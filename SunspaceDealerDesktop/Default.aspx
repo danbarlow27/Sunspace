@@ -21,7 +21,7 @@
     <input type="button" value ="Toggle Wall Type" onclick="standAlone = !standAlone"/>
     <input type="button" value = "Done Drawing" onclick="sunroomCompleted()" />    
     <input type="button" value ="Undo" onclick="undo()" />
-    <input type="button" value ="Clear Canvas" onclick="clearCanvas()" />
+    <input type="submit" value ="Clear Canvas" />
     <input type="button" value ="Done Existing Walls" onclick="disableExistingWalls()" />
     <p>
         Red is proposed wall
@@ -38,6 +38,7 @@
         var counter = 0;
         var cellPadding = 25;
         var lineArray = new Array();
+        var removed = new Array();
         var lineCount = 0;
         var standAlone = false;//confirm("standalone?");
         var existingWall = false;//standAlone ? false : confirm("existing wall?");
@@ -54,9 +55,32 @@
 
         var MIN_NUMBER_OF_WALLS = 3;
 
-        
-     
 
+        //undo last line
+        function undo() {
+            d3.selectAll("#standAlone").remove();
+            d3.selectAll("#notStandAlone").remove();
+
+            for (var i = 0; i < lineArray.length - 1; i++) {
+                //var line = drawLine(lineArray[i].attr("x1"), lineArray[i].attr("x2"), lineArray[i].attr("y1"), lineArray[i].attr("y2"), false, standAlone);
+                //line;
+                console.log(lineArray[i].attr("x1") + "," + lineArray[i].attr("x2"));
+                //ycoord += lineArray[i].attr("y1") + "," + lineArray[i].attr("y2") + "/n";
+            }
+
+            removed = lineArray.splice(lineArray.length - 1, 1);
+
+            for (var i = 0; i < lineArray.length - 1; i++) {
+                var line = drawLine(lineArray[i].attr("x1"), lineArray[i].attr("x2"), lineArray[i].attr("y1"), lineArray[i].attr("y2"), false, standAlone);
+                line;
+                console.log(lineArray[i].attr("x1") + "," + lineArray[i].attr("x2"));
+                //ycoord += lineArray[i].attr("y1") + "," + lineArray[i].attr("y2") + "/n";
+            }
+
+            lineCount--;
+
+           
+        }
 
         //Draw the grid lines
         function drawGrid() {
@@ -145,11 +169,14 @@
                 x1 = line.attr("x2");
                 y1 = line.attr("y2");
 
+                //alert(x1);
+                //alert(line.attr("x2"));
+
                 lineArray[lineCount] = line;
                 lineCount++;
 
-                for (var i = 0; i < lineArray.length ; i++)
-                    lineArray[i];
+                //for (var i = 0; i < lineArray.length ; i++)
+                //    lineArray[i];
             }
         },
         false);
