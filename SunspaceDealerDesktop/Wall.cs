@@ -91,7 +91,7 @@ namespace SunspaceDealerDesktop
             optimalModSize = remainingWallLength / numberOfMods;
             noDecimalModSize = (int)optimalModSize;
 
-            float decimalRound = optimalModSize - noDecimalModSize;
+            float decimalRound = (float)Math.Round(optimalModSize - noDecimalModSize, 3);
             float addedToFiller = decimalRound * numberOfMods;
 
             if (decimalRound > 0.875f)
