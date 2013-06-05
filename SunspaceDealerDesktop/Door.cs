@@ -10,8 +10,8 @@ namespace SunspaceDealerDesktop
         private String typeOfDoor; //Type of Door String
         //private bool isPatioDoor; //True if Patio Door ?????????????
         private int itemIndex; //LinearItems Array Index
-        private int transomStyle; //Transom Style: 0-Solid, 1-Glass, 2-Vinyl , glass rect, vinyl rect
-        private int transomTint;
+        private String transomStyle; //Transom Style: 0-Solid, 1-Glass, 2-Vinyl , glass rect, vinyl rect
+        private String transomTint;
         //private int underHeaderStyle; //Transom Style: 0-Solid, 1-Glass, 2-Vinyl , glass rect, vinyl rect
         //private int underHeaderTint; //?????????????????????????????????????????????????????????????????
         private float height; //Punch Height of Door
@@ -19,10 +19,10 @@ namespace SunspaceDealerDesktop
 
         public Door()
         {
-            TypeOfDoor = "Entry"; 
+            TypeOfDoor = "entry"; 
             ItemIndex = -1;
-            TransomStyle = 1; 
-            TransomTint = 1;
+            TransomStyle = "solid"; 
+            TransomTint = "glass";
             Height = 80.5f; 
             Width = 60.6f;
         }
@@ -36,7 +36,7 @@ namespace SunspaceDealerDesktop
 
             set
             {
-                typeOfDoor = value;
+                typeOfDoor = value.ToLower();
             }
         }
        
@@ -53,7 +53,7 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public int TransomStyle
+        public String TransomStyle
         {
             get
             {
@@ -62,11 +62,11 @@ namespace SunspaceDealerDesktop
 
             set
             {
-                transomStyle = value;
+                transomStyle = value.ToLower();
             }
         }
 
-        public int TransomTint
+        public String TransomTint
         {
             get
             {
@@ -75,7 +75,7 @@ namespace SunspaceDealerDesktop
 
             set
             {
-                transomTint = value;
+                transomTint = value.ToLower();
             }
         }
 
