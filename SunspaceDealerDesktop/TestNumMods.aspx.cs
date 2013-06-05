@@ -13,8 +13,8 @@ namespace SunspaceDealerDesktop
         {
             Wall aWall = new Wall();
             aWall.Length = 177f;
-            aWall.TotalCornerLength = 4f;
-            aWall.TotalStarterLength = 1.5f;
+            aWall.TotalCornerLength = 4.5f;
+            aWall.TotalStarterLength = 0;
             tester.InnerHtml = aWall.FindOptimalNumberOfMods();
             tester2.InnerHtml = aWall.FindOptimalSizeOfMods(10);
         }
