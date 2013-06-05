@@ -49,9 +49,6 @@
 
         //alert(WALL_FACING.EAST);
 
-
-
-
         //Draw the grid lines
         function drawGrid() {
 
