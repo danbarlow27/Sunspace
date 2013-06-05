@@ -36,7 +36,7 @@
         var lineArray = new Array();
         var lineCount = 0;
         var existingWall = false;
-        var COMPASS = {
+        var WALL_FACING = {
                 SOUTH: 0,
                 SOUTH_WEST: 1,
                 WEST: 2,
@@ -205,9 +205,26 @@
             var orientation = getOrientation(dX, dY);
             
 
-            //alert("compass value: " + orientation);
-            //If remainder is not zero, line isn't a zero slope, modify value accordingly, needs fixing
-            //if (m != 0 || Math.abs(m) != 1 || (x2 - x1 != 0)) {
+            switch (orientation) {
+                case COMPASS.SOUTH:
+                case COMPASS.NORTH:
+                    y2 = y1;
+                    break;
+                case COMPASS.SOUTH_WEST:
+                case COMPASS.NORTH_EAST:
+                    y2 = y1 + sign(dY) * Math.abs(dX);
+                    break;
+                case COMPASS.WEST:
+                case COMPASS.EAST:
+                    x2 = x1;
+                    break;
+                case COMPASS.NORTH_WEST:
+                case COMPASS.SOUTH_EAST:
+                    x2 = x1 + sign(dX) * Math.abs(dY);
+                    break;
+            }
+
+            /*
             if (Math.abs(dY) < Math.abs(dX))
                 if (Math.abs(dY) > (Math.abs(dX) / 2))
                     y2 = y1 + sign(dY) * Math.abs(dX);
@@ -218,10 +235,7 @@
                     x2 = x1 + sign(dX) * Math.abs(dY);
                 else
                     x2 = x1;
-            //   }
-
-
-
+            */
             return {
                 'x1': x1,
                 'y1': y1,
