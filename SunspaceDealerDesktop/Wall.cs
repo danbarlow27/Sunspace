@@ -34,7 +34,23 @@ namespace SunspaceDealerDesktop
             Length = 0.0F;
             FirstItemIndex = -1;
             LastItemIndex = -1;
+            Orientation = "";
+            Name = "";
+            IsExisting = false;
+            StartHeight = 0.0F;
+            EndHeight = 0.0F;
+            Soffit = 0.0F;
+        }
 
+        public int FindNumberOfMods(float wallLength, float totalCornerLength, float totalStarterLength)
+        {
+            float remainingWallLength = 0.0F;
+            float defaultFiller = 2.0F;
+
+            remainingWallLength -= totalCornerLength;
+            remainingWallLength -= totalStarterLength;
+
+            remainingWallLength -= (defaultFiller * 2);
         }
 
         public float Length
