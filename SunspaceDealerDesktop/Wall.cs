@@ -77,7 +77,7 @@ namespace SunspaceDealerDesktop
             noDecimalModSize = (int)optimalModSize;
 
             float decimalRound = (float)Math.Round(optimalModSize - noDecimalModSize, 3);
-            float addedToFiller = decimalRound * numberOfMods;
+            
 
             if (decimalRound > 0.875f)
             {
@@ -107,7 +107,7 @@ namespace SunspaceDealerDesktop
             {
                 decimalRound = 0;
             }
-
+            float addedToFiller = decimalRound * numberOfMods;
             optimalModSize = noDecimalModSize + decimalRound;
 
             return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + addedToFiller / 2 + " inches to both fillers.";
