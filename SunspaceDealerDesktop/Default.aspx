@@ -36,6 +36,21 @@
         var lineArray = new Array();
         var lineCount = 0;
         var existingWall = false;
+        var COMPASS = {
+                SOUTH: 0,
+                SOUTH_WEST: 1,
+                WEST: 2,
+                NORTH_WEST: 3,
+                NORTH: 4,
+                NORTH_EAST: 5,
+                EAST: 6,
+                SOUTH_EAST: 7
+        }
+
+        //alert(COMPASS.EAST);
+
+
+
 
         //Draw the grid lines
         function drawGrid() {
@@ -176,16 +191,21 @@
             return line;
         };
 
+        //orientation funtion
+        function getOrientation(dX, dY) {
+            return ((Math.round(Math.atan2(dY, dX) / (Math.PI / 4))) + 8) % 8;
+        }
+
         //Function to set the coordinate on a specific corner of the grid boxes
         function setGridPoints(x1, y1, x2, y2) {
             function sign(val) { return Math.abs(val) / val; }
             var dX = x2 - x1;
             var dY = y2 - y1;
-            var m = (dY) / (dX); //m === 1 means 45degree slope
             var length;
+            var orientation = getOrientation(dX, dY);
+            
 
-
-            //var compass = ((Math.round(atan2((y2-y1), (x2-x1)) / (PI / 4))) + 4) % 4;
+            //alert("compass value: " + orientation);
             //If remainder is not zero, line isn't a zero slope, modify value accordingly, needs fixing
             //if (m != 0 || Math.abs(m) != 1 || (x2 - x1 != 0)) {
             if (Math.abs(dY) < Math.abs(dX))
