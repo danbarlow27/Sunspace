@@ -19,13 +19,14 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div style="width:500px; height:500px;" id="mySunroom"></div>
     <input type="button" value ="Toggle Wall Type" onclick="existingWall = !existingWall"/>
-    
+    <input type="submit" value ="Done Drawing" onclick="sunroomCompleted()" />    
     <p>
         Red is proposed wall
         Black is existing wall
     </p>
 
     <script>
+
         var canvas = d3.select("#mySunroom")
                     .append("svg")
                     .attr("width", 500)
@@ -35,7 +36,8 @@
         var cellPadding = 25;
         var lineArray = new Array();
         var lineCount = 0;
-        var existingWall = false;
+        var standAlone = false;
+
         var WALL_FACING = {
                 SOUTH: 0,
                 SOUTH_WEST: 1,
@@ -203,7 +205,6 @@
             var dY = y2 - y1;
             var length;
             var orientation = getOrientation(dX, dY);
-            
 
             switch (orientation) {
                 case WALL_FACING.SOUTH:
@@ -224,18 +225,6 @@
                     break;
             }
 
-            /*
-            if (Math.abs(dY) < Math.abs(dX))
-                if (Math.abs(dY) > (Math.abs(dX) / 2))
-                    y2 = y1 + sign(dY) * Math.abs(dX);
-                else
-                    y2 = y1;
-            else
-                if (Math.abs(dX) > (Math.abs(dY) / 2))
-                    x2 = x1 + sign(dX) * Math.abs(dY);
-                else
-                    x2 = x1;
-            */
             return {
                 'x1': x1,
                 'y1': y1,
@@ -243,6 +232,11 @@
                 'y2': y2
             };
         };
+
+        //determine if the sunroom is valid
+        function sunroomCompleted() {
+            if (
+        }
 
         function snapToGrid(coordinate, cellPadding) {
             var endLoop = false;
