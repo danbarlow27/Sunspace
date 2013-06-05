@@ -44,8 +44,33 @@ namespace SunspaceDealerDesktop
 
         public int FindNumberOfMods(float wallLength, float totalCornerLength, float totalStarterLength)
         {
-           
-            
+            int numberOfMods = 0;
+            float optimalModSize = 0;
+            float remainingWallLength = wallLength;
+            float DEFAULT_FILLTER = 2.0F; //constants module?
+
+            float SOFT_MIN_WINDOW_SIZE = 30.0F; //inches
+            float SOFT_MAX_WINDOW_SIZE = 58.0F; //inches
+
+            remainingWallLength -= totalCornerLength;
+            remainingWallLength -= totalStarterLength;
+
+            remainingWallLength -= (DEFAULT_FILLTER * 2);
+
+            if (remainingWallLength > SOFT_MAX_WINDOW_SIZE)
+            {
+                numberOfMods = 1;
+                optimalModSize = remainingWallLength;
+
+                while (optimalModSize > SOFT_MAX_WINDOW_SIZE)
+                {
+                    numberOfMods++;
+                    optimalModSize = remainingWallLength / numberOfMods;
+                }
+            }
+
+            Console.WriteLine("Suggested " + numberOfMods + " mods at " + optimalModSize + " inches.");
+            return 0;
         }
 
         public float Length
