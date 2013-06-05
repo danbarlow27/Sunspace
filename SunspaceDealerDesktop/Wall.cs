@@ -19,6 +19,8 @@ namespace SunspaceDealerDesktop
         //private bool isGableWall; //????????????????
         //private bool customHeight; //???????????????
         private float soffit; //Soffit length (only for fascia install)
+        private float totalCornerLength;
+        private float totalStarterLength;
 
         /*
          * ??NOT SURE IF THESE ARE REQUIRED
@@ -40,20 +42,22 @@ namespace SunspaceDealerDesktop
             StartHeight = 0.0F;
             EndHeight = 0.0F;
             Soffit = 0.0F;
+            TotalCornerLength = 0.0f;
+            TotalStarterLength = 0.0f;
         }
 
-        public int FindNumberOfMods(float wallLength, float totalCornerLength, float totalStarterLength)
+        public String FindOptimalNumberOfMods()
         {
             int numberOfMods = 0;
             float optimalModSize = 0;
-            float remainingWallLength = wallLength;
+            float remainingWallLength = Length;
             float DEFAULT_FILLTER = 2.0F; //constants module?
 
             float SOFT_MIN_WINDOW_SIZE = 30.0F; //inches
             float SOFT_MAX_WINDOW_SIZE = 58.0F; //inches
 
-            remainingWallLength -= totalCornerLength;
-            remainingWallLength -= totalStarterLength;
+            remainingWallLength -= TotalCornerLength;
+            remainingWallLength -= TotalStarterLength;
 
             remainingWallLength -= (DEFAULT_FILLTER * 2);
 
@@ -69,8 +73,26 @@ namespace SunspaceDealerDesktop
                 }
             }
 
-            Console.WriteLine("Suggested " + numberOfMods + " mods at " + optimalModSize + " inches.");
-            return 0;
+            return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches.";
+        }
+
+        public String FindOptimalSizeOfMods(int numberOfMods)
+        {
+            float optimalModSize = 0;
+            float remainingWallLength = Length;
+            float DEFAULT_FILLTER = 2.0F; //constants module?
+
+            float SOFT_MIN_WINDOW_SIZE = 30.0F; //inches
+            float SOFT_MAX_WINDOW_SIZE = 58.0F; //inches
+
+            remainingWallLength -= TotalCornerLength;
+            remainingWallLength -= TotalStarterLength;
+
+            remainingWallLength -= (DEFAULT_FILLTER * 2);
+
+            optimalModSize = remainingWallLength / numberOfMods;
+            
+            return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches.";
         }
 
         public float Length
@@ -187,6 +209,32 @@ namespace SunspaceDealerDesktop
             set
             {
                 soffit = value;
+            }
+        }
+
+        public float TotalCornerLength
+        {
+            get
+            {
+                return totalCornerLength;
+            }
+
+            set
+            {
+                totalCornerLength = value;
+            }
+        }
+
+        public float TotalStarterLength
+        {
+            get
+            {
+                return totalStarterLength;
+            }
+
+            set
+            {
+                totalStarterLength = value;
             }
         }
     }
