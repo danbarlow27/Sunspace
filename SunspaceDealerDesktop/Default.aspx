@@ -47,7 +47,7 @@
                 SOUTH_EAST: 7
         }
 
-        //alert(COMPASS.EAST);
+        //alert(WALL_FACING.EAST);
 
 
 
@@ -206,20 +206,20 @@
             
 
             switch (orientation) {
-                case COMPASS.SOUTH:
-                case COMPASS.NORTH:
+                case WALL_FACING.SOUTH:
+                case WALL_FACING.NORTH:
                     y2 = y1;
                     break;
-                case COMPASS.SOUTH_WEST:
-                case COMPASS.NORTH_EAST:
+                case WALL_FACING.SOUTH_WEST:
+                case WALL_FACING.NORTH_EAST:
                     y2 = y1 + sign(dY) * Math.abs(dX);
                     break;
-                case COMPASS.WEST:
-                case COMPASS.EAST:
+                case WALL_FACING.WEST:
+                case WALL_FACING.EAST:
                     x2 = x1;
                     break;
-                case COMPASS.NORTH_WEST:
-                case COMPASS.SOUTH_EAST:
+                case WALL_FACING.NORTH_WEST:
+                case WALL_FACING.SOUTH_EAST:
                     x2 = x1 + sign(dX) * Math.abs(dY);
                     break;
             }
