@@ -52,6 +52,7 @@ namespace SunspaceDealerDesktop
             float optimalModSize = 0;
             float remainingWallLength = Length;
             float DEFAULT_FILLER = 2.0F; //constants module?
+            int noDecimalModSize;
 
             float SOFT_MIN_WINDOW_SIZE = 30.0F; //inches
             float SOFT_MAX_WINDOW_SIZE = 58.0F; //inches
@@ -73,7 +74,43 @@ namespace SunspaceDealerDesktop
                 }
             }
 
-            return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches.";
+            noDecimalModSize = (int)optimalModSize;
+
+            float decimalRound = (float)Math.Round(optimalModSize - noDecimalModSize, 3);
+            float addedToFiller = decimalRound * numberOfMods;
+
+            if (decimalRound > 0.875f)
+            {
+                decimalRound = 0.875f;
+            }
+            else if (decimalRound > 0.75f)
+            {
+                decimalRound = 0.75f;
+            }
+            else if (decimalRound > 0.625f)
+            {
+                decimalRound = 0.625f;
+            }
+            else if (decimalRound > 0.5f)
+            {
+                decimalRound = 0.5f;
+            }
+            else if (decimalRound > 0.375f)
+            {
+                decimalRound = 0.375f;
+            }
+            else if (decimalRound > 0.25f)
+            {
+                decimalRound = 0.25f;
+            }
+            else
+            {
+                decimalRound = 0;
+            }
+
+            optimalModSize = noDecimalModSize + decimalRound;
+
+            return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + addedToFiller / 2 + " inches to both fillers.";
         }
 
         public String FindOptimalSizeOfMods(int numberOfMods)
