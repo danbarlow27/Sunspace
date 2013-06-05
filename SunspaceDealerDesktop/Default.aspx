@@ -52,31 +52,43 @@
                 EAST: 6,
                 SOUTH_EAST: 7
         }
-
         var MIN_NUMBER_OF_WALLS = 3;
+        var x1;
+        var y1;
+        var x2;
+        var y2;
 
+        var coordList = new Array();
 
         //undo last line
         function undo() {
             d3.selectAll("#standAlone").remove();
             d3.selectAll("#notStandAlone").remove();
 
-            for (var i = 0; i < lineArray.length - 1; i++) {
-                //var line = drawLine(lineArray[i].attr("x1"), lineArray[i].attr("x2"), lineArray[i].attr("y1"), lineArray[i].attr("y2"), false, standAlone);
+            //for (var i = 0; i < lineArray.length - 1; i++) {
+            //    var line = drawLine(coordList[1].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false, standAlone);
+
                 //line;
-                console.log(lineArray[i].attr("x1") + "," + lineArray[i].attr("x2"));
+                //console.log(lineArray[i].attr("x1") + "," + lineArray[i].attr("x2"));
                 //ycoord += lineArray[i].attr("y1") + "," + lineArray[i].attr("y2") + "/n";
-            }
+            //}
 
             removed = lineArray.splice(lineArray.length - 1, 1);
 
-            for (var i = 0; i < lineArray.length - 1; i++) {
-                var line = drawLine(lineArray[i].attr("x1"), lineArray[i].attr("x2"), lineArray[i].attr("y1"), lineArray[i].attr("y2"), false, standAlone);
-                line;
-                console.log(lineArray[i].attr("x1") + "," + lineArray[i].attr("x2"));
+            for (var i = 0; i <= lineArray.length - 1; i++) {
+                var line = drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false, standAlone);
+                //var line = drawLine(lineArray[i].attr("x1"), lineArray[i].attr("x2"), lineArray[i].attr("y1"), lineArray[i].attr("y2"), false, standAlone);
+                //line;
+                //console.log(lineArray[i].attr("x1") + "," + lineArray[i].attr("x2"));
                 //ycoord += lineArray[i].attr("y1") + "," + lineArray[i].attr("y2") + "/n";
             }
 
+            coordList = new Array();
+            lineArray = new Array();
+            //x1 = new Array();
+            //x2 = new Array();
+            //y1 = new Array();
+            //y2 = new Array();
             lineCount--;
 
            
@@ -166,6 +178,15 @@
 
                 var line = drawLine(x1, y1, x2, y2, false, standAlone);
 
+                coordList[lineCount] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2") };
+
+                for (var i = 0; i < coordList.length; i++) {
+                    console.log(coordList[i].x1);
+                    console.log(coordList[i].y1);
+                    console.log(coordList[i].x2);
+                    console.log(coordList[i].y2);
+                }
+
                 x1 = line.attr("x2");
                 y1 = line.attr("y2");
 
@@ -174,6 +195,7 @@
 
                 lineArray[lineCount] = line;
                 lineCount++;
+                
 
                 //for (var i = 0; i < lineArray.length ; i++)
                 //    lineArray[i];
