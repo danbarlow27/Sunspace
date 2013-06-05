@@ -20,6 +20,9 @@
     <div style="width:500px; height:500px;" id="mySunroom"></div>
     <input type="button" value ="Toggle Wall Type" onclick="standAlone = !standAlone"/>
     <input type="button" value = "Done Drawing" onclick="sunroomCompleted()" />    
+    <input type="button" value ="Undo" onclick="undo()" />
+    <input type="button" value ="Clear Canvas" onclick="clearCanvas()" />
+    <input type="button" value ="Done Existing Walls" onclick="disableExistingWalls()" />
     <p>
         Red is proposed wall
         Black is existing wall
@@ -36,7 +39,7 @@
         var cellPadding = 25;
         var lineArray = new Array();
         var lineCount = 0;
-        var standAlone = true;//confirm("standalone?");
+        var standAlone = false;//confirm("standalone?");
         var existingWall = false;//standAlone ? false : confirm("existing wall?");
         var WALL_FACING = {
                 SOUTH: 0,
@@ -49,9 +52,12 @@
                 SOUTH_EAST: 7
         }
 
-        var MIN_STANDALONE_WALLS = 3;
+        var MIN_NUMBER_OF_WALLS = 3;
 
         
+     
+
+
         //Draw the grid lines
         function drawGrid() {
 
@@ -237,17 +243,54 @@
 
         //determine if the sunroom is valid
         function sunroomCompleted() {
-            if (standAlone) {
-                if (lineArray.length < MIN_STANDALONE_WALLS)
-                    alert("A complete sunroom must have at least 3 walls. Please try again!");
-                else if (lineArray[lineArray.length - 1].attr("x2") != lineArray[0].attr("x1"))
+            if (lineArray.length < MIN_NUMBER_OF_WALLS) 
+                alert("A complete sunroom must be enclosed (3 walls minimum). Please try again!");
+               else if (standAlone && lineArray[lineArray.length - 1].attr("x2") != lineArray[0].attr("x1"))
                     alert("A stand-alone sunroom must end at the start of the starting wall. Please try again!");
-            }
-            else {
-                
+                else if (!standAlone) {
+                    var cx2 = lineArray[0].attr("x2");
+                    var cx1 = lineArray[0].attr("x1");
+                    var cy2 = lineArray[0].attr("y2");
+                    var cy1 = lineArray[0].attr("y1");
+                    var A1 = cy2 - cy1;
+                    var B1 = cx1 - cx2;
+                    var C1 = A1 * cx1 + B1 * cy1;
+                    cx2 = lineArray[lineArray.length - 1].attr("x2");
+                    cx1 = lineArray[lineArray.length - 1].attr("x1");
+                    cy2 = lineArray[lineArray.length - 1].attr("y2");
+                    cy1 = lineArray[lineArray.length - 1].attr("y1");
+                    var A2 = cy2 - cy1;
+                    var B2 = cx1 - cx2;
+                    var C2 = A2 * cx1 + B2 * cy1;
+
+                    var det = (A1 * B2) - (A2 * B1);
+
+                    if (det === 0) {
+                        //lines are parallel
+                        alert("Sunroom must be enclosed. Please add another wall.");
+                    }
+                    else {
+                        var x = (B2 * C1 - B1 * C2) / det; 
+                        var y = (A1 * C2 - A2 * C1) / det;
+
+                        if (x != cx2 && y != cy2)
+                            alert("Please complete your sunroom by connecting your last wall to an existing wall");
+                        else {// if (x === x2 && y === y2)
+                            //alert("Sunroom Completed");
+                            var line = drawLine(cx1, cy1, x, y, false, standAlone);
+                            x1 = line.attr("x2");
+                            y1 = line.attr("y2");
+                            //alert(x1 + "," + y1);
+                        }
+                        //alert(x + "," + y);
+                        //alert(x2 + "," + y2);
+                    }
+
+
+                }
             }
 
-        }
+
 
         function snapToGrid(coordinate, cellPadding) {
             var endLoop = false;
