@@ -20,8 +20,9 @@ namespace SunspaceDealerDesktop
         //private bool customHeight; //???????????????
         private float soffit; //Soffit length (only for fascia install)
         private float totalCornerLength;
-        private float totalStarterLength;
-
+        private float totalReceiverLength;
+        //private float proposedLength;
+        //private float actualLength;
         /*
          * ??NOT SURE IF THESE ARE REQUIRED
             ExistingKneewall As Single
@@ -43,7 +44,7 @@ namespace SunspaceDealerDesktop
             EndHeight = 0.0F;
             Soffit = 0.0F;
             TotalCornerLength = 0.0f;
-            TotalStarterLength = 0.0f;
+            TotalReceiverLength = 0.0f;
         }
 
         public String FindOptimalNumberOfMods()
@@ -58,7 +59,7 @@ namespace SunspaceDealerDesktop
             float SOFT_MAX_WINDOW_SIZE = 58.0F; //inches
 
             remainingWallLength -= TotalCornerLength;
-            remainingWallLength -= TotalStarterLength;
+            remainingWallLength -= TotalReceiverLength;
 
             remainingWallLength -= (DEFAULT_FILLER * 2);
 
@@ -77,7 +78,7 @@ namespace SunspaceDealerDesktop
             noDecimalModSize = (int)optimalModSize;
 
             float decimalRound = optimalModSize - noDecimalModSize;
-            float addedToFiller = (float)Math.Round(decimalRound * numberOfMods, 3);
+            float addedToFiller = decimalRound * numberOfMods;
 
             if (decimalRound > 0.875f)
             {
@@ -121,7 +122,7 @@ namespace SunspaceDealerDesktop
             int noDecimalModSize;
 
             remainingWallLength -= TotalCornerLength;
-            remainingWallLength -= TotalStarterLength;
+            remainingWallLength -= TotalReceiverLength;
 
             remainingWallLength -= (DEFAULT_FILLER * 2);
 
@@ -129,7 +130,7 @@ namespace SunspaceDealerDesktop
             noDecimalModSize = (int)optimalModSize;
 
             float decimalRound = optimalModSize - noDecimalModSize;
-            float addedToFiller = (float)Math.Round(decimalRound * numberOfMods,3);
+            float addedToFiller = decimalRound * numberOfMods;
 
             if (decimalRound > 0.875f)
             {
@@ -295,16 +296,16 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public float TotalStarterLength
+        public float TotalReceiverLength
         {
             get
             {
-                return totalStarterLength;
+                return totalReceiverLength;
             }
 
             set
             {
-                totalStarterLength = value;
+                totalReceiverLength = value;
             }
         }
     }
