@@ -76,9 +76,23 @@ namespace SunspaceDealerDesktop
             return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches.";
         }
 
-        public String FindOptimalSizeOfMods(float wallLength, float totalCornerLength, float totalStarterLength)
+        public String FindOptimalSizeOfMods(int numberOfMods)
         {
-            return "";
+            float optimalModSize = 0;
+            float remainingWallLength = Length;
+            float DEFAULT_FILLTER = 2.0F; //constants module?
+
+            float SOFT_MIN_WINDOW_SIZE = 30.0F; //inches
+            float SOFT_MAX_WINDOW_SIZE = 58.0F; //inches
+
+            remainingWallLength -= TotalCornerLength;
+            remainingWallLength -= TotalStarterLength;
+
+            remainingWallLength -= (DEFAULT_FILLTER * 2);
+
+            optimalModSize = remainingWallLength / numberOfMods;
+            
+            return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches.";
         }
 
         public float Length
