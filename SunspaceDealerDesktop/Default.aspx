@@ -18,8 +18,8 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div style="width:500px; height:500px;" id="mySunroom"></div>
-    <input type="button" value ="Toggle Wall Type" onclick="existingWall = !existingWall"/>
-    <input type="submit" value ="Done Drawing" onclick="sunroomCompleted()" />    
+    <input type="button" value ="Toggle Wall Type" onclick="standAlone = !standAlone"/>
+    <input type="button" value = "Done Drawing" onclick="sunroomCompleted()" />    
     <p>
         Red is proposed wall
         Black is existing wall
@@ -36,8 +36,8 @@
         var cellPadding = 25;
         var lineArray = new Array();
         var lineCount = 0;
-        var standAlone = false;
-
+        var standAlone = true;//confirm("standalone?");
+        var existingWall = false;//standAlone ? false : confirm("existing wall?");
         var WALL_FACING = {
                 SOUTH: 0,
                 SOUTH_WEST: 1,
@@ -49,11 +49,9 @@
                 SOUTH_EAST: 7
         }
 
-        //alert(WALL_FACING.EAST);
+        var MIN_STANDALONE_WALLS = 3;
 
-
-
-
+        
         //Draw the grid lines
         function drawGrid() {
 
@@ -136,7 +134,7 @@
                 x2 = mousePos.x;
                 y2 = mousePos.y;
 
-                var line = drawLine(x1, y1, x2, y2, false, existingWall);
+                var line = drawLine(x1, y1, x2, y2, false, standAlone);
 
                 x1 = line.attr("x2");
                 y1 = line.attr("y2");
@@ -159,7 +157,7 @@
             d3.selectAll("#mouseMoveLine").remove();
 
             if (counter != 0)
-                drawLine(x1, y1, x2, y2, true, existingWall);
+                drawLine(x1, y1, x2, y2, true, standAlone);
         },
         false);
 
@@ -169,7 +167,7 @@
         },
         false);
 
-        function drawLine(x1, y1, x2, y2, mouseMove, existingWall) {
+        function drawLine(x1, y1, x2, y2, mouseMove, standAlone) {
 
             var coordinates = setGridPoints(snapToGrid(x1, cellPadding), snapToGrid(y1, cellPadding), snapToGrid(x2, cellPadding), snapToGrid(y2, cellPadding));
 
@@ -178,13 +176,17 @@
                     .attr("y1", coordinates.y1)
                     .attr("x2", coordinates.x2)
                     .attr("y2", coordinates.y2)
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 2);
+
+            if (standAlone)
+                line.attr("id", "standAlone");
+            else
+                line.attr("id", "notStandAlone");
 
             if (existingWall) {
-                line.attr("stroke", "red");
-            }
-            else {
-                line.attr("stroke", "black")
-                    .attr("stroke-width", 2);
+                line.attr("stroke", "red")
+                    .attr("stroke-width", 1);
             }
 
             if (mouseMove)
@@ -235,7 +237,16 @@
 
         //determine if the sunroom is valid
         function sunroomCompleted() {
-            if (
+            if (standAlone) {
+                if (lineArray.length < MIN_STANDALONE_WALLS)
+                    alert("A complete sunroom must have at least 3 walls. Please try again!");
+                else if (lineArray[lineArray.length - 1].attr("x2") != lineArray[0].attr("x1"))
+                    alert("A stand-alone sunroom must end at the start of the starting wall. Please try again!");
+            }
+            else {
+                
+            }
+
         }
 
         function snapToGrid(coordinate, cellPadding) {
