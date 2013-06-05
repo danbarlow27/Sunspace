@@ -196,6 +196,7 @@
             else
                 if (Math.abs(dX) > (Math.abs(dY) / 2))
                     x2 = x1 + sign(dX) * Math.abs(dY);
+
                 else
                     x2 = x1;
             //   }
