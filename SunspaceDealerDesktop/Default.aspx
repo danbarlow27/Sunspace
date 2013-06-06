@@ -18,14 +18,18 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div style="width:500px; height:500px;" id="mySunroom"></div>
-    <input type="button" value ="Toggle Wall Type" onclick="existingWall = !existingWall"/>
-    
+    <input type="button" value ="Toggle Wall Type" onclick="standAlone = !standAlone"/>
+    <input type="button" value = "Done Drawing" onclick="sunroomCompleted()" />    
+    <input type="button" value ="Undo" onclick="undo()" />
+    <input type="submit" value ="Clear Canvas" />
+    <input type="button" value ="Done Existing Walls" onclick="disableExistingWalls()" />
     <p>
         Red is proposed wall
         Black is existing wall
     </p>
 
     <script>
+
         var canvas = d3.select("#mySunroom")
                     .append("svg")
                     .attr("width", 500)
@@ -34,8 +38,10 @@
         var counter = 0;
         var cellPadding = 25;
         var lineArray = new Array();
+        var removed = new Array();
         var lineCount = 0;
-        var existingWall = false;
+        var standAlone = false;//confirm("standalone?");
+        var existingWall = false;//standAlone ? false : confirm("existing wall?");
         var WALL_FACING = {
                 SOUTH: 0,
                 SOUTH_WEST: 1,
@@ -46,11 +52,40 @@
                 EAST: 6,
                 SOUTH_EAST: 7
         }
+        var MIN_NUMBER_OF_WALLS = 3;
+        var x1;
+        var y1;
+        var x2;
+        var y2;
 
-        //alert(WALL_FACING.EAST);
+        var coordList = new Array();
 
+        //undo last line
+        function undo() {
+            d3.selectAll("#standAlone").remove();
+            d3.selectAll("#notStandAlone").remove();
 
+            //for (var i = 0; i < lineArray.length - 1; i++) {
+            //    var line = drawLine(coordList[1].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false, standAlone);
 
+                //line;
+                //console.log(lineArray[i].attr("x1") + "," + lineArray[i].attr("x2"));
+                //ycoord += lineArray[i].attr("y1") + "," + lineArray[i].attr("y2") + "/n";
+            //}
+
+            removed = lineArray.pop();
+
+            for (var i = 0; i <= lineArray.length - 1; i++) {
+                drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false, standAlone);
+                //var line = drawLine(lineArray[i].attr("x1"), lineArray[i].attr("x2"), lineArray[i].attr("y1"), lineArray[i].attr("y2"), false, standAlone);
+                //line;
+                //console.log(lineArray[i].attr("x1") + "," + lineArray[i].attr("x2"));
+                //ycoord += lineArray[i].attr("y1") + "," + lineArray[i].attr("y2") + "/n";
+            }
+
+            x1 = lineArray.attr("x2");
+            y1 = lineArray.atrr("y2");
+        }
 
         //Draw the grid lines
         function drawGrid() {
@@ -134,16 +169,29 @@
                 x2 = mousePos.x;
                 y2 = mousePos.y;
 
-                var line = drawLine(x1, y1, x2, y2, false, existingWall);
+                var line = drawLine(x1, y1, x2, y2, false, standAlone);
+
+                coordList[lineCount] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2") };
+
+                for (var i = 0; i < coordList.length; i++) {
+                    console.log(coordList[i].x1);
+                    console.log(coordList[i].y1);
+                    console.log(coordList[i].x2);
+                    console.log(coordList[i].y2);
+                }
 
                 x1 = line.attr("x2");
                 y1 = line.attr("y2");
 
+                //alert(x1);
+                //alert(line.attr("x2"));
+
                 lineArray[lineCount] = line;
                 lineCount++;
+                
 
-                for (var i = 0; i < lineArray.length ; i++)
-                    lineArray[i];
+                //for (var i = 0; i < lineArray.length ; i++)
+                //    lineArray[i];
             }
         },
         false);
@@ -157,7 +205,7 @@
             d3.selectAll("#mouseMoveLine").remove();
 
             if (counter != 0)
-                drawLine(x1, y1, x2, y2, true, existingWall);
+                drawLine(x1, y1, x2, y2, true, standAlone);
         },
         false);
 
@@ -167,7 +215,7 @@
         },
         false);
 
-        function drawLine(x1, y1, x2, y2, mouseMove, existingWall) {
+        function drawLine(x1, y1, x2, y2, mouseMove, standAlone) {
 
             var coordinates = setGridPoints(snapToGrid(x1, cellPadding), snapToGrid(y1, cellPadding), snapToGrid(x2, cellPadding), snapToGrid(y2, cellPadding));
 
@@ -176,13 +224,17 @@
                     .attr("y1", coordinates.y1)
                     .attr("x2", coordinates.x2)
                     .attr("y2", coordinates.y2)
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 2);
+
+            if (standAlone)
+                line.attr("id", "standAlone");
+            else
+                line.attr("id", "notStandAlone");
 
             if (existingWall) {
-                line.attr("stroke", "red");
-            }
-            else {
-                line.attr("stroke", "black")
-                    .attr("stroke-width", 2);
+                line.attr("stroke", "red")
+                    .attr("stroke-width", 1);
             }
 
             if (mouseMove)
@@ -203,7 +255,6 @@
             var dY = y2 - y1;
             var length;
             var orientation = getOrientation(dX, dY);
-            
 
             switch (orientation) {
                 case WALL_FACING.SOUTH:
@@ -224,19 +275,6 @@
                     break;
             }
 
-            /*
-            if (Math.abs(dY) < Math.abs(dX))
-                if (Math.abs(dY) > (Math.abs(dX) / 2))
-                    y2 = y1 + sign(dY) * Math.abs(dX);
-                else
-                    y2 = y1;
-            else
-                if (Math.abs(dX) > (Math.abs(dY) / 2))
-                    x2 = x1 + sign(dX) * Math.abs(dY);
-
-                else
-                    x2 = x1;
-            */
             return {
                 'x1': x1,
                 'y1': y1,
@@ -244,6 +282,57 @@
                 'y2': y2
             };
         };
+
+        //determine if the sunroom is valid
+        function sunroomCompleted() {
+            if (lineArray.length < MIN_NUMBER_OF_WALLS) 
+                alert("A complete sunroom must be enclosed (3 walls minimum). Please try again!");
+               else if (standAlone && lineArray[lineArray.length - 1].attr("x2") != lineArray[0].attr("x1"))
+                    alert("A stand-alone sunroom must end at the start of the starting wall. Please try again!");
+                else if (!standAlone) {
+                    var cx2 = lineArray[0].attr("x2");
+                    var cx1 = lineArray[0].attr("x1");
+                    var cy2 = lineArray[0].attr("y2");
+                    var cy1 = lineArray[0].attr("y1");
+                    var A1 = cy2 - cy1;
+                    var B1 = cx1 - cx2;
+                    var C1 = A1 * cx1 + B1 * cy1;
+                    cx2 = lineArray[lineArray.length - 1].attr("x2");
+                    cx1 = lineArray[lineArray.length - 1].attr("x1");
+                    cy2 = lineArray[lineArray.length - 1].attr("y2");
+                    cy1 = lineArray[lineArray.length - 1].attr("y1");
+                    var A2 = cy2 - cy1;
+                    var B2 = cx1 - cx2;
+                    var C2 = A2 * cx1 + B2 * cy1;
+
+                    var det = (A1 * B2) - (A2 * B1);
+
+                    if (det === 0) {
+                        //lines are parallel
+                        alert("Sunroom must be enclosed. Please add another wall.");
+                    }
+                    else {
+                        var x = (B2 * C1 - B1 * C2) / det; 
+                        var y = (A1 * C2 - A2 * C1) / det;
+
+                        if (x != cx2 && y != cy2)
+                            alert("Please complete your sunroom by connecting your last wall to an existing wall");
+                        else {// if (x === x2 && y === y2)
+                            //alert("Sunroom Completed");
+                            var line = drawLine(cx1, cy1, x, y, false, standAlone);
+                            x1 = line.attr("x2");
+                            y1 = line.attr("y2");
+                            //alert(x1 + "," + y1);
+                        }
+                        //alert(x + "," + y);
+                        //alert(x2 + "," + y2);
+                    }
+
+
+                }
+            }
+
+
 
         function snapToGrid(coordinate, cellPadding) {
             var endLoop = false;
