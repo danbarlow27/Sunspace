@@ -12,11 +12,12 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             Wall aWall = new Wall();
-            aWall.ProposedLength = 177f;
+            aWall.ProposedLength = 178f;
             aWall.TotalCornerLength = 3.125f;
             aWall.TotalReceiverLength = 2;
             tester.InnerHtml = aWall.FindOptimalNumberOfMods();
             tester2.InnerHtml = aWall.FindOptimalSizeOfMods(10);
+            tester.InnerHtml += "\n" + "Proposed: " + aWall.ProposedLength + ", Actual: " + aWall.ActualLength;            
         }
     }
 }

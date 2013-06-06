@@ -61,8 +61,6 @@ namespace SunspaceDealerDesktop
             remainingWallLength -= TotalReceiverLength;
             remainingWallLength -= (DEFAULT_FILLER * 2);
 
-            ActualLength = remainingWallLength;
-
             if (remainingWallLength > SOFT_MAX_WINDOW_SIZE)
             {
                 numberOfMods = 1;
@@ -75,43 +73,12 @@ namespace SunspaceDealerDesktop
                 }
             }
 
-            noDecimalModSize = (int)optimalModSize;
+            optimalModSize = GlobalFunctions.RoundDownToNearestEighthInch(optimalModSize);
 
-            float decimalRound = optimalModSize - noDecimalModSize;
-            float addedToFiller = decimalRound * numberOfMods;
+            float extraFiller = remainingWallLength - (optimalModSize * numberOfMods);
 
-            if (decimalRound > 0.875f)
-            {
-                decimalRound = 0.875f;
-            }
-            else if (decimalRound > 0.75f)
-            {
-                decimalRound = 0.75f;
-            }
-            else if (decimalRound > 0.625f)
-            {
-                decimalRound = 0.625f;
-            }
-            else if (decimalRound > 0.5f)
-            {
-                decimalRound = 0.5f;
-            }
-            else if (decimalRound > 0.375f)
-            {
-                decimalRound = 0.375f;
-            }
-            else if (decimalRound > 0.25f)
-            {
-                decimalRound = 0.25f;
-            }
-            else
-            {
-                decimalRound = 0;
-            }
-
-            optimalModSize = noDecimalModSize + decimalRound;
-
-            return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + addedToFiller / 2 + " inches to both fillers.";
+            ActualLength = TotalCornerLength + TotalReceiverLength + ((DEFAULT_FILLER*2) + extraFiller) + (numberOfMods * optimalModSize);
+            return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + extraFiller / 2 + " inches to both fillers.";
         }
 
         public String FindOptimalSizeOfMods(int numberOfMods)
