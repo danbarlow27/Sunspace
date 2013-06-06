@@ -73,25 +73,18 @@
                 //ycoord += lineArray[i].attr("y1") + "," + lineArray[i].attr("y2") + "/n";
             //}
 
-            removed = lineArray.splice(lineArray.length - 1, 1);
+            removed = lineArray.pop();
 
             for (var i = 0; i <= lineArray.length - 1; i++) {
-                var line = drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false, standAlone);
+                drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false, standAlone);
                 //var line = drawLine(lineArray[i].attr("x1"), lineArray[i].attr("x2"), lineArray[i].attr("y1"), lineArray[i].attr("y2"), false, standAlone);
                 //line;
                 //console.log(lineArray[i].attr("x1") + "," + lineArray[i].attr("x2"));
                 //ycoord += lineArray[i].attr("y1") + "," + lineArray[i].attr("y2") + "/n";
             }
 
-            coordList = new Array();
-            lineArray = new Array();
-            //x1 = new Array();
-            //x2 = new Array();
-            //y1 = new Array();
-            //y2 = new Array();
-            lineCount--;
-
-           
+            x1 = lineArray.attr("x2");
+            y1 = lineArray.atrr("y2");
         }
 
         //Draw the grid lines
