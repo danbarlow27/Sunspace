@@ -49,7 +49,7 @@ namespace SunspaceDealerDesktop
         {
             int numberOfMods = 0;
             float optimalModSize = 0;
-            float remainingWallLength = Length;
+            float remainingWallLength = ProposedLength;
             float DEFAULT_FILLER = 2.0F; //constants module?
             int noDecimalModSize;
 
