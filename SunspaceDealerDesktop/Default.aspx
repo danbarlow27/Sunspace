@@ -85,10 +85,7 @@
 
             coordList = new Array();
             lineArray = new Array();
-            //x1 = new Array();
-            //x2 = new Array();
-            //y1 = new Array();
-            //y2 = new Array();
+            
             lineCount--;
 
            
