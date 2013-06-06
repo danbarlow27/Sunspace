@@ -7,11 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SunspaceDealerDesktop
-{
-
-
-    public partial class _Default
-    {
+namespace SunspaceDealerDesktop {
+    
+    
+    public partial class _Default {
     }
 }

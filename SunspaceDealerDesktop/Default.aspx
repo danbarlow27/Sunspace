@@ -22,7 +22,7 @@
     <input type="button" value = "Done Drawing" onclick="sunroomCompleted()" />    
     <input type="button" value ="Undo" onclick="undo()" />
     <input type="button" value ="Clear Canvas" onclick ="clearCanvas()"/>
-    <input type="button" value ="Done Existing Walls" onclick="if(!standAlone) disableExistingWalls()" />
+    <input type="button" value ="Done Existing Walls" onclick="if(!standAlone) doneExistingWalls()" />
     <input type="button" value ="Redo" onclick="redo()" />
     <p>
         Red is proposed wall
@@ -33,11 +33,13 @@
 
         var canvas = d3.select("#mySunroom")
                     .append("svg")
-                    .attr("width", 500)
-                    .attr("height", 500);
+                    .attr("width", MAX_CANVAS_WIDTH)
+                    .attr("height", MAX_CANVAS_WIDTH);
         var svgGrid = document.getElementById("mySunroom");
-        var counter = 0;
+        var clickCount = 0;
         var cellPadding = 25;
+        var MAX_CANVAS_WIDTH = 500;
+
         //var coordList = new Array();
         var removed = new Array();
         //var lineCount = 0;
@@ -70,15 +72,23 @@
 
         //undo last line
         function undo() {
-            d3.selectAll("#standAlone").remove();
-            d3.selectAll("#notStandAlone").remove();
+
+            //var existing;
+
+            d3.selectAll("#existingWall").remove();
+            d3.selectAll("#proposedWall").remove();
 
             removed.push(coordList[coordList.length - 1]);
             coordList.pop();
 
-            for (var i = 0; i <= coordList.length - 1; i++) 
-                var line = drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false, standAlone);
-            
+            for (var i = 0; i <= coordList.length - 1; i++){ 
+                if (coordList[i].id === "existingWall")
+                    existingWall = true;
+                else
+                    existingWall = false;
+
+                drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false);
+            }
             if (coordList.length === 0)
                 clearCanvas();
             else {
@@ -93,72 +103,111 @@
 
                 coordList.push(removed[removed.length - 1]);
                 removed.pop();
-                drawLine(coordList[coordList.length - 1].x1, coordList[coordList.length - 1].y1, coordList[coordList.length - 1].x2, coordList[coordList.length - 1].y2, false, standAlone);
+                drawLine(coordList[coordList.length - 1].x1, coordList[coordList.length - 1].y1, coordList[coordList.length - 1].x2, coordList[coordList.length - 1].y2, false);
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
             }
         }
 
         //done drawing existing walls
-        function disableExistingWalls() {
+        function doneExistingWalls(){
+            //createCookie("existingWalls", coordList, 0);
+            existingWall = false;
+            clickCount = 0;
 
-            location.reload();
 
+            
+            
+            
+            //location.reload();
 
+            //var value = new Array();
+                
 
+            //value = readCookie("existingWalls");
+
+            //console.log(value);
 
         }
+        
+        /*
+        //create cookie
+        function createCookie(id,value,days) {
+            //Session("ExistingWallList") = coordList;
+            if (days) {
+		        var date = new Date();
+		        date.setTime(date.getTime()+(days*24*60*60*1000));
+		        var expires = "; expires="+date.toGMTString();
+	        }
+	        else var expires = "";
+	        document.cookie = id+"="+value+expires+"; path=/"; 
+        }
+
+        //read cookie
+        function readCookie(name) {
+	        var nameEQ = name + "=";
+	        var ca = document.cookie.split(';');
+	        for(var i=0;i < ca.length;i++) {
+		        var c = ca[i];
+		        while (c.charAt(0)==' ') 
+                    c = c.substring(1,c.length);
+		        if (c.indexOf(nameEQ) == 0) 
+                    return c.substring(nameEQ.length,c.length);
+	        }
+	        return null;
+        }
+        */
 
         //Draw the grid lines
         function drawGrid() {
 
             var rect = canvas.append("rect")
-                        .attr("width", 500)
-                        .attr("height", 500)
+                        .attr("width", MAX_CANVAS_WIDTH)
+                        .attr("height", MAX_CANVAS_WIDTH)
                         .attr("fill", "white")
 
             var line = canvas.append("line")
                         .attr("x1", 0)
                         .attr("y1", 0)
                         .attr("x2", 0)
-                        .attr("y2", 500)
+                        .attr("y2", MAX_CANVAS_WIDTH)
                         .attr("stroke", "black");
 
             var line = canvas.append("line")
                         .attr("x1", 0)
                         .attr("y1", 0)
-                        .attr("x2", 500)
+                        .attr("x2", MAX_CANVAS_WIDTH)
                         .attr("y2", 0)
                         .attr("stroke", "black");
 
             var line = canvas.append("line")
                         .attr("x1", 0)
-                        .attr("y1", 500)
-                        .attr("x2", 500)
-                        .attr("y2", 500)
+                        .attr("y1", MAX_CANVAS_WIDTH)
+                        .attr("x2", MAX_CANVAS_WIDTH)
+                        .attr("y2", MAX_CANVAS_WIDTH)
                         .attr("stroke", "black");
 
             var line = canvas.append("line")
-                        .attr("x1", 500)
+                        .attr("x1", MAX_CANVAS_WIDTH)
                         .attr("y1", 0)
-                        .attr("x2", 500)
-                        .attr("y2", 500)
+                        .attr("x2", MAX_CANVAS_WIDTH)
+                        .attr("y2", MAX_CANVAS_WIDTH)
                         .attr("stroke", "black");
 
-            for (var i = 0; i < 500; i += 25) {
+            for (var i = 0; i < MAX_CANVAS_WIDTH; i += cellPadding) {
                 var line = canvas.append("line")
-                        .attr("x1", i + 25)
+                        .attr("x1", i + cellPadding)
                         .attr("y1", 0)
-                        .attr("x2", i + 25)
-                        .attr("y2", 500)
+                        .attr("x2", i + cellPadding)
+                        .attr("y2", MAX_CANVAS_WIDTH)
                         .attr("stroke", "grey");
             }
-            for (var i = 0; i < 500; i += 25) {
+            for (var i = 0; i < MAX_CANVAS_WIDTH; i += cellPadding) {
                 var line = canvas.append("line")
                         .attr("x1", 0)
-                        .attr("y1", i + 25)
-                        .attr("x2", 500)
-                        .attr("y2", i + 25)
+                        .attr("y1", i + cellPadding)
+                        .attr("x2", MAX_CANVAS_WIDTH)
+                        .attr("y2", i + cellPadding)
                         .attr("stroke", "grey");
             }
 
@@ -181,9 +230,9 @@
 
             console.log("array length: " + coordList.length);
 
-            counter++;
+            clickCount++;
 
-            if (counter === 1) {
+            if (clickCount === 1) {
                 x1 = mousePos.x;
                 y1 = mousePos.y;
             }
@@ -191,12 +240,12 @@
                 x2 = mousePos.x;
                 y2 = mousePos.y;
 
-                var line = drawLine(x1, y1, x2, y2, false, standAlone);
+                var line = drawLine(x1, y1, x2, y2, false);
 
                 //console.log(x1 + "," + y1);
                 //console.log(x2 + "," + y2);
 
-                coordList[coordList.length] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2") };
+                coordList[coordList.length] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2"), "id" : line.attr("id") };
                 
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
@@ -206,7 +255,7 @@
 
 
                 //if (x2 != x1) {
-                //    x2 = 500;
+                //    x2 = MAX_CANVAS_WIDTH;
                 //    y2 = (dY / dX)(x2 - x1) + y1;
                 //}
             }
@@ -221,8 +270,8 @@
 
             d3.selectAll("#mouseMoveLine").remove();
 
-            if (counter != 0)
-                drawLine(x1, y1, x2, y2, true, standAlone);
+            if (clickCount != 0)
+                drawLine(x1, y1, x2, y2, true);
         },
         false);
 
@@ -232,7 +281,7 @@
         },
         false);
 
-        function drawLine(x1, y1, x2, y2, mouseMove, standAlone) {
+        function drawLine(x1, y1, x2, y2, mouseMove) {
 
             var coordinates = setGridPoints(snapToGrid(x1, cellPadding), snapToGrid(y1, cellPadding), snapToGrid(x2, cellPadding), snapToGrid(y2, cellPadding));
             var coorx1 = coordinates.x1;
@@ -245,8 +294,8 @@
             if (!mouseMove)
                 console.log(coorx2 + "," + coory2);
 
-            if (coorx2 > 500) {
-                coorx2 = 500;
+            if (coorx2 > MAX_CANVAS_WIDTH) {
+                coorx2 = MAX_CANVAS_WIDTH;
                 coory2 = (dY / dX) * (coorx2 - coorx1) + coory1;
             }
             else if (coorx2 < 0) {
@@ -265,14 +314,20 @@
                     .attr("stroke", "black")
                     .attr("stroke-width", 2);
 
-            if (standAlone)
-                line.attr("id", "standAlone");
-            else
-                line.attr("id", "notStandAlone");
+            //if (standAlone)
+            //    line.attr("id", "standAlone");
+            //else
+            //    line.attr("id", "notStandAlone");
 
             if (existingWall) {
                 line.attr("stroke", "red")
-                    .attr("stroke-width", 1);
+                    .attr("stroke-width", 1)
+                    .attr("id", "existingWall");
+            }
+            else{
+                line.attr("id", "proposedWall")
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 2);
             }
 
             if (mouseMove)
@@ -300,8 +355,8 @@
 
             //console.log(x2);
 
-            //if (x2 > 500) {
-            //    x2 = 500;
+            //if (x2 > MAX_CANVAS_WIDTH) {
+            //    x2 = MAX_CANVAS_WIDTH;
             //    y2 = (dY / dX)(x2 - x1) + y1;
             //}
 
@@ -343,21 +398,89 @@
                else if (standAlone && coordList[coordList.length - 1].attr("x2") != coordList[0].x1)
                     alert("A stand-alone sunroom must end at the start of the starting wall. Please try again!");
                 else if (!standAlone) {
-                    var cx2 = coordList[0].x2;
-                    var cx1 = coordList[0].x1;
-                    var cy2 = coordList[0].y2;
-                    var cy1 = coordList[0].y1;
-                    var A1 = cy2 - cy1;
-                    var B1 = cx1 - cx2;
-                    var C1 = A1 * cx1 + B1 * cy1;
+                    var cx2;
+                    var cx1;
+                    var cy2;
+                    var cy1;
+                    var A1;
+                    var B1;
+                    var C1;
+                    var A2;
+                    var B2;
+                    var C2;
+
+                    var distanceBetweenLines = new Array();
+                    
+                    for (var i = 0; i < coordList.length; i++){
+                        while (coordList[i].id === "existingWall") {
+                            cx2 = coordList[0].x2;
+                            cx1 = coordList[0].x1;
+                            cy2 = coordList[0].y2;
+                            cy1 = coordList[0].y1;
+
+                            A1 = cy2 - cy1;
+                            B1 = cx1 - cx2;
+                            C1 = A1 * cx1 + B1 * cy1;
+
+                            cx2 = coordList[coordList.length - 1].x2;
+                            cx1 = coordList[coordList.length - 1].x1;
+                            cy2 = coordList[coordList.length - 1].y2;
+                            cy1 = coordList[coordList.length - 1].y1;
+
+                            A2 = cy2 - cy1;
+                            B2 = cx1 - cx2;
+                            C2 = A2 * cx1 + B2 * cy1;
+
+                            var det = (A1 * B2) - (A2 * B1);
+
+                            if (det === 0) {
+                                //lines are parallel
+                                alert("Sunroom must be enclosed. Please add another wall.");
+                            }
+                            else {
+                                var x = (B2 * C1 - B1 * C2) / det;
+                                var y = (A1 * C2 - A2 * C1) / det;
+
+                                if (x != cx2 || y != cy2) {
+                                    ////////////////
+                                    ///////////////
+                                    ////////////////
+                                    //////////////
+                                    ////////////////
+                                    ////////////////
+                                    ////////////////
+                                    undo();
+                                    removed.pop();
+                                    var line = drawLine(cx1, cy1, x, y, false);
+
+                                    coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
+
+                                    x1 = line.attr("x2");
+                                    y1 = line.attr("y2");
+
+                                }
+                            }
+                        }
+                    }
+
+                    /*cx2 = coordList[0].x2;
+                    cx1 = coordList[0].x1;
+                    cy2 = coordList[0].y2;
+                    cy1 = coordList[0].y1;
+
+                    A1 = cy2 - cy1;
+                    B1 = cx1 - cx2;
+                    C1 = A1 * cx1 + B1 * cy1;
+
                     cx2 = coordList[coordList.length - 1].x2;
                     cx1 = coordList[coordList.length - 1].x1;
                     cy2 = coordList[coordList.length - 1].y2;
                     cy1 = coordList[coordList.length - 1].y1;
-                    var A2 = cy2 - cy1;
-                    var B2 = cx1 - cx2;
-                    var C2 = A2 * cx1 + B2 * cy1;
-
+                    
+                    A2 = cy2 - cy1;
+                    B2 = cx1 - cx2;
+                    C2 = A2 * cx1 + B2 * cy1;
+                    
                     var det = (A1 * B2) - (A2 * B1);
 
                     if (det === 0) {
@@ -372,18 +495,15 @@
                           
                             undo();
                             removed.pop();
-                            var line = drawLine(cx1, cy1, x, y, false, standAlone);
+                            var line = drawLine(cx1, cy1, x, y, false);
 
-                            coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2") }
+                            coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id" : line.attr("id") }
 
                             x1 = line.attr("x2");
                             y1 = line.attr("y2");
 
-
-
-                            //alert(x1 + "," + y1);
                         }
-                    }
+                    }*/
 
 
                 }

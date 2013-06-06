@@ -11,7 +11,9 @@ namespace SunspaceDealerDesktop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //unbreaking git
+            //Session["newSession"];
+
+            //int[] coordList = (int)Session("ExistingWallList");
         }
     }
 }
