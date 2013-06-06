@@ -17,6 +17,7 @@ namespace SunspaceDealerDesktop
             aWall.TotalReceiverLength = 2;
             tester.InnerHtml = aWall.FindOptimalNumberOfMods();
             tester2.InnerHtml = aWall.FindOptimalSizeOfMods(10);
+            tester.InnerHtml += "\n" + "Proposed: " + aWall.ProposedLength + ", Actual: " + aWall.ActualLength;            
         }
     }
 }
