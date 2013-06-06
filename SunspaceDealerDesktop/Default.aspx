@@ -52,44 +52,18 @@
                 EAST: 6,
                 SOUTH_EAST: 7
         }
-        var MIN_NUMBER_OF_WALLS = 3;
-        var x1;
-        var y1;
-        var x2;
-        var y2;
 
-        var coordList = new Array();
+        //alert(WALL_FACING.EAST);
 
-        //undo last line
-        function undo() {
-            d3.selectAll("#standAlone").remove();
-            d3.selectAll("#notStandAlone").remove();
-
-            //for (var i = 0; i < lineArray.length - 1; i++) {
-            //    var line = drawLine(coordList[1].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false, standAlone);
-
-                //line;
-                //console.log(lineArray[i].attr("x1") + "," + lineArray[i].attr("x2"));
-                //ycoord += lineArray[i].attr("y1") + "," + lineArray[i].attr("y2") + "/n";
-            //}
-
-            removed = lineArray.splice(lineArray.length - 1, 1);
 
             for (var i = 0; i <= lineArray.length - 1; i++) {
-                var line = drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false, standAlone);
+                drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false, standAlone);
                 //var line = drawLine(lineArray[i].attr("x1"), lineArray[i].attr("x2"), lineArray[i].attr("y1"), lineArray[i].attr("y2"), false, standAlone);
                 //line;
                 //console.log(lineArray[i].attr("x1") + "," + lineArray[i].attr("x2"));
                 //ycoord += lineArray[i].attr("y1") + "," + lineArray[i].attr("y2") + "/n";
             }
 
-            coordList = new Array();
-            lineArray = new Array();
-            
-            lineCount--;
-
-           
-        }
 
         //Draw the grid lines
         function drawGrid() {
@@ -192,7 +166,7 @@
 
                 lineArray[lineCount] = line;
                 lineCount++;
-                
+
 
                 //for (var i = 0; i < lineArray.length ; i++)
                 //    lineArray[i];
@@ -259,7 +233,7 @@
             var dY = y2 - y1;
             var length;
             var orientation = getOrientation(dX, dY);
-
+            
             switch (orientation) {
                 case WALL_FACING.SOUTH:
                 case WALL_FACING.NORTH:
