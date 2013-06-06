@@ -7,12 +7,13 @@ namespace SunspaceDealerDesktop
 {
     public class Wall
     {
-        private float length; //Total Width Of Wall (in inches)
+        private float proposedLength;
+        private float actualLength;
         private int firstItemIndex; //Index of First Item in Wall
         private int lastItemIndex; //Index of Last Item in Wall
         private String orientation; //N, NE, E, S, SE, NW, SW, W
         private String name; //Name of the wall – For user few
-        private bool isExisting; //True if Wall exists
+        private String wallType; //P - Proposed, E - Existing, G - Gable Post
         //private float secondSide; //???????????????
         private float startHeight; //Start height of the wall
         private float endHeight; //End height of the wall
@@ -21,8 +22,6 @@ namespace SunspaceDealerDesktop
         private float soffit; //Soffit length (only for fascia install)
         private float totalCornerLength;
         private float totalReceiverLength;
-        //private float proposedLength;
-        //private float actualLength;
         /*
          * ??NOT SURE IF THESE ARE REQUIRED
             ExistingKneewall As Single
@@ -166,16 +165,29 @@ namespace SunspaceDealerDesktop
             return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + addedToFiller/2 + " inches to both fillers.";
         }
 
-        public float Length
+        public float ProposedLength
         {
             get
             {
-                return length;
+                return proposedLength;
             }
 
             set
             {
-                length = value;
+                proposedLength = value;
+            }
+        }
+
+        public float ActualLength
+        {
+            get
+            {
+                return actualLength;
+            }
+
+            set
+            {
+                actualLength = value;
             }
         }
 
