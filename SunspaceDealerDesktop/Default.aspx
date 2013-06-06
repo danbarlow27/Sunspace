@@ -22,7 +22,7 @@
     <input type="button" value = "Done Drawing" onclick="sunroomCompleted()" />    
     <input type="button" value ="Undo" onclick="undo()" />
     <input type="button" value ="Clear Canvas" onclick ="clearCanvas()"/>
-    <input type="button" value ="Done Existing Walls" onclick="disableExistingWalls()" />
+    <input type="button" value ="Done Existing Walls" onclick="if(!standAlone) disableExistingWalls()" />
     <input type="button" value ="Redo" onclick="redo()" />
     <p>
         Red is proposed wall
@@ -42,7 +42,7 @@
         var removed = new Array();
         //var lineCount = 0;
         var standAlone = false;//confirm("standalone?");
-        var existingWall = false;//standAlone ? false : confirm("existing wall?");
+        var existingWall = true;//standAlone ? false : confirm("existing wall?");
         var WALL_FACING = {
                 SOUTH: 0,
                 SOUTH_WEST: 1,
@@ -97,6 +97,16 @@
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
             }
+        }
+
+        //done drawing existing walls
+        function disableExistingWalls() {
+
+            location.reload();
+
+
+
+
         }
 
         //Draw the grid lines
@@ -358,17 +368,21 @@
                         var x = (B2 * C1 - B1 * C2) / det; 
                         var y = (A1 * C2 - A2 * C1) / det;
 
-                        if (x != cx2 && y != cy2)
-                            alert("Please complete your sunroom by connecting your last wall to an existing wall");
-                        else {// if (x === x2 && y === y2)
-                            //alert("Sunroom Completed");
+                        if (x != cx2 || y != cy2){
+                          
+                            undo();
+                            removed.pop();
                             var line = drawLine(cx1, cy1, x, y, false, standAlone);
+
+                            coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2") }
+
                             x1 = line.attr("x2");
                             y1 = line.attr("y2");
+
+
+
                             //alert(x1 + "," + y1);
                         }
-                        //alert(x + "," + y);
-                        //alert(x2 + "," + y2);
                     }
 
 
