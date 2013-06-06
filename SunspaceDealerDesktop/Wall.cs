@@ -20,8 +20,7 @@ namespace SunspaceDealerDesktop
         //private bool isGableWall; //????????????????
         //private bool customHeight; //???????????????
         private float soffit; //Soffit length (only for fascia install)
-        private float totalCornerLength;
-        private float totalReceiverLength;
+
         /*
          * ??NOT SURE IF THESE ARE REQUIRED
             ExistingKneewall As Single
@@ -33,12 +32,12 @@ namespace SunspaceDealerDesktop
 
         public Wall()
         {
-            ProposedLength = 0.0F;
-            ActualLength = 0.0F;
+            Length = 0.0F;
             FirstItemIndex = -1;
             LastItemIndex = -1;
             Orientation = "";
             Name = "";
+            IsExisting = false;
             StartHeight = 0.0F;
             EndHeight = 0.0F;
             Soffit = 0.0F;
@@ -50,7 +49,7 @@ namespace SunspaceDealerDesktop
         {
             int numberOfMods = 0;
             float optimalModSize = 0;
-            float remainingWallLength = ProposedLength;
+            float remainingWallLength = Length;
             float DEFAULT_FILLER = 2.0F; //constants module?
             int noDecimalModSize;
 
@@ -59,9 +58,8 @@ namespace SunspaceDealerDesktop
 
             remainingWallLength -= TotalCornerLength;
             remainingWallLength -= TotalReceiverLength;
-            remainingWallLength -= (DEFAULT_FILLER * 2);
 
-            ActualLength = remainingWallLength;
+            remainingWallLength -= (DEFAULT_FILLER * 2);
 
             if (remainingWallLength > SOFT_MAX_WINDOW_SIZE)
             {
@@ -73,20 +71,6 @@ namespace SunspaceDealerDesktop
                     numberOfMods++;
                     optimalModSize = remainingWallLength / numberOfMods;
                 }
-            }
-
-            noDecimalModSize = (int)optimalModSize;
-
-            float decimalRound = optimalModSize - noDecimalModSize;
-            float addedToFiller = decimalRound * numberOfMods;
-
-            if (decimalRound > 0.875f)
-            {
-                decimalRound = 0.875f;
-            }
-            else if (decimalRound > 0.75f)
-            {
-                decimalRound = 0.75f;
             }
             else if (decimalRound > 0.625f)
             {
@@ -117,66 +101,15 @@ namespace SunspaceDealerDesktop
         public String FindOptimalSizeOfMods(int numberOfMods)
         {
             float optimalModSize = 0;
-            float remainingWallLength = ProposedLength;
+            float remainingWallLength = Length;
             float DEFAULT_FILLER = 2.0F; //constants module?
             int noDecimalModSize;
 
             remainingWallLength -= TotalCornerLength;
             remainingWallLength -= TotalReceiverLength;
 
-            remainingWallLength -= (DEFAULT_FILLER * 2);
-
-            optimalModSize = remainingWallLength / numberOfMods;
-            noDecimalModSize = (int)optimalModSize;
-
-            float decimalRound = optimalModSize - noDecimalModSize;
-            float addedToFiller = decimalRound * numberOfMods;
-
-            if (decimalRound > 0.875f)
-            {
-                decimalRound = 0.875f;
-            }
-            else if (decimalRound > 0.75f)
-            {
-                decimalRound = 0.75f;
-            }
-            else if (decimalRound > 0.625f)
-            {
-                decimalRound = 0.625f; 
-            }
-            else if (decimalRound > 0.5f)
-            {
-                decimalRound = 0.5f;
-            }
-            else if (decimalRound > 0.375f)
-            {
-                decimalRound = 0.375f;
-            }
-            else if (decimalRound > 0.25f)
-            {
-                decimalRound = 0.25f;
-            }
-            else
-            {
-                decimalRound = 0;
-            }
-
-            optimalModSize = noDecimalModSize + decimalRound;
-
-            return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + addedToFiller/2 + " inches to both fillers.";
-        }
-
-        public float ProposedLength
-        {
-            get
-            {
-                return proposedLength;
-            }
-
-            set
-            {
-                proposedLength = value;
-            }
+            Console.WriteLine("Suggested " + numberOfMods + " mods at " + optimalModSize + " inches.");
+            return 0;
         }
 
         public float ActualLength
@@ -241,6 +174,19 @@ namespace SunspaceDealerDesktop
             set
             {
                 name = value;
+            }
+        }
+
+        public bool IsExisting
+        {
+            get
+            {
+                return isExisting;
+            }
+
+            set
+            {
+                isExisting = value;
             }
         }
 
