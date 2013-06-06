@@ -33,12 +33,12 @@ namespace SunspaceDealerDesktop
 
         public Wall()
         {
-            Length = 0.0F;
+            ProposedLength = 0.0F;
+            ActualLength = 0.0F;
             FirstItemIndex = -1;
             LastItemIndex = -1;
             Orientation = "";
             Name = "";
-            IsExisting = false;
             StartHeight = 0.0F;
             EndHeight = 0.0F;
             Soffit = 0.0F;
@@ -50,7 +50,7 @@ namespace SunspaceDealerDesktop
         {
             int numberOfMods = 0;
             float optimalModSize = 0;
-            float remainingWallLength = Length;
+            float remainingWallLength = ProposedLength;
             float DEFAULT_FILLER = 2.0F; //constants module?
             int noDecimalModSize;
 
@@ -59,8 +59,9 @@ namespace SunspaceDealerDesktop
 
             remainingWallLength -= TotalCornerLength;
             remainingWallLength -= TotalReceiverLength;
-
             remainingWallLength -= (DEFAULT_FILLER * 2);
+
+            ActualLength = remainingWallLength;
 
             if (remainingWallLength > SOFT_MAX_WINDOW_SIZE)
             {
@@ -116,7 +117,7 @@ namespace SunspaceDealerDesktop
         public String FindOptimalSizeOfMods(int numberOfMods)
         {
             float optimalModSize = 0;
-            float remainingWallLength = Length;
+            float remainingWallLength = ProposedLength;
             float DEFAULT_FILLER = 2.0F; //constants module?
             int noDecimalModSize;
 
@@ -240,19 +241,6 @@ namespace SunspaceDealerDesktop
             set
             {
                 name = value;
-            }
-        }
-
-        public bool IsExisting
-        {
-            get
-            {
-                return isExisting;
-            }
-
-            set
-            {
-                isExisting = value;
             }
         }
 
