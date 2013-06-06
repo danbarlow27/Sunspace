@@ -411,8 +411,17 @@
 
                     var distanceBetweenLines = new Array();
                     
+                    var shortest;
+
+                    var numberOfExistingWalls = 0;
+
+                    var shortestDistanceWallNumber;
+
+
                     for (var i = 0; i < coordList.length; i++){
-                        while (coordList[i].id === "existingWall") {
+                        if (coordList[i].id === "existingWall") {
+                            numberOfExistingWalls++;
+
                             cx2 = coordList[0].x2;
                             cx1 = coordList[0].x1;
                             cy2 = coordList[0].y2;
@@ -442,26 +451,32 @@
                                 var y = (A1 * C2 - A2 * C1) / det;
 
                                 if (x != cx2 || y != cy2) {
-                                    ////////////////
-                                    ///////////////
-                                    ////////////////
-                                    //////////////
-                                    ////////////////
-                                    ////////////////
-                                    ////////////////
-                                    undo();
-                                    removed.pop();
-                                    var line = drawLine(cx1, cy1, x, y, false);
 
-                                    coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
-
-                                    x1 = line.attr("x2");
-                                    y1 = line.attr("y2");
-
+                                    distanceBetweenLines[i] = { "distance": Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2)), "x": x, "y": y };
+                                    
                                 }
                             }
                         }
                     }
+
+                    for (var i = 0; i < distanceBetweenLines.length; i++) {
+                        shortest = MAX_CANVAS_WIDTH; //arbitrary long number
+
+                        if (distanceBetweenLines[i].distance < shortest) {
+                            shortest = distanceBetweenLines[i].distance;
+                            shortestDistanceWallNumber = i - 1;
+                        }
+                    }
+
+
+                    undo();
+                    removed.pop();
+                    var line = drawLine(cx1, cy1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
+
+                    coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
+
+                    x1 = line.attr("x2");
+                    y1 = line.attr("y2");
 
                     /*cx2 = coordList[0].x2;
                     cx1 = coordList[0].x1;
