@@ -61,8 +61,6 @@ namespace SunspaceDealerDesktop
             remainingWallLength -= TotalReceiverLength;
             remainingWallLength -= (DEFAULT_FILLER * 2);
 
-            ActualLength = remainingWallLength;
-
             if (remainingWallLength > SOFT_MAX_WINDOW_SIZE)
             {
                 numberOfMods = 1;
