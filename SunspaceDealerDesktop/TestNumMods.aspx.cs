@@ -12,6 +12,13 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             Wall aWall = new Wall();
+
+            List<Wall> aList = new List<Wall>();
+
+            aList.Add(aWall);
+
+            aWall = aList[0];
+
             aWall.ProposedLength = 178f;
             aWall.TotalCornerLength = 3.125f;
             aWall.TotalReceiverLength = 2;

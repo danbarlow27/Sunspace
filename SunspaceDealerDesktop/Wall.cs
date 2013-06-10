@@ -77,8 +77,13 @@ namespace SunspaceDealerDesktop
 
             float extraFiller = remainingWallLength - (optimalModSize * numberOfMods);
 
+            float fillerOne = 2f;
+            float fillerTwo = 2f;
+
+            GlobalFunctions.splitFillerToOutside(ref fillerOne, ref fillerTwo, extraFiller);
+
             ActualLength = TotalCornerLength + TotalReceiverLength + ((DEFAULT_FILLER*2) + extraFiller) + (numberOfMods * optimalModSize);
-            return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + extraFiller / 2 + " inches to both fillers.";
+            return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + extraFiller + " inches to filler.";
         }
 
         public String FindOptimalSizeOfMods(int numberOfMods)
