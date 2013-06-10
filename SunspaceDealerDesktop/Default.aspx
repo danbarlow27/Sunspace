@@ -69,7 +69,6 @@
             location.reload();
         }
 
-
         //undo last line
         function undo() {
 
@@ -477,7 +476,7 @@
 
                     x1 = line.attr("x2");
                     y1 = line.attr("y2");
-
+                    
                     /*cx2 = coordList[0].x2;
                     cx1 = coordList[0].x1;
                     cy2 = coordList[0].y2;
