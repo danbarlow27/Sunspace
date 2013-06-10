@@ -12,8 +12,9 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             //Session["newSession"];
+            
 
-            //int[] coordList = (int)Session("ExistingWallList");
+
         }
     }
 }
