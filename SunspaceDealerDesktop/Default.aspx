@@ -411,6 +411,10 @@
                     var C2;
 
                     var distanceBetweenLines = new Array();
+
+                    var mExisting = new Array();
+
+                    var mProposed = new Array();
                     
                     var shortest;
 
@@ -419,6 +423,16 @@
                     var numberOfExistingWalls = 0;
 
                     var shortestDistanceWallNumber;
+
+                    for(var i = 0; i < coordList.length; i++){
+
+                        if (coordList[i].id === "proposedWall"){
+                            mProposed[mProposed.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
+                        }
+                        else if (coordList[i].id === "existingWall") {
+                            mExisting[mExisting.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
+                        }
+                    }
 
                     //Needs functionality to handle existing wall corners
                     for (var i = 0; i < coordList.length; i++){
@@ -445,13 +459,55 @@
 
                             var det = (A1 * B2) - (A2 * B1);
 
+                            
+
                             if (det === 0) {
+                                //var proposedIndex;
+
+                                //for(var i = 0; i < coordList.length; i++){
+                                
+                                //    if (coordList[i].id === "proposedWall"){
+                                //        proposedIndex = i; 
+                                //    }
+                                //}
+                                //for(var i = proposedIndex; i < coordList.length; i++){
+                                //    if (x === coordList[i].x1 || x === coordList[i].x2 || x === coordList[i].y1 || x === coordList[i].y2) {
+                                //        alert("Worked");
+                                //    }
+                                //}
                                 //lines are parallel
                                 alert("Sunroom must be enclosed. Please add another wall.");
                             }
+                            <%--else if (det === 0 && (x === coordList[i].x1 || x === coordList[i].x2 || x === coordList[i].y1 || x === coordList[i].y2)) {
+                                alert("Worked");
+                            }--%>
                             else {
+
                                 var x = (B2 * C1 - B1 * C2) / det;
                                 var y = (A1 * C2 - A2 * C1) / det;
+                                
+                                //var m = (cy2 - cy1) / (cx2 - cx1);
+                                
+                                for (var i = 0; i < mExisting.length; i++) {
+                                    for (var j = 0; j < mProposed.length; j++) {
+                                        if (mExisting[i] === mProposed[j]) {
+                                            //if (coordList[i].x1 === coordList[numberOfExistingWalls + 1 + j].x1 || coordList[i].x2 === coordList[numberOfExistingWalls + 1 + j].x2 || coordList[i].y1 === coordList[numberOfExistingWalls + 1 + j].y1 || coordList[i].y2 === coordList[numberOfExistingWalls + 1 + j].y2) {
+                                            if (coordList[i].x1 === coordList[numberOfExistingWalls + 1 + j].x1 || coordList[i].x2 === coordList[numberOfExistingWalls + 1 + j].x2 || coordList[i].y1 === coordList[numberOfExistingWalls + 1 + j].y1 || coordList[i].y2 === coordList[numberOfExistingWalls + 1 + j].y2) {
+                                                alert("Worked");
+                                                //(x2-x1)m = (y2-y1);
+                                            }
+                                            else if (coordList[i].x2 === coordList[numberOfExistingWalls + 1 + j].x2){
+                                                
+                                            }
+                                        }
+                                    }
+                                }
+
+                                //for (var i = numberOfExistingWalls + 1; i < coordList.length; i++) {
+                                //    if (x === coordList[i].x1 || x === coordList[i].x2 || x === coordList[i].y1 || x === coordList[i].y2) {
+                                //        alert("Worked");
+                                //    }
+                                //}
 
                                 if (x != cx2 || y != cy2) {
                                     distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))                                    
