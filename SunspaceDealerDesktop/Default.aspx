@@ -70,8 +70,8 @@
         //undo last line
         function undo(toBeRemoved) {
 
-            d3.selectAll("#existingWall").remove();
-            d3.selectAll("#proposedWall").remove();
+            d3.selectAll("#E").remove();
+            d3.selectAll("#P").remove();
 
             if (toBeRemoved)
                 removed.push(coordList[coordList.length - 1]);
@@ -79,7 +79,7 @@
             coordList.pop();
 
             for (var i = 0; i <= coordList.length - 1; i++){ 
-                if (coordList[i].id === "existingWall")
+                if (coordList[i].id === "E")
                     existingWall = true;
                 else
                     existingWall = false;
@@ -224,22 +224,14 @@
 
                 var line = drawLine(x1, y1, x2, y2, false);
 
-                //console.log(x1 + "," + y1);
-                //console.log(x2 + "," + y2);
+                var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
 
-                coordList[coordList.length] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2"), "id" : line.attr("id") };
-                
+                coordList[coordList.length - 1] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation};
+               
+                alert(coordList[coordList.length - 1].orientation + ", " + coordList[coordList.length - 1].x1);
+
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
-
-                //console.log(x1 + "," + y1);
-                //console.log(coordList[coordList.length - 1].x2 + "," + coordList[coordList.length - 1].y2);
-
-
-                //if (x2 != x1) {
-                //    x2 = MAX_CANVAS_WIDTH;
-                //    y2 = (dY / dX)(x2 - x1) + y1;
-                //}
             }
         },
         false);
@@ -304,10 +296,10 @@
             if (existingWall) {
                 line.attr("stroke", "red")
                     .attr("stroke-width", 1)
-                    .attr("id", "existingWall");
+                    .attr("id", "E");
             }
             else{
-                line.attr("id", "proposedWall")
+                line.attr("id", "P")
                     .attr("stroke", "black")
                     .attr("stroke-width", 2);
             }
@@ -318,8 +310,40 @@
             return line;
         };
 
+        function getStringOrientation(x1, y1, x2, y2) {
+            dX = x2 - x1;
+            dY = y2 - y1;
+            orientation = getOrientation(dX, dY);
+
+            switch (orientation) {
+                case WALL_FACING.SOUTH:
+                    orientation = "S";
+                    break;
+                case WALL_FACING.NORTH:
+                    orientation = "N";
+                    break;
+                case WALL_FACING.SOUTH_WEST:
+                    orientation = "SW";
+                    break;
+                case WALL_FACING.NORTH_EAST:
+                    orientation = "NE";
+                    break;
+                case WALL_FACING.WEST:
+                    orientation = "W";
+                    break;
+                case WALL_FACING.EAST:
+                    orientation = "E";
+                    break;
+                case WALL_FACING.NORTH_WEST:
+                case WALL_FACING.SOUTH_EAST:
+                    break;
+            }
+
+            return orientation;
+        }
+
         //orientation funtion
-        function getOrientation(dX, dY) {
+        function getOrientation(dX, dY) {    
             return ((Math.round(Math.atan2(dY, dX) / (Math.PI / 4))) + 8) % 8;
         }
 
@@ -331,16 +355,6 @@
             var dY;
             var length;
             var orientation;
-
-            //dX = x2 - x1;
-            //dY = y2 - y1;
-
-            //console.log(x2);
-
-            //if (x2 > MAX_CANVAS_WIDTH) {
-            //    x2 = MAX_CANVAS_WIDTH;
-            //    y2 = (dY / dX)(x2 - x1) + y1;
-            //}
 
             dX = x2 - x1;
             dY = y2 - y1;
@@ -363,7 +377,7 @@
                 case WALL_FACING.SOUTH_EAST:
                     x2 = x1 + sign(dX) * Math.abs(dY);
                     break;
-            }
+            }            
 
             return {
                 'x1': x1,
@@ -400,7 +414,7 @@
 
             //Needs functionality to handle existing wall corners
             for (var i = 0; i < coordList.length; i++) {
-                if (coordList[i].id === "existingWall") {
+                if (coordList[i].id === "E") {
 
                     var intercept = findIntercept(i);
 
@@ -446,10 +460,10 @@
 
             for (var i = 0; i < coordList.length; i++) {
 
-                if (coordList[i].id === "proposedWall") {
+                if (coordList[i].id === "P") {
                     mProposed[mProposed.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
                 }
-                else if (coordList[i].id === "existingWall") {
+                else if (coordList[i].id === "E") {
                     mExisting[mExisting.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
                 }
             }
