@@ -462,19 +462,6 @@
                             
 
                             if (det === 0) {
-                                //var proposedIndex;
-
-                                //for(var i = 0; i < coordList.length; i++){
-                                
-                                //    if (coordList[i].id === "proposedWall"){
-                                //        proposedIndex = i; 
-                                //    }
-                                //}
-                                //for(var i = proposedIndex; i < coordList.length; i++){
-                                //    if (x === coordList[i].x1 || x === coordList[i].x2 || x === coordList[i].y1 || x === coordList[i].y2) {
-                                //        alert("Worked");
-                                //    }
-                                //}
                                 //lines are parallel
                                 alert("Sunroom must be enclosed. Please add another wall.");
                             }
@@ -488,20 +475,42 @@
                                 
                                 //var m = (cy2 - cy1) / (cx2 - cx1);
                                 
-                                for (var i = 0; i < mExisting.length; i++) {
-                                    for (var j = 0; j < mProposed.length; j++) {
-                                        if (mExisting[i] === mProposed[j]) {
-                                            //if (coordList[i].x1 === coordList[numberOfExistingWalls + 1 + j].x1 || coordList[i].x2 === coordList[numberOfExistingWalls + 1 + j].x2 || coordList[i].y1 === coordList[numberOfExistingWalls + 1 + j].y1 || coordList[i].y2 === coordList[numberOfExistingWalls + 1 + j].y2) {
-                                            if (coordList[i].x1 === coordList[numberOfExistingWalls + 1 + j].x1 || coordList[i].x2 === coordList[numberOfExistingWalls + 1 + j].x2 || coordList[i].y1 === coordList[numberOfExistingWalls + 1 + j].y1 || coordList[i].y2 === coordList[numberOfExistingWalls + 1 + j].y2) {
-                                                alert("Worked");
-                                                //(x2-x1)m = (y2-y1);
-                                            }
-                                            else if (coordList[i].x2 === coordList[numberOfExistingWalls + 1 + j].x2){
+                                //for (var i = 0; i < mExisting.length; i++) {
+                                //    for (var j = 0; j < mProposed.length; j++) {
+                                //        if (mExisting[i] === mProposed[j]) {
+                                //            if (mExisting === 0) {
+                                //                //if (coordList[i].x1 === coordList[numberOfExistingWalls + 1 + j].x1 || coordList[i].x2 === coordList[numberOfExistingWalls + 1 + j].x2 || coordList[i].y1 === coordList[numberOfExistingWalls + 1 + j].y1 || coordList[i].y2 === coordList[numberOfExistingWalls + 1 + j].y2) {
                                                 
-                                            }
-                                        }
-                                    }
-                                }
+                                //                if (coordList[i].y1 === coordList[numberOfExistingWalls + 1 + j].y1) {
+                                //                    alert("Worked1");
+                                //                }
+                                //                else if (coordList[i].y2 === coordList[numberOfExistingWalls + 1 + j].y2) {
+                                //                    alert("Worked2");
+                                //                }
+                                //            }
+                                //            else if (Math.abs(mExisting) === 1) {
+                                //                if (!isNaN(x)) //Coordinates from line to see if it belongs to existing wall line
+                                //                {
+                                //                    alert("X is a number");
+                                //                }
+                                //                else if(isNaN(x)){
+                                //                    alert("X is not a number");
+                                //                }
+                                //            }
+                                //            else {
+                                //                if (coordList[i].x1 === coordList[numberOfExistingWalls + 1 + j].x1) {
+                                //                    alert("Worked3");
+                                //                    console.log("Worked 3 coordinates: " + coordList[i].x1 + ", " + coordList[numberOfExistingWalls + 1 + j].x1);
+                                //                    //(x2-x1)m = (y2-y1);
+                                //                }
+                                //                else if (coordList[i].x2 === coordList[numberOfExistingWalls + 1 + j].x2) {
+                                //                    //(x2-x1)m = (y2-y1);
+                                //                    alert("Worked4");
+                                //                }
+                                //            }
+                                //        }
+                                //    }
+                                //}
 
                                 //for (var i = numberOfExistingWalls + 1; i < coordList.length; i++) {
                                 //    if (x === coordList[i].x1 || x === coordList[i].x2 || x === coordList[i].y1 || x === coordList[i].y2) {
@@ -510,14 +519,15 @@
                                 //}
 
                                 if (x != cx2 || y != cy2) {
-                                    distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))                                    
+                                    //distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))
+                                    distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2)), "x": x, "y": y };
                                 }
-                                else {
-                                    x = cx2;
-                                    y = cy2;
-                                    distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))                                    
-                                }
-                                distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2)), "x": x, "y": y };
+                                //else {
+                                //    x = cx2;
+                                //    y = cy2;
+                                //    distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))                                    
+                                //}
+                                
                             }
                         }
                     }
