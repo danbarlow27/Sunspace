@@ -7,6 +7,7 @@ namespace SunspaceDealerDesktop
 {
     public class Wall
     {
+        #region Attributes
         private float proposedLength;
         private float actualLength;
         private int firstItemIndex; //Index of First Item in Wall
@@ -30,7 +31,9 @@ namespace SunspaceDealerDesktop
             ExistingDrawBrick As Boolean
  
          */
+        #endregion
 
+        #region Constructors
         public Wall()
         {
             ProposedLength = 0.0F;
@@ -45,28 +48,25 @@ namespace SunspaceDealerDesktop
             TotalCornerLength = 0.0f;
             TotalReceiverLength = 0.0f;
         }
+        #endregion
 
+        #region Class Functions
         public String FindOptimalNumberOfMods()
         {
             int numberOfMods = 0;
             float optimalModSize = 0;
             float remainingWallLength = ProposedLength;
-            float DEFAULT_FILLER = 2.0F; //constants module?
-            int noDecimalModSize;
-
-            float SOFT_MIN_WINDOW_SIZE = 30.0F; //inches
-            float SOFT_MAX_WINDOW_SIZE = 58.0F; //inches
 
             remainingWallLength -= TotalCornerLength;
             remainingWallLength -= TotalReceiverLength;
-            remainingWallLength -= (DEFAULT_FILLER * 2);
+            remainingWallLength -= (Constants.DEFAULT_FILLER * 2);
 
-            if (remainingWallLength > SOFT_MAX_WINDOW_SIZE)
+            if (remainingWallLength > Constants.SOFT_MAX_WINDOW_SIZE)
             {
                 numberOfMods = 1;
                 optimalModSize = remainingWallLength;
 
-                while (optimalModSize > SOFT_MAX_WINDOW_SIZE)
+                while (optimalModSize > Constants.SOFT_MAX_WINDOW_SIZE)
                 {
                     numberOfMods++;
                     optimalModSize = remainingWallLength / numberOfMods;
@@ -77,21 +77,25 @@ namespace SunspaceDealerDesktop
 
             float extraFiller = remainingWallLength - (optimalModSize * numberOfMods);
 
-            ActualLength = TotalCornerLength + TotalReceiverLength + ((DEFAULT_FILLER*2) + extraFiller) + (numberOfMods * optimalModSize);
-            return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + extraFiller / 2 + " inches to both fillers.";
+            float fillerOne = 2f;
+            float fillerTwo = 2f;
+
+            GlobalFunctions.splitFillerToOutside(ref fillerOne, ref fillerTwo, extraFiller);
+
+            ActualLength = TotalCornerLength + TotalReceiverLength + ((Constants.DEFAULT_FILLER * 2) + extraFiller) + (numberOfMods * optimalModSize);
+            return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + extraFiller + " inches to filler.";
         }
 
         public String FindOptimalSizeOfMods(int numberOfMods)
         {
             float optimalModSize = 0;
             float remainingWallLength = ProposedLength;
-            float DEFAULT_FILLER = 2.0F; //constants module?
             int noDecimalModSize;
 
             remainingWallLength -= TotalCornerLength;
             remainingWallLength -= TotalReceiverLength;
 
-            remainingWallLength -= (DEFAULT_FILLER * 2);
+            remainingWallLength -= (Constants.DEFAULT_FILLER * 2);
 
             optimalModSize = remainingWallLength / numberOfMods;
             noDecimalModSize = (int)optimalModSize;
@@ -133,6 +137,9 @@ namespace SunspaceDealerDesktop
             return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + addedToFiller/2 + " inches to both fillers.";
         }
 
+        #endregion
+
+        #region Accessors
         public float ProposedLength
         {
             get
@@ -275,5 +282,6 @@ namespace SunspaceDealerDesktop
                 totalReceiverLength = value;
             }
         }
+        #endregion
     }
 }
