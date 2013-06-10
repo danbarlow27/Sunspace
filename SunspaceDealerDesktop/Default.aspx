@@ -18,15 +18,17 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div style="width:500px; height:500px;" id="mySunroom"></div>
-    <input type="button" value ="Toggle Wall Type" onclick="standAlone = !standAlone"/>
+    <!--<input type="button" value ="Toggle Wall Type" onclick="standAlone = !standAlone"/>-->
     <input type="button" value = "Done Drawing" onclick="sunroomCompleted()" />    
     <input type="button" value ="Undo" onclick="undo()" />
     <input type="button" value ="Clear Canvas" onclick ="clearCanvas()"/>
     <input type="button" value ="Done Existing Walls" onclick="if(!standAlone) doneExistingWalls()" />
     <input type="button" value ="Redo" onclick="redo()" />
+
+    <input type="hidden" id="lineArrayInfo" runat="server" />
     <p>
-        Red is proposed wall
-        Black is existing wall
+        Red is existing wall
+        Black is proposed wall
     </p>
 
     <script>
@@ -68,7 +70,6 @@
         function clearCanvas() {
             location.reload();
         }
-
 
         //undo last line
         function undo() {
@@ -413,19 +414,21 @@
                     
                     var shortest;
 
+                    var distance;
+
                     var numberOfExistingWalls = 0;
 
                     var shortestDistanceWallNumber;
 
-
+                    //Needs functionality to handle existing wall corners
                     for (var i = 0; i < coordList.length; i++){
                         if (coordList[i].id === "existingWall") {
                             numberOfExistingWalls++;
 
-                            cx2 = coordList[0].x2;
-                            cx1 = coordList[0].x1;
-                            cy2 = coordList[0].y2;
-                            cy1 = coordList[0].y1;
+                            cx2 = coordList[i].x2;
+                            cx1 = coordList[i].x1;
+                            cy2 = coordList[i].y2;
+                            cy1 = coordList[i].y1;
 
                             A1 = cy2 - cy1;
                             B1 = cx1 - cx2;
@@ -451,33 +454,37 @@
                                 var y = (A1 * C2 - A2 * C1) / det;
 
                                 if (x != cx2 || y != cy2) {
-
-                                    distanceBetweenLines[i] = { "distance": Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2)), "x": x, "y": y };
-                                    
+                                    distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))                                    
                                 }
+                                else {
+                                    x = cx2;
+                                    y = cy2;
+                                    distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))                                    
+                                }
+                                distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2)), "x": x, "y": y };
                             }
                         }
                     }
 
-                    for (var i = 0; i < distanceBetweenLines.length; i++) {
-                        shortest = MAX_CANVAS_WIDTH; //arbitrary long number
+                    shortest = MAX_CANVAS_WIDTH; //arbitrary long number
+                    for (var i = 0; i < distanceBetweenLines.length; i++) {                        
 
                         if (distanceBetweenLines[i].distance < shortest) {
                             shortest = distanceBetweenLines[i].distance;
-                            shortestDistanceWallNumber = i - 1;
+                            shortestDistanceWallNumber = i;
                         }
                     }
 
-
                     undo();
                     removed.pop();
+
                     var line = drawLine(cx1, cy1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
 
                     coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
 
                     x1 = line.attr("x2");
                     y1 = line.attr("y2");
-
+                    
                     /*cx2 = coordList[0].x2;
                     cx1 = coordList[0].x1;
                     cy2 = coordList[0].y2;
