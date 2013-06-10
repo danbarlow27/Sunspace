@@ -11,20 +11,21 @@ namespace SunspaceDealerDesktop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            List<Object> testList = new List<Object>();
+
             Wall aWall = new Wall();
+            
+            testList.Add(aWall);
 
-            List<Wall> aList = new List<Wall>();
-
-            aList.Add(aWall);
-
-            aWall = aList[0];
+            testList[0].ToString();
 
             aWall.ProposedLength = 178f;
             aWall.TotalCornerLength = 3.125f;
             aWall.TotalReceiverLength = 2;
             tester.InnerHtml = aWall.FindOptimalNumberOfMods();
             tester2.InnerHtml = aWall.FindOptimalSizeOfMods(10);
-            tester.InnerHtml += "\n" + "Proposed: " + aWall.ProposedLength + ", Actual: " + aWall.ActualLength;            
+            //tester.InnerHtml += "\n" + "Proposed: " + aWall.ProposedLength + ", Actual: " + aWall.ActualLength; 
+            tester.InnerHtml = testList[0].ToString();
         }
     }
 }
