@@ -415,6 +415,8 @@
                     
                     var shortest;
 
+                    var distance;
+
                     var numberOfExistingWalls = 0;
 
                     var shortestDistanceWallNumber;
@@ -424,10 +426,10 @@
                         if (coordList[i].id === "existingWall") {
                             numberOfExistingWalls++;
 
-                            cx2 = coordList[0].x2;
-                            cx1 = coordList[0].x1;
-                            cy2 = coordList[0].y2;
-                            cy1 = coordList[0].y1;
+                            cx2 = coordList[i].x2;
+                            cx1 = coordList[i].x1;
+                            cy2 = coordList[i].y2;
+                            cy1 = coordList[i].y1;
 
                             A1 = cy2 - cy1;
                             B1 = cx1 - cx2;
@@ -453,10 +455,14 @@
                                 var y = (A1 * C2 - A2 * C1) / det;
 
                                 if (x != cx2 || y != cy2) {
-
-                                    distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2)), "x": x, "y": y };
-                                    
+                                    distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))                                    
                                 }
+                                else {
+                                    x = cx2;
+                                    y = cy2;
+                                    distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))                                    
+                                }
+                                distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2)), "x": x, "y": y };
                             }
                         }
                     }
