@@ -35,78 +35,126 @@
     </p>
 
     <script>
-        window.onload = buttonDoneOnLoad();
+        window.onload = buttonDoneOnLoad(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
 
-        var canvas = d3.select("#mySunroom")
+        //wall type enumeration
+        var WALL_TYPE = {
+            EXISTING: "E",
+            PROPOSED: "P",
+            INTERNAL: "I"
+        }
+
+        //wall facing enumeration
+        var WALL_FACING = {
+            SOUTH: 0,
+            SOUTH_WEST: 1,
+            WEST: 2,
+            NORTH_WEST: 3,
+            NORTH: 4,
+            NORTH_EAST: 5,
+            EAST: 6,
+            SOUTH_EAST: 7
+        }
+
+        //minimum number of walls that makes up a complete sunroom
+        var MIN_NUMBER_OF_WALLS = 3;
+
+        //cell padding determines the size of each square in the grid 
+        var cellPadding = 25;
+
+        //max size of canvas (width and height)
+        var MAX_CANVAS_WIDTH = 500;
+
+        //create the canvas
+        var canvas = d3.select("#mySunroom") 
                     .append("svg")
                     .attr("width", MAX_CANVAS_WIDTH)
                     .attr("height", MAX_CANVAS_WIDTH);
+
+        //create the svg grid on the canvas
         var svgGrid = document.getElementById("mySunroom");
+
+        //store the "Done" button in a variable for use in multiple functions
         var doneButton = document.getElementById("buttonDone");
-        var clickCount = 0;
-        var cellPadding = 25;
-        var MAX_CANVAS_WIDTH = 500;
+
+        //true or false based on whether the user chose standalone or not in the wizard
+        var standAlone = false;//confirm("standalone?");
+
+        //keep track of track of click count (to be reset when the user is done drawing a type of wall)
+        var startNewWall = true; 
+
+        //an array of removed lines, for use in "redo" function
         var removed = new Array();
         
-        var standAlone = false;//confirm("standalone?");
-        //var existingWall = true;//standAlone ? false : confirm("existing wall?");
-        //var internalWall = false;
-        var WALL_TYPE = {
-                EXISTING: "E",
-                PROPOSED: "P",
-                INTERNAL: "I"
-        }
-        var WALL_FACING = {
-                SOUTH: 0,
-                SOUTH_WEST: 1,
-                WEST: 2,
-                NORTH_WEST: 3,
-                NORTH: 4,
-                NORTH_EAST: 5,
-                EAST: 6,
-                SOUTH_EAST: 7
-        }
-        var MIN_NUMBER_OF_WALLS = 3;
-        var x1;
-        var y1;
-        var x2;
-        var y2;
-        var wallType = WALL_TYPE.EXISTING;
-
+        //an array of lines drawn
         var coordList = new Array();
 
+        //coordinates of a given line
+        var x1, y1, x2, y2;
+
+        //type of wall currently being drawn
+        var wallType = WALL_TYPE.EXISTING;
+
+
+
+
+        //var existingWall = true;//standAlone ? false : confirm("existing wall?");
+        //var internalWall = false;
+
+
+
+
+        //set the name (value) of the "Done" button to the default value
         function buttonDoneOnLoad() {
             document.getElementById("buttonDone").value = (standAlone) ? "Done External Walls" : "Done Existing Walls";
         }
 
+        //on click event of "Done" button
         function buttonDoneOnClick() {
+            //if user wants to finish drawing existing walls
             if (doneButton.value === "Done Existing Walls") {
+                //if the wallType is "E"
                 if (wallType === WALL_TYPE.EXISTING) {
+                    //change the name (value) of the button
                     doneButton.value = "Done External Walls";
+                    //change wall type
                     wallType = WALL_TYPE.PROPOSED;
-                    clickCount = 0;
+                    //reset click count
+                    startNewWall = true;
                 }
+                //if walltype is not "E", means they have not drawn any existing walls
                 else
+                    //show error message
                     alert("No existing walls drawn, please draw one");
             }
+            //if user wants to finish drawing external (i.e. proposed) walls
             else if (doneButton.value === "Done External Walls") {
+                //if its a valid sunroom
                 if (sunroomCompleted()) { // && wallType === WALL_TYPE.PROPOSED                    
+                    //change the name (value) of the button
                     doneButton.value = "Done Internal Walls";
+                    //change wall type
                     wallType = WALL_TYPE.INTERNAL;
-                    clickCount = 0;
+                    //reset click count
+                    startNewWall = true;
                 }
             }
+            //if the user wants to finish drawing internal walls 
             else {
-                if(sunroomCompleted())
+                //if its a valid sunroom
+                if (sunroomCompleted())
+                    //change the name (value) of the button
                     doneButton.value = "Done Drawing";
             }
         }
 
         //clear canvas
         function clearCanvas() {
-            location.reload();
+            location.reload(); //reload the page to clear canvas
         }
 
+
+        //change the name (value) of the done button
         function setButtonValue() {
             doneButton.value = (coordList[coordList.length-1].id === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
                 (coordList[coordList.length-1].id === WALL_TYPE.PROPOSED) ? "Done External Walls" : "Done Internal Walls";
@@ -162,7 +210,7 @@
             var rect = canvas.append("rect")
                         .attr("width", MAX_CANVAS_WIDTH)
                         .attr("height", MAX_CANVAS_WIDTH)
-                        .attr("fill", "white")
+                        .attr("fill", "black")
 
             var line = canvas.append("line")
                         .attr("x1", 0)
@@ -228,11 +276,12 @@
 
             console.log("array length: " + coordList.length);
 
-            clickCount++;
+            //startNewWall++;
 
-            if (clickCount === 1) {
+            if (startNewWall === true) {
                 x1 = mousePos.x;
                 y1 = mousePos.y;
+                startNewWall = false;
             }
             else {
                 x2 = mousePos.x;
@@ -258,7 +307,7 @@
 
             d3.selectAll("#mouseMoveLine").remove();
 
-            if (clickCount != 0)
+            if (!startNewWall)
                 drawLine(x1, y1, x2, y2, true);
         },
         false);
