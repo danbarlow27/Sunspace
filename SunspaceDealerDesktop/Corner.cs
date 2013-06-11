@@ -9,7 +9,7 @@ namespace SunspaceDealerDesktop
     {
         private int itemIndex; //LinearItems Array Index
         private bool angleIs90; //True if 90, False if 45
-        //private float cutLength; //Length to Cut Corner At ??????????????
+        private float length; //Length to Cut Corner At ??????????????
         private String colour; //Colour of the corner
         private bool outsideCorner; //True is Normal Corner, False if inside corner
 
@@ -70,6 +70,19 @@ namespace SunspaceDealerDesktop
             set
             {
                 outsideCorner = value;
+            }
+        }
+
+        public float Length
+        {
+            get
+            {
+                return length;
+            }
+
+            set
+            {
+                length = value;
             }
         }
     }

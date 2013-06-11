@@ -11,21 +11,43 @@ namespace SunspaceDealerDesktop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            List<Object> testList = new List<Object>();
-
             Wall aWall = new Wall();
-            
-            testList.Add(aWall);
-
-            testList[0].ToString();
+            Receiver aReceiver = new Receiver();
+            Mod aMod = new Mod();
+            Corner aCorner = new Corner();
+            Filler aFiller = new Filler();
 
             aWall.ProposedLength = 178f;
-            aWall.TotalCornerLength = 3.125f;
-            aWall.TotalReceiverLength = 2;
-            tester.InnerHtml = aWall.FindOptimalNumberOfMods();
-            tester2.InnerHtml = aWall.FindOptimalSizeOfMods(10);
+
+            aReceiver.Length = 2f;
+            aWall.addToItemList(aReceiver);
+            aReceiver = new Receiver();
+
+            aWall.addToItemList(aFiller);
+            aFiller = new Filler();
+
+            aMod.Length = 30f;
+            aWall.addToItemList(new Mod());
+            aMod = new Mod();
+
+            aMod.Length = 30f;
+            aWall.addToItemList(new Mod());
+            aMod = new Mod();
+
+            aMod.Length = 30f;
+            aWall.addToItemList(new Mod());
+            aMod = new Mod();
+
+            aWall.addToItemList(aFiller);
+            aFiller = new Filler();
+
+            aCorner.Length = 3.125f;
+            aWall.addToItemList(new Corner());
+            aCorner = new Corner();
+            
+            //int numberOfMods = aWall.FindOptimalNumberOfMods();
             //tester.InnerHtml += "\n" + "Proposed: " + aWall.ProposedLength + ", Actual: " + aWall.ActualLength; 
-            tester.InnerHtml = testList[0].ToString();
+            //tester2.InnerHtml = aWall.FindOptimalSizeOfMods(10); 
         }
     }
 }

@@ -31,6 +31,7 @@ namespace SunspaceDealerDesktop
             ExistingDrawBrick As Boolean
  
          */
+        List<Object> linearItems = new List<Object>();
         #endregion
 
         #region Constructors
@@ -51,15 +52,24 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Class Functions
-        public String FindOptimalNumberOfMods()
+
+        public float calculateWorkableSpace()
+        {
+            float workableSpace = ProposedLength;
+            workableSpace -= TotalCornerLength;
+            workableSpace -= TotalReceiverLength;
+
+            return workableSpace;
+        }
+
+        public string FindOptimalNumberOfMods(float leftFiller, float rightFiller)
         {
             int numberOfMods = 0;
             float optimalModSize = 0;
-            float remainingWallLength = ProposedLength;
+            float remainingWallLength;
 
-            remainingWallLength -= TotalCornerLength;
-            remainingWallLength -= TotalReceiverLength;
-            remainingWallLength -= (Constants.DEFAULT_FILLER * 2);
+            remainingWallLength = calculateWorkableSpace();
+            remainingWallLength -= (leftFiller + rightFiller); 
 
             if (remainingWallLength > Constants.SOFT_MAX_WINDOW_SIZE)
             {
@@ -135,6 +145,11 @@ namespace SunspaceDealerDesktop
             optimalModSize = noDecimalModSize + decimalRound;
 
             return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + addedToFiller/2 + " inches to both fillers.";
+        }
+
+        public void addToItemList(Object anObject)
+        {
+            linearItems.Add(anObject);
         }
 
         #endregion
