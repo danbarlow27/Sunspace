@@ -5,7 +5,7 @@
    
     <%-- SLIDES (QUESTIONS)
     ======================================== --%>
-    <div class="slide-window" onmousedown="event.preventDefault ? event.preventDefault() : event.returnValue = false">
+    <div class="slide-window">
 
         <div class="slide-wrapper">
             
@@ -304,7 +304,7 @@
             </div> <%-- end #slide3 --%>
 
             
-            <%-- QUESTION 4
+            <%-- QUESTION 4 - Styling Options
             ======================================== --%>
             <div id="slide4" class="slide">
                 
@@ -317,88 +317,79 @@
                     ======================================== --%>
                     <li>
                                     
-                        <asp:RadioButton ID="radKneewallOptions" GroupName="bob" runat="server" />
+                        <asp:RadioButton ID="radKneewallOptions" GroupName="styling" runat="server" />
                         <asp:Label ID="lblKneewallOptionsRadio" AssociatedControlID="radKneewallOptions" runat="server"></asp:Label>
                         <asp:Label ID="lblKneewallOptions" AssociatedControlID="radKneewallOptions" runat="server" Text="Kneewall"></asp:Label>
 
                         <div class="toggleContent">
-                            <ul class="checkboxes">
+                            <ul>                                
                                 <li>
-                                    <asp:CheckBox ID="CheckBox1" runat="server" />
-                                    <asp:Label ID="Label3" AssociatedControlID="CheckBox1" runat="server"></asp:Label>
-                                    <asp:Label ID="Label4" AssociatedControlID="CheckBox1" runat="server" Text="Sub option 1"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:CheckBox ID="CheckBox2" runat="server" />
-                                    <asp:Label ID="Label5" AssociatedControlID="CheckBox2" runat="server"></asp:Label>
-                                    <asp:Label ID="Label6" AssociatedControlID="CheckBox2" runat="server" Text="Sub option 2"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:CheckBox ID="CheckBox3" runat="server" />
-                                    <asp:Label ID="Label7" AssociatedControlID="CheckBox3" runat="server"></asp:Label>
-                                    <asp:Label ID="Label8" AssociatedControlID="CheckBox3" runat="server" Text="Sub option 3"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:CheckBox ID="CheckBox4" runat="server" />
-                                    <asp:Label ID="Label9" AssociatedControlID="CheckBox4" runat="server"></asp:Label>
-                                    <asp:Label ID="Label10" AssociatedControlID="CheckBox4" runat="server" Text="Sub option 4"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:CheckBox ID="CheckBox5" runat="server" />
-                                    <asp:Label ID="Label11" AssociatedControlID="CheckBox5" runat="server"></asp:Label>
-                                    <asp:Label ID="Label12" AssociatedControlID="CheckBox5" runat="server" Text="Sub option 5"></asp:Label>
+                                    <asp:TextBox ID="txtKneewallHeight" GroupName="styling" class="txtField" runat="server" />
+                                    <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height" />
+                                    <br />
+                                    <asp:DropDownList ID="ddlKneewallType" GroupName="styling" runat="server" />
+                                    <asp:Label ID="lblKneewallType" AssociatedControlID="txtKneewallHeight" runat="server" Text="Type" />
+                                    <br />
+                                    <asp:DropDownList ID="ddlKneewallColour" GroupName="styling" runat="server" />
+                                    <asp:Label ID="lblKneewallColour" AssociatedControlID="txtKneewallHeight" runat="server" Text="Colour" />
                                 </li>
                             </ul>   
                         </div> <%-- end .toggleContent --%>
 
-                    </li> <%-- end Q2 option 1 --%>
+                    </li> <%-- end Q4 option 1 --%>
 
-
-                    <%-- Q2 - Option 2
+                    <%-- Option 2 - Transom
                     ======================================== --%>
                     <li>
                 
-                        <asp:RadioButton ID="RadioButton2" GroupName="bob" runat="server" />
-                        <asp:Label ID="Label13" AssociatedControlID="RadioButton2" runat="server"></asp:Label>
-                        <asp:Label ID="Label14" AssociatedControlID="RadioButton2" runat="server" Text="Option 2"></asp:Label>
+                        <asp:RadioButton ID="radTransomOptions" GroupName="styling" runat="server" />
+                        <asp:Label ID="lblTransomOptionsRadio" AssociatedControlID="radTransomOptions" runat="server"></asp:Label>
+                        <asp:Label ID="lblTransomOptions" AssociatedControlID="radTransomOptions" runat="server" Text="Transom"></asp:Label>
 
                         <div class="toggleContent">
-                            <ul class="radiobuttons">
+                            <ul>                                
                                 <li>
-                                    <asp:RadioButton ID="RadioButton3" GroupName="mod" runat="server" />
-                                    <asp:Label ID="Label15" AssociatedControlID="RadioButton3" runat="server"></asp:Label>
-                                    <asp:Label ID="Label16" AssociatedControlID="RadioButton3" runat="server" Text="Sub option 1"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:RadioButton ID="RadioButton4" GroupName="mod" runat="server" />
-                                    <asp:Label ID="Label17" AssociatedControlID="RadioButton4" runat="server"></asp:Label>
-                                    <asp:Label ID="Label18" AssociatedControlID="RadioButton4" runat="server" Text="Sub option 2"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:RadioButton ID="RadioButton5" GroupName="mod" runat="server" />
-                                    <asp:Label ID="Label19" AssociatedControlID="RadioButton5" runat="server"></asp:Label>
-                                    <asp:Label ID="Label20" AssociatedControlID="RadioButton5" runat="server" Text="Sub option 3"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:RadioButton ID="RadioButton6" GroupName="mod" runat="server" />
-                                    <asp:Label ID="Label21" AssociatedControlID="RadioButton6" runat="server"></asp:Label>
-                                    <asp:Label ID="Label22" AssociatedControlID="RadioButton6" runat="server" Text="Sub option 4"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:RadioButton ID="RadioButton7" GroupName="mod" runat="server" />
-                                    <asp:Label ID="Label23" AssociatedControlID="RadioButton7" runat="server"></asp:Label>
-                                    <asp:Label ID="Label24" AssociatedControlID="RadioButton7" runat="server" Text="Sub option 5"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:RadioButton ID="RadioButton8" GroupName="mod" runat="server" />
-                                    <asp:Label ID="Label25" AssociatedControlID="RadioButton8" runat="server"></asp:Label>
-                                    <asp:Label ID="Label26" AssociatedControlID="RadioButton8" runat="server" Text="Sub option 6"></asp:Label>
+                                    <asp:TextBox ID="txtTransomHeight" GroupName="styling" class="txtField" runat="server" />
+                                    <asp:Label ID="lblTransomHeight" AssociatedControlID="txtTransomHeight" runat="server" Text="Height" />
+                                    <br />
+                                    <asp:DropDownList ID="ddlTransomType" GroupName="styling" runat="server" />
+                                    <asp:Label ID="lblTransomType" AssociatedControlID="txtTransomHeight" runat="server" Text="Type" />
+                                    <br />
+                                    <asp:DropDownList ID="ddlTransomColour" GroupName="styling" runat="server" />
+                                    <asp:Label ID="lblTransomColour" AssociatedControlID="txtTransomHeight" runat="server" Text="Colour" />
                                 </li>
                             </ul>
                         </div> <%-- end .toggleContent --%>
 
-                    </li> <%-- end Q2 option 2 --%>  
+                    </li> <%-- end Q4 option 2 --%>  
               
+                    <%-- Option 3 - Framing
+                    ======================================== --%>
+                    <li>
+                
+                        <asp:RadioButton ID="radFramingOptions" GroupName="styling" runat="server" />
+                        <asp:Label ID="lblFramingOptionsRadio" AssociatedControlID="radFramingOptions" runat="server"></asp:Label>
+                        <asp:Label ID="lblFramingOptions" AssociatedControlID="radFramingOptions" runat="server" Text="Framing"></asp:Label>
+
+                        <div class="toggleContent">
+                            <ul>                                
+                                <li>
+                                    <asp:DropDownList ID="ddlInteriorColour" GroupName="styling" runat="server" />
+                                    <asp:Label ID="lblInteriorColour" AssociatedControlID="ddlInteriorColour" runat="server" Text="Interior Colour" />
+                                    <br />
+                                    <asp:DropDownList ID="ddlInteriorSkin" GroupName="styling" runat="server" />
+                                    <asp:Label ID="lblInteriorSkin" AssociatedControlID="ddlInteriorSkin" runat="server" Text="Interior Skin" />
+                                    <br />
+                                    <asp:DropDownList ID="ddlExteriorColour" GroupName="styling" runat="server" />
+                                    <asp:Label ID="lblExteriorColour" AssociatedControlID="ddlExteriorColour" runat="server" Text="Exterior Colour" />
+                                    <br />
+                                    <asp:DropDownList ID="ddlExteriorSkin" GroupName="styling" runat="server" />
+                                    <asp:Label ID="lblExteriorSkin" AssociatedControlID="ddlExteriorSkin" runat="server" Text="Exterior Skin" />
+                                </li>
+                            </ul>
+                        </div> <%-- end .toggleContent --%>
+
+                    </li> <%-- end Q2 option 2 --%>
                 </ul> <%-- end .toggleOptions --%>
 
                 <asp:Button ID="btnNext2" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" />
@@ -406,35 +397,89 @@
             </div> <%-- end #slide4 --%>
 
 
-            <%-- QUESTION 5
+            <%-- QUESTION 5 - Foam Protection
             ======================================== --%>
             <div id="slide5" class="slide">
                 
                 <h1>
-                    <asp:Label ID="Label39" runat="server" Text="Question 5?"></asp:Label>
+                    <asp:Label ID="lblFoamProtected" runat="server" Text="Would you like foam protected panels?"></asp:Label>
                 </h1> 
 
                 <ul class="toggleOptions">
 
                     <li>
-                        <asp:RadioButton ID="RadioButton11" GroupName="boo" runat="server" />
-                        <asp:Label ID="Label40" AssociatedControlID="RadioButton11" runat="server"></asp:Label>
-                        <asp:Label ID="Label41" AssociatedControlID="RadioButton11" runat="server" Text="Option 1"></asp:Label>
+                        <asp:RadioButton ID="radFoamProtectedYes" GroupName="foam" runat="server" />
+                        <asp:Label ID="lblFoamProtectedYesRadio" AssociatedControlID="radFoamProtectedYes" runat="server"></asp:Label>
+                        <asp:Label ID="lblFoamProtectedYes" AssociatedControlID="radFoamProtectedYes" runat="server" Text="Yes"></asp:Label>
                     </li>
 
                     <li>
-                        <asp:RadioButton ID="RadioButton12" GroupName="boo" runat="server" />
-                        <asp:Label ID="Label44" AssociatedControlID="RadioButton12" runat="server"></asp:Label>
-                        <asp:Label ID="Label45" AssociatedControlID="RadioButton12" runat="server" Text="Option 1"></asp:Label>
+                        <asp:RadioButton ID="radFoamProtectedNo" GroupName="foam" runat="server" />
+                        <asp:Label ID="lblFoamProtectedNoRadio" AssociatedControlID="radFoamProtectedNo" runat="server"></asp:Label>
+                        <asp:Label ID="lblFoamProtectedNo" AssociatedControlID="radFoamProtectedNo" runat="server" Text="No"></asp:Label>
                     </li>
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="Button2" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" />
+                <asp:Button ID="btnFoamProtected" CssClass="btnSubmit float-right slidePanel" data-slide="#slide6" runat="server" Text="Next Question" />
 
             </div> <%-- end #slide5 --%>
 
+            <%-- QUESTION 6 - Prefab Floor
+            ======================================== --%>
+            <div id="slide6" class="slide">
+                
+                <h1>
+                    <asp:Label ID="lblPrefabFloor" runat="server" Text="Would you like a prefabricated floor?"></asp:Label>
+                </h1> 
 
+                <ul class="toggleOptions">
+
+                    <li>
+                        <asp:RadioButton ID="radPrefabFloorYes" GroupName="floor" runat="server" />
+                        <asp:Label ID="lblPrefabFloorYesRadio" AssociatedControlID="radPrefabFloorYes" runat="server"></asp:Label>
+                        <asp:Label ID="lblPrefabFloorYes" AssociatedControlID="radPrefabFloorYes" runat="server" Text="Yes"></asp:Label>
+                    </li>
+
+                    <li>
+                        <asp:RadioButton ID="radPrefabFloorNo" GroupName="floor" runat="server" />
+                        <asp:Label ID="lblPrefabFloorNoRadio" AssociatedControlID="radPrefabFloorNo" runat="server"></asp:Label>
+                        <asp:Label ID="lblPrefabFloorNo" AssociatedControlID="radPrefabFloorNo" runat="server" Text="No"></asp:Label>
+                    </li>
+
+                </ul> <%-- end .toggleOptions --%>
+
+                <asp:Button ID="btnPrefabFloor" CssClass="btnSubmit float-right slidePanel" data-slide="#slide7" runat="server" Text="Next Question" />
+
+            </div> <%-- end #slide6 --%>
+
+            <%-- QUESTION 7 - Roof
+            ======================================== --%>
+            <div id="slide7" class="slide">
+                
+                <h1>
+                    <asp:Label ID="lblRoof" runat="server" Text="Would you like to include a roof?"></asp:Label>
+                </h1> 
+
+                <ul class="toggleOptions">
+
+                    <li>
+                        <asp:RadioButton ID="radRoofYes" GroupName="roof" runat="server" />
+                        <asp:Label ID="lblRoofYesRadio" AssociatedControlID="radRoofYes" runat="server"></asp:Label>
+                        <asp:Label ID="lblRoofYes" AssociatedControlID="radRoofYes" runat="server" Text="Yes"></asp:Label>
+                    </li>
+
+                    <li>
+                        <asp:RadioButton ID="radRoofNo" GroupName="roof" runat="server" />
+                        <asp:Label ID="lblRoofNoRadio" AssociatedControlID="radRoofYes" runat="server"></asp:Label>
+                        <asp:Label ID="lblRoofNo" AssociatedControlID="radRoofYes" runat="server" Text="No"></asp:Label>
+                    </li>
+
+                </ul> <%-- end .toggleOptions --%>
+
+                <asp:Button ID="Button1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide7" runat="server" Text="Next Question" />
+
+            </div> <%-- end #slide7 --%>
         </div> <%-- end .slide-wrapper --%>
 
     </div> <%-- end .slide-window --%>
@@ -475,6 +520,19 @@
                     <a href="#" data-slide="#slide5" class="slidePanel">
                         <asp:Label ID="Label31" runat="server" Text="Question 5"></asp:Label>
                         <asp:Label ID="Label32" runat="server" Text="Question 5 Answer"></asp:Label>
+                    </a>
+                </li>                
+                <li>
+                    <a href="#" data-slide="#slide6" class="slidePanel">
+                        <asp:Label ID="Label1" runat="server" Text="Question 6"></asp:Label>
+                        <asp:Label ID="Label2" runat="server" Text="Question 6 Answer"></asp:Label>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="#" data-slide="#slide7" class="slidePanel">
+                        <asp:Label ID="Label3" runat="server" Text="Question 7"></asp:Label>
+                        <asp:Label ID="Label4" runat="server" Text="Question 7 Answer"></asp:Label>
                     </a>
                 </li>
             </ul>    
