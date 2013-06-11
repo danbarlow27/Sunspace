@@ -17,6 +17,7 @@ namespace SunspaceDealerDesktop
         {
             ItemIndex = -1;
             AngleIs90 = true;
+            Length = 0f;
             Colour = "REd";
             OutsideCorner = true;
         }
