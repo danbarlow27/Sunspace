@@ -27,22 +27,22 @@ namespace SunspaceDealerDesktop
             aFiller = new Filler();
 
             aMod.Length = 30f;
-            aWall.addToItemList(new Mod());
+            aWall.addToItemList(aMod);
             aMod = new Mod();
 
             aMod.Length = 30f;
-            aWall.addToItemList(new Mod());
+            aWall.addToItemList(aMod);
             aMod = new Mod();
 
             aMod.Length = 30f;
-            aWall.addToItemList(new Mod());
+            aWall.addToItemList(aMod);
             aMod = new Mod();
 
             aWall.addToItemList(aFiller);
             aFiller = new Filler();
 
             aCorner.Length = 3.125f;
-            aWall.addToItemList(new Corner());
+            aWall.addToItemList(aCorner);
             aCorner = new Corner();
 
             List<Object> listOfItems = aWall.LinearItems;
@@ -53,9 +53,30 @@ namespace SunspaceDealerDesktop
                 int index = currentObjectType.IndexOf(".");
                 if (index > 0)
                     currentObjectType = currentObjectType.Substring(index+1, (currentObjectType.Length-index-1)); //from one past the index to end of string
-
-                tester.InnerHtml += currentObjectType + " - ";
+                
+                if (currentObjectType.Equals("Receiver"))
+                {
+                    aReceiver = (Receiver)listOfItems[i];
+                    tester.InnerHtml += (currentObjectType + " at length " + aReceiver.Length.ToString() + "<br/>");
+                }
+                else if (currentObjectType.Equals("Filler"))
+                {
+                    aFiller = (Filler)listOfItems[i];
+                    tester.InnerHtml += (currentObjectType + " at length " + aFiller.Length.ToString() + "<br/>");
+                }
+                else if (currentObjectType.Equals("Mod"))
+                {
+                    aMod = (Mod)listOfItems[i];
+                    tester.InnerHtml += (currentObjectType + " at length " + aMod.Length.ToString() + "<br/>");
+                }
+                else if (currentObjectType.Equals("Corner"))
+                {
+                    aCorner = (Corner)listOfItems[i];
+                    tester.InnerHtml += (currentObjectType + " at length " + aCorner.Length.ToString() + "<br/>");
+                }
             }
+
+            tester.InnerHtml += "Total Wall Length currently set to: " + aWall.ProposedLength + "<br/>";
 
             //int numberOfMods = aWall.FindOptimalNumberOfMods();
             //tester.InnerHtml += "\n" + "Proposed: " + aWall.ProposedLength + ", Actual: " + aWall.ActualLength; 
