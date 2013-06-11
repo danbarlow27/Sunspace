@@ -6,7 +6,7 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SunspaceDealerDesktop
+namespace SunspaceWizard
 {
     public partial class SiteMaster : MasterPage
     {

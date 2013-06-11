@@ -190,6 +190,9 @@
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
     <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\iconSearch.png" />
+    <Content Include="Images\iconsNav.png" />
+    <Content Include="Images\logo.png" />
     <Content Include="Images\orderedList0.png" />
     <Content Include="Images\orderedList1.png" />
     <Content Include="Images\orderedList2.png" />
@@ -200,14 +203,27 @@
     <Content Include="Images\orderedList7.png" />
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
+    <Content Include="Content\jquery.bxslider.css" />
+    <Content Include="NewProject.aspx" />
     <Content Include="packages.config" />
+    <Content Include="Content\fonts\Shanti-Regular.ttf" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="SavedProjects.aspx" />
     <Content Include="Scripts\D3.js" />
+    <None Include="Scripts\jquery-1.7.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery.bxslider.min.js" />
+    <Content Include="Scripts\jquery.scrollTo.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\sorttable.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
     <Content Include="Scripts\WebForms\GridView.js" />
@@ -233,6 +249,7 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Content\styles.css" />
     <Content Include="TestNumMods.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -308,8 +325,20 @@
     </Compile>
     <Compile Include="GlobalFunctions.cs" />
     <Compile Include="Mod.cs" />
+    <Compile Include="NewProject.aspx.cs">
+      <DependentUpon>NewProject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NewProject.aspx.designer.cs">
+      <DependentUpon>NewProject.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Receiver.cs" />
+    <Compile Include="SavedProjects.aspx.cs">
+      <DependentUpon>SavedProjects.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SavedProjects.aspx.designer.cs">
+      <DependentUpon>SavedProjects.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

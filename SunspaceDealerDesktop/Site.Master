@@ -1,29 +1,34 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SunspaceDealerDesktop.SiteMaster" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SunspaceWizard.SiteMaster" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %> | Sunspace Sunrooms Wizard</title>
     <asp:PlaceHolder runat="server">     
           <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>  
-    <webopt:BundleReference runat="server" Path="~/Content/css" /> 
+    <%--<webopt:BundleReference runat="server" Path="~/Content/css" /> --%>
+    <link href="Content/styles.css" rel="stylesheet" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="Scripts/sorttable.js"></script>
+    <script src="Scripts/jquery.scrollTo.js"></script>
+
     <meta name="viewport" content="width=device-width" />
     <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
-    <script src="./Scripts/D3.js"></script>
 </head>
+
 <body>
     <form runat="server">
     <asp:ScriptManager runat="server">
         <Scripts>
-            <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=272931&clcid=0x409 --%>
             <%--Framework Scripts--%>
-            
             <asp:ScriptReference Name="MsAjaxBundle" />
-            <asp:ScriptReference Name="jquery" />
-            <asp:ScriptReference Name="jquery.ui.combined" />
+            <%--<asp:ScriptReference Name="jquery" />
+            <asp:ScriptReference Name="jquery.ui.combined" />--%>
             <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
             <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
             <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
@@ -37,54 +42,140 @@
 
         </Scripts>
     </asp:ScriptManager>
+    
+    <%-- HEADER
+    ======================================== --%>
     <header>
-        <div class="content-wrapper">
-            <div class="float-left">
-                <p class="site-title">
-                    <a runat="server" href="~/">your logo here</a>
-                </p>
-            </div>
-            <div class="float-right">
-                <section id="login">
-                    <asp:LoginView runat="server" ViewStateMode="Disabled">
-                        <AnonymousTemplate>
-                            <ul>
-                                <li><a id="registerLink" runat="server" href="~/Account/Register">Register</a></li>
-                                <li><a id="loginLink" runat="server" href="~/Account/Login">Log in</a></li>
-                            </ul>
-                        </AnonymousTemplate>
-                        <LoggedInTemplate>
-                            <p>
-                                Hello, <a runat="server" class="username" href="~/Account/Manage" title="Manage your account">
-                                    <asp:LoginName runat="server" CssClass="username" /></a>!
-                                <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" />
-                            </p>
-                        </LoggedInTemplate>
-                    </asp:LoginView>
-                </section>
-                <nav>
-                    <ul id="menu">
-                        <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+        <nav class="navMain">
+            <div id="logo">Sunspace Sunrooms</div>
+
+            <ul class="ulNavMain">
+                <li><asp:HyperLink ID="lnkMainNavHome" runat="server">Home</asp:HyperLink></li>
+                <li><asp:HyperLink ID="lnkMainNavSavedProjects" NavigateUrl="SavedProjects.aspx" runat="server">Saved Projects</asp:HyperLink></li>
+                <li><asp:HyperLink ID="lnkMainNavNewProject" NavigateUrl="NewProject.aspx" runat="server">New Project</asp:HyperLink></li>
+                <li><asp:HyperLink ID="lnkMainNavCloseProject" runat="server">Close Project</asp:HyperLink></li>
+            </ul>
+        </nav>    
     </header>
+
+    <%-- MAIN CONTENT
+    ======================================== --%>
     <div id="body">
         <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
-        <section class="content-wrapper main-content clear-fix">
+        <section class="content-wrapper">
+            
             <asp:ContentPlaceHolder runat="server" ID="MainContent" />
-        </section>
+           
+        </section>       
     </div>
-    <footer>
-        <div class="content-wrapper">
-            <div class="float-left">
-                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
-            </div>
-        </div>
+    
+    <%-- FOOTER
+    ======================================== --%>
+    <footer>        
+        <div>
+            <p>Copyright &copy; <%: DateTime.Now.Year %> Sunspace Sunrooms | All Rights Reserved</p>
+        </div>        
     </footer>
+
     </form>
+
+
+    <script>
+        $(document).ready(function () {
+
+            // slide navigation 
+            $('.slidePanel').click(function () {
+
+                // set active item link
+                //$('.slidePanel').removeClass('selected');
+                //$(this).addClass('selected');
+
+                // get current slide, for resizePanel() function
+                var current = $(this);
+
+                // scroll page to selected slide
+                $('.slide-window').scrollTo($(this).attr('data-slide'), 600);
+
+                //$(this).siblings('.toggleOptions').find('.toggleContent').slideUp(400);
+                //slide(current);
+
+                // cancel the link default behaviour
+                return false;
+            });
+
+            function slide(current) {
+                // scroll page to selected slide
+                $('.slide-window').scrollTo($(current).attr('data-slide'), 600);
+            }
+
+
+            // toggle visibility of radio button (accordion) options
+            $('ul.toggleOptions > li > input[type="radio"]').click(function () {
+                // toggle (show/hide) clicked radio button option 
+                $(this).siblings('.toggleContent').slideToggle(400);
+
+                // hide other options
+                $(this).parent().siblings().children('.toggleContent').slideUp(400);
+            });
+
+            
+            // set height of content wrapper
+            //var contentWrapperHeight = $(window).height() - 100;
+            //$('.content-wrapper').css('height', contentWrapperHeight);
+
+            // set max height of scrollbox div
+            var scrollHeight = $(window).height() - 280; 
+            $('.scrollbox').css('max-height', scrollHeight);
+
+            // set max height of paging div
+            var pagingHeight = $('.slide-window').height() - 20;
+            $('#paging-wrapper').css('max-height', pagingHeight);
+
+            // set width of slide paging container
+            var pagingWidth = $('.content-wrapper').width() - $('.slide-window').width() - 30;
+            $('#paging-wrapper').css('width', pagingWidth);
+
+                      
+            function resizePanel() {
+                //get the browser width and height
+                width = $(window).width();
+                height = $(window).height();
+                //get the mask width: width * total of items
+                mask_width = width * $('.slide').length;
+
+                //set the dimension    
+                $('.slide-window, .slide').css({ width: width, height: height });
+                $('.slide-wrapper').css({ width: mask_width, height: height });
+
+                //if the item is displayed incorrectly, set it to the corrent pos
+                $('.slide-window').scrollTo($('.selected').attr('href'), 0);
+
+            }
+            
+
+            // window resize events
+            $(window).resize(function () {
+                //call the resizePanel function
+                //resizePanel();
+
+                // set height of content wrapper
+                //var contentWrapperHeight = $(window).height() - 100;
+                //$('.content-wrapper').css('height', contentWrapperHeight);
+
+                // set max height of scrollbox div
+                var scrollHeight = $(window).height() - 280; 
+                $('.scrollbox').css('max-height', scrollHeight);
+
+                // set max height of paging div
+                var pagingHeight = $('.slide-window').height() - 20;
+                $('#paging-wrapper').css('max-height', pagingHeight);
+
+                // set width of slide paging container
+                var pagingWidth = $('.content-wrapper').width() - $('.slide-window').width() - 30;
+                $('#paging-wrapper').css('width', pagingWidth);
+            });
+
+        });
+    </script>
 </body>
 </html>

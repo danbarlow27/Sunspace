@@ -1,0 +1,568 @@
+﻿@font-face {
+	font-family: 'Shanti';
+	src: url('fonts/Shanti-Regular.ttf') format('truetype');
+}
+
+
+/******************************************
+ * GLOBAL
+ ******************************************/
+ 
+* {
+	padding: 0;
+	margin: 0;
+    list-style: none;
+    outline: none !important;
+}
+
+body {
+	font: 1em/1.5em 'Shanti', Helvetica, Arial, sans-serif;
+	background: #fff;
+}
+
+.content-wrapper {
+    margin: 0 auto;
+    width: 80%;
+    position: relative;
+}
+
+.scrollbox {
+    overflow: auto;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    -webkit-transition: all ease 300ms;
+       -moz-transition: all ease 300ms;
+        -ms-transition: all ease 300ms;
+         -o-transition: all ease 300ms;
+            transition: all ease 300ms;
+    cursor: pointer;
+}
+
+
+
+/******************************************
+ * TEXT
+ ******************************************/
+
+h1 { /* question */
+    font-size: 1.25em;
+    background: #f6f6f6;
+    padding: 15px;
+}
+
+h2 { /* paging sidebar heading */
+    font-size: 1.25em;
+    font-weight: normal;
+    padding: 5px 0 15px;
+}
+
+h3 { /* optional heading before text input field table */
+    font-size: 1em;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+
+
+/******************************************
+ * HEADER
+ ******************************************/
+/* #region */
+header {
+	margin-bottom: 50px;
+}
+
+#logo {
+	text-indent: -999999px;
+	background: url('../Images/logo.png') no-repeat left top;
+	background-size: auto 100%;
+	width: 70px;
+	height: 35px;
+	margin: 7.5px 20px 0 15px;
+	float: left;
+}
+
+.navMain {
+	color: #fff;
+	background: #000;
+	height: 50px;
+}
+
+.ulNavMain li a {
+    font-size: 1.25em;
+    text-transform: uppercase;
+    text-indent: 30px;
+    line-height: 50px;
+    background: url('../Images/iconsNav.png') no-repeat left top;
+    background-size: 36px 200px;
+    margin: 0 20px;
+    float: left;
+    display: block;
+}
+
+.ulNavMain li a:hover,
+.ulNavMain li a:active,
+.ulNavMain li a:focus {
+    color: #dfbf98;
+}
+
+.ulNavMain li a.active {
+    color: #dfbf98;
+}
+
+.ulNavMain li:last-child a {
+    float: right;
+}
+
+.ulNavMain li:nth-child(1) a {
+    background-position: 0 0;
+}
+
+.ulNavMain li:nth-child(2) a {
+    text-indent: 45px;
+    background-position: 0 -50px;
+}
+
+.ulNavMain li:nth-child(3) a { 
+    background-position: 0 -100px;
+}
+
+.ulNavMain li:nth-child(4) a {
+    background-position: 0 -150px;
+}
+/* #endregion */
+
+
+/******************************************
+ * FOOTER
+ ******************************************/
+
+footer {
+    font-size: .675em;
+    color: #898989;
+    padding: 0 5px;
+    margin-top: 50px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+
+
+/******************************************
+ * INPUT ELEMENTS
+ ******************************************/
+/* #region */
+/* TEXT FIELDS
+---------------------------------------- */
+
+/* Base styling */
+.txtField {
+    font-size: 1em; 
+    color: #555;
+    background-color: #fafafa;
+    padding: 5px;
+    border: 1px solid #cacece;
+    border-radius: 5px;
+}
+
+/* Custom text fields */
+.txtSearch {
+    font-size: .75em;
+    text-indent: 20px;
+    text-transform: uppercase;
+    background: url('../Images/iconSearch.png') no-repeat 5px top;
+    background-size: 14px 25px;
+    width: 200px;
+}
+
+.txtInput {    
+    width: 250px;
+}
+
+.txtAddress {
+    width: 250px;
+}
+
+.txtZipPhone {
+    width: 100px;
+}
+
+
+/* Table layout for text fields */
+
+.tblTxtFields {
+    border-collapse: collapse;
+}
+
+.tblTxtFields td {
+    padding: 3px 8px 3px 0;
+}
+
+.tblTxtFields tr td:first-child {
+    text-align: right;
+}
+
+
+/* RADIO BUTTONS / CHECKBOXES
+---------------------------------------- */
+
+.toggleOptions li {
+    padding: 4px 0;
+}
+
+.toggleOptions li > label + label {
+    margin-left: 32px;
+    display: block;
+}
+
+.toggleOptions li > label + label:hover {
+    cursor: pointer;
+}
+
+
+/* CHECKBOXES
+---------------------------------------- */
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"] + label {
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    width: 20px;
+	height: 20px;
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+    float: left;
+}
+ 
+input[type="checkbox"] + label:active, 
+input[type="checkbox"]:checked + label:active {
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+}
+ 
+input[type="checkbox"]:checked + label {
+    border: 1px solid #adb8c0;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+    color: #99a1a7;
+}
+ 
+input[type="checkbox"]:checked + label:after {
+    content: '\2714';
+    font-size: 14px;
+    position: absolute;
+    top: 0px;
+    left: 3px;
+    color: #99a1a7;
+}
+
+
+/* RADIO BUTTONS
+---------------------------------------- */
+
+input[type="radio"] {
+    display: none;
+}
+ 
+input[type="radio"] + label {
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    width: 20px;
+	height: 20px;
+    border-radius: 50px;
+    display: inline-block;
+    position: relative;
+    float: left;
+}
+ 
+input[type="radio"]:checked + label:after {
+    content: ' ';
+    width: 12px;
+    height: 12px;
+    border-radius: 50px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background: #99a1a7;    
+}
+ 
+input[type="radio"]:checked + label {
+    border: 1px solid #adb8c0;
+    box-shadow: inset 0px 0px 5px rgba(0,0,0,0.1);
+}
+ 
+input[type="radio"] + label:active, 
+input[type="radio"]:checked + label:active {
+	box-shadow: inset 0px 0px 5px rgba(0,0,0,0.1);
+}
+
+
+/* BUTTONS
+---------------------------------------- */
+
+.btnSubmit {
+    font: .75em 'Shanti', Helvetica, Arial, sans-serif !important;
+    text-transform: uppercase;
+    color: #555;
+    background: #dcdcdc;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f6f6f6), to(#dcdcdc)); /* Safari 4+, Chrome 1-9 */
+	background: -webkit-linear-gradient(top, #f6f6f6, #dcdcdc); /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background:    -moz-linear-gradient(top, #f6f6f6, #dcdcdc); /* Firefox 3.6+ */
+	background:     -ms-linear-gradient(top, #f6f6f6, #dcdcdc); /* IE 10+ */
+	background:      -o-linear-gradient(top, #f6f6f6, #dcdcdc); /* Opera 11.10+ */	 
+	background:         linear-gradient(top, #f6f6f6, #dcdcdc); /* Opera 11.10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', endColorstr='#dcdcdc',GradientType=0 ); /* IE6-9 */
+    padding: 5px;
+    margin: 15px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btnSubmit:hover {
+    color: #898989;
+}
+
+.btnSubmit:active {
+    background: #f6f6f6;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#dcdcdc), to(#f6f6f6)); /* Safari 4+, Chrome 1-9 */
+	background: -webkit-linear-gradient(top, #dcdcdc, #f6f6f6); /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background:    -moz-linear-gradient(top, #dcdcdc, #f6f6f6); /* Firefox 3.6+ */
+	background:     -ms-linear-gradient(top, #dcdcdc, #f6f6f6); /* IE 10+ */
+	background:      -o-linear-gradient(top, #dcdcdc, #f6f6f6); /* Opera 11.10+ */	 
+	background:         linear-gradient(top, #dcdcdc, #f6f6f6); /* Opera 11.10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dcdcdc', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
+    box-shadow: inset 0 0 6px #ccc, inset 1px 1px 4px #ccc;
+}
+
+/* SEARCH BUTTON */
+.btnSearch {
+    margin: 0 0 30px 10px;
+}
+
+/* DELETE 'BUTTON' (HYPERLINK) */
+.btnDelete {
+    font-size: .875em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    color: #898989;
+    display: block;
+}
+
+.btnDelete:hover {
+    color: #555;
+}
+
+/* ADD TO ESTIMATE BUTTON */
+.btnAddToEstimate {
+    margin-right: 5%;
+    float: right;
+}
+/* #endregion */
+
+
+
+/******************************************
+ * SAVED PROJECTS PAGE
+ ******************************************/
+/* #region */
+.tblSavedProjects {
+    width: 100%;
+    /*margin-top: 30px;*/
+    border-collapse: collapse;
+}
+
+/*.tblSavedProjects thead {
+    width: 100%;
+}*/
+
+/*.tblSavedProjects tbody {
+    overflow: auto;
+    display: block;
+}*/
+
+.tblSavedProjects tr th {
+    font-size: 1.25em;
+    text-transform: uppercase;
+    text-align: center;
+    background: #f6f6f6;
+    padding: 15px 10px;
+    white-space: nowrap;
+}
+
+.tblSavedProjects tr th.thSortable:hover {
+    color: #dfbf98;
+    -webkit-transition: all ease 300ms;
+       -moz-transition: all ease 300ms;
+        -ms-transition: all ease 300ms;
+         -o-transition: all ease 300ms;
+            transition: all ease 300ms;
+    cursor: pointer;
+}
+
+.tblSavedProjects tr td {
+    font-size: 1.125em;
+    text-align: center;
+    padding: 10px;
+}
+
+.tblSavedProjects tr:nth-child(odd) td {
+    background: rgb(242, 235, 214);
+}
+
+.tblSavedProjects tr:nth-child(even) td {
+    background: rgba(242, 235, 214,.5);
+}
+
+.tblSavedProjects tr th:first-child,
+.tblSavedProjects tr td:first-child { /* Project name column */
+    text-align: left;
+}
+
+.tblSavedProjects tr th:nth-child(2),
+.tblSavedProjects tr td:nth-child(2),
+.tblSavedProjects tr th:last-child { /* Date column */
+    width: 20%;
+}
+
+.tblSavedProjects tr th:nth-child(3),
+.tblSavedProjects tr td:nth-child(3) { /* Delete column */
+    width: 10%;
+}
+
+.tblSavedProjects tr td:last-child { /* Add to estimate column */
+    padding-left: 9%;
+    width: 20%;
+}
+
+/*.tblSavedProjects tfoot td {
+    font-size: 1em;
+    text-align: center;
+    background: none !important;
+    padding-top: 0;
+    padding-bottom: 0;
+}*/
+/* #endregion */
+
+
+
+/******************************************
+ * SLIDES / PAGING
+ ******************************************/
+
+.slide-window {
+    width: 72%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.slide-wrapper {
+    width: 500%; /* 100% * total # slides */
+}
+
+.slide {
+    width: 20%; /* 100% / total # slides */
+    float: left;    
+}
+
+#paging-wrapper {
+    background: #f6f6f6;
+    padding: 10px 10px 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    overflow-y: auto;
+}
+
+#paging {
+    height: 90%;
+}
+
+#paging li {
+    padding: 3px 0;
+    border-bottom: 1px dotted #bbb;
+}
+
+#paging li:last-child {
+    padding-bottom: 10px;
+    border-bottom: 0;
+}
+
+#paging li span {
+    display: block;
+}
+
+#paging li span:first-child:after {
+    content: ':';
+}
+
+#paging li span + span {
+    padding-left: 10px; 
+}
+
+#paging a:hover {
+    color: #dfbf98;
+}
+
+
+
+/******************************************
+ * TOGGLE RADIO BUTTON OPTIONS (ACCORDION)
+ ******************************************/
+
+.toggleOptions > li:nth-child(odd) {
+    background: rgb(242, 235, 214);
+    padding: 10px;
+}
+
+.toggleOptions > li:nth-child(even) {
+    background: rgba(242, 235, 214,.5);
+    padding: 10px;
+}
+
+.toggleContent {
+    padding: 10px 0 10px 35px;
+    display: none;
+}
+
+
+
+/******************************************
+ * GLOBAL FIXES
+ ******************************************/
+ 
+.clear {
+	clear: both;
+}
+
+.clear-fix:after {
+    content: ".";
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
+.clear-right-margin {
+	margin-right: 0;
+}
