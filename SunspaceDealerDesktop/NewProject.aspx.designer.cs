@@ -193,31 +193,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label lblExistingCustomer;
         
         /// <summary>
-        /// RadioButton17 control.
+        /// ddlExistingCustomer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RadioButton17;
-        
-        /// <summary>
-        /// Label52 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label52;
-        
-        /// <summary>
-        /// Label53 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label53;
+        protected global::System.Web.UI.WebControls.DropDownList ddlExistingCustomer;
         
         /// <summary>
         /// btnQuestion1 control.
@@ -823,6 +805,33 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label lblProjectComponents;
         
         /// <summary>
+        /// radProjectShowroom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radProjectShowroom;
+        
+        /// <summary>
+        /// lblProjectShowroomRadio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblProjectShowroomRadio;
+        
+        /// <summary>
+        /// lblProjectShowroom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblProjectShowroom;
+        
+        /// <summary>
         /// btnQuestion3 control.
         /// </summary>
         /// <remarks>
@@ -832,40 +841,40 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Button btnQuestion3;
         
         /// <summary>
-        /// lblPageHeading2 control.
+        /// lblQuestion4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPageHeading2;
+        protected global::System.Web.UI.WebControls.Label lblQuestion4;
         
         /// <summary>
-        /// RadioButton1 control.
+        /// radKneewallOptions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RadioButton1;
+        protected global::System.Web.UI.WebControls.RadioButton radKneewallOptions;
         
         /// <summary>
-        /// Label1 control.
+        /// lblKneewallOptionsRadio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lblKneewallOptionsRadio;
         
         /// <summary>
-        /// Label2 control.
+        /// lblKneewallOptions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label lblKneewallOptions;
         
         /// <summary>
         /// CheckBox1 control.
