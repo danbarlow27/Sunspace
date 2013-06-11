@@ -139,7 +139,7 @@
             //if the user wants to finish drawing internal walls 
             else {
                 //if its a valid sunroom
-                if (sunroomCompleted())
+                if (internalWalls())
                     //change the name (value) of the button
                     doneButton.value = "Done Drawing";
             }
@@ -160,51 +160,56 @@
         //undo last line
         function undo(toBeRemoved) {
 
-            //remove previously drawn walls
-            d3.selectAll("#E").remove(); //remove existing walls
-            d3.selectAll("#P").remove(); //remove proposed walls
-
-            //if removed array needs to be popped at the end
-            if (toBeRemoved)
-                removed.push(coordList[coordList.length - 1]); //pop it
-
-            //set the appropriate button value
-            setButtonValue();
-            
-            //delete last line from the list
-            coordList.pop();
-
-            //go through the list of lines, set wall type, and draw the lines
-            for (var i = 0; i <= coordList.length - 1; i++) {
-                wallType = (coordList[i].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
-                    (coordList[i].id === WALL_TYPE.INTERNAL) ? WALL_TYPE.INTERNAL : WALL_TYPE.PROPOSED;
-
-                drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false);
-            }
-
             //if last line is removed, enable user to draw a line anywhere
             if (coordList.length === 0)
                 startNewWall = true;
             else { //set the first coordinates of the next line to the last coordinates of the previous line
+                //remove previously drawn walls
+                d3.selectAll("#E").remove(); //remove existing walls
+                d3.selectAll("#P").remove(); //remove proposed walls
+
+                //if removed array needs to be popped at the end
+                if (toBeRemoved)
+                    removed.push(coordList[coordList.length - 1]); //pop it
+
+                //set the appropriate button value
+                setButtonValue();
+
+                //delete last line from the list
+                coordList.pop();
+
+                //go through the list of lines, set wall type, and draw the lines
+                for (var i = 0; i <= coordList.length - 1; i++) {
+                    wallType = (coordList[i].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
+                        (coordList[i].id === WALL_TYPE.INTERNAL) ? WALL_TYPE.INTERNAL : WALL_TYPE.PROPOSED;
+
+                    drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false);
+                }
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
             }
+
         }
 
         //redo last undo
         function redo() {
-            if (removed.length != 0) {
-                setButtonValue();
+            
 
+            if (removed.length != 0) {
+                
                 wallType = (removed[removed.length - 1].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
                     (removed[removed.length - 1].id === WALL_TYPE.INTERNAL) ? WALL_TYPE.INTERNAL : WALL_TYPE.PROPOSED;
 
                 coordList.push(removed[removed.length - 1]);
                 removed.pop();
 
+                //alert("Coord: " + coordList.length);
+                //alert("Remov: " + removed.length);
+
                 drawLine(coordList[coordList.length - 1].x1, coordList[coordList.length - 1].y1, coordList[coordList.length - 1].x2, coordList[coordList.length - 1].y2, false);
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
+                setButtonValue();
             }
         }
 
@@ -286,6 +291,9 @@
                 x1 = mousePos.x;
                 y1 = mousePos.y;
                 startNewWall = false;
+
+                removed = new Array();
+
             }
             else {
                 x2 = mousePos.x;
@@ -323,9 +331,6 @@
         false);
 
         function drawLine(x1, y1, x2, y2, mouseMove) {
-
-
-
             var coordinates = setGridPoints(snapToGrid(x1, cellPadding), snapToGrid(y1, cellPadding), snapToGrid(x2, cellPadding), snapToGrid(y2, cellPadding));
             var coorx1 = coordinates.x1;
             var coorx2 = coordinates.x2;
@@ -467,7 +472,7 @@
             else if (standAlone && coordList[coordList.length - 1].attr("x2") != coordList[0].x1)
                 alert("A stand-alone sunroom must end at the start of the starting wall. Please try again!");
             else if (!standAlone) {
-                isValid = validateNotStandAlone();
+                isValid = validateNotStandAlone(WALL_TYPE.EXISTING, null, null);
             }
             else
                 isValid = true;
@@ -485,11 +490,14 @@
 
             var isValid = true;
 
+            //var numberOfWallTypes = (internal) ? 3 : (proposed) ? 2 : 1;
+            
+
             //var numberOfExistingWalls = 0;
 
             var shortestDistanceWallNumber;
 
-            var slopes = getAllSlopes();
+            //var slopes = getAllSlopes();
 
             //Needs functionality to handle existing wall corners
             for (var i = 0; i < coordList.length; i++) {
@@ -543,25 +551,25 @@
             return isValid;
         }
 
-        function getAllSlopes() {
-            var mExisting = new Array();
+        //function getAllSlopes() {
+        //    var mExisting = new Array();
 
-            var mProposed = new Array();
+        //    var mProposed = new Array();
 
-            for (var i = 0; i < coordList.length; i++) {
+        //    for (var i = 0; i < coordList.length; i++) {
 
-                if (coordList[i].id === "P") {
-                    mProposed[mProposed.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
-                }
-                else if (coordList[i].id === "E") {
-                    mExisting[mExisting.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
-                }
-            }
-            return {
-                "proposedSlopes": mProposed,
-                "existingSlopes": mExisting
-            };
-        }
+        //        if (coordList[i].id === "P") {
+        //            mProposed[mProposed.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
+        //        }
+        //        else if (coordList[i].id === "E") {
+        //            mExisting[mExisting.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
+        //        }
+        //    }
+        //    return {
+        //        "proposedSlopes": mProposed,
+        //        "existingSlopes": mExisting
+        //    };
+        //}
 
         //Used in validateNotStandAlone only
         function findIntercept(i) {
@@ -631,6 +639,56 @@
 
             return validCoordinate;
         }
+
+        function internalWalls() {
+            var isValid = true;
+            for (var i = 0; i < coordList.length; i++) {
+
+                    var intercept = findIntercept(i);
+
+                    if (intercept.det === 0) {
+                        isValid = false;
+                    }
+                    else {
+                        isValid = true;
+
+                        if (intercept.x != coordList[coordList.length - 1].x2 || intercept.y != coordList[coordList.length - 1].y2) {
+                            //distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))
+                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x2), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y2), 2)), "x": intercept.x, "y": intercept.y };
+
+                            shortest = MAX_CANVAS_WIDTH; //arbitrary long number
+                            for (var i = 0; i < distanceBetweenLines.length; i++) {
+
+                                if (distanceBetweenLines[i].distance < shortest) {
+                                    shortest = distanceBetweenLines[i].distance;
+                                    shortestDistanceWallNumber = i;
+                                }
+                            }
+                            alert(intercept.x2 + " , If");
+                        }
+                        else {
+                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": 0, "x": intercept.x2, "y": intercept.y2 };
+                            alert(intercept.x2 + " , Else");
+                        }
+                    }
+                
+            }            
+
+            undo(false);
+
+            alert(distanceBetweenLines[shortestDistanceWallNumber].x);
+
+            var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
+
+            coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
+
+            x1 = line.attr("x2");
+            y1 = line.attr("y2");
+
+            return isValid;
+                
+            }
+         
 
     </script>
 
