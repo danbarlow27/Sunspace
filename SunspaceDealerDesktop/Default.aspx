@@ -92,7 +92,7 @@
         //type of wall currently being drawn
         var wallType = WALL_TYPE.EXISTING;
 
-
+        
 
 
         //var existingWall = true;//standAlone ? false : confirm("existing wall?");
@@ -139,16 +139,25 @@
             //if the user wants to finish drawing internal walls 
             else {
                 //if its a valid sunroom
-                if (internalWalls())
+                if (internalWalls()) {
                     //change the name (value) of the button
                     doneButton.value = "Done Drawing";
+                    //reset click count
+                    startNewWall = true;
+                }
             }
         }
 
         //clear canvas
         function clearCanvas() {
-            location.reload(); //reload the page to clear canvas
-        }
+            d3.selectAll("#E").remove(); //remove existing walls
+            d3.selectAll("#P").remove(); //remove proposed walls
+            d3.selectAll("#I").remove(); //remove internal walls
+            startNewWall = true; //let the user begin another wall anywhere on the grid
+            coordList = new Array(); //clear the list of lines
+            removed = new Array(); //clear the list of removed lines
+            wallType = WALL_TYPE.EXISTING; //reset the wall type to existing
+       }
 
 
         //change the name (value) of the done button
@@ -472,10 +481,12 @@
             else if (standAlone && coordList[coordList.length - 1].attr("x2") != coordList[0].x1)
                 alert("A stand-alone sunroom must end at the start of the starting wall. Please try again!");
             else if (!standAlone) {
-                isValid = validateNotStandAlone(WALL_TYPE.EXISTING, null, null);
+                isValid = validateNotStandAlone();
             }
             else
                 isValid = true;
+
+            alert(isValid);
 
             return isValid;
             }
@@ -488,7 +499,7 @@
 
             var distance;
 
-            var isValid = true;
+            var isValid = false;
 
             //var numberOfWallTypes = (internal) ? 3 : (proposed) ? 2 : 1;
             
@@ -510,7 +521,7 @@
                     if (intercept.det === 0) {
                         //lines are parallel
                         //alert("Sunroom must be enclosed. Please add another wall.");
-                        isValid = false;
+                        //isValid = false;
                     }
                     else {
                         isValid = true;
@@ -528,48 +539,26 @@
                                 }
                             }
                             alert(intercept.x2 + " , If");
-                        }
-                        else {
-                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": 0, "x": intercept.x2, "y": intercept.y2 };
-                            alert(intercept.x2 + " , Else");
+
+                            undo(false);
+
+                            //alert(distanceBetweenLines[shortestDistanceWallNumber].x);
+
+                            var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
+
+                            coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
+
+                            x1 = line.attr("x2");
+                            y1 = line.attr("y2");
                         }
                     }
                 }
             }            
 
-            undo(false);
-
-            alert(distanceBetweenLines[shortestDistanceWallNumber].x);
-
-            var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
-
-            coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
-
-            x1 = line.attr("x2");
-            y1 = line.attr("y2");
-
             return isValid;
         }
 
-        //function getAllSlopes() {
-        //    var mExisting = new Array();
-
-        //    var mProposed = new Array();
-
-        //    for (var i = 0; i < coordList.length; i++) {
-
-        //        if (coordList[i].id === "P") {
-        //            mProposed[mProposed.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
-        //        }
-        //        else if (coordList[i].id === "E") {
-        //            mExisting[mExisting.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
-        //        }
-        //    }
-        //    return {
-        //        "proposedSlopes": mProposed,
-        //        "existingSlopes": mExisting
-        //    };
-        //}
+        
 
         //Used in validateNotStandAlone only
         function findIntercept(i) {
@@ -687,7 +676,7 @@
 
             return isValid;
                 
-            }
+        }
          
 
     </script>
