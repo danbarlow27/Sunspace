@@ -17,10 +17,9 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div style="width:500px; height:500px;" id="mySunroom"></div>
-    <!--<input type="button" value ="Toggle Wall Type" onclick="standAlone = !standAlone"/>-->
+    <div style="width:500px; height:500px;" id="mySunroom"></div>    
     <input type="button" value = "Done Drawing" onclick="sunroomCompleted()" />    
-    <input type="button" value ="Undo" onclick="undo()" />
+    <input type="button" value ="Undo" onclick="undo(true)" />
     <input type="button" value ="Clear Canvas" onclick ="clearCanvas()"/>
     <input type="button" value ="Done Existing Walls" onclick="if(!standAlone) doneExistingWalls()" />
     <input type="button" value ="Redo" onclick="redo()" />
@@ -41,10 +40,8 @@
         var clickCount = 0;
         var cellPadding = 25;
         var MAX_CANVAS_WIDTH = 500;
-
-        //var coordList = new Array();
+        //var removePop = false;
         var removed = new Array();
-        //var lineCount = 0;
         var standAlone = false;//confirm("standalone?");
         var existingWall = true;//standAlone ? false : confirm("existing wall?");
         var WALL_FACING = {
@@ -65,25 +62,24 @@
 
         var coordList = new Array();
 
-
         //clear canvas
         function clearCanvas() {
             location.reload();
         }
 
         //undo last line
-        function undo() {
+        function undo(toBeRemoved) {
 
-            //var existing;
+            d3.selectAll("#E").remove();
+            d3.selectAll("#P").remove();
 
-            d3.selectAll("#existingWall").remove();
-            d3.selectAll("#proposedWall").remove();
+            if (toBeRemoved)
+                removed.push(coordList[coordList.length - 1]);
 
-            removed.push(coordList[coordList.length - 1]);
             coordList.pop();
 
             for (var i = 0; i <= coordList.length - 1; i++){ 
-                if (coordList[i].id === "existingWall")
+                if (coordList[i].id === "E")
                     existingWall = true;
                 else
                     existingWall = false;
@@ -111,24 +107,9 @@
         }
 
         //done drawing existing walls
-        function doneExistingWalls(){
-            //createCookie("existingWalls", coordList, 0);
+        function doneExistingWalls(){            
             existingWall = false;
             clickCount = 0;
-
-
-            
-            
-            
-            //location.reload();
-
-            //var value = new Array();
-                
-
-            //value = readCookie("existingWalls");
-
-            //console.log(value);
-
         }
         
         /*
@@ -243,22 +224,14 @@
 
                 var line = drawLine(x1, y1, x2, y2, false);
 
-                //console.log(x1 + "," + y1);
-                //console.log(x2 + "," + y2);
+                var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
 
-                coordList[coordList.length] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2"), "id" : line.attr("id") };
-                
+                coordList[coordList.length - 1] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation};
+               
+                alert(coordList[coordList.length - 1].orientation + ", " + coordList[coordList.length - 1].x1);
+
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
-
-                //console.log(x1 + "," + y1);
-                //console.log(coordList[coordList.length - 1].x2 + "," + coordList[coordList.length - 1].y2);
-
-
-                //if (x2 != x1) {
-                //    x2 = MAX_CANVAS_WIDTH;
-                //    y2 = (dY / dX)(x2 - x1) + y1;
-                //}
             }
         },
         false);
@@ -323,10 +296,10 @@
             if (existingWall) {
                 line.attr("stroke", "red")
                     .attr("stroke-width", 1)
-                    .attr("id", "existingWall");
+                    .attr("id", "E");
             }
             else{
-                line.attr("id", "proposedWall")
+                line.attr("id", "P")
                     .attr("stroke", "black")
                     .attr("stroke-width", 2);
             }
@@ -337,8 +310,40 @@
             return line;
         };
 
+        function getStringOrientation(x1, y1, x2, y2) {
+            dX = x2 - x1;
+            dY = y2 - y1;
+            orientation = getOrientation(dX, dY);
+
+            switch (orientation) {
+                case WALL_FACING.SOUTH:
+                    orientation = "S";
+                    break;
+                case WALL_FACING.NORTH:
+                    orientation = "N";
+                    break;
+                case WALL_FACING.SOUTH_WEST:
+                    orientation = "SW";
+                    break;
+                case WALL_FACING.NORTH_EAST:
+                    orientation = "NE";
+                    break;
+                case WALL_FACING.WEST:
+                    orientation = "W";
+                    break;
+                case WALL_FACING.EAST:
+                    orientation = "E";
+                    break;
+                case WALL_FACING.NORTH_WEST:
+                case WALL_FACING.SOUTH_EAST:
+                    break;
+            }
+
+            return orientation;
+        }
+
         //orientation funtion
-        function getOrientation(dX, dY) {
+        function getOrientation(dX, dY) {    
             return ((Math.round(Math.atan2(dY, dX) / (Math.PI / 4))) + 8) % 8;
         }
 
@@ -350,16 +355,6 @@
             var dY;
             var length;
             var orientation;
-
-            //dX = x2 - x1;
-            //dY = y2 - y1;
-
-            //console.log(x2);
-
-            //if (x2 > MAX_CANVAS_WIDTH) {
-            //    x2 = MAX_CANVAS_WIDTH;
-            //    y2 = (dY / dX)(x2 - x1) + y1;
-            //}
 
             dX = x2 - x1;
             dY = y2 - y1;
@@ -382,7 +377,7 @@
                 case WALL_FACING.SOUTH_EAST:
                     x2 = x1 + sign(dX) * Math.abs(dY);
                     break;
-            }
+            }            
 
             return {
                 'x1': x1,
@@ -399,195 +394,132 @@
                else if (standAlone && coordList[coordList.length - 1].attr("x2") != coordList[0].x1)
                     alert("A stand-alone sunroom must end at the start of the starting wall. Please try again!");
                 else if (!standAlone) {
-                    var cx2;
-                    var cx1;
-                    var cy2;
-                    var cy1;
-                    var A1;
-                    var B1;
-                    var C1;
-                    var A2;
-                    var B2;
-                    var C2;
-
-                    var distanceBetweenLines = new Array();
-
-                    var mExisting = new Array();
-
-                    var mProposed = new Array();
-                    
-                    var shortest;
-
-                    var distance;
-
-                    var numberOfExistingWalls = 0;
-
-                    var shortestDistanceWallNumber;
-
-                    for(var i = 0; i < coordList.length; i++){
-
-                        if (coordList[i].id === "proposedWall"){
-                            mProposed[mProposed.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
-                        }
-                        else if (coordList[i].id === "existingWall") {
-                            mExisting[mExisting.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
-                        }
-                    }
-
-                    //Needs functionality to handle existing wall corners
-                    for (var i = 0; i < coordList.length; i++){
-                        if (coordList[i].id === "existingWall") {
-                            numberOfExistingWalls++;
-
-                            cx2 = coordList[i].x2;
-                            cx1 = coordList[i].x1;
-                            cy2 = coordList[i].y2;
-                            cy1 = coordList[i].y1;
-
-                            A1 = cy2 - cy1;
-                            B1 = cx1 - cx2;
-                            C1 = A1 * cx1 + B1 * cy1;
-
-                            cx2 = coordList[coordList.length - 1].x2;
-                            cx1 = coordList[coordList.length - 1].x1;
-                            cy2 = coordList[coordList.length - 1].y2;
-                            cy1 = coordList[coordList.length - 1].y1;
-
-                            A2 = cy2 - cy1;
-                            B2 = cx1 - cx2;
-                            C2 = A2 * cx1 + B2 * cy1;
-
-                            var det = (A1 * B2) - (A2 * B1);
-
-                            
-
-                            if (det === 0) {
-                                //var proposedIndex;
-
-                                //for(var i = 0; i < coordList.length; i++){
-                                
-                                //    if (coordList[i].id === "proposedWall"){
-                                //        proposedIndex = i; 
-                                //    }
-                                //}
-                                //for(var i = proposedIndex; i < coordList.length; i++){
-                                //    if (x === coordList[i].x1 || x === coordList[i].x2 || x === coordList[i].y1 || x === coordList[i].y2) {
-                                //        alert("Worked");
-                                //    }
-                                //}
-                                //lines are parallel
-                                alert("Sunroom must be enclosed. Please add another wall.");
-                            }
-                            <%--else if (det === 0 && (x === coordList[i].x1 || x === coordList[i].x2 || x === coordList[i].y1 || x === coordList[i].y2)) {
-                                alert("Worked");
-                            }--%>
-                            else {
-
-                                var x = (B2 * C1 - B1 * C2) / det;
-                                var y = (A1 * C2 - A2 * C1) / det;
-                                
-                                //var m = (cy2 - cy1) / (cx2 - cx1);
-                                
-                                for (var i = 0; i < mExisting.length; i++) {
-                                    for (var j = 0; j < mProposed.length; j++) {
-                                        if (mExisting[i] === mProposed[j]) {
-                                            //if (coordList[i].x1 === coordList[numberOfExistingWalls + 1 + j].x1 || coordList[i].x2 === coordList[numberOfExistingWalls + 1 + j].x2 || coordList[i].y1 === coordList[numberOfExistingWalls + 1 + j].y1 || coordList[i].y2 === coordList[numberOfExistingWalls + 1 + j].y2) {
-                                            if (coordList[i].x1 === coordList[numberOfExistingWalls + 1 + j].x1 || coordList[i].x2 === coordList[numberOfExistingWalls + 1 + j].x2 || coordList[i].y1 === coordList[numberOfExistingWalls + 1 + j].y1 || coordList[i].y2 === coordList[numberOfExistingWalls + 1 + j].y2) {
-                                                alert("Worked");
-                                                //(x2-x1)m = (y2-y1);
-                                            }
-                                            else if (coordList[i].x2 === coordList[numberOfExistingWalls + 1 + j].x2){
-                                                
-                                            }
-                                        }
-                                    }
-                                }
-
-                                //for (var i = numberOfExistingWalls + 1; i < coordList.length; i++) {
-                                //    if (x === coordList[i].x1 || x === coordList[i].x2 || x === coordList[i].y1 || x === coordList[i].y2) {
-                                //        alert("Worked");
-                                //    }
-                                //}
-
-                                if (x != cx2 || y != cy2) {
-                                    distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))                                    
-                                }
-                                else {
-                                    x = cx2;
-                                    y = cy2;
-                                    distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))                                    
-                                }
-                                distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2)), "x": x, "y": y };
-                            }
-                        }
-                    }
-
-                    shortest = MAX_CANVAS_WIDTH; //arbitrary long number
-                    for (var i = 0; i < distanceBetweenLines.length; i++) {                        
-
-                        if (distanceBetweenLines[i].distance < shortest) {
-                            shortest = distanceBetweenLines[i].distance;
-                            shortestDistanceWallNumber = i;
-                        }
-                    }
-
-                    undo();
-                    removed.pop();
-
-                    var line = drawLine(cx1, cy1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
-
-                    coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
-
-                    x1 = line.attr("x2");
-                    y1 = line.attr("y2");
-                    
-                    /*cx2 = coordList[0].x2;
-                    cx1 = coordList[0].x1;
-                    cy2 = coordList[0].y2;
-                    cy1 = coordList[0].y1;
-
-                    A1 = cy2 - cy1;
-                    B1 = cx1 - cx2;
-                    C1 = A1 * cx1 + B1 * cy1;
-
-                    cx2 = coordList[coordList.length - 1].x2;
-                    cx1 = coordList[coordList.length - 1].x1;
-                    cy2 = coordList[coordList.length - 1].y2;
-                    cy1 = coordList[coordList.length - 1].y1;
-                    
-                    A2 = cy2 - cy1;
-                    B2 = cx1 - cx2;
-                    C2 = A2 * cx1 + B2 * cy1;
-                    
-                    var det = (A1 * B2) - (A2 * B1);
-
-                    if (det === 0) {
-                        //lines are parallel
-                        alert("Sunroom must be enclosed. Please add another wall.");
-                    }
-                    else {
-                        var x = (B2 * C1 - B1 * C2) / det; 
-                        var y = (A1 * C2 - A2 * C1) / det;
-
-                        if (x != cx2 || y != cy2){
-                          
-                            undo();
-                            removed.pop();
-                            var line = drawLine(cx1, cy1, x, y, false);
-
-                            coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id" : line.attr("id") }
-
-                            x1 = line.attr("x2");
-                            y1 = line.attr("y2");
-
-                        }
-                    }*/
-
-
+                    validateNotStandAlone();
                 }
             }
 
+        function validateNotStandAlone() {
 
+            var distanceBetweenLines = new Array();            
+
+            var shortest;
+
+            var distance;
+
+            var numberOfExistingWalls = 0;
+
+            var shortestDistanceWallNumber;
+
+            var slopes = getAllSlopes();
+
+            //Needs functionality to handle existing wall corners
+            for (var i = 0; i < coordList.length; i++) {
+                if (coordList[i].id === "E") {
+
+                    var intercept = findIntercept(i);
+
+                    numberOfExistingWalls++;
+
+                    if (intercept.det === 0) {
+                        //lines are parallel
+                        alert("Sunroom must be enclosed. Please add another wall.");
+                    }
+                    else {      
+                        if (intercept.x != coordList[coordList.length - 1].x2 || intercept.y != coordList[coordList.length - 1].y2) {
+                            //distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))
+                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x2), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y2), 2)), "x": intercept.x, "y": intercept.y };
+                        }
+                    }
+                }
+            }
+
+            shortest = MAX_CANVAS_WIDTH; //arbitrary long number
+            for (var i = 0; i < distanceBetweenLines.length; i++) {
+
+                if (distanceBetweenLines[i].distance < shortest) {
+                    shortest = distanceBetweenLines[i].distance;
+                    shortestDistanceWallNumber = i;
+                }
+            }
+
+            undo(false);
+
+            var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
+
+            coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
+
+            x1 = line.attr("x2");
+            y1 = line.attr("y2");
+
+        }
+
+        function getAllSlopes() {
+            var mExisting = new Array();
+
+            var mProposed = new Array();
+
+            for (var i = 0; i < coordList.length; i++) {
+
+                if (coordList[i].id === "P") {
+                    mProposed[mProposed.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
+                }
+                else if (coordList[i].id === "E") {
+                    mExisting[mExisting.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
+                }
+            }
+            return {
+                "proposedSlopes": mProposed,
+                "existingSlopes": mExisting
+            };
+        }
+
+        //Used in validateNotStandAlone only
+        function findIntercept(i) {
+            var cx2;
+            var cx1;
+            var cy2;
+            var cy1;
+
+            var A1;
+            var B1;
+            var C1;
+
+            var A2;
+            var B2;
+            var C2;
+
+            cx2 = coordList[i].x2;
+            cx1 = coordList[i].x1;
+            cy2 = coordList[i].y2;
+            cy1 = coordList[i].y1;
+
+            A1 = cy2 - cy1;
+            B1 = cx1 - cx2;
+            C1 = A1 * cx1 + B1 * cy1;
+
+            cx2 = coordList[coordList.length - 1].x2;
+            cx1 = coordList[coordList.length - 1].x1;
+            cy2 = coordList[coordList.length - 1].y2;
+            cy1 = coordList[coordList.length - 1].y1;
+
+            A2 = cy2 - cy1;
+            B2 = cx1 - cx2;
+            C2 = A2 * cx1 + B2 * cy1;
+
+            var det = (A1 * B2) - (A2 * B1);
+            var x = (B2 * C1 - B1 * C2) / det;
+            var y = (A1 * C2 - A2 * C1) / det;
+
+            return {
+                "det": det,
+                "x": x,
+                "y": y,
+                "x1": cx1,
+                "y1": cy1,
+                "y2": cx2,
+                "x2": cy2
+            };
+        }
 
         function snapToGrid(coordinate, cellPadding) {
             var endLoop = false;
