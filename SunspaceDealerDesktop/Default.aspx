@@ -18,10 +18,14 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div style="width:500px; height:500px;" id="mySunroom"></div>    
-    <input type="button" value = "Done Drawing" onclick="sunroomCompleted()" />    
+
+    <input type="button" value = "Done Drawing" onclick="sunroomCompleted()" />
+        
     <input type="button" value ="Undo" onclick="undo(true)" />
     <input type="button" value ="Clear Canvas" onclick ="clearCanvas()"/>
-    <input type="button" value ="Done Existing Walls" onclick="if(!standAlone) doneExistingWalls()" />
+
+    <input id="buttonDone" type="button" value ="" onclick="buttonDoneOnClick()"/>
+
     <input type="button" value ="Redo" onclick="redo()" />
 
     <input type="hidden" id="lineArrayInfo" runat="server" />
@@ -31,19 +35,27 @@
     </p>
 
     <script>
+        window.onload = buttonDoneOnLoad();
 
         var canvas = d3.select("#mySunroom")
                     .append("svg")
                     .attr("width", MAX_CANVAS_WIDTH)
                     .attr("height", MAX_CANVAS_WIDTH);
         var svgGrid = document.getElementById("mySunroom");
+        var doneButton = document.getElementById("buttonDone");
         var clickCount = 0;
         var cellPadding = 25;
         var MAX_CANVAS_WIDTH = 500;
-        //var removePop = false;
         var removed = new Array();
+        
         var standAlone = false;//confirm("standalone?");
-        var existingWall = true;//standAlone ? false : confirm("existing wall?");
+        //var existingWall = true;//standAlone ? false : confirm("existing wall?");
+        //var internalWall = false;
+        var WALL_TYPE = {
+                EXISTING: "E",
+                PROPOSED: "P",
+                INTERNAL: "I"
+        }
         var WALL_FACING = {
                 SOUTH: 0,
                 SOUTH_WEST: 1,
@@ -59,12 +71,45 @@
         var y1;
         var x2;
         var y2;
+        var wallType = WALL_TYPE.EXISTING;
 
         var coordList = new Array();
+
+        function buttonDoneOnLoad() {
+            document.getElementById("buttonDone").value = (standAlone) ? "Done External Walls" : "Done Existing Walls";
+        }
+
+        function buttonDoneOnClick() {
+            if (doneButton.value === "Done Existing Walls") {
+                if (wallType === WALL_TYPE.EXISTING) {
+                    doneButton.value = "Done External Walls";
+                    wallType = WALL_TYPE.PROPOSED;
+                    clickCount = 0;
+                }
+                else
+                    alert("No existing walls drawn, please draw one");
+            }
+            else if (doneButton.value === "Done External Walls") {
+                if (sunroomCompleted()) { // && wallType === WALL_TYPE.PROPOSED                    
+                    doneButton.value = "Done Internal Walls";
+                    wallType = WALL_TYPE.INTERNAL;
+                    clickCount = 0;
+                }
+            }
+            else {
+                if(sunroomCompleted())
+                    doneButton.value = "Done Drawing";
+            }
+        }
 
         //clear canvas
         function clearCanvas() {
             location.reload();
+        }
+
+        function setButtonValue() {
+            doneButton.value = (coordList[coordList.length-1].id === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
+                (coordList[coordList.length-1].id === WALL_TYPE.PROPOSED) ? "Done External Walls" : "Done Internal Walls";
         }
 
         //undo last line
@@ -76,13 +121,13 @@
             if (toBeRemoved)
                 removed.push(coordList[coordList.length - 1]);
 
+            setButtonValue();
+            
             coordList.pop();
 
-            for (var i = 0; i <= coordList.length - 1; i++){ 
-                if (coordList[i].id === "E")
-                    existingWall = true;
-                else
-                    existingWall = false;
+            for (var i = 0; i <= coordList.length - 1; i++) {
+                wallType = (coordList[i].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
+                    (coordList[i].id === WALL_TYPE.INTERNAL) ? WALL_TYPE.INTERNAL : WALL_TYPE.PROPOSED;
 
                 drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false);
             }
@@ -97,48 +142,19 @@
         //redo last undo
         function redo() {
             if (removed.length != 0) {
+                setButtonValue();
+
+                wallType = (removed[removed.length - 1].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
+                    (removed[removed.length - 1].id === WALL_TYPE.INTERNAL) ? WALL_TYPE.INTERNAL : WALL_TYPE.PROPOSED;
 
                 coordList.push(removed[removed.length - 1]);
                 removed.pop();
+
                 drawLine(coordList[coordList.length - 1].x1, coordList[coordList.length - 1].y1, coordList[coordList.length - 1].x2, coordList[coordList.length - 1].y2, false);
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
             }
         }
-
-        //done drawing existing walls
-        function doneExistingWalls(){            
-            existingWall = false;
-            clickCount = 0;
-        }
-        
-        /*
-        //create cookie
-        function createCookie(id,value,days) {
-            //Session("ExistingWallList") = coordList;
-            if (days) {
-		        var date = new Date();
-		        date.setTime(date.getTime()+(days*24*60*60*1000));
-		        var expires = "; expires="+date.toGMTString();
-	        }
-	        else var expires = "";
-	        document.cookie = id+"="+value+expires+"; path=/"; 
-        }
-
-        //read cookie
-        function readCookie(name) {
-	        var nameEQ = name + "=";
-	        var ca = document.cookie.split(';');
-	        for(var i=0;i < ca.length;i++) {
-		        var c = ca[i];
-		        while (c.charAt(0)==' ') 
-                    c = c.substring(1,c.length);
-		        if (c.indexOf(nameEQ) == 0) 
-                    return c.substring(nameEQ.length,c.length);
-	        }
-	        return null;
-        }
-        */
 
         //Draw the grid lines
         function drawGrid() {
@@ -226,10 +242,8 @@
 
                 var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
 
-                coordList[coordList.length - 1] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation};
-               
-                alert(coordList[coordList.length - 1].orientation + ", " + coordList[coordList.length - 1].x1);
-
+                coordList[coordList.length] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation};
+                
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
             }
@@ -256,6 +270,8 @@
         false);
 
         function drawLine(x1, y1, x2, y2, mouseMove) {
+
+
 
             var coordinates = setGridPoints(snapToGrid(x1, cellPadding), snapToGrid(y1, cellPadding), snapToGrid(x2, cellPadding), snapToGrid(y2, cellPadding));
             var coorx1 = coordinates.x1;
@@ -284,26 +300,26 @@
                     .attr("x1", coorx1)
                     .attr("y1", coory1)
                     .attr("x2", coorx2)
-                    .attr("y2", coory2)
-                    .attr("stroke", "black")
-                    .attr("stroke-width", 2);
+                    .attr("y2", coory2);
 
-            //if (standAlone)
-            //    line.attr("id", "standAlone");
-            //else
-            //    line.attr("id", "notStandAlone");
+            //alert(wallType);
 
-            if (existingWall) {
+            if (wallType === WALL_TYPE.EXISTING) {
                 line.attr("stroke", "red")
                     .attr("stroke-width", 1)
                     .attr("id", "E");
             }
-            else{
+            else if (wallType === WALL_TYPE.PROPOSED){
                 line.attr("id", "P")
                     .attr("stroke", "black")
                     .attr("stroke-width", 2);
             }
-
+            else if (wallType === WALL_TYPE.INTERNAL) {
+                line.attr("id", "I")
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 1);
+            }
+            
             if (mouseMove)
                 line.attr("id", "mouseMoveLine");
 
@@ -335,7 +351,10 @@
                     orientation = "E";
                     break;
                 case WALL_FACING.NORTH_WEST:
+                    orientation = "NW";
+                    break;
                 case WALL_FACING.SOUTH_EAST:
+                    orientation = "SE";
                     break;
             }
 
@@ -389,13 +408,18 @@
 
         //determine if the sunroom is valid
         function sunroomCompleted() {
-            if (coordList.length < MIN_NUMBER_OF_WALLS) 
+            var isValid = false;
+            if (coordList.length < MIN_NUMBER_OF_WALLS)
                 alert("A complete sunroom must be enclosed (3 walls minimum). Please try again!");
-               else if (standAlone && coordList[coordList.length - 1].attr("x2") != coordList[0].x1)
-                    alert("A stand-alone sunroom must end at the start of the starting wall. Please try again!");
-                else if (!standAlone) {
-                    validateNotStandAlone();
-                }
+            else if (standAlone && coordList[coordList.length - 1].attr("x2") != coordList[0].x1)
+                alert("A stand-alone sunroom must end at the start of the starting wall. Please try again!");
+            else if (!standAlone) {
+                isValid = validateNotStandAlone();
+            }
+            else
+                isValid = true;
+
+            return isValid;
             }
 
         function validateNotStandAlone() {
@@ -406,7 +430,9 @@
 
             var distance;
 
-            var numberOfExistingWalls = 0;
+            var isValid = true;
+
+            //var numberOfExistingWalls = 0;
 
             var shortestDistanceWallNumber;
 
@@ -414,35 +440,45 @@
 
             //Needs functionality to handle existing wall corners
             for (var i = 0; i < coordList.length; i++) {
-                if (coordList[i].id === "E") {
+                if (coordList[i].id === WALL_TYPE.EXISTING) {
 
                     var intercept = findIntercept(i);
 
-                    numberOfExistingWalls++;
+                    //numberOfExistingWalls++;
 
                     if (intercept.det === 0) {
                         //lines are parallel
-                        alert("Sunroom must be enclosed. Please add another wall.");
+                        //alert("Sunroom must be enclosed. Please add another wall.");
+                        isValid = false;
                     }
-                    else {      
+                    else {
+                        isValid = true;
+
                         if (intercept.x != coordList[coordList.length - 1].x2 || intercept.y != coordList[coordList.length - 1].y2) {
                             //distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))
                             distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x2), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y2), 2)), "x": intercept.x, "y": intercept.y };
+
+                            shortest = MAX_CANVAS_WIDTH; //arbitrary long number
+                            for (var i = 0; i < distanceBetweenLines.length; i++) {
+
+                                if (distanceBetweenLines[i].distance < shortest) {
+                                    shortest = distanceBetweenLines[i].distance;
+                                    shortestDistanceWallNumber = i;
+                                }
+                            }
+                            alert(intercept.x2 + " , If");
+                        }
+                        else {
+                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": 0, "x": intercept.x2, "y": intercept.y2 };
+                            alert(intercept.x2 + " , Else");
                         }
                     }
                 }
-            }
-
-            shortest = MAX_CANVAS_WIDTH; //arbitrary long number
-            for (var i = 0; i < distanceBetweenLines.length; i++) {
-
-                if (distanceBetweenLines[i].distance < shortest) {
-                    shortest = distanceBetweenLines[i].distance;
-                    shortestDistanceWallNumber = i;
-                }
-            }
+            }            
 
             undo(false);
+
+            alert(distanceBetweenLines[shortestDistanceWallNumber].x);
 
             var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
 
@@ -451,6 +487,7 @@
             x1 = line.attr("x2");
             y1 = line.attr("y2");
 
+            return isValid;
         }
 
         function getAllSlopes() {
@@ -516,8 +553,8 @@
                 "y": y,
                 "x1": cx1,
                 "y1": cy1,
-                "y2": cx2,
-                "x2": cy2
+                "y2": cy2,
+                "x2": cx2
             };
         }
 
