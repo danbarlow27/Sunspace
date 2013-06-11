@@ -44,7 +44,19 @@ namespace SunspaceDealerDesktop
             aCorner.Length = 3.125f;
             aWall.addToItemList(new Corner());
             aCorner = new Corner();
-            
+
+            List<Object> listOfItems = aWall.LinearItems;
+
+            for (int i = 0; i <= listOfItems.Count-1; i++)
+            {
+                string currentObjectType = listOfItems[i].ToString();
+                int index = currentObjectType.IndexOf(".");
+                if (index > 0)
+                    currentObjectType = currentObjectType.Substring(index+1, (currentObjectType.Length-index-1)); //from one past the index to end of string
+
+                tester.InnerHtml += currentObjectType + " - ";
+            }
+
             //int numberOfMods = aWall.FindOptimalNumberOfMods();
             //tester.InnerHtml += "\n" + "Proposed: " + aWall.ProposedLength + ", Actual: " + aWall.ActualLength; 
             //tester2.InnerHtml = aWall.FindOptimalSizeOfMods(10); 

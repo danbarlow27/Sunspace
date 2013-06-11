@@ -9,43 +9,31 @@ namespace SunspaceDealerDesktop
     {
         #region Attributes
         private float proposedLength;
-        private float actualLength;
         private int firstItemIndex; //Index of First Item in Wall
         private int lastItemIndex; //Index of Last Item in Wall
         private String orientation; //N, NE, E, S, SE, NW, SW, W
         private String name; //Name of the wall – For user few
-        private String wallType; //P - Proposed, E - Existing, G - Gable Post
-        //private float secondSide; //???????????????
+        private String wallType; 
         private float startHeight; //Start height of the wall
         private float endHeight; //End height of the wall
-        //private bool isGableWall; //????????????????
-        //private bool customHeight; //???????????????
-        private float soffit; //Soffit length (only for fascia install)
+        private float soffitLength; //Soffit length (only for fascia install)
         private float totalCornerLength;
         private float totalReceiverLength;
-        /*
-         * ??NOT SURE IF THESE ARE REQUIRED
-            ExistingKneewall As Single
-            ExistingWidth As Single
-            ExistingRight As Boolean
-            ExistingDrawBrick As Boolean
- 
-         */
         List<Object> linearItems = new List<Object>();
+        List<Object> obstructions = new List<Object>();
         #endregion
 
         #region Constructors
         public Wall()
         {
             ProposedLength = 0.0F;
-            ActualLength = 0.0F;
             FirstItemIndex = -1;
             LastItemIndex = -1;
             Orientation = "";
             Name = "";
             StartHeight = 0.0F;
             EndHeight = 0.0F;
-            Soffit = 0.0F;
+            SoffitLength = 0.0F;
             TotalCornerLength = 0.0f;
             TotalReceiverLength = 0.0f;
         }
@@ -92,7 +80,6 @@ namespace SunspaceDealerDesktop
 
             GlobalFunctions.splitFillerToOutside(ref fillerOne, ref fillerTwo, extraFiller);
 
-            ActualLength = TotalCornerLength + TotalReceiverLength + ((Constants.DEFAULT_FILLER * 2) + extraFiller) + (numberOfMods * optimalModSize);
             return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + extraFiller + " inches to filler.";
         }
 
@@ -167,20 +154,7 @@ namespace SunspaceDealerDesktop
                 proposedLength = value;
             }
         }
-
-        public float ActualLength
-        {
-            get
-            {
-                return actualLength;
-            }
-
-            set
-            {
-                actualLength = value;
-            }
-        }
-
+        
         public int FirstItemIndex
         {
             get
@@ -259,16 +233,16 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public float Soffit
+        public float SoffitLength
         {
             get
             {
-                return soffit;
+                return soffitLength;
             }
 
             set
             {
-                soffit = value;
+                soffitLength = value;
             }
         }
 
@@ -297,6 +271,20 @@ namespace SunspaceDealerDesktop
                 totalReceiverLength = value;
             }
         }
+
+        public List<Object> LinearItems
+        {
+            get
+            {
+                return linearItems;
+            }
+
+            set
+            {
+                linearItems = value;
+            }
+        }
+
         #endregion
     }
 }
