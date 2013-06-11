@@ -1,23 +1,19 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SunspaceDealerDesktop._Default" %>
+﻿<%@ Page Title="Custom Drawing Tool" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SunspaceDealerDesktop._Default" %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
                 <h1><%: Title %>.</h1>
-                <h2>Modify this template to jump-start your ASP.NET application.</h2>
+                <p> &nbsp; </p>
             </hgroup>
-            <p>
-                To learn more about ASP.NET, visit <a href="http://asp.net" title="ASP.NET Website">http://asp.net</a>.
-                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET.
-                If you have any questions about ASP.NET visit
-                <a href="http://forums.asp.net/18.aspx" title="ASP.NET Forum">our forums</a>.
-            </p>
+            
         </div>
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div style="width:500px; height:500px;" id="mySunroom"></div>    
+    <p> &nbsp; </p>
 
     <input type="button" value = "Done Drawing" onclick="sunroomCompleted()" />
         
@@ -29,10 +25,11 @@
     <input type="button" value ="Redo" onclick="redo()" />
 
     <input type="hidden" id="lineArrayInfo" runat="server" />
-    <p>
+    
+    <!--<p>
         Red is existing wall
         Black is proposed wall
-    </p>
+    </p>-->
 
     <script>
         window.onload = buttonDoneOnLoad(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
@@ -163,25 +160,32 @@
         //undo last line
         function undo(toBeRemoved) {
 
-            d3.selectAll("#E").remove();
-            d3.selectAll("#P").remove();
+            //remove previously drawn walls
+            d3.selectAll("#E").remove(); //remove existing walls
+            d3.selectAll("#P").remove(); //remove proposed walls
 
+            //if removed array needs to be popped at the end
             if (toBeRemoved)
-                removed.push(coordList[coordList.length - 1]);
+                removed.push(coordList[coordList.length - 1]); //pop it
 
+            //set the appropriate button value
             setButtonValue();
             
+            //delete last line from the list
             coordList.pop();
 
+            //go through the list of lines, set wall type, and draw the lines
             for (var i = 0; i <= coordList.length - 1; i++) {
                 wallType = (coordList[i].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
                     (coordList[i].id === WALL_TYPE.INTERNAL) ? WALL_TYPE.INTERNAL : WALL_TYPE.PROPOSED;
 
                 drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false);
             }
+
+            //if last line is removed, enable user to draw a line anywhere
             if (coordList.length === 0)
-                clearCanvas();
-            else {
+                startNewWall = true;
+            else { //set the first coordinates of the next line to the last coordinates of the previous line
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
             }
@@ -210,7 +214,7 @@
             var rect = canvas.append("rect")
                         .attr("width", MAX_CANVAS_WIDTH)
                         .attr("height", MAX_CANVAS_WIDTH)
-                        .attr("fill", "black")
+                        .attr("fill", "white")
 
             var line = canvas.append("line")
                         .attr("x1", 0)
