@@ -5,7 +5,7 @@
 
     <%-- SLIDES (QUESTIONS)
     ======================================== --%>
-    <div class="slide-window">
+    <div class="slide-window" onmousedown="event.preventDefault ? event.preventDefault() : event.returnValue = false">
 
         <div class="slide-wrapper">
             
