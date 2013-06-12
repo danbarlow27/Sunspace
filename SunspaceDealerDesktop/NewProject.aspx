@@ -1,28 +1,7 @@
 ﻿<%@ Page Title="New Project - Project Details" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NewProject.aspx.cs" Inherits="SunspaceWizard._Default" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <%-- Hidden div populating scripts 
-    =================================== --%>
-    <script>       
 
-        function checkQuestion1() {
-            if ($('#MainContent_radNewCustomer').is(':checked'))
-            {
-                $('#MainContent_lblSpecsProjectTypeAnswer')
-                console.log("New Customer");
-            }
-            else if ($('#MainContent_radExistingCustomer').is(':checked'))
-            {
-                console.log("Existing Customer");
-            }
-
-            var slider = $('.bxslider').bxSlider({
-                mode: 'fade'
-            });
-            slider.goToNextSlide();
-        }
-    </script>
-    <%-- End hidden div populating scripts --%>
 
     <%-- SLIDES (QUESTIONS)
     ======================================== --%>
@@ -136,7 +115,7 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" UseSubmitBehavior="false" runat="server" Text="Next Question" 
+                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right" data-slide="slide2" UseSubmitBehavior="false" runat="server" Text="Next Question" 
                      OnClientClick="checkQuestion1()"/>
 
             </div> 
@@ -725,5 +704,21 @@
             $('#lnkMainNavNewProject').addClass('active');
         });
     </script>
+    <%-- Hidden div populating scripts 
+    =================================== --%>
+    <script>
 
+        function checkQuestion1() {
+            if ($('#MainContent_radNewCustomer').is(':checked')) {
+                $('#MainContent_lblSpecsProjectTypeAnswer')
+                console.log("New Customer");
+            }
+            else if ($('#MainContent_radExistingCustomer').is(':checked')) {
+                console.log("Existing Customer");
+            }
+
+            $('.slide-window').scrollTo($('#slide2'), 600);
+        }
+    </script>
+    <%-- End hidden div populating scripts --%>
 </asp:Content>
