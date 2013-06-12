@@ -12,27 +12,30 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div style="width:500px; height:500px;" id="mySunroom"></div>    
-    <p> &nbsp; </p>
-
-    <input type="button" value = "Done Drawing" onclick="sunroomCompleted()" />
-        
-    <input type="button" value ="Undo" onclick="undo(true)" />
-
-    <input type="button" value ="Clear Canvas" onclick ="clearCanvas()"/>
-
-    <input id="buttonDone" type="button" value ="" onclick="buttonDoneOnClick()"/>
-
-    <input type="button" value ="Redo" onclick="redo()" />
-
-    <input type="hidden" id="lineArrayInfo" runat="server" />
     
-    <!--<p>
-        Red is existing wall
-        Black is proposed wall
-    </p>-->
+        <div id="buttons" style="width:20%; float:left; text-align:center;">
+            <ol>
+                <li><input type="button" value ="Undo" onclick="undo(true)" /></li>
+
+                <li><input type="button" value ="Clear Canvas" onclick ="clearCanvas()"/></li>
+
+                <li><input id="buttonDone" type="button" value ="" onclick="buttonDoneOnClick()"/></li>
+
+                <li><input type="button" value ="Redo" onclick="redo()" /></li>
+
+                <li><input type="hidden" id="lineArrayInfo" runat="server" /></li>
+            </ol>
+        </div>
+        <div style="width:500px; height:500px; float:left;" id="mySunroom"></div>
+        <div style="width:20%; float:right;" id="actionsText"><p>This might work</p></div>
+    
+    <p> &nbsp; </p>   
 
     <script>
+
+        var buttons = document.getElementById("buttons");
+
+        buttons.className = hopeThisWorks;
 
         //wall type enumeration
         var WALL_TYPE = {
@@ -55,9 +58,11 @@
 
         //minimum number of walls that makes up a complete sunroom
         var MIN_NUMBER_OF_WALLS = 3;
+        
+        //size of the squares in the grid
+        var GRID_PADDING = 25;
 
-        //cell padding determines the size of each square in the grid 
-        var CELL_PADDING = 25;
+        var CELL_PADDING = GRID_PADDING / 2; //cell padding is half less than the grid padding
 
         //max size of canvas (width and height)
         var MAX_CANVAS_WIDTH = 500;
@@ -99,20 +104,23 @@
             window.onload = buttonDoneOnLoad(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
         });
         
+        //On keypress "e" start new line on the grid
+        $(document).on('keypress', function (e) { if (e.which === 101) { startNewWall = true; }});
 
         //set the name (value) of the "Done" button to the default value
         function buttonDoneOnLoad() {
-            document.getElementById("buttonDone").value = (standAlone) ? "Done External Walls" : "Done Existing Walls";
+            document.getElementById("buttonDone").value = (standAlone) ? "Done Proposed Walls" : "Done Existing Walls";
         }
 
         //on click event of "Done" button
         function buttonDoneOnClick() {
             //if user wants to finish drawing existing walls
             if (doneButton.value === "Done Existing Walls") {
-                //if the wallType is "E"
-                if (wallType === WALL_TYPE.EXISTING) {
+                
+                //if there are walls drawn and first wall is wall type "E"
+                if (coordList.length > 0 && coordList[0].id === WALL_TYPE.EXISTING) {
                     //change the name (value) of the button
-                    doneButton.value = "Done External Walls";
+                    doneButton.value = "Done Proposed Walls";
                     //change wall type
                     wallType = WALL_TYPE.PROPOSED;
                     //reset click count
@@ -124,23 +132,13 @@
                     alert("No existing walls drawn, please draw one");
             }
             //if user wants to finish drawing external (i.e. proposed) walls
-            else if (doneButton.value === "Done External Walls") {
+            else if (doneButton.value === "Done Proposed Walls") {
                 //if its a valid sunroom
                 if (sunroomCompleted()) { // && wallType === WALL_TYPE.PROPOSED                    
                     //change the name (value) of the button
-                    doneButton.value = "Done Internal Walls";
-                    //change wall type
-                    wallType = WALL_TYPE.INTERNAL;
-                    //reset click count
-                    startNewWall = true;
-                }
-            }
-            //if the user wants to finish drawing internal walls 
-            else {
-                //if its a valid sunroom
-                if (internalWalls()) {
-                    //change the name (value) of the button
                     doneButton.value = "Done Drawing";
+                    //change wall type
+                    //wallType = WALL_TYPE.INTERNAL;
                     //reset click count
                     startNewWall = true;
                 }
@@ -151,21 +149,23 @@
         function clearCanvas() {
             d3.selectAll("#E").remove(); //remove existing walls
             d3.selectAll("#P").remove(); //remove proposed walls
-            d3.selectAll("#I").remove(); //remove internal walls
+            //d3.selectAll("#I").remove(); //remove internal walls
             startNewWall = true; //let the user begin another wall anywhere on the grid
             coordList = new Array(); //clear the list of lines
             removed = new Array(); //clear the list of removed lines
             wallType = WALL_TYPE.EXISTING; //reset the wall type to existing
+            setButtonValue(); //set button value
        }
 
 
         //change the name (value) of the done button
         function setButtonValue() {
             doneButton.value = (coordList[coordList.length-1].id === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
-                (coordList[coordList.length-1].id === WALL_TYPE.PROPOSED) ? "Done External Walls" : "Done Internal Walls";
+                (coordList[coordList.length-1].id === WALL_TYPE.PROPOSED) ? "Done Proposed Walls" : "Done Drawing";
         }
 
         //undo last line
+        //@param toBeRemoved - true or false whether we want to remove the last element from the removed line list
         function undo(toBeRemoved) {
 
             //if last line is removed, enable user to draw a line anywhere
@@ -188,11 +188,12 @@
 
                 //go through the list of lines, set wall type, and draw the lines
                 for (var i = 0; i <= coordList.length - 1; i++) {
-                    wallType = (coordList[i].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
-                        (coordList[i].id === WALL_TYPE.INTERNAL) ? WALL_TYPE.INTERNAL : WALL_TYPE.PROPOSED;
+                    wallType = (coordList[i].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED;
 
                     drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false);
                 }
+
+                //set the starting coordinates of the next line to be drawn to the ending coordinates of the previous line drawn
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
             }
@@ -206,8 +207,8 @@
             if (removed.length != 0) {
                 
                 //Change the wall type based on the id of the last element in the removed array
-                wallType = (removed[removed.length - 1].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
-                    (removed[removed.length - 1].id === WALL_TYPE.INTERNAL) ? WALL_TYPE.INTERNAL : WALL_TYPE.PROPOSED;
+                wallType = (removed[removed.length - 1].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED;
+  
 
                 //Add the last item in the removed array to the coordList array
                 coordList.push(removed[removed.length - 1]);
@@ -268,22 +269,22 @@
                         .attr("stroke", "black");
 
             //Draws vertical lines of the grid onto the canvas
-            for (var i = 0; i < MAX_CANVAS_WIDTH; i += CELL_PADDING) {
+            for (var i = 0; i < MAX_CANVAS_WIDTH; i += GRID_PADDING) {
                 var line = canvas.append("line")
-                        .attr("x1", i + CELL_PADDING)
+                        .attr("x1", i + GRID_PADDING)
                         .attr("y1", 0)
-                        .attr("x2", i + CELL_PADDING)
+                        .attr("x2", i + GRID_PADDING)
                         .attr("y2", MAX_CANVAS_WIDTH)
                         .attr("stroke", "grey");
             }
 
             //Draws horizontal lines of the grid onto the canvas
-            for (var i = 0; i < MAX_CANVAS_WIDTH; i += CELL_PADDING) {
+            for (var i = 0; i < MAX_CANVAS_WIDTH; i += GRID_PADDING) {
                 var line = canvas.append("line")
                         .attr("x1", 0)
-                        .attr("y1", i + CELL_PADDING)
+                        .attr("y1", i + GRID_PADDING)
                         .attr("x2", MAX_CANVAS_WIDTH)
-                        .attr("y2", i + CELL_PADDING)
+                        .attr("y2", i + GRID_PADDING)
                         .attr("stroke", "grey");
             }
 
@@ -300,6 +301,12 @@
                 y: evt.clientY - rect.top
             };
         };
+
+        svgGrid.addEventListener("dblclick",
+        function (evt) {
+            startNewWall = true;
+        },
+        false);
 
         //On click event listener for the canvas/grid
         svgGrid.addEventListener("click",
@@ -431,8 +438,8 @@
                 line.attr("id", "E")
                     //Change the line color to red
                     .attr("stroke", "red")
-                    //Make stroke width to 1
-                    .attr("stroke-width", 1);
+                    //Make stroke width to 2
+                    .attr("stroke-width", 2);
                     
             }
                 //If wall type is proposed do following logic
@@ -444,15 +451,7 @@
                     //Make stroke width to 2
                     .attr("stroke-width", 2);
             }
-            else if (wallType === WALL_TYPE.INTERNAL) {
-                //Make line id P for internal wall
-                line.attr("id", "I")
-                    //Change the line color to black
-                    .attr("stroke", "black")
-                    //Make stroke width to 1
-                    .attr("stroke-width", 1);
-            }
-            
+
             //If logic to change line id on mousemove event, if mouseMove is true
             if (mouseMove)
                 line.attr("id", "mouseMoveLine");
@@ -628,7 +627,7 @@
             var distanceBetweenLines = new Array();            
 
             //for storing the shortest calculated distance
-            var shortest;
+            var shortest = 0;
 
             //true or false depending on whether the drawn wall is valid
             var isValid = false;
@@ -655,40 +654,42 @@
                     else {//there is an intercept
                         isValid = true; //thus valid
 
-                        //if the last proposed line is not closing off at the intercept..
-                        if (intercept.x != coordList[coordList.length - 1].x2 || intercept.y != coordList[coordList.length - 1].y2) {
-                            
-                            //calculate the distance between the end of the last proposed line and the intercept
-                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x2), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y2), 2)), "x": intercept.x, "y": intercept.y };
-
+                        //calculate the distance between the end of the last proposed line and the intercept
+                        distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x2), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y2), 2)), "x": intercept.x, "y": intercept.y };
+                    }
+                }
+            }
                             //determine the shortest distance between all the intercepts
                             shortest = MAX_CANVAS_WIDTH; //arbitrary long number for getting at the shortest distance
 
                             //loop through all the lines and determine the shortest distance
-                            for (var i = 0; i < distanceBetweenLines.length; i++) {
+                            for (var j = 0; j < distanceBetweenLines.length; j++) {
                                 //if the calculated distance is less than the shortest distance...
-                                if (distanceBetweenLines[i].distance < shortest) {
-                                    shortest = distanceBetweenLines[i].distance; //set shortest distance to the calculated distance
-                                    shortestDistanceWallNumber = i; //store the wall number for the shortest distance
+                                if (distanceBetweenLines[j].distance < shortest) {
+                                    shortest = distanceBetweenLines[j].distance; //set shortest distance to the calculated distance
+                                    shortestDistanceWallNumber = j; //store the wall number for the shortest distance
+                                    console.log("Distance " + j + ":" + shortest)
                                 }
                             }
 
-                            //undo the last drawn line, to be redrawn properly (i.e. snapped to the coordinate)
-                            undo(false);
+                            if(shortest != 0) {
+                    
+                                //undo the last drawn line, to be redrawn properly (i.e. snapped to the coordinate)
+                                undo(false);
 
-                            //draw the snapped line
-                            var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
+                                //draw the snapped line
+                                var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
 
-                            //store the new line into the list
-                            coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
+                                //store the new line into the list
+                                coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
 
-                            //set the starting coordinates of the next line to the ending coordinates of this line
-                            x1 = line.attr("x2");
-                            y1 = line.attr("y2");
-                        }
-                    }
-                }
-            }            
+                                //set the starting coordinates of the next line to the ending coordinates of this line
+                                x1 = line.attr("x2");
+                                y1 = line.attr("y2");
+
+                            }
+                
+                        
             //return valid 
             return isValid;
         }
@@ -790,69 +791,7 @@
         }
 
 
-        /**
-        function to validate internal walls
-        @return isValid - true or false depending on whether the wall is drawn properly or not
-        */
-        function internalWalls() {
-            //true or false depending on whether the drawn wall is valid 
-            var isValid = true; //true by default
-
-            //loop through all the walls
-            for (var i = 0; i < coordList.length; i++) {
-
-                    //get the intercept 
-                    var intercept = findIntercept(i);
-
-                    //if determinant is 0 means its a parallel line, meaning no intercept
-                    if (intercept.det === 0) {
-                        isValid = false; //not valid because parallel lines cannot close off
-                    }
-                    else { //there is an intercept
-                        isValid = true; //thus valid
-
-                        //if the last proposed line is not closing off at the intercept..
-                        if (intercept.x != coordList[coordList.length - 1].x2 || intercept.y != coordList[coordList.length - 1].y2) {
-
-                            //calculate the distance between the end of the last proposed line and the intercept
-                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x2), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y2), 2)), "x": intercept.x, "y": intercept.y };
-
-                            //determine the shortest distance between all the intercepts 
-                            shortest = MAX_CANVAS_WIDTH; //arbitrary long number for getting at the shortest distance
-
-                            //loop through all the lines and determine the shortest distance
-                            for (var i = 0; i < distanceBetweenLines.length; i++) {
-                                //if the calculated distance is less than the shortest distance...
-                                if (distanceBetweenLines[i].distance < shortest) {
-                                    shortest = distanceBetweenLines[i].distance; //set shortest distance to the calculated distance
-                                    shortestDistanceWallNumber = i; //store the wall number for the shortest distance
-                                }
-                            }
-                        }
-                        else {
-                            //else line is closed off properly at the intercept, meaning distance between last proposed line and intercept is 0
-                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": 0, "x": intercept.x2, "y": intercept.y2 }; //store the appropriate coordinates
-                        }
-                    }
-            }            
-
-            //undo the last drawn line, to be redrawn properly (i.e. snapped to the coordinate)
-            undo(false);
-
-            //draw the snapped line
-            var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
-
-            //store the new line into the list
-            coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
-
-            //set the starting coordinates of the next line to the ending coordinates of this line
-            x1 = line.attr("x2");
-            y1 = line.attr("y2");
-
-            //return valid 
-            return isValid;
-                
-        }
+       
          
 
     </script>

@@ -1,11 +1,45 @@
 ﻿<%@ Page Title="New Project - Project Details" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NewProject.aspx.cs" Inherits="SunspaceWizard._Default" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <%-- Hidden div populating scripts 
+    =================================== --%>
+    <script>       
 
+        function checkQuestion1() {
+            if ($('#MainContent_radNewCustomer').is(':checked'))
+            {
+                $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
+
+                $('#MainContent_hidFirstName').text($('#MainContent_txtCustomerFirstName').val());
+                //document.getElementById("Hidden1").valueOf = "fuck";
+                //document.getElementById("Hidden1").s
+                $('#MainContent_hidLastName').text($('#MainContent_txtCustomerLastName').val());
+                $('#MainContent_hidAddress').text($('#MainContent_txtCustomerAddress').val());
+                $('#MainContent_hidCity').text($('#MainContent_txtCustomerCity').val());
+                $('#MainContent_hidZip').text($('#MainContent_txtCustomerZip').val());
+                $('#MainContent_hidPhone').text($('#MainContent_txtCustomerPhone').val());
+
+                console.log("New Customer " + $('#MainContent_hidFirstName').text() + $('#MainContent_hidLastName').text() + $('#MainContent_hidAddress').text()
+                    + $('#MainContent_hidCity').text() + $('#MainContent_hidZip').text() + $('#MainContent_hidPhone').text());
+            }
+            else if ($('#MainContent_radExistingCustomer').is(':checked'))
+            {
+                $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing");
+                $('#hidExisting').text($('#MainContent_ddlCustomerFirstName').val());
+
+                console.log("Existing Customer" + $('#hidExisting').text());
+            }
+
+            return false;
+        }
+    </script>
+    <%-- End hidden div populating scripts --%>
 
     <%-- SLIDES (QUESTIONS)
-    ======================================== --%>
-    <div class="slide-window" onmousedown="event.preventDefault ? event.preventDefault() : event.returnValue = false" >
+    ======================================== 
+        
+        onmousedown="event.preventDefault ? event.preventDefault() : event.returnValue = false"--%>
+    <div class="slide-window"  >
 
         <div class="slide-wrapper">
             
@@ -38,7 +72,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerFirstName" class="txtField txtInput"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerFirstName"  CssClass="txtField txtInput"  runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -48,17 +82,17 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerLastName" class="txtField txtInput"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerLastName" CssClass="txtField txtInput"  runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
                                         <asp:TableRow>
                                             <asp:TableCell>
-                                                <asp:Label ID="lblCustomerAddress1" AssociatedControlID="txtCustomerAddress1" runat="server" Text="Address:"></asp:Label>
+                                                <asp:Label ID="lblCustomerAddress" AssociatedControlID="txtCustomerAddress" runat="server" Text="Address:"></asp:Label>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerAddress1" class="txtField txtInput"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerAddress" CssClass="txtField txtInput"  runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -68,7 +102,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerCity" class="txtField txtInput"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerCity" CssClass="txtField txtInput"  runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -78,7 +112,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerZip" class="txtField txtZipPhone"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerZip" CssClass="txtField txtZipPhone"  runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -88,7 +122,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerPhone" class="txtField txtZipPhone"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerPhone" CssClass="txtField txtZipPhone"  runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -115,7 +149,7 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right" data-slide="slide2" UseSubmitBehavior="false" runat="server" Text="Next Question" 
+                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" 
                      OnClientClick="checkQuestion1()"/>
 
             </div> 
@@ -139,7 +173,7 @@
                                 </asp:TableCell>
 
                                 <asp:TableCell>
-                                    <asp:TextBox ID="txtProjectName" class="txtField txtInput"  runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtProjectName" CssClass="txtField txtInput"  runat="server"></asp:TextBox>
                                 </asp:TableCell>
                             </asp:TableRow>
                         </asp:Table>
@@ -148,7 +182,7 @@
                 </ul> <%-- end .toggleOptions --%>
 
                 <asp:Button ID="btnQuestion2" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
-
+                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
             </div> 
             <%-- end #slide2 --%>
 
@@ -327,7 +361,7 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:TextBox ID="txtKneewallHeight" GroupName="styling" class="txtField" runat="server" />
+                                    <asp:TextBox ID="txtKneewallHeight" GroupName="styling" CssClass="txtField" runat="server" />
                                     <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height" />
                                     <br />
                                     <asp:DropDownList ID="ddlKneewallType" GroupName="styling" runat="server" />
@@ -352,7 +386,7 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:TextBox ID="txtTransomHeight" GroupName="styling" class="txtField" runat="server" />
+                                    <asp:TextBox ID="txtTransomHeight" GroupName="styling" CssClass="txtField" runat="server" />
                                     <asp:Label ID="lblTransomHeight" AssociatedControlID="txtTransomHeight" runat="server" Text="Height" />
                                     <br />
                                     <asp:DropDownList ID="ddlTransomType" GroupName="styling" runat="server" />
@@ -575,11 +609,13 @@
             </div> 
             <%-- end #slide8 --%>
 
+            
+
         </div> <%-- end .slide-wrapper --%>
 
     </div> 
     <%-- end .slide-window --%>
-
+    
 
     <%-- SLIDE PAGING (QUESTION NAVIGATION)
     ======================================== --%>
@@ -644,54 +680,69 @@
 
     <%-- Hidden div tags 
     ================= --%>
+    <input id="Hidden1" type="hidden" runat="server" />
     <div style="display: none">
         <div id="hidQuestion1"  > 
-            <div id="hidExisting"  />
-            <div id="hidFirstName"  />
-            <div id="hidLastName"  />
-            <div id="hidAddress"  />
-            <div id="hidCity"  />
-            <div id="hidZip"  />
-            <div id="hidPhone"  />
+            <div id="hidExisting" runat="server">
+                
+            </div>
+            <div id="hidFirstName" runat="server">
+                nope.avi
+            </div>
+            <div id="hidLastName" runat="server">
+
+            </div>  
+            <div id="hidAddress" runat="server">
+
+            </div>  
+            <div id="hidCity" runat="server">
+
+            </div>  
+            <div id="hidZip" runat="server">
+
+            </div>
+            <div id="hidPhone" runat="server">
+
+            </div>
         </div>
 
         <div id="hidQuestion2" >
-            <div id="hidProjectTag"  />
+            <div id="hidProjectTag" runat="server"></div>
         </div>
 
         <div id="hidQuestion3" >
-            <div id="hidProjectType"  />
-            <div id="hidModelNumber"  />
+            <div id="hidProjectType" runat="server"></div>
+            <div id="hidModelNumber" runat="server"></div>
         </div>
 
         <div id="hidQuestion4" >
-            <div id="hidKneewallType"  />
-            <div id="hidKneewallColour"  />
-            <div id="hidKneewallHeight"  />
-            <div id="hidTransomType"  />
-            <div id="hidTransomColour"  />
-            <div id="hidTransomHeight"  />
-            <div id="hidInteriorColour"  />
-            <div id="hidInteriorSkin"  />
-            <div id="hidExteriorColour"  />
-            <div id="hidExteriorSkin"  />
+            <div id="hidKneewallType" runat="server"></div>
+            <div id="hidKneewallColour" runat="server"></div>
+            <div id="hidKneewallHeight" runat="server"></div>
+            <div id="hidTransomType" runat="server"></div>
+            <div id="hidTransomColour" runat="server"></div>
+            <div id="hidTransomHeight" runat="server"></div>
+            <div id="hidInteriorColour" runat="server"></div>
+            <div id="hidInteriorSkin" runat="server"></div>
+            <div id="hidExteriorColour" runat="server"></div>
+            <div id="hidExteriorSkin" runat="server"></div>
         </div>
 
         <div id="hidQuestion5" >
-            <div id="hidFoamProtected"  />
+            <div id="hidFoamProtected" runat="server"></div>
         </div>
 
         <div id="hidQuestion6" >
-            <div id="hidPrefabFloor"  />
+            <div id="hidPrefabFloor" runat="server"></div>
         </div>
 
         <div id="hidQuestion7" >
-            <div id="hidRoof"  />
-            <div id="hidRoofType"  />
+            <div id="hidRoof" runat="server"></div>
+            <div id="hidRoofType" runat="server"></div>
         </div>
 
         <div id="hidQuestion8" >
-            <div id="hidLayoutSelection"  />
+            <div id="hidLayoutSelection" runat="server"></div>
         </div>
     </div>
     <%-- end hidden divs --%>
@@ -704,21 +755,5 @@
             $('#lnkMainNavNewProject').addClass('active');
         });
     </script>
-    <%-- Hidden div populating scripts 
-    =================================== --%>
-    <script>
 
-        function checkQuestion1() {
-            if ($('#MainContent_radNewCustomer').is(':checked')) {
-                $('#MainContent_lblSpecsProjectTypeAnswer')
-                console.log("New Customer");
-            }
-            else if ($('#MainContent_radExistingCustomer').is(':checked')) {
-                console.log("Existing Customer");
-            }
-
-            $('.slide-window').scrollTo($('#slide2'), 600);
-        }
-    </script>
-    <%-- End hidden div populating scripts --%>
 </asp:Content>

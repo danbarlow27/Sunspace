@@ -11,13 +11,24 @@ namespace SunspaceWizard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (IsPostBack)
+            {
+                Session.Add("testing", hidFirstName.InnerText);
+                //string test = Request.Form["Hidden1"];
+                //Session.Add("testing", test);
+                Response.Redirect("TestingHiddens.aspx");
+            }
         }
 
         protected void btnLayout_Click(object sender, EventArgs e)
         {
             //If custom btnLayout, Page 2, else, page3
             Response.Redirect("http://www.google.ca");
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
