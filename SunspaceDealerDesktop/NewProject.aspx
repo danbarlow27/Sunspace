@@ -10,7 +10,7 @@
             {
                 $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
 
-                $('#<%=hidFirstName.ClientID%>').text($('#MainContent_txtCustomerFirstName').val());
+                document.getElementById('#MainContent_myHidden');
                 //document.getElementById("Hidden1").valueOf = "fuck";
                 //document.getElementById("Hidden1").s
                 $('#MainContent_hidLastName').text($('#MainContent_txtCustomerLastName').val());
@@ -29,7 +29,7 @@
 
                 console.log("Existing Customer" + $('#hidExisting').text());
             }
-
+            
             return false;
         }
     </script>
@@ -680,7 +680,8 @@
 
     <%-- Hidden div tags 
     ================= --%>
-    <div style="display: none">
+    <input type="hidden" id="myHidden" runat="server"/>
+    <%--<div style="display: none">
         <div id="hidQuestion1"  > 
             <div id="hidExisting" runat="server">
                 
@@ -703,9 +704,9 @@
             <div id="hidPhone" runat="server">
 
             </div>
-        </div>
+        </div>--%>
 
-        <div id="hidQuestion2" >
+        <%--<div id="hidQuestion2" >
             <div id="hidProjectTag" runat="server"></div>
         </div>
 
@@ -743,7 +744,7 @@
         <div id="hidQuestion8" >
             <div id="hidLayoutSelection" runat="server"></div>
         </div>
-    </div>
+    </div>--%>
     <%-- end hidden divs --%>
 
     

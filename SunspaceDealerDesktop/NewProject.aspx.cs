@@ -13,7 +13,7 @@ namespace SunspaceWizard
         {
             if (IsPostBack)
             {
-                Session.Add("testing", hidFirstName.InnerText);
+                Session.Add("testing", myHidden.Value);
                 //string test = Request.Form["Hidden1"];
                 //Session.Add("testing", test);
                 Response.Redirect("TestingHiddens.aspx");
@@ -28,7 +28,10 @@ namespace SunspaceWizard
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            
+            Session.Add("testing", myHidden.Value);
+            //string test = Request.Form["Hidden1"];
+            //Session.Add("testing", test);
+            Response.Redirect("TestingHiddens.aspx");
         }
     }
 }
