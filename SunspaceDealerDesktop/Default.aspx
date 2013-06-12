@@ -13,29 +13,24 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     
-        <div id="buttons" style="width:20%; float:left; text-align:center;">
+        <div id="buttons" style="width:20%; text-align:right; vertical-align:central; float:left; padding-top:10%">
             <ol>
-                <li><input type="button" value ="Undo" onclick="undo(true)" /></li>
+                <li><input class="btnSubmit" type="button" value ="Undo" onclick="undo(true)" style="width:150px"/></li>
 
-                <li><input type="button" value ="Clear Canvas" onclick ="clearCanvas()"/></li>
+                <li><input class="btnSubmit" type="button" value ="Redo" onclick="redo()" style="width:150px"/></li>
 
-                <li><input id="buttonDone" type="button" value ="" onclick="buttonDoneOnClick()"/></li>
+                <li><input class="btnSubmit" type="button" value ="Clear Canvas" onclick ="clearCanvas()" style="width:150px"/></li>
 
-                <li><input type="button" value ="Redo" onclick="redo()" /></li>
+                <li><input id="buttonDone" class="btnSubmit" type="button" value ="" onclick="buttonDoneOnClick()" style="width:150px"/></li>
 
-                <li><input type="hidden" id="lineArrayInfo" runat="server" /></li>
             </ol>
         </div>
-        <div style="width:500px; height:500px; float:left;" id="mySunroom"></div>
-        <div style="width:20%; float:right;" id="actionsText"><p>This might work</p></div>
-    
-    <p> &nbsp; </p>   
+        <div style="max-width:500px; max-height:500px; min-width:100px; min-height:100px; float:left;" id="mySunroom"></div>
+        <div style="width:20%; float:right; padding-right:10%;" >
+            <textarea id="drawingLog" rows="31" cols="30" style="resize:none; border:0px;" readonly></textarea>
+        </div>
 
     <script>
-
-        var buttons = document.getElementById("buttons");
-
-        buttons.className = hopeThisWorks;
 
         //wall type enumeration
         var WALL_TYPE = {
@@ -73,6 +68,9 @@
                     .attr("width", MAX_CANVAS_WIDTH)
                     .attr("height", MAX_CANVAS_WIDTH);
 
+        //variable to hold textarea tag
+        var log = document.getElementById("drawingLog");
+
         //create the svg grid on the canvas
         var svgGrid = document.getElementById("mySunroom");
 
@@ -97,11 +95,15 @@
         //type of wall currently being drawn
         var wallType = WALL_TYPE.EXISTING;
 
+        //Used to validate first walls, also after dblclick and E
+        var validateFirstWall = false;
+
         
         //when the DOM is loaded...
         $(document).ready(function () {
             drawGrid(); //Draws the initial grid
             window.onload = buttonDoneOnLoad(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
+            log.innerHTML += "Please draw an existing wall.\n\nPress 'E' to end a line.\n\n";
         });
         
         //On keypress "e" start new line on the grid
@@ -129,7 +131,7 @@
                 //if walltype is not "E", means they have not drawn any existing walls
                 else
                     //show error message
-                    alert("No existing walls drawn, please draw one");
+                    log.innerHTML += "No existing walls drawn, please draw one\n\n";
             }
             //if user wants to finish drawing external (i.e. proposed) walls
             else if (doneButton.value === "Done Proposed Walls") {
@@ -302,11 +304,11 @@
             };
         };
 
-        svgGrid.addEventListener("dblclick",
-        function (evt) {
-            startNewWall = true;
-        },
-        false);
+        //svgGrid.addEventListener("dblclick",
+        //function (evt) {
+        //    startNewWall = true;
+        //},
+        //false);
 
         //On click event listener for the canvas/grid
         svgGrid.addEventListener("click",
@@ -328,6 +330,9 @@
                 //Delete all entries into removed array
                 removed = new Array();
 
+                if (!standAlone && coordList.length != 0 && wallType === WALL_TYPE.PROPOSED)
+                    validateFirstWall = true;
+
             }
                 //Logic for clicks after initial click to draw lines and store values into an array
             else {
@@ -343,7 +348,13 @@
 
                 //Store line starting and ending coordinates, along with line id and string orientation
                 coordList[coordList.length] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation};
-                
+    
+                //Validate
+                if(!standAlone && validateFirstWall && coordList[coordList.length-1].id === WALL_TYPE.PROPOSED){
+                    validateNotStandAlone(false);
+                    validateFirstWall = false;
+                }
+
                 //Restart the start position for the next line to be drawn
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
@@ -439,8 +450,7 @@
                     //Change the line color to red
                     .attr("stroke", "red")
                     //Make stroke width to 2
-                    .attr("stroke-width", 2);
-                    
+                    .attr("stroke-width", 2);                    
             }
                 //If wall type is proposed do following logic
             else if (wallType === WALL_TYPE.PROPOSED) {
@@ -599,15 +609,15 @@
             //If logic to see that at least 1 wall exist
             if (coordList.length < MIN_NUMBER_OF_WALLS)
                 //Alert to tell the user there current error
-                alert("A complete sunroom must be enclosed (3 walls minimum). Please try again!");
+                log.innerHTML += "A complete sunroom must be enclosed (3 walls minimum). Please try again!\n\n";
                 //Else if to check for standAlone rooms and if the room is closed
             else if (standAlone && coordList[coordList.length - 1].attr("x2") != coordList[0].x1)
                 //Alert to tell the user there current error
-                alert("A stand-alone sunroom must end at the start of the starting wall. Please try again!");
+                log.innerHTML += "A stand-alone sunroom must end at the start of the starting wall. Please try again!\n\n";
                 //Else if logic to check for non-standAlone rooms
             else if (!standAlone) {
                 //Assign isValid the value returned by validateNotStandAlone()
-                isValid = validateNotStandAlone();
+                isValid = validateNotStandAlone(true);
             }
                 //Else, sunroom is ok, isValid is set to true
             else
@@ -621,7 +631,9 @@
         function to validate external walls when its not a standAlone sunroom
         @return isValid - true or false depending on whether the wall is drawn properly or not
         */
-        function validateNotStandAlone() {
+        function validateNotStandAlone(lastWall) {
+
+
 
             //array of calculated distances to determine the shortest distance
             var distanceBetweenLines = new Array();            
@@ -667,8 +679,7 @@
                                 //if the calculated distance is less than the shortest distance...
                                 if (distanceBetweenLines[j].distance < shortest) {
                                     shortest = distanceBetweenLines[j].distance; //set shortest distance to the calculated distance
-                                    shortestDistanceWallNumber = j; //store the wall number for the shortest distance
-                                    console.log("Distance " + j + ":" + shortest)
+                                    shortestDistanceWallNumber = j; //store the wall number for the shortest distance                                    
                                 }
                             }
 
@@ -677,8 +688,15 @@
                                 //undo the last drawn line, to be redrawn properly (i.e. snapped to the coordinate)
                                 undo(false);
 
-                                //draw the snapped line
-                                var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
+                                if(lastWall)
+                                    //draw the snapped line
+                                    var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
+                                else{
+                                    wallType = WALL_TYPE.PROPOSED;
+                                    //coordList[coordList.length-1].attr("id","P");
+                                    var line = drawLine(distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, intercept.x2, intercept.y2, false);
+                                    
+                                }
 
                                 //store the new line into the list
                                 coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
@@ -790,8 +808,6 @@
             return validCoordinate; //return the validated coordinate
         }
 
-
-       
          
 
     </script>
