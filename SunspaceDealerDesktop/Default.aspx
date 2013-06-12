@@ -158,6 +158,7 @@
             coordList = new Array(); //clear the list of lines
             removed = new Array(); //clear the list of removed lines
             wallType = WALL_TYPE.EXISTING; //reset the wall type to existing
+            setButtonValue();
        }
 
 
