@@ -1,29 +1,43 @@
 ﻿<%@ Page Title="New Project - Project Details" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NewProject.aspx.cs" Inherits="SunspaceWizard._Default" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <%-- Hidden div populating scripts 
+    =================================== --%>
+    <script>       
 
         function checkQuestion1() {
             if ($('#MainContent_radNewCustomer').is(':checked'))
             {
-                $('#MainContent_lblSpecsProjectTypeAnswer')
-                console.log("New Customer");
+                $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
+
+                $('#<%=hidFirstName.ClientID%>').text($('#MainContent_txtCustomerFirstName').val());
+                //document.getElementById("Hidden1").valueOf = "fuck";
+                //document.getElementById("Hidden1").s
+                $('#MainContent_hidLastName').text($('#MainContent_txtCustomerLastName').val());
+                $('#MainContent_hidAddress').text($('#MainContent_txtCustomerAddress').val());
+                $('#MainContent_hidCity').text($('#MainContent_txtCustomerCity').val());
+                $('#MainContent_hidZip').text($('#MainContent_txtCustomerZip').val());
+                $('#MainContent_hidPhone').text($('#MainContent_txtCustomerPhone').val());
+
+                console.log("New Customer " + $('#MainContent_hidFirstName').text() + $('#MainContent_hidLastName').text() + $('#MainContent_hidAddress').text()
+                    + $('#MainContent_hidCity').text() + $('#MainContent_hidZip').text() + $('#MainContent_hidPhone').text());
             }
             else if ($('#MainContent_radExistingCustomer').is(':checked'))
             {
-                console.log("Existing Customer");
+                $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing");
+                $('#hidExisting').text($('#MainContent_ddlCustomerFirstName').val());
+
+                console.log("Existing Customer" + $('#hidExisting').text());
             }
 
-            var slider = $('.bxslider').bxSlider({
-                mode: 'fade'
-            });
-            slider.goToNextSlide();
+            return false;
         }
     </script>
     <%-- End hidden div populating scripts --%>
 
     <%-- SLIDES (QUESTIONS)
     ======================================== 
-
+        
         onmousedown="event.preventDefault ? event.preventDefault() : event.returnValue = false"--%>
     <div class="slide-window"  >
 
@@ -135,7 +149,7 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" UseSubmitBehavior="false" runat="server" Text="Next Question" 
+                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" 
                      OnClientClick="checkQuestion1()"/>
 
             </div> 
@@ -601,7 +615,7 @@
 
     </div> 
     <%-- end .slide-window --%>
-
+    
 
     <%-- SLIDE PAGING (QUESTION NAVIGATION)
     ======================================== --%>
@@ -666,7 +680,6 @@
 
     <%-- Hidden div tags 
     ================= --%>
-    <input id="Hidden1" type="hidden" runat="server" />
     <div style="display: none">
         <div id="hidQuestion1"  > 
             <div id="hidExisting" runat="server">
@@ -741,21 +754,5 @@
             $('#lnkMainNavNewProject').addClass('active');
         });
     </script>
-    <%-- Hidden div populating scripts 
-    =================================== --%>
-    <script>
 
-        function checkQuestion1() {
-            if ($('#MainContent_radNewCustomer').is(':checked')) {
-                $('#MainContent_lblSpecsProjectTypeAnswer')
-                console.log("New Customer");
-            }
-            else if ($('#MainContent_radExistingCustomer').is(':checked')) {
-                console.log("Existing Customer");
-            }
-
-            $('.slide-window').scrollTo($('#slide2'), 600);
-        }
-    </script>
-    <%-- End hidden div populating scripts --%>
 </asp:Content>
