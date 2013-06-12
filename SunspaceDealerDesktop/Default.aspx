@@ -30,7 +30,14 @@
             <textarea id="drawingLog" rows="31" cols="30" style="resize:none; border:0px;" readonly></textarea>
         </div>
 
+    <input type="hidden" id="hiddenVar" runat="server" />
+    <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click1" />
+         
+
     <script>
+        //function testFunction() {
+            
+        //}
 
         //wall type enumeration
         var WALL_TYPE = {
@@ -145,7 +152,25 @@
                     startNewWall = true;
                 }
             }
+
+            else if (doneButton.value === "Done Drawing") {
+                
+                for (var i = 0; i < coordList.length; i++){
+                    for(var j = 0; j < 6; j++) {
+                        var hidden = document.createElement("input");
+                        hidden.setAttribute("type", "hidden");
+                        hidden.setAttribute("name", i);
+                        hidden.setAttribute("value", j);
+                    }
+                }
+
+
+                document.getElementById("MainContent_hiddenVar").value = coordList[0].id;
+            }
+    
         }
+
+
 
         //clear canvas
         function clearCanvas() {
@@ -808,7 +833,7 @@
             return validCoordinate; //return the validated coordinate
         }
 
-         
+
 
     </script>
 
