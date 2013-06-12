@@ -9,10 +9,8 @@
             if ($('#MainContent_radNewCustomer').is(':checked'))
             {
                 $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
-
-                $('#<%=hidFirstName.ClientID%>').text($('#MainContent_txtCustomerFirstName').val());
-                //document.getElementById("Hidden1").valueOf = "fuck";
-                //document.getElementById("Hidden1").s
+                document.getElementById("MainContent_Hidden1").value = $('#MainContent_txtCustomerFirstName').val();
+                $('#MainContent_hidFirstName').text($('#MainContent_txtCustomerFirstName').val());
                 $('#MainContent_hidLastName').text($('#MainContent_txtCustomerLastName').val());
                 $('#MainContent_hidAddress').text($('#MainContent_txtCustomerAddress').val());
                 $('#MainContent_hidCity').text($('#MainContent_txtCustomerCity').val());
@@ -680,6 +678,7 @@
 
     <%-- Hidden div tags 
     ================= --%>
+    <input id="Hidden1" type="hidden" runat="server" />
     <div style="display: none">
         <div id="hidQuestion1"  > 
             <div id="hidExisting" runat="server">
