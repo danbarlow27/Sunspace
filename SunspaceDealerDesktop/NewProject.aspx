@@ -55,9 +55,18 @@
     </div>
     <%-- end hidden divs --%>
 
+    <%-- Hidden div populating scripts 
+    =================================== --%>
+    <script>
+        function checkQuestion1() {
+
+        }
+    </script>
+    <%-- End hidden div populating scripts --%>
+
     <%-- SLIDES (QUESTIONS)
     ======================================== --%>
-    <div class="slide-window">
+    <div class="slide-window" onmousedown="event.preventDefault ? event.preventDefault() : event.returnValue = false">
 
         <div class="slide-wrapper">
             
@@ -167,7 +176,8 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" 
+                     />
 
             </div> 
             <%-- end #slide1 --%>
