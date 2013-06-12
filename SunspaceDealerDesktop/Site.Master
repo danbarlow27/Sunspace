@@ -106,7 +106,7 @@
 
             function slide(current) {
                 // scroll page to selected slide
-                $('.slide-window').scrollTo($(current).attr('data-slide'), 600);
+                $('.slide-window').scrollTo($(this).attr('data-slide'), 600);
             }
 
 
