@@ -10,7 +10,7 @@
             {
                 $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
 
-                $('#MainContent_hidFirstName').text($('#MainContent_txtCustomerFirstName').val());
+                $('#<%=hidFirstName.ClientID%>').text($('#MainContent_txtCustomerFirstName').val());
                 //document.getElementById("Hidden1").valueOf = "fuck";
                 //document.getElementById("Hidden1").s
                 $('#MainContent_hidLastName').text($('#MainContent_txtCustomerLastName').val());
@@ -680,7 +680,6 @@
 
     <%-- Hidden div tags 
     ================= --%>
-    <input id="Hidden1" type="hidden" runat="server" />
     <div style="display: none">
         <div id="hidQuestion1"  > 
             <div id="hidExisting" runat="server">
