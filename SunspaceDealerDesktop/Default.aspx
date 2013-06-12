@@ -635,6 +635,8 @@
             return validCoordinate;
         }
 
+
+        //function to validate internal walls
         function internalWalls() {
             var isValid = true;
             for (var i = 0; i < coordList.length; i++) {
