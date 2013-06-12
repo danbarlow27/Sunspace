@@ -383,9 +383,10 @@
         *@param x2 - second x coordinate of current line
         *@param y2 - second y coordinate of current line
         *@param mouseMove - boolean used to give an id to lines between drawn on mouse move event
+        *@return line - returns line object and all its attributes
         */
         function drawLine(x1, y1, x2, y2, mouseMove) {
-            var coordinates = setGridPoints(snapToGrid(x1, cellPadding), snapToGrid(y1, cellPadding), snapToGrid(x2, cellPadding), snapToGrid(y2, cellPadding));
+            var coordinates = setGridPoints(snapToGrid(x1, CELL_PADDING), snapToGrid(y1, CELL_PADDING), snapToGrid(x2, CELL_PADDING), snapToGrid(y2, CELL_PADDING));
 
             //Variables to hold starting/ending validated coordinates
             var coorx1 = coordinates.x1;
@@ -466,41 +467,52 @@
         };
 
         /**
-        *Find line orientation
+        *Find line orientation (string format)
         *@param x1 - first x coordinate of current line
         *@param y1 - first y coordinate of current line
         *@param x2 - second x coordinate of current line
         *@param y2 - second y coordinate of current line
-        *return orientation - variable containing compass direction
+        *@return orientation - variable containing compass direction (N, NE, E, SE, S, SW, W, NW)
         */
         function getStringOrientation(x1, y1, x2, y2) {
-            //Difference between
-            dX = x2 - x1;
-            dY = y2 - y1;
-            orientation = getOrientation(dX, dY);
+            //Variable to hold difference between x2 and x1 values
+            var dX = x2 - x1;
+            //Variable to hold difference between y2 and y1 values
+            var dY = y2 - y1;
+            //Variable to get orientation value, from 0 to 7
+            var orientation = getOrientation(dX, dY);
 
+            //Switch case on orientation values, from 0 to 7
             switch (orientation) {
+                //Case when orientation is 0, set orientation to "S"
                 case WALL_FACING.SOUTH:
                     orientation = "S";
                     break;
+                //Case when orientation is 4, set orientation to "N"
                 case WALL_FACING.NORTH:
                     orientation = "N";
                     break;
+                //Case when orientation is 1, set orientation to "SW"
                 case WALL_FACING.SOUTH_WEST:
                     orientation = "SW";
                     break;
+                //Case when orientation is 5, set orientation to "NE"
                 case WALL_FACING.NORTH_EAST:
                     orientation = "NE";
                     break;
+                //Case when orientation is 2, set orientation to "W"
                 case WALL_FACING.WEST:
                     orientation = "W";
                     break;
+                //Case when orientation is 6, set orientation to "E"
                 case WALL_FACING.EAST:
                     orientation = "E";
                     break;
+                //Case when orientation is 3, set orientation to "NW"
                 case WALL_FACING.NORTH_WEST:
                     orientation = "NW";
                     break;
+                //Case when orientation is 7, set orientation to "SE"
                 case WALL_FACING.SOUTH_EAST:
                     orientation = "SE";
                     break;
@@ -509,44 +521,73 @@
             return orientation;
         }
 
-        //orientation funtion
+        /**
+        *Find line orientation (number)
+        *@param dX - difference between the x coordinates of a line
+        *@param dY - difference between the y coordinates of a line
+        *@return - returns a value from 0 to 7 which determines which direction the line is going
+        */
         function getOrientation(dX, dY) {    
             return ((Math.round(Math.atan2(dY, dX) / (Math.PI / 4))) + 8) % 8;
         }
 
-        //Function to set the coordinate on a specific corner of the grid boxes
+        /**
+        *Sets the line to 45 degrees or straight line
+        *@param x1 - first x coordinate of current line
+        *@param y1 - first y coordinate of current line
+        *@param x2 - second x coordinate of current line
+        *@param y2 - second y coordinate of current line
+        *@return - an object which contains starting and ending coordinates for a valid line
+        */
         function setGridPoints(x1, y1, x2, y2) {
+            /**
+            *Finds the sign value for the axes differences
+            *@param val - difference between axes values (i.e. dX = (x2-x1))
+            *@return - positive or negative 1 to assign the direction to coordinates (i.e. -1 or 1)
+            */
             function sign(val) { return Math.abs(val) / val; }
 
-            var dX;
-            var dY;
+            var dX, dY;
             var length;
             var orientation;
 
+            //Calculates the difference between x values of the current line
             dX = x2 - x1;
+            //Calculates the difference between y values of the current line
             dY = y2 - y1;
+            //Find the orientation value (0 to 7)
             orientation = getOrientation(dX, dY);
 
+            //Switch case to handle line direction based off of orientation value
             switch (orientation) {
+                //Switch case when orientation is 0 or 4
                 case WALL_FACING.SOUTH:
                 case WALL_FACING.NORTH:
+                    //Changes y2 equal to y1, creates horizontal line
                     y2 = y1;
                     break;
+                //Switch case when orientation is 1 or 5
                 case WALL_FACING.SOUTH_WEST:
                 case WALL_FACING.NORTH_EAST:
+                    //Changes y2 to create a 45 degree line
                     y2 = y1 + sign(dY) * Math.abs(dX);
                     break;
+                //Switch case when orientation is 2 or 6
                 case WALL_FACING.WEST:
                 case WALL_FACING.EAST:
+                    //Changes x2 equal to x1, creates vertical line
                     x2 = x1;
                     break;
+                //Switch case when orientation is 3 or 7
                 case WALL_FACING.NORTH_WEST:
                 case WALL_FACING.SOUTH_EAST:
+                    //Changes x2 to create a 45 degree line
                     x2 = x1 + sign(dX) * Math.abs(dY);
                     break;
             }            
 
             return {
+                //Returns valid x1,y1,x2,y2 values
                 'x1': x1,
                 'y1': y1,
                 'x2': x2,
@@ -554,21 +595,31 @@
             };
         };
 
-        //determine if the sunroom is valid
+        /**
+        *Validates lines to see that the sunroom has been closed and snaps lines to their assumed end points
+        *@return isValid - boolean to say whether the room is valid or not
+        */
         function sunroomCompleted() {
+            //Variable to say whether or not the sunroom is valid
             var isValid = false;
+            //If logic to see that at least 1 wall exist
             if (coordList.length < MIN_NUMBER_OF_WALLS)
+                //Alert to tell the user there current error
                 alert("A complete sunroom must be enclosed (3 walls minimum). Please try again!");
+                //Else if to check for standAlone rooms and if the room is closed
             else if (standAlone && coordList[coordList.length - 1].attr("x2") != coordList[0].x1)
+                //Alert to tell the user there current error
                 alert("A stand-alone sunroom must end at the start of the starting wall. Please try again!");
+                //Else if logic to check for non-standAlone rooms
             else if (!standAlone) {
+                //Assign isValid the value returned by validateNotStandAlone()
                 isValid = validateNotStandAlone();
             }
+                //Else, sunroom is ok, isValid is set to true
             else
                 isValid = true;
 
-            alert(isValid);
-
+            //return isValid based on above logic
             return isValid;
             }
 
