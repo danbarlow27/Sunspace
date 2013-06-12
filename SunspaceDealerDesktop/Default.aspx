@@ -385,7 +385,7 @@
         *@param mouseMove - boolean used to give an id to lines between drawn on mouse move event
         */
         function drawLine(x1, y1, x2, y2, mouseMove) {
-            var coordinates = setGridPoints(snapToGrid(x1, cellPadding), snapToGrid(y1, cellPadding), snapToGrid(x2, cellPadding), snapToGrid(y2, cellPadding));
+            var coordinates = setGridPoints(snapToGrid(x1, CELL_PADDING), snapToGrid(y1, CELL_PADDING), snapToGrid(x2, CELL_PADDING), snapToGrid(y2, CELL_PADDING));
 
             //Variables to hold starting/ending validated coordinates
             var coorx1 = coordinates.x1;
@@ -633,51 +633,64 @@
 
         
 
-        //Used in validateNotStandAlone only
-        function findIntercept(i) {
-            var cx2;
-            var cx1;
-            var cy2;
-            var cy1;
+        /**
+        This function runs through all of the lines in the list, and finds 
+            the intercepting point between each line and the last drawn line
+        @param lineNumber - the number of line for which we need to find intercept
+        @return - a line object with the intercept point, the starting and ending coordinates, and the determinant
+        */
+        function findIntercept(lineNumber) {
 
-            var A1;
-            var B1;
-            var C1;
+            //the following variables hold the starting and ending x and y coordinates of a given line
+            var cx2, cx1, cy2, cy1;
 
-            var A2;
-            var B2;
-            var C2;
+            //the following variables will be used for the line equation of the given line
+            var A1, B1, C1;
 
-            cx2 = coordList[i].x2;
-            cx1 = coordList[i].x1;
-            cy2 = coordList[i].y2;
-            cy1 = coordList[i].y1;
+            //the following variables will be used for the line equation of the last drawn line
+            var A2, B2, C2;
 
+            //initialize the given line coordinate variables, retrieving the coordinates from the list
+            cx2 = coordList[lineNumber].x2; //initialize x2
+            cx1 = coordList[lineNumber].x1; //initialize x1
+            cy2 = coordList[lineNumber].y2; //initialize y2
+            cy1 = coordList[lineNumber].y1; //initialize y1
+
+            //calculate A1 for use in the line equation for the given line
             A1 = cy2 - cy1;
+            //calculate B1 for use in the line equation for the given line
             B1 = cx1 - cx2;
+            //make the line equation for the given line with A1, B1, and coordinates of the line
             C1 = A1 * cx1 + B1 * cy1;
 
-            cx2 = coordList[coordList.length - 1].x2;
-            cx1 = coordList[coordList.length - 1].x1;
-            cy2 = coordList[coordList.length - 1].y2;
-            cy1 = coordList[coordList.length - 1].y1;
+            //initialize the last drawn line coordinate variables, retrieving the coordinates from the list
+            cx2 = coordList[coordList.length - 1].x2; //initialize x2
+            cx1 = coordList[coordList.length - 1].x1; //initialize x1
+            cy2 = coordList[coordList.length - 1].y2; //initialize y2
+            cy1 = coordList[coordList.length - 1].y1; //initialize y1
 
+            //calculate A1 for use in the line equation for the last drawn line
             A2 = cy2 - cy1;
+            //calculate B1 for use in the line equation for the last drawn line
             B2 = cx1 - cx2;
+            //make the line equation for the last drawn line with A1, B1, and coordinates of the line
             C2 = A2 * cx1 + B2 * cy1;
 
+            //calculate the determinant 
             var det = (A1 * B2) - (A2 * B1);
+            //calculate the x value of the intercepting point
             var x = (B2 * C1 - B1 * C2) / det;
+            //calculate the y value of the intercepting point
             var y = (A1 * C2 - A2 * C1) / det;
 
             return {
-                "det": det,
-                "x": x,
-                "y": y,
-                "x1": cx1,
-                "y1": cy1,
-                "y2": cy2,
-                "x2": cx2
+                "det": det, //return the determinant (0 if parallel)
+                "x": x, //return the x coordinate of the intercept point
+                "y": y, //return the y coordinate of the intercept point
+                "x1": cx1, //return the initial x coordinate of the line
+                "y1": cy1, //return the initial y coordinate of the line
+                "y2": cy2, //return the ending x coodinate of the line
+                "x2": cx2 //return the ending y coordinate of the line
             };
         }
 
@@ -686,26 +699,32 @@
         function snaps each drawn line to the corners of each cell in the grid;
             this prevents irregular lines being drawn
         @param coordinate - all of the coordinates (x1, y1, x2, y2), will be sent for snapping individually
+        @return - return the new (snapped to grid) coordinate
         */
         function snapToGrid(coordinate) {
+            //set to true or false depending on if the coordinate is less than cell padding * number of cells
             var endLoop = false;
+            //initialize a counter to count the number of cells the coordinate is in
             var count = 0;
+            //used to store validated coordinate
             var validCoordinate = 0;
 
+            //run through a loop 
             while (!endLoop) {
-                count++;
-                if (coordinate <= CELL_PADDING * count) {
-                    endLoop = true;
-                    count--;
+                count++;// increment the counter every time the loop runs
+                if (coordinate <= CELL_PADDING * count) { //if coordinate is less than cell padding * number of cells
+                    endLoop = true; //end the loop
+                    count--; //decrement the counter
                 }
             }
 
+            //if coordinate is closer to the one side of the grid line
             if ((coordinate - (count * CELL_PADDING)) <= CELL_PADDING / 2)
-                validCoordinate = CELL_PADDING * count;
-            else
-                validCoordinate = CELL_PADDING * (count + 1);
+                validCoordinate = CELL_PADDING * count; //snap it to this line
+            else //if coordinate is closer to the other side of the grid line
+                validCoordinate = CELL_PADDING * (count + 1); //snap it to the other line
 
-            return validCoordinate;
+            return validCoordinate; //return the validated coordinate
         }
 
 
