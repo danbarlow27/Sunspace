@@ -231,11 +231,13 @@
         //Draw the grid lines
         function drawGrid() {
 
+            //Creates rectangle area to draw in based on max canvas dimensions
             var rect = canvas.append("rect")
                         .attr("width", MAX_CANVAS_WIDTH)
                         .attr("height", MAX_CANVAS_WIDTH)
                         .attr("fill", "white")
 
+            //Draws left border line of canvas
             var line = canvas.append("line")
                         .attr("x1", 0)
                         .attr("y1", 0)
@@ -243,6 +245,7 @@
                         .attr("y2", MAX_CANVAS_WIDTH)
                         .attr("stroke", "black");
 
+            //Draws top border line of canvas
             var line = canvas.append("line")
                         .attr("x1", 0)
                         .attr("y1", 0)
@@ -250,6 +253,7 @@
                         .attr("y2", 0)
                         .attr("stroke", "black");
 
+            //Draws bottom border line of canvas
             var line = canvas.append("line")
                         .attr("x1", 0)
                         .attr("y1", MAX_CANVAS_WIDTH)
@@ -257,6 +261,7 @@
                         .attr("y2", MAX_CANVAS_WIDTH)
                         .attr("stroke", "black");
 
+            //Draws right border line of canvas
             var line = canvas.append("line")
                         .attr("x1", MAX_CANVAS_WIDTH)
                         .attr("y1", 0)
@@ -264,6 +269,7 @@
                         .attr("y2", MAX_CANVAS_WIDTH)
                         .attr("stroke", "black");
 
+            //Draws vertical lines of the grid onto the canvas
             for (var i = 0; i < MAX_CANVAS_WIDTH; i += cellPadding) {
                 var line = canvas.append("line")
                         .attr("x1", i + cellPadding)
@@ -272,6 +278,8 @@
                         .attr("y2", MAX_CANVAS_WIDTH)
                         .attr("stroke", "grey");
             }
+
+            //Draws horizontal lines of the grid onto the canvas
             for (var i = 0; i < MAX_CANVAS_WIDTH; i += cellPadding) {
                 var line = canvas.append("line")
                         .attr("x1", 0)
@@ -284,8 +292,10 @@
         }
         //end of grid
 
+        //Draws the initial grid
         drawGrid();
 
+        //Gets the current mouse position on the canvas/grid
         function getMousePos(myCanvas, evt) {
             var rect = myCanvas.getBoundingClientRect();
             return {
@@ -294,32 +304,43 @@
             };
         };
 
+        //On click event listener for the canvas/grid
         svgGrid.addEventListener("click",
         function (evt) {
+            //Variable to hold the values return by getMousePos. X and Y coordinates within the canvas/grid
             var mousePos = getMousePos(svgGrid, evt);
 
-            console.log("array length: " + coordList.length);
+            //console.log("array length: " + coordList.length);
 
-            //startNewWall++;
-
+            //If startNewWall is true, set the first pair of coordinates to the current mouse position
+            //Used to define when the first click of on the canvas and reset removed array elements
             if (startNewWall === true) {
                 x1 = mousePos.x;
                 y1 = mousePos.y;
+
+                //Set startNewWall to false to find logic to complete line coordinates
                 startNewWall = false;
 
+                //Delete all entries into removed array
                 removed = new Array();
 
             }
+                //Logic for clicks after initial click to draw lines and store values into an array
             else {
+                //Find 2nd pair of coordinates based on current mouse position within the canvas/grid
                 x2 = mousePos.x;
                 y2 = mousePos.y;
 
+                //Draw the line and store the line into a variable named "line"
                 var line = drawLine(x1, y1, x2, y2, false);
 
+                //Find the orientation in string format to be stored into the array to be passed to C# classes
                 var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
 
+                //Store line starting and ending coordinates, along with line id and string orientation
                 coordList[coordList.length] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation};
                 
+                //Restart the start position for the next line to be drawn
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
             }
