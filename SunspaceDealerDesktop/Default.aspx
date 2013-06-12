@@ -99,6 +99,8 @@
             window.onload = buttonDoneOnLoad(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
         });
         
+        //On keypress "e" start new line on the grid
+        $(document).on('keypress', function (e) { if (e.which === 101) { startNewWall = true; }});
 
         //set the name (value) of the "Done" button to the default value
         function buttonDoneOnLoad() {
@@ -300,6 +302,12 @@
                 y: evt.clientY - rect.top
             };
         };
+
+        svgGrid.addEventListener("dblclick",
+        function (evt) {
+            startNewWall = true;
+        },
+        false);
 
         //On click event listener for the canvas/grid
         svgGrid.addEventListener("click",
