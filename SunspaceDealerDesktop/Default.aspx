@@ -441,24 +441,40 @@
             }
                 //If wall type is proposed do following logic
             else if (wallType === WALL_TYPE.PROPOSED) {
-                //
+                //Make line id P for proposed wall
                 line.attr("id", "P")
+                    //Change the line color to black
                     .attr("stroke", "black")
+                    //Make stroke width to 2
                     .attr("stroke-width", 2);
             }
             else if (wallType === WALL_TYPE.INTERNAL) {
+                //Make line id P for internal wall
                 line.attr("id", "I")
+                    //Change the line color to black
                     .attr("stroke", "black")
+                    //Make stroke width to 1
                     .attr("stroke-width", 1);
             }
             
+            //If logic to change line id on mousemove event, if mouseMove is true
             if (mouseMove)
                 line.attr("id", "mouseMoveLine");
 
+            //Return the line
             return line;
         };
 
+        /**
+        *Find line orientation
+        *@param x1 - first x coordinate of current line
+        *@param y1 - first y coordinate of current line
+        *@param x2 - second x coordinate of current line
+        *@param y2 - second y coordinate of current line
+        *return orientation - variable containing compass direction
+        */
         function getStringOrientation(x1, y1, x2, y2) {
+            //Difference between
             dX = x2 - x1;
             dY = y2 - y1;
             orientation = getOrientation(dX, dY);
