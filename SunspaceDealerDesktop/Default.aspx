@@ -12,21 +12,30 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <div style="width:500px; height:500px;" id="mySunroom"></div>    
-    <p> &nbsp; </p>
-
-    <input type="button" value ="Undo" onclick="undo(true)" />
-
-    <input type="button" value ="Clear Canvas" onclick ="clearCanvas()"/>
-
-    <input id="buttonDone" type="button" value ="" onclick="buttonDoneOnClick()"/>
-
-    <input type="button" value ="Redo" onclick="redo()" />
-
-    <input type="hidden" id="lineArrayInfo" runat="server" />
     
+        <div id="buttons" style="width:20%; float:left; text-align:center;">
+            <ol>
+                <li><input type="button" value ="Undo" onclick="undo(true)" /></li>
+
+                <li><input type="button" value ="Clear Canvas" onclick ="clearCanvas()"/></li>
+
+                <li><input id="buttonDone" type="button" value ="" onclick="buttonDoneOnClick()"/></li>
+
+                <li><input type="button" value ="Redo" onclick="redo()" /></li>
+
+                <li><input type="hidden" id="lineArrayInfo" runat="server" /></li>
+            </ol>
+        </div>
+        <div style="width:500px; height:500px; float:left;" id="mySunroom"></div>
+        <div style="width:20%; float:right;" id="actionsText"><p>This might work</p></div>
+    
+    <p> &nbsp; </p>   
 
     <script>
+
+        var buttons = document.getElementById("buttons");
+
+        buttons.className = hopeThisWorks;
 
         //wall type enumeration
         var WALL_TYPE = {
