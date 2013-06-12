@@ -469,11 +469,11 @@ input[type="radio"]:checked + label:active {
 }
 
 .slide-wrapper {
-    width: 700%; /* 100% * total # slides */
+    width: 800%; /* 100% * total # slides */
 }
 
 .slide {
-    width: 14.285714285714285714285714285714%; /* 100% / total # slides */
+    width: 12.5%; /* 100% / total # slides */
     float: left;    
 }
 

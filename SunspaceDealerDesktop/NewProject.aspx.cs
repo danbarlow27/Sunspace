@@ -13,5 +13,11 @@ namespace SunspaceWizard
         {
 
         }
+
+        protected void btnLayout_Click(object sender, EventArgs e)
+        {
+            //If custom btnLayout, Page 2, else, page3
+            Response.Redirect("http://www.google.ca");
+        }
     }
 }

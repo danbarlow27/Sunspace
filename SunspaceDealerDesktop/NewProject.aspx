@@ -1,15 +1,67 @@
 ﻿<%@ Page Title="New Project - Project Details" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NewProject.aspx.cs" Inherits="SunspaceWizard._Default" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <%-- Hidden div tags 
+    ================= --%>
+    <div style="display: none">
+        <div id="hidQuestion1"  > 
+            <div id="hidExisting"  />
+            <div id="hidFirstName"  />
+            <div id="hidLastName"  />
+            <div id="hidAddress"  />
+            <div id="hidCity"  />
+            <div id="hidZip"  />
+            <div id="hidPhone"  />
+        </div>
 
-   
+        <div id="hidQuestion2" >
+            <div id="hidProjectTag"  />
+        </div>
+
+        <div id="hidQuestion3" >
+            <div id="hidProjectType"  />
+            <div id="hidModelNumber"  />
+        </div>
+
+        <div id="hidQuestion4" >
+            <div id="hidKneewallType"  />
+            <div id="hidKneewallColour"  />
+            <div id="hidKneewallHeight"  />
+            <div id="hidTransomType"  />
+            <div id="hidTransomColour"  />
+            <div id="hidTransomHeight"  />
+            <div id="hidInteriorColour"  />
+            <div id="hidInteriorSkin"  />
+            <div id="hidExteriorColour"  />
+            <div id="hidExteriorSkin"  />
+        </div>
+
+        <div id="hidQuestion5" >
+            <div id="hidFoamProtected"  />
+        </div>
+
+        <div id="hidQuestion6" >
+            <div id="hidPrefabFloor"  />
+        </div>
+
+        <div id="hidQuestion7" >
+            <div id="hidRoof"  />
+            <div id="hidRoofType"  />
+        </div>
+
+        <div id="hidQuestion8" >
+            <div id="hidLayoutSelection"  />
+        </div>
+    </div>
+    <%-- end hidden divs --%>
+
     <%-- SLIDES (QUESTIONS)
     ======================================== --%>
     <div class="slide-window" onmousedown="event.preventDefault ? event.preventDefault() : event.returnValue = false">
 
         <div class="slide-wrapper">
             
-            <%-- QUESTION 1 
+            <%-- QUESTION 1 - New or existing customer
             ======================================== --%>
             <div id="slide1" class="slide">
 
@@ -117,10 +169,11 @@
 
                 <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
 
-            </div> <%-- end #slide1 --%>
+            </div> 
+            <%-- end #slide1 --%>
 
 
-            <%-- QUESTION 2
+            <%-- QUESTION 2 - Project tag
             ======================================== --%>
             <div id="slide2" class="slide">
                 
@@ -129,7 +182,6 @@
                 </h1> 
 
                 <ul class="toggleOptions">
-
                     <li>
                         <asp:Table ID="tblProjectName" CssClass="tblTxtFields" runat="server">
                             <asp:TableRow>
@@ -148,10 +200,11 @@
 
                 <asp:Button ID="btnQuestion2" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
 
-            </div> <%-- end #slide2 --%>
+            </div> 
+            <%-- end #slide2 --%>
 
 
-            <%-- QUESTION 3
+            <%-- QUESTION 3 - What type of project?
             ======================================== --%>
             <div id="slide3" class="slide">
 
@@ -301,7 +354,8 @@
 
                 <asp:Button ID="btnQuestion3" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
-            </div> <%-- end #slide3 --%>
+            </div> 
+            <%-- end #slide3 --%>
 
             
             <%-- QUESTION 4 - Styling Options
@@ -394,7 +448,8 @@
 
                 <asp:Button ID="btnNext2" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" />
 
-            </div> <%-- end #slide4 --%>
+            </div> 
+            <%-- end #slide4 --%>
 
 
             <%-- QUESTION 5 - Foam Protection
@@ -423,7 +478,8 @@
 
                 <asp:Button ID="btnFoamProtected" CssClass="btnSubmit float-right slidePanel" data-slide="#slide6" runat="server" Text="Next Question" />
 
-            </div> <%-- end #slide5 --%>
+            </div> 
+            <%-- end #slide5 --%>
 
             <%-- QUESTION 6 - Prefab Floor
             ======================================== --%>
@@ -451,7 +507,8 @@
 
                 <asp:Button ID="btnPrefabFloor" CssClass="btnSubmit float-right slidePanel" data-slide="#slide7" runat="server" Text="Next Question" />
 
-            </div> <%-- end #slide6 --%>
+            </div> 
+            <%-- end #slide6 --%>
 
             <%-- QUESTION 7 - Roof
             ======================================== --%>
@@ -467,6 +524,26 @@
                         <asp:RadioButton ID="radRoofYes" GroupName="roof" runat="server" />
                         <asp:Label ID="lblRoofYesRadio" AssociatedControlID="radRoofYes" runat="server"></asp:Label>
                         <asp:Label ID="lblRoofYes" AssociatedControlID="radRoofYes" runat="server" Text="Yes"></asp:Label>
+
+                        <div class="toggleContent">
+                            <ul>
+                                <li>
+                                    <asp:RadioButton ID="radStudio" GroupName="roof" runat="server" />
+                                    <asp:Label ID="lblStudioRadio" AssociatedControlID="radStudio" runat="server"></asp:Label>
+                                    <asp:Label ID="lblStudio" AssociatedControlID="radStudio" runat="server" Text="Studio"></asp:Label>
+                                </li>
+                                <li>
+                                    <asp:RadioButton ID="radDealerGable" GroupName="roof" runat="server" />
+                                    <asp:Label ID="lblDealerGableRadio" AssociatedControlID="radDealerGable" runat="server"></asp:Label>
+                                    <asp:Label ID="lblDealerGable" AssociatedControlID="radDealerGable" runat="server" Text="Dealer gable"></asp:Label>
+                                </li>
+                                <li>
+                                    <asp:RadioButton ID="radSunspaceGable" GroupName="roof" runat="server" />
+                                    <asp:Label ID="lblSunspaceGableRadio" AssociatedControlID="radSunspaceGable" runat="server"></asp:Label>
+                                    <asp:Label ID="lblSunspaceGable" AssociatedControlID="radSunspaceGable" runat="server" Text="Sunspace gable"></asp:Label>
+                                </li>
+                            </ul>
+                        </div> <%-- end 'yes' option --%>
                     </li>
 
                     <li>
@@ -477,12 +554,82 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="Button1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide7" runat="server" Text="Next Question" />
+                <asp:Button ID="btnRoof" CssClass="btnSubmit float-right slidePanel" data-slide="#slide8" runat="server" Text="Next Question" />
 
-            </div> <%-- end #slide7 --%>
+            </div> 
+            <%-- end #slide7 --%>
+
+            <%-- QUESTION 8 - Layout
+            ======================================== --%>
+            <div id="slide8" class="slide">
+                
+                <h1>
+                    <asp:Label ID="lblLayout" runat="server" Text="Please choose a sunroom layout."></asp:Label>
+                </h1> 
+
+                <ul class="toggleOptions">
+
+                    <li>
+                        <asp:RadioButton ID="radPreset1" GroupName="layout" runat="server" />                        
+                        <asp:Label ID="lblPreset1Radio" AssociatedControlID="radPreset1" runat="server"></asp:Label>
+                        <asp:Image ID="imbPreset1" GroupName="layout" AssociatedControlID="radPreset1" AlternateText="missing preset image" ImageUrl="./images/layout/Preset1.png" runat="server" />                  
+                    </li>
+                    <li>
+                        <asp:RadioButton ID="radPreset2" GroupName="layout" runat="server" />
+                        <asp:Image ID="imbPreset2" GroupName="layout" AssociatedControlID="radPreset2" AlternateText="missing preset image" ImageUrl="./images/layout/Preset2.png" runat="server" />                  
+                    </li>
+                    <li>
+                        <asp:RadioButton ID="radPreset3" GroupName="layout" runat="server" />
+                        <asp:Image ID="imbPreset3" GroupName="layout" AssociatedControlID="radPreset3" AlternateText="missing preset image" ImageUrl="./images/layout/Preset3.png" runat="server" />                  
+                    </li>
+                    <li>
+                        <asp:RadioButton ID="radPreset4" GroupName="layout" runat="server" />
+                        <asp:Image ID="imbPreset4" GroupName="layout" AssociatedControlID="radPreset4" AlternateText="missing preset image" ImageUrl="./images/layout/Preset4.png" runat="server" />                  
+                    </li>
+                    <li>
+                        <asp:RadioButton ID="radPreset5" GroupName="layout" runat="server" />
+                        <asp:Image ID="imbPreset5" GroupName="layout" AssociatedControlID="radPreset5" AlternateText="missing preset image" ImageUrl="./images/layout/Preset5.png" runat="server" />                  
+                    </li>
+                    <li>
+                        <asp:RadioButton ID="radPreset6" GroupName="layout" runat="server" />
+                        <asp:Image ID="imbPreset6" GroupName="layout" AssociatedControlID="radPreset6" AlternateText="missing preset image" ImageUrl="./images/layout/Preset6.png" runat="server" />                  
+                    </li>
+                    <li>
+                        <asp:RadioButton ID="radPreset7" GroupName="layout" runat="server" />
+                        <asp:Image ID="imbPreset7" GroupName="layout" AssociatedControlID="radPreset7" AlternateText="missing preset image" ImageUrl="./images/layout/Preset7.png" runat="server" />                  
+                    </li>
+                    <li>
+                        <asp:RadioButton ID="radPreset8" GroupName="layout" runat="server" />
+                        <asp:Image ID="imbPreset8" GroupName="layout" AssociatedControlID="radPreset8" AlternateText="missing preset image" ImageUrl="./images/layout/Preset8.png" runat="server" />                  
+                    </li>
+                    <li>
+                        <asp:RadioButton ID="radPreset9" GroupName="layout" runat="server" />
+                        <asp:Image ID="imbPreset9" GroupName="layout" AssociatedControlID="radPreset9" AlternateText="missing preset image" ImageUrl="./images/layout/Preset9.png" runat="server" />                  
+                    </li>
+                    <li>
+                        <asp:RadioButton ID="radPreset10" GroupName="layout" runat="server" />
+                        <asp:Image ID="imbPreset10" GroupName="layout" AssociatedControlID="radPreset10" AlternateText="missing preset image" ImageUrl="./images/layout/Preset10.png" runat="server" />                  
+                    </li>
+                    <li>
+                        <asp:RadioButton ID="radPresetF1" GroupName="layout" runat="server" />
+                        <asp:Image ID="imbPresetF1" GroupName="layout" AssociatedControlID="radPresetF1" AlternateText="missing preset image" ImageUrl="./images/layout/PresetS1.png" runat="server" />                  
+                    </li>
+                    <li>
+                        <asp:RadioButton ID="radPresetC1" GroupName="layout" runat="server" />
+                        <asp:Image ID="imbPresetC1" GroupName="layout" AssociatedControlID="radPresetC1" AlternateText="missing preset image" ImageUrl="./images/layout/PresetC1.png" runat="server" />                  
+                    </li>
+
+                    <asp:Button ID="btnLayout" CssClass="btnSubmit float-right slidePanel" Text="Confirm all selections" runat="server" OnClick="btnLayout_Click"/>
+
+                </ul> <%-- end .toggleOptions --%>
+
+            </div> 
+            <%-- end #slide8 --%>
+
         </div> <%-- end .slide-wrapper --%>
 
-    </div> <%-- end .slide-window --%>
+    </div> 
+    <%-- end .slide-window --%>
 
 
     <%-- SLIDE PAGING (QUESTION NAVIGATION)
@@ -500,39 +647,46 @@
                 </li>
                 <li>
                     <a href="#" data-slide="#slide2" class="slidePanel">
-                        <asp:Label ID="Label28" runat="server" Text="Question 2"></asp:Label>
+                        <asp:Label ID="Label28" runat="server" Text="Project tag"></asp:Label>
                         <asp:Label ID="Label29" runat="server" Text="Question 2 Answer"></asp:Label>
                     </a>
                 </li>
                 <li>
                     <a href="#" data-slide="#slide3" class="slidePanel">
-                        <asp:Label ID="Label37" runat="server" Text="Question 3"></asp:Label>
+                        <asp:Label ID="Label37" runat="server" Text="Type of project"></asp:Label>
                         <asp:Label ID="Label38" runat="server" Text="Question 3 Answer"></asp:Label>
                     </a>
                 </li>
                 <li>
                     <a href="#" data-slide="#slide4" class="slidePanel">
-                        <asp:Label ID="Label27" runat="server" Text="Question 4"></asp:Label>
+                        <asp:Label ID="Label27" runat="server" Text="Styling options"></asp:Label>
                         <asp:Label ID="Label30" runat="server" Text="Question 4 Answer"></asp:Label>
                     </a>
                 </li>
                 <li>
                     <a href="#" data-slide="#slide5" class="slidePanel">
-                        <asp:Label ID="Label31" runat="server" Text="Question 5"></asp:Label>
+                        <asp:Label ID="Label31" runat="server" Text="Foam protection"></asp:Label>
                         <asp:Label ID="Label32" runat="server" Text="Question 5 Answer"></asp:Label>
                     </a>
                 </li>                
                 <li>
                     <a href="#" data-slide="#slide6" class="slidePanel">
-                        <asp:Label ID="Label1" runat="server" Text="Question 6"></asp:Label>
+                        <asp:Label ID="Label1" runat="server" Text="Prefab floor"></asp:Label>
                         <asp:Label ID="Label2" runat="server" Text="Question 6 Answer"></asp:Label>
                     </a>
                 </li>
                 
                 <li>
                     <a href="#" data-slide="#slide7" class="slidePanel">
-                        <asp:Label ID="Label3" runat="server" Text="Question 7"></asp:Label>
+                        <asp:Label ID="Label3" runat="server" Text="Roof"></asp:Label>
                         <asp:Label ID="Label4" runat="server" Text="Question 7 Answer"></asp:Label>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" data-slide="#slide8" class="slidePanel">
+                        <asp:Label ID="Label5" runat="server" Text="Layout"></asp:Label>
+                        <asp:Label ID="Label6" runat="server" Text="Question 8 Answer"></asp:Label>
                     </a>
                 </li>
             </ul>    
