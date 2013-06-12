@@ -58,7 +58,7 @@
         var MIN_NUMBER_OF_WALLS = 3;
 
         //cell padding determines the size of each square in the grid 
-        var cellPadding = 25;
+        var CELL_PADDING = 25;
 
         //max size of canvas (width and height)
         var MAX_CANVAS_WIDTH = 500;
@@ -270,22 +270,22 @@
                         .attr("stroke", "black");
 
             //Draws vertical lines of the grid onto the canvas
-            for (var i = 0; i < MAX_CANVAS_WIDTH; i += cellPadding) {
+            for (var i = 0; i < MAX_CANVAS_WIDTH; i += CELL_PADDING) {
                 var line = canvas.append("line")
-                        .attr("x1", i + cellPadding)
+                        .attr("x1", i + CELL_PADDING)
                         .attr("y1", 0)
-                        .attr("x2", i + cellPadding)
+                        .attr("x2", i + CELL_PADDING)
                         .attr("y2", MAX_CANVAS_WIDTH)
                         .attr("stroke", "grey");
             }
 
             //Draws horizontal lines of the grid onto the canvas
-            for (var i = 0; i < MAX_CANVAS_WIDTH; i += cellPadding) {
+            for (var i = 0; i < MAX_CANVAS_WIDTH; i += CELL_PADDING) {
                 var line = canvas.append("line")
                         .attr("x1", 0)
-                        .attr("y1", i + cellPadding)
+                        .attr("y1", i + CELL_PADDING)
                         .attr("x2", MAX_CANVAS_WIDTH)
-                        .attr("y2", i + cellPadding)
+                        .attr("y2", i + CELL_PADDING)
                         .attr("stroke", "grey");
             }
 
@@ -385,8 +385,6 @@
         *@param mouseMove - boolean used to give an id to lines between drawn on mouse move event
         */
         function drawLine(x1, y1, x2, y2, mouseMove) {
-
-            //Variable to hold coordinates that have been snapped to the grid and made be only straight or 45 degree angle lines
             var coordinates = setGridPoints(snapToGrid(x1, cellPadding), snapToGrid(y1, cellPadding), snapToGrid(x2, cellPadding), snapToGrid(y2, cellPadding));
 
             //Variables to hold starting/ending validated coordinates
@@ -397,8 +395,8 @@
 
             //Variables to hold the difference between the ending and starting points of x and y axes
             var dY = coory2 - coory1;
-            var dX = coorx2 - coorx1;            
-            
+            var dX = coorx2 - coorx1;
+
             //if (!mouseMove)
             //   console.log(coorx2 + "," + coory2);
 
@@ -574,70 +572,78 @@
             return isValid;
             }
 
+        /**
+        function to validate external walls when its not a standAlone sunroom
+        @return isValid - true or false depending on whether the wall is drawn properly or not
+        */
         function validateNotStandAlone() {
 
+            //array of calculated distances to determine the shortest distance
             var distanceBetweenLines = new Array();            
 
+            //for storing the shortest calculated distance
             var shortest;
 
-            var distance;
-
+            //true or false depending on whether the drawn wall is valid
             var isValid = false;
 
-            //var numberOfWallTypes = (internal) ? 3 : (proposed) ? 2 : 1;
-            
-
-            //var numberOfExistingWalls = 0;
-
+            //to store the wall number of the wall with shortest distance to the intercept
             var shortestDistanceWallNumber;
 
-            //var slopes = getAllSlopes();
 
             //Needs functionality to handle existing wall corners
+            
+            //run through the list of lines
             for (var i = 0; i < coordList.length; i++) {
+                //if it is an existing wall...
                 if (coordList[i].id === WALL_TYPE.EXISTING) {
 
+                    //find intercept
                     var intercept = findIntercept(i);
 
-                    //numberOfExistingWalls++;
-
+                    //if determinant is 0 means its a parallel line, meaning no intercept
                     if (intercept.det === 0) {
-                        //lines are parallel
                         //alert("Sunroom must be enclosed. Please add another wall.");
                         //isValid = false;
                     }
-                    else {
-                        isValid = true;
+                    else {//there is an intercept
+                        isValid = true; //thus valid
 
+                        //if the last proposed line is not closing off at the intercept..
                         if (intercept.x != coordList[coordList.length - 1].x2 || intercept.y != coordList[coordList.length - 1].y2) {
-                            //distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))
+                            
+                            //calculate the distance between the end of the last proposed line and the intercept
                             distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x2), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y2), 2)), "x": intercept.x, "y": intercept.y };
 
-                            shortest = MAX_CANVAS_WIDTH; //arbitrary long number
-                            for (var i = 0; i < distanceBetweenLines.length; i++) {
+                            //determine the shortest distance between all the intercepts
+                            shortest = MAX_CANVAS_WIDTH; //arbitrary long number for getting at the shortest distance
 
+                            //loop through all the lines and determine the shortest distance
+                            for (var i = 0; i < distanceBetweenLines.length; i++) {
+                                //if the calculated distance is less than the shortest distance...
                                 if (distanceBetweenLines[i].distance < shortest) {
-                                    shortest = distanceBetweenLines[i].distance;
-                                    shortestDistanceWallNumber = i;
+                                    shortest = distanceBetweenLines[i].distance; //set shortest distance to the calculated distance
+                                    shortestDistanceWallNumber = i; //store the wall number for the shortest distance
                                 }
                             }
-                            alert(intercept.x2 + " , If");
 
+                            //undo the last drawn line, to be redrawn properly (i.e. snapped to the coordinate)
                             undo(false);
 
-                            //alert(distanceBetweenLines[shortestDistanceWallNumber].x);
-
+                            //draw the snapped line
                             var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
 
+                            //store the new line into the list
                             coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
 
+                            //set the starting coordinates of the next line to the ending coordinates of this line
                             x1 = line.attr("x2");
                             y1 = line.attr("y2");
                         }
                     }
                 }
             }            
-
+            //return valid 
             return isValid;
         }
 
@@ -691,74 +697,94 @@
             };
         }
 
-        function snapToGrid(coordinate, cellPadding) {
+
+        /**
+        function snaps each drawn line to the corners of each cell in the grid;
+            this prevents irregular lines being drawn
+        @param coordinate - all of the coordinates (x1, y1, x2, y2), will be sent for snapping individually
+        */
+        function snapToGrid(coordinate) {
             var endLoop = false;
             var count = 0;
             var validCoordinate = 0;
 
             while (!endLoop) {
                 count++;
-                if (coordinate <= cellPadding * count) {
+                if (coordinate <= CELL_PADDING * count) {
                     endLoop = true;
                     count--;
                 }
             }
 
-            if ((coordinate - (count * cellPadding)) <= cellPadding / 2)
-                validCoordinate = cellPadding * count;
+            if ((coordinate - (count * CELL_PADDING)) <= CELL_PADDING / 2)
+                validCoordinate = CELL_PADDING * count;
             else
-                validCoordinate = cellPadding * (count + 1);
+                validCoordinate = CELL_PADDING * (count + 1);
 
             return validCoordinate;
         }
 
 
-        //function to validate internal walls
+        /**
+        function to validate internal walls
+        @return isValid - true or false depending on whether the wall is drawn properly or not
+        */
         function internalWalls() {
-            var isValid = true;
+            //true or false depending on whether the drawn wall is valid 
+            var isValid = true; //true by default
+
+            //loop through all the walls
             for (var i = 0; i < coordList.length; i++) {
 
+                    //get the intercept 
                     var intercept = findIntercept(i);
 
+                    //if determinant is 0 means its a parallel line, meaning no intercept
                     if (intercept.det === 0) {
-                        isValid = false;
+                        isValid = false; //not valid because parallel lines cannot close off
                     }
-                    else {
-                        isValid = true;
+                    else { //there is an intercept
+                        isValid = true; //thus valid
 
+                        //if the last proposed line is not closing off at the intercept..
                         if (intercept.x != coordList[coordList.length - 1].x2 || intercept.y != coordList[coordList.length - 1].y2) {
-                            //distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))
+
+                            //calculate the distance between the end of the last proposed line and the intercept
                             distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x2), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y2), 2)), "x": intercept.x, "y": intercept.y };
 
-                            shortest = MAX_CANVAS_WIDTH; //arbitrary long number
-                            for (var i = 0; i < distanceBetweenLines.length; i++) {
+                            //determine the shortest distance between all the intercepts 
+                            shortest = MAX_CANVAS_WIDTH; //arbitrary long number for getting at the shortest distance
 
+                            //loop through all the lines and determine the shortest distance
+                            for (var i = 0; i < distanceBetweenLines.length; i++) {
+                                //if the calculated distance is less than the shortest distance...
                                 if (distanceBetweenLines[i].distance < shortest) {
-                                    shortest = distanceBetweenLines[i].distance;
-                                    shortestDistanceWallNumber = i;
+                                    shortest = distanceBetweenLines[i].distance; //set shortest distance to the calculated distance
+                                    shortestDistanceWallNumber = i; //store the wall number for the shortest distance
                                 }
                             }
-                            alert(intercept.x2 + " , If");
                         }
                         else {
-                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": 0, "x": intercept.x2, "y": intercept.y2 };
-                            alert(intercept.x2 + " , Else");
+                            //else line is closed off properly at the intercept, meaning distance between last proposed line and intercept is 0
+                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": 0, "x": intercept.x2, "y": intercept.y2 }; //store the appropriate coordinates
                         }
                     }
-                
             }            
 
+            //undo the last drawn line, to be redrawn properly (i.e. snapped to the coordinate)
             undo(false);
 
-            alert(distanceBetweenLines[shortestDistanceWallNumber].x);
-
+            //draw the snapped line
             var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
 
+            //store the new line into the list
             coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
 
+            //set the starting coordinates of the next line to the ending coordinates of this line
             x1 = line.attr("x2");
             y1 = line.attr("y2");
 
+            //return valid 
             return isValid;
                 
         }
