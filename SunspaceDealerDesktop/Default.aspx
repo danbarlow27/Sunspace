@@ -33,7 +33,6 @@
     </p>-->
 
     <script>
-        window.onload = buttonDoneOnLoad(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
 
         //wall type enumeration
         var WALL_TYPE = {
@@ -94,13 +93,12 @@
         var wallType = WALL_TYPE.EXISTING;
 
         
-
-
-        //var existingWall = true;//standAlone ? false : confirm("existing wall?");
-        //var internalWall = false;
-
-
-
+        //when the DOM is loaded...
+        $(document).ready(function () {
+            drawGrid(); //Draws the initial grid
+            window.onload = buttonDoneOnLoad(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
+        });
+        
 
         //set the name (value) of the "Done" button to the default value
         function buttonDoneOnLoad() {
@@ -291,9 +289,6 @@
 
         }
         //end of grid
-
-        //Draws the initial grid
-        drawGrid();
 
         //Gets the current mouse position on the canvas/grid
         function getMousePos(myCanvas, evt) {
