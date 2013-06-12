@@ -18,6 +18,7 @@
     <input type="button" value = "Done Drawing" onclick="sunroomCompleted()" />
         
     <input type="button" value ="Undo" onclick="undo(true)" />
+
     <input type="button" value ="Clear Canvas" onclick ="clearCanvas()"/>
 
     <input id="buttonDone" type="button" value ="" onclick="buttonDoneOnClick()"/>
@@ -203,21 +204,26 @@
         //redo last undo
         function redo() {
             
-
+            //If an item exist within the removed array proceed with logic
             if (removed.length != 0) {
                 
+                //Change the wall type based on the id of the last element in the removed array
                 wallType = (removed[removed.length - 1].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
                     (removed[removed.length - 1].id === WALL_TYPE.INTERNAL) ? WALL_TYPE.INTERNAL : WALL_TYPE.PROPOSED;
 
+                //Add the last item in the removed array to the coordList array
                 coordList.push(removed[removed.length - 1]);
+                //Remove the last item in the removed array
                 removed.pop();
 
-                //alert("Coord: " + coordList.length);
-                //alert("Remov: " + removed.length);
-
+                //Draw the last element in the coordList array
                 drawLine(coordList[coordList.length - 1].x1, coordList[coordList.length - 1].y1, coordList[coordList.length - 1].x2, coordList[coordList.length - 1].y2, false);
+
+                //Set the initial coordinates to the x2 and y2 coordinates of the last element in the coordList array
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
+
+                //Call setButtonValue function to set the button text
                 setButtonValue();
             }
         }
