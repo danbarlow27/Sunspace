@@ -16,6 +16,7 @@
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script src="Scripts/sorttable.js"></script>
     <script src="Scripts/jquery.scrollTo.js"></script>
+    <script src="Scripts/D3.js"></script>
 
     <meta name="viewport" content="width=device-width" />
     <asp:ContentPlaceHolder runat="server" ID="HeadContent" />

@@ -1,27 +1,24 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SunspaceDealerDesktop._Default" %>
+﻿<%@ Page Title="Custom Drawing Tool" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SunspaceDealerDesktop._Default" %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
                 <h1><%: Title %>.</h1>
-                <h2>Modify this template to jump-start your ASP.NET application.</h2>
+                <p> &nbsp; </p>
             </hgroup>
-            <p>
-                To learn more about ASP.NET, visit <a href="http://asp.net" title="ASP.NET Website">http://asp.net</a>.
-                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET.
-                If you have any questions about ASP.NET visit
-                <a href="http://forums.asp.net/18.aspx" title="ASP.NET Forum">our forums</a>.
-            </p>
+            
         </div>
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div style="width:500px; height:500px;" id="mySunroom"></div>    
+    <p> &nbsp; </p>
 
     <input type="button" value = "Done Drawing" onclick="sunroomCompleted()" />
         
     <input type="button" value ="Undo" onclick="undo(true)" />
+
     <input type="button" value ="Clear Canvas" onclick ="clearCanvas()"/>
 
     <input id="buttonDone" type="button" value ="" onclick="buttonDoneOnClick()"/>
@@ -29,84 +26,142 @@
     <input type="button" value ="Redo" onclick="redo()" />
 
     <input type="hidden" id="lineArrayInfo" runat="server" />
-    <p>
+    
+    <!--<p>
         Red is existing wall
         Black is proposed wall
-    </p>
+    </p>-->
 
     <script>
-        window.onload = buttonDoneOnLoad();
+        window.onload = buttonDoneOnLoad(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
 
-        var canvas = d3.select("#mySunroom")
+        //wall type enumeration
+        var WALL_TYPE = {
+            EXISTING: "E",
+            PROPOSED: "P",
+            INTERNAL: "I"
+        }
+
+        //wall facing enumeration
+        var WALL_FACING = {
+            SOUTH: 0,
+            SOUTH_WEST: 1,
+            WEST: 2,
+            NORTH_WEST: 3,
+            NORTH: 4,
+            NORTH_EAST: 5,
+            EAST: 6,
+            SOUTH_EAST: 7
+        }
+
+        //minimum number of walls that makes up a complete sunroom
+        var MIN_NUMBER_OF_WALLS = 3;
+
+        //cell padding determines the size of each square in the grid 
+        var cellPadding = 25;
+
+        //max size of canvas (width and height)
+        var MAX_CANVAS_WIDTH = 500;
+
+        //create the canvas
+        var canvas = d3.select("#mySunroom") 
                     .append("svg")
                     .attr("width", MAX_CANVAS_WIDTH)
                     .attr("height", MAX_CANVAS_WIDTH);
+
+        //create the svg grid on the canvas
         var svgGrid = document.getElementById("mySunroom");
+
+        //store the "Done" button in a variable for use in multiple functions
         var doneButton = document.getElementById("buttonDone");
-        var clickCount = 0;
-        var cellPadding = 25;
-        var MAX_CANVAS_WIDTH = 500;
+
+        //true or false based on whether the user chose standalone or not in the wizard
+        var standAlone = false;//confirm("standalone?");
+
+        //keep track of track of click count (to be reset when the user is done drawing a type of wall)
+        var startNewWall = true; 
+
+        //an array of removed lines, for use in "redo" function
         var removed = new Array();
         
-        var standAlone = false;//confirm("standalone?");
-        //var existingWall = true;//standAlone ? false : confirm("existing wall?");
-        //var internalWall = false;
-        var WALL_TYPE = {
-                EXISTING: "E",
-                PROPOSED: "P",
-                INTERNAL: "I"
-        }
-        var WALL_FACING = {
-                SOUTH: 0,
-                SOUTH_WEST: 1,
-                WEST: 2,
-                NORTH_WEST: 3,
-                NORTH: 4,
-                NORTH_EAST: 5,
-                EAST: 6,
-                SOUTH_EAST: 7
-        }
-        var MIN_NUMBER_OF_WALLS = 3;
-        var x1;
-        var y1;
-        var x2;
-        var y2;
-        var wallType = WALL_TYPE.EXISTING;
-
+        //an array of lines drawn
         var coordList = new Array();
 
+        //coordinates of a given line
+        var x1, y1, x2, y2;
+
+        //type of wall currently being drawn
+        var wallType = WALL_TYPE.EXISTING;
+
+        
+
+
+        //var existingWall = true;//standAlone ? false : confirm("existing wall?");
+        //var internalWall = false;
+
+
+
+
+        //set the name (value) of the "Done" button to the default value
         function buttonDoneOnLoad() {
             document.getElementById("buttonDone").value = (standAlone) ? "Done External Walls" : "Done Existing Walls";
         }
 
+        //on click event of "Done" button
         function buttonDoneOnClick() {
+            //if user wants to finish drawing existing walls
             if (doneButton.value === "Done Existing Walls") {
+                //if the wallType is "E"
                 if (wallType === WALL_TYPE.EXISTING) {
+                    //change the name (value) of the button
                     doneButton.value = "Done External Walls";
+                    //change wall type
                     wallType = WALL_TYPE.PROPOSED;
-                    clickCount = 0;
+                    //reset click count
+                    startNewWall = true;
                 }
+                //if walltype is not "E", means they have not drawn any existing walls
                 else
+                    //show error message
                     alert("No existing walls drawn, please draw one");
             }
+            //if user wants to finish drawing external (i.e. proposed) walls
             else if (doneButton.value === "Done External Walls") {
+                //if its a valid sunroom
                 if (sunroomCompleted()) { // && wallType === WALL_TYPE.PROPOSED                    
+                    //change the name (value) of the button
                     doneButton.value = "Done Internal Walls";
+                    //change wall type
                     wallType = WALL_TYPE.INTERNAL;
-                    clickCount = 0;
+                    //reset click count
+                    startNewWall = true;
                 }
             }
+            //if the user wants to finish drawing internal walls 
             else {
-                if(sunroomCompleted())
+                //if its a valid sunroom
+                if (internalWalls()) {
+                    //change the name (value) of the button
                     doneButton.value = "Done Drawing";
+                    //reset click count
+                    startNewWall = true;
+                }
             }
         }
 
         //clear canvas
         function clearCanvas() {
-            location.reload();
-        }
+            d3.selectAll("#E").remove(); //remove existing walls
+            d3.selectAll("#P").remove(); //remove proposed walls
+            d3.selectAll("#I").remove(); //remove internal walls
+            startNewWall = true; //let the user begin another wall anywhere on the grid
+            coordList = new Array(); //clear the list of lines
+            removed = new Array(); //clear the list of removed lines
+            wallType = WALL_TYPE.EXISTING; //reset the wall type to existing
+       }
 
+
+        //change the name (value) of the done button
         function setButtonValue() {
             doneButton.value = (coordList[coordList.length-1].id === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
                 (coordList[coordList.length-1].id === WALL_TYPE.PROPOSED) ? "Done External Walls" : "Done Internal Walls";
@@ -115,55 +170,74 @@
         //undo last line
         function undo(toBeRemoved) {
 
-            d3.selectAll("#E").remove();
-            d3.selectAll("#P").remove();
-
-            if (toBeRemoved)
-                removed.push(coordList[coordList.length - 1]);
-
-            setButtonValue();
-            
-            coordList.pop();
-
-            for (var i = 0; i <= coordList.length - 1; i++) {
-                wallType = (coordList[i].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
-                    (coordList[i].id === WALL_TYPE.INTERNAL) ? WALL_TYPE.INTERNAL : WALL_TYPE.PROPOSED;
-
-                drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false);
-            }
+            //if last line is removed, enable user to draw a line anywhere
             if (coordList.length === 0)
-                clearCanvas();
-            else {
+                startNewWall = true;
+            else { //set the first coordinates of the next line to the last coordinates of the previous line
+                //remove previously drawn walls
+                d3.selectAll("#E").remove(); //remove existing walls
+                d3.selectAll("#P").remove(); //remove proposed walls
+
+                //if removed array needs to be popped at the end
+                if (toBeRemoved)
+                    removed.push(coordList[coordList.length - 1]); //pop it
+
+                //set the appropriate button value
+                setButtonValue();
+
+                //delete last line from the list
+                coordList.pop();
+
+                //go through the list of lines, set wall type, and draw the lines
+                for (var i = 0; i <= coordList.length - 1; i++) {
+                    wallType = (coordList[i].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
+                        (coordList[i].id === WALL_TYPE.INTERNAL) ? WALL_TYPE.INTERNAL : WALL_TYPE.PROPOSED;
+
+                    drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false);
+                }
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
             }
+
         }
 
         //redo last undo
         function redo() {
+            
+            //If an item exist within the removed array proceed with logic
             if (removed.length != 0) {
-                setButtonValue();
-
+                
+                //Change the wall type based on the id of the last element in the removed array
                 wallType = (removed[removed.length - 1].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
                     (removed[removed.length - 1].id === WALL_TYPE.INTERNAL) ? WALL_TYPE.INTERNAL : WALL_TYPE.PROPOSED;
 
+                //Add the last item in the removed array to the coordList array
                 coordList.push(removed[removed.length - 1]);
+                //Remove the last item in the removed array
                 removed.pop();
 
+                //Draw the last element in the coordList array
                 drawLine(coordList[coordList.length - 1].x1, coordList[coordList.length - 1].y1, coordList[coordList.length - 1].x2, coordList[coordList.length - 1].y2, false);
+
+                //Set the initial coordinates to the x2 and y2 coordinates of the last element in the coordList array
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
+
+                //Call setButtonValue function to set the button text
+                setButtonValue();
             }
         }
 
         //Draw the grid lines
         function drawGrid() {
 
+            //Creates rectangle area to draw in based on max canvas dimensions
             var rect = canvas.append("rect")
                         .attr("width", MAX_CANVAS_WIDTH)
                         .attr("height", MAX_CANVAS_WIDTH)
                         .attr("fill", "white")
 
+            //Draws left border line of canvas
             var line = canvas.append("line")
                         .attr("x1", 0)
                         .attr("y1", 0)
@@ -171,6 +245,7 @@
                         .attr("y2", MAX_CANVAS_WIDTH)
                         .attr("stroke", "black");
 
+            //Draws top border line of canvas
             var line = canvas.append("line")
                         .attr("x1", 0)
                         .attr("y1", 0)
@@ -178,6 +253,7 @@
                         .attr("y2", 0)
                         .attr("stroke", "black");
 
+            //Draws bottom border line of canvas
             var line = canvas.append("line")
                         .attr("x1", 0)
                         .attr("y1", MAX_CANVAS_WIDTH)
@@ -185,6 +261,7 @@
                         .attr("y2", MAX_CANVAS_WIDTH)
                         .attr("stroke", "black");
 
+            //Draws right border line of canvas
             var line = canvas.append("line")
                         .attr("x1", MAX_CANVAS_WIDTH)
                         .attr("y1", 0)
@@ -192,6 +269,7 @@
                         .attr("y2", MAX_CANVAS_WIDTH)
                         .attr("stroke", "black");
 
+            //Draws vertical lines of the grid onto the canvas
             for (var i = 0; i < MAX_CANVAS_WIDTH; i += cellPadding) {
                 var line = canvas.append("line")
                         .attr("x1", i + cellPadding)
@@ -200,6 +278,8 @@
                         .attr("y2", MAX_CANVAS_WIDTH)
                         .attr("stroke", "grey");
             }
+
+            //Draws horizontal lines of the grid onto the canvas
             for (var i = 0; i < MAX_CANVAS_WIDTH; i += cellPadding) {
                 var line = canvas.append("line")
                         .attr("x1", 0)
@@ -212,8 +292,10 @@
         }
         //end of grid
 
+        //Draws the initial grid
         drawGrid();
 
+        //Gets the current mouse position on the canvas/grid
         function getMousePos(myCanvas, evt) {
             var rect = myCanvas.getBoundingClientRect();
             return {
@@ -222,28 +304,43 @@
             };
         };
 
+        //On click event listener for the canvas/grid
         svgGrid.addEventListener("click",
         function (evt) {
+            //Variable to hold the values return by getMousePos. X and Y coordinates within the canvas/grid
             var mousePos = getMousePos(svgGrid, evt);
 
-            console.log("array length: " + coordList.length);
+            //console.log("array length: " + coordList.length);
 
-            clickCount++;
-
-            if (clickCount === 1) {
+            //If startNewWall is true, set the first pair of coordinates to the current mouse position
+            //Used to define when the first click of on the canvas and reset removed array elements
+            if (startNewWall === true) {
                 x1 = mousePos.x;
                 y1 = mousePos.y;
+
+                //Set startNewWall to false to find logic to complete line coordinates
+                startNewWall = false;
+
+                //Delete all entries into removed array
+                removed = new Array();
+
             }
+                //Logic for clicks after initial click to draw lines and store values into an array
             else {
+                //Find 2nd pair of coordinates based on current mouse position within the canvas/grid
                 x2 = mousePos.x;
                 y2 = mousePos.y;
 
+                //Draw the line and store the line into a variable named "line"
                 var line = drawLine(x1, y1, x2, y2, false);
 
+                //Find the orientation in string format to be stored into the array to be passed to C# classes
                 var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
 
+                //Store line starting and ending coordinates, along with line id and string orientation
                 coordList[coordList.length] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation};
                 
+                //Restart the start position for the next line to be drawn
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
             }
@@ -258,7 +355,7 @@
 
             d3.selectAll("#mouseMoveLine").remove();
 
-            if (clickCount != 0)
+            if (!startNewWall)
                 drawLine(x1, y1, x2, y2, true);
         },
         false);
@@ -270,9 +367,6 @@
         false);
 
         function drawLine(x1, y1, x2, y2, mouseMove) {
-
-
-
             var coordinates = setGridPoints(snapToGrid(x1, cellPadding), snapToGrid(y1, cellPadding), snapToGrid(x2, cellPadding), snapToGrid(y2, cellPadding));
             var coorx1 = coordinates.x1;
             var coorx2 = coordinates.x2;
@@ -419,6 +513,8 @@
             else
                 isValid = true;
 
+            alert(isValid);
+
             return isValid;
             }
 
@@ -430,13 +526,16 @@
 
             var distance;
 
-            var isValid = true;
+            var isValid = false;
+
+            //var numberOfWallTypes = (internal) ? 3 : (proposed) ? 2 : 1;
+            
 
             //var numberOfExistingWalls = 0;
 
             var shortestDistanceWallNumber;
 
-            var slopes = getAllSlopes();
+            //var slopes = getAllSlopes();
 
             //Needs functionality to handle existing wall corners
             for (var i = 0; i < coordList.length; i++) {
@@ -449,7 +548,7 @@
                     if (intercept.det === 0) {
                         //lines are parallel
                         //alert("Sunroom must be enclosed. Please add another wall.");
-                        isValid = false;
+                        //isValid = false;
                     }
                     else {
                         isValid = true;
@@ -467,48 +566,26 @@
                                 }
                             }
                             alert(intercept.x2 + " , If");
-                        }
-                        else {
-                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": 0, "x": intercept.x2, "y": intercept.y2 };
-                            alert(intercept.x2 + " , Else");
+
+                            undo(false);
+
+                            //alert(distanceBetweenLines[shortestDistanceWallNumber].x);
+
+                            var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
+
+                            coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
+
+                            x1 = line.attr("x2");
+                            y1 = line.attr("y2");
                         }
                     }
                 }
             }            
 
-            undo(false);
-
-            alert(distanceBetweenLines[shortestDistanceWallNumber].x);
-
-            var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
-
-            coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
-
-            x1 = line.attr("x2");
-            y1 = line.attr("y2");
-
             return isValid;
         }
 
-        function getAllSlopes() {
-            var mExisting = new Array();
-
-            var mProposed = new Array();
-
-            for (var i = 0; i < coordList.length; i++) {
-
-                if (coordList[i].id === "P") {
-                    mProposed[mProposed.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
-                }
-                else if (coordList[i].id === "E") {
-                    mExisting[mExisting.length] = (coordList[i].y2 - coordList[i].y1) / (coordList[i].x2 - coordList[i].x1)
-                }
-            }
-            return {
-                "proposedSlopes": mProposed,
-                "existingSlopes": mExisting
-            };
-        }
+        
 
         //Used in validateNotStandAlone only
         function findIntercept(i) {
@@ -578,6 +655,58 @@
 
             return validCoordinate;
         }
+
+
+        //function to validate internal walls
+        function internalWalls() {
+            var isValid = true;
+            for (var i = 0; i < coordList.length; i++) {
+
+                    var intercept = findIntercept(i);
+
+                    if (intercept.det === 0) {
+                        isValid = false;
+                    }
+                    else {
+                        isValid = true;
+
+                        if (intercept.x != coordList[coordList.length - 1].x2 || intercept.y != coordList[coordList.length - 1].y2) {
+                            //distance = Math.sqrt(Math.pow((x - cx2), 2) + Math.pow((y - cy2), 2))
+                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x2), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y2), 2)), "x": intercept.x, "y": intercept.y };
+
+                            shortest = MAX_CANVAS_WIDTH; //arbitrary long number
+                            for (var i = 0; i < distanceBetweenLines.length; i++) {
+
+                                if (distanceBetweenLines[i].distance < shortest) {
+                                    shortest = distanceBetweenLines[i].distance;
+                                    shortestDistanceWallNumber = i;
+                                }
+                            }
+                            alert(intercept.x2 + " , If");
+                        }
+                        else {
+                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": 0, "x": intercept.x2, "y": intercept.y2 };
+                            alert(intercept.x2 + " , Else");
+                        }
+                    }
+                
+            }            
+
+            undo(false);
+
+            alert(distanceBetweenLines[shortestDistanceWallNumber].x);
+
+            var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
+
+            coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
+
+            x1 = line.attr("x2");
+            y1 = line.attr("y2");
+
+            return isValid;
+                
+        }
+         
 
     </script>
 
