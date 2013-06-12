@@ -11,13 +11,7 @@ namespace SunspaceWizard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack)
-            {
-                Session.Add("testing", myHidden.Value);
-                //string test = Request.Form["Hidden1"];
-                //Session.Add("testing", test);
-                Response.Redirect("TestingHiddens.aspx");
-            }
+
         }
 
         protected void btnLayout_Click(object sender, EventArgs e)
@@ -28,9 +22,7 @@ namespace SunspaceWizard
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Session.Add("testing", myHidden.Value);
-            //string test = Request.Form["Hidden1"];
-            //Session.Add("testing", test);
+            Session.Add("testing", Hidden1.Value);
             Response.Redirect("TestingHiddens.aspx");
         }
     }

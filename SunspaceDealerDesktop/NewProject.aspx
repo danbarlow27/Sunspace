@@ -9,10 +9,8 @@
             if ($('#MainContent_radNewCustomer').is(':checked'))
             {
                 $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
-
-                document.getElementById('#MainContent_myHidden');
-                //document.getElementById("Hidden1").valueOf = "fuck";
-                //document.getElementById("Hidden1").s
+                document.getElementById("MainContent_Hidden1").value = $('#MainContent_txtCustomerFirstName').val();
+                $('#MainContent_hidFirstName').text($('#MainContent_txtCustomerFirstName').val());
                 $('#MainContent_hidLastName').text($('#MainContent_txtCustomerLastName').val());
                 $('#MainContent_hidAddress').text($('#MainContent_txtCustomerAddress').val());
                 $('#MainContent_hidCity').text($('#MainContent_txtCustomerCity').val());
@@ -29,7 +27,7 @@
 
                 console.log("Existing Customer" + $('#hidExisting').text());
             }
-            
+
             return false;
         }
     </script>
@@ -680,8 +678,8 @@
 
     <%-- Hidden div tags 
     ================= --%>
-    <input type="hidden" id="myHidden" runat="server"/>
-    <%--<div style="display: none">
+    <input id="Hidden1" type="hidden" runat="server" />
+    <div style="display: none">
         <div id="hidQuestion1"  > 
             <div id="hidExisting" runat="server">
                 
@@ -704,9 +702,9 @@
             <div id="hidPhone" runat="server">
 
             </div>
-        </div>--%>
+        </div>
 
-        <%--<div id="hidQuestion2" >
+        <div id="hidQuestion2" >
             <div id="hidProjectTag" runat="server"></div>
         </div>
 
@@ -744,7 +742,7 @@
         <div id="hidQuestion8" >
             <div id="hidLayoutSelection" runat="server"></div>
         </div>
-    </div>--%>
+    </div>
     <%-- end hidden divs --%>
 
     
