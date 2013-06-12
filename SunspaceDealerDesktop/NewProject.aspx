@@ -1,72 +1,32 @@
 ﻿<%@ Page Title="New Project - Project Details" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NewProject.aspx.cs" Inherits="SunspaceWizard._Default" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <%-- Hidden div tags 
-    ================= --%>
-    <div style="display: none">
-        <div id="hidQuestion1"  > 
-            <div id="hidExisting"  />
-            <div id="hidFirstName"  />
-            <div id="hidLastName"  />
-            <div id="hidAddress"  />
-            <div id="hidCity"  />
-            <div id="hidZip"  />
-            <div id="hidPhone"  />
-        </div>
-
-        <div id="hidQuestion2" >
-            <div id="hidProjectTag"  />
-        </div>
-
-        <div id="hidQuestion3" >
-            <div id="hidProjectType"  />
-            <div id="hidModelNumber"  />
-        </div>
-
-        <div id="hidQuestion4" >
-            <div id="hidKneewallType"  />
-            <div id="hidKneewallColour"  />
-            <div id="hidKneewallHeight"  />
-            <div id="hidTransomType"  />
-            <div id="hidTransomColour"  />
-            <div id="hidTransomHeight"  />
-            <div id="hidInteriorColour"  />
-            <div id="hidInteriorSkin"  />
-            <div id="hidExteriorColour"  />
-            <div id="hidExteriorSkin"  />
-        </div>
-
-        <div id="hidQuestion5" >
-            <div id="hidFoamProtected"  />
-        </div>
-
-        <div id="hidQuestion6" >
-            <div id="hidPrefabFloor"  />
-        </div>
-
-        <div id="hidQuestion7" >
-            <div id="hidRoof"  />
-            <div id="hidRoofType"  />
-        </div>
-
-        <div id="hidQuestion8" >
-            <div id="hidLayoutSelection"  />
-        </div>
-    </div>
-    <%-- end hidden divs --%>
-
     <%-- Hidden div populating scripts 
     =================================== --%>
-    <script>
-        function checkQuestion1() {
+    <script>       
 
+        function checkQuestion1() {
+            if ($('#MainContent_radNewCustomer').is(':checked'))
+            {
+                $('#MainContent_lblSpecsProjectTypeAnswer')
+                console.log("New Customer");
+            }
+            else if ($('#MainContent_radExistingCustomer').is(':checked'))
+            {
+                console.log("Existing Customer");
+            }
+
+            var slider = $('.bxslider').bxSlider({
+                mode: 'fade'
+            });
+            slider.goToNextSlide();
         }
     </script>
     <%-- End hidden div populating scripts --%>
 
     <%-- SLIDES (QUESTIONS)
     ======================================== --%>
-    <div class="slide-window" onmousedown="event.preventDefault ? event.preventDefault() : event.returnValue = false">
+    <div class="slide-window" onmousedown="event.preventDefault ? event.preventDefault() : event.returnValue = false" >
 
         <div class="slide-wrapper">
             
@@ -176,8 +136,8 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" 
-                     />
+                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" UseSubmitBehavior="false" runat="server" Text="Next Question" 
+                     OnClientClick="checkQuestion1()"/>
 
             </div> 
             <%-- end #slide1 --%>
@@ -702,6 +662,62 @@
             </ul>    
         </div> <%-- end #paging --%>
     </div>
+
+    <%-- Hidden div tags 
+    ================= --%>
+    <div style="display: none">
+        <div id="hidQuestion1"  > 
+            <div id="hidExisting"  />
+            <div id="hidFirstName"  />
+            <div id="hidLastName"  />
+            <div id="hidAddress"  />
+            <div id="hidCity"  />
+            <div id="hidZip"  />
+            <div id="hidPhone"  />
+        </div>
+
+        <div id="hidQuestion2" >
+            <div id="hidProjectTag"  />
+        </div>
+
+        <div id="hidQuestion3" >
+            <div id="hidProjectType"  />
+            <div id="hidModelNumber"  />
+        </div>
+
+        <div id="hidQuestion4" >
+            <div id="hidKneewallType"  />
+            <div id="hidKneewallColour"  />
+            <div id="hidKneewallHeight"  />
+            <div id="hidTransomType"  />
+            <div id="hidTransomColour"  />
+            <div id="hidTransomHeight"  />
+            <div id="hidInteriorColour"  />
+            <div id="hidInteriorSkin"  />
+            <div id="hidExteriorColour"  />
+            <div id="hidExteriorSkin"  />
+        </div>
+
+        <div id="hidQuestion5" >
+            <div id="hidFoamProtected"  />
+        </div>
+
+        <div id="hidQuestion6" >
+            <div id="hidPrefabFloor"  />
+        </div>
+
+        <div id="hidQuestion7" >
+            <div id="hidRoof"  />
+            <div id="hidRoofType"  />
+        </div>
+
+        <div id="hidQuestion8" >
+            <div id="hidLayoutSelection"  />
+        </div>
+    </div>
+    <%-- end hidden divs --%>
+
+    
 
     <script>
         $(function () {
