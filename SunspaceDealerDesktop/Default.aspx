@@ -297,8 +297,10 @@
 
         //Gets the current mouse position on the canvas/grid
         function getMousePos(myCanvas, evt) {
+            //Get the coordinates within the canvas/grid
             var rect = myCanvas.getBoundingClientRect();
             return {
+                //return x and y coordinates of the mouse within the canvas/grid
                 x: evt.clientX - rect.left,
                 y: evt.clientY - rect.top
             };
@@ -347,49 +349,80 @@
         },
         false);
 
+        //Mouse mouse event listener for the canvas/grid
         svgGrid.addEventListener("mousemove",
         function (evt) {
+            //Store mouse coordinates from within the canvas/grid into a variable named mousePos
             var mousePos = getMousePos(svgGrid, evt);
+            //Store the lines 2nd pair of coordinates into variables
             x2 = mousePos.x;
             y2 = mousePos.y;
 
+            //Remove all lines from the canvas/grid with the id "mouseMoveLine"
             d3.selectAll("#mouseMoveLine").remove();
 
+            //If startNewWall is false, draw the line on mouse move event
+            //This will occur after the first initial of every wall type (Existing Walls, Proposed Walls, Internal Walls)
             if (!startNewWall)
                 drawLine(x1, y1, x2, y2, true);
         },
         false);
 
+        //Mouse out event listener for the canvas/grid
         svgGrid.addEventListener("mouseout",
         function (evt) {
+            //Remove all lines on the canvas/grid with the id "mouseMoveLine"
             d3.selectAll("#mouseMoveLine").remove();
         },
         false);
 
+        /**
+        *Draw line function takes in coordinates and a boolean to draw lines based on these arguments
+        *@param x1 - first x coordinate of current line
+        *@param y1 - first y coordinate of current line
+        *@param x2 - second x coordinate of current line
+        *@param y2 - second y coordinate of current line
+        *@param mouseMove - boolean used to give an id to lines between drawn on mouse move event
+        */
         function drawLine(x1, y1, x2, y2, mouseMove) {
+
+            //Variable to hold coordinates that have been snapped to the grid and made be only straight or 45 degree angle lines
             var coordinates = setGridPoints(snapToGrid(x1, cellPadding), snapToGrid(y1, cellPadding), snapToGrid(x2, cellPadding), snapToGrid(y2, cellPadding));
+
+            //Variables to hold starting/ending validated coordinates
             var coorx1 = coordinates.x1;
             var coorx2 = coordinates.x2;
             var coory1 = coordinates.y1;
             var coory2 = coordinates.y2;
+
+            //Variables to hold the difference between the ending and starting points of x and y axes
             var dY = coory2 - coory1;
-            var dX = coorx2 - coorx1;
+            var dX = coorx2 - coorx1;            
+            
+            //if (!mouseMove)
+            //   console.log(coorx2 + "," + coory2);
 
-            if (!mouseMove)
-                console.log(coorx2 + "," + coory2);
+            //
 
+            //If logical to check if the x2 value is outside of the right side of canvas/grid
             if (coorx2 > MAX_CANVAS_WIDTH) {
+                //Set x2 coordinate value to the maximum size of the canvas/grid
                 coorx2 = MAX_CANVAS_WIDTH;
+                //Set y2 coordinate according to the x2,x1,y1 and slope
                 coory2 = (dY / dX) * (coorx2 - coorx1) + coory1;
             }
+                //If logical to check if the x2 value is outside of the left side of canvas/grid
             else if (coorx2 < 0) {
+                //Set x2 coordinate to the minimum size of the canvas/grid
                 coorx2 = 0;
+                //Set y2 coordinate according to the x2,x1,y1 and slope
                 coory2 = coory1 + (dY / dX) * (coorx2 - coorx1);
             }
 
-            if (!mouseMove)
-                console.log(coorx2 + "," + coory2);
+            //if (!mouseMove)
+            //    console.log(coorx2 + "," + coory2);
 
+            //Local variable to store all the line information
             var line = canvas.append("line")
                     .attr("x1", coorx1)
                     .attr("y1", coory1)
@@ -398,12 +431,19 @@
 
             //alert(wallType);
 
+            //If wall type is existing do following logic
             if (wallType === WALL_TYPE.EXISTING) {
-                line.attr("stroke", "red")
-                    .attr("stroke-width", 1)
-                    .attr("id", "E");
+                //Make line id E for existing wall                
+                line.attr("id", "E")
+                    //Change the line color to red
+                    .attr("stroke", "red")
+                    //Make stroke width to 1
+                    .attr("stroke-width", 1);
+                    
             }
-            else if (wallType === WALL_TYPE.PROPOSED){
+                //If wall type is proposed do following logic
+            else if (wallType === WALL_TYPE.PROPOSED) {
+                //
                 line.attr("id", "P")
                     .attr("stroke", "black")
                     .attr("stroke-width", 2);
