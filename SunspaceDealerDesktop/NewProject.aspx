@@ -6,9 +6,11 @@
     <script>       
 
         function checkQuestion1() {
+            //disable 'next slide' button until after validation
+            document.getElementById('MainContent_btnQuestion1').disabled=true;
+
             if ($('#MainContent_radNewCustomer').is(':checked'))
             {
-                $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
                 document.getElementById("MainContent_hidFirstName").value = $('#MainContent_txtCustomerFirstName').val();
                 document.getElementById("MainContent_hidLastName").value = $('#MainContent_txtCustomerLastName').val();
                 document.getElementById("MainContent_hidAddress").value = $('#MainContent_txtCustomerAddress').val();
@@ -16,8 +18,18 @@
                 document.getElementById("MainContent_hidZip").value = $('#MainContent_txtCustomerZip').val();
                 document.getElementById("MainContent_hidPhone").value = $('#MainContent_txtCustomerPhone').val();
 
-                if (document.getElementById("MainContent_hidFirstName").value == "") {
-                    console.log("first name is blank");
+                //Make sure the text boxes aren't blank
+                if (document.getElementById("MainContent_hidFirstName").value != "" &&
+                    document.getElementById("MainContent_hidLastName").value != "" &&
+                    document.getElementById("MainContent_hidAddress").value != "" &&
+                    document.getElementById("MainContent_hidCity").value != "" &&
+                    document.getElementById("MainContent_hidZip").value != "" &&
+                    document.getElementById("MainContent_hidPhone").value != "") {
+
+                    //Set answer to 'new' on side pager and enable button
+                    $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
+                    document.getElementById('MainContent_btnQuestion1').disabled = false;
+                    console.log("Nothing blank");
                 }
 
                 console.log("New Customer " + $('#MainContent_hidFirstName').text() + $('#MainContent_hidLastName').text() + $('#MainContent_hidAddress').text()
@@ -25,9 +37,13 @@
             }
             else if ($('#MainContent_radExistingCustomer').is(':checked'))
             {
-                $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing");
                 document.getElementById("MainContent_ddlExistingCustomer").value = $('#MainContent_ddlCustomerFirstName').val();
 
+                if (document.getElementById("MainContent_ddlExistingCustomer").value != "") {
+                    //valid, so update pager and enable button
+                    $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing");
+                    document.getElementById('MainContent_btnQuestion1').disabled = false;
+                }
                 console.log("Existing Customer" + $('#hidExisting').text());
             }
 
@@ -79,7 +95,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerFirstName"  CssClass="txtField txtInput"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerFirstName"  CssClass="txtField txtInput" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -89,7 +105,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerLastName" CssClass="txtField txtInput"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerLastName" CssClass="txtField txtInput"  OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -99,7 +115,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerAddress" CssClass="txtField txtInput"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerAddress" CssClass="txtField txtInput"  OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -109,7 +125,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerCity" CssClass="txtField txtInput"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerCity" CssClass="txtField txtInput"  OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -119,7 +135,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerZip" CssClass="txtField txtZipPhone"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerZip" CssClass="txtField txtZipPhone"  OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -129,7 +145,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerPhone" CssClass="txtField txtZipPhone"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerPhone" CssClass="txtField txtZipPhone"  OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -156,8 +172,7 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" 
-                     OnClientClick="checkQuestion1()" />
+                <asp:Button ID="btnQuestion1" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide1 --%>
@@ -632,10 +647,12 @@
 
             <ul>
                 <li>
-                    <a href="#" data-slide="#slide1" class="slidePanel">
-                        <asp:Label ID="lblSpecsProjectType" runat="server" Text="New/Existing Customer"></asp:Label>
-                        <asp:Label ID="lblSpecsProjectTypeAnswer" runat="server" Text="Customer Answer"></asp:Label>
-                    </a>
+                    <div style="display: none" id="pagerOne">
+                        <a href="#" data-slide="#slide1" class="slidePanel">
+                            <asp:Label ID="lblSpecsProjectType" runat="server" Text="New/Existing Customer"></asp:Label>
+                            <asp:Label ID="lblSpecsProjectTypeAnswer" runat="server" Text="Customer Answer"></asp:Label>
+                        </a>
+                    </div>
                 </li>
                 <li>
                     <a href="#" data-slide="#slide2" class="slidePanel">
