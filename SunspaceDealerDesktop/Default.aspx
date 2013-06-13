@@ -5,7 +5,7 @@
         <div class="content-wrapper">
             <hgroup class="title">
                 <h1><%: Title %>.</h1>
-                <p> &nbsp; </p>
+               
             </hgroup>
             
         </div>
@@ -35,10 +35,7 @@
          
 
     <script>
-        //function testFunction() {
-            
-        //}
-
+       
         //wall type enumeration
         var WALL_TYPE = {
             EXISTING: "E",
@@ -76,7 +73,7 @@
                     .attr("height", MAX_CANVAS_WIDTH);
 
         //Variable to hold all child elements which has all the array information
-        var hiddenParent = document.getElementById("MainContent_hiddenVar");
+        //var hiddenParent = document.getElementById("MainContent_hiddenVar");
 
         //variable to hold textarea tag
         var log = document.getElementById("drawingLog");
@@ -108,11 +105,12 @@
         //Used to validate first walls, also after dblclick and E
         var validateFirstWall = false;
 
-        function appendChildToParent(){
-            var child = document.createElement("child1");
-            child.innerHTML = coordList[0].id;
-            hiddenVar.appendChild(child);
-        }
+        //function appendChildToParent(){
+        //    var child = document.createElement("child1");
+        //    child.setAttribute("id", "child0");
+        //    child.innerHTML = coordList[0].id;
+        //   hiddenVar.appendChild(child);
+        //}
 
         //when the DOM is loaded...
         $(document).ready(function () {
@@ -163,8 +161,19 @@
 
             else if (doneButton.value === "Done Drawing") {
                 
-                appendChildToParent();
+                //appendChildToParent();
                 
+                var lineInfo = "";
+
+                for (var i = 0; i < coordList.length; i++) {
+                    lineInfo += coordList[i].x1 + ",";
+                    lineInfo += coordList[i].x2 + ",";
+                    lineInfo += coordList[i].y1 + ",";
+                    lineInfo += coordList[i].y2 + ",";
+                    lineInfo += coordList[i].id + ",";
+                    lineInfo += coordList[i].orientation + "/";
+                }
+
                 //for (var i = 0; i < coordList.length; i++){
                 //    for(var j = 0; j < 6; j++) {
                 //        var hidden = document.createElement("input");
@@ -175,7 +184,7 @@
                 //}
 
 
-                //document.getElementById("MainContent_hiddenVar").value = coordList[0].id;
+                document.getElementById("MainContent_hiddenVar").value = lineInfo;
             }
     
         }
@@ -201,8 +210,9 @@
                 (coordList[coordList.length-1].id === WALL_TYPE.PROPOSED) ? "Done Proposed Walls" : "Done Drawing";
         }
 
-        //undo last line
-        //@param toBeRemoved - true or false whether we want to remove the last element from the removed line list
+        /**undo last line
+        @param toBeRemoved - true or false whether we want to remove the last element from the removed line list
+        */
         function undo(toBeRemoved) {
 
             //if last line is removed, enable user to draw a line anywhere
