@@ -1696,22 +1696,22 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label lblProjectTagAnswer;
         
         /// <summary>
-        /// Label37 control.
+        /// lblProjectType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label37;
+        protected global::System.Web.UI.WebControls.Label lblProjectType;
         
         /// <summary>
-        /// Label38 control.
+        /// lblProjectTypeAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label38;
+        protected global::System.Web.UI.WebControls.Label lblProjectTypeAnswer;
         
         /// <summary>
         /// Label27 control.
