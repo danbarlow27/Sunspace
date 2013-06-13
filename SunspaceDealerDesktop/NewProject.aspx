@@ -9,13 +9,16 @@
             if ($('#MainContent_radNewCustomer').is(':checked'))
             {
                 $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
-                document.getElementById("MainContent_Hidden1").value = $('#MainContent_txtCustomerFirstName').val();
-                $('#MainContent_hidFirstName').text($('#MainContent_txtCustomerFirstName').val());
-                $('#MainContent_hidLastName').text($('#MainContent_txtCustomerLastName').val());
-                $('#MainContent_hidAddress').text($('#MainContent_txtCustomerAddress').val());
-                $('#MainContent_hidCity').text($('#MainContent_txtCustomerCity').val());
-                $('#MainContent_hidZip').text($('#MainContent_txtCustomerZip').val());
-                $('#MainContent_hidPhone').text($('#MainContent_txtCustomerPhone').val());
+                document.getElementById("MainContent_hidFirstName").value = $('#MainContent_txtCustomerFirstName').val();
+                document.getElementById("MainContent_hidLastName").value = $('#MainContent_txtCustomerLastName').val();
+                document.getElementById("MainContent_hidAddress").value = $('#MainContent_txtCustomerAddress').val();
+                document.getElementById("MainContent_hidCity").value = $('#MainContent_txtCustomerCity').val();
+                document.getElementById("MainContent_hidZip").value = $('#MainContent_txtCustomerZip').val();
+                document.getElementById("MainContent_hidPhone").value = $('#MainContent_txtCustomerPhone').val();
+
+                if (document.getElementById("MainContent_hidFirstName").value == "") {
+                    console.log("first name is blank");
+                }
 
                 console.log("New Customer " + $('#MainContent_hidFirstName').text() + $('#MainContent_hidLastName').text() + $('#MainContent_hidAddress').text()
                     + $('#MainContent_hidCity').text() + $('#MainContent_hidZip').text() + $('#MainContent_hidPhone').text());
@@ -23,7 +26,7 @@
             else if ($('#MainContent_radExistingCustomer').is(':checked'))
             {
                 $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing");
-                $('#hidExisting').text($('#MainContent_ddlCustomerFirstName').val());
+                document.getElementById("MainContent_ddlExistingCustomer").value = $('#MainContent_ddlCustomerFirstName').val();
 
                 console.log("Existing Customer" + $('#hidExisting').text());
             }
@@ -154,7 +157,7 @@
                 </ul> <%-- end .toggleOptions --%>
 
                 <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" 
-                     OnClientClick="checkQuestion1()" OnClick="btnQuestion1_Click"/>
+                     OnClientClick="checkQuestion1()" />
 
             </div> 
             <%-- end #slide1 --%>
