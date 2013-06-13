@@ -12,13 +12,24 @@
         var hiddenParent = document.getElementById("MainContent_hiddenVar");
 
         var newArray = new Array();
-        newArray[newArray.length] = { "A": "apple", "B": "banana" };
+        newArray[0] = { "A": "apple", "B": "banana" };
+        newArray[1] = { "A": "orange", "B": "pineapple" };
 
         function appendChildToParent() {
             var child = document.createElement("child1");
             child.setAttribute("id", "child0");
-            child.innerHTML = newArray[0].A;
+            child.setAttribute("text", newArray.A);
+            //child.innerHTML = newArray[0].A;
             hiddenVar.appendChild(child);
+        }
+
+        function dynamicallyCreatedHiddens() {
+            for (var i = 0; i < newArray.length; i++) {
+                var currentElement = document.createElement("line" + i)
+                for (var i = 0; i < 2; i++) {
+                    currentElement.innerHTML = newArray.A + "," + newArray.B;
+                }
+            }
         }
 
 
@@ -26,9 +37,9 @@
 </head>
 <body>
     <form id="form1" runat="server">
-       <input type="hidden" id="hiddenVar" runat="server" />
+       <input type="hidden" id="hiddenVar" runat="server" value="123" />
     <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click1" />
-        <input type="button" runat="server" onclick="/*appendChildToParent()*/ hiddenParent.innerHTML = newArray[0].A" value="HTML button" />
+        <input type="button" runat="server" onclick="appendChildToParent() /*hiddenParent.innerHTML = newArray[0].A*/" value="HTML button" />
 
 
         
