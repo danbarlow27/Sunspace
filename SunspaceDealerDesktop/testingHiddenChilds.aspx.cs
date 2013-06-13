@@ -7,12 +7,17 @@ using System.Web.UI.WebControls;
 
 namespace SunspaceDealerDesktop
 {
-    public partial class TestingHiddens : System.Web.UI.Page
+    public partial class testingHiddenChilds : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            testField.InnerText = Session["testing"].ToString();
 
+        }
+
+        protected void Button1_Click1(object sender, EventArgs e)
+        {
+            Session.Add("testing", hiddenVar.Value);
+            Response.Redirect("TestingHiddens.aspx");
         }
     }
 }

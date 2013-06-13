@@ -250,6 +250,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\styles.css" />
+    <Content Include="testingHiddenChilds.aspx" />
     <Content Include="TestingHiddens.aspx" />
     <Content Include="TestNumMods.aspx" />
     <Content Include="ViewSwitcher.ascx" />
@@ -355,6 +356,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="testingHiddenChilds.aspx.cs">
+      <DependentUpon>testingHiddenChilds.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="testingHiddenChilds.aspx.designer.cs">
+      <DependentUpon>testingHiddenChilds.aspx</DependentUpon>
     </Compile>
     <Compile Include="TestingHiddens.aspx.cs">
       <DependentUpon>TestingHiddens.aspx</DependentUpon>
