@@ -256,15 +256,6 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Button btnQuestion2;
         
         /// <summary>
-        /// Button1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
-        
-        /// <summary>
         /// lblQuestion3 control.
         /// </summary>
         /// <remarks>
@@ -1813,22 +1804,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// Hidden1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden Hidden1;
-        
-        /// <summary>
         /// hidExisting control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidExisting;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidExisting;
         
         /// <summary>
         /// hidFirstName control.
@@ -1837,7 +1819,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidFirstName;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidFirstName;
         
         /// <summary>
         /// hidLastName control.
@@ -1846,7 +1828,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidLastName;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidLastName;
         
         /// <summary>
         /// hidAddress control.
@@ -1855,7 +1837,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidAddress;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidAddress;
         
         /// <summary>
         /// hidCity control.
@@ -1864,7 +1846,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidCity;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidCity;
         
         /// <summary>
         /// hidZip control.
@@ -1873,7 +1855,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidZip;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidZip;
         
         /// <summary>
         /// hidPhone control.
@@ -1882,7 +1864,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidPhone;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidPhone;
         
         /// <summary>
         /// hidProjectTag control.
@@ -1891,7 +1873,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidProjectTag;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidProjectTag;
         
         /// <summary>
         /// hidProjectType control.
@@ -1900,7 +1882,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidProjectType;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidProjectType;
         
         /// <summary>
         /// hidModelNumber control.
@@ -1909,7 +1891,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidModelNumber;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidModelNumber;
         
         /// <summary>
         /// hidKneewallType control.
@@ -1918,7 +1900,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidKneewallType;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidKneewallType;
         
         /// <summary>
         /// hidKneewallColour control.
@@ -1927,7 +1909,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidKneewallColour;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidKneewallColour;
         
         /// <summary>
         /// hidKneewallHeight control.
@@ -1936,7 +1918,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidKneewallHeight;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidKneewallHeight;
         
         /// <summary>
         /// hidTransomType control.
@@ -1945,7 +1927,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidTransomType;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidTransomType;
         
         /// <summary>
         /// hidTransomColour control.
@@ -1954,7 +1936,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidTransomColour;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidTransomColour;
         
         /// <summary>
         /// hidTransomHeight control.
@@ -1963,7 +1945,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidTransomHeight;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidTransomHeight;
         
         /// <summary>
         /// hidInteriorColour control.
@@ -1972,7 +1954,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidInteriorColour;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidInteriorColour;
         
         /// <summary>
         /// hidInteriorSkin control.
@@ -1981,7 +1963,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidInteriorSkin;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidInteriorSkin;
         
         /// <summary>
         /// hidExteriorColour control.
@@ -1990,7 +1972,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidExteriorColour;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidExteriorColour;
         
         /// <summary>
         /// hidExteriorSkin control.
@@ -1999,7 +1981,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidExteriorSkin;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidExteriorSkin;
         
         /// <summary>
         /// hidFoamProtected control.
@@ -2008,7 +1990,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidFoamProtected;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidFoamProtected;
         
         /// <summary>
         /// hidPrefabFloor control.
@@ -2017,7 +1999,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidPrefabFloor;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidPrefabFloor;
         
         /// <summary>
         /// hidRoof control.
@@ -2026,7 +2008,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidRoof;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidRoof;
         
         /// <summary>
         /// hidRoofType control.
@@ -2035,7 +2017,7 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidRoofType;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidRoofType;
         
         /// <summary>
         /// hidLayoutSelection control.
@@ -2044,6 +2026,6 @@ namespace SunspaceWizard {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hidLayoutSelection;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidLayoutSelection;
     }
 }

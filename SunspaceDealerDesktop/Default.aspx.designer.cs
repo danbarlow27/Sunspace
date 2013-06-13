@@ -13,21 +13,21 @@ namespace SunspaceDealerDesktop {
     public partial class _Default {
         
         /// <summary>
-        /// doneDrawing control.
+        /// hiddenVar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button doneDrawing;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hiddenVar;
         
         /// <summary>
-        /// hiddenParent control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hiddenParent;
+        protected global::System.Web.UI.WebControls.Button Button1;
     }
 }
