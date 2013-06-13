@@ -28,12 +28,12 @@
 
                     //Set answer to 'new' on side pager and enable button
                     $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
+                    document.getElementById('pagerOne').style.display = "inline";
                     document.getElementById('MainContent_btnQuestion1').disabled = false;
-                    console.log("Nothing blank");
                 }
-
-                console.log("New Customer " + $('#MainContent_hidFirstName').text() + $('#MainContent_hidLastName').text() + $('#MainContent_hidAddress').text()
-                    + $('#MainContent_hidCity').text() + $('#MainContent_hidZip').text() + $('#MainContent_hidPhone').text());
+                else {
+                    //error styling or something
+                }
             }
             else if ($('#MainContent_radExistingCustomer').is(':checked'))
             {
@@ -42,14 +42,61 @@
                 if (document.getElementById("MainContent_ddlExistingCustomer").value != "") {
                     //valid, so update pager and enable button
                     $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing");
+                    document.getElementById('pagerOne').style.display = "inline";
                     document.getElementById('MainContent_btnQuestion1').disabled = false;
                 }
-                console.log("Existing Customer" + $('#hidExisting').text());
             }
 
             return false;
         }
 
+        function checkQuestion2() {
+            //disable 'next slide' button until after validation
+            document.getElementById('MainContent_btnQuestion2').disabled = true;
+
+            document.getElementById("MainContent_hidProjectTag").value = $('#MainContent_txtProjectName').val();
+
+            if (document.getElementById("MainContent_hidProjectTag").value != "") {
+                //valid, so update pager and enable button
+                $('#MainContent_lblProjectTagAnswer').text(document.getElementById("MainContent_hidProjectTag").value);
+                document.getElementById('pagerTwo').style.display = "inline";
+                document.getElementById('MainContent_btnQuestion2').disabled = false;
+            }
+            else {
+                //error styling or something
+            }
+            return false;
+        }
+
+        function checkQuestion3() {
+
+            console.log("I got into the javascript function for question 3.");
+            return false;
+        }
+
+        function checkQuestion4() {
+
+            console.log("I got into the javascript function for question 4.");
+            return false;
+        }
+
+        function checkQuestion5() {
+
+            console.log("I got into the javascript function for question 5.");
+            return false;
+        }
+
+        function checkQuestion6() {
+
+            console.log("I got into the javascript function for question 6.");
+            return false;
+        }
+
+        function checkQuestion7() {
+
+            console.log("I got into the javascript function for question 7.");
+            return false;
+        }
         function checkQuestion8() {
 
             console.log("I got into the javascript function for question 8.");
@@ -95,7 +142,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerFirstName"  CssClass="txtField txtInput" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerFirstName" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -105,7 +152,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerLastName" CssClass="txtField txtInput"  OnChange="checkQuestion1()" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerLastName" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -115,7 +162,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerAddress" CssClass="txtField txtInput"  OnChange="checkQuestion1()" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerAddress" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -125,7 +172,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerCity" CssClass="txtField txtInput"  OnChange="checkQuestion1()" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerCity" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -135,7 +182,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerZip" CssClass="txtField txtZipPhone"  OnChange="checkQuestion1()" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerZip" CssClass="txtField txtZipPhone" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -145,7 +192,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerPhone" CssClass="txtField txtZipPhone"  OnChange="checkQuestion1()" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerPhone" CssClass="txtField txtZipPhone" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -164,7 +211,7 @@
                         <div class="toggleContent">
                             <ul>
                                 <li>
-                                    <asp:DropDownList ID="ddlExistingCustomer" GroupName="question1" runat="server" />
+                                    <asp:DropDownList ID="ddlExistingCustomer" OnChange="checkQuestion1()" GroupName="question1" runat="server" />
                                 </li>
                             </ul>            
                         </div> <%-- end .toggleContent --%>
@@ -195,7 +242,7 @@
                                 </asp:TableCell>
 
                                 <asp:TableCell>
-                                    <asp:TextBox ID="txtProjectName" CssClass="txtField txtInput"  runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtProjectName" CssClass="txtField txtInput" onkeyup="checkQuestion2()" runat="server"></asp:TextBox>
                                 </asp:TableCell>
                             </asp:TableRow>
                         </asp:Table>
@@ -203,7 +250,7 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion2" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion2" Enabled = "false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
                 
             </div> 
             <%-- end #slide2 --%>
@@ -655,10 +702,12 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#" data-slide="#slide2" class="slidePanel">
-                        <asp:Label ID="Label28" runat="server" Text="Project tag"></asp:Label>
-                        <asp:Label ID="Label29" runat="server" Text="Question 2 Answer"></asp:Label>
-                    </a>
+                    <div style="display: none" id="pagerTwo">
+                        <a href="#" data-slide="#slide2" class="slidePanel">
+                            <asp:Label ID="lblProjectTag" runat="server" Text="Project tag"></asp:Label>
+                            <asp:Label ID="lblProjectTagAnswer" runat="server" Text="Question 2 Answer"></asp:Label>
+                        </a>
+                    </div>
                 </li>
                 <li>
                     <a href="#" data-slide="#slide3" class="slidePanel">
