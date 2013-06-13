@@ -12,7 +12,7 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             testField.InnerText = Session["testing"].ToString();
-
+            formattedOutput.InnerText = Session["viewingArray"].ToString();
         }
     }
 }

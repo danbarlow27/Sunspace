@@ -11,6 +11,9 @@
     <div id="testField" runat="server">
     
     </div>
+    <div id="formattedOutput" runat="server">
+    
+    </div>
     </form>
 </body>
 </html>

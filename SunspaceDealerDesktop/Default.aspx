@@ -174,16 +174,6 @@
                     lineInfo += coordList[i].orientation + "/";
                 }
 
-                //for (var i = 0; i < coordList.length; i++){
-                //    for(var j = 0; j < 6; j++) {
-                //        var hidden = document.createElement("input");
-                //        hidden.setAttribute("type", "hidden");
-                //        hidden.setAttribute("name", i);
-                //        hidden.setAttribute("value", j);
-                //    }
-                //}
-
-
                 document.getElementById("MainContent_hiddenVar").value = lineInfo;
             }
     
@@ -741,10 +731,11 @@
                                     //coordList[coordList.length-1].attr("id","P");
                                     var line = drawLine(distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, intercept.x2, intercept.y2, false);
                                     
+                                    var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
                                 }
 
                                 //store the new line into the list
-                                coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id") }
+                                coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation }
 
                                 //set the starting coordinates of the next line to the ending coordinates of this line
                                 x1 = line.attr("x2");
