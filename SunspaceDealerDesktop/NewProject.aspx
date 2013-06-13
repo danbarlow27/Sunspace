@@ -30,6 +30,12 @@
 
             return false;
         }
+
+        function checkQuestion8() {
+
+            console.log("I got into the javascript function for question 8.");
+            return false;
+        }
     </script>
     <%-- End hidden div populating scripts --%>
 
@@ -148,7 +154,7 @@
                 </ul> <%-- end .toggleOptions --%>
 
                 <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" 
-                     OnClientClick="checkQuestion1()"/>
+                     OnClientClick="checkQuestion1()" OnClick="btnQuestion1_Click"/>
 
             </div> 
             <%-- end #slide1 --%>
@@ -180,7 +186,7 @@
                 </ul> <%-- end .toggleOptions --%>
 
                 <asp:Button ID="btnQuestion2" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
-                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+                
             </div> 
             <%-- end #slide2 --%>
 
@@ -600,7 +606,7 @@
                         <asp:Image ID="imbPresetC1" GroupName="layout" AssociatedControlID="radPresetC1" AlternateText="missing preset image" ImageUrl="./images/layout/PresetC1.png" runat="server" />                  
                     </li>
 
-                    <asp:Button ID="btnLayout" CssClass="btnSubmit float-right slidePanel" Text="Confirm all selections" runat="server" OnClick="btnLayout_Click"/>
+                    <asp:Button ID="btnLayout" CssClass="btnSubmit float-right slidePanel" Text="Confirm all selections" runat="server" OnClientClick="checkQuestion8()" OnClick="btnLayout_Click"/>
 
                 </ul> <%-- end .toggleOptions --%>
 
@@ -676,73 +682,41 @@
         </div> <%-- end #paging --%>
     </div>
 
-    <%-- Hidden div tags 
-    ================= --%>
-    <input id="Hidden1" type="hidden" runat="server" />
-    <div style="display: none">
-        <div id="hidQuestion1"  > 
-            <div id="hidExisting" runat="server">
-                
-            </div>
-            <div id="hidFirstName" runat="server">
-                nope.avi
-            </div>
-            <div id="hidLastName" runat="server">
+    <%-- Hidden input tags 
+    ======================= --%>
+    <input id="hidExisting" type="hidden" runat="server" />
+    <input id="hidFirstName" type="hidden" runat="server" />
+    <input id="hidLastName" type="hidden" runat="server" />
+    <input id="hidAddress" type="hidden" runat="server" />
+    <input id="hidCity" type="hidden" runat="server" />
+    <input id="hidZip" type="hidden" runat="server" />
+    <input id="hidPhone" type="hidden" runat="server" />
+   
+    <input id="hidProjectTag" type="hidden" runat="server" />
+       
+    <input id="hidProjectType" type="hidden" runat="server" />
+    <input id="hidModelNumber" type="hidden" runat="server" />
 
-            </div>  
-            <div id="hidAddress" runat="server">
+    <input id="hidKneewallType" type="hidden" runat="server" />
+    <input id="hidKneewallColour" type="hidden" runat="server" />
+    <input id="hidKneewallHeight" type="hidden" runat="server" />
+    <input id="hidTransomType" type="hidden" runat="server" />
+    <input id="hidTransomColour" type="hidden" runat="server" />
+    <input id="hidTransomHeight" type="hidden" runat="server" />
+    <input id="hidInteriorColour" type="hidden" runat="server" />
+    <input id="hidInteriorSkin" type="hidden" runat="server" />
+    <input id="hidExteriorColour" type="hidden" runat="server" />
+    <input id="hidExteriorSkin" type="hidden" runat="server" />
 
-            </div>  
-            <div id="hidCity" runat="server">
+    <input id="hidFoamProtected" type="hidden" runat="server" />
 
-            </div>  
-            <div id="hidZip" runat="server">
+    <input id="hidPrefabFloor" type="hidden" runat="server" />
 
-            </div>
-            <div id="hidPhone" runat="server">
+    <input id="hidRoof" type="hidden" runat="server" />
+    <input id="hidRoofType" type="hidden" runat="server" />
 
-            </div>
-        </div>
+    <input id="hidLayoutSelection" type="hidden" runat="server" />
 
-        <div id="hidQuestion2" >
-            <div id="hidProjectTag" runat="server"></div>
-        </div>
-
-        <div id="hidQuestion3" >
-            <div id="hidProjectType" runat="server"></div>
-            <div id="hidModelNumber" runat="server"></div>
-        </div>
-
-        <div id="hidQuestion4" >
-            <div id="hidKneewallType" runat="server"></div>
-            <div id="hidKneewallColour" runat="server"></div>
-            <div id="hidKneewallHeight" runat="server"></div>
-            <div id="hidTransomType" runat="server"></div>
-            <div id="hidTransomColour" runat="server"></div>
-            <div id="hidTransomHeight" runat="server"></div>
-            <div id="hidInteriorColour" runat="server"></div>
-            <div id="hidInteriorSkin" runat="server"></div>
-            <div id="hidExteriorColour" runat="server"></div>
-            <div id="hidExteriorSkin" runat="server"></div>
-        </div>
-
-        <div id="hidQuestion5" >
-            <div id="hidFoamProtected" runat="server"></div>
-        </div>
-
-        <div id="hidQuestion6" >
-            <div id="hidPrefabFloor" runat="server"></div>
-        </div>
-
-        <div id="hidQuestion7" >
-            <div id="hidRoof" runat="server"></div>
-            <div id="hidRoofType" runat="server"></div>
-        </div>
-
-        <div id="hidQuestion8" >
-            <div id="hidLayoutSelection" runat="server"></div>
-        </div>
-    </div>
     <%-- end hidden divs --%>
 
     
