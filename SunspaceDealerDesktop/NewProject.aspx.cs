@@ -16,13 +16,42 @@ namespace SunspaceWizard
 
         protected void btnLayout_Click(object sender, EventArgs e)
         {
-            //If custom btnLayout, Page 2, else, page3
-            Response.Redirect("http://www.google.ca");
-        }
+            Session.Add("hidFirstName", hidFirstName.Value);
+            Session.Add("hidExisting", hidExisting.Value);
+            Session.Add("hidFirstName", hidFirstName.Value);
+           /* Session.Add("hidLastName", );
+            Session.Add("hidAddress", );
+            Session.Add("hidCity", );
+            Session.Add("hidZip", );
+            Session.Add("hidPhone", );
+   
+            Session.Add("hidProjectTag", );
+       
+            Session.Add("hidProjectType", );
+            Session.Add("hidModelNumber", );
 
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Session.Add("testing", Hidden1.Value);
+            Session.Add("hidKneewallType", );
+            Session.Add("hidKneewallColour", );
+            Session.Add("hidKneewallHeight", );
+            Session.Add("hidTransomType", );
+            Session.Add("hidTransomColour", );
+            Session.Add("hidTransomHeight", );
+            Session.Add("hidInteriorColour", );
+            Session.Add("hidInteriorSkin", );
+            Session.Add("hidExteriorColour", );
+            Session.Add("hidExteriorSkin", );
+            
+            Session.Add("hidFoamProtected", );
+
+            Session.Add("hidPrefabFloor", );
+
+            Session.Add("hidRoof", );
+            Session.Add("hidRoofType", );
+
+            Session.Add("hidLayoutSelection", );
+            */
+            //If custom btnLayout, Page 2, else, page3
+            Session.Add("testing2", "Second test worked");
             Response.Redirect("TestingHiddens.aspx");
         }
     }
