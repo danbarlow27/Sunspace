@@ -16,5 +16,11 @@ namespace SunspaceDealerDesktop
 
 
         }
+
+        protected void doneDrawing_Click(object sender, EventArgs e)
+        {
+            Session.Add("testing", hiddenParent.Value);
+            Response.Redirect("TestingHiddens.aspx");
+        }
     }
 }

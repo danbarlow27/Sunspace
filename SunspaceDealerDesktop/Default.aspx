@@ -23,12 +23,17 @@
 
                 <li><input id="buttonDone" class="btnSubmit" type="button" value ="" onclick="buttonDoneOnClick()" style="width:150px"/></li>
 
+                <li><asp:Button runat="server" Text="Done Drawing" CssClass="btnSubmit" ID="doneDrawing" OnClick="doneDrawing_Click" style="width:150px"/></li>
+
             </ol>
         </div>
         <div style="max-width:500px; max-height:500px; min-width:100px; min-height:100px; float:left;" id="mySunroom"></div>
         <div style="width:20%; float:right; padding-right:10%;" >
             <textarea id="drawingLog" rows="31" cols="30" style="resize:none; border:0px;" readonly></textarea>
         </div>
+
+        <input id="hiddenParent" type="hidden" runat="server" value="" onclick="appendChild()"/>
+        <!--onclick="createHiddenFields()"-->
 
     <script>
 
@@ -68,6 +73,8 @@
                     .attr("width", MAX_CANVAS_WIDTH)
                     .attr("height", MAX_CANVAS_WIDTH);
 
+        var hidden = document.getElementById("MainContent_hiddenParent");
+
         //variable to hold textarea tag
         var log = document.getElementById("drawingLog");
 
@@ -98,7 +105,32 @@
         //Used to validate first walls, also after dblclick and E
         var validateFirstWall = false;
 
+        var numberOfFields = 6;
         
+        function createHiddenFields(){
+            var totalHiddenFields = numberOfFields*coordList.length;
+
+            for(var i = 0; i < coordList.length; i++){
+                for(var j = 0; j < numberOfFields; j++){
+                    var currentLabel
+                    if(j===0)
+                        currentLabel = x1;
+
+                    var currentElement = document.createElement("element_"+i+"_"+j);
+                    currentElement.type("hidden");                    
+                    currentElement.value(coordList[i].currentLabel);
+                }
+                hidden.appendChild(currentElement);
+            }
+
+        }
+
+        function appendChild(){
+            var child = document.createElement("firstChild");
+            
+        }
+
+
         //when the DOM is loaded...
         $(document).ready(function () {
             drawGrid(); //Draws the initial grid
