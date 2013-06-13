@@ -19,39 +19,38 @@ namespace SunspaceWizard
             Session.Add("hidFirstName", hidFirstName.Value);
             Session.Add("hidExisting", hidExisting.Value);
             Session.Add("hidFirstName", hidFirstName.Value);
-           /* Session.Add("hidLastName", );
-            Session.Add("hidAddress", );
-            Session.Add("hidCity", );
-            Session.Add("hidZip", );
-            Session.Add("hidPhone", );
-   
-            Session.Add("hidProjectTag", );
-       
-            Session.Add("hidProjectType", );
-            Session.Add("hidModelNumber", );
+            Session.Add("hidLastName", hidLastName.Value);
+            Session.Add("hidAddress", hidAddress.Value);
+            Session.Add("hidCity", hidCity.Value);
+            Session.Add("hidZip", hidZip.Value);
+            Session.Add("hidPhone", hidPhone.Value);
 
-            Session.Add("hidKneewallType", );
-            Session.Add("hidKneewallColour", );
-            Session.Add("hidKneewallHeight", );
-            Session.Add("hidTransomType", );
-            Session.Add("hidTransomColour", );
-            Session.Add("hidTransomHeight", );
-            Session.Add("hidInteriorColour", );
-            Session.Add("hidInteriorSkin", );
-            Session.Add("hidExteriorColour", );
-            Session.Add("hidExteriorSkin", );
+            Session.Add("hidProjectTag", hidProjectTag.Value);
+
+            Session.Add("hidProjectType", hidProjectType.Value);
+            Session.Add("hidModelNumber", hidModelNumber.Value);
+
+            Session.Add("hidKneewallType", hidKneewallType.Value);
+            Session.Add("hidKneewallColour", hidKneewallColour.Value);
+            Session.Add("hidKneewallHeight", hidKneewallHeight.Value);
+            Session.Add("hidTransomType", hidTransomType.Value);
+            Session.Add("hidTransomColour", hidTransomColour.Value);
+            Session.Add("hidTransomHeight", hidTransomHeight.Value);
+            Session.Add("hidInteriorColour", hidInteriorColour.Value);
+            Session.Add("hidInteriorSkin", hidInteriorSkin.Value);
+            Session.Add("hidExteriorColour", hidExteriorColour.Value);
+            Session.Add("hidExteriorSkin", hidExteriorSkin.Value);
+
+            Session.Add("hidFoamProtected", hidFoamProtected.Value);
+
+            Session.Add("hidPrefabFloor", hidPrefabFloor.Value);
+
+            Session.Add("hidRoof", hidRoof.Value);
+            Session.Add("hidRoofType", hidRoofType.Value);
+
+            Session.Add("hidLayoutSelection", hidLayoutSelection.Value);
             
-            Session.Add("hidFoamProtected", );
-
-            Session.Add("hidPrefabFloor", );
-
-            Session.Add("hidRoof", );
-            Session.Add("hidRoofType", );
-
-            Session.Add("hidLayoutSelection", );
-            */
             //If custom btnLayout, Page 2, else, page3
-            Session.Add("testing2", "Second test worked");
             Response.Redirect("TestingHiddens.aspx");
         }
     }
