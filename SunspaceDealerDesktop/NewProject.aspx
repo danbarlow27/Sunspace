@@ -6,9 +6,11 @@
     <script>       
 
         function checkQuestion1() {
+            //disable 'next slide' button until after validation
+            document.getElementById('MainContent_btnQuestion1').disabled=true;
+
             if ($('#MainContent_radNewCustomer').is(':checked'))
             {
-                $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
                 document.getElementById("MainContent_hidFirstName").value = $('#MainContent_txtCustomerFirstName').val();
                 document.getElementById("MainContent_hidLastName").value = $('#MainContent_txtCustomerLastName').val();
                 document.getElementById("MainContent_hidAddress").value = $('#MainContent_txtCustomerAddress').val();
@@ -16,24 +18,148 @@
                 document.getElementById("MainContent_hidZip").value = $('#MainContent_txtCustomerZip').val();
                 document.getElementById("MainContent_hidPhone").value = $('#MainContent_txtCustomerPhone').val();
 
-                if (document.getElementById("MainContent_hidFirstName").value == "") {
-                    console.log("first name is blank");
-                }
+                //Make sure the text boxes aren't blank
+                if (document.getElementById("MainContent_hidFirstName").value != "" &&
+                    document.getElementById("MainContent_hidLastName").value != "" &&
+                    document.getElementById("MainContent_hidAddress").value != "" &&
+                    document.getElementById("MainContent_hidCity").value != "" &&
+                    document.getElementById("MainContent_hidZip").value != "" &&
+                    document.getElementById("MainContent_hidPhone").value != "") {
 
-                console.log("New Customer " + $('#MainContent_hidFirstName').text() + $('#MainContent_hidLastName').text() + $('#MainContent_hidAddress').text()
-                    + $('#MainContent_hidCity').text() + $('#MainContent_hidZip').text() + $('#MainContent_hidPhone').text());
+                    //Set answer to 'new' on side pager and enable button
+                    $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
+                    document.getElementById('pagerOne').style.display = "inline";
+                    document.getElementById('MainContent_btnQuestion1').disabled = false;
+                }
+                else {
+                    //error styling or something
+                }
             }
             else if ($('#MainContent_radExistingCustomer').is(':checked'))
             {
-                $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing");
                 document.getElementById("MainContent_ddlExistingCustomer").value = $('#MainContent_ddlCustomerFirstName').val();
 
-                console.log("Existing Customer" + $('#hidExisting').text());
+                if (document.getElementById("MainContent_ddlExistingCustomer").value != "") {
+                    //valid, so update pager and enable button
+                    $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing");
+                    document.getElementById('pagerOne').style.display = "inline";
+                    document.getElementById('MainContent_btnQuestion1').disabled = false;
+                }
             }
 
             return false;
         }
 
+        function checkQuestion2() {
+            //disable 'next slide' button until after validation
+            document.getElementById('MainContent_btnQuestion2').disabled = true;
+
+            document.getElementById("MainContent_hidProjectTag").value = $('#MainContent_txtProjectName').val();
+
+            if (document.getElementById("MainContent_hidProjectTag").value != "") {
+                //valid, so update pager and enable button
+                $('#MainContent_lblProjectTagAnswer').text(document.getElementById("MainContent_hidProjectTag").value);
+                document.getElementById('pagerTwo').style.display = "inline";
+                document.getElementById('MainContent_btnQuestion2').disabled = false;
+            }
+            else {
+                //error styling or something
+            }
+            return false;
+        }
+
+        function checkQuestion3() {
+            document.getElementById('MainContent_btnQuestion3').disabled = true;
+
+            if ($('#MainContent_radProjectSunroom').is(':checked')) {
+                if ($('#MainContent_radSunroomModel100').is(':checked')) {
+                    document.getElementById("MainContent_hidModelNumber").value = "100";
+                    document.getElementById('pagerThree').style.display = "inline";
+                    document.getElementById('MainContent_btnQuestion3').disabled = false;
+                }
+                else if($('#MainContent_radSunroomModel200').is(':checked')) {
+                    document.getElementById("MainContent_hidModelNumber").value = "200";
+                    document.getElementById('pagerThree').style.display = "inline";
+                    document.getElementById('MainContent_btnQuestion3').disabled = false;
+                }
+                else if($('#MainContent_radSunroomModel300').is(':checked')) {
+                    document.getElementById("MainContent_hidModelNumber").value = "300";
+                    document.getElementById('pagerThree').style.display = "inline";
+                    document.getElementById('MainContent_btnQuestion3').disabled = false;
+                }
+                else if($('#MainContent_radSunroomModel400').is(':checked')) {
+                    document.getElementById("MainContent_hidModelNumber").value = "400";
+                    document.getElementById('pagerThree').style.display = "inline";
+                    document.getElementById('MainContent_btnQuestion3').disabled = false;
+                }
+                
+                document.getElementById("MainContent_hidProjectType").value = "Sunroom";
+                $('#MainContent_lblProjectTypeAnswer').text(document.getElementById("MainContent_hidProjectType").value + " of Model " + document.getElementById("MainContent_hidModelNumber").value);
+            }
+            return false;
+        }
+
+        function checkQuestion4() {
+            document.getElementById('MainContent_btnQuestion4').disabled = true;
+
+            if (document.getElementById("MainContent_txtKneewallHeight").value != "" &&
+                document.getElementById("MainContent_ddlKneewallType").value != "" &&
+                document.getElementById("MainContent_ddlKneewallColour").value != "") {
+
+                document.getElementById("MainContent_hidKneewallHeight").value = document.getElementById("MainContent_txtKneewallHeight").value;
+                document.getElementById("MainContent_hidKneewallType").value = document.getElementById("MainContent_ddlKneewallType").value;
+                document.getElementById("MainContent_hidKneewallColour").value = document.getElementById("MainContent_ddlKneewallColour").value;
+                document.getElementById('pagerFour').style.display = "inline";
+                document.getElementById('MainContent_btnQuestion4').disabled = false;
+            }
+            else {
+                document.getElementById('MainContent_btnQuestion4').disabled = true;
+                //kneewall error styling
+            }
+
+            if (document.getElementById("MainContent_txtTransomHeight").value != "" &&
+                document.getElementById("MainContent_ddlTransomType").value != "" &&
+                document.getElementById("MainContent_ddlTransomColour").value != "") {
+
+                document.getElementById("MainContent_hidTransomHeight").value = document.getElementById("MainContent_txtTransomHeight").value;
+                document.getElementById("MainContent_hidTransomType").value = document.getElementById("MainContent_ddlTransomType").value;
+                document.getElementById("MainContent_hidTransomColour").value = document.getElementById("MainContent_ddlTransomColour").value;
+            }
+            else {
+                document.getElementById('MainContent_btnQuestion4').disabled = true;
+                //transom error styling
+            }
+
+            if (document.getElementById("MainContent_ddlInteriorColour").value != "" &&
+                document.getElementById("MainContent_ddlInteriorSkin").value != "" &&
+                document.getElementById("MainContent_ddlExteriorColour").value != "" &&
+                document.getElementById("MainContent_ddlExteriorSkin").value != "") {
+
+            }
+            else {
+                document.getElementById('MainContent_btnQuestion4').disabled = true;
+                //framing error styling
+            }
+            return false;
+        }
+
+        function checkQuestion5() {
+
+            console.log("I got into the javascript function for question 5.");
+            return false;
+        }
+
+        function checkQuestion6() {
+
+            console.log("I got into the javascript function for question 6.");
+            return false;
+        }
+
+        function checkQuestion7() {
+
+            console.log("I got into the javascript function for question 7.");
+            return false;
+        }
         function checkQuestion8() {
 
             console.log("I got into the javascript function for question 8.");
@@ -79,7 +205,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerFirstName"  CssClass="txtField txtInput"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerFirstName" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -89,7 +215,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerLastName" CssClass="txtField txtInput"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerLastName" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -99,7 +225,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerAddress" CssClass="txtField txtInput"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerAddress" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -109,7 +235,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerCity" CssClass="txtField txtInput"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerCity" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -119,7 +245,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerZip" CssClass="txtField txtZipPhone"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerZip" CssClass="txtField txtZipPhone" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -129,7 +255,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerPhone" CssClass="txtField txtZipPhone"  runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerPhone" CssClass="txtField txtZipPhone" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -148,7 +274,7 @@
                         <div class="toggleContent">
                             <ul>
                                 <li>
-                                    <asp:DropDownList ID="ddlExistingCustomer" GroupName="question1" runat="server" />
+                                    <asp:DropDownList ID="ddlExistingCustomer" OnChange="checkQuestion1()" GroupName="question1" runat="server" />
                                 </li>
                             </ul>            
                         </div> <%-- end .toggleContent --%>
@@ -156,8 +282,7 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" 
-                     OnClientClick="checkQuestion1()" />
+                <asp:Button ID="btnQuestion1" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide1 --%>
@@ -180,7 +305,7 @@
                                 </asp:TableCell>
 
                                 <asp:TableCell>
-                                    <asp:TextBox ID="txtProjectName" CssClass="txtField txtInput"  runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtProjectName" CssClass="txtField txtInput" onkeyup="checkQuestion2()" runat="server"></asp:TextBox>
                                 </asp:TableCell>
                             </asp:TableRow>
                         </asp:Table>
@@ -188,7 +313,7 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion2" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion2" Enabled = "false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
                 
             </div> 
             <%-- end #slide2 --%>
@@ -213,22 +338,22 @@
                         <div class="toggleContent">
                             <ul>
                                 <li>
-                                    <asp:RadioButton ID="radSunroomModel100" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radSunroomModel100" OnClick="checkQuestion3()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblSunroomModel100Radio" AssociatedControlID="radSunroomModel100" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel100" AssociatedControlID="radSunroomModel100" runat="server" Text="Model 100"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radSunroomModel200" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radSunroomModel200" OnClick="checkQuestion3()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblSunroomModel200Radio" AssociatedControlID="radSunroomModel200" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel200" AssociatedControlID="radSunroomModel200" runat="server" Text="Model 200"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radSunroomModel300" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radSunroomModel300" OnClick="checkQuestion3()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblSunroomModel300Radio" AssociatedControlID="radSunroomModel300" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel300" AssociatedControlID="radSunroomModel300" runat="server" Text="Model 300"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radSunroomModel400" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radSunroomModel400" OnClick="checkQuestion3()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblSunroomModel400Radio" AssociatedControlID="radSunroomModel400" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel400" AssociatedControlID="radSunroomModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
@@ -342,7 +467,7 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion3" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide3 --%>
@@ -368,13 +493,13 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:TextBox ID="txtKneewallHeight" GroupName="styling" CssClass="txtField" runat="server" />
+                                    <asp:TextBox ID="txtKneewallHeight" onkeyup="checkQuestion4()" OnChange="checkQuestion4()" GroupName="styling" CssClass="txtField" runat="server" />
                                     <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height" />
                                     <br />
-                                    <asp:DropDownList ID="ddlKneewallType" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlKneewallType" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblKneewallType" AssociatedControlID="txtKneewallHeight" runat="server" Text="Type" />
                                     <br />
-                                    <asp:DropDownList ID="ddlKneewallColour" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlKneewallColour" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblKneewallColour" AssociatedControlID="txtKneewallHeight" runat="server" Text="Colour" />
                                 </li>
                             </ul>   
@@ -393,13 +518,13 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:TextBox ID="txtTransomHeight" GroupName="styling" CssClass="txtField" runat="server" />
+                                    <asp:TextBox ID="txtTransomHeight" onkeyup="checkQuestion4()" OnChange="checkQuestion4()" GroupName="styling" CssClass="txtField" runat="server" />
                                     <asp:Label ID="lblTransomHeight" AssociatedControlID="txtTransomHeight" runat="server" Text="Height" />
                                     <br />
-                                    <asp:DropDownList ID="ddlTransomType" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlTransomType" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblTransomType" AssociatedControlID="txtTransomHeight" runat="server" Text="Type" />
                                     <br />
-                                    <asp:DropDownList ID="ddlTransomColour" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlTransomColour" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblTransomColour" AssociatedControlID="txtTransomHeight" runat="server" Text="Colour" />
                                 </li>
                             </ul>
@@ -418,16 +543,16 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:DropDownList ID="ddlInteriorColour" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlInteriorColour" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblInteriorColour" AssociatedControlID="ddlInteriorColour" runat="server" Text="Interior Colour" />
                                     <br />
-                                    <asp:DropDownList ID="ddlInteriorSkin" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlInteriorSkin" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblInteriorSkin" AssociatedControlID="ddlInteriorSkin" runat="server" Text="Interior Skin" />
                                     <br />
-                                    <asp:DropDownList ID="ddlExteriorColour" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlExteriorColour" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblExteriorColour" AssociatedControlID="ddlExteriorColour" runat="server" Text="Exterior Colour" />
                                     <br />
-                                    <asp:DropDownList ID="ddlExteriorSkin" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlExteriorSkin" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblExteriorSkin" AssociatedControlID="ddlExteriorSkin" runat="server" Text="Exterior Skin" />
                                 </li>
                             </ul>
@@ -631,56 +756,77 @@
             <h2>Project Specifications</h2>
 
             <ul>
-                <li>
-                    <a href="#" data-slide="#slide1" class="slidePanel">
-                        <asp:Label ID="lblSpecsProjectType" runat="server" Text="New/Existing Customer"></asp:Label>
-                        <asp:Label ID="lblSpecsProjectTypeAnswer" runat="server" Text="Customer Answer"></asp:Label>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-slide="#slide2" class="slidePanel">
-                        <asp:Label ID="Label28" runat="server" Text="Project tag"></asp:Label>
-                        <asp:Label ID="Label29" runat="server" Text="Question 2 Answer"></asp:Label>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-slide="#slide3" class="slidePanel">
-                        <asp:Label ID="Label37" runat="server" Text="Type of project"></asp:Label>
-                        <asp:Label ID="Label38" runat="server" Text="Question 3 Answer"></asp:Label>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-slide="#slide4" class="slidePanel">
-                        <asp:Label ID="Label27" runat="server" Text="Styling options"></asp:Label>
-                        <asp:Label ID="Label30" runat="server" Text="Question 4 Answer"></asp:Label>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-slide="#slide5" class="slidePanel">
-                        <asp:Label ID="Label31" runat="server" Text="Foam protection"></asp:Label>
-                        <asp:Label ID="Label32" runat="server" Text="Question 5 Answer"></asp:Label>
-                    </a>
-                </li>                
-                <li>
-                    <a href="#" data-slide="#slide6" class="slidePanel">
-                        <asp:Label ID="Label1" runat="server" Text="Prefab floor"></asp:Label>
-                        <asp:Label ID="Label2" runat="server" Text="Question 6 Answer"></asp:Label>
-                    </a>
-                </li>
-                
-                <li>
-                    <a href="#" data-slide="#slide7" class="slidePanel">
-                        <asp:Label ID="Label3" runat="server" Text="Roof"></asp:Label>
-                        <asp:Label ID="Label4" runat="server" Text="Question 7 Answer"></asp:Label>
-                    </a>
-                </li>
+                <div style="display: none" id="pagerOne">
+                    <li>
+                            <a href="#" data-slide="#slide1" class="slidePanel">
+                                <asp:Label ID="lblSpecsProjectType" runat="server" Text="New/Existing Customer"></asp:Label>
+                                <asp:Label ID="lblSpecsProjectTypeAnswer" runat="server" Text="Customer Answer"></asp:Label>
+                            </a>
+                    </li>
+                </div>
 
-                <li>
-                    <a href="#" data-slide="#slide8" class="slidePanel">
-                        <asp:Label ID="Label5" runat="server" Text="Layout"></asp:Label>
-                        <asp:Label ID="Label6" runat="server" Text="Question 8 Answer"></asp:Label>
-                    </a>
-                </li>
+                <div style="display: none" id="pagerTwo">
+                    <li>
+                            <a href="#" data-slide="#slide2" class="slidePanel">
+                                <asp:Label ID="lblProjectTag" runat="server" Text="Project tag"></asp:Label>
+                                <asp:Label ID="lblProjectTagAnswer" runat="server" Text="Question 2 Answer"></asp:Label>
+                            </a>
+                    </li>
+                </div>
+
+                <div style="display: none" id="pagerThree">
+                    <li>
+                            <a href="#" data-slide="#slide3" class="slidePanel">
+                                <asp:Label ID="lblProjectType" runat="server" Text="Type of project"></asp:Label>
+                                <asp:Label ID="lblProjectTypeAnswer" runat="server" Text="Question 3 Answer"></asp:Label>
+                            </a>
+                    </li>
+                </div>
+
+                <div style="display: none" id="pagerFour">
+                    <li>
+                            <a href="#" data-slide="#slide4" class="slidePanel">
+                                <asp:Label ID="Label27" runat="server" Text="Styling options"></asp:Label>
+                                <asp:Label ID="Label30" runat="server" Text="Question 4 Answer"></asp:Label>
+                            </a>
+                    </li>
+                </div>
+
+                <div style="display: none" id="pagerFive">
+                    <li>
+                            <a href="#" data-slide="#slide5" class="slidePanel">
+                                <asp:Label ID="Label31" runat="server" Text="Foam protection"></asp:Label>
+                                <asp:Label ID="Label32" runat="server" Text="Question 5 Answer"></asp:Label>
+                            </a>
+                    </li>          
+                </div>    
+                  
+                <div style="display: none" id="pagerSix">
+                    <li>
+                            <a href="#" data-slide="#slide6" class="slidePanel">
+                                <asp:Label ID="Label1" runat="server" Text="Prefab floor"></asp:Label>
+                                <asp:Label ID="Label2" runat="server" Text="Question 6 Answer"></asp:Label>
+                            </a>
+                    </li>
+                </div>
+
+                <div style="display: none" id="pagerSeven">                
+                    <li>
+                            <a href="#" data-slide="#slide7" class="slidePanel">
+                                <asp:Label ID="Label3" runat="server" Text="Roof"></asp:Label>
+                                <asp:Label ID="Label4" runat="server" Text="Question 7 Answer"></asp:Label>
+                            </a>
+                    </li>
+                </div>
+
+                <div style="display: none" id="pagerEight">
+                    <li>
+                            <a href="#" data-slide="#slide8" class="slidePanel">
+                                <asp:Label ID="Label5" runat="server" Text="Layout"></asp:Label>
+                                <asp:Label ID="Label6" runat="server" Text="Question 8 Answer"></asp:Label>
+                            </a>
+                    </li>
+                </div>
             </ul>    
         </div> <%-- end #paging --%>
     </div>
