@@ -75,6 +75,9 @@
                     .attr("width", MAX_CANVAS_WIDTH)
                     .attr("height", MAX_CANVAS_WIDTH);
 
+        //Variable to hold all child elements which has all the array information
+        var hiddenParent = document.getElementById("MainContent_hiddenVar");
+
         //variable to hold textarea tag
         var log = document.getElementById("drawingLog");
 
@@ -105,7 +108,12 @@
         //Used to validate first walls, also after dblclick and E
         var validateFirstWall = false;
 
-        
+        function appendChildToParent(){
+            var child = document.createElement("child1");
+            child.innerHTML = coordList[0].id;
+            hiddenVar.appendChild(child);
+        }
+
         //when the DOM is loaded...
         $(document).ready(function () {
             drawGrid(); //Draws the initial grid
@@ -155,17 +163,19 @@
 
             else if (doneButton.value === "Done Drawing") {
                 
-                for (var i = 0; i < coordList.length; i++){
-                    for(var j = 0; j < 6; j++) {
-                        var hidden = document.createElement("input");
-                        hidden.setAttribute("type", "hidden");
-                        hidden.setAttribute("name", i);
-                        hidden.setAttribute("value", j);
-                    }
-                }
+                appendChildToParent();
+                
+                //for (var i = 0; i < coordList.length; i++){
+                //    for(var j = 0; j < 6; j++) {
+                //        var hidden = document.createElement("input");
+                //        hidden.setAttribute("type", "hidden");
+                //        hidden.setAttribute("name", i);
+                //        hidden.setAttribute("value", j);
+                //    }
+                //}
 
 
-                document.getElementById("MainContent_hiddenVar").value = coordList[0].id;
+                //document.getElementById("MainContent_hiddenVar").value = coordList[0].id;
             }
     
         }
