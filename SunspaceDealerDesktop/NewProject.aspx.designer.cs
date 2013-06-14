@@ -1462,6 +1462,15 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.RadioButton radPreset2;
         
         /// <summary>
+        /// lblPreset2Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPreset2Radio;
+        
+        /// <summary>
         /// imbPreset2 control.
         /// </summary>
         /// <remarks>
@@ -1478,6 +1487,15 @@ namespace SunspaceWizard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton radPreset3;
+        
+        /// <summary>
+        /// lblPreset3Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPreset3Radio;
         
         /// <summary>
         /// imbPreset3 control.
@@ -1498,6 +1516,15 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.RadioButton radPreset4;
         
         /// <summary>
+        /// lblPreset4Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPreset4Radio;
+        
+        /// <summary>
         /// imbPreset4 control.
         /// </summary>
         /// <remarks>
@@ -1514,6 +1541,15 @@ namespace SunspaceWizard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton radPreset5;
+        
+        /// <summary>
+        /// lblPreset5Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPreset5Radio;
         
         /// <summary>
         /// imbPreset5 control.
@@ -1534,6 +1570,15 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.RadioButton radPreset6;
         
         /// <summary>
+        /// lblPreset6Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPreset6Radio;
+        
+        /// <summary>
         /// imbPreset6 control.
         /// </summary>
         /// <remarks>
@@ -1550,6 +1595,15 @@ namespace SunspaceWizard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton radPreset7;
+        
+        /// <summary>
+        /// lblPreset7Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPreset7Radio;
         
         /// <summary>
         /// imbPreset7 control.
@@ -1570,6 +1624,15 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.RadioButton radPreset8;
         
         /// <summary>
+        /// lblPreset8Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPreset8Radio;
+        
+        /// <summary>
         /// imbPreset8 control.
         /// </summary>
         /// <remarks>
@@ -1586,6 +1649,15 @@ namespace SunspaceWizard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton radPreset9;
+        
+        /// <summary>
+        /// lblPreset9Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPreset9Radio;
         
         /// <summary>
         /// imbPreset9 control.
@@ -1606,6 +1678,15 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.RadioButton radPreset10;
         
         /// <summary>
+        /// lblPreset10Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPreset10Radio;
+        
+        /// <summary>
         /// imbPreset10 control.
         /// </summary>
         /// <remarks>
@@ -1624,6 +1705,15 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.RadioButton radPresetF1;
         
         /// <summary>
+        /// lblPresetF1Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPresetF1Radio;
+        
+        /// <summary>
         /// imbPresetF1 control.
         /// </summary>
         /// <remarks>
@@ -1640,6 +1730,15 @@ namespace SunspaceWizard {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton radPresetC1;
+        
+        /// <summary>
+        /// lblPresetC1Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPresetC1Radio;
         
         /// <summary>
         /// imbPresetC1 control.

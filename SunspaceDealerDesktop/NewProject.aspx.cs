@@ -49,7 +49,7 @@ namespace SunspaceWizard
             Session.Add("hidRoofType", hidRoofType.Value);
 
             Session.Add("hidLayoutSelection", hidLayoutSelection.Value);
-            
+
             //If custom btnLayout, Page 2, else, page3
             Response.Redirect("TestingHiddens.aspx");
         }
