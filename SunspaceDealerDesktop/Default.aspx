@@ -173,7 +173,7 @@
                     lineInfo += coordList[i].id + ",";
                     lineInfo += coordList[i].orientation + "/";
                 }
-
+                console.log(lineInfo);
                 document.getElementById("MainContent_hiddenVar").value = lineInfo;
             }
     
@@ -731,9 +731,10 @@
                                     //coordList[coordList.length-1].attr("id","P");
                                     var line = drawLine(distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, intercept.x2, intercept.y2, false);
                                     
-                                    var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
+                                    //var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
                                 }
-
+                                //get the orientation
+                                var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
                                 //store the new line into the list
                                 coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation }
 

@@ -29,13 +29,13 @@ namespace SunspaceDealerDesktop
 
             int numberOfElements = 6;
 
-            int dimensions = lineInfo.Length / numberOfElements;
+            int numberOfWalls = lineInfo.Length / numberOfElements;
 
-            string[,] newArray = new string[dimensions, numberOfElements];
+            string[,] newArray = new string[numberOfWalls, numberOfElements];
 
             //int count = 0;
 
-            for (int i = 0; i < dimensions; i++)
+            for (int i = 0; i < numberOfWalls; i++)
             {
                 for (int j = 0; j < numberOfElements; j++)
                 {
@@ -43,7 +43,7 @@ namespace SunspaceDealerDesktop
                 }
             }
 
-            Session.Add("viewingArray", newArray[3, 5]);
+            Session.Add("viewingArray", newArray[newArray.GetLength(0) - 1, newArray.GetLength(1) - 1]);
 
             Response.Redirect("TestingHiddens.aspx");
         }
