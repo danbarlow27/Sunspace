@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * File name: Default.aspx.cs
+ * Version: 1.0
+ * Date Last Modified:16/06/13
+ * Notes: Changes may be needed to meet the structure of the wall class
+ **/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,8 +19,6 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             //Session["newSession"];
-            
-
         }
 
         protected void Button1_Click1(object sender, EventArgs e)
@@ -22,14 +26,11 @@ namespace SunspaceDealerDesktop
             //Adds the concatenated string from the hidden field to the Session in C#
             Session.Add("testing", hiddenVar.Value);
 
-            //String variable to hold hidden field value
-            string lineArrayInfo = hiddenVar.Value;
-
             //Character array to hold the delimiters to parse the string being passed from Javascript/Client-side
             char[] charDelimiter = { ',', '/' };
 
             //Array of values from the hidden field string without all the delimiters
-            string[] lineInfo = lineArrayInfo.Split(charDelimiter, StringSplitOptions.RemoveEmptyEntries);
+            string[] lineInfo = (hiddenVar.Value).Split(charDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
             //Number of elements per line
             int numberOfElements = 6;
