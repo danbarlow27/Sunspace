@@ -16,39 +16,68 @@ namespace SunspaceWizard
 
         protected void btnLayout_Click(object sender, EventArgs e)
         {
-            Session.Add("hidFirstName", hidFirstName.Value);
-            Session.Add("hidExisting", hidExisting.Value);
-            Session.Add("hidFirstName", hidFirstName.Value);
-            Session.Add("hidLastName", hidLastName.Value);
-            Session.Add("hidAddress", hidAddress.Value);
-            Session.Add("hidCity", hidCity.Value);
-            Session.Add("hidZip", hidZip.Value);
-            Session.Add("hidPhone", hidPhone.Value);
+            //Session.Add("hidFirstName", hidFirstName.Value);
+            //Session.Add("hidExisting", hidExisting.Value);
+            //Session.Add("hidFirstName", hidFirstName.Value);
+            //Session.Add("hidLastName", hidLastName.Value);
+            //Session.Add("hidAddress", hidAddress.Value);
+            //Session.Add("hidCity", hidCity.Value);
+            //Session.Add("hidZip", hidZip.Value);
+            //Session.Add("hidPhone", hidPhone.Value);
 
-            Session.Add("hidProjectTag", hidProjectTag.Value);
+            //Session.Add("hidProjectTag", hidProjectTag.Value);
 
-            Session.Add("hidProjectType", hidProjectType.Value);
-            Session.Add("hidModelNumber", hidModelNumber.Value);
+            //Session.Add("hidProjectType", hidProjectType.Value);
+            //Session.Add("hidModelNumber", hidModelNumber.Value);
 
-            Session.Add("hidKneewallType", hidKneewallType.Value);
-            Session.Add("hidKneewallColour", hidKneewallColour.Value);
-            Session.Add("hidKneewallHeight", hidKneewallHeight.Value);
-            Session.Add("hidTransomType", hidTransomType.Value);
-            Session.Add("hidTransomColour", hidTransomColour.Value);
-            Session.Add("hidTransomHeight", hidTransomHeight.Value);
-            Session.Add("hidInteriorColour", hidInteriorColour.Value);
-            Session.Add("hidInteriorSkin", hidInteriorSkin.Value);
-            Session.Add("hidExteriorColour", hidExteriorColour.Value);
-            Session.Add("hidExteriorSkin", hidExteriorSkin.Value);
+            //Session.Add("hidKneewallType", hidKneewallType.Value);
+            //Session.Add("hidKneewallColour", hidKneewallColour.Value);
+            //Session.Add("hidKneewallHeight", hidKneewallHeight.Value);
+            //Session.Add("hidTransomType", hidTransomType.Value);
+            //Session.Add("hidTransomColour", hidTransomColour.Value);
+            //Session.Add("hidTransomHeight", hidTransomHeight.Value);
+            //Session.Add("hidInteriorColour", hidInteriorColour.Value);
+            //Session.Add("hidInteriorSkin", hidInteriorSkin.Value);
+            //Session.Add("hidExteriorColour", hidExteriorColour.Value);
+            //Session.Add("hidExteriorSkin", hidExteriorSkin.Value);
 
-            Session.Add("hidFoamProtected", hidFoamProtected.Value);
+            //Session.Add("hidFoamProtected", hidFoamProtected.Value);
 
-            Session.Add("hidPrefabFloor", hidPrefabFloor.Value);
+            //Session.Add("hidPrefabFloor", hidPrefabFloor.Value);
 
-            Session.Add("hidRoof", hidRoof.Value);
-            Session.Add("hidRoofType", hidRoofType.Value);
+            //Session.Add("hidRoof", hidRoof.Value);
+            //Session.Add("hidRoofType", hidRoofType.Value);
 
-            Session.Add("hidLayoutSelection", hidLayoutSelection.Value);
+            //Session.Add("hidLayoutSelection", hidLayoutSelection.Value);
+
+            string[] viewingArray = new string[24];
+
+            viewingArray[0] = hidFirstName.Value.ToString();
+            viewingArray[1] = hidLastName.Value.ToString();
+            viewingArray[2] = hidAddress.Value.ToString();
+            viewingArray[3] = hidCity.Value.ToString();
+            viewingArray[4] = hidZip.Value.ToString();
+            viewingArray[5] = hidPhone.Value.ToString();
+            viewingArray[6] = hidProjectTag.Value.ToString();
+            viewingArray[7] = hidProjectType.Value.ToString();
+            viewingArray[8] = hidModelNumber.Value.ToString();
+            viewingArray[9] = hidKneewallType.Value.ToString();
+            viewingArray[10] = hidKneewallColour.Value.ToString();
+            viewingArray[11] = hidKneewallHeight.Value.ToString();
+            viewingArray[12] = hidTransomType.Value.ToString();
+            viewingArray[13] = hidTransomColour.Value.ToString();
+            viewingArray[14] = hidTransomHeight.Value.ToString();
+            viewingArray[15] = hidInteriorColour.Value.ToString();
+            viewingArray[16] = hidInteriorSkin.Value.ToString();
+            viewingArray[17] = hidExteriorColour.Value.ToString();
+            viewingArray[18] = hidExteriorSkin.Value.ToString();
+            viewingArray[19] = hidFoamProtected.Value.ToString();
+            viewingArray[20] = hidPrefabFloor.Value.ToString();
+            viewingArray[21] = hidRoof.Value.ToString();
+            viewingArray[22] = hidRoofType.Value.ToString();
+            viewingArray[23] = hidLayoutSelection.Value.ToString();
+
+            Session.Add("viewingArray", viewingArray);
 
             //If custom btnLayout, Page 2, else, page3
             Response.Redirect("TestingHiddens.aspx");

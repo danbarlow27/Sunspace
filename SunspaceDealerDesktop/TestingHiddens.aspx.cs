@@ -11,8 +11,14 @@ namespace SunspaceDealerDesktop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            testField.InnerText = Session["testing"].ToString();
-            formattedOutput.InnerText = Session["viewingArray"].ToString();
+            //testField.InnerText = Session["testing"].ToString();
+            string[] newViewingArray = (string[])Session["viewingArray"];
+
+            for (int i = 0; i < newViewingArray.Length; i++)
+            {
+                formattedOutput.InnerHtml += newViewingArray[i].ToString() + "<br />";
+            }
+            
         }
     }
 }
