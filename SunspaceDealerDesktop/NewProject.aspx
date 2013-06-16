@@ -643,17 +643,17 @@
                         <div class="toggleContent">
                             <ul>
                                 <li>
-                                    <asp:RadioButton ID="radStudio" GroupName="roof" runat="server" />
+                                    <asp:RadioButton ID="radStudio" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblStudioRadio" AssociatedControlID="radStudio" runat="server"></asp:Label>
                                     <asp:Label ID="lblStudio" AssociatedControlID="radStudio" runat="server" Text="Studio"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radDealerGable" GroupName="roof" runat="server" />
+                                    <asp:RadioButton ID="radDealerGable" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblDealerGableRadio" AssociatedControlID="radDealerGable" runat="server"></asp:Label>
                                     <asp:Label ID="lblDealerGable" AssociatedControlID="radDealerGable" runat="server" Text="Dealer gable"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radSunspaceGable" GroupName="roof" runat="server" />
+                                    <asp:RadioButton ID="radSunspaceGable" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblSunspaceGableRadio" AssociatedControlID="radSunspaceGable" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunspaceGable" AssociatedControlID="radSunspaceGable" runat="server" Text="Sunspace gable"></asp:Label>
                                 </li>
