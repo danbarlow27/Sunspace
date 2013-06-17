@@ -116,11 +116,16 @@
             //if (document.getElementById("MainContent_txtKneewallHeight").value != "" &&
             //    document.getElementById("MainContent_ddlKneewallType").value != "" &&
             //    document.getElementById("MainContent_ddlKneewallColour").value != "") {
-
+            //
+            //    if (isNaN(document.getElementById("MainContent_txtKneewallHeight").value) {
+            //
+            //    }
+            //    else {
             //    document.getElementById("MainContent_hidKneewallHeight").value = document.getElementById("MainContent_txtKneewallHeight").value;
             //    document.getElementById("MainContent_hidKneewallType").value = document.getElementById("MainContent_ddlKneewallType").value;
             //    document.getElementById("MainContent_hidKneewallColour").value = document.getElementById("MainContent_ddlKneewallColour").value;
             //    optionChecksPassed = true;
+            //    }
             //}
             //else {
             //    optionChecksPassed = false;
@@ -130,11 +135,17 @@
             //if (document.getElementById("MainContent_txtTransomHeight").value != "" &&
             //    document.getElementById("MainContent_ddlTransomType").value != "" &&
             //    document.getElementById("MainContent_ddlTransomColour").value != "") {
-
+            //
+            //    if (isNaN(document.getElementById("MainContent_txtTransomHeight").value) {
+            //
+            //    }
+            //    else {
             //    document.getElementById("MainContent_hidTransomHeight").value = document.getElementById("MainContent_txtTransomHeight").value;
             //    document.getElementById("MainContent_hidTransomType").value = document.getElementById("MainContent_ddlTransomType").value;
             //    document.getElementById("MainContent_hidTransomColour").value = document.getElementById("MainContent_ddlTransomColour").value;
             //    optionChecksPassed = true;
+            //    }
+
             //}
             //else {
             //    optionChecksPassed = false;
