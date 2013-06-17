@@ -174,7 +174,7 @@
                 $('#MainContent_lblQuestion4PagerAnswer').text("Entry Complete");
                 document.getElementById('pagerFour').style.display = "inline";
             }
-
+            document.getElementById('MainContent_btnQuestion4').disabled = false; //autoenable, remove when dropdowns are populated
             return false;
         }
 
