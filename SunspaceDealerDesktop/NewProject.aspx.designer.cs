@@ -1822,13 +1822,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label Label27;
         
         /// <summary>
-        /// Label30 control.
+        /// lblQuestion4PagerAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label30;
+        protected global::System.Web.UI.WebControls.Label lblQuestion4PagerAnswer;
         
         /// <summary>
         /// Label31 control.
@@ -1840,13 +1840,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label Label31;
         
         /// <summary>
-        /// Label32 control.
+        /// lblQuestion5PagerAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label32;
+        protected global::System.Web.UI.WebControls.Label lblQuestion5PagerAnswer;
         
         /// <summary>
         /// Label1 control.
@@ -1858,13 +1858,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// Label2 control.
+        /// lblQuestion6PagerAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label lblQuestion6PagerAnswer;
         
         /// <summary>
         /// Label3 control.
@@ -1876,13 +1876,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// Label4 control.
+        /// lblQuestion7PagerAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label lblQuestion7PagerAnswer;
         
         /// <summary>
         /// Label5 control.
@@ -1894,13 +1894,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
-        /// Label6 control.
+        /// lblQuestion8PagerAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
+        protected global::System.Web.UI.WebControls.Label lblQuestion8PagerAnswer;
         
         /// <summary>
         /// hidExisting control.
