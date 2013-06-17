@@ -205,8 +205,11 @@
 
         //change the name (value) of the done button
         function setButtonValue() {
-            doneButton.value = (coordList[coordList.length-1].id === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
-                (coordList[coordList.length-1].id === WALL_TYPE.PROPOSED) ? "Done Proposed Walls" : "Done Drawing";
+            //doneButton.value = (coordList[coordList.length-1].id === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
+            //    (coordList[coordList.length - 1].id === WALL_TYPE.PROPOSED) ? "Done Proposed Walls" : "Done Drawing";
+
+            doneButton.value = (wallType === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
+                (wallType === WALL_TYPE.PROPOSED) ? "Done Proposed Walls" : "Done Drawing";
         }
 
         /**undo last line
