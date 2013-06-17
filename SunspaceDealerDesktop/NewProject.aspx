@@ -110,6 +110,7 @@
         }
 
         function checkQuestion4() {
+            console.log("Checking q4");
             document.getElementById('MainContent_btnQuestion4').disabled = true;
             var optionChecksPassed = false;
 
@@ -174,7 +175,6 @@
                 document.getElementById('pagerFour').style.display = "inline";
             }
 
-            document.getElementById('MainContent_btnQuestion4').disabled = false;
             return false;
         }
 
