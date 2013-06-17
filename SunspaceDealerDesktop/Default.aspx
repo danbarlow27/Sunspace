@@ -216,21 +216,24 @@
             startNewWall = true; //let the user begin another wall anywhere on the grid
             coordList = new Array(); //clear the list of lines
             removed = new Array(); //clear the list of removed lines
-            wallType = WALL_TYPE.EXISTING; //reset the wall type to existing
+            wallType = (standAlone) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED; //reset the wall type to default
             setButtonValue(); //set button value
        }
 
 
         //change the name (value) of the done button
         function setButtonValue() {
-            doneButton.value = (coordList[coordList.length-1].id === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
-                (coordList[coordList.length-1].id === WALL_TYPE.PROPOSED) ? "Done Proposed Walls" : "Done Drawing";
+            //doneButton.value = (coordList[coordList.length-1].id === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
+            //    (coordList[coordList.length - 1].id === WALL_TYPE.PROPOSED) ? "Done Proposed Walls" : "Done Drawing";
+
+            doneButton.value = (wallType === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
+                (wallType === WALL_TYPE.PROPOSED) ? "Done Proposed Walls" : "Done Drawing";
         }
 
         /**undo last line
-        @param toBeRemoved - true or false whether we want to remove the last element from the removed line list
+        @param toBeRemoved - true or false whether we want to add the last element to the removed line list
         */
-        function undo(toBeRemoved) {
+        function undo(addToRemovedList) {
 
             //if last line is removed, enable user to draw a line anywhere
             if (coordList.length === 0)
@@ -240,9 +243,9 @@
                 d3.selectAll("#E").remove(); //remove existing walls
                 d3.selectAll("#P").remove(); //remove proposed walls
 
-                //if removed array needs to be popped at the end
-                if (toBeRemoved)
-                    removed.push(coordList[coordList.length - 1]); //pop it
+                //if the element needs to be added to the removed list
+                if (addToRemovedList)
+                    removed.push(coordList[coordList.length - 1]); //push it
 
                 //set the appropriate button value
                 setButtonValue();

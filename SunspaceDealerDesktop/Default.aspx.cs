@@ -53,7 +53,7 @@ namespace SunspaceDealerDesktop
             }
 
             //Adding one element to the session for testing purposes
-            Session.Add("viewingArray", newArray[newArray.GetLength(0) - 1, newArray.GetLength(1) - 1]);
+            Session.Add("viewingArray", newArray[0,0]);
 
             //Redirect to test page to see if information is being passed properly
             Response.Redirect("TestingHiddens.aspx");
