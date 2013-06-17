@@ -11,10 +11,24 @@
         </div>
     </section>
 </asp:Content>
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">              
+
         <!--Div tag to hold canvas/grid buttons-->
-        <div id="buttons" style="width:20%; text-align:right; vertical-align:central; float:left; padding-top:10%">
+        <div id="buttons" style="width:20%; text-align:right; vertical-align:central; float:left; padding-top:10%;">
             <ol>
+                <!--<li>
+                    
+                    <form action="Default.aspx">
+                    <ul>
+                    <li style="display:block;"><input id="500grid" name="gridSize" type="radio" value="500x500" checked="checked">
+                        <label for="500grid">500</label>
+                    </li>
+                    <li style="display:block;"><input id="750grid" name="gridSize" type="radio" value="500x750" /><label for="750grid">750</label></li>
+                    <li style="display:block;"><input id="1000grid" name="gridSize" type="radio" value="500x1000" /><label for="1000grid">1000</label></li>
+                    </ul>
+                    </form>
+                </li>-->
                 <!--Undo button to undo the last line drawn-->
                 <li><input class="btnSubmit" type="button" value ="Undo" onclick="undo(true)" style="width:150px"/></li>
 
@@ -41,8 +55,7 @@
     <input type="hidden" id="hiddenVar" runat="server" />
     <!--ASP button for testing, to be removed-->
     <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click1" />
-         
-
+       
     <script>
        
         //wall type enumeration
@@ -130,6 +143,11 @@
         
         //On keypress "e" start new line on the grid
         $(document).on('keypress', function (e) { if (e.which === 101) { startNewWall = true; }});
+
+        function setGridSize() {
+            document.getElementById("buttons").className = "something";
+
+        }
 
         //set the name (value) of the "Done" button to the default value
         function buttonDoneOnLoad() {
