@@ -20,7 +20,7 @@
         <div id="buttons" style="width:20%; text-align:center; vertical-align:central; float:left; padding-top:10%;" >
             
             
-            <input id="MainContent_radGridSize500" type="radio" name="gridSize" onclick="setGridSize()"> 500
+            <input id="MainContent_radGridSize500" type="radio" name="gridSize" checked="checked" onclick="setGridSize()"> 500
             <label for="MainContent_radGridSize500" id="MainContent_lblGridSize500"></label> <br />
             <input id="MainContent_radGridSize750" type="radio" name="gridSize" onclick="setGridSize()"> 750
             <label for="MainContent_radGridSize750" id="MainContent_lblGridSize750"></label> <br />
@@ -29,20 +29,6 @@
                 
                 
             <ol>
-
-                <!--<li>
-                    
-                    <form action="Default.aspx">
-                    <ul>
-                    <li style="display:block;"><input id="500grid" name="gridSize" type="radio" value="500x500" checked="checked">
-                        <label for="500grid">500</label>
-                    </li>
-                    <li style="display:block;"><input id="750grid" name="gridSize" type="radio" value="500x750" /><label for="750grid">750</label></li>
-                    <li style="display:block;"><input id="1000grid" name="gridSize" type="radio" value="500x1000" /><label for="1000grid">1000</label></li>
-                    </ul>
-                    </form>
-                </li>-->
-
                 <!--Undo button to undo the last line drawn-->
                 <li><input class="btnSubmit" type="button" value ="Undo" onclick="undo(true)" style="width:150px"/></li>
 
@@ -113,17 +99,16 @@
         var MAX_CANVAS_HEIGHT = 500;
 
         //create the canvas
-        var canvas;
-        //= d3.select("#mySunroom") 
-        //            .append("svg")
-        //            .attr("width", DEFAULT_CANVAS_WIDTH)
-        //            .attr("height", MAX_CANVAS_HEIGHT);
+        var canvas;// = d3.select("#mySunroom") 
+                    //.append("svg")
+                    //.attr("width", DEFAULT_CANVAS_WIDTH)
+                    //.attr("height", MAX_CANVAS_HEIGHT);
 
         //variable to hold textarea tag
         var log = document.getElementById("drawingLog");
 
         //create the svg grid on the canvas
-        var svgGrid= document.getElementById("mySunroom");
+        var svgGrid;// = document.getElementById("mySunroom");
 
         //store the "Done" button in a variable for use in multiple functions
         var doneButton = document.getElementById("buttonDone");
@@ -146,25 +131,26 @@
         //type of wall currently being drawn
         var wallType = WALL_TYPE.EXISTING;
 
-        //Used to validate first walls, also after dblclick and E
+        //Used to validate first walls, also after E
         var validateFirstWall = false;
+
+        window.onload = setGridSize();
 
         //when the DOM is loaded...
         $(document).ready(function () {
-            setGridSize();
+            //setGridSize()
             //drawGrid(); //Draws the initial grid
-            window.onload = buttonDoneOnLoad(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
+            //window.onload = buttonDoneOnLoad(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
             log.innerHTML += "Please draw an existing wall.\n\nPress 'E' to end a line.\n\n";
         });
         
         //On keypress "e" start new line on the grid
         $(document).on('keypress', function (e) { if (e.which === 101) { startNewWall = true; }});
 
-
         //set the name (value) of the "Done" button to the default value
-        function buttonDoneOnLoad() {
-            document.getElementById("buttonDone").value = (standAlone) ? "Done Proposed Walls" : "Done Existing Walls";
-        }
+        //function buttonDoneOnLoad() {
+        //    document.getElementById("buttonDone").value = (standAlone) ? "Done Proposed Walls" : "Done Existing Walls";
+        //}
 
         //on click event of "Done" button
         function buttonDoneOnClick() {
@@ -229,8 +215,7 @@
             wallType = (!standAlone) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED; //reset the wall type to default
             setButtonValue(); //set button value
        }
-
-
+        
         //change the name (value) of the done button
         function setButtonValue() {
             //doneButton.value = (coordList[coordList.length-1].id === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
@@ -303,16 +288,16 @@
                 setButtonValue();
             }
         }
-
-
+        
         function setGridSize() {
             
-            var width = DEFAULT_CANVAS_WIDTH;
+            var width;// = DEFAULT_CANVAS_WIDTH;
 
             if (document.getElementById("MainContent_radGridSize500").checked)
                 width = DEFAULT_CANVAS_WIDTH;
-            else if (document.getElementById("MainContent_radGridSize750").checked)
-                width = MEDIUM_CANVAS_WIDTH;
+            else if (document.getElementById("MainContent_radGridSize750").checked) {
+                width = MEDIUM_CANVAS_WIDTH; //alert(width);
+            }
             else if (document.getElementById("MainContent_radGridSize1000").checked)
                 width = MAX_CANVAS_WIDTH;
 
@@ -320,36 +305,19 @@
             if (document.getElementById("mySunroom")) {
                 //alert(thisCanvas.parentNode);
                 thisCanvas = document.getElementById("mySunroom");
-                document.getElementById("parent").removeChild(thisCanvas);
-                
-
-                //thisCanvas.innerHTML = "I AM HERE";
-                //thisCanvas.setAttribute("id", "mySunroom");
-                //thisCanvas.setAttribute("width", width);
-                //thisCanvas.setAttribute("height", MAX_CANVAS_HEIGHT);
-                //thisCanvas.setAttribute("max-height", 600);
-                //alert(thisCanvas.parentNode);
+                document.getElementById("parent").removeChild(thisCanvas); 
             }
 
             thisCanvas = document.createElement("div");
             thisCanvas.id = "mySunroom";
             thisCanvas.style.width = width + "px";
             thisCanvas.style.height = MAX_CANVAS_HEIGHT + "px";
-            document.getElementById("parent").appendChild(thisCanvas);
+            document.getElementById("parent").appendChild(thisCanvas);            
 
-            //canvas = d3.select("#mySunroom")
-            //        .append("svg")
-            //        .attr("width", width)
-            //        .attr("height", MAX_CANVAS_HEIGHT);
-
-            
-            //d3.selectAll("#E").remove(); //remove existing walls
-            //d3.selectAll("#P").remove(); //remove proposed walls
-            //d3.selectAll("#I").remove(); //remove internal walls
             startNewWall = true; //let the user begin another wall anywhere on the grid
             coordList = new Array(); //clear the list of lines
             removed = new Array(); //clear the list of removed lines
-            wallType = (standAlone) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED; //reset the wall type to default
+            wallType = (!standAlone) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED; //reset the wall type to default
             setButtonValue(); //set button value
 
             drawGrid(width);
@@ -358,22 +326,25 @@
 
         //Draw the grid lines
         function drawGrid(width) {
-
             
             //create the canvas
+            if(canvas)
+                canvas.remove();
+
             canvas = d3.select("#mySunroom")
                         .append("svg")
                         .attr("width", width)
-                        .attr("height", MAX_CANVAS_HEIGHT);
+                        .attr("height", MAX_CANVAS_HEIGHT)
+                        .attr("id", "newSVG");
 
-            svgGrid = document.getElementById("mySunroom");
+            svgGrid = document.getElementById("newSVG");
             
             //Creates rectangle area to draw in based on max canvas dimensions
             var rect = canvas.append("rect")
                         .attr("width", width)
                         .attr("height", MAX_CANVAS_HEIGHT)
                         .attr("fill", "white")
-                        .attr("onclick", "onClick();");
+                        //.attr("onclick", "onClick();");
 
             //Draws left border line of canvas
             var line = canvas.append("line")
@@ -432,32 +403,22 @@
         //end of grid
 
         //Gets the current mouse position on the canvas/grid
-        function getMousePos(myCanvas/*, evt*/) {
+        function getMousePos(myCanvas, evt) {
             //Get the coordinates within the canvas/grid
-            var rect = myCanvas.getBoundingClientRect();
+            var rect = myCanvas.getBoundingClientRect();            
             return {
                 //return x and y coordinates of the mouse within the canvas/grid
-                x: this.clientX - rect.left,
-                y: this.clientY - rect.top
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
             };
         };
 
-        //svgGrid.addEventListener("dblclick",
-        //function (evt) {
-        //    startNewWall = true;
-        //},
-        //false);
-
         //On click event listener for the canvas/grid
-        //svgGrid.addEventListener("click",
-        function onClick (/*evt*/) {
-            
-           alert("in click");
-
+        svgGrid.addEventListener("click",
+        function (evt) {
+            alert("click");
             //Variable to hold the values return by getMousePos. X and Y coordinates within the canvas/grid
-            var mousePos = getMousePos(svgGrid/*, evt*/);
-
-            //console.log("array length: " + coordList.length);
+            var mousePos = getMousePos(svgGrid, evt);
 
             //If startNewWall is true, set the first pair of coordinates to the current mouse position
             //Used to define when the first click of on the canvas and reset removed array elements
@@ -467,7 +428,7 @@
 
                 //Set startNewWall to false to find logic to complete line coordinates
                 startNewWall = false;
-
+                
                 //Delete all entries into removed array
                 removed = new Array();
 
@@ -501,7 +462,7 @@
                 y1 = coordList[coordList.length - 1].y2;
             }
         }
-        //,false);
+        ,false);
 
         //Mouse mouse event listener for the canvas/grid
         svgGrid.addEventListener("mousemove",
