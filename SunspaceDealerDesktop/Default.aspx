@@ -29,6 +29,7 @@
                     </ul>
                     </form>
                 </li>-->
+
                 <!--Undo button to undo the last line drawn-->
                 <li><input class="btnSubmit" type="button" value ="Undo" onclick="undo(true)" style="width:150px"/></li>
 
@@ -206,8 +207,6 @@
     
         }
 
-
-
         //clear canvas
         function clearCanvas() {
             d3.selectAll("#E").remove(); //remove existing walls
@@ -216,7 +215,7 @@
             startNewWall = true; //let the user begin another wall anywhere on the grid
             coordList = new Array(); //clear the list of lines
             removed = new Array(); //clear the list of removed lines
-            wallType = (standAlone) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED; //reset the wall type to default
+            wallType = (!standAlone) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED; //reset the wall type to default
             setButtonValue(); //set button value
        }
 
@@ -699,7 +698,6 @@
         function validateNotStandAlone(lastWall) {
 
 
-
             //array of calculated distances to determine the shortest distance
             var distanceBetweenLines = new Array();            
 
@@ -731,55 +729,60 @@
                     else {//there is an intercept
                         isValid = true; //thus valid
 
-                        //calculate the distance between the end of the last proposed line and the intercept
-                        distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x2), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y2), 2)), "x": intercept.x, "y": intercept.y };
+                        if (lastWall) {
+                            //calculate the distance between the end of the last proposed line and the intercept
+                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x2), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y2), 2)), "x": intercept.x, "y": intercept.y };
+                        }
+                        else {
+                            //calculate the distance between the end of the first proposed line and the intercept
+                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x1), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y1), 2)), "x": intercept.x, "y": intercept.y };
+                        }
                     }
                 }
             }
-                            //determine the shortest distance between all the intercepts
-                            shortest = MAX_CANVAS_WIDTH; //arbitrary long number for getting at the shortest distance
 
-                            //loop through all the lines and determine the shortest distance
-                            for (var j = 0; j < distanceBetweenLines.length; j++) {
-                                //if the calculated distance is less than the shortest distance...
-                                if (distanceBetweenLines[j].distance < shortest) {
-                                    shortest = distanceBetweenLines[j].distance; //set shortest distance to the calculated distance
-                                    shortestDistanceWallNumber = j; //store the wall number for the shortest distance                                    
-                                }
-                            }
+            //determine the shortest distance between all the intercepts
+            shortest = MAX_CANVAS_WIDTH; //arbitrary long number for getting at the shortest distance
 
-                            if(shortest != 0) {
+            //loop through all the lines and determine the shortest distance
+            for (var j = 0; j < distanceBetweenLines.length; j++) {
+                //if the calculated distance is less than the shortest distance...
+                if (distanceBetweenLines[j].distance < shortest) {
+                    shortest = distanceBetweenLines[j].distance; //set shortest distance to the calculated distance
+                    shortestDistanceWallNumber = j; //store the wall number for the shortest distance                                    
+                }
+            }
+
+            if(shortest != 0) {
                     
-                                //undo the last drawn line, to be redrawn properly (i.e. snapped to the coordinate)
-                                undo(false);
+                //undo the last drawn line, to be redrawn properly (i.e. snapped to the coordinate)
+                undo(false);
 
-                                if(lastWall)
-                                    //draw the snapped line
-                                    var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
-                                else{
-                                    wallType = WALL_TYPE.PROPOSED;
-                                    //coordList[coordList.length-1].attr("id","P");
-                                    var line = drawLine(distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, intercept.x2, intercept.y2, false);
+                if(lastWall)
+                    //draw the snapped line
+                    var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
+                else{
+                    wallType = WALL_TYPE.PROPOSED;
+                    //coordList[coordList.length-1].attr("id","P");
+                    var line = drawLine(distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, intercept.x2, intercept.y2, false);
                                     
-                                    //var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
-                                }
-                                //get the orientation
-                                var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
-                                //store the new line into the list
-                                coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation }
+                    //var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
+                }
+                //get the orientation
+                var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
+                //store the new line into the list
+                coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation }
 
-                                //set the starting coordinates of the next line to the ending coordinates of this line
-                                x1 = line.attr("x2");
-                                y1 = line.attr("y2");
+                //set the starting coordinates of the next line to the ending coordinates of this line
+                x1 = line.attr("x2");
+                y1 = line.attr("y2");
 
-                            }
+            }
                 
                         
             //return valid 
             return isValid;
-        }
-
-        
+        }        
 
         /**
         This function runs through all of the lines in the list, and finds 
@@ -798,6 +801,8 @@
             //the following variables will be used for the line equation of the last drawn line
             var A2, B2, C2;
 
+            //var belongsToLine = false;
+            
             //initialize the given line coordinate variables, retrieving the coordinates from the list
             cx2 = coordList[lineNumber].x2; //initialize x2
             cx1 = coordList[lineNumber].x1; //initialize x1
@@ -874,9 +879,7 @@
 
             return validCoordinate; //return the validated coordinate
         }
-
-
-
+        
     </script>
 
 
