@@ -14,19 +14,17 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">              
 
-    <div id="parent" style="height:600px;">    
+    <div id="parent" style="height:600px; width:1000px;">    
 
         <!--Div tag to hold canvas/grid buttons-->
-        <div id="buttons" style="width:20%; text-align:center; vertical-align:central; float:left; padding-top:10%;" >
-            
+        <div id="buttons" style="width:200px; text-align:center; vertical-align:central; float:left; padding-top:10%;" >            
             
             <input id="MainContent_radGridSize500" type="radio" name="gridSize" checked="checked" onclick="setGridSize()"> 500
             <label for="MainContent_radGridSize500" id="MainContent_lblGridSize500"></label> <br />
             <input id="MainContent_radGridSize750" type="radio" name="gridSize" onclick="setGridSize()"> 750
             <label for="MainContent_radGridSize750" id="MainContent_lblGridSize750"></label> <br />
             <input id="MainContent_radGridSize1000" type="radio" name="gridSize" onclick="setGridSize()"> 1000
-            <label for="MainContent_radGridSize1000" id="MainContent_lblGridSize1000"></label> <br />
-                
+            <label for="MainContent_radGridSize1000" id="MainContent_lblGridSize1000"></label> <br />                
                 
             <ol>
                 <!--Undo button to undo the last line drawn-->
@@ -44,10 +42,10 @@
             </ol>
         </div>
         <!--Div tag to hold the canvas/grid-->
-        <div style="width:500px; height:500px; float:left;" id="mySunroom"></div>
+        <div style="width:500px; height:500px; float:right; padding-left:250px" id="mySunroom"></div>
         
         <!--Div tag to hold the error log-->
-        <div style="width:20%; float:right; padding-right:10%;" >
+        <div style="width:20%; float:right;">
             <textarea id="drawingLog" rows="31" cols="30" style="resize:none; border:0px;" readonly></textarea>
         </div>
 
@@ -416,7 +414,7 @@
         //On click event listener for the canvas/grid
         svgGrid.addEventListener("click",
         function (evt) {
-            alert("click");
+            //alert("click");
             //Variable to hold the values return by getMousePos. X and Y coordinates within the canvas/grid
             var mousePos = getMousePos(svgGrid, evt);
 
