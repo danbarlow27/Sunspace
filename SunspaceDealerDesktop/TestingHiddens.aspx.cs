@@ -17,8 +17,7 @@ namespace SunspaceDealerDesktop
             for (int i = 0; i < newViewingArray.Length; i++)
             {
                 formattedOutput.InnerHtml += newViewingArray[i].ToString() + "<br />";
-            }
-            
+            }            
         }
     }
 }

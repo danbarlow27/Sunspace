@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="New Project - Project Details" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NewProject.aspx.cs" Inherits="SunspaceWizard._Default" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <script src="Scripts/Validation.js"></script>
     <%-- Hidden div populating scripts 
     =================================== --%>
     <script>       
@@ -25,6 +26,15 @@
                     document.getElementById("MainContent_hidCity").value != "" &&
                     document.getElementById("MainContent_hidZip").value != "" &&
                     document.getElementById("MainContent_hidPhone").value != "") {
+
+                    var validPhone = validatePhone(document.getElementById("MainContent_hidPhone").value);
+
+                    if (!validPhone) {
+                        console.log("invalid");
+                    }
+                    else {
+                        console.log("valid");
+                    }
 
                     //Set answer to 'new' on side pager and enable button
                     $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
@@ -255,7 +265,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerPhone" CssClass="txtField txtZipPhone" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerPhone" CssClass="txtField txtZipPhone" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server" MaxLength="10"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -887,5 +897,4 @@
             $('#lnkMainNavNewProject').addClass('active');
         });
     </script>
-
 </asp:Content>
