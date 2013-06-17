@@ -27,13 +27,11 @@
                     document.getElementById("MainContent_hidZip").value != "" &&
                     document.getElementById("MainContent_hidPhone").value != "") {
 
-                    var validPhone = validatePhone(document.getElementById("MainContent_hidPhone").value);
+                    var lengthCheck = document.getElementById("MainContent_hidPhone").value;
 
-                    if (!validPhone) {
-                        console.log("invalid");
-                    }
-                    else {
-                        console.log("valid");
+                    if (lengthCheck.length == 10) {
+                        var validPhone = validatePhone(document.getElementById("MainContent_hidPhone").value);
+                        console.log(validPhone);
                     }
 
                     var zipCode = document.getElementById("MainContent_hidZip").value;

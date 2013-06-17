@@ -12,12 +12,26 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             //testField.InnerText = Session["testing"].ToString();
-            string[] newViewingArray = (string[])Session["viewingArray"];
+            //string[] newViewingArray = (string[])Session["viewingArray"];
 
-            for (int i = 0; i < newViewingArray.Length; i++)
+            //for (int i = 0; i < newViewingArray.Length; i++)
+            //{
+            //    formattedOutput.InnerHtml += newViewingArray[i].ToString() + "<br />";
+            //}
+
+            int numOfWalls = (int)Session["numberOfWalls"];
+
+            int numOfElements = (int)Session["numberOfElements"];
+
+            string[,] testArray = (string[,])Session["testArray"];
+
+            for (int i = 0; i < numOfWalls; i++)
             {
-                formattedOutput.InnerHtml += newViewingArray[i].ToString() + "<br />";
-            }            
+                for (int j = 0; j < numOfElements; j++)
+                {
+                    formattedOutput.InnerHtml += testArray[i, j].ToString() + "<br />";
+                }
+            }
         }
     }
 }
