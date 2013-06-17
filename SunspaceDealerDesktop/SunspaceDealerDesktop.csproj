@@ -252,6 +252,7 @@
     <Content Include="Content\styles.css" />
     <Content Include="TestingHiddens.aspx" />
     <Content Include="TestNumMods.aspx" />
+    <Content Include="Scripts\Validation.js" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />

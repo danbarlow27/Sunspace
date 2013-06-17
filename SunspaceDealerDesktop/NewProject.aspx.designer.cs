@@ -1111,13 +1111,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label lblExteriorSkin;
         
         /// <summary>
-        /// btnNext2 control.
+        /// btnQuestion4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnNext2;
+        protected global::System.Web.UI.WebControls.Button btnQuestion4;
         
         /// <summary>
         /// lblFoamProtected control.
@@ -1183,13 +1183,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label lblFoamProtectedNo;
         
         /// <summary>
-        /// btnFoamProtected control.
+        /// btnQuestion5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnFoamProtected;
+        protected global::System.Web.UI.WebControls.Button btnQuestion5;
         
         /// <summary>
         /// lblPrefabFloor control.
@@ -1255,13 +1255,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label lblPrefabFloorNo;
         
         /// <summary>
-        /// btnPrefabFloor control.
+        /// btnQuestion6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPrefabFloor;
+        protected global::System.Web.UI.WebControls.Button btnQuestion6;
         
         /// <summary>
         /// lblRoof control.
@@ -1408,13 +1408,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label lblRoofNo;
         
         /// <summary>
-        /// btnRoof control.
+        /// btnQuestion7 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRoof;
+        protected global::System.Web.UI.WebControls.Button btnQuestion7;
         
         /// <summary>
         /// lblLayout control.
@@ -1750,13 +1750,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Image imbPresetC1;
         
         /// <summary>
-        /// btnLayout control.
+        /// btnQuestion8 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLayout;
+        protected global::System.Web.UI.WebControls.Button btnQuestion8;
         
         /// <summary>
         /// lblSpecsProjectType control.
@@ -1822,13 +1822,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label Label27;
         
         /// <summary>
-        /// Label30 control.
+        /// lblQuestion4PagerAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label30;
+        protected global::System.Web.UI.WebControls.Label lblQuestion4PagerAnswer;
         
         /// <summary>
         /// Label31 control.
@@ -1840,13 +1840,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label Label31;
         
         /// <summary>
-        /// Label32 control.
+        /// lblQuestion5PagerAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label32;
+        protected global::System.Web.UI.WebControls.Label lblQuestion5PagerAnswer;
         
         /// <summary>
         /// Label1 control.
@@ -1858,13 +1858,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// Label2 control.
+        /// lblQuestion6PagerAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label lblQuestion6PagerAnswer;
         
         /// <summary>
         /// Label3 control.
@@ -1876,13 +1876,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// Label4 control.
+        /// lblQuestion7PagerAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label lblQuestion7PagerAnswer;
         
         /// <summary>
         /// Label5 control.
@@ -1894,13 +1894,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
-        /// Label6 control.
+        /// lblQuestion8PagerAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
+        protected global::System.Web.UI.WebControls.Label lblQuestion8PagerAnswer;
         
         /// <summary>
         /// hidExisting control.
