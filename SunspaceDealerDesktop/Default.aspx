@@ -12,25 +12,34 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    
+        <!--Div tag to hold canvas/grid buttons-->
         <div id="buttons" style="width:20%; text-align:right; vertical-align:central; float:left; padding-top:10%">
             <ol>
+                <!--Undo button to undo the last line drawn-->
                 <li><input class="btnSubmit" type="button" value ="Undo" onclick="undo(true)" style="width:150px"/></li>
 
+                <!--Redo button to redo the last line drawn-->
                 <li><input class="btnSubmit" type="button" value ="Redo" onclick="redo()" style="width:150px"/></li>
 
+                <!--Clear Canvas button which clears the current canvas-->
                 <li><input class="btnSubmit" type="button" value ="Clear Canvas" onclick ="clearCanvas()" style="width:150px"/></li>
 
+                <!--Done button which ends the current operations (i.e. Done Existing Walls, Done Proposed Walls, Done Drawing)-->
                 <li><input id="buttonDone" class="btnSubmit" type="button" value ="" onclick="buttonDoneOnClick()" style="width:150px"/></li>
 
             </ol>
         </div>
+        <!--Div tag to hold the canvas/grid-->
         <div style="max-width:500px; max-height:500px; min-width:100px; min-height:100px; float:left;" id="mySunroom"></div>
+        
+        <!--Div tag to hold the error log-->
         <div style="width:20%; float:right; padding-right:10%;" >
             <textarea id="drawingLog" rows="31" cols="30" style="resize:none; border:0px;" readonly></textarea>
         </div>
 
+    <!--Hidden input field to hold concatenated string of line information to be passed to C#-->
     <input type="hidden" id="hiddenVar" runat="server" />
+    <!--ASP button for testing, to be removed-->
     <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click1" />
          
 
