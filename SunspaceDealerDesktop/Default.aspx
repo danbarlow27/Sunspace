@@ -100,15 +100,21 @@
 
         //create the canvas
 <<<<<<< HEAD
+<<<<<<< HEAD
         var canvas= d3.select("#mySunroom") 
                     .append("svg")
                     .attr("width", DEFAULT_CANVAS_WIDTH + 23)
                     .attr("height", MAX_CANVAS_HEIGHT + 23);
 =======
+=======
+>>>>>>> 18ca91fad80580a8e3769bc6d1f2100a3d111945
         var canvas;// = d3.select("#mySunroom") 
                     //.append("svg")
                     //.attr("width", DEFAULT_CANVAS_WIDTH)
                     //.attr("height", MAX_CANVAS_HEIGHT);
+<<<<<<< HEAD
+>>>>>>> 18ca91fad80580a8e3769bc6d1f2100a3d111945
+=======
 >>>>>>> 18ca91fad80580a8e3769bc6d1f2100a3d111945
 
         //variable to hold textarea tag
@@ -314,6 +320,7 @@
                 //alert(thisCanvas.parentNode);
                 thisCanvas = document.getElementById("mySunroom");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 //thisSVG = document.getElementsByTagName("svg");
                 document.getElementById("parent").removeChild(thisCanvas);
                 //document.getElementById("parent").removeChild(thisSVG);
@@ -327,6 +334,9 @@
 =======
                 document.getElementById("parent").removeChild(thisCanvas); 
 >>>>>>> 18ca91fad80580a8e3769bc6d1f2100a3d111945
+=======
+                document.getElementById("parent").removeChild(thisCanvas); 
+>>>>>>> 18ca91fad80580a8e3769bc6d1f2100a3d111945
             }
 
             thisCanvas = document.createElement("div");
@@ -335,6 +345,7 @@
             thisCanvas.style.height = MAX_CANVAS_HEIGHT + "px";
             document.getElementById("parent").appendChild(thisCanvas);            
 
+<<<<<<< HEAD
 <<<<<<< HEAD
             svgGrid = document.getElementById("mySunroom");
 
@@ -348,6 +359,8 @@
             //d3.selectAll("#E").remove(); //remove existing walls
             //d3.selectAll("#P").remove(); //remove proposed walls
             //d3.selectAll("#I").remove(); //remove internal walls
+=======
+>>>>>>> 18ca91fad80580a8e3769bc6d1f2100a3d111945
 =======
 >>>>>>> 18ca91fad80580a8e3769bc6d1f2100a3d111945
             startNewWall = true; //let the user begin another wall anywhere on the grid
@@ -374,7 +387,11 @@
                         .attr("id", "newSVG");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             //document.getElementById("mySunroom").appendChild(canvas);
+=======
+            svgGrid = document.getElementById("newSVG");
+>>>>>>> 18ca91fad80580a8e3769bc6d1f2100a3d111945
 =======
             svgGrid = document.getElementById("newSVG");
 >>>>>>> 18ca91fad80580a8e3769bc6d1f2100a3d111945
@@ -385,10 +402,14 @@
                         .attr("height", MAX_CANVAS_HEIGHT)
                         .attr("fill", "white")
 <<<<<<< HEAD
+<<<<<<< HEAD
                         .attr("id", "rect");
                         //.attr("onclick", "onClick();");
 
 //            svgGrid = document.getElementById("rect");
+=======
+                        //.attr("onclick", "onClick();");
+>>>>>>> 18ca91fad80580a8e3769bc6d1f2100a3d111945
 =======
                         //.attr("onclick", "onClick();");
 >>>>>>> 18ca91fad80580a8e3769bc6d1f2100a3d111945
@@ -453,8 +474,12 @@
         function getMousePos(myCanvas, evt) {
             //Get the coordinates within the canvas/grid
 <<<<<<< HEAD
+<<<<<<< HEAD
             var rect = myCanvas.getBoundingClientRect();
 
+=======
+            var rect = myCanvas.getBoundingClientRect();            
+>>>>>>> 18ca91fad80580a8e3769bc6d1f2100a3d111945
 =======
             var rect = myCanvas.getBoundingClientRect();            
 >>>>>>> 18ca91fad80580a8e3769bc6d1f2100a3d111945
@@ -469,6 +494,7 @@
         svgGrid.addEventListener("click",
         function (evt) {
 <<<<<<< HEAD
+<<<<<<< HEAD
             
            alert("in click");
 
@@ -476,6 +502,11 @@
             var mousePos = getMousePos(svgGrid, evt);
 
             //console.log("array length: " + coordList.length);
+=======
+            alert("click");
+            //Variable to hold the values return by getMousePos. X and Y coordinates within the canvas/grid
+            var mousePos = getMousePos(svgGrid, evt);
+>>>>>>> 18ca91fad80580a8e3769bc6d1f2100a3d111945
 =======
             alert("click");
             //Variable to hold the values return by getMousePos. X and Y coordinates within the canvas/grid
