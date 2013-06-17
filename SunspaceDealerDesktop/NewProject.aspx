@@ -647,7 +647,8 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:TextBox ID="txtKneewallHeight" onkeyup="checkQuestion4()" OnChange="checkQuestion4()" GroupName="styling" CssClass="txtField" runat="server" />
+                                    <asp:TextBox ID="txtKneewallHeight" onkeyup="checkQuestion4()" OnChange="checkQuestion4()" GroupName="styling" CssClass="txtField" runat="server" MaxLength="3" />
+                                    
                                     <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height" />
                                     <br />
                                     <asp:DropDownList ID="ddlKneewallType" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
