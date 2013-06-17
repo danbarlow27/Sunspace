@@ -117,7 +117,7 @@
                 document.getElementById("MainContent_ddlKneewallType").value != "" &&
                 document.getElementById("MainContent_ddlKneewallColour").value != "") {
             
-                if (isNaN(document.getElementById("MainContent_txtKneewallHeight").value) {
+                if (isNaN(document.getElementById("MainContent_txtKneewallHeight").value)) {
                     console.log("Invalid kneewall height");
                 }
                 else {
@@ -136,7 +136,7 @@
                 document.getElementById("MainContent_ddlTransomType").value != "" &&
                 document.getElementById("MainContent_ddlTransomColour").value != "") {
             
-                if (isNaN(document.getElementById("MainContent_txtTransomHeight").value) {
+                if (isNaN(document.getElementById("MainContent_txtTransomHeight").value)) {
                     console.log("Invalid transom height");
                 }
                 else {
