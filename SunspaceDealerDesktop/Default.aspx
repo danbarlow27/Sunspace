@@ -113,11 +113,10 @@
         var MAX_CANVAS_HEIGHT = 500;
 
         //create the canvas
-        var canvas;
-        //= d3.select("#mySunroom") 
-        //            .append("svg")
-        //            .attr("width", DEFAULT_CANVAS_WIDTH)
-        //            .attr("height", MAX_CANVAS_HEIGHT);
+        var canvas= d3.select("#mySunroom") 
+                    .append("svg")
+                    .attr("width", DEFAULT_CANVAS_WIDTH + 23)
+                    .attr("height", MAX_CANVAS_HEIGHT + 23);
 
         //variable to hold textarea tag
         var log = document.getElementById("drawingLog");
@@ -153,7 +152,7 @@
         $(document).ready(function () {
             setGridSize();
             //drawGrid(); //Draws the initial grid
-            window.onload = buttonDoneOnLoad(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
+            //window.onload = buttonDoneOnLoad(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
             log.innerHTML += "Please draw an existing wall.\n\nPress 'E' to end a line.\n\n";
         });
         
@@ -317,11 +316,13 @@
                 width = MAX_CANVAS_WIDTH;
 
             var thisCanvas;// = document.getElementById("mySunroom");
+            //var thisSVG;
             if (document.getElementById("mySunroom")) {
                 //alert(thisCanvas.parentNode);
                 thisCanvas = document.getElementById("mySunroom");
+                //thisSVG = document.getElementsByTagName("svg");
                 document.getElementById("parent").removeChild(thisCanvas);
-                
+                //document.getElementById("parent").removeChild(thisSVG);
 
                 //thisCanvas.innerHTML = "I AM HERE";
                 //thisCanvas.setAttribute("id", "mySunroom");
@@ -337,11 +338,14 @@
             thisCanvas.style.height = MAX_CANVAS_HEIGHT + "px";
             document.getElementById("parent").appendChild(thisCanvas);
 
-            //canvas = d3.select("#mySunroom")
-            //        .append("svg")
-            //        .attr("width", width)
-            //        .attr("height", MAX_CANVAS_HEIGHT);
+            svgGrid = document.getElementById("mySunroom");
 
+            canvas = d3.select("#mySunroom")
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", MAX_CANVAS_HEIGHT);
+
+            svgGrid
             
             //d3.selectAll("#E").remove(); //remove existing walls
             //d3.selectAll("#P").remove(); //remove proposed walls
@@ -364,16 +368,20 @@
             canvas = d3.select("#mySunroom")
                         .append("svg")
                         .attr("width", width)
-                        .attr("height", MAX_CANVAS_HEIGHT);
+                        .attr("height", MAX_CANVAS_HEIGHT)
+                        .attr("id", "newSVG");
 
-            svgGrid = document.getElementById("mySunroom");
+            //document.getElementById("mySunroom").appendChild(canvas);
             
             //Creates rectangle area to draw in based on max canvas dimensions
             var rect = canvas.append("rect")
                         .attr("width", width)
                         .attr("height", MAX_CANVAS_HEIGHT)
                         .attr("fill", "white")
-                        .attr("onclick", "onClick();");
+                        .attr("id", "rect");
+                        //.attr("onclick", "onClick();");
+
+//            svgGrid = document.getElementById("rect");
 
             //Draws left border line of canvas
             var line = canvas.append("line")
@@ -432,13 +440,14 @@
         //end of grid
 
         //Gets the current mouse position on the canvas/grid
-        function getMousePos(myCanvas/*, evt*/) {
+        function getMousePos(myCanvas, evt) {
             //Get the coordinates within the canvas/grid
             var rect = myCanvas.getBoundingClientRect();
+
             return {
                 //return x and y coordinates of the mouse within the canvas/grid
-                x: this.clientX - rect.left,
-                y: this.clientY - rect.top
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
             };
         };
 
@@ -449,13 +458,13 @@
         //false);
 
         //On click event listener for the canvas/grid
-        //svgGrid.addEventListener("click",
-        function onClick (/*evt*/) {
+        svgGrid.addEventListener("click",
+        function (evt) {
             
            alert("in click");
 
             //Variable to hold the values return by getMousePos. X and Y coordinates within the canvas/grid
-            var mousePos = getMousePos(svgGrid/*, evt*/);
+            var mousePos = getMousePos(svgGrid, evt);
 
             //console.log("array length: " + coordList.length);
 
@@ -501,7 +510,7 @@
                 y1 = coordList[coordList.length - 1].y2;
             }
         }
-        //,false);
+        ,false);
 
         //Mouse mouse event listener for the canvas/grid
         svgGrid.addEventListener("mousemove",
