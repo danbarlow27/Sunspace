@@ -52,8 +52,10 @@ namespace SunspaceDealerDesktop
                 }
             }
 
+            Session.Add("numberOfWalls", numberOfWalls);
+            Session.Add("numberOfElements", numberOfElements);
             //Adding one element to the session for testing purposes
-            Session.Add("viewingArray", newArray[0,0]);
+            Session.Add("testArray", newArray);
 
             //Redirect to test page to see if information is being passed properly
             Response.Redirect("TestingHiddens.aspx");
