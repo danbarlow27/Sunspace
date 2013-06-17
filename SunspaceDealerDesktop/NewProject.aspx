@@ -36,6 +36,15 @@
                         console.log("valid");
                     }
 
+                    var zipCode = document.getElementById("MainContent_hidZip").value;
+
+                    if (isNaN(zipCode) || zipCode.length < 5) {
+                        console.log("invalid zip");
+                    }
+                    else {
+                        console.log("valid zip");
+                    }
+
                     //Set answer to 'new' on side pager and enable button
                     $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
                     document.getElementById('pagerOne').style.display = "inline";
@@ -99,6 +108,11 @@
                 }
                 else if($('#MainContent_radSunroomModel400').is(':checked')) {
                     document.getElementById("MainContent_hidModelNumber").value = "400";
+                    document.getElementById('pagerThree').style.display = "inline";
+                    document.getElementById('MainContent_btnQuestion3').disabled = false;
+                } 
+                else if ($('#MainContent_radSunroomModelShowroom').is(':checked')) {
+                    document.getElementById("MainContent_hidModelNumber").value = "Showroom";
                     document.getElementById('pagerThree').style.display = "inline";
                     document.getElementById('MainContent_btnQuestion3').disabled = false;
                 }
@@ -532,6 +546,11 @@
                                     <asp:Label ID="lblSunroomModel400Radio" AssociatedControlID="radSunroomModel400" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel400" AssociatedControlID="radSunroomModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
+                                <li>
+                                    <asp:RadioButton ID="radSunroomModelShowroom" OnClick="checkQuestion3()" GroupName="sunroomModel" runat="server" />
+                                    <asp:Label ID="lblSunroomModelShowroomRadio" AssociatedControlID="radSunroomModelShowroom" runat="server"></asp:Label>
+                                    <asp:Label ID="lblSunroomModelShowroom" AssociatedControlID="radSunroomModelShowroom" runat="server" Text="Showroom"></asp:Label>
+                                </li>
                             </ul>            
                         </div> <%-- end 'complete sunroom' options --%>
                     </li> <%-- end 'complete sunroom' --%>
@@ -631,13 +650,6 @@
                         <asp:RadioButton ID="radProjectComponents" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectComponentsRadio" AssociatedControlID="radProjectComponents" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectComponents" AssociatedControlID="radProjectComponents" runat="server" Text="Components"></asp:Label>
-                    </li> <%-- end 'components' --%>
-
-                    <%-- SHOWROOM --%>
-                    <li>
-                        <asp:RadioButton ID="radProjectShowroom" GroupName="projectType" runat="server" />
-                        <asp:Label ID="lblProjectShowroomRadio" AssociatedControlID="radProjectComponents" runat="server"></asp:Label>
-                        <asp:Label ID="lblProjectShowroom" AssociatedControlID="radProjectComponents" runat="server" Text="Showroom"></asp:Label>
                     </li> <%-- end 'components' --%>
 
                 </ul> <%-- end .toggleOptions --%>
