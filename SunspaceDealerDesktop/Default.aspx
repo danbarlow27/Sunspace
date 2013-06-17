@@ -14,9 +14,22 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">              
 
+    <div id="parent" style="height:600px;">    
+
         <!--Div tag to hold canvas/grid buttons-->
-        <div id="buttons" style="width:20%; text-align:right; vertical-align:central; float:left; padding-top:10%;">
+        <div id="buttons" style="width:20%; text-align:center; vertical-align:central; float:left; padding-top:10%;" >
+            
+            
+            <input id="MainContent_radGridSize500" type="radio" name="gridSize" onclick="setGridSize()"> 500
+            <label for="MainContent_radGridSize500" id="MainContent_lblGridSize500"></label> <br />
+            <input id="MainContent_radGridSize750" type="radio" name="gridSize" onclick="setGridSize()"> 750
+            <label for="MainContent_radGridSize750" id="MainContent_lblGridSize750"></label> <br />
+            <input id="MainContent_radGridSize1000" type="radio" name="gridSize" onclick="setGridSize()"> 1000
+            <label for="MainContent_radGridSize1000" id="MainContent_lblGridSize1000"></label> <br />
+                
+                
             <ol>
+
                 <!--<li>
                     
                     <form action="Default.aspx">
@@ -44,18 +57,19 @@
             </ol>
         </div>
         <!--Div tag to hold the canvas/grid-->
-        <div style="max-width:500px; max-height:500px; min-width:100px; min-height:100px; float:left;" id="mySunroom"></div>
+        <div style="width:500px; height:500px; float:left;" id="mySunroom"></div>
         
         <!--Div tag to hold the error log-->
         <div style="width:20%; float:right; padding-right:10%;" >
             <textarea id="drawingLog" rows="31" cols="30" style="resize:none; border:0px;" readonly></textarea>
         </div>
 
+      </div>
     <!--Hidden input field to hold concatenated string of line information to be passed to C#-->
     <input type="hidden" id="hiddenVar" runat="server" />
-    <!--ASP button for testing, to be removed-->
+    <!--ASP button for testing, to be removed
     <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click1" />
-       
+       -->
     <script>
        
         //wall type enumeration
@@ -82,26 +96,33 @@
         
         //size of the squares in the grid
         var GRID_PADDING = 25;
-
+        
         var CELL_PADDING = GRID_PADDING / 2; //cell padding is half less than the grid padding
 
-        //max size of canvas (width and height)
-        var MAX_CANVAS_WIDTH = 500;
+        //default width of canvas
+        var DEFAULT_CANVAS_WIDTH = 500;
+
+        //medium width of canvas
+        var MEDIUM_CANVAS_WIDTH = 750;
+
+        //max width of canvas
+        var MAX_CANVAS_WIDTH = 1000;
+
+        //max height of canvas
+        var MAX_CANVAS_HEIGHT = 500;
 
         //create the canvas
-        var canvas = d3.select("#mySunroom") 
-                    .append("svg")
-                    .attr("width", MAX_CANVAS_WIDTH)
-                    .attr("height", MAX_CANVAS_WIDTH);
-
-        //Variable to hold all child elements which has all the array information
-        //var hiddenParent = document.getElementById("MainContent_hiddenVar");
+        var canvas;
+        //= d3.select("#mySunroom") 
+        //            .append("svg")
+        //            .attr("width", DEFAULT_CANVAS_WIDTH)
+        //            .attr("height", MAX_CANVAS_HEIGHT);
 
         //variable to hold textarea tag
         var log = document.getElementById("drawingLog");
 
         //create the svg grid on the canvas
-        var svgGrid = document.getElementById("mySunroom");
+        var svgGrid= document.getElementById("mySunroom");
 
         //store the "Done" button in a variable for use in multiple functions
         var doneButton = document.getElementById("buttonDone");
@@ -127,16 +148,10 @@
         //Used to validate first walls, also after dblclick and E
         var validateFirstWall = false;
 
-        //function appendChildToParent(){
-        //    var child = document.createElement("child1");
-        //    child.setAttribute("id", "child0");
-        //    child.innerHTML = coordList[0].id;
-        //   hiddenVar.appendChild(child);
-        //}
-
         //when the DOM is loaded...
         $(document).ready(function () {
-            drawGrid(); //Draws the initial grid
+            setGridSize();
+            //drawGrid(); //Draws the initial grid
             window.onload = buttonDoneOnLoad(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
             log.innerHTML += "Please draw an existing wall.\n\nPress 'E' to end a line.\n\n";
         });
@@ -144,10 +159,6 @@
         //On keypress "e" start new line on the grid
         $(document).on('keypress', function (e) { if (e.which === 101) { startNewWall = true; }});
 
-        function setGridSize() {
-            document.getElementById("buttons").className = "something";
-
-        }
 
         //set the name (value) of the "Done" button to the default value
         function buttonDoneOnLoad() {
@@ -294,78 +305,141 @@
             }
         }
 
-        //Draw the grid lines
-        function drawGrid() {
 
+        function setGridSize() {
+            
+            var width = DEFAULT_CANVAS_WIDTH;
+
+            if (document.getElementById("MainContent_radGridSize500").checked)
+                width = DEFAULT_CANVAS_WIDTH;
+            else if (document.getElementById("MainContent_radGridSize750").checked)
+                width = MEDIUM_CANVAS_WIDTH;
+            else if (document.getElementById("MainContent_radGridSize1000").checked)
+                width = MAX_CANVAS_WIDTH;
+
+            var thisCanvas;// = document.getElementById("mySunroom");
+            if (document.getElementById("mySunroom")) {
+                //alert(thisCanvas.parentNode);
+                thisCanvas = document.getElementById("mySunroom");
+                document.getElementById("parent").removeChild(thisCanvas);
+                
+
+                //thisCanvas.innerHTML = "I AM HERE";
+                //thisCanvas.setAttribute("id", "mySunroom");
+                //thisCanvas.setAttribute("width", width);
+                //thisCanvas.setAttribute("height", MAX_CANVAS_HEIGHT);
+                //thisCanvas.setAttribute("max-height", 600);
+                //alert(thisCanvas.parentNode);
+            }
+
+            thisCanvas = document.createElement("div");
+            thisCanvas.id = "mySunroom";
+            thisCanvas.style.width = width + "px";
+            thisCanvas.style.height = MAX_CANVAS_HEIGHT + "px";
+            document.getElementById("parent").appendChild(thisCanvas);
+
+            //canvas = d3.select("#mySunroom")
+            //        .append("svg")
+            //        .attr("width", width)
+            //        .attr("height", MAX_CANVAS_HEIGHT);
+
+            
+            //d3.selectAll("#E").remove(); //remove existing walls
+            //d3.selectAll("#P").remove(); //remove proposed walls
+            //d3.selectAll("#I").remove(); //remove internal walls
+            startNewWall = true; //let the user begin another wall anywhere on the grid
+            coordList = new Array(); //clear the list of lines
+            removed = new Array(); //clear the list of removed lines
+            wallType = (standAlone) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED; //reset the wall type to default
+            setButtonValue(); //set button value
+
+            drawGrid(width);
+        }
+
+
+        //Draw the grid lines
+        function drawGrid(width) {
+
+            
+            //create the canvas
+            canvas = d3.select("#mySunroom")
+                        .append("svg")
+                        .attr("width", width)
+                        .attr("height", MAX_CANVAS_HEIGHT);
+
+            svgGrid = document.getElementById("mySunroom");
+            
             //Creates rectangle area to draw in based on max canvas dimensions
             var rect = canvas.append("rect")
-                        .attr("width", MAX_CANVAS_WIDTH)
-                        .attr("height", MAX_CANVAS_WIDTH)
+                        .attr("width", width)
+                        .attr("height", MAX_CANVAS_HEIGHT)
                         .attr("fill", "white")
+                        .attr("onclick", "onClick();");
 
             //Draws left border line of canvas
             var line = canvas.append("line")
                         .attr("x1", 0)
                         .attr("y1", 0)
                         .attr("x2", 0)
-                        .attr("y2", MAX_CANVAS_WIDTH)
+                        .attr("y2", MAX_CANVAS_HEIGHT)
                         .attr("stroke", "black");
 
             //Draws top border line of canvas
             var line = canvas.append("line")
                         .attr("x1", 0)
                         .attr("y1", 0)
-                        .attr("x2", MAX_CANVAS_WIDTH)
+                        .attr("x2", width)
                         .attr("y2", 0)
                         .attr("stroke", "black");
 
             //Draws bottom border line of canvas
             var line = canvas.append("line")
                         .attr("x1", 0)
-                        .attr("y1", MAX_CANVAS_WIDTH)
-                        .attr("x2", MAX_CANVAS_WIDTH)
-                        .attr("y2", MAX_CANVAS_WIDTH)
+                        .attr("y1", MAX_CANVAS_HEIGHT)
+                        .attr("x2", width)
+                        .attr("y2", MAX_CANVAS_HEIGHT)
                         .attr("stroke", "black");
 
             //Draws right border line of canvas
             var line = canvas.append("line")
-                        .attr("x1", MAX_CANVAS_WIDTH)
+                        .attr("x1", width)
                         .attr("y1", 0)
-                        .attr("x2", MAX_CANVAS_WIDTH)
-                        .attr("y2", MAX_CANVAS_WIDTH)
+                        .attr("x2", width)
+                        .attr("y2", MAX_CANVAS_HEIGHT)
                         .attr("stroke", "black");
 
+
+
             //Draws vertical lines of the grid onto the canvas
-            for (var i = 0; i < MAX_CANVAS_WIDTH; i += GRID_PADDING) {
+            for (var i = 0; i < width; i += GRID_PADDING) {
                 var line = canvas.append("line")
                         .attr("x1", i + GRID_PADDING)
                         .attr("y1", 0)
                         .attr("x2", i + GRID_PADDING)
-                        .attr("y2", MAX_CANVAS_WIDTH)
+                        .attr("y2", MAX_CANVAS_HEIGHT)
                         .attr("stroke", "grey");
             }
 
             //Draws horizontal lines of the grid onto the canvas
-            for (var i = 0; i < MAX_CANVAS_WIDTH; i += GRID_PADDING) {
+            for (var i = 0; i < MAX_CANVAS_HEIGHT; i += GRID_PADDING) {
                 var line = canvas.append("line")
                         .attr("x1", 0)
                         .attr("y1", i + GRID_PADDING)
-                        .attr("x2", MAX_CANVAS_WIDTH)
+                        .attr("x2", width)
                         .attr("y2", i + GRID_PADDING)
                         .attr("stroke", "grey");
             }
-
         }
         //end of grid
 
         //Gets the current mouse position on the canvas/grid
-        function getMousePos(myCanvas, evt) {
+        function getMousePos(myCanvas/*, evt*/) {
             //Get the coordinates within the canvas/grid
             var rect = myCanvas.getBoundingClientRect();
             return {
                 //return x and y coordinates of the mouse within the canvas/grid
-                x: evt.clientX - rect.left,
-                y: evt.clientY - rect.top
+                x: this.clientX - rect.left,
+                y: this.clientY - rect.top
             };
         };
 
@@ -376,10 +450,13 @@
         //false);
 
         //On click event listener for the canvas/grid
-        svgGrid.addEventListener("click",
-        function (evt) {
+        //svgGrid.addEventListener("click",
+        function onClick (/*evt*/) {
+            
+           alert("in click");
+
             //Variable to hold the values return by getMousePos. X and Y coordinates within the canvas/grid
-            var mousePos = getMousePos(svgGrid, evt);
+            var mousePos = getMousePos(svgGrid/*, evt*/);
 
             //console.log("array length: " + coordList.length);
 
@@ -424,8 +501,8 @@
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
             }
-        },
-        false);
+        }
+        //,false);
 
         //Mouse mouse event listener for the canvas/grid
         svgGrid.addEventListener("mousemove",
