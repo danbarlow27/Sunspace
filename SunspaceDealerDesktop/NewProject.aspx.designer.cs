@@ -1111,13 +1111,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label lblExteriorSkin;
         
         /// <summary>
-        /// btnNext2 control.
+        /// btnQuestion4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnNext2;
+        protected global::System.Web.UI.WebControls.Button btnQuestion4;
         
         /// <summary>
         /// lblFoamProtected control.
@@ -1183,13 +1183,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label lblFoamProtectedNo;
         
         /// <summary>
-        /// btnFoamProtected control.
+        /// btnQuestion5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnFoamProtected;
+        protected global::System.Web.UI.WebControls.Button btnQuestion5;
         
         /// <summary>
         /// lblPrefabFloor control.
@@ -1255,13 +1255,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label lblPrefabFloorNo;
         
         /// <summary>
-        /// btnPrefabFloor control.
+        /// btnQuestion6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPrefabFloor;
+        protected global::System.Web.UI.WebControls.Button btnQuestion6;
         
         /// <summary>
         /// lblRoof control.
@@ -1408,13 +1408,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Label lblRoofNo;
         
         /// <summary>
-        /// btnRoof control.
+        /// btnQuestion7 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRoof;
+        protected global::System.Web.UI.WebControls.Button btnQuestion7;
         
         /// <summary>
         /// lblLayout control.
@@ -1750,13 +1750,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Image imbPresetC1;
         
         /// <summary>
-        /// btnLayout control.
+        /// btnQuestion8 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLayout;
+        protected global::System.Web.UI.WebControls.Button btnQuestion8;
         
         /// <summary>
         /// lblSpecsProjectType control.

@@ -101,6 +101,8 @@
 
         function checkQuestion4() {
             document.getElementById('MainContent_btnQuestion4').disabled = true;
+            var optionChecksPassed = false;
+
 
             if (document.getElementById("MainContent_txtKneewallHeight").value != "" &&
                 document.getElementById("MainContent_ddlKneewallType").value != "" &&
@@ -109,11 +111,10 @@
                 document.getElementById("MainContent_hidKneewallHeight").value = document.getElementById("MainContent_txtKneewallHeight").value;
                 document.getElementById("MainContent_hidKneewallType").value = document.getElementById("MainContent_ddlKneewallType").value;
                 document.getElementById("MainContent_hidKneewallColour").value = document.getElementById("MainContent_ddlKneewallColour").value;
-                document.getElementById('pagerFour').style.display = "inline";
-                document.getElementById('MainContent_btnQuestion4').disabled = false;
+                optionChecksPassed = true;
             }
             else {
-                document.getElementById('MainContent_btnQuestion4').disabled = true;
+                optionChecksPassed = false;
                 //kneewall error styling
             }
 
@@ -124,9 +125,10 @@
                 document.getElementById("MainContent_hidTransomHeight").value = document.getElementById("MainContent_txtTransomHeight").value;
                 document.getElementById("MainContent_hidTransomType").value = document.getElementById("MainContent_ddlTransomType").value;
                 document.getElementById("MainContent_hidTransomColour").value = document.getElementById("MainContent_ddlTransomColour").value;
+                optionChecksPassed = true;
             }
             else {
-                document.getElementById('MainContent_btnQuestion4').disabled = true;
+                optionChecksPassed = false;
                 //transom error styling
             }
 
@@ -135,11 +137,22 @@
                 document.getElementById("MainContent_ddlExteriorColour").value != "" &&
                 document.getElementById("MainContent_ddlExteriorSkin").value != "") {
 
+                document.getElementById("MainContent_hidInteriorColour").value = document.getElementById("MainContent_ddlInteriorColour").value;
+                document.getElementById("MainContent_hidInteriorSkin").value = document.getElementById("MainContent_ddlInteriorSkin").value;
+                document.getElementById("MainContent_hidExteriorColour").value = document.getElementById("MainContent_ddlExteriorColour").value;
+                document.getElementById("MainContent_hidExteriorSkin").value = document.getElementById("MainContent_ddlExteriorSkin").value;
+                optionChecksPassed = true;
             }
             else {
-                document.getElementById('MainContent_btnQuestion4').disabled = true;
+                optionChecksPassed = false;
                 //framing error styling
             }
+
+            if (optionChecksPassed) {
+                document.getElementById('MainContent_btnQuestion4').disabled = false;
+                document.getElementById('pagerFour').style.display = "inline";
+            }
+
             return false;
         }
 
@@ -561,7 +574,7 @@
                     </li> <%-- end Q2 option 2 --%>
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnNext2" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion4" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide4 --%>
@@ -578,20 +591,20 @@
                 <ul class="toggleOptions">
 
                     <li>
-                        <asp:RadioButton ID="radFoamProtectedYes" GroupName="foam" runat="server" />
+                        <asp:RadioButton ID="radFoamProtectedYes" OnClick="checkQuestion5()" GroupName="foam" runat="server" />
                         <asp:Label ID="lblFoamProtectedYesRadio" AssociatedControlID="radFoamProtectedYes" runat="server"></asp:Label>
                         <asp:Label ID="lblFoamProtectedYes" AssociatedControlID="radFoamProtectedYes" runat="server" Text="Yes"></asp:Label>
                     </li>
 
                     <li>
-                        <asp:RadioButton ID="radFoamProtectedNo" GroupName="foam" runat="server" />
+                        <asp:RadioButton ID="radFoamProtectedNo" OnClick="checkQuestion5()" GroupName="foam" runat="server" />
                         <asp:Label ID="lblFoamProtectedNoRadio" AssociatedControlID="radFoamProtectedNo" runat="server"></asp:Label>
                         <asp:Label ID="lblFoamProtectedNo" AssociatedControlID="radFoamProtectedNo" runat="server" Text="No"></asp:Label>
                     </li>
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnFoamProtected" CssClass="btnSubmit float-right slidePanel" data-slide="#slide6" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion5" CssClass="btnSubmit float-right slidePanel" data-slide="#slide6" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide5 --%>
@@ -607,20 +620,20 @@
                 <ul class="toggleOptions">
 
                     <li>
-                        <asp:RadioButton ID="radPrefabFloorYes" GroupName="floor" runat="server" />
+                        <asp:RadioButton ID="radPrefabFloorYes" OnClick="checkQuestion6()" GroupName="floor" runat="server" />
                         <asp:Label ID="lblPrefabFloorYesRadio" AssociatedControlID="radPrefabFloorYes" runat="server"></asp:Label>
                         <asp:Label ID="lblPrefabFloorYes" AssociatedControlID="radPrefabFloorYes" runat="server" Text="Yes"></asp:Label>
                     </li>
 
                     <li>
-                        <asp:RadioButton ID="radPrefabFloorNo" GroupName="floor" runat="server" />
+                        <asp:RadioButton ID="radPrefabFloorNo" OnClick="checkQuestion6()" GroupName="floor" runat="server" />
                         <asp:Label ID="lblPrefabFloorNoRadio" AssociatedControlID="radPrefabFloorNo" runat="server"></asp:Label>
                         <asp:Label ID="lblPrefabFloorNo" AssociatedControlID="radPrefabFloorNo" runat="server" Text="No"></asp:Label>
                     </li>
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnPrefabFloor" CssClass="btnSubmit float-right slidePanel" data-slide="#slide7" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion6" CssClass="btnSubmit float-right slidePanel" data-slide="#slide7" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide6 --%>
@@ -643,17 +656,17 @@
                         <div class="toggleContent">
                             <ul>
                                 <li>
-                                    <asp:RadioButton ID="radStudio" GroupName="roofSub" runat="server" />
+                                    <asp:RadioButton ID="radStudio" OnClick="checkQuestion7()" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblStudioRadio" AssociatedControlID="radStudio" runat="server"></asp:Label>
                                     <asp:Label ID="lblStudio" AssociatedControlID="radStudio" runat="server" Text="Studio"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radDealerGable" GroupName="roofSub" runat="server" />
+                                    <asp:RadioButton ID="radDealerGable" OnClick="checkQuestion7()" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblDealerGableRadio" AssociatedControlID="radDealerGable" runat="server"></asp:Label>
                                     <asp:Label ID="lblDealerGable" AssociatedControlID="radDealerGable" runat="server" Text="Dealer gable"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radSunspaceGable" GroupName="roofSub" runat="server" />
+                                    <asp:RadioButton ID="radSunspaceGable" OnClick="checkQuestion7()" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblSunspaceGableRadio" AssociatedControlID="radSunspaceGable" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunspaceGable" AssociatedControlID="radSunspaceGable" runat="server" Text="Sunspace gable"></asp:Label>
                                 </li>
@@ -662,14 +675,14 @@
                     </li>
 
                     <li>
-                        <asp:RadioButton ID="radRoofNo" GroupName="roof" runat="server" />
+                        <asp:RadioButton ID="radRoofNo" OnClick="checkQuestion7()" GroupName="roof" runat="server" />
                         <asp:Label ID="lblRoofNoRadio" AssociatedControlID="radRoofNo" runat="server"></asp:Label>
                         <asp:Label ID="lblRoofNo" AssociatedControlID="radRoofNo" runat="server" Text="No"></asp:Label>
                     </li>
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnRoof" CssClass="btnSubmit float-right slidePanel" data-slide="#slide8" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion7" CssClass="btnSubmit float-right slidePanel" data-slide="#slide8" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide7 --%>
@@ -685,67 +698,67 @@
                 <ul class="toggleOptions">
 
                     <li>
-                        <asp:RadioButton ID="radPreset1" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset1" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset1Radio" AssociatedControlID="radPreset1" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset1" GroupName="layout" AssociatedControlID="radPreset1" AlternateText="missing preset image" ImageUrl="./images/layout/Preset1.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset2" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset2" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset2Radio" AssociatedControlID="radPreset2" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset2" GroupName="layout" AssociatedControlID="radPreset2" AlternateText="missing preset image" ImageUrl="./images/layout/Preset2.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset3" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset3" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset3Radio" AssociatedControlID="radPreset3" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset3" GroupName="layout" AssociatedControlID="radPreset3" AlternateText="missing preset image" ImageUrl="./images/layout/Preset3.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset4" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset4" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset4Radio" AssociatedControlID="radPreset4" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset4" GroupName="layout" AssociatedControlID="radPreset4" AlternateText="missing preset image" ImageUrl="./images/layout/Preset4.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset5" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset5" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset5Radio" AssociatedControlID="radPreset5" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset5" GroupName="layout" AssociatedControlID="radPreset5" AlternateText="missing preset image" ImageUrl="./images/layout/Preset5.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset6" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset6" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset6Radio" AssociatedControlID="radPreset6" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset6" GroupName="layout" AssociatedControlID="radPreset6" AlternateText="missing preset image" ImageUrl="./images/layout/Preset6.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset7" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset7" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset7Radio" AssociatedControlID="radPreset7" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset7" GroupName="layout" AssociatedControlID="radPreset7" AlternateText="missing preset image" ImageUrl="./images/layout/Preset7.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset8" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset8" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset8Radio" AssociatedControlID="radPreset8" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset8" GroupName="layout" AssociatedControlID="radPreset8" AlternateText="missing preset image" ImageUrl="./images/layout/Preset8.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset9" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset9" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset9Radio" AssociatedControlID="radPreset9" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset9" GroupName="layout" AssociatedControlID="radPreset9" AlternateText="missing preset image" ImageUrl="./images/layout/Preset9.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset10" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset10" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset10Radio" AssociatedControlID="radPreset10" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset10" GroupName="layout" AssociatedControlID="radPreset10" AlternateText="missing preset image" ImageUrl="./images/layout/Preset10.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPresetF1" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPresetF1" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPresetF1Radio" AssociatedControlID="radPresetF1" runat="server"></asp:Label>
                         <asp:Image ID="imbPresetF1" GroupName="layout" AssociatedControlID="radPresetF1" AlternateText="missing preset image" ImageUrl="./images/layout/PresetS1.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPresetC1" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPresetC1" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPresetC1Radio" AssociatedControlID="radPresetC1" runat="server"></asp:Label>
                         <asp:Image ID="imbPresetC1" GroupName="layout" AssociatedControlID="radPresetC1" AlternateText="missing preset image" ImageUrl="./images/layout/PresetC1.png" runat="server" />                  
                     </li>
 
-                    <asp:Button ID="btnLayout" CssClass="btnSubmit float-right slidePanel" Text="Confirm all selections" runat="server" OnClientClick="checkQuestion8()" OnClick="btnLayout_Click"/>
+                    <asp:Button ID="btnQuestion8" CssClass="btnSubmit float-right slidePanel" Text="Confirm all selections" runat="server" OnClientClick="checkQuestion8()" OnClick="btnLayout_Click"/>
 
                 </ul> <%-- end .toggleOptions --%>
 
