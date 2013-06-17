@@ -213,9 +213,9 @@
         }
 
         /**undo last line
-        @param toBeRemoved - true or false whether we want to remove the last element from the removed line list
+        @param toBeRemoved - true or false whether we want to add the last element to the removed line list
         */
-        function undo(toBeRemoved) {
+        function undo(addToRemovedList) {
 
             //if last line is removed, enable user to draw a line anywhere
             if (coordList.length === 0)
@@ -225,9 +225,9 @@
                 d3.selectAll("#E").remove(); //remove existing walls
                 d3.selectAll("#P").remove(); //remove proposed walls
 
-                //if removed array needs to be popped at the end
-                if (toBeRemoved)
-                    removed.push(coordList[coordList.length - 1]); //pop it
+                //if the element needs to be added to the removed list
+                if (addToRemovedList)
+                    removed.push(coordList[coordList.length - 1]); //push it
 
                 //set the appropriate button value
                 setButtonValue();
