@@ -110,69 +110,69 @@
         }
 
         function checkQuestion4() {
-            //document.getElementById('MainContent_btnQuestion4').disabled = true;
-            //var optionChecksPassed = false;
+            document.getElementById('MainContent_btnQuestion4').disabled = true;
+            var optionChecksPassed = false;
 
-            //if (document.getElementById("MainContent_txtKneewallHeight").value != "" &&
-            //    document.getElementById("MainContent_ddlKneewallType").value != "" &&
-            //    document.getElementById("MainContent_ddlKneewallColour").value != "") {
-            //
-            //    if (isNaN(document.getElementById("MainContent_txtKneewallHeight").value) {
-            //
-            //    }
-            //    else {
-            //    document.getElementById("MainContent_hidKneewallHeight").value = document.getElementById("MainContent_txtKneewallHeight").value;
-            //    document.getElementById("MainContent_hidKneewallType").value = document.getElementById("MainContent_ddlKneewallType").value;
-            //    document.getElementById("MainContent_hidKneewallColour").value = document.getElementById("MainContent_ddlKneewallColour").value;
-            //    optionChecksPassed = true;
-            //    }
-            //}
-            //else {
-            //    optionChecksPassed = false;
-            //    //kneewall error styling
-            //}
+            if (document.getElementById("MainContent_txtKneewallHeight").value != "" &&
+                document.getElementById("MainContent_ddlKneewallType").value != "" &&
+                document.getElementById("MainContent_ddlKneewallColour").value != "") {
+            
+                if (isNaN(document.getElementById("MainContent_txtKneewallHeight").value) {
+                    console.log("Invalid kneewall height");
+                }
+                else {
+                document.getElementById("MainContent_hidKneewallHeight").value = document.getElementById("MainContent_txtKneewallHeight").value;
+                document.getElementById("MainContent_hidKneewallType").value = document.getElementById("MainContent_ddlKneewallType").value;
+                document.getElementById("MainContent_hidKneewallColour").value = document.getElementById("MainContent_ddlKneewallColour").value;
+                optionChecksPassed = true;
+                }
+            }
+            else {
+                optionChecksPassed = false;
+                //kneewall error styling
+            }
 
-            //if (document.getElementById("MainContent_txtTransomHeight").value != "" &&
-            //    document.getElementById("MainContent_ddlTransomType").value != "" &&
-            //    document.getElementById("MainContent_ddlTransomColour").value != "") {
-            //
-            //    if (isNaN(document.getElementById("MainContent_txtTransomHeight").value) {
-            //
-            //    }
-            //    else {
-            //    document.getElementById("MainContent_hidTransomHeight").value = document.getElementById("MainContent_txtTransomHeight").value;
-            //    document.getElementById("MainContent_hidTransomType").value = document.getElementById("MainContent_ddlTransomType").value;
-            //    document.getElementById("MainContent_hidTransomColour").value = document.getElementById("MainContent_ddlTransomColour").value;
-            //    optionChecksPassed = true;
-            //    }
+            if (document.getElementById("MainContent_txtTransomHeight").value != "" &&
+                document.getElementById("MainContent_ddlTransomType").value != "" &&
+                document.getElementById("MainContent_ddlTransomColour").value != "") {
+            
+                if (isNaN(document.getElementById("MainContent_txtTransomHeight").value) {
+                    console.log("Invalid transom height");
+                }
+                else {
+                document.getElementById("MainContent_hidTransomHeight").value = document.getElementById("MainContent_txtTransomHeight").value;
+                document.getElementById("MainContent_hidTransomType").value = document.getElementById("MainContent_ddlTransomType").value;
+                document.getElementById("MainContent_hidTransomColour").value = document.getElementById("MainContent_ddlTransomColour").value;
+                optionChecksPassed = true;
+                }
 
-            //}
-            //else {
-            //    optionChecksPassed = false;
-            //    //transom error styling
-            //}
+            }
+            else {
+                optionChecksPassed = false;
+                //transom error styling
+            }
 
-            //if (document.getElementById("MainContent_ddlInteriorColour").value != "" &&
-            //    document.getElementById("MainContent_ddlInteriorSkin").value != "" &&
-            //    document.getElementById("MainContent_ddlExteriorColour").value != "" &&
-            //    document.getElementById("MainContent_ddlExteriorSkin").value != "") {
+            if (document.getElementById("MainContent_ddlInteriorColour").value != "" &&
+                document.getElementById("MainContent_ddlInteriorSkin").value != "" &&
+                document.getElementById("MainContent_ddlExteriorColour").value != "" &&
+                document.getElementById("MainContent_ddlExteriorSkin").value != "") {
 
-            //    document.getElementById("MainContent_hidInteriorColour").value = document.getElementById("MainContent_ddlInteriorColour").value;
-            //    document.getElementById("MainContent_hidInteriorSkin").value = document.getElementById("MainContent_ddlInteriorSkin").value;
-            //    document.getElementById("MainContent_hidExteriorColour").value = document.getElementById("MainContent_ddlExteriorColour").value;
-            //    document.getElementById("MainContent_hidExteriorSkin").value = document.getElementById("MainContent_ddlExteriorSkin").value;
-            //    optionChecksPassed = true;
-            //}
-            //else {
-            //    optionChecksPassed = false;
-            //    //framing error styling
-            //}
+                document.getElementById("MainContent_hidInteriorColour").value = document.getElementById("MainContent_ddlInteriorColour").value;
+                document.getElementById("MainContent_hidInteriorSkin").value = document.getElementById("MainContent_ddlInteriorSkin").value;
+                document.getElementById("MainContent_hidExteriorColour").value = document.getElementById("MainContent_ddlExteriorColour").value;
+                document.getElementById("MainContent_hidExteriorSkin").value = document.getElementById("MainContent_ddlExteriorSkin").value;
+                optionChecksPassed = true;
+            }
+            else {
+                optionChecksPassed = false;
+                //framing error styling
+            }
 
-            //if (optionChecksPassed) {
-            //    document.getElementById('MainContent_btnQuestion4').disabled = false;
-            //    $('#MainContent_lblQuestion4PagerAnswer').text("Entry Complete");
-            //    document.getElementById('pagerFour').style.display = "inline";
-            //}
+            if (optionChecksPassed) {
+                document.getElementById('MainContent_btnQuestion4').disabled = false;
+                $('#MainContent_lblQuestion4PagerAnswer').text("Entry Complete");
+                document.getElementById('pagerFour').style.display = "inline";
+            }
 
             document.getElementById('MainContent_btnQuestion4').disabled = false;
             return false;
