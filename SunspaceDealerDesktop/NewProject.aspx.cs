@@ -11,9 +11,9 @@ namespace SunspaceWizard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ddlExistingCustomer.Items.Add("Choose a Customer...");
-            ddlExistingCustomer.Items.Add("Previous Customer One");
-            ddlExistingCustomer.Items.Add("Previous Customer Two");
+            //ddlExistingCustomer.Items.Add("Choose a Customer...");
+            //ddlExistingCustomer.Items.Add("Previous Customer One");
+            //ddlExistingCustomer.Items.Add("Previous Customer Two");
         }
 
         protected void btnLayout_Click(object sender, EventArgs e)
@@ -54,30 +54,30 @@ namespace SunspaceWizard
 
             string[] viewingArray = new string[24];
 
-            viewingArray[0] = hidFirstName.Value.ToString();
-            viewingArray[1] = hidLastName.Value.ToString();
-            viewingArray[2] = hidAddress.Value.ToString();
-            viewingArray[3] = hidCity.Value.ToString();
-            viewingArray[4] = hidZip.Value.ToString();
-            viewingArray[5] = hidPhone.Value.ToString();
-            viewingArray[6] = hidProjectTag.Value.ToString();
-            viewingArray[7] = hidProjectType.Value.ToString();
-            viewingArray[8] = hidModelNumber.Value.ToString();
-            viewingArray[9] = hidKneewallType.Value.ToString();
-            viewingArray[10] = hidKneewallColour.Value.ToString();
-            viewingArray[11] = hidKneewallHeight.Value.ToString();
-            viewingArray[12] = hidTransomType.Value.ToString();
-            viewingArray[13] = hidTransomColour.Value.ToString();
-            viewingArray[14] = hidTransomHeight.Value.ToString();
-            viewingArray[15] = hidInteriorColour.Value.ToString();
-            viewingArray[16] = hidInteriorSkin.Value.ToString();
-            viewingArray[17] = hidExteriorColour.Value.ToString();
-            viewingArray[18] = hidExteriorSkin.Value.ToString();
-            viewingArray[19] = hidFoamProtected.Value.ToString();
-            viewingArray[20] = hidPrefabFloor.Value.ToString();
-            viewingArray[21] = hidRoof.Value.ToString();
-            viewingArray[22] = hidRoofType.Value.ToString();
-            viewingArray[23] = hidLayoutSelection.Value.ToString();
+            //viewingArray[0] = hidFirstName.Value.ToString();
+            //viewingArray[1] = hidLastName.Value.ToString();
+            //viewingArray[2] = hidAddress.Value.ToString();
+            //viewingArray[3] = hidCity.Value.ToString();
+            //viewingArray[4] = hidZip.Value.ToString();
+            //viewingArray[5] = hidPhone.Value.ToString();
+            //viewingArray[6] = hidProjectTag.Value.ToString();
+            //viewingArray[7] = hidProjectType.Value.ToString();
+            //viewingArray[8] = hidModelNumber.Value.ToString();
+            //viewingArray[9] = hidKneewallType.Value.ToString();
+            //viewingArray[10] = hidKneewallColour.Value.ToString();
+            //viewingArray[11] = hidKneewallHeight.Value.ToString();
+            //viewingArray[12] = hidTransomType.Value.ToString();
+            //viewingArray[13] = hidTransomColour.Value.ToString();
+            //viewingArray[14] = hidTransomHeight.Value.ToString();
+            //viewingArray[15] = hidInteriorColour.Value.ToString();
+            //viewingArray[16] = hidInteriorSkin.Value.ToString();
+            //viewingArray[17] = hidExteriorColour.Value.ToString();
+            //viewingArray[18] = hidExteriorSkin.Value.ToString();
+            //viewingArray[19] = hidFoamProtected.Value.ToString();
+            //viewingArray[20] = hidPrefabFloor.Value.ToString();
+            //viewingArray[21] = hidRoof.Value.ToString();
+            //viewingArray[22] = hidRoofType.Value.ToString();
+            //viewingArray[23] = hidLayoutSelection.Value.ToString();
 
             Session.Add("viewingArray", viewingArray);
 
