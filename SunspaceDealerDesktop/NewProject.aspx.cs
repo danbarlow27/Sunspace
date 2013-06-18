@@ -11,7 +11,9 @@ namespace SunspaceWizard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            ddlExistingCustomer.Items.Add("Choose a Customer...");
+            ddlExistingCustomer.Items.Add("Previous Customer One");
+            ddlExistingCustomer.Items.Add("Previous Customer Two");
         }
 
         protected void btnLayout_Click(object sender, EventArgs e)
