@@ -307,6 +307,7 @@
             }
 
             thisCanvas = document.createElement("div");
+            //thisCanvas.onclick = function () { alert("hello");};
             thisCanvas.id = "mySunroom";
             thisCanvas.style.width = width + "px";
             thisCanvas.style.height = MAX_CANVAS_HEIGHT + "px";
@@ -326,8 +327,8 @@
         function drawGrid(width) {
             
             //create the canvas
-            if(canvas)
-                canvas.remove();
+            //if(canvas)
+            //    canvas.remove();
 
             canvas = d3.select("#mySunroom")
                         .append("svg")
@@ -412,11 +413,11 @@
         };
 
         //On click event listener for the canvas/grid
-        svgGrid.addEventListener("click",
-        function (evt) {
+        $("div").on("click", "svg", event,
+        function () {
             //alert("click");
             //Variable to hold the values return by getMousePos. X and Y coordinates within the canvas/grid
-            var mousePos = getMousePos(svgGrid, evt);
+            var mousePos = getMousePos(svgGrid, event);
 
             //If startNewWall is true, set the first pair of coordinates to the current mouse position
             //Used to define when the first click of on the canvas and reset removed array elements
@@ -426,7 +427,7 @@
 
                 //Set startNewWall to false to find logic to complete line coordinates
                 startNewWall = false;
-                
+
                 //Delete all entries into removed array
                 removed = new Array();
 
@@ -447,10 +448,10 @@
                 var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
 
                 //Store line starting and ending coordinates, along with line id and string orientation
-                coordList[coordList.length] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation};
-    
+                coordList[coordList.length] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation };
+
                 //Validate
-                if(!standAlone && validateFirstWall && coordList[coordList.length-1].id === WALL_TYPE.PROPOSED){
+                if (!standAlone && validateFirstWall && coordList[coordList.length - 1].id === WALL_TYPE.PROPOSED) {
                     validateNotStandAlone(false);
                     validateFirstWall = false;
                 }
@@ -459,14 +460,14 @@
                 x1 = coordList[coordList.length - 1].x2;
                 y1 = coordList[coordList.length - 1].y2;
             }
-        }
-        ,false);
+        });
+        //,false);
 
         //Mouse mouse event listener for the canvas/grid
-        svgGrid.addEventListener("mousemove",
-        function (evt) {
+        $("div").on("mousemove", "svg", event,
+        function () {
             //Store mouse coordinates from within the canvas/grid into a variable named mousePos
-            var mousePos = getMousePos(svgGrid, evt);
+            var mousePos = getMousePos(svgGrid, event);
             //Store the lines 2nd pair of coordinates into variables
             x2 = mousePos.x;
             y2 = mousePos.y;
@@ -478,16 +479,16 @@
             //This will occur after the first initial of every wall type (Existing Walls, Proposed Walls, Internal Walls)
             if (!startNewWall)
                 drawLine(x1, y1, x2, y2, true);
-        },
-        false);
+        });
+        //false);
 
         //Mouse out event listener for the canvas/grid
-        svgGrid.addEventListener("mouseout",
-        function (evt) {
+        $("div").on("mouseout", "svg", event,
+        function () {
             //Remove all lines on the canvas/grid with the id "mouseMoveLine"
             d3.selectAll("#mouseMoveLine").remove();
-        },
-        false);
+        });
+        //false);
 
         /**
         *Draw line function takes in coordinates and a boolean to draw lines based on these arguments
