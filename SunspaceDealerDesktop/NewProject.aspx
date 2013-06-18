@@ -56,7 +56,7 @@
             {
                 document.getElementById("MainContent_ddlExistingCustomer").value = $('#MainContent_ddlCustomerFirstName').val();
 
-                if (document.getElementById("MainContent_ddlExistingCustomer").value != "") {
+                if (document.getElementById("MainContent_ddlExistingCustomer").value != "Choose a Customer...") {
                     //valid, so update pager and enable button
                     $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing");
                     document.getElementById('pagerOne').style.display = "inline";
