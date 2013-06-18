@@ -58,33 +58,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Table tblWallLengths;
         
         /// <summary>
-        /// lblWall1Length control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWall1Length;
-        
-        /// <summary>
-        /// txtWall1Length control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtWall1Length;
-        
-        /// <summary>
-        /// ddlInchFractions control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlInchFractions;
-        
-        /// <summary>
         /// btnQuestion1 control.
         /// </summary>
         /// <remarks>

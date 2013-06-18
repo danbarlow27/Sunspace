@@ -7,11 +7,68 @@
     <script>
 
         function dynamicWallNumbers() {
-            var wallCount = "<%= Session["numberOfWalls"] %>";
+            //var wallCount = "<%= Session["numberOfWalls"] %>";
 
-            for (var i = 0; i < wallCount; i++) {
-                
-            }
+                <%
+        
+                    //TableRow row = new TableRow();
+                    //TableCell cell1 = new TableCell();
+                    //TableCell cell2 = new TableCell();
+                    //TableCell cell3 = new TableCell();
+                    Label lblWallNumber = new Label();
+                    TextBox txtWallLength = new TextBox();
+                    DropDownList ddlInchFractions = new DropDownList();
+                    ListItem lst0 = new ListItem("---", "0", true);
+                    ListItem lst18 = new ListItem("1/8", "1/8");
+                    ListItem lst14 = new ListItem("1/4", "1/4");
+                    ListItem lst38 = new ListItem("3/8", "3/8");
+                    ListItem lst12 = new ListItem("1/2", "1/2");
+                    ListItem lst58 = new ListItem("5/8", "5/8");
+                    ListItem lst34 = new ListItem("3/4", "3/4");
+                    ListItem lst78 = new ListItem("7/8", "7/8");
+                    ddlInchFractions.Items.Add(lst0);
+                    ddlInchFractions.Items.Add(lst18);
+                    ddlInchFractions.Items.Add(lst14);
+                    ddlInchFractions.Items.Add(lst38);
+                    ddlInchFractions.Items.Add(lst12);
+                    ddlInchFractions.Items.Add(lst58);
+                    ddlInchFractions.Items.Add(lst34);
+                    ddlInchFractions.Items.Add(lst78);
+
+                    int num;
+                    
+                    for(int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 5 right now
+                    {
+                        TableRow row = new TableRow();
+                        TableCell cell1 = new TableCell();
+                        TableCell cell2 = new TableCell();
+                        TableCell cell3 = new TableCell();
+                        
+                        lblWallNumber.Text = "Wall " + i + " length: ";
+                        lblWallNumber.ID = "lblWall" + i + "Length";
+                        lblWallNumber.AssociatedControlID = "txtWall" + i + "Length";
+
+                        txtWallLength.ID = "txtWall" + i + "Length";
+                        txtWallLength.CssClass = "txtField txtInput";
+                        txtWallLength.MaxLength = 3;
+                        //txtWallLength.onkeyup="checkQuestion1()"; 
+                        //txtWallLength.OnChange="checkQuestion1()";
+                        
+                        
+                        cell1.Controls.Add(lblWallNumber);
+                        cell2.Controls.Add(txtWallLength);
+                        cell3.Controls.Add(ddlInchFractions);
+
+                        row.Cells.Add(cell1);
+                        row.Cells.Add(cell2);
+                        row.Cells.Add(cell3);
+
+                        tblWallLengths.Rows.Add(row);
+
+                        num = tblWallLengths.Rows.Count;
+                    }
+                    
+                  %>
 
         }
         
@@ -107,7 +164,7 @@
 
                                     <asp:Table ID="tblWallLengths" CssClass="tblTxtFields" runat="server">
 
-                                        <asp:TableRow>
+                                        <%--<asp:TableRow>
                                             <asp:TableCell>
                                                 <asp:Label ID="lblWall1Length" AssociatedControlID="txtWall1Length" runat="server" Text="Wall 1 Length:"></asp:Label>
                                             </asp:TableCell>
@@ -128,7 +185,7 @@
                                                     <asp:ListItem Text="7/8" Value="7/8"></asp:ListItem>
                                                 </asp:DropDownList>
                                             </asp:TableCell>
-                                        </asp:TableRow>
+                                        </asp:TableRow>--%>
 
                                     </asp:Table>
                                 </li>

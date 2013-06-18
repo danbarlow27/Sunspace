@@ -12,7 +12,7 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             //string newString = "abc";
-            Session.Add("numberOfWalls", 5);
+            Session["numberOfWalls"] = 5;
         }
     }
 }
