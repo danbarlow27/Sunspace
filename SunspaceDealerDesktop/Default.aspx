@@ -301,13 +301,11 @@
 
             var thisCanvas;// = document.getElementById("mySunroom");
             if (document.getElementById("mySunroom")) {
-                //alert(thisCanvas.parentNode);
                 thisCanvas = document.getElementById("mySunroom");
                 document.getElementById("parent").removeChild(thisCanvas); 
             }
 
             thisCanvas = document.createElement("div");
-            //thisCanvas.onclick = function () { alert("hello");};
             thisCanvas.id = "mySunroom";
             thisCanvas.style.width = width + "px";
             thisCanvas.style.height = MAX_CANVAS_HEIGHT + "px";
@@ -415,7 +413,6 @@
         //On click event listener for the canvas/grid
         $("div").on("click", "svg", event,
         function () {
-            //alert("click");
             //Variable to hold the values return by getMousePos. X and Y coordinates within the canvas/grid
             var mousePos = getMousePos(svgGrid, event);
 
