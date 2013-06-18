@@ -12,7 +12,26 @@
     </section>
 </asp:Content>
 
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">    
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    
+    <!--Div tag setup:
+        |SECTION 1|SECTION 2|SECTION 3|
+        |         |         |         |
+        |BUTTONS  |GRID     |ERROR    |
+        |ORDERED  |         |MESSAGES |
+        |LIST     |         |         |
+        
+        This section contains div tags for buttons, grid, and error messages.
+        
+        Layout to consider: 
+
+        |SECTION 1                  |
+        |BUTTONS - ORDERED LIST     |
+        -----------------------------
+        |SECTION 2|SECTION 3        |
+        |ERROR    |GRID             |
+        |MESSAGES |                 |
+        -->    
 
         <!--Div tag to hold canvas/grid buttons-->
         <div id="buttons" style="width:20%; text-align:center; vertical-align:central; float:left; padding-top:10%">
@@ -27,7 +46,7 @@
                 <li><input class="btnSubmit" type="button" value ="Clear Canvas" onclick ="clearCanvas()" style="width:150px"/></li>
 
                 <!--Done button which ends the current operations (i.e. Done Existing Walls, Done Proposed Walls, Done Drawing)-->
-                <li><input id="buttonDone" class="btnSubmit" type="button" value ="" onclick="buttonDoneOnClick()" style="width:150px"/></li>
+                <li><input id="btnDone" class="btnSubmit" type="button" value ="" onclick="btnDoneOnClick()" style="width:150px"/></li>
 
                 <li><hr /></li>
 
@@ -88,7 +107,7 @@
         
         var log = document.getElementById("drawingLog");        //variable to hold textarea tag
         var svgGrid = document.getElementById("mySunroom");     //create the svg grid on the canvas
-        var doneButton = document.getElementById("buttonDone"); //store the "Done" button in a variable
+        var doneButton = document.getElementById("btnDone"); //store the "Done" button in a variable
         
 
         /**** ARRAY VARIABLES ****/
@@ -128,18 +147,16 @@
         /********************************************* JAVASCRIPT FUNCTIONS *********************************************/
 
         //on click event of "Done" button
-        function buttonDoneOnClick() {
+        function btnDoneOnClick() {
+
             //if user wants to finish drawing existing walls
             if (doneButton.value === "Done Existing Walls") {
                 
                 //if there are walls drawn and first wall is wall type "E"
-                if (coordList.length > 0 && coordList[0].id === WALL_TYPE.EXISTING) {
-                    //change the name (value) of the button
-                    doneButton.value = "Done Proposed Walls";
-                    //change wall type
-                    wallType = WALL_TYPE.PROPOSED;
-                    //reset click count
-                    startNewWall = true;
+                if (coordList.length > 0 && coordList[0].id === WALL_TYPE.EXISTING) {                    
+                    doneButton.value = "Done Proposed Walls";   //change the name (value) of the button
+                    wallType = WALL_TYPE.PROPOSED;              //change wall type                    
+                    startNewWall = true;                        //reset click count
                 }
                 //if walltype is not "E", means they have not drawn any existing walls
                 else
@@ -148,36 +165,38 @@
             }
             //if user wants to finish drawing external (i.e. proposed) walls
             else if (doneButton.value === "Done Proposed Walls") {
+
                 //if its a valid sunroom
-                if (sunroomCompleted()) { // && wallType === WALL_TYPE.PROPOSED                    
-                    //change the name (value) of the button
-                    doneButton.value = "Done Drawing";
-                    //change wall type
-                    wallType = WALL_TYPE.PROPOSED;
-                    //reset click count
-                    startNewWall = true;
+                if (sunroomCompleted()) {                    
+                    doneButton.value = "Done Drawing";  //change the name (value) of the button                    
+                    wallType = WALL_TYPE.PROPOSED;      //change wall type                    
+                    startNewWall = true;                //reset click count
                 }
             }
-
+            //If logic for passing values to C# (server-side)
             else if (doneButton.value === "Done Drawing") {
-                
-                var lineInfo = "";
+                                
+                var lineInfo = "";  //Variable to hold array/line information to be passed to C# (server-side)
 
+                //For loop to concatenate a string with array/line information
                 for (var i = 0; i < coordList.length; i++) {
-                    lineInfo += coordList[i].x1 + ",";
-                    lineInfo += coordList[i].x2 + ",";
-                    lineInfo += coordList[i].y1 + ",";
-                    lineInfo += coordList[i].y2 + ",";
-                    lineInfo += coordList[i].id + ",";
-                    lineInfo += coordList[i].orientation + "/";
+                    lineInfo += coordList[i].x1 + ",";          //First X coordinate of line index i
+                    lineInfo += coordList[i].x2 + ",";          //First Y coordinate of line index i
+                    lineInfo += coordList[i].y1 + ",";          //Second X coordinate of line index i
+                    lineInfo += coordList[i].y2 + ",";          //Second Y coordinate of line index i
+                    lineInfo += coordList[i].id + ",";          //ID of line index i
+                    lineInfo += coordList[i].orientation + "/"; //Orientation of line index i
                 }
-                console.log(lineInfo);
+                //Passing lineInfo (concatenated string) to hidden field to be pulled in C# (server-side)
                 document.getElementById("MainContent_hiddenVar").value = lineInfo;
             }
     
         }
 
-        //clear canvas
+        /**
+        *clearCanvas
+        *Clear canvas function; clears canvas of all lines, resets arrays to null
+        */
         function clearCanvas() {
             d3.selectAll("#E").remove(); //remove existing walls
             d3.selectAll("#P").remove(); //remove proposed walls
@@ -188,14 +207,19 @@
             setButtonValue();            //set button value
        }
         
-        //change the name (value) of the done button
+        /**
+        *setButtonValue
+        *Set button value function; sets the text inside btnDone
+        */
         function setButtonValue() {
             doneButton.value = (wallType === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
                 (wallType === WALL_TYPE.PROPOSED) ? "Done Proposed Walls" : "Done Drawing";
         }
 
-        /**undo last line
-        @param toBeRemoved - true or false whether we want to add the last element to the removed line list
+        /**
+        *undo
+        *Undo function; removes last line drawn
+        *@param toBeRemoved - true or false whether we want to add the last element to the removed line list
         */
         function undo(addToRemovedList) {
 
@@ -226,7 +250,10 @@
 
         }
 
-        //redo last undo
+        /**
+        *redo
+        *Redo function; redraws the last line undone
+        */
         function redo() {
             
             //If an item exist within the removed array proceed with logic
@@ -250,7 +277,10 @@
             }
         }
         
-        //Draw the grid lines
+        /**
+        *drawGrid
+        *Draw grid function; draws the grid lines and border
+        */
         function drawGrid() {
             
             //Creates rectangle area to draw in based on max canvas dimensions
@@ -311,7 +341,6 @@
                         .attr("stroke", "grey");            //Sets the line colour to grey
             }
         }
-        //end of grid
 
         //Gets the current mouse position on the canvas/grid
         function getMousePos(myCanvas, evt) {
@@ -322,89 +351,6 @@
                 y: evt.clientY - rect.top   //return the Y value of the mouse within the canvas/grid
             };
         };
-
-        //On click event listener for the canvas/grid
-        svgGrid.addEventListener("click",
-        function (evt) {
-            //Variable to hold the values return by getMousePos. X and Y coordinates within the canvas/grid
-            var mousePos = getMousePos(svgGrid, evt);
-
-            //If startNewWall is true, set the first pair of coordinates to the current mouse position
-            //Used to define when the first click of on the canvas and reset removed array elements
-            if (startNewWall) {
-                x1 = mousePos.x; //Find first X coordinates for the new line within the canvas/grid
-                y1 = mousePos.y; //Find first Y coordinates for the new line within the canvas/grid
-
-                //Set startNewWall to false to find logic to complete line coordinates
-                startNewWall = false;
-                
-                removed = new Array(); //Delete all entries into removed array
-
-                //Validation for these condition: not stand alone, existing walls exist, the current line being drawn is proposed wall type
-                if (!standAlone && coordList.length != 0 && wallType === WALL_TYPE.PROPOSED)
-                    validateFirstWall = true;
-
-            }
-                //Logic for clicks after initial click to draw lines and store values into an array
-            else {
-                x2 = mousePos.x; //Find second X coordinates for the current line within the canvas/grid
-                y2 = mousePos.y; //Find second Y coordinates for the current line within the canvas/grid
-
-                //Draw the line and store the line into a variable named "line"
-                var line = drawLine(x1, y1, x2, y2, false);
-
-                //Find the orientation in string format to be stored into the array to be passed to C# classes
-                var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
-
-                //Store line starting and ending coordinates, along with line id and string orientation
-                coordList[coordList.length] = {
-                    "x1": line.attr("x1"), //Sets the first X coordinate for the current line
-                    "y1": line.attr("y1"), //Sets the first Y coordinate for the current line
-                    "x2": line.attr("x2"), //Sets the second X coordinate for the current line
-                    "y2": line.attr("y2"), //Sets the second Y coordinate for the current line
-                    "id": line.attr("id"), //Sets the ID for the current line
-                    "orientation": stringOrientation //Sets the line orientation for the current line
-                };
-
-                //Validation for lines that meet these conditions: non-stand alone, first wall, and are proposed walls.
-                if (!standAlone && validateFirstWall && coordList[coordList.length - 1].id === WALL_TYPE.PROPOSED) {
-                    validateNotStandAlone(false); //Call to validateNotStandAlone to snap first line
-                    validateFirstWall = false;    //Sets validateFirstWall to false since walls to be drawn won't be the first one
-                }
-
-                //Restart the start position for the next line to be drawn
-                x1 = coordList[coordList.length - 1].x2; //Sets the starting X for the next line to the last X coordinate of the previous line
-                y1 = coordList[coordList.length - 1].y2; //Sets the starting Y for the next line to the last Y coordinate of the previous line
-            }
-        },false);
-
-
-        //Mouse mouse event listener for the canvas/grid
-       svgGrid.addEventListener("mousemove", 
-        function (evt) {
-            //Store mouse coordinates from within the canvas/grid into a variable named mousePos
-            var mousePos = getMousePos(svgGrid, evt);
-
-            //Store the lines 2nd pair of coordinates into variables
-            x2 = mousePos.x;
-            y2 = mousePos.y;
-
-            //Remove all lines from the canvas/grid with the id "mouseMoveLine"
-            d3.selectAll("#mouseMoveLine").remove();
-
-            //If startNewWall is false, draw the line on mouse move event
-            //This will occur after the first initial of every wall type (Existing Walls, Proposed Walls, Internal Walls)
-            if (!startNewWall)
-                drawLine(x1, y1, x2, y2, true);
-        });
-
-
-        //Mouse out event listener for the canvas/grid
-        svgGrid.addEventListener("mouseout", 
-        function () {
-            //Remove all lines on the canvas/grid with the id "mouseMoveLine"
-            d3.selectAll("#mouseMoveLine").remove();
-        });
        
         /**
         *Draw line function takes in coordinates and a boolean to draw lines based on these arguments
@@ -631,7 +577,7 @@
             var isValid = false;
             //If logic to see that at least 1 wall exist
             if (coordList.length < MIN_NUMBER_OF_WALLS)
-                //Alert to tell the user there current error
+                //Error message to tell the user there current error
                 log.innerHTML += "A complete sunroom must be enclosed (3 walls minimum). Please try again!\n\n";
                 //Else if to check for standAlone rooms and if the room is closed
             else if (standAlone && coordList[coordList.length - 1].attr("x2") != coordList[0].x1)
@@ -645,116 +591,119 @@
                 //Else, sunroom is ok, isValid is set to true
             else
                 isValid = true;
-
-            //return isValid based on above logic
-            return isValid;
+            
+            return isValid; //return isValid based on above logic
             }
 
         /**
-        function to validate external walls when its not a standAlone sunroom
-        @return isValid - true or false depending on whether the wall is drawn properly or not
+        *validateNotStandAlone
+        *Validate not stand alone function to validate external walls when its not a standAlone sunroom
+        *@param lastWall - passes true or false whether the line being verified is the last wall
+        *@return isValid - true or false depending on whether the wall is drawn properly or not
         */
         function validateNotStandAlone(lastWall) {
 
-            //array of calculated distances to determine the shortest distance
+            //Array of calculated distances to determine the shortest distance
             var distanceBetweenLines = new Array();            
 
-            //for storing the shortest calculated distance
+            //Variable for storing the shortest calculated distance
             var shortest = 0;
 
-            //true or false depending on whether the drawn wall is valid
+            //Variable true or false depending on whether the drawn wall is valid
             var isValid = false;
 
-            //to store the wall number of the wall with shortest distance to the intercept
+            //Variable to store the wall number of the wall with shortest distance to the intercept
             var shortestDistanceWallNumber;
-
-            //Needs functionality to handle existing wall corners
             
-            //run through the list of lines
+            //Run through the list of lines
             for (var i = 0; i < coordList.length; i++) {
-                //if it is an existing wall...
+                //If it is an existing wall...
                 if (coordList[i].id === WALL_TYPE.EXISTING) {
+                                        
+                    var intercept = findIntercept(i); //Call to intercept function; finds intercept
 
-                    //find intercept
-                    var intercept = findIntercept(i);
-
-                    //if determinant is 0 means its a parallel line, meaning no intercept
+                    //If determinant is 0 means its a parallel line, meaning no intercept
                     if (intercept.det === 0) {
                         //alert("Sunroom must be enclosed. Please add another wall.");
-                        //isValid = false;
                     }
-                    else {//there is an intercept
-                        isValid = true; //thus valid
+                    //There is an intercept
+                    else {
+                        isValid = true; //Thus valid
 
                         if (lastWall) {
                             //calculate the distance between the end of the last proposed line and the intercept
-                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x2), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y2), 2)), "x": intercept.x, "y": intercept.y };
+                            distanceBetweenLines[distanceBetweenLines.length] = {
+                                //Calculated distance between intercept and second pair of coordinates
+                                "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x2), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y2), 2)),
+                                "x": intercept.x,   //X value for intercept
+                                "y": intercept.y    //Y value for intercept
+                            };
                         }
                         else {                            
                             //calculate the distance between the end of the first proposed line and the intercept
-                            distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x1), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y1), 2)), "x": intercept.x, "y": intercept.y };
+                            distanceBetweenLines[distanceBetweenLines.length] = {
+                                //Calculated distance between intercept and first pair of coordinates
+                                "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x1), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y1), 2)),
+                                "x": intercept.x,   //X value for intercept
+                                "y": intercept.y    //Y value for intercept
+                            };
                         }                        
                     }
                 }
-            }
+            }            
+                //Determine the shortest distance between all the intercepts
+                shortest = MAX_CANVAS_WIDTH; //Arbitrary long number for getting at the shortest distance
 
-            
-                //determine the shortest distance between all the intercepts
-                shortest = MAX_CANVAS_WIDTH; //arbitrary long number for getting at the shortest distance
-
-                //loop through all the lines and determine the shortest distance
+                //Loop through all the lines and determine the shortest distance
                 for (var j = 0; j < distanceBetweenLines.length; j++) {
-                    //if the calculated distance is less than the shortest distance...
+                    //If the calculated distance is less than the shortest distance...
                     if (distanceBetweenLines[j].distance < shortest) {
-                        shortest = distanceBetweenLines[j].distance; //set shortest distance to the calculated distance
-                        shortestDistanceWallNumber = j; //store the wall number for the shortest distance                                    
+                        shortest = distanceBetweenLines[j].distance; //Set shortest distance to the calculated distance
+                        shortestDistanceWallNumber = j;              //Store the wall number for the shortest distance                                    
                     }
                 }
-
+                
+                //If shortest isn't zero...
                 if (shortest != 0) {
 
                     //undo the last drawn line, to be redrawn properly (i.e. snapped to the coordinate)
-                    undo(false);
+                    undo(false);    //Call to undo function
 
                     if (lastWall) {
-                        alert("last");
-                        //draw the snapped line
+                        //Sraw the snapped line
                         var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
                     }
                     else {
-                        alert("first one");
+                        //If the intercept.x2 (or y2) value and the x (or y) value of the shortest distance wall are the same..
                         if (distanceBetweenLines[shortestDistanceWallNumber].x === intercept.x2 && distanceBetweenLines[shortestDistanceWallNumber].y === intercept.y2) {
                             isValid = false;
-                            alert("blah");
                         }
                         else {
                             wallType = WALL_TYPE.PROPOSED;
-                            //coordList[coordList.length-1].attr("id","P");
+                            //Draw the line with intercepts as the starting point and the lines second coordinates as the end coordinates
                             var line = drawLine(distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, intercept.x2, intercept.y2, false);
                         }
-                        //var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
                     }
-                    //get the orientation
+
+                    //Get the orientation
                     var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
-                    //store the new line into the list
+                    //Store the new line into the list
                     coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation }
 
-                    //set the starting coordinates of the next line to the ending coordinates of this line
+                    //Set the starting coordinates of the next line to the ending coordinates of this line
                     x1 = line.attr("x2");
                     y1 = line.attr("y2");
-
                 }
 
-                
-            //return valid 
-            return isValid;
+            return isValid; //Returns true/false if the line is valid or not
         }        
 
         /**
-        This function runs through all of the lines in the list, and finds 
-            the intercepting point between each line and the last drawn line
-        @param lineNumber - the number of line for which we need to find intercept
-        @return - a line object with the intercept point, the starting and ending coordinates, and the determinant
+        *findIntercept
+        *Find intercept function runs through all of the lines in the list, and finds 
+        *    the intercepting point between each line and the last drawn line
+        *@param lineNumber - the number of line for which we need to find intercept
+        *@return - a line object with the intercept point, the starting and ending coordinates, and the determinant
         */
         function findIntercept(lineNumber) {
 
@@ -766,8 +715,6 @@
 
             //the following variables will be used for the line equation of the last drawn line
             var A2, B2, C2;
-
-            //var belongsToLine = false;
             
             //initialize the given line coordinate variables, retrieving the coordinates from the list
             cx2 = coordList[lineNumber].x2; //initialize x2
@@ -815,10 +762,11 @@
 
 
         /**
-        function snaps each drawn line to the corners of each cell in the grid;
-            this prevents irregular lines being drawn
-        @param coordinate - all of the coordinates (x1, y1, x2, y2), will be sent for snapping individually
-        @return - return the new (snapped to grid) coordinate
+        *snapToGrid
+        *Snap to grid function snaps each drawn line to the corners of each cell in the grid;
+        *    this prevents irregular lines being drawn
+        *@param coordinate - all of the coordinates (x1, y1, x2, y2), will be sent for snapping individually
+        *@return - return the new (snapped to grid) coordinate
         */
         function snapToGrid(coordinate) {
             //set to true or false depending on if the coordinate is less than cell padding * number of cells
@@ -845,6 +793,103 @@
 
             return validCoordinate; //return the validated coordinate
         }
+
+        /********************************************* JAVASCRIPT EVENTLISTENERS/HANDLERS *********************************************/
+
+        /**
+        *EventListner Type: onclick
+        *Event target: svgGrid/document.getElementById("mySunroom")
+        *Performs a function when the onclick event on the canvas/grid is triggered
+        */
+        svgGrid.addEventListener("click",
+        function (evt) {
+            //Variable to hold the values return by getMousePos. X and Y coordinates within the canvas/grid
+            var mousePos = getMousePos(svgGrid, evt);
+
+            //If startNewWall is true, set the first pair of coordinates to the current mouse position
+            //Used to define when the first click of on the canvas and reset removed array elements
+            if (startNewWall) {
+                x1 = mousePos.x; //Find first X coordinates for the new line within the canvas/grid
+                y1 = mousePos.y; //Find first Y coordinates for the new line within the canvas/grid
+
+                //Set startNewWall to false to find logic to complete line coordinates
+                startNewWall = false;
+
+                removed = new Array(); //Delete all entries into removed array
+
+                //Validation for these condition: not stand alone, existing walls exist, the current line being drawn is proposed wall type
+                if (!standAlone && coordList.length != 0 && wallType === WALL_TYPE.PROPOSED)
+                    validateFirstWall = true;
+
+            }
+                //Logic for clicks after initial click to draw lines and store values into an array
+            else {
+                x2 = mousePos.x; //Find second X coordinates for the current line within the canvas/grid
+                y2 = mousePos.y; //Find second Y coordinates for the current line within the canvas/grid
+
+                //Draw the line and store the line into a variable named "line"
+                var line = drawLine(x1, y1, x2, y2, false);
+
+                //Find the orientation in string format to be stored into the array to be passed to C# classes
+                var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
+
+                //Store line starting and ending coordinates, along with line id and string orientation
+                coordList[coordList.length] = {
+                    "x1": line.attr("x1"), //Sets the first X coordinate for the current line
+                    "y1": line.attr("y1"), //Sets the first Y coordinate for the current line
+                    "x2": line.attr("x2"), //Sets the second X coordinate for the current line
+                    "y2": line.attr("y2"), //Sets the second Y coordinate for the current line
+                    "id": line.attr("id"), //Sets the ID for the current line
+                    "orientation": stringOrientation //Sets the line orientation for the current line
+                };
+
+                //Validation for lines that meet these conditions: non-stand alone, first wall, and are proposed walls.
+                if (!standAlone && validateFirstWall && coordList[coordList.length - 1].id === WALL_TYPE.PROPOSED) {
+                    validateNotStandAlone(false); //Call to validateNotStandAlone to snap first line
+                    validateFirstWall = false;    //Sets validateFirstWall to false since walls to be drawn won't be the first one
+                }
+
+                //Restart the start position for the next line to be drawn
+                x1 = coordList[coordList.length - 1].x2; //Sets the starting X for the next line to the last X coordinate of the previous line
+                y1 = coordList[coordList.length - 1].y2; //Sets the starting Y for the next line to the last Y coordinate of the previous line
+            }
+        }, false);
+
+
+        /**
+         *EventListner Type: mousemove
+         *Event target: svgGrid/document.getElementById("mySunroom")
+         *Performs a function when the mousemove event on the canvas/grid is triggered
+         */
+        svgGrid.addEventListener("mousemove",
+        function (evt) {
+            //Store mouse coordinates from within the canvas/grid into a variable named mousePos
+            var mousePos = getMousePos(svgGrid, evt);
+
+            //Store the lines 2nd pair of coordinates into variables
+            x2 = mousePos.x;
+            y2 = mousePos.y;
+
+            //Remove all lines from the canvas/grid with the id "mouseMoveLine"
+            d3.selectAll("#mouseMoveLine").remove();
+
+            //If startNewWall is false, draw the line on mouse move event
+            //This will occur after the first initial of every wall type (Existing Walls, Proposed Walls, Internal Walls)
+            if (!startNewWall)
+                drawLine(x1, y1, x2, y2, true);
+        });
+
+
+        /**
+         *EventListner Type: mouseout
+         *Event target: svgGrid/document.getElementById("mySunroom")
+         *Performs a function when the mouseout event on the canvas/grid is triggered
+         */
+        svgGrid.addEventListener("mouseout",
+        function () {
+            //Remove all lines on the canvas/grid with the id "mouseMoveLine"
+            d3.selectAll("#mouseMoveLine").remove();
+        });
         
     </script>
 
