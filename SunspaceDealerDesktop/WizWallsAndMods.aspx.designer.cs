@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SunspaceWizard {
+namespace SunspaceDealerDesktop {
     
     
-    public partial class _Default {
+    public partial class WizWallsAndMods {
         
         /// <summary>
         /// lblQuestion1 control.
@@ -49,13 +49,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.TextBox txtWall1Length;
         
         /// <summary>
-        /// cboInchFractions control.
+        /// ddlInchFractions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cboInchFractions;
+        protected global::System.Web.UI.WebControls.DropDownList ddlInchFractions;
         
         /// <summary>
         /// btnQuestion1 control.
