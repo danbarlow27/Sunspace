@@ -289,17 +289,16 @@
         
         function setGridSize() {
             
-            var width;// = DEFAULT_CANVAS_WIDTH;
+            var width;
 
             if (document.getElementById("MainContent_radGridSize500").checked)
                 width = DEFAULT_CANVAS_WIDTH;
-            else if (document.getElementById("MainContent_radGridSize750").checked) {
-                width = MEDIUM_CANVAS_WIDTH; //alert(width);
-            }
+            else if (document.getElementById("MainContent_radGridSize750").checked)
+                width = MEDIUM_CANVAS_WIDTH; 
             else if (document.getElementById("MainContent_radGridSize1000").checked)
                 width = MAX_CANVAS_WIDTH;
 
-            var thisCanvas;// = document.getElementById("mySunroom");
+            var thisCanvas;
             if (document.getElementById("mySunroom")) {
                 thisCanvas = document.getElementById("mySunroom");
                 document.getElementById("parent").removeChild(thisCanvas); 
@@ -324,10 +323,6 @@
         //Draw the grid lines
         function drawGrid(width) {
             
-            //create the canvas
-            //if(canvas)
-            //    canvas.remove();
-
             canvas = d3.select("#mySunroom")
                         .append("svg")
                         .attr("width", width)
@@ -418,7 +413,7 @@
 
             //If startNewWall is true, set the first pair of coordinates to the current mouse position
             //Used to define when the first click of on the canvas and reset removed array elements
-            if (startNewWall === true) {
+            if (startNewWall) {
                 x1 = mousePos.x;
                 y1 = mousePos.y;
 
@@ -458,13 +453,14 @@
                 y1 = coordList[coordList.length - 1].y2;
             }
         });
-        //,false);
+
 
         //Mouse mouse event listener for the canvas/grid
         $("div").on("mousemove", "svg", event,
         function () {
             //Store mouse coordinates from within the canvas/grid into a variable named mousePos
             var mousePos = getMousePos(svgGrid, event);
+
             //Store the lines 2nd pair of coordinates into variables
             x2 = mousePos.x;
             y2 = mousePos.y;
@@ -477,7 +473,7 @@
             if (!startNewWall)
                 drawLine(x1, y1, x2, y2, true);
         });
-        //false);
+
 
         //Mouse out event listener for the canvas/grid
         $("div").on("mouseout", "svg", event,
@@ -485,7 +481,7 @@
             //Remove all lines on the canvas/grid with the id "mouseMoveLine"
             d3.selectAll("#mouseMoveLine").remove();
         });
-        //false);
+
 
         /**
         *Draw line function takes in coordinates and a boolean to draw lines based on these arguments
@@ -514,10 +510,12 @@
 
             //
 
+            //alert(document.getElementById("mySunroom").clientWidth);
+
             //If logical to check if the x2 value is outside of the right side of canvas/grid
-            if (coorx2 > MAX_CANVAS_WIDTH) {
+            if (coorx2 > document.getElementById("mySunroom").clientWidth) {
                 //Set x2 coordinate value to the maximum size of the canvas/grid
-                coorx2 = MAX_CANVAS_WIDTH;
+                coorx2 = document.getElementById("mySunroom").clientWidth;
                 //Set y2 coordinate according to the x2,x1,y1 and slope
                 coory2 = (dY / dX) * (coorx2 - coorx1) + coory1;
             }
