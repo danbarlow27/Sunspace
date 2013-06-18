@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Custom Drawing Tool" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SunspaceDealerDesktop._Default" %>
+﻿<%@ Page Title="Custom Drawing Tool" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CustomDrawingTool.aspx.cs" Inherits="SunspaceDealerDesktop._Default" %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
@@ -15,7 +15,7 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">    
 
         <!--Div tag to hold canvas/grid buttons-->
-        <div id="buttons" style="width:20%; text-align:right; vertical-align:central; float:left; padding-top:10%">
+        <div id="buttons" style="width:20%; text-align:center; vertical-align:central; float:left; padding-top:10%">
             <ol>
                 <!--Undo button to undo the last line drawn-->
                 <li><input class="btnSubmit" type="button" value ="Undo" onclick="undo(true)" style="width:150px"/></li>
@@ -28,6 +28,11 @@
 
                 <!--Done button which ends the current operations (i.e. Done Existing Walls, Done Proposed Walls, Done Drawing)-->
                 <li><input id="buttonDone" class="btnSubmit" type="button" value ="" onclick="buttonDoneOnClick()" style="width:150px"/></li>
+
+                <li><hr /></li>
+
+                <!--Button to send line information to C#-->
+                <li><asp:Button ID="Button1" CSSClass="btnSubmit" runat="server" Text="Submit Drawing" OnClick="Button1_Click1" style="width:150px"/></li>
 
             </ol>
         </div>
@@ -42,7 +47,7 @@
     <!--Hidden input field to hold concatenated string of line information to be passed to C#-->
     <input type="hidden" id="hiddenVar" runat="server" />
     <!--ASP button for testing, to be removed-->
-    <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click1" />
+    
     <script>
        
         //wall type enumeration
@@ -156,7 +161,7 @@
                     //change the name (value) of the button
                     doneButton.value = "Done Drawing";
                     //change wall type
-                    //wallType = WALL_TYPE.INTERNAL;
+                    wallType = WALL_TYPE.PROPOSED;
                     //reset click count
                     startNewWall = true;
                 }
@@ -711,53 +716,62 @@
                             //calculate the distance between the end of the last proposed line and the intercept
                             distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x2), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y2), 2)), "x": intercept.x, "y": intercept.y };
                         }
-                        else {
+                        else {                            
                             //calculate the distance between the end of the first proposed line and the intercept
                             distanceBetweenLines[distanceBetweenLines.length] = { "distance": Math.sqrt(Math.pow((intercept.x - coordList[coordList.length - 1].x1), 2) + Math.pow((intercept.y - coordList[coordList.length - 1].y1), 2)), "x": intercept.x, "y": intercept.y };
-                        }
+                        }                        
                     }
                 }
             }
 
-            //determine the shortest distance between all the intercepts
-            shortest = MAX_CANVAS_WIDTH; //arbitrary long number for getting at the shortest distance
+            
+                //determine the shortest distance between all the intercepts
+                shortest = MAX_CANVAS_WIDTH; //arbitrary long number for getting at the shortest distance
 
-            //loop through all the lines and determine the shortest distance
-            for (var j = 0; j < distanceBetweenLines.length; j++) {
-                //if the calculated distance is less than the shortest distance...
-                if (distanceBetweenLines[j].distance < shortest) {
-                    shortest = distanceBetweenLines[j].distance; //set shortest distance to the calculated distance
-                    shortestDistanceWallNumber = j; //store the wall number for the shortest distance                                    
+                //loop through all the lines and determine the shortest distance
+                for (var j = 0; j < distanceBetweenLines.length; j++) {
+                    //if the calculated distance is less than the shortest distance...
+                    if (distanceBetweenLines[j].distance < shortest) {
+                        shortest = distanceBetweenLines[j].distance; //set shortest distance to the calculated distance
+                        shortestDistanceWallNumber = j; //store the wall number for the shortest distance                                    
+                    }
                 }
-            }
 
-            if(shortest != 0) {
-                    
-                //undo the last drawn line, to be redrawn properly (i.e. snapped to the coordinate)
-                undo(false);
+                if (shortest != 0) {
 
-                if(lastWall)
-                    //draw the snapped line
-                    var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
-                else{
-                    wallType = WALL_TYPE.PROPOSED;
-                    //coordList[coordList.length-1].attr("id","P");
-                    var line = drawLine(distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, intercept.x2, intercept.y2, false);
-                                    
-                    //var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
+                    //undo the last drawn line, to be redrawn properly (i.e. snapped to the coordinate)
+                    undo(false);
+
+                    if (lastWall) {
+                        alert("last");
+                        //draw the snapped line
+                        var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
+                    }
+                    else {
+                        alert("first one");
+                        if (distanceBetweenLines[shortestDistanceWallNumber].x === intercept.x2 && distanceBetweenLines[shortestDistanceWallNumber].y === intercept.y2) {
+                            isValid = false;
+                            alert("blah");
+                        }
+                        else {
+                            wallType = WALL_TYPE.PROPOSED;
+                            //coordList[coordList.length-1].attr("id","P");
+                            var line = drawLine(distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, intercept.x2, intercept.y2, false);
+                        }
+                        //var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
+                    }
+                    //get the orientation
+                    var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
+                    //store the new line into the list
+                    coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation }
+
+                    //set the starting coordinates of the next line to the ending coordinates of this line
+                    x1 = line.attr("x2");
+                    y1 = line.attr("y2");
+
                 }
-                //get the orientation
-                var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
-                //store the new line into the list
-                coordList[coordList.length] = { "x1": line.attr("x1"), "x2": line.attr("x2"), "y1": line.attr("y1"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation }
 
-                //set the starting coordinates of the next line to the ending coordinates of this line
-                x1 = line.attr("x2");
-                y1 = line.attr("y2");
-
-            }
                 
-                        
             //return valid 
             return isValid;
         }        
