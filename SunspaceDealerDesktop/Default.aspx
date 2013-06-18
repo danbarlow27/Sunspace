@@ -413,7 +413,7 @@
 
             //If startNewWall is true, set the first pair of coordinates to the current mouse position
             //Used to define when the first click of on the canvas and reset removed array elements
-            if (startNewWall === true) {
+            if (startNewWall) {
                 x1 = mousePos.x;
                 y1 = mousePos.y;
 
@@ -510,10 +510,12 @@
 
             //
 
+            //alert(document.getElementById("mySunroom").clientWidth);
+
             //If logical to check if the x2 value is outside of the right side of canvas/grid
-            if (coorx2 > MAX_CANVAS_WIDTH) {
+            if (coorx2 > document.getElementById("mySunroom").clientWidth) {
                 //Set x2 coordinate value to the maximum size of the canvas/grid
-                coorx2 = MAX_CANVAS_WIDTH;
+                coorx2 = document.getElementById("mySunroom").clientWidth;
                 //Set y2 coordinate according to the x2,x1,y1 and slope
                 coory2 = (dY / dX) * (coorx2 - coorx1) + coory1;
             }
