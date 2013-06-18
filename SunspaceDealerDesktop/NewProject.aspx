@@ -492,7 +492,7 @@
                                 </asp:TableCell>
 
                                 <asp:TableCell>
-                                    <asp:TextBox ID="txtProjectName" CssClass="txtField txtInput" onkeyup="checkQuestion2()" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtProjectName" CssClass="txtField txtInput" onkeyup="checkQuestion2()" runat="server" MaxLength="50"></asp:TextBox>
                                 </asp:TableCell>
                             </asp:TableRow>
                         </asp:Table>
