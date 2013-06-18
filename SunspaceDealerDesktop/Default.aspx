@@ -289,25 +289,22 @@
         
         function setGridSize() {
             
-            var width;// = DEFAULT_CANVAS_WIDTH;
+            var width;
 
             if (document.getElementById("MainContent_radGridSize500").checked)
                 width = DEFAULT_CANVAS_WIDTH;
-            else if (document.getElementById("MainContent_radGridSize750").checked) {
-                width = MEDIUM_CANVAS_WIDTH; //alert(width);
-            }
+            else if (document.getElementById("MainContent_radGridSize750").checked)
+                width = MEDIUM_CANVAS_WIDTH; 
             else if (document.getElementById("MainContent_radGridSize1000").checked)
                 width = MAX_CANVAS_WIDTH;
 
-            var thisCanvas;// = document.getElementById("mySunroom");
+            var thisCanvas;
             if (document.getElementById("mySunroom")) {
-                //alert(thisCanvas.parentNode);
                 thisCanvas = document.getElementById("mySunroom");
                 document.getElementById("parent").removeChild(thisCanvas); 
             }
 
             thisCanvas = document.createElement("div");
-            //thisCanvas.onclick = function () { alert("hello");};
             thisCanvas.id = "mySunroom";
             thisCanvas.style.width = width + "px";
             thisCanvas.style.height = MAX_CANVAS_HEIGHT + "px";
@@ -326,10 +323,6 @@
         //Draw the grid lines
         function drawGrid(width) {
             
-            //create the canvas
-            //if(canvas)
-            //    canvas.remove();
-
             canvas = d3.select("#mySunroom")
                         .append("svg")
                         .attr("width", width)
@@ -415,7 +408,6 @@
         //On click event listener for the canvas/grid
         $("div").on("click", "svg", event,
         function () {
-            //alert("click");
             //Variable to hold the values return by getMousePos. X and Y coordinates within the canvas/grid
             var mousePos = getMousePos(svgGrid, event);
 
@@ -461,13 +453,14 @@
                 y1 = coordList[coordList.length - 1].y2;
             }
         });
-        //,false);
+
 
         //Mouse mouse event listener for the canvas/grid
         $("div").on("mousemove", "svg", event,
         function () {
             //Store mouse coordinates from within the canvas/grid into a variable named mousePos
             var mousePos = getMousePos(svgGrid, event);
+
             //Store the lines 2nd pair of coordinates into variables
             x2 = mousePos.x;
             y2 = mousePos.y;
@@ -480,7 +473,7 @@
             if (!startNewWall)
                 drawLine(x1, y1, x2, y2, true);
         });
-        //false);
+
 
         //Mouse out event listener for the canvas/grid
         $("div").on("mouseout", "svg", event,
@@ -488,7 +481,7 @@
             //Remove all lines on the canvas/grid with the id "mouseMoveLine"
             d3.selectAll("#mouseMoveLine").remove();
         });
-        //false);
+
 
         /**
         *Draw line function takes in coordinates and a boolean to draw lines based on these arguments
