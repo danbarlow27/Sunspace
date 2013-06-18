@@ -48,92 +48,84 @@
     <input type="hidden" id="hiddenVar" runat="server" />
     <!--ASP button for testing, to be removed-->
     
-    <script>
-       
-        //wall type enumeration
+    <script>   
+        
+        /**************** CONSTANTS ****************/
+
+        //Wall type enumeration(enumeration)
         var WALL_TYPE = {
-            EXISTING: "E",
-            PROPOSED: "P",
-            INTERNAL: "I"
+            EXISTING: "E",  //Existing wall
+            PROPOSED: "P"   //Proposed wall
         }
 
-        //wall facing enumeration
+        //Wall facing object(enumeration)
         var WALL_FACING = {
-            SOUTH: 0,
-            SOUTH_WEST: 1,
-            WEST: 2,
-            NORTH_WEST: 3,
-            NORTH: 4,
-            NORTH_EAST: 5,
-            EAST: 6,
-            SOUTH_EAST: 7
+            SOUTH: 0,       //South value 0
+            SOUTH_WEST: 1,  //South West value 0
+            WEST: 2,        //West value 0
+            NORTH_WEST: 3,  //North West value 0
+            NORTH: 4,       //North value 0
+            NORTH_EAST: 5,  //North East value 0
+            EAST: 6,        //East value 0
+            SOUTH_EAST: 7   //South East value 0
         }
-
-        //minimum number of walls that makes up a complete sunroom
-        var MIN_NUMBER_OF_WALLS = 3;
         
-        //size of the squares in the grid
-        var GRID_PADDING = 25;
+        var MIN_NUMBER_OF_WALLS = 3;            //minimum number of walls that makes up a complete sunroom
+        var GRID_PADDING = 25;                  //size of the squares in the grid        
+        var CELL_PADDING = GRID_PADDING / 2;    //cell padding is half less than the grid padding
+        var MAX_CANVAS_WIDTH = 500;             //max width of canvas
+        var MAX_CANVAS_HEIGHT = 500;            //max height of canvas
+
+
+        /**************** VARIABLES ****************/
+
+        /**** DOM VARIABLES ****/
+        /* CREATE CANVAS */
+        var canvas = d3.select("#mySunroom")            //Select the div tag with id "mySunroom"
+                    .append("svg")                      //Add an svg tag to the selected div tag
+                    .attr("width", MAX_CANVAS_WIDTH)    //Set the width of the canvas/grid to MAX_CANVAS_WIDTH
+                    .attr("height", MAX_CANVAS_HEIGHT); //Set the height of the canvas/grid to MAX_CANVAS_HEIGHT        
         
-        var CELL_PADDING = GRID_PADDING / 2; //cell padding is half less than the grid padding
+        var log = document.getElementById("drawingLog");        //variable to hold textarea tag
+        var svgGrid = document.getElementById("mySunroom");     //create the svg grid on the canvas
+        var doneButton = document.getElementById("buttonDone"); //store the "Done" button in a variable
         
-        //max width of canvas
-        var MAX_CANVAS_WIDTH = 500;
 
-        //max height of canvas
-        var MAX_CANVAS_HEIGHT = 500;
+        /**** ARRAY VARIABLES ****/
+        var removed = new Array();      //an array of removed lines, for use in "redo" function
+        var coordList = new Array();    //an array of lines drawn
 
-        //create the canvas
-        var canvas = d3.select("#mySunroom") 
-                    .append("svg")
-                    .attr("width", MAX_CANVAS_WIDTH)
-                    .attr("height", MAX_CANVAS_HEIGHT);
 
-        //variable to hold textarea tag
-        var log = document.getElementById("drawingLog");
+        /**** FUNCTIONALITY VARIABLES ****/
+        var x1, y1, x2, y2;             //Coordinates of a given line (start/end coordinates)
+        var startNewWall = true;        //Variable to determine new set of walls being drawn
+        var validateFirstWall = false;  //Used to validate first walls, also after E
 
-        //create the svg grid on the canvas
-        var svgGrid = document.getElementById("mySunroom");
 
-        //store the "Done" button in a variable for use in multiple functions
-        var doneButton = document.getElementById("buttonDone");
+        /**** WIZARD VARIABLES ****/
+        var wallType = WALL_TYPE.EXISTING;  //Type of wall currently being drawn, to be determined by wizard
+        var standAlone = false;             //Variable to be set by wizard values
+        var gable = false;                  //Variable to hold whether its a gable or not, to come from wizard
 
-        //true or false based on whether the user chose standalone or not in the wizard
-        var standAlone = false;//confirm("standalone?");
 
-        //keep track of track of click count (to be reset when the user is done drawing a type of wall)
-        var startNewWall = true; 
-
-        //an array of removed lines, for use in "redo" function
-        var removed = new Array();
-        
-        //an array of lines drawn
-        var coordList = new Array();
-
-        //coordinates of a given line
-        var x1, y1, x2, y2;
-
-        //type of wall currently being drawn
-        var wallType = WALL_TYPE.EXISTING;
-
-        //Used to validate first walls, also after E
-        var validateFirstWall = false;
-
+        /**** EVENTS ON LOAD ****/
         window.onload = setButtonValue(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
+        
 
-        //when the DOM is loaded...
+        /**** jQuery FUNCTIONS ****/
+
+        //When the DOM is loaded and ready
         $(document).ready(function () {
-            drawGrid(); //Draws the initial grid            
+            drawGrid(); //Draws the initial grid
+            //Set initial text in log section
             log.innerHTML += "Please draw an existing wall.\n\nPress 'E' to end a line.\n\n";
         });
         
         //On keypress "e" start new line on the grid
         $(document).on('keypress', function (e) { if (e.which === 101) { startNewWall = true; }});
-
-        //set the name (value) of the "Done" button to the default value
-        //function buttonDoneOnLoad() {
-        //    document.getElementById("buttonDone").value = (standAlone) ? "Done Proposed Walls" : "Done Existing Walls";
-        //}
+        
+        
+        /********************************************* JAVASCRIPT FUNCTIONS *********************************************/
 
         //on click event of "Done" button
         function buttonDoneOnClick() {
@@ -189,19 +181,15 @@
         function clearCanvas() {
             d3.selectAll("#E").remove(); //remove existing walls
             d3.selectAll("#P").remove(); //remove proposed walls
-            //d3.selectAll("#I").remove(); //remove internal walls
-            startNewWall = true; //let the user begin another wall anywhere on the grid
-            coordList = new Array(); //clear the list of lines
-            removed = new Array(); //clear the list of removed lines
+            startNewWall = true;         //let the user begin another wall anywhere on the grid
+            coordList = new Array();     //clear the list of lines
+            removed = new Array();       //clear the list of removed lines
             wallType = (!standAlone) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED; //reset the wall type to default
-            setButtonValue(); //set button value
+            setButtonValue();            //set button value
        }
         
         //change the name (value) of the done button
         function setButtonValue() {
-            //doneButton.value = (coordList[coordList.length-1].id === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
-            //    (coordList[coordList.length - 1].id === WALL_TYPE.PROPOSED) ? "Done Proposed Walls" : "Done Drawing";
-
             doneButton.value = (wallType === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
                 (wallType === WALL_TYPE.PROPOSED) ? "Done Proposed Walls" : "Done Drawing";
         }
@@ -222,23 +210,18 @@
                 //if the element needs to be added to the removed list
                 if (addToRemovedList)
                     removed.push(coordList[coordList.length - 1]); //push it
-
-                //set the appropriate button value
-                setButtonValue();
-
-                //delete last line from the list
-                coordList.pop();
+                                
+                setButtonValue();   //set the appropriate button value                
+                coordList.pop();    //delete last line from the list
 
                 //go through the list of lines, set wall type, and draw the lines
                 for (var i = 0; i <= coordList.length - 1; i++) {
                     wallType = (coordList[i].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED;
-
                     drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false);
                 }
 
-                //set the starting coordinates of the next line to be drawn to the ending coordinates of the previous line drawn
-                x1 = coordList[coordList.length - 1].x2;
-                y1 = coordList[coordList.length - 1].y2;
+                x1 = coordList[coordList.length - 1].x2;    //Sets the first X value of the new line to the second X value of the last line in the coordList array
+                y1 = coordList[coordList.length - 1].y2;    //Sets the first Y value of the new line to the second Y value of the last line in the coordList array
             }
 
         }
@@ -250,23 +233,20 @@
             if (removed.length != 0) {
                 
                 //Change the wall type based on the id of the last element in the removed array
-                wallType = (removed[removed.length - 1].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED;
-  
-
-                //Add the last item in the removed array to the coordList array
-                coordList.push(removed[removed.length - 1]);
-                //Remove the last item in the removed array
-                removed.pop();
+                wallType = (removed[removed.length - 1].id === WALL_TYPE.EXISTING)
+                    ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED;
+                
+                coordList.push(removed[removed.length - 1]); //Add the last item in the removed array to the coordList array
+                removed.pop(); //Remove the last item in the removed array
 
                 //Draw the last element in the coordList array
                 drawLine(coordList[coordList.length - 1].x1, coordList[coordList.length - 1].y1, coordList[coordList.length - 1].x2, coordList[coordList.length - 1].y2, false);
 
                 //Set the initial coordinates to the x2 and y2 coordinates of the last element in the coordList array
-                x1 = coordList[coordList.length - 1].x2;
-                y1 = coordList[coordList.length - 1].y2;
-
-                //Call setButtonValue function to set the button text
-                setButtonValue();
+                x1 = coordList[coordList.length - 1].x2;    //Sets the first X value of the new line to the second X value of the last line in the coordList array
+                y1 = coordList[coordList.length - 1].y2;    //Sets the first Y value of the new line to the second Y value of the last line in the coordList array
+                                
+                setButtonValue(); //Call setButtonValue function to set the button text
             }
         }
         
@@ -274,64 +254,61 @@
         function drawGrid() {
             
             //Creates rectangle area to draw in based on max canvas dimensions
-            var rect = canvas.append("rect")
-                        .attr("width", MAX_CANVAS_WIDTH)
-                        .attr("height", MAX_CANVAS_HEIGHT)
-                        .attr("fill", "white")
-                        //.attr("onclick", "onClick();");
+            var rect = canvas.append("rect")                //Draws a rectangle for the canvas/grid to sit in
+                        .attr("width", MAX_CANVAS_WIDTH)    //Sets the width for the canvas/grid
+                        .attr("height", MAX_CANVAS_HEIGHT)  //Sets the height for the canvas/grid
+                        .attr("fill", "white")              //Sets the color of the rectangle to white
 
             //Draws left border line of canvas
-            var line = canvas.append("line")
-                        .attr("x1", 0)
-                        .attr("y1", 0)
-                        .attr("x2", 0)
-                        .attr("y2", MAX_CANVAS_HEIGHT)
-                        .attr("stroke", "black");
+            var line = canvas.append("line")                //Draws the left line of the border of the canvas/grid
+                        .attr("x1", 0)                      //Sets the first X value to 0
+                        .attr("y1", 0)                      //Sets the first Y value to 0
+                        .attr("x2", 0)                      //Sets the second X value to 0
+                        .attr("y2", MAX_CANVAS_HEIGHT)      //Sets the second Y value to MAX_CANVAS_HEIGHT(500)
+                        .attr("stroke", "black");           //Sets the line colour to black
 
             //Draws top border line of canvas
-            var line = canvas.append("line")
-                        .attr("x1", 0)
-                        .attr("y1", 0)
-                        .attr("x2", MAX_CANVAS_WIDTH)
-                        .attr("y2", 0)
-                        .attr("stroke", "black");
+            var line = canvas.append("line")                //Draws the top line of the border of the canvas/grid
+                        .attr("x1", 0)                      //Sets the first X value to 0
+                        .attr("y1", 0)                      //Sets the first Y value to 0
+                        .attr("x2", MAX_CANVAS_WIDTH)       //Sets the second X value to MAX_CANVAS_WIDTH
+                        .attr("y2", 0)                      //Sets the second Y value to 0
+                        .attr("stroke", "black");           //Sets the line colour to black
 
             //Draws bottom border line of canvas
-            var line = canvas.append("line")
-                        .attr("x1", 0)
-                        .attr("y1", MAX_CANVAS_HEIGHT)
-                        .attr("x2", MAX_CANVAS_WIDTH)
-                        .attr("y2", MAX_CANVAS_HEIGHT)
-                        .attr("stroke", "black");
+            var line = canvas.append("line")                //Draws the bottom line of the border of the canvas/grid
+                        .attr("x1", 0)                      //Sets the first X value to 0
+                        .attr("y1", MAX_CANVAS_HEIGHT)      //Sets the first Y value to MAX_CANVAS_HEIGHT
+                        .attr("x2", MAX_CANVAS_WIDTH)       //Sets the second X value to MAX_CANVAS_WIDTH
+                        .attr("y2", MAX_CANVAS_HEIGHT)      //Sets the second Y value to MAX_CANVAS_HEIGHT
+                        .attr("stroke", "black");           //Sets the line colour to black
 
             //Draws right border line of canvas
-            var line = canvas.append("line")
-                        .attr("x1", MAX_CANVAS_WIDTH)
-                        .attr("y1", 0)
-                        .attr("x2", MAX_CANVAS_WIDTH)
-                        .attr("y2", MAX_CANVAS_HEIGHT)
-                        .attr("stroke", "black");
-
-
+            var line = canvas.append("line")                //Draws the right line of the border of the canvas/grid
+                        .attr("x1", MAX_CANVAS_WIDTH)       //Sets the first X value to MAX_CANVAS_WIDTH
+                        .attr("y1", 0)                      //Sets the first Y value to 0
+                        .attr("x2", MAX_CANVAS_WIDTH)       //Sets the second X value to MAX_CANVAS_WIDTH
+                        .attr("y2", MAX_CANVAS_HEIGHT)      //Sets the second Y value to MAX_CANVAS_HEIGHt
+                        .attr("stroke", "black");           //Sets the line colour to black
 
             //Draws vertical lines of the grid onto the canvas
             for (var i = 0; i < MAX_CANVAS_WIDTH; i += GRID_PADDING) {
-                var line = canvas.append("line")
-                        .attr("x1", i + GRID_PADDING)
-                        .attr("y1", 0)
-                        .attr("x2", i + GRID_PADDING)
-                        .attr("y2", MAX_CANVAS_HEIGHT)
-                        .attr("stroke", "grey");
+                var line = canvas.append("line")            //Draws vertical lines based on the current i value of the loop
+                        .attr("x1", i + GRID_PADDING)       //Sets the first X value to i plus the GRID_PADDING (25)
+                        .attr("y1", 0)                      //Sets the frist Y value to 0
+                        .attr("x2", i + GRID_PADDING)       //Sets the second X value to i plus GRID_PADDING(25)
+                        .attr("y2", MAX_CANVAS_HEIGHT)      //Sets the second Y value to MAX_CANVAS_HEIGHT
+                        .attr("stroke", "grey");            //Sets the line colour to grey
             }
 
             //Draws horizontal lines of the grid onto the canvas
             for (var i = 0; i < MAX_CANVAS_HEIGHT; i += GRID_PADDING) {
-                var line = canvas.append("line")
-                        .attr("x1", 0)
-                        .attr("y1", i + GRID_PADDING)
-                        .attr("x2", MAX_CANVAS_WIDTH)
-                        .attr("y2", i + GRID_PADDING)
-                        .attr("stroke", "grey");
+                var line = canvas.append("line")            //Draws horizontal lines based on the current i value of the loop
+                        .attr("x1", 0)                      //Sets the first X value to 0
+                        .attr("y1", i + GRID_PADDING)       //Sets the first Y value to i plus GRID_PADDING(25)
+                        .attr("x2", MAX_CANVAS_WIDTH)       //Sets the second X value to MAX_CANVAS_WIDTH
+                        .attr("y2", i + GRID_PADDING)       //Sets the second Y value to i plus GRID_PADDING(25)
+                        .attr("stroke", "grey");            //Sets the line colour to grey
             }
         }
         //end of grid
@@ -341,9 +318,8 @@
             //Get the coordinates within the canvas/grid
             var rect = myCanvas.getBoundingClientRect();            
             return {
-                //return x and y coordinates of the mouse within the canvas/grid
-                x: evt.clientX - rect.left,
-                y: evt.clientY - rect.top
+                x: evt.clientX - rect.left, //return the X value of the mouse within the canvas/grid
+                y: evt.clientY - rect.top   //return the Y value of the mouse within the canvas/grid
             };
         };
 
@@ -353,48 +329,52 @@
             //Variable to hold the values return by getMousePos. X and Y coordinates within the canvas/grid
             var mousePos = getMousePos(svgGrid, evt);
 
-            //alert(startNewWall);
             //If startNewWall is true, set the first pair of coordinates to the current mouse position
             //Used to define when the first click of on the canvas and reset removed array elements
             if (startNewWall) {
-                x1 = mousePos.x;
-                y1 = mousePos.y;
+                x1 = mousePos.x; //Find first X coordinates for the new line within the canvas/grid
+                y1 = mousePos.y; //Find first Y coordinates for the new line within the canvas/grid
 
                 //Set startNewWall to false to find logic to complete line coordinates
                 startNewWall = false;
+                
+                removed = new Array(); //Delete all entries into removed array
 
-                //Delete all entries into removed array
-                removed = new Array();
-
+                //Validation for these condition: not stand alone, existing walls exist, the current line being drawn is proposed wall type
                 if (!standAlone && coordList.length != 0 && wallType === WALL_TYPE.PROPOSED)
                     validateFirstWall = true;
 
             }
                 //Logic for clicks after initial click to draw lines and store values into an array
             else {
-                //Find 2nd pair of coordinates based on current mouse position within the canvas/grid
-                x2 = mousePos.x;
-                y2 = mousePos.y;
+                x2 = mousePos.x; //Find second X coordinates for the current line within the canvas/grid
+                y2 = mousePos.y; //Find second Y coordinates for the current line within the canvas/grid
 
                 //Draw the line and store the line into a variable named "line"
                 var line = drawLine(x1, y1, x2, y2, false);
 
-                //alert(coordList.length);
                 //Find the orientation in string format to be stored into the array to be passed to C# classes
                 var stringOrientation = getStringOrientation(line.attr("x1"), line.attr("y1"), line.attr("x2"), line.attr("y2"));
 
                 //Store line starting and ending coordinates, along with line id and string orientation
-                coordList[coordList.length] = { "x1": line.attr("x1"), "y1": line.attr("y1"), "x2": line.attr("x2"), "y2": line.attr("y2"), "id": line.attr("id"), "orientation": stringOrientation };
+                coordList[coordList.length] = {
+                    "x1": line.attr("x1"), //Sets the first X coordinate for the current line
+                    "y1": line.attr("y1"), //Sets the first Y coordinate for the current line
+                    "x2": line.attr("x2"), //Sets the second X coordinate for the current line
+                    "y2": line.attr("y2"), //Sets the second Y coordinate for the current line
+                    "id": line.attr("id"), //Sets the ID for the current line
+                    "orientation": stringOrientation //Sets the line orientation for the current line
+                };
 
-                //Validate
+                //Validation for lines that meet these conditions: non-stand alone, first wall, and are proposed walls.
                 if (!standAlone && validateFirstWall && coordList[coordList.length - 1].id === WALL_TYPE.PROPOSED) {
-                    validateNotStandAlone(false);
-                    validateFirstWall = false;
+                    validateNotStandAlone(false); //Call to validateNotStandAlone to snap first line
+                    validateFirstWall = false;    //Sets validateFirstWall to false since walls to be drawn won't be the first one
                 }
 
                 //Restart the start position for the next line to be drawn
-                x1 = coordList[coordList.length - 1].x2;
-                y1 = coordList[coordList.length - 1].y2;
+                x1 = coordList[coordList.length - 1].x2; //Sets the starting X for the next line to the last X coordinate of the previous line
+                y1 = coordList[coordList.length - 1].y2; //Sets the starting Y for the next line to the last Y coordinate of the previous line
             }
         },false);
 
@@ -425,8 +405,7 @@
             //Remove all lines on the canvas/grid with the id "mouseMoveLine"
             d3.selectAll("#mouseMoveLine").remove();
         });
-
-
+       
         /**
         *Draw line function takes in coordinates and a boolean to draw lines based on these arguments
         *@param x1 - first x coordinate of current line
@@ -569,7 +548,7 @@
                     break;
             }
 
-            return orientation;
+            return orientation; //Return orientation in string format
         }
 
         /**
@@ -598,16 +577,14 @@
             */
             function sign(val) { return Math.abs(val) / val; }
 
-            var dX, dY;
-            var length;
-            var orientation;
-
-            //Calculates the difference between x values of the current line
-            dX = x2 - x1;
-            //Calculates the difference between y values of the current line
-            dY = y2 - y1;
-            //Find the orientation value (0 to 7)
-            orientation = getOrientation(dX, dY);
+            var dX, dY;         //Variables to hold delta X and Y, difference between second and first coordinates
+            var length;         //Variable to hold the length between the coordinates
+            var orientation;    //Variable to hold the orientation of the line
+            
+            dX = x2 - x1;       //Calculates the difference between x values of the current line            
+            dY = y2 - y1;       //Calculates the difference between y values of the current line
+            
+            orientation = getOrientation(dX, dY); //Find the orientation value (0 to 7)
 
             //Switch case to handle line direction based off of orientation value
             switch (orientation) {
@@ -638,11 +615,10 @@
             }            
 
             return {
-                //Returns valid x1,y1,x2,y2 values
-                'x1': x1,
-                'y1': y1,
-                'x2': x2,
-                'y2': y2
+                'x1': x1, //return first X coordinate
+                'y1': y1, //return first Y coordinate
+                'x2': x2, //return second X coordinate
+                'y2': y2  //return second Y coordinate
             };
         };
 
@@ -680,7 +656,6 @@
         */
         function validateNotStandAlone(lastWall) {
 
-
             //array of calculated distances to determine the shortest distance
             var distanceBetweenLines = new Array();            
 
@@ -692,7 +667,6 @@
 
             //to store the wall number of the wall with shortest distance to the intercept
             var shortestDistanceWallNumber;
-
 
             //Needs functionality to handle existing wall corners
             
@@ -830,12 +804,12 @@
 
             return {
                 "det": det, //return the determinant (0 if parallel)
-                "x": x, //return the x coordinate of the intercept point
-                "y": y, //return the y coordinate of the intercept point
-                "x1": cx1, //return the initial x coordinate of the line
-                "y1": cy1, //return the initial y coordinate of the line
-                "y2": cy2, //return the ending x coodinate of the line
-                "x2": cx2 //return the ending y coordinate of the line
+                "x": x,     //return the x coordinate of the intercept point
+                "y": y,     //return the y coordinate of the intercept point
+                "x1": cx1,  //return the initial x coordinate of the line
+                "y1": cy1,  //return the initial y coordinate of the line
+                "y2": cy2,  //return the ending x coodinate of the line
+                "x2": cx2   //return the ending y coordinate of the line
             };
         }
 
