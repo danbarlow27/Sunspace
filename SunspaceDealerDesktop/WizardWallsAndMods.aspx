@@ -163,9 +163,13 @@
                 document.getElementById("MainContent_hidDoorColour").value = $('#MainContent_ddlDoorColour').val();
                 document.getElementById("MainContent_hidSwingingDoor").value = $('#MainContent_radSwingingDoorYes').is(':checked');
                 document.getElementById("MainContent_hidWallDoorPlacement").value = $('#MainContent_ddlWallDoorPlacement').val();
-                //document.getElementById("MainContent_inFrac")
-                //document.getElementById("MainContent_hidWallDoorPlacement").value 
-                //document.getElementById("MainContent_hidDoorColour").value = $('#MainContent_ddlDoorColour').val();
+                var dropdownDOM = document.getElementById("MainContent_inFrac");
+                var totalDoorDistance = dropdownDOM.options[dropdownDOM.selectedIndex].value + document.getElementById("MainContent_txtCurrentWallDoorPosition").value;
+                document.getElementById("MainContent_hidWallDoorPlacement").value = totalDoorDistance;
+
+                if (dropdownDOM.options[dropdownDOM.selectedIndex].value == 0) {
+                    alert("This isn't working");
+                }
             }
             else {
                 //document.getElementById("MainContent_hidPhone").value = $('#MainContent_radDoorYes').val();
