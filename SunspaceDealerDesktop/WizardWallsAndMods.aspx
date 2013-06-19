@@ -34,6 +34,13 @@
                     ddlInFrac.Items.Add(lst34);
                     ddlInFrac.Items.Add(lst78);
                     inchesSpecifics.Controls.Add(ddlInFrac);
+                    
+                    //Used to dynamically add values to ddlWallDoorPlacement
+                    for(int i = 1; i <= (int)Session["numberOfWalls"]; i++)
+                    {
+                        ListItem numberOfWalls = new ListItem(Convert.ToString(i), Convert.ToString(i));
+                        ddlWallDoorPlacement.Items.Add(numberOfWalls);
+                    }
                     //ddlInchFractions.Items.Add(lst0);
                     //ddlInchFractions.Items.Add(lst18);
                     //ddlInchFractions.Items.Add(lst14);
@@ -71,7 +78,7 @@
                         txtWallLength.MaxLength = 3;
                         txtWallLength.TextChanged += new EventHandler(txtWallLengths_TextChanged);
                         txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
-
+                        
                         cell1.Controls.Add(lblWallNumber);
                         cell2.Controls.Add(txtWallLength);
                         cell3.Controls.Add(ddlInchFractions);
@@ -82,7 +89,7 @@
                         row.Cells.Add(cell2);
                         row.Cells.Add(cell3);
 
-                    
+
                     }
                   %>
 
@@ -155,22 +162,37 @@
 
             return false;
         }
-            function checkQuestion3() {
-                if ($('#MainContent_radDoorYes').is(':checked')) {
-                    document.getElementById("MainContent_hidTypeOfDoor").value = $('#MainContent_ddlTypeOfDoor').val();
-                    document.getElementById("MainContent_hidDoorColour").value = $('#MainContent_ddlDoorColour').val();
-                    document.getElementById("MainContent_hidSwingingDoor").value = $('#MainContent_radSwingingDoorYes').is(':checked');
-                    document.getElementById("MainContent_hidWallDoorPlacement").value = $('#MainContent_ddlWallDoorPlacement').val();
-                    var dropdownDOM = document.getElementById("MainContent_inFrac");
-                    var totalDoorDistance = dropdownDOM.options[dropdownDOM.selectedIndex].value + document.getElementById("MainContent_txtCurrentWallDoorPosition").value;
-                    document.getElementById("MainContent_hidWallDoorPlacement").value = totalDoorDistance;
+        function checkQuestion3() {
+            if ($('#MainContent_radDoorYes').is(':checked')) {
+                //Variable used to get current index of dropbox and its value
+                var dropdownDOM = document.getElementById("MainContent_inFrac");
+                var totalDoorDistance = document.getElementById("MainContent_txtWallDoorPosition").value + dropdownDOM.options[dropdownDOM.selectedIndex].value;
+                
 
-                    alert("Concatenated inches " + document.getElementById("MainContent_txtCurrentWallDoorPosition").value + dropdownDOM.options[dropdownDOM.selectedIndex].value);                
+                document.getElementById("MainContent_hidDoorType").value = document.getElementById("MainContent_ddlDoorType").options[document.getElementById("MainContent_ddlDoorType").selectedIndex].value;
+                document.getElementById("MainContent_hidDoorColour").value = document.getElementById("MainContent_ddlDoorColour").options[document.getElementById("MainContent_ddlDoorColour").selectedIndex].value;
+                document.getElementById("MainContent_hidSwingingDoor").value = $('#MainContent_radSwingingDoorYes').is(':checked');
+                document.getElementById("MainContent_hidWallDoorPlacement").value = document.getElementById("MainContent_ddlWallDoorPlacement").options[document.getElementById("MainContent_ddlWallDoorPlacement").selectedIndex].value;
+                document.getElementById("MainContent_hidWallDoorPosition").value = totalDoorDistance;
+                
+                //alert(document.getElementById("MainContent_ddlWallDoorPlacement").options[document.getElementById("MainContent_ddlWallDoorPlacement").selectedIndex].value);
+
+                if (document.getElementById("MainContent_hidDoorType").value != "" &&
+                    document.getElementById("MainContent_hidDoorColour").value != "" &&
+                    document.getElementById("MainContent_hidSwingingDoor").value != "" &&
+                    document.getElementById("MainContent_hidWallDoorPlacement").value != "" &&
+                    document.getElementById("MainContent_hidWallDoorPosition").value != "") {
+
+
                 }
                 else {
-                    //document.getElementById("MainContent_hidPhone").value = $('#MainContent_radDoorYes').val();
+                    //error styling or something
                 }
             }
+            else {
+                //document.getElementById("MainContent_hidPhone").value = $('#MainContent_radDoorYes').val();
+            }
+        }
 
     </script>
     <%-- End hidden div populating scripts --%>
@@ -324,11 +346,14 @@
 
                                         <asp:TableRow>
                                             <asp:TableCell>
-                                                <asp:Label ID="lblTypeOfDoor" AssociatedControlID="ddlTypeOfDoor" runat="server" Text="Type Of Door:"></asp:Label>
+                                                <asp:Label ID="lblDoorType" AssociatedControlID="ddlDoorType" runat="server" Text="Type Of Door:"></asp:Label>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlTypeOfDoor" GroupName="question3" runat="server" />
+                                                <asp:DropDownList ID="ddlDoorType" GroupName="question3" runat="server" >
+                                                    <asp:ListItem Text="Cabana" Value="Cabana"/>
+                                                    <asp:ListItem Text="Patio" Value="Patio" />
+                                                </asp:DropDownList>                                                
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -338,7 +363,11 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlDoorColour" GroupName="question3" runat="server" />
+                                                <asp:DropDownList ID="ddlDoorColour" GroupName="question3" runat="server" >
+                                                    <asp:ListItem Text="Clear" Value="Clear" />
+                                                    <asp:ListItem Text="Grey" Value="Grey" />
+                                                    <asp:ListItem Text="Bronze" Value="Bronze" />
+                                                </asp:DropDownList>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -371,17 +400,18 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlWallDoorPlacement" GroupName="question3" runat="server" />
+                                                <asp:DropDownList ID="ddlWallDoorPlacement" GroupName="question3" runat="server" >
+                                                </asp:DropDownList>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
                                         <asp:TableRow>
                                             <asp:TableCell>
-                                                <asp:Label ID="lblCurrentWallDoorPosition" AssociatedControlID="txtCurrentWallDoorPosition" runat="server" Text="Inches from left side the wall:"></asp:Label>
+                                                <asp:Label ID="lblWallDoorPosition" AssociatedControlID="txtWallDoorPosition" runat="server" Text="Inches from left side the wall:"></asp:Label>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCurrentWallDoorPosition" onkeyup="checkQuestion3()" CssClass="txtField txtInput" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtWallDoorPosition" onkeyup="checkQuestion3()" CssClass="txtField txtInput" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
                                             <asp:TableCell >
                                                 <asp:PlaceHolder ID="inchesSpecifics" runat="server" />
@@ -497,12 +527,12 @@
 
     <%-- Hidden input tags 
     ======================= --%>
-    <%-- %><input id="hidWallLengthsAndHeights" type="hidden" runat="server" /> wall length hidden fields will be created dynamically --%>
+<%-- %><input id="hidWallLengthsAndHeights" type="hidden" runat="server" /> wall length hidden fields will be created dynamically --%>
     <input id="hidTypeOfDoor" type="hidden" runat="server" />
     <input id="hidDoorColour" type="hidden" runat="server" />
     <input id="hidSwingingDoor" type="hidden" runat="server" />
     <input id="hidWallDoorPlacement" type="hidden" runat="server" />
-    <input id="hidCurrentWallDoorPosition" type="hidden" runat="server" />
+    <input id="hidWallDoorPosition" type="hidden" runat="server" />
     <%--<input id="hidFirstName" type="hidden" runat="server" />
     <input id="hidLastName" type="hidden" runat="server" />
     <input id="hidAddress" type="hidden" runat="server" />
