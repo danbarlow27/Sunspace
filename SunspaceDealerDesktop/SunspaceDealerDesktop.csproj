@@ -208,7 +208,6 @@
     <Content Include="packages.config" />
     <Content Include="Content\fonts\Shanti-Regular.ttf" />
     <Content Include="WizardWallsAndMods.aspx" />
-    <Content Include="WizWallsAndMods.aspx" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="SavedProjects.aspx" />
     <Content Include="Scripts\D3.js" />
@@ -387,13 +386,6 @@
     </Compile>
     <Compile Include="WizardWallsAndMods.aspx.designer.cs">
       <DependentUpon>WizardWallsAndMods.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="WizWallsAndMods.aspx.cs">
-      <DependentUpon>WizWallsAndMods.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WizWallsAndMods.aspx.designer.cs">
-      <DependentUpon>WizWallsAndMods.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

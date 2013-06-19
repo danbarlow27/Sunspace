@@ -6,9 +6,6 @@
     =================================== --%>
     <script>
 
-        //function dynamicWallNumbers() {
-            //var wallCount = "<% //Session["numberOfWalls"] %>";
-
                 <%
         
                     //TableRow row = new TableRow();
@@ -46,8 +43,6 @@
                     //ddlInchFractions.Items.Add(lst34);
                     //ddlInchFractions.Items.Add(lst78);
 
-                    int num; //for debugging
-                    
                     for(int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 5 right now
                     {
                         TableRow row = new TableRow();
@@ -75,13 +70,8 @@
                         txtWallLength.CssClass = "txtField txtInput";
                         txtWallLength.MaxLength = 3;
                         txtWallLength.TextChanged += new EventHandler(txtWallLengths_TextChanged);
+                        txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
 
-                        //Response.Write("document.getElementById('MainContent_txtWall'" + i + "'Length').onkeyup='checkQuestion1()';");
-                        //Response.Write("document.getElementById('MainContent_txtWall'" + i + "'Length').OnChange='checkQuestion1()';");                        
-                        //txtWallLength.onkeyup="checkQuestion1()"; 
-                        //txtWallLength.OnChange="checkQuestion1()";
-                        
-                        
                         cell1.Controls.Add(lblWallNumber);
                         cell2.Controls.Add(txtWallLength);
                         cell3.Controls.Add(ddlInchFractions);
@@ -92,14 +82,16 @@
                         row.Cells.Add(cell2);
                         row.Cells.Add(cell3);
 
-                        //tblWallLengths.Rows.Add(row);
-
                     
                     }
-                    num = tblWallLengths.Rows.Count; //for debugging
                   %>
 
-        //}
+        
+        $(document).ready(function() {
+            //var wallCount = '<% //Session["numberOfWalls"]; %>';
+            //alert(wallCount);
+        });
+        
 
         function checkQuestion1() {
 
@@ -163,22 +155,22 @@
 
             return false;
         }
-        function checkQuestion3() {
-            if ($('#MainContent_radDoorYes').is(':checked')) {
-                document.getElementById("MainContent_hidTypeOfDoor").value = $('#MainContent_ddlTypeOfDoor').val();
-                document.getElementById("MainContent_hidDoorColour").value = $('#MainContent_ddlDoorColour').val();
-                document.getElementById("MainContent_hidSwingingDoor").value = $('#MainContent_radSwingingDoorYes').is(':checked');
-                document.getElementById("MainContent_hidWallDoorPlacement").value = $('#MainContent_ddlWallDoorPlacement').val();
-                var dropdownDOM = document.getElementById("MainContent_inFrac");
-                var totalDoorDistance = dropdownDOM.options[dropdownDOM.selectedIndex].value + document.getElementById("MainContent_txtCurrentWallDoorPosition").value;
-                document.getElementById("MainContent_hidWallDoorPlacement").value = totalDoorDistance;
+            function checkQuestion3() {
+                if ($('#MainContent_radDoorYes').is(':checked')) {
+                    document.getElementById("MainContent_hidTypeOfDoor").value = $('#MainContent_ddlTypeOfDoor').val();
+                    document.getElementById("MainContent_hidDoorColour").value = $('#MainContent_ddlDoorColour').val();
+                    document.getElementById("MainContent_hidSwingingDoor").value = $('#MainContent_radSwingingDoorYes').is(':checked');
+                    document.getElementById("MainContent_hidWallDoorPlacement").value = $('#MainContent_ddlWallDoorPlacement').val();
+                    var dropdownDOM = document.getElementById("MainContent_inFrac");
+                    var totalDoorDistance = dropdownDOM.options[dropdownDOM.selectedIndex].value + document.getElementById("MainContent_txtCurrentWallDoorPosition").value;
+                    document.getElementById("MainContent_hidWallDoorPlacement").value = totalDoorDistance;
 
-                alert("Concatenated inches " + document.getElementById("MainContent_txtCurrentWallDoorPosition").value + dropdownDOM.options[dropdownDOM.selectedIndex].value);                
+                    alert("Concatenated inches " + document.getElementById("MainContent_txtCurrentWallDoorPosition").value + dropdownDOM.options[dropdownDOM.selectedIndex].value);                
+                }
+                else {
+                    //document.getElementById("MainContent_hidPhone").value = $('#MainContent_radDoorYes').val();
+                }
             }
-            else {
-                //document.getElementById("MainContent_hidPhone").value = $('#MainContent_radDoorYes').val();
-            }
-        }
 
     </script>
     <%-- End hidden div populating scripts --%>
@@ -505,7 +497,7 @@
 
     <%-- Hidden input tags 
     ======================= --%>
-    <input id="hidWallLengthsAndHeights" type="hidden" runat="server" />
+    <%-- %><input id="hidWallLengthsAndHeights" type="hidden" runat="server" /> wall length hidden fields will be created dynamically --%>
     <input id="hidTypeOfDoor" type="hidden" runat="server" />
     <input id="hidDoorColour" type="hidden" runat="server" />
     <input id="hidSwingingDoor" type="hidden" runat="server" />
