@@ -74,6 +74,10 @@
                         txtWallLength.ID = "txtWall" + i + "Length";
                         txtWallLength.CssClass = "txtField txtInput";
                         txtWallLength.MaxLength = 3;
+                        txtWallLength.TextChanged += new EventHandler(txtWallLengths_TextChanged);
+
+                        Response.Write("document.getElementById('MainContent_txtWall'" + i + "'Length').onkeyup='checkQuestion1()';");
+                        Response.Write("document.getElementById('MainContent_txtWall'" + i + "'Length').OnChange='checkQuestion1()';");                        
                         //txtWallLength.onkeyup="checkQuestion1()"; 
                         //txtWallLength.OnChange="checkQuestion1()";
                         
@@ -96,8 +100,10 @@
                   %>
 
         //}
-        
+
         function checkQuestion1() {
+
+            alert("SUCCESS!");
             //disable 'next slide' button until after validation
             document.getElementById('MainContent_btnQuestion1').disabled = false;
             document.getElementById('MainContent_btnQuestion2').disabled = false;
