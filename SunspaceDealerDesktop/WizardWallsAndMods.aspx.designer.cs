@@ -292,22 +292,31 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddlWallDoorPlacement;
         
         /// <summary>
-        /// lblInnerWallDoorPosition control.
+        /// lblCurrentWallDoorPosition control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblInnerWallDoorPosition;
+        protected global::System.Web.UI.WebControls.Label lblCurrentWallDoorPosition;
         
         /// <summary>
-        /// txtInnerWallDoorPosition control.
+        /// txtCurrentWallDoorPosition control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtInnerWallDoorPosition;
+        protected global::System.Web.UI.WebControls.TextBox txtCurrentWallDoorPosition;
+        
+        /// <summary>
+        /// inchesSpecifics control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder inchesSpecifics;
         
         /// <summary>
         /// radDoorNo control.
@@ -389,5 +398,50 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidWallLengthsAndHeights;
+        
+        /// <summary>
+        /// hidTypeOfDoor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidTypeOfDoor;
+        
+        /// <summary>
+        /// hidDoorColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidDoorColour;
+        
+        /// <summary>
+        /// hidSwingingDoor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidSwingingDoor;
+        
+        /// <summary>
+        /// hidWallDoorPlacement control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidWallDoorPlacement;
+        
+        /// <summary>
+        /// hidCurrentWallDoorPosition control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidCurrentWallDoorPosition;
     }
 }

@@ -18,6 +18,8 @@
                     //Label lblWallNumber = new Label();
                     //TextBox txtWallLength = new TextBox();
                     //DropDownList ddlInchFractions = new DropDownList();
+                    DropDownList ddlInFrac = new DropDownList();
+                    ddlInFrac.ID = "inFrac";
                     ListItem lst0 = new ListItem("---", "0", true);
                     ListItem lst18 = new ListItem("1/8", "1/8");
                     ListItem lst14 = new ListItem("1/4", "1/4");
@@ -26,6 +28,15 @@
                     ListItem lst58 = new ListItem("5/8", "5/8");
                     ListItem lst34 = new ListItem("3/4", "3/4");
                     ListItem lst78 = new ListItem("7/8", "7/8");
+                    ddlInFrac.Items.Add(lst0);
+                    ddlInFrac.Items.Add(lst18);
+                    ddlInFrac.Items.Add(lst14);
+                    ddlInFrac.Items.Add(lst38);
+                    ddlInFrac.Items.Add(lst12);
+                    ddlInFrac.Items.Add(lst58);
+                    ddlInFrac.Items.Add(lst34);
+                    ddlInFrac.Items.Add(lst78);
+                    inchesSpecifics.Controls.Add(ddlInFrac);
                     //ddlInchFractions.Items.Add(lst0);
                     //ddlInchFractions.Items.Add(lst18);
                     //ddlInchFractions.Items.Add(lst14);
@@ -148,7 +159,13 @@
         }
         function checkQuestion3() {
             if ($('#MainContent_radDoorYes').is(':checked')) {
-                //document.getElementById("MainContent_hidWall1Length").value = $('#MainContent_txtWall1Length').val();
+                document.getElementById("MainContent_hidTypeOfDoor").value = $('#MainContent_ddlTypeOfDoor').val();
+                document.getElementById("MainContent_hidDoorColour").value = $('#MainContent_ddlDoorColour').val();
+                document.getElementById("MainContent_hidSwingingDoor").value = $('#MainContent_radSwingingDoorYes').is(':checked');
+                document.getElementById("MainContent_hidWallDoorPlacement").value = $('#MainContent_ddlWallDoorPlacement').val();
+                //document.getElementById("MainContent_inFrac")
+                //document.getElementById("MainContent_hidWallDoorPlacement").value 
+                //document.getElementById("MainContent_hidDoorColour").value = $('#MainContent_ddlDoorColour').val();
             }
             else {
                 //document.getElementById("MainContent_hidPhone").value = $('#MainContent_radDoorYes').val();
@@ -360,11 +377,14 @@
 
                                         <asp:TableRow>
                                             <asp:TableCell>
-                                                <asp:Label ID="lblInnerWallDoorPosition" AssociatedControlID="txtInnerWallDoorPosition" runat="server" Text="Inches from left side the wall:"></asp:Label>
+                                                <asp:Label ID="lblCurrentWallDoorPosition" AssociatedControlID="txtCurrentWallDoorPosition" runat="server" Text="Inches from left side the wall:"></asp:Label>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtInnerWallDoorPosition" CssClass="txtField txtInput" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtCurrentWallDoorPosition" CssClass="txtField txtInput" runat="server" MaxLength="3"></asp:TextBox>
+                                            </asp:TableCell>
+                                            <asp:TableCell >
+                                                <asp:PlaceHolder ID="inchesSpecifics" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -478,6 +498,11 @@
     <%-- Hidden input tags 
     ======================= --%>
     <input id="hidWallLengthsAndHeights" type="hidden" runat="server" />
+    <input id="hidTypeOfDoor" type="hidden" runat="server" />
+    <input id="hidDoorColour" type="hidden" runat="server" />
+    <input id="hidSwingingDoor" type="hidden" runat="server" />
+    <input id="hidWallDoorPlacement" type="hidden" runat="server" />
+    <input id="hidCurrentWallDoorPosition" type="hidden" runat="server" />
     <%--<input id="hidFirstName" type="hidden" runat="server" />
     <input id="hidLastName" type="hidden" runat="server" />
     <input id="hidAddress" type="hidden" runat="server" />
