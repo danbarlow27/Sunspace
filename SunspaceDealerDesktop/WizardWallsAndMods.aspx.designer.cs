@@ -400,7 +400,7 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidWallLengthsAndHeights;
         
         /// <summary>
-        /// hidDoorType control.
+        /// hidTypeOfDoor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.

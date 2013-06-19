@@ -6,9 +6,6 @@
     =================================== --%>
     <script>
 
-        //function dynamicWallNumbers() {
-            //var wallCount = "<% //Session["numberOfWalls"] %>";
-
                 <%
         
                     //TableRow row = new TableRow();
@@ -53,8 +50,6 @@
                     //ddlInchFractions.Items.Add(lst34);
                     //ddlInchFractions.Items.Add(lst78);
 
-                    int num; //for debugging
-                    
                     for(int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 5 right now
                     {
                         TableRow row = new TableRow();
@@ -82,12 +77,7 @@
                         txtWallLength.CssClass = "txtField txtInput";
                         txtWallLength.MaxLength = 3;
                         txtWallLength.TextChanged += new EventHandler(txtWallLengths_TextChanged);
-
-                        //Response.Write("document.getElementById('MainContent_txtWall'" + i + "'Length').onkeyup='checkQuestion1()';");
-                        //Response.Write("document.getElementById('MainContent_txtWall'" + i + "'Length').OnChange='checkQuestion1()';");                        
-                        //txtWallLength.onkeyup="checkQuestion1()"; 
-                        //txtWallLength.OnChange="checkQuestion1()";
-                        
+                        txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
                         
                         cell1.Controls.Add(lblWallNumber);
                         cell2.Controls.Add(txtWallLength);
@@ -99,14 +89,16 @@
                         row.Cells.Add(cell2);
                         row.Cells.Add(cell3);
 
-                        //tblWallLengths.Rows.Add(row);
 
-                    
                     }
-                    num = tblWallLengths.Rows.Count; //for debugging
                   %>
 
-        //}
+        
+        $(document).ready(function() {
+            //var wallCount = '<% //Session["numberOfWalls"]; %>';
+            //alert(wallCount);
+        });
+        
 
         function checkQuestion1() {
 
@@ -549,8 +541,8 @@
 
     <%-- Hidden input tags 
     ======================= --%>
-    <input id="hidWallLengthsAndHeights" type="hidden" runat="server" />
-    <input id="hidDoorType" type="hidden" runat="server" />
+<%-- %><input id="hidWallLengthsAndHeights" type="hidden" runat="server" /> wall length hidden fields will be created dynamically --%>
+    <input id="hidTypeOfDoor" type="hidden" runat="server" />
     <input id="hidDoorColour" type="hidden" runat="server" />
     <input id="hidSwingingDoor" type="hidden" runat="server" />
     <input id="hidWallDoorPlacement" type="hidden" runat="server" />
