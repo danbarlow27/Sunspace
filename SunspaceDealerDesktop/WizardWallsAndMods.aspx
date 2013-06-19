@@ -176,7 +176,6 @@
                 var dropdownDOM = document.getElementById("MainContent_inFrac");
                 var totalDoorDistance = document.getElementById("MainContent_txtWallDoorPosition").value + dropdownDOM.options[dropdownDOM.selectedIndex].value;
                 
-
                 document.getElementById("MainContent_hidDoorType").value = document.getElementById("MainContent_ddlDoorType").options[document.getElementById("MainContent_ddlDoorType").selectedIndex].value;
                 document.getElementById("MainContent_hidDoorColour").value = document.getElementById("MainContent_ddlDoorColour").options[document.getElementById("MainContent_ddlDoorColour").selectedIndex].value;
                 document.getElementById("MainContent_hidSwingingDoor").value = $('#MainContent_radSwingingDoorYes').is(':checked');
@@ -184,14 +183,27 @@
                 document.getElementById("MainContent_hidWallDoorPosition").value = totalDoorDistance;
                 
                 //alert(document.getElementById("MainContent_ddlWallDoorPlacement").options[document.getElementById("MainContent_ddlWallDoorPlacement").selectedIndex].value);
+                if(document.getElementById("MainContent_hidDoorType").value
 
-                if (document.getElementById("MainContent_hidDoorType").value != "" &&
-                    document.getElementById("MainContent_hidDoorColour").value != "" &&
-                    document.getElementById("MainContent_hidSwingingDoor").value != "" &&
-                    document.getElementById("MainContent_hidWallDoorPlacement").value != "" &&
-                    document.getElementById("MainContent_hidWallDoorPosition").value != "") {
+                if (document.getElementById("MainContent_hidWallDoorPosition").value != "") {
 
+                    document.getElementById('MainContent_btnQuestion5').disabled = true;
 
+                    if ($('#MainContent_radFoamProtectedYes').is(':checked')) {
+                        document.getElementById('MainContent_btnQuestion5').disabled = false;
+                        $('#MainContent_lblQuestion5PagerAnswer').text("Yes");
+                        document.getElementById('pagerFive').style.display = "inline";
+                        document.getElementById("MainContent_hidFoamProtected").value = "Yes";
+                    }
+                    else if ($('#MainContent_radFoamProtectedNo').is(':checked')) {
+                        document.getElementById('MainContent_btnQuestion5').disabled = false;
+                        $('#MainContent_lblQuestion5PagerAnswer').text("No");
+                        document.getElementById('pagerFive').style.display = "inline";
+                        document.getElementById("MainContent_hidFoamProtected").value = "No";
+                    }
+                    else {
+                        //no selection, errors
+                    }
                 }
                 else {
                     //error styling or something
@@ -359,6 +371,7 @@
 
                                             <asp:TableCell>
                                                 <asp:DropDownList ID="ddlDoorType" GroupName="question3" runat="server" >
+                                                    <asp:ListItem Text="------" Value="0"/>
                                                     <asp:ListItem Text="Cabana" Value="Cabana"/>
                                                     <asp:ListItem Text="Patio" Value="Patio" />
                                                 </asp:DropDownList>                                                
@@ -372,6 +385,7 @@
 
                                             <asp:TableCell>
                                                 <asp:DropDownList ID="ddlDoorColour" GroupName="question3" runat="server" >
+                                                    <asp:ListItem Text="------" Value="0" />
                                                     <asp:ListItem Text="Clear" Value="Clear" />
                                                     <asp:ListItem Text="Grey" Value="Grey" />
                                                     <asp:ListItem Text="Bronze" Value="Bronze" />
