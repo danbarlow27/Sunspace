@@ -167,7 +167,7 @@
                 var totalDoorDistance = dropdownDOM.options[dropdownDOM.selectedIndex].value + document.getElementById("MainContent_txtCurrentWallDoorPosition").value;
                 document.getElementById("MainContent_hidWallDoorPlacement").value = totalDoorDistance;
 
-                alert(document.getElementById("MainContent_txtCurrentWallDoorPosition").value + dropdownDOM.options[dropdownDOM.selectedIndex].value);                
+                alert("Concatenated inches " + document.getElementById("MainContent_txtCurrentWallDoorPosition").value + dropdownDOM.options[dropdownDOM.selectedIndex].value);                
             }
             else {
                 //document.getElementById("MainContent_hidPhone").value = $('#MainContent_radDoorYes').val();
