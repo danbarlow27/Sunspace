@@ -20,14 +20,14 @@
                     //DropDownList ddlInchFractions = new DropDownList();
                     DropDownList ddlInFrac = new DropDownList();
                     ddlInFrac.ID = "inFrac";
-                    ListItem lst0 = new ListItem("---", "0", true);
-                    ListItem lst18 = new ListItem("1/8", "1/8");
-                    ListItem lst14 = new ListItem("1/4", "1/4");
-                    ListItem lst38 = new ListItem("3/8", "3/8");
-                    ListItem lst12 = new ListItem("1/2", "1/2");
-                    ListItem lst58 = new ListItem("5/8", "5/8");
-                    ListItem lst34 = new ListItem("3/4", "3/4");
-                    ListItem lst78 = new ListItem("7/8", "7/8");
+                    ListItem lst0 = new ListItem("---", "", true);
+                    ListItem lst18 = new ListItem("1/8", ".125");
+                    ListItem lst14 = new ListItem("1/4", ".25");
+                    ListItem lst38 = new ListItem("3/8", ".375");
+                    ListItem lst12 = new ListItem("1/2", ".5");
+                    ListItem lst58 = new ListItem("5/8", ".625");
+                    ListItem lst34 = new ListItem("3/4", ".75");
+                    ListItem lst78 = new ListItem("7/8", ".875");
                     ddlInFrac.Items.Add(lst0);
                     ddlInFrac.Items.Add(lst18);
                     ddlInFrac.Items.Add(lst14);
@@ -167,9 +167,7 @@
                 var totalDoorDistance = dropdownDOM.options[dropdownDOM.selectedIndex].value + document.getElementById("MainContent_txtCurrentWallDoorPosition").value;
                 document.getElementById("MainContent_hidWallDoorPlacement").value = totalDoorDistance;
 
-                if (dropdownDOM.options[dropdownDOM.selectedIndex].value == 0) {
-                    alert("This isn't working");
-                }
+                alert(document.getElementById("MainContent_txtCurrentWallDoorPosition").value + dropdownDOM.options[dropdownDOM.selectedIndex].value);                
             }
             else {
                 //document.getElementById("MainContent_hidPhone").value = $('#MainContent_radDoorYes').val();
@@ -385,7 +383,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCurrentWallDoorPosition" CssClass="txtField txtInput" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtCurrentWallDoorPosition" onkeyup="checkQuestion3()" CssClass="txtField txtInput" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
                                             <asp:TableCell >
                                                 <asp:PlaceHolder ID="inchesSpecifics" runat="server" />
@@ -407,7 +405,7 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
 
             </div><%-- end #slide3 --%>
 
