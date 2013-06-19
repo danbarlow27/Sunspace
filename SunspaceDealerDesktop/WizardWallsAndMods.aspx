@@ -74,7 +74,9 @@
         
         function checkQuestion1() {
             //disable 'next slide' button until after validation
-            document.getElementById('MainContent_btnQuestion1').disabled = true;
+            document.getElementById('MainContent_btnQuestion1').disabled = false;
+            document.getElementById('MainContent_btnQuestion2').disabled = false;
+            document.getElementById('MainContent_btnQuestion3').disabled = false;
 
             if ($('#MainContent_radNewCustomer').is(':checked')) {
                 document.getElementById("MainContent_hidWall1Length").value = $('#MainContent_txtWall1Length').val();
@@ -195,15 +197,124 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion1" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide1 --%>
 
+             <%-- QUESTION 2 - Heights
+            ======================================== --%>
+
+            <div id="slide2" class="slide">
+                <asp:Button ID="btnQuestion2" Enabled="true " CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
+                </div>
+
+            <%-- end #slide2 --%>
+
+             <%-- QUESTION 3 - DOOR DETAILS
+            ======================================== --%>
+
+            <div id="slide3" class="slide">
+                <h1>
+                    <asp:Label ID="lblQuestion3" runat="server" Text="Would you like a door on your sunroom?"></asp:Label>
+                </h1>        
+                              
+                <ul class="toggleOptions">
+
+                    <%-- DOOR YES --%>
+                    <li>
+                        <asp:RadioButton ID="radDoorYes" GroupName="question3" runat="server" />
+                        <asp:Label ID="lblDoorYesRadio" AssociatedControlID="radDoorYes" runat="server"></asp:Label>
+                        <asp:Label ID="lblDoorYes" AssociatedControlID="radDoorYes" runat="server" Text="Yes"></asp:Label>
+           
+                        <div class="toggleContent">
+                            <ul>
+                                <li>
+                                    <h3>Enter door details:</h3>
+
+                                    <asp:Table ID="tblDoorYesInfo" CssClass="tblTxtFields" runat="server">
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblTypeOfDoor" AssociatedControlID="ddlTypeOfDoor" runat="server" Text="Type Of Door:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlTypeOfDoor" GroupName="question3" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblDoorColour" AssociatedControlID="ddlDoorColour" runat="server" Text="Door Colour:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlDoorColour" GroupName="question3" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblSwingingDoor" runat="server" Text="Swinging Door:" ></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:RadioButton ID="radSwingingDoorYes" GroupName="question3" runat="server" />
+                                                <asp:Label ID="lblSwingingDoorYesRadio" AssociatedControlID="radSwingingDoorYes" runat="server"></asp:Label>
+                                                <asp:Label ID="lblSwingingDoorYes" AssociatedControlID="radSwingingDoorYes" runat="server" Text="Yes"></asp:Label>                                               
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:RadioButton ID="radSwingingDoorNo" GroupName="question3" runat="server" />
+                                                <asp:Label ID="lblSwingingDoorNoRadio" AssociatedControlID="radSwingingDoorNo" runat="server"></asp:Label>
+                                                <asp:Label ID="lblSwingingDoorNo" AssociatedControlID="radSwingingDoorNo" runat="server" Text="No"></asp:Label>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow ID="WallDoorPlacement">
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblCustomerCity" AssociatedControlID="ddlWallDoorPlacement" runat="server" Text="Which wall is the door in:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlWallDoorPlacement" GroupName="question3" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblInnerWallDoorPosition" AssociatedControlID="txtInnerWallDoorPosition" runat="server" Text="Inches from left side the wall:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtInnerWallDoorPosition" CssClass="txtField txtInput" runat="server" MaxLength="3"></asp:TextBox>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                    </asp:Table>
+                                </li>
+                            </ul>            
+                        </div> <%-- end .toggleContent --%>
+                    </li> <%-- end 'complete sunroom' option --%>
+
+                    <%-- DOOR NO --%>
+                    <li>
+                        <asp:RadioButton ID="radDoorNo" GroupName="question3" runat="server" />
+                        <asp:Label ID="lblDoorNoRadio" AssociatedControlID="radDoorNo" runat="server"></asp:Label>
+                        <asp:Label ID="lblDoorNo" AssociatedControlID="radDoorNo" runat="server" Text="No"></asp:Label>
+                    </li> <%-- end 'existing customer' option --%>
+
+                </ul> <%-- end .toggleOptions --%>
+
+                <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
+
+            </div><%-- end #slide3 --%>
+
         </div> <%-- end .slide-wrapper --%>
 
     </div> 
-    <%-- end .slide-window --%>
+    <%-- end .slide-window --%>    
     
 
     <%-- SLIDE PAGING (QUESTION NAVIGATION)
@@ -222,11 +333,11 @@
                     </li>
                 </div>
 
-<%--                <div style="display: none" id="pagerTwo">
+                <div style="display: none" id="pagerTwo">
                     <li>
                             <a href="#" data-slide="#slide2" class="slidePanel">
-                                <asp:Label ID="lblProjectTag" runat="server" Text="Project tag"></asp:Label>
-                                <asp:Label ID="lblProjectTagAnswer" runat="server" Text="Question 2 Answer"></asp:Label>
+                                <asp:Label ID="lblHeights" runat="server" Text="Heights"></asp:Label>
+                                <asp:Label ID="lblHeightsAnswer" runat="server" Text="Question 2 Answer"></asp:Label>
                             </a>
                     </li>
                 </div>
@@ -234,13 +345,13 @@
                 <div style="display: none" id="pagerThree">
                     <li>
                             <a href="#" data-slide="#slide3" class="slidePanel">
-                                <asp:Label ID="lblProjectType" runat="server" Text="Type of project"></asp:Label>
-                                <asp:Label ID="lblProjectTypeAnswer" runat="server" Text="Question 3 Answer"></asp:Label>
+                                <asp:Label ID="lblDoor" runat="server" Text="Door"></asp:Label>
+                                <asp:Label ID="lblDoorTypeAnswer" runat="server" Text="Question 3 Answer"></asp:Label>
                             </a>
                     </li>
                 </div>
 
-                <div style="display: none" id="pagerFour">
+ <%--               <div style="display: none" id="pagerFour">
                     <li>
                             <a href="#" data-slide="#slide4" class="slidePanel">
                                 <asp:Label ID="Label27" runat="server" Text="Styling options"></asp:Label>
