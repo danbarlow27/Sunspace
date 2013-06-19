@@ -37,6 +37,13 @@
                     ddlInFrac.Items.Add(lst34);
                     ddlInFrac.Items.Add(lst78);
                     inchesSpecifics.Controls.Add(ddlInFrac);
+                    
+                    //Used to dynamically add values to ddlWallDoorPlacement
+                    for(int i = 1; i <= (int)Session["numberOfWalls"]; i++)
+                    {
+                        ListItem numberOfWalls = new ListItem(Convert.ToString(i), Convert.ToString(i));
+                        ddlWallDoorPlacement.Items.Add(numberOfWalls);
+                    }
                     //ddlInchFractions.Items.Add(lst0);
                     //ddlInchFractions.Items.Add(lst18);
                     //ddlInchFractions.Items.Add(lst14);
