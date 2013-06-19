@@ -134,6 +134,14 @@
 
             return false;
         }
+        function checkQuestion3() {
+            if ($('#MainContent_radDoorYes').is(':checked')) {
+                //document.getElementById("MainContent_hidWall1Length").value = $('#MainContent_txtWall1Length').val();
+            }
+            else {
+                //document.getElementById("MainContent_hidPhone").value = $('#MainContent_radDoorYes').val();
+            }
+        }
 
     </script>
     <%-- End hidden div populating scripts --%>
@@ -257,19 +265,10 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="Button1" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
+                <asp:Button ID="Button1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide1 --%>
-
-             <%-- QUESTION 2 - Heights
-            ======================================== --%>
-
-            <div id="slide2" class="slide">
-                <asp:Button ID="btnQuestion2" Enabled="true " CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
-                </div>
-
-            <%-- end #slide2 --%>
 
              <%-- QUESTION 3 - DOOR DETAILS
             ======================================== --%>
