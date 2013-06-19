@@ -162,7 +162,11 @@
 
             return false;
         }
+        /*
+        *****Needs handling for multiple doors with different styles*****
+        */
         function checkQuestion3() {
+
             if ($('#MainContent_radDoorYes').is(':checked')) {
                 //Variable used to get current index of dropbox and its value
                 var dropdownDOM = document.getElementById("MainContent_inFrac");
@@ -175,34 +179,23 @@
                 document.getElementById("MainContent_hidWallDoorPosition").value = totalDoorDistance;
                 
                 //alert(document.getElementById("MainContent_ddlWallDoorPlacement").options[document.getElementById("MainContent_ddlWallDoorPlacement").selectedIndex].value);
-                if(document.getElementById("MainContent_hidDoorType").value){}
+                if(document.getElementById("MainContent_hidDoorType").value != 0 &&
+                    document.getElementById("MainContent_hidDoorColour").value != 0 &&
+                    document.getElementById("MainContent_hidWallDoorPlacement").value != 0 &&
+                    document.getElementById("MainContent_hidWallDoorPosition").value != 0) {
 
-                    if (document.getElementById("MainContent_hidWallDoorPosition").value != "") {}
-
-                    document.getElementById('MainContent_btnQuestion5').disabled = true;
-
-                    if ($('#MainContent_radFoamProtectedYes').is(':checked')) {
-                        document.getElementById('MainContent_btnQuestion5').disabled = false;
-                        $('#MainContent_lblQuestion5PagerAnswer').text("Yes");
-                        document.getElementById('pagerFive').style.display = "inline";
-                        document.getElementById("MainContent_hidFoamProtected").value = "Yes";
-                    }
-                    else if ($('#MainContent_radFoamProtectedNo').is(':checked')) {
-                        document.getElementById('MainContent_btnQuestion5').disabled = false;
-                        $('#MainContent_lblQuestion5PagerAnswer').text("No");
-                        document.getElementById('pagerFive').style.display = "inline";
-                        document.getElementById("MainContent_hidFoamProtected").value = "No";
-                    }
-                    else {
-                        //no selection, errors
-                    }
+                    document.getElementById('MainContent_btnQuestion3').disabled = false;
+                    $('#MainContent_lblQuestion3Pager').text("Door");
+                    $('#MainContent_lblQuestion3PagerAnswer').text(document.getElementById("MainContent_ddlDoorType").options[document.getElementById("MainContent_ddlDoorType").selectedIndex].value + ": ");
+                    document.getElementById('pagerThree').style.display = "inline";
                 }
-                else {
-                    //error styling or something
-                }
+
             }
             else {
-                //document.getElementById("MainContent_hidPhone").value = $('#MainContent_radDoorYes').val();
+                document.getElementById('MainContent_btnQuestion3').disabled = false;
+                $('#MainContent_lblQuestion3Pager').text("Door");
+                $('#MainContent_lblQuestion3PagerAnswer').text("No Door");
+                document.getElementById('pagerThree').style.display = "inline";
             }
         }
 
@@ -365,6 +358,7 @@
                                                 <asp:DropDownList ID="ddlDoorType" GroupName="question3" runat="server" >
                                                     <asp:ListItem Text="------" Value="0"/>
                                                     <asp:ListItem Text="Cabana" Value="Cabana"/>
+                                                    <asp:ListItem Text="French" Value="French" />
                                                     <asp:ListItem Text="Patio" Value="Patio" />
                                                 </asp:DropDownList>                                                
                                             </asp:TableCell>
@@ -391,7 +385,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:RadioButton ID="radSwingingDoorYes" GroupName="question3" runat="server" />
+                                                <asp:RadioButton ID="radSwingingDoorYes" checked="true" GroupName="Swinging" runat="server" />
                                                 <asp:Label ID="lblSwingingDoorYesRadio" AssociatedControlID="radSwingingDoorYes" runat="server"></asp:Label>
                                                 <asp:Label ID="lblSwingingDoorYes" AssociatedControlID="radSwingingDoorYes" runat="server" Text="&nbsp; Yes"></asp:Label>                                               
                                             </asp:TableCell>
@@ -402,7 +396,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:RadioButton ID="radSwingingDoorNo" GroupName="question3" runat="server" />
+                                                <asp:RadioButton ID="radSwingingDoorNo" GroupName="Swinging" runat="server" />
                                                 <asp:Label ID="lblSwingingDoorNoRadio" AssociatedControlID="radSwingingDoorNo" runat="server"></asp:Label>
                                                 <asp:Label ID="lblSwingingDoorNo" AssociatedControlID="radSwingingDoorNo" runat="server" Text="&nbsp; No"></asp:Label>
                                             </asp:TableCell>
@@ -482,11 +476,11 @@
                     </li>
                 </div>
 
-<%--                 <div style="display: none" id="pagerThree">
+                <div style="display: none" id="pagerThree">
                     <li>
                             <a href="#" data-slide="#slide3" class="slidePanel">
-                                <asp:Label ID="lblDoor" runat="server" Text="Door"></asp:Label>
-                                <asp:Label ID="lblDoorTypeAnswer" runat="server" Text="Question 3 Answer"></asp:Label>
+                                <asp:Label ID="lblQuestion3Pager" runat="server" Text="Door"></asp:Label>
+                                <asp:Label ID="lblQuestion3PagerAnswer" runat="server" Text="Question 3 Answer"></asp:Label>
                             </a>
                     </li>
                 </div>
@@ -542,7 +536,7 @@
     <%-- Hidden input tags 
     ======================= --%>
 <%-- %><input id="hidWallLengthsAndHeights" type="hidden" runat="server" /> wall length hidden fields will be created dynamically --%>
-    <input id="hidTypeOfDoor" type="hidden" runat="server" />
+    <input id="hidDoorType" type="hidden" runat="server" />
     <input id="hidDoorColour" type="hidden" runat="server" />
     <input id="hidSwingingDoor" type="hidden" runat="server" />
     <input id="hidWallDoorPlacement" type="hidden" runat="server" />

@@ -391,13 +391,31 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblWallHeightsAnswer;
         
         /// <summary>
-        /// hidTypeOfDoor control.
+        /// lblQuestion3Pager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidTypeOfDoor;
+        protected global::System.Web.UI.WebControls.Label lblQuestion3Pager;
+        
+        /// <summary>
+        /// lblQuestion3PagerAnswer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblQuestion3PagerAnswer;
+        
+        /// <summary>
+        /// hidDoorType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidDoorType;
         
         /// <summary>
         /// hidDoorColour control.
