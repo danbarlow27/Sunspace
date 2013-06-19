@@ -6,8 +6,8 @@
     =================================== --%>
     <script>
 
-        function dynamicWallNumbers() {
-            //var wallCount = "<%= Session["numberOfWalls"] %>";
+        //function dynamicWallNumbers() {
+            //var wallCount = "<% //Session["numberOfWalls"] %>";
 
                 <%
         
@@ -35,7 +35,7 @@
                     ddlInchFractions.Items.Add(lst34);
                     ddlInchFractions.Items.Add(lst78);
 
-                    int num;
+                    int num; //for debugging
                     
                     for(int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 5 right now
                     {
@@ -59,25 +59,27 @@
                         cell2.Controls.Add(txtWallLength);
                         cell3.Controls.Add(ddlInchFractions);
 
+                        tblWallLengths.Rows.Add(row);
+                        
                         row.Cells.Add(cell1);
                         row.Cells.Add(cell2);
                         row.Cells.Add(cell3);
 
-                        tblWallLengths.Rows.Add(row);
+                        //tblWallLengths.Rows.Add(row);
 
-                        num = tblWallLengths.Rows.Count;
+                        
                     }
-                    
+                    num = tblWallLengths.Rows.Count; //for debugging
                   %>
 
-        }
+        //}
         
         function checkQuestion1() {
             //disable 'next slide' button until after validation
             document.getElementById('MainContent_btnQuestion1').disabled = true;
 
-            if ($('#MainContent_radNewCustomer').is(':checked')) {
-                document.getElementById("MainContent_hidWall1Length").value = $('#MainContent_txtWall1Length').val();
+            if ($('#MainContent_radWallLengths').is(':checked')) {
+                document.getElementById("MainContent_hidWallLengthsAndHeights").value = $('#MainContent_txtWall1Length').val();
                 //document.getElementById("MainContent_hidLastName").value = $('#MainContent_txtCustomerLastName').val();
                 //document.getElementById("MainContent_hidAddress").value = $('#MainContent_txtCustomerAddress').val();
                 //document.getElementById("MainContent_hidCity").value = $('#MainContent_txtCustomerCity').val();
@@ -85,7 +87,7 @@
                 //document.getElementById("MainContent_hidPhone").value = $('#MainContent_txtCustomerPhone').val();
 
                 //Make sure the text boxes aren't blank
-                if (document.getElementById("MainContent_hidWall1Length").value != "" ) {// &&
+                if (document.getElementById("MainContent_hidWallLengthsAndHeights").value != "" ) {// &&
                     //document.getElementById("MainContent_hidLastName").value != "" &&
                     //document.getElementById("MainContent_hidAddress").value != "" &&
                     //document.getElementById("MainContent_hidCity").value != "" &&
@@ -142,21 +144,21 @@
 
         <div class="slide-wrapper">
             
-            <%-- QUESTION 1 - Wall Measurements
+            <%-- QUESTION 1 - Wall Lengths
             ======================================== --%>
             <div id="slide1" class="slide">
 
                 <h1>
-                    <asp:Label ID="lblQuestion1" runat="server" Text="Please enter the wall measurements"></asp:Label>
+                    <asp:Label ID="lblQuestion1" runat="server" Text="Please enter the wall lengths"></asp:Label>
                 </h1>        
                               
                 <ul class="toggleOptions">
 
                     <%-- Wall Lengths --%>
                     <li>
-                        <asp:RadioButton ID="radWall1" GroupName="question1" runat="server" />
-                        <asp:Label ID="lblWall1Radio" AssociatedControlID="radWall1" runat="server"></asp:Label>
-                        <asp:Label ID="lblWall1" AssociatedControlID="radWall1" runat="server" Text="Wall Lengths"></asp:Label>
+                        <asp:RadioButton ID="radWallLengths" GroupName="question1" runat="server" />
+                        <asp:Label ID="lblWallLengthsRadio" AssociatedControlID="radWallLengths" runat="server"></asp:Label>
+                        <asp:Label ID="lblWallLengths" AssociatedControlID="radWallLengths" runat="server" Text="Wall Lengths"></asp:Label>
            
                         <div class="toggleContent">
                             <ul>
@@ -200,6 +202,64 @@
             </div> 
             <%-- end #slide1 --%>
 
+            <%-- QUESTION 2 - Wall Heights
+            ======================================== --%>
+            <div id="slide2" class="slide">
+
+                <h1>
+                    <asp:Label ID="lblQuestion2" runat="server" Text="Please enter the wall heights"></asp:Label>
+                </h1>        
+                              
+                <ul class="toggleOptions">
+
+                    <%-- Wall Lengths --%>
+                    <li>
+                        <asp:RadioButton ID="radWallHeights" GroupName="question2" runat="server" />
+                        <asp:Label ID="lblWallHeightsRadio" AssociatedControlID="radWallHeights" runat="server"></asp:Label>
+                        <asp:Label ID="lblWallHeights" AssociatedControlID="radWallHeights" runat="server" Text="Wall Heights"></asp:Label>
+           
+                        <div class="toggleContent">
+                            <ul>
+                                <li>
+
+                                    <asp:Table ID="Table1" CssClass="tblTxtFields" runat="server">
+
+                                        <%--<asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblWall1Length" AssociatedControlID="txtWall1Length" runat="server" Text="Wall 1 Length:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtWall1Length" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server" MaxLength="3"></asp:TextBox>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlInchFractions" CssClass="" runat="server" >
+                                                    <asp:ListItem Text="---" Value="0"></asp:ListItem>
+                                                    <asp:ListItem Text="1/8" Value="1/8"></asp:ListItem>
+                                                    <asp:ListItem Text="1/4" Value="1/4"></asp:ListItem>
+                                                    <asp:ListItem Text="3/8" Value="3/8"></asp:ListItem>
+                                                    <asp:ListItem Text="1/2" Value="1/2"></asp:ListItem>
+                                                    <asp:ListItem Text="5/8" Value="5/8"></asp:ListItem>
+                                                    <asp:ListItem Text="3/4" Value="3/4"></asp:ListItem>
+                                                    <asp:ListItem Text="7/8" Value="7/8"></asp:ListItem>
+                                                </asp:DropDownList>
+                                            </asp:TableCell>
+                                        </asp:TableRow>--%>
+
+                                    </asp:Table>
+                                </li>
+                            </ul>            
+                        </div> <%-- end .toggleContent --%>
+                    </li> <%-- end 'complete sunroom' option --%>
+
+                </ul> <%-- end .toggleOptions --%>
+
+                <asp:Button ID="Button1" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
+
+            </div> 
+            <%-- end #slide1 --%>
+
         </div> <%-- end .slide-wrapper --%>
 
     </div> 
@@ -216,22 +276,22 @@
                 <div style="display: none" id="pagerOne">
                     <li>
                             <a href="#" data-slide="#slide1" class="slidePanel">
-                                <asp:Label ID="lblWallLengths" runat="server" Text="Wall Lengths"></asp:Label>
-                                <asp:Label ID="lblWallLengthsTypeAnswer" runat="server" Text="Customer Answer"></asp:Label>
+                                <asp:Label ID="lblWallLengthsSlidePanel" runat="server" Text="Wall Lengths"></asp:Label>
+                                <asp:Label ID="lblWallLengthsAnswer" runat="server" Text="Wall Lengths"></asp:Label>
                             </a>
                     </li>
                 </div>
 
-<%--                <div style="display: none" id="pagerTwo">
+               <div style="display: none" id="pagerTwo">
                     <li>
                             <a href="#" data-slide="#slide2" class="slidePanel">
-                                <asp:Label ID="lblProjectTag" runat="server" Text="Project tag"></asp:Label>
-                                <asp:Label ID="lblProjectTagAnswer" runat="server" Text="Question 2 Answer"></asp:Label>
+                                <asp:Label ID="lblWallHeightsSlidePanel" runat="server" Text="Wall Heights"></asp:Label>
+                                <asp:Label ID="lblWallHeightsAnswer" runat="server" Text="Wall Heights"></asp:Label>
                             </a>
                     </li>
                 </div>
 
-                <div style="display: none" id="pagerThree">
+<%--                 <div style="display: none" id="pagerThree">
                     <li>
                             <a href="#" data-slide="#slide3" class="slidePanel">
                                 <asp:Label ID="lblProjectType" runat="server" Text="Type of project"></asp:Label>
@@ -290,7 +350,7 @@
 
     <%-- Hidden input tags 
     ======================= --%>
-    <input id="hidWall1Length" type="hidden" runat="server" />
+    <input id="hidWallLengthsAndHeights" type="hidden" runat="server" />
     <%--<input id="hidFirstName" type="hidden" runat="server" />
     <input id="hidLastName" type="hidden" runat="server" />
     <input id="hidAddress" type="hidden" runat="server" />
