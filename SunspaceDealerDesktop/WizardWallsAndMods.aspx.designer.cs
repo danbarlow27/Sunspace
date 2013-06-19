@@ -166,58 +166,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblSwingingDoor;
         
         /// <summary>
-        /// radSwingingDoorYes control.
+        /// ddlSwingingDoor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radSwingingDoorYes;
-        
-        /// <summary>
-        /// lblSwingingDoorYesRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSwingingDoorYesRadio;
-        
-        /// <summary>
-        /// lblSwingingDoorYes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSwingingDoorYes;
-        
-        /// <summary>
-        /// radSwingingDoorNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radSwingingDoorNo;
-        
-        /// <summary>
-        /// lblSwingingDoorNoRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSwingingDoorNoRadio;
-        
-        /// <summary>
-        /// lblSwingingDoorNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSwingingDoorNo;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSwingingDoor;
         
         /// <summary>
         /// WallDoorPlacement control.
