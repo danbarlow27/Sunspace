@@ -175,9 +175,9 @@
                 document.getElementById("MainContent_hidWallDoorPosition").value = totalDoorDistance;
                 
                 //alert(document.getElementById("MainContent_ddlWallDoorPlacement").options[document.getElementById("MainContent_ddlWallDoorPlacement").selectedIndex].value);
-                if(document.getElementById("MainContent_hidDoorType").value
+                if(document.getElementById("MainContent_hidDoorType").value){}
 
-                if (document.getElementById("MainContent_hidWallDoorPosition").value != "") {
+                    if (document.getElementById("MainContent_hidWallDoorPosition").value != "") {}
 
                     document.getElementById('MainContent_btnQuestion5').disabled = true;
 
