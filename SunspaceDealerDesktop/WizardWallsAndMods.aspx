@@ -15,9 +15,9 @@
                     //TableCell cell1 = new TableCell();
                     //TableCell cell2 = new TableCell();
                     //TableCell cell3 = new TableCell();
-                    Label lblWallNumber = new Label();
-                    TextBox txtWallLength = new TextBox();
-                    DropDownList ddlInchFractions = new DropDownList();
+                    //Label lblWallNumber = new Label();
+                    //TextBox txtWallLength = new TextBox();
+                    //DropDownList ddlInchFractions = new DropDownList();
                     ListItem lst0 = new ListItem("---", "0", true);
                     ListItem lst18 = new ListItem("1/8", "1/8");
                     ListItem lst14 = new ListItem("1/4", "1/4");
@@ -26,14 +26,14 @@
                     ListItem lst58 = new ListItem("5/8", "5/8");
                     ListItem lst34 = new ListItem("3/4", "3/4");
                     ListItem lst78 = new ListItem("7/8", "7/8");
-                    ddlInchFractions.Items.Add(lst0);
-                    ddlInchFractions.Items.Add(lst18);
-                    ddlInchFractions.Items.Add(lst14);
-                    ddlInchFractions.Items.Add(lst38);
-                    ddlInchFractions.Items.Add(lst12);
-                    ddlInchFractions.Items.Add(lst58);
-                    ddlInchFractions.Items.Add(lst34);
-                    ddlInchFractions.Items.Add(lst78);
+                    //ddlInchFractions.Items.Add(lst0);
+                    //ddlInchFractions.Items.Add(lst18);
+                    //ddlInchFractions.Items.Add(lst14);
+                    //ddlInchFractions.Items.Add(lst38);
+                    //ddlInchFractions.Items.Add(lst12);
+                    //ddlInchFractions.Items.Add(lst58);
+                    //ddlInchFractions.Items.Add(lst34);
+                    //ddlInchFractions.Items.Add(lst78);
 
                     int num; //for debugging
                     
@@ -43,6 +43,18 @@
                         TableCell cell1 = new TableCell();
                         TableCell cell2 = new TableCell();
                         TableCell cell3 = new TableCell();
+                        Label lblWallNumber = new Label();
+                        TextBox txtWallLength = new TextBox();
+                        DropDownList ddlInchFractions = new DropDownList();
+
+                        ddlInchFractions.Items.Add(lst0);
+                        ddlInchFractions.Items.Add(lst18);
+                        ddlInchFractions.Items.Add(lst14);
+                        ddlInchFractions.Items.Add(lst38);
+                        ddlInchFractions.Items.Add(lst12);
+                        ddlInchFractions.Items.Add(lst58);
+                        ddlInchFractions.Items.Add(lst34);
+                        ddlInchFractions.Items.Add(lst78);
                         
                         lblWallNumber.Text = "Wall " + i + " length: ";
                         lblWallNumber.ID = "lblWall" + i + "Length";
