@@ -292,22 +292,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddlWallDoorPlacement;
         
         /// <summary>
-        /// lblCurrentWallDoorPosition control.
+        /// lblWallDoorPosition control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCurrentWallDoorPosition;
+        protected global::System.Web.UI.WebControls.Label lblWallDoorPosition;
         
         /// <summary>
-        /// txtCurrentWallDoorPosition control.
+        /// txtWallDoorPosition control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCurrentWallDoorPosition;
+        protected global::System.Web.UI.WebControls.TextBox txtWallDoorPosition;
         
         /// <summary>
         /// inchesSpecifics control.
@@ -436,12 +436,12 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidWallDoorPlacement;
         
         /// <summary>
-        /// hidCurrentWallDoorPosition control.
+        /// hidWallDoorPosition control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidCurrentWallDoorPosition;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidWallDoorPosition;
     }
 }

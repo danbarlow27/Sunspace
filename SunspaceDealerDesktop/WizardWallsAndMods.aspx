@@ -169,11 +169,17 @@
                 document.getElementById("MainContent_hidDoorColour").value = $('#MainContent_ddlDoorColour').val();
                 document.getElementById("MainContent_hidSwingingDoor").value = $('#MainContent_radSwingingDoorYes').is(':checked');
                 document.getElementById("MainContent_hidWallDoorPlacement").value = $('#MainContent_ddlWallDoorPlacement').val();
+
                 var dropdownDOM = document.getElementById("MainContent_inFrac");
                 var totalDoorDistance = dropdownDOM.options[dropdownDOM.selectedIndex].value + document.getElementById("MainContent_txtCurrentWallDoorPosition").value;
-                document.getElementById("MainContent_hidWallDoorPlacement").value = totalDoorDistance;
-
-                alert("Concatenated inches " + document.getElementById("MainContent_txtCurrentWallDoorPosition").value + dropdownDOM.options[dropdownDOM.selectedIndex].value);                
+                document.getElementById("MainContent_hidWallDoorPosition").value = totalDoorDistance;
+                
+                if (document.getElementById("MainContent_hidTypeOfDoor").value != "" &&
+                    document.getElementById("MainContent_hidDoorColour").value != "" &&
+                    document.getElementById("MainContent_hidSwingingDoor").value != "" &&
+                    document.getElementById("MainContent_hidWallDoorPlacement").value != "" &&
+                    document.getElementById("MainContent_hidWallDoorPosition").value != "") {
+                }
             }
             else {
                 //document.getElementById("MainContent_hidPhone").value = $('#MainContent_radDoorYes').val();
@@ -385,11 +391,11 @@
 
                                         <asp:TableRow>
                                             <asp:TableCell>
-                                                <asp:Label ID="lblCurrentWallDoorPosition" AssociatedControlID="txtCurrentWallDoorPosition" runat="server" Text="Inches from left side the wall:"></asp:Label>
+                                                <asp:Label ID="lblWallDoorPosition" AssociatedControlID="txtWallDoorPosition" runat="server" Text="Inches from left side the wall:"></asp:Label>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCurrentWallDoorPosition" onkeyup="checkQuestion3()" CssClass="txtField txtInput" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtWallDoorPosition" onkeyup="checkQuestion3()" CssClass="txtField txtInput" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
                                             <asp:TableCell >
                                                 <asp:PlaceHolder ID="inchesSpecifics" runat="server" />
@@ -510,7 +516,7 @@
     <input id="hidDoorColour" type="hidden" runat="server" />
     <input id="hidSwingingDoor" type="hidden" runat="server" />
     <input id="hidWallDoorPlacement" type="hidden" runat="server" />
-    <input id="hidCurrentWallDoorPosition" type="hidden" runat="server" />
+    <input id="hidWallDoorPosition" type="hidden" runat="server" />
     <%--<input id="hidFirstName" type="hidden" runat="server" />
     <input id="hidLastName" type="hidden" runat="server" />
     <input id="hidAddress" type="hidden" runat="server" />
