@@ -321,13 +321,18 @@
                                             <asp:TableCell>
                                                 <asp:RadioButton ID="radSwingingDoorYes" GroupName="question3" runat="server" />
                                                 <asp:Label ID="lblSwingingDoorYesRadio" AssociatedControlID="radSwingingDoorYes" runat="server"></asp:Label>
-                                                <asp:Label ID="lblSwingingDoorYes" AssociatedControlID="radSwingingDoorYes" runat="server" Text="Yes"></asp:Label>                                               
+                                                <asp:Label ID="lblSwingingDoorYes" AssociatedControlID="radSwingingDoorYes" runat="server" Text="&nbsp; Yes"></asp:Label>                                               
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                
                                             </asp:TableCell>
 
                                             <asp:TableCell>
                                                 <asp:RadioButton ID="radSwingingDoorNo" GroupName="question3" runat="server" />
                                                 <asp:Label ID="lblSwingingDoorNoRadio" AssociatedControlID="radSwingingDoorNo" runat="server"></asp:Label>
-                                                <asp:Label ID="lblSwingingDoorNo" AssociatedControlID="radSwingingDoorNo" runat="server" Text="No"></asp:Label>
+                                                <asp:Label ID="lblSwingingDoorNo" AssociatedControlID="radSwingingDoorNo" runat="server" Text="&nbsp; No"></asp:Label>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
