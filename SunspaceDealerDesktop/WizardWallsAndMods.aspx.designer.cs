@@ -22,31 +22,31 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblQuestion1;
         
         /// <summary>
-        /// radWall1 control.
+        /// radWallLengths control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radWall1;
+        protected global::System.Web.UI.WebControls.RadioButton radWallLengths;
         
         /// <summary>
-        /// lblWall1Radio control.
+        /// lblWallLengthsRadio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWall1Radio;
+        protected global::System.Web.UI.WebControls.Label lblWallLengthsRadio;
         
         /// <summary>
-        /// lblWall1 control.
+        /// lblWallLengths control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWall1;
+        protected global::System.Web.UI.WebControls.Label lblWallLengths;
         
         /// <summary>
         /// tblWallLengths control.
@@ -67,255 +67,102 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Button btnQuestion1;
         
         /// <summary>
-        /// btnQuestion2 control.
+        /// lblQuestion2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnQuestion2;
+        protected global::System.Web.UI.WebControls.Label lblQuestion2;
         
         /// <summary>
-        /// lblQuestion3 control.
+        /// radWallHeights control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblQuestion3;
+        protected global::System.Web.UI.WebControls.RadioButton radWallHeights;
         
         /// <summary>
-        /// radDoorYes control.
+        /// lblWallHeightsRadio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radDoorYes;
+        protected global::System.Web.UI.WebControls.Label lblWallHeightsRadio;
         
         /// <summary>
-        /// lblDoorYesRadio control.
+        /// lblWallHeights control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorYesRadio;
+        protected global::System.Web.UI.WebControls.Label lblWallHeights;
         
         /// <summary>
-        /// lblDoorYes control.
+        /// Table1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorYes;
+        protected global::System.Web.UI.WebControls.Table Table1;
         
         /// <summary>
-        /// tblDoorYesInfo control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table tblDoorYesInfo;
+        protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
-        /// lblTypeOfDoor control.
+        /// lblWallLengthsSlidePanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTypeOfDoor;
+        protected global::System.Web.UI.WebControls.Label lblWallLengthsSlidePanel;
         
         /// <summary>
-        /// ddlTypeOfDoor control.
+        /// lblWallLengthsAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTypeOfDoor;
+        protected global::System.Web.UI.WebControls.Label lblWallLengthsAnswer;
         
         /// <summary>
-        /// lblDoorColour control.
+        /// lblWallHeightsSlidePanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorColour;
+        protected global::System.Web.UI.WebControls.Label lblWallHeightsSlidePanel;
         
         /// <summary>
-        /// ddlDoorColour control.
+        /// lblWallHeightsAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDoorColour;
+        protected global::System.Web.UI.WebControls.Label lblWallHeightsAnswer;
         
         /// <summary>
-        /// lblSwingingDoor control.
+        /// hidWallLengthsAndHeights control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSwingingDoor;
-        
-        /// <summary>
-        /// ddlSwingingDoor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSwingingDoor;
-        
-        /// <summary>
-        /// WallDoorPlacement control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow WallDoorPlacement;
-        
-        /// <summary>
-        /// lblCustomerCity control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCustomerCity;
-        
-        /// <summary>
-        /// ddlWallDoorPlacement control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlWallDoorPlacement;
-        
-        /// <summary>
-        /// lblInnerWallDoorPosition control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblInnerWallDoorPosition;
-        
-        /// <summary>
-        /// txtInnerWallDoorPosition control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtInnerWallDoorPosition;
-        
-        /// <summary>
-        /// radDoorNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radDoorNo;
-        
-        /// <summary>
-        /// lblDoorNoRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorNoRadio;
-        
-        /// <summary>
-        /// lblDoorNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorNo;
-        
-        /// <summary>
-        /// btnQuestion3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnQuestion3;
-        
-        /// <summary>
-        /// lblWallLengths control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWallLengths;
-        
-        /// <summary>
-        /// lblWallLengthsTypeAnswer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWallLengthsTypeAnswer;
-        
-        /// <summary>
-        /// lblHeights control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblHeights;
-        
-        /// <summary>
-        /// lblHeightsAnswer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblHeightsAnswer;
-        
-        /// <summary>
-        /// lblDoor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoor;
-        
-        /// <summary>
-        /// lblDoorTypeAnswer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorTypeAnswer;
-        
-        /// <summary>
-        /// hidWall1Length control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidWall1Length;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidWallLengthsAndHeights;
     }
 }
