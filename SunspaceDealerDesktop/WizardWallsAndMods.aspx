@@ -76,8 +76,8 @@
                         txtWallLength.MaxLength = 3;
                         txtWallLength.TextChanged += new EventHandler(txtWallLengths_TextChanged);
 
-                        Response.Write("document.getElementById('MainContent_txtWall'" + i + "'Length').onkeyup='checkQuestion1()';");
-                        Response.Write("document.getElementById('MainContent_txtWall'" + i + "'Length').OnChange='checkQuestion1()';");                        
+                        //Response.Write("document.getElementById('MainContent_txtWall'" + i + "'Length').onkeyup='checkQuestion1()';");
+                        //Response.Write("document.getElementById('MainContent_txtWall'" + i + "'Length').OnChange='checkQuestion1()';");                        
                         //txtWallLength.onkeyup="checkQuestion1()"; 
                         //txtWallLength.OnChange="checkQuestion1()";
                         
