@@ -166,22 +166,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Table tblDoorYesInfo;
         
         /// <summary>
-        /// lblTypeOfDoor control.
+        /// lblDoorType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTypeOfDoor;
+        protected global::System.Web.UI.WebControls.Label lblDoorType;
         
         /// <summary>
-        /// ddlTypeOfDoor control.
+        /// ddlDoorType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTypeOfDoor;
+        protected global::System.Web.UI.WebControls.DropDownList ddlDoorType;
         
         /// <summary>
         /// lblDoorColour control.
@@ -400,13 +400,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidWallLengthsAndHeights;
         
         /// <summary>
-        /// hidTypeOfDoor control.
+        /// hidDoorType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidTypeOfDoor;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidDoorType;
         
         /// <summary>
         /// hidDoorColour control.

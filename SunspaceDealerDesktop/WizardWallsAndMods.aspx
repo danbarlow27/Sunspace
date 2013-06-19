@@ -165,20 +165,26 @@
         }
         function checkQuestion3() {
             if ($('#MainContent_radDoorYes').is(':checked')) {
-                document.getElementById("MainContent_hidTypeOfDoor").value = $('#MainContent_ddlTypeOfDoor').val();
+                //Variable used to get current index of dropbox and its value
+                var dropdownDOM = document.getElementById("MainContent_inFrac");
+                var totalDoorDistance = dropdownDOM.options[dropdownDOM.selectedIndex].value + document.getElementById("MainContent_txtCurrentWallDoorPosition").value;
+
+                document.getElementById("MainContent_hidDoorType").value = $('#MainContent_ddlDoorType').val();
                 document.getElementById("MainContent_hidDoorColour").value = $('#MainContent_ddlDoorColour').val();
                 document.getElementById("MainContent_hidSwingingDoor").value = $('#MainContent_radSwingingDoorYes').is(':checked');
                 document.getElementById("MainContent_hidWallDoorPlacement").value = $('#MainContent_ddlWallDoorPlacement').val();
-
-                var dropdownDOM = document.getElementById("MainContent_inFrac");
-                var totalDoorDistance = dropdownDOM.options[dropdownDOM.selectedIndex].value + document.getElementById("MainContent_txtCurrentWallDoorPosition").value;
                 document.getElementById("MainContent_hidWallDoorPosition").value = totalDoorDistance;
                 
-                if (document.getElementById("MainContent_hidTypeOfDoor").value != "" &&
+                if (document.getElementById("MainContent_hidDoorType").value != "" &&
                     document.getElementById("MainContent_hidDoorColour").value != "" &&
                     document.getElementById("MainContent_hidSwingingDoor").value != "" &&
                     document.getElementById("MainContent_hidWallDoorPlacement").value != "" &&
                     document.getElementById("MainContent_hidWallDoorPosition").value != "") {
+
+
+                }
+                else {
+                    //error styling or something
                 }
             }
             else {
@@ -338,11 +344,14 @@
 
                                         <asp:TableRow>
                                             <asp:TableCell>
-                                                <asp:Label ID="lblTypeOfDoor" AssociatedControlID="ddlTypeOfDoor" runat="server" Text="Type Of Door:"></asp:Label>
+                                                <asp:Label ID="lblDoorType" AssociatedControlID="ddlDoorType" runat="server" Text="Type Of Door:"></asp:Label>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlTypeOfDoor" GroupName="question3" runat="server" />
+                                                <asp:DropDownList ID="ddlDoorType" GroupName="question3" runat="server" >
+                                                    <asp:ListItem Text="Cabana" Value="Cabana"/>
+                                                    <asp:ListItem Text="Patio" Value="Patio" />
+                                                </asp:DropDownList>                                                
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -352,7 +361,11 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlDoorColour" GroupName="question3" runat="server" />
+                                                <asp:DropDownList ID="ddlDoorColour" GroupName="question3" runat="server" >
+                                                    <asp:ListItem Text="Clear" Value="Clear" />
+                                                    <asp:ListItem Text="Grey" Value="Grey" />
+                                                    <asp:ListItem Text="Bronze" Value="Bronze" />
+                                                </asp:DropDownList>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -385,7 +398,8 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlWallDoorPlacement" GroupName="question3" runat="server" />
+                                                <asp:DropDownList ID="ddlWallDoorPlacement" GroupName="question3" runat="server" >
+                                                </asp:DropDownList>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -512,7 +526,7 @@
     <%-- Hidden input tags 
     ======================= --%>
     <input id="hidWallLengthsAndHeights" type="hidden" runat="server" />
-    <input id="hidTypeOfDoor" type="hidden" runat="server" />
+    <input id="hidDoorType" type="hidden" runat="server" />
     <input id="hidDoorColour" type="hidden" runat="server" />
     <input id="hidSwingingDoor" type="hidden" runat="server" />
     <input id="hidWallDoorPlacement" type="hidden" runat="server" />
