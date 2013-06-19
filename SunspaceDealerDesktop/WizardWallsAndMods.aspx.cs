@@ -14,5 +14,10 @@ namespace SunspaceDealerDesktop
             //string newString = "abc";
             Session["numberOfWalls"] = 5;
         }
+
+        protected void txtWallLengths_TextChanged(object sender, EventArgs e)
+        { 
+            
+        }
     }
 }
