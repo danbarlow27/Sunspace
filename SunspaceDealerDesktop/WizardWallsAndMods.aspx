@@ -6,6 +6,9 @@
     =================================== --%>
     <script>
 
+        var wallCount ='<%= (int)Session["numberOfWalls"] %>';
+
+        //alert(wallCount);
                 <%
         
                     //TableRow row = new TableRow();
@@ -78,6 +81,7 @@
                         txtWallLength.MaxLength = 3;
                         txtWallLength.TextChanged += new EventHandler(txtWallLengths_TextChanged);
                         txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
+                        txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");
                         
                         cell1.Controls.Add(lblWallNumber);
                         cell2.Controls.Add(txtWallLength);
@@ -102,22 +106,37 @@
 
         function checkQuestion1() {
 
-            alert("SUCCESS!");
+            //alert("SUCCESS!");
             //disable 'next slide' button until after validation
             document.getElementById('MainContent_btnQuestion1').disabled = false;
-            document.getElementById('MainContent_btnQuestion2').disabled = false;
+            //document.getElementById('MainContent_btnQuestion2').disabled = false;
             document.getElementById('MainContent_btnQuestion3').disabled = false;
 
+            //alert(document.getElementById("MainContent_txtWall1Length").value);
+
             if ($('#MainContent_radWallLengths').is(':checked')) {
-                document.getElementById("MainContent_hidWall1Length").value = $('#MainContent_txtWall1Length').val();
+
+                //for (var i = 1; i <= wallCount; i++) {
+                    //if (!document.getElementById("MainContent_hidWall1Length")) {
+                    //var hidWall1Length = document.createElement("input");
+                    //hidWall1Length.type = "hidden";
+                    //hidWall1Length.id = "hidWall1Length";
+                    //hidWall1Length.value = document.getElementById("MainContent_txtWall1Length").value;//$('#MainContent_txtWall1Length').val();
+
+                }
+                    document.getElementById("hidWall1Length").value = $('#MainContent_txtWall1Length').val(); ///this line is breaking because hidWall1Length doesn't exist yet
+                //}
                 //document.getElementById("MainContent_hidLastName").value = $('#MainContent_txtCustomerLastName').val();
                 //document.getElementById("MainContent_hidAddress").value = $('#MainContent_txtCustomerAddress').val();
                 //document.getElementById("MainContent_hidCity").value = $('#MainContent_txtCustomerCity').val();
                 //document.getElementById("MainContent_hidZip").value = $('#MainContent_txtCustomerZip').val();
                 //document.getElementById("MainContent_hidPhone").value = $('#MainContent_txtCustomerPhone').val();
 
+                //alert(document.getElementById("hidWall1Length").value); 
+                  //  alert(hidWall1Length.value);
+
                 //Make sure the text boxes aren't blank
-                if (document.getElementById("MainContent_hidWallLengthsAndHeights").value != "" ) {// &&
+                //if (document.getElementById("MainContent_hidWallLengthsAndHeights").value != "" ) {// &&
                     //document.getElementById("MainContent_hidLastName").value != "" &&
                     //document.getElementById("MainContent_hidAddress").value != "" &&
                     //document.getElementById("MainContent_hidCity").value != "" &&
@@ -144,11 +163,11 @@
                     //$('#MainContent_lblSpecsProjectTypeAnswer').text("New");
                     //document.getElementById('pagerOne').style.display = "inline";
                     //document.getElementById('MainContent_btnQuestion1').disabled = false;
-                }
-                else {
+                //}
+                //else {
                     //error styling or something
-                }
-            }
+                //}
+            //}
             //else if ($('#MainContent_radExistingCustomer').is(':checked')) {
             //    document.getElementById("MainContent_ddlExistingCustomer").value = $('#MainContent_ddlCustomerFirstName').val();
 
@@ -229,33 +248,7 @@
                         <div class="toggleContent">
                             <ul>
                                 <li>
-
-                                    <asp:Table ID="tblWallLengths" CssClass="tblTxtFields" runat="server">
-
-                                        <%--<asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblWall1Length" AssociatedControlID="txtWall1Length" runat="server" Text="Wall 1 Length:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:TextBox ID="txtWall1Length" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server" MaxLength="3"></asp:TextBox>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlInchFractions" CssClass="" runat="server" >
-                                                    <asp:ListItem Text="---" Value="0"></asp:ListItem>
-                                                    <asp:ListItem Text="1/8" Value="1/8"></asp:ListItem>
-                                                    <asp:ListItem Text="1/4" Value="1/4"></asp:ListItem>
-                                                    <asp:ListItem Text="3/8" Value="3/8"></asp:ListItem>
-                                                    <asp:ListItem Text="1/2" Value="1/2"></asp:ListItem>
-                                                    <asp:ListItem Text="5/8" Value="5/8"></asp:ListItem>
-                                                    <asp:ListItem Text="3/4" Value="3/4"></asp:ListItem>
-                                                    <asp:ListItem Text="7/8" Value="7/8"></asp:ListItem>
-                                                </asp:DropDownList>
-                                            </asp:TableCell>
-                                        </asp:TableRow>--%>
-
-                                    </asp:Table>
+                                    <asp:Table ID="tblWallLengths" CssClass="tblTxtFields" runat="server"></asp:Table>
                                 </li>
                             </ul>            
                         </div> <%-- end .toggleContent --%>
@@ -537,7 +530,6 @@
     ======================= --%>
 <%-- %><input id="hidWallLengthsAndHeights" type="hidden" runat="server" /> wall length hidden fields will be created dynamically --%>
     <div id="hiddenFieldsDiv" runat="server">
-        
         <input id="hidDoorType" type="hidden" runat="server" />
         <input id="hidDoorColour" type="hidden" runat="server" />
         <input id="hidSwingingDoor" type="hidden" runat="server" />
