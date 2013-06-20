@@ -6,7 +6,8 @@
     =================================== --%>
     <script>
 
-        var wallCount ='<%= (int)Session["numberOfWalls"] %>';
+        var wallCount = '<%= (int)Session["numberOfWalls"] %>';
+        //document.getElementById("btnQuestion1").onclick = checkQuestion1();
 
         //alert(wallCount);
                 <%
@@ -97,87 +98,51 @@
                     }
                   %>
 
-        
-        $(document).ready(function() {
-            //var wallCount = '<% //Session["numberOfWalls"]; %>';
-            //alert(wallCount);
-        });
-        
 
         function checkQuestion1() {
 
-            //alert("SUCCESS!");
-            //disable 'next slide' button until after validation
+            //disable 'next slide' button until after validation (this is currently enabled for debugging purposes)
             document.getElementById('MainContent_btnQuestion1').disabled = false;
             //document.getElementById('MainContent_btnQuestion2').disabled = false;
-            document.getElementById('MainContent_btnQuestion3').disabled = false;
+            //document.getElementById('MainContent_btnQuestion3').disabled = false;
 
-            //alert(document.getElementById("MainContent_txtWall1Length").value);
+            //if ($('#MainContent_radWallLengths').is(':checked')) {
 
-            if ($('#MainContent_radWallLengths').is(':checked')) {
+                //var lengthList = new Array();
+                var isValid = true;
+                var answer = "";
 
-                //for (var i = 1; i <= wallCount; i++) {
-                    //if (!document.getElementById("MainContent_hidWall1Length")) {
-                    //var hidWall1Length = document.createElement("input");
-                    //hidWall1Length.type = "hidden";
-                    //hidWall1Length.id = "hidWall1Length";
-                    //hidWall1Length.value = document.getElementById("MainContent_txtWall1Length").value;//$('#MainContent_txtWall1Length').val();
-
+                //creating hidden fields dynamically using js (this is currently being done in codebehind)
+                /*for (var i = 1; i <= wallCount; i++) {
+                    if (!document.getElementById("MainContent_hidWall1Length")) {
+                    var hidWall1Length = document.createElement("input");
+                    hidWall1Length.type = "hidden";
+                    hidWall1Length.id = "hidWall1Length";
+                    hidWall1Length.value = document.getElementById("MainContent_txtWall1Length").value;//$('#MainContent_txtWall1Length').val();
+                }*/
+                
+                for (var i = 1; i <= wallCount; i++) {
+                    if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0)
+                        isValid = false;
                 }
-                    document.getElementById("hidWall1Length").value = $('#MainContent_txtWall1Length').val(); ///this line is breaking because hidWall1Length doesn't exist yet
-                //}
-                //document.getElementById("MainContent_hidLastName").value = $('#MainContent_txtCustomerLastName').val();
-                //document.getElementById("MainContent_hidAddress").value = $('#MainContent_txtCustomerAddress').val();
-                //document.getElementById("MainContent_hidCity").value = $('#MainContent_txtCustomerCity').val();
-                //document.getElementById("MainContent_hidZip").value = $('#MainContent_txtCustomerZip').val();
-                //document.getElementById("MainContent_hidPhone").value = $('#MainContent_txtCustomerPhone').val();
 
-                //alert(document.getElementById("hidWall1Length").value); 
-                  //  alert(hidWall1Length.value);
-
-                //Make sure the text boxes aren't blank
-                //if (document.getElementById("MainContent_hidWallLengthsAndHeights").value != "" ) {// &&
-                    //document.getElementById("MainContent_hidLastName").value != "" &&
-                    //document.getElementById("MainContent_hidAddress").value != "" &&
-                    //document.getElementById("MainContent_hidCity").value != "" &&
-                    //document.getElementById("MainContent_hidZip").value != "" &&
-                    //document.getElementById("MainContent_hidPhone").value != "") {
-
-                    //var lengthCheck = document.getElementById("MainContent_hidPhone").value;
-
-                    //if (lengthCheck.length == 10) {
-                    //    var validPhone = validatePhone(document.getElementById("MainContent_hidPhone").value);
-                    //    console.log(validPhone);
-                    //}
-
-                    //var zipCode = document.getElementById("MainContent_hidZip").value;
-
-                    //if (isNaN(zipCode) || zipCode.length < 5) {
-                    //    console.log("invalid zip");
-                    //}
-                    //else {
-                    //    console.log("valid zip");
-                    //}
-
-                    ////Set answer to 'new' on side pager and enable button
-                    //$('#MainContent_lblSpecsProjectTypeAnswer').text("New");
-                    //document.getElementById('pagerOne').style.display = "inline";
-                    //document.getElementById('MainContent_btnQuestion1').disabled = false;
-                //}
-                //else {
+                if (isValid) {
+                    for (var i = 1; i <= wallCount; i++) {
+                        document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
+                        answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value;
+                    }
+                    //Set answer on side pager and enable button
+                    $('#MainContent_lblWallLengthsAnswer').text(answer);
+                    document.getElementById('pagerOne').style.display = "inline";
+                    document.getElementById('MainContent_btnQuestion1').disabled = false;
+                }
+                else {
                     //error styling or something
-                //}
-            //}
-            //else if ($('#MainContent_radExistingCustomer').is(':checked')) {
-            //    document.getElementById("MainContent_ddlExistingCustomer").value = $('#MainContent_ddlCustomerFirstName').val();
-
-            //    if (document.getElementById("MainContent_ddlExistingCustomer").value != "Choose a Customer...") {
-            //        //valid, so update pager and enable button
-            //        $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing");
-            //        document.getElementById('pagerOne').style.display = "inline";
-            //        document.getElementById('MainContent_btnQuestion1').disabled = false;
-            //    }
-            //}
+                    //Set answer on side pager and enable button
+                    $('#MainContent_lblWallLengthsAnswer').text("Wall Lengths Invalid");
+                    document.getElementById('pagerOne').style.display = "inline";
+                    document.getElementById('MainContent_btnQuestion1').disabled = false;
+                }
 
             return false;
         }
@@ -463,7 +428,7 @@
                 <div style="display: none" id="pagerTwo">
                     <li>
                             <a href="#" data-slide="#slide2" class="slidePanel">
-                                <asp:Label ID="lblProjectTag" runat="server" Text="Project tag"></asp:Label>
+                                <asp:Label ID="lblWallHeightsSlidePanel" runat="server" Text="Wall Heights"></asp:Label>
                                 <asp:Label ID="lblWallHeightsAnswer" runat="server" Text="Wall Heights"></asp:Label>
                             </a>
                     </li>

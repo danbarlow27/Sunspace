@@ -13,7 +13,7 @@ namespace SunspaceDealerDesktop
         {
             Session["numberOfWalls"] = 5; 
 
-            hiddenFieldsDiv.InnerHtml = createHiddenDivs(); //create hidden fields on page load dynamically
+            hiddenFieldsDiv.InnerHtml = createHiddenFields(); //create hidden fields on page load dynamically
         }
 
         protected void txtWallLengths_TextChanged(object sender, EventArgs e)
@@ -25,7 +25,7 @@ namespace SunspaceDealerDesktop
         /// This method creates hidden fields dynamically on page load to store the values of wall lengths to be validated on client side
         /// </summary>
         /// <returns>html hidden field tags</returns>
-        protected string createHiddenDivs()
+        protected string createHiddenFields()
         {
             string html = "";
 
