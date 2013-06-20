@@ -91,15 +91,26 @@
         $(document).ready(function() {
             //var wallCount = '<% //Session["numberOfWalls"]; %>';
             //alert(wallCount);
-            var addItem = function (wallId) {
-                $("#WallDetails").append('<li id="' + wallId + '"></li>');
-            }
-            for (var i = 1; i <= wallCount; i++) //numberOfWalls is hard-coded to be 5 right now
-            {
-                var wallIdString = "wall" + i;                
-                addItem(wallIdString);
+            //var addItem = function (wallId) {
+            //    $("#WallDetails").append('<li id="' + wallId + '"></li>');
+            //}
+            //for (var i = 1; i <= wallCount; i++) //numberOfWalls is hard-coded to be 5 right now
+            //{
+            //    var wallIdString = "wall" + i;                
+            //    addItem(wallIdString);
+            //    var currentWall = document.getElementById(wallIdString);
+            //    var radioButton = document.createElement("input");
+            //    radioButton.type = "radio";
+            //    var labelRad = document.createElement("input");
+            //    labelRad.type = "label";
+            //    radioButton.appendChild(labelRad);
+            //    var labelRadio = document.createElement("input");
+            //    labelRadio.type = "label";
+            //    labelRadio.innerHTML = "The label";
+            //    radioButton.appendChild(labelRadio);
 
-            }
+            //    currentWall.appendChild(radioButton);
+            //}
         });
         
 
@@ -456,38 +467,20 @@
             ======================================== --%>
 
             <div id="slide4" class="slide">
+                    <%--<asp:RadioButton ID="Wall<%=i %>" GroupName="question4" runat="server" />
+                    <asp:Label ID="lblWallRad" AssociatedControlID="Wall<%=i %>" runat="server"></asp:Label>
+                    <asp:Label ID="lblWallRadio" AssociatedControlID="Wall<%=i %>" runat="server" Text="Wall"></asp:Label>--%>
                 <h1>
-                    <asp:Label ID="lblQuestion4" runat="server" Text="Would you like a door on your sunroom?"></asp:Label>
+                    <asp:Label ID="lblQuestion4" runat="server" Text="Wall Details"></asp:Label>
                 </h1>        
                               
                 <ul id="WallDetails" class="toggleOptions">
 
-                    <%-- DOOR YES --%>
-                    <li>
-                        <asp:RadioButton ID="RadioButton1" GroupName="question4" runat="server" />
-                        <asp:Label ID="Label2" AssociatedControlID="radDoorYes" runat="server"></asp:Label>
-                        <asp:Label ID="Label3" AssociatedControlID="radDoorYes" runat="server" Text="Yes"></asp:Label>
-           
-                        <div class="toggleContent">
-                            <ul>
-                                <li>
-                                    <h3>Enter door details:</h3>
-
-                                </li>
-                            </ul>            
-                        </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'complete sunroom' option --%>
-
-                    <%-- DOOR NO --%>
-                    <li>
-                        <asp:RadioButton ID="RadioButton2" GroupName="question4" runat="server" />
-                        <asp:Label ID="Label4" AssociatedControlID="radDoorNo" runat="server"></asp:Label>
-                        <asp:Label ID="Label5" AssociatedControlID="radDoorNo" runat="server" Text="No"></asp:Label>
-                    </li> <%-- end 'existing customer' option --%>
+                    
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="Button2"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion4"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" />
 
             </div><%-- end #slide4 --%>
         </div> <%-- end .slide-wrapper --%>
