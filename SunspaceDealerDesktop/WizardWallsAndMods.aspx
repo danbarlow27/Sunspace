@@ -530,43 +530,14 @@
     ======================= --%>
 <%-- %><input id="hidWallLengthsAndHeights" type="hidden" runat="server" /> wall length hidden fields will be created dynamically --%>
     <div id="hiddenFieldsDiv" runat="server">
-        <input id="hidDoorType" type="hidden" runat="server" />
-        <input id="hidDoorColour" type="hidden" runat="server" />
-        <input id="hidSwingingDoor" type="hidden" runat="server" />
-        <input id="hidWallDoorPlacement" type="hidden" runat="server" />
-        <input id="hidWallDoorPosition" type="hidden" runat="server" />
+        
     </div>
-    <%--<input id="hidFirstName" type="hidden" runat="server" />
-    <input id="hidLastName" type="hidden" runat="server" />
-    <input id="hidAddress" type="hidden" runat="server" />
-    <input id="hidCity" type="hidden" runat="server" />
-    <input id="hidZip" type="hidden" runat="server" />
-    <input id="hidPhone" type="hidden" runat="server" />
-   
-    <input id="hidProjectTag" type="hidden" runat="server" />
-       
-    <input id="hidProjectType" type="hidden" runat="server" />
-    <input id="hidModelNumber" type="hidden" runat="server" />
 
-    <input id="hidKneewallType" type="hidden" runat="server" />
-    <input id="hidKneewallColour" type="hidden" runat="server" />
-    <input id="hidKneewallHeight" type="hidden" runat="server" />
-    <input id="hidTransomType" type="hidden" runat="server" />
-    <input id="hidTransomColour" type="hidden" runat="server" />
-    <input id="hidTransomHeight" type="hidden" runat="server" />
-    <input id="hidInteriorColour" type="hidden" runat="server" />
-    <input id="hidInteriorSkin" type="hidden" runat="server" />
-    <input id="hidExteriorColour" type="hidden" runat="server" />
-    <input id="hidExteriorSkin" type="hidden" runat="server" />
-
-    <input id="hidFoamProtected" type="hidden" runat="server" />
-
-    <input id="hidPrefabFloor" type="hidden" runat="server" />
-
-    <input id="hidRoof" type="hidden" runat="server" />
-    <input id="hidRoofType" type="hidden" runat="server" />
-
-    <input id="hidLayoutSelection" type="hidden" runat="server" />--%>
+    <input id="hidDoorType" type="hidden" runat="server" />
+    <input id="hidDoorColour" type="hidden" runat="server" />
+    <input id="hidSwingingDoor" type="hidden" runat="server" />
+    <input id="hidWallDoorPlacement" type="hidden" runat="server" />
+    <input id="hidWallDoorPosition" type="hidden" runat="server" />
 
     <%-- end hidden divs --%>
 
