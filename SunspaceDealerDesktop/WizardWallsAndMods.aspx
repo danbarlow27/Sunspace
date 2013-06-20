@@ -45,14 +45,6 @@
                         ListItem numberOfWalls = new ListItem(Convert.ToString(i), Convert.ToString(i));
                         ddlWallDoorPlacement.Items.Add(numberOfWalls);
                     }
-                    //ddlInchFractions.Items.Add(lst0);
-                    //ddlInchFractions.Items.Add(lst18);
-                    //ddlInchFractions.Items.Add(lst14);
-                    //ddlInchFractions.Items.Add(lst38);
-                    //ddlInchFractions.Items.Add(lst12);
-                    //ddlInchFractions.Items.Add(lst58);
-                    //ddlInchFractions.Items.Add(lst34);
-                    //ddlInchFractions.Items.Add(lst78);
 
                     for(int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 5 right now
                     {
@@ -93,11 +85,23 @@
                         row.Cells.Add(cell1);
                         row.Cells.Add(cell2);
                         row.Cells.Add(cell3);
-
-
                     }
                   %>
 
+        
+        $(document).ready(function() {
+            //var wallCount = '<% //Session["numberOfWalls"]; %>';
+            //alert(wallCount);
+            var addItem = function (wallId) {
+                $("#WallDetails").append('<li id="' + wallId + '"></li>');
+            }
+            for (var i = 1; i <= wallCount; i++) //numberOfWalls is hard-coded to be 5 right now
+            {
+                var wallIdString = "wall" + i;                
+                addItem(wallIdString);
+
+            }
+        });
 
         function checkQuestion1() {
 
@@ -120,7 +124,7 @@
                     hidWall1Length.id = "hidWall1Length";
                     hidWall1Length.value = document.getElementById("MainContent_txtWall1Length").value;//$('#MainContent_txtWall1Length').val();
                 }*/
-                
+
                 for (var i = 1; i <= wallCount; i++) {
                     if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0)
                         isValid = false;
@@ -158,20 +162,22 @@
                 
                 document.getElementById("MainContent_hidDoorType").value = document.getElementById("MainContent_ddlDoorType").options[document.getElementById("MainContent_ddlDoorType").selectedIndex].value;                
                 document.getElementById("MainContent_hidDoorColour").value = document.getElementById("MainContent_ddlDoorColour").options[document.getElementById("MainContent_ddlDoorColour").selectedIndex].value;
+                document.getElementById("MainContent_hidDoorHeight").value = document.getElementById("MainContent_ddlDoorHeight").options[document.getElementById("MainContent_ddlDoorHeight").selectedIndex].value;
                 document.getElementById("MainContent_hidSwingingDoor").value = $('#MainContent_radSwingingDoorYes').is(':checked');
                 document.getElementById("MainContent_hidWallDoorPlacement").value = document.getElementById("MainContent_ddlWallDoorPlacement").options[document.getElementById("MainContent_ddlWallDoorPlacement").selectedIndex].value;
                 document.getElementById("MainContent_hidWallDoorPosition").value = totalDoorDistance;
                 
-                //alert(document.getElementById("MainContent_ddlWallDoorPlacement").options[document.getElementById("MainContent_ddlWallDoorPlacement").selectedIndex].value);
-                if(document.getElementById("MainContent_hidDoorType").value != 0 &&
-                    document.getElementById("MainContent_hidDoorColour").value != 0 &&
-                    document.getElementById("MainContent_hidWallDoorPlacement").value != 0 &&
-                    document.getElementById("MainContent_hidWallDoorPosition").value != 0) {
+                alert(document.getElementById("MainContent_ddlDoorHeight").options[document.getElementById("MainContent_ddlDoorHeight").selectedIndex].value);
+
+                if (document.getElementById("MainContent_hidWallDoorPosition").value != 0) {
 
                     document.getElementById('MainContent_btnQuestion3').disabled = false;
                     $('#MainContent_lblQuestion3Pager').text("Door");
-                    $('#MainContent_lblQuestion3PagerAnswer').text(document.getElementById("MainContent_ddlDoorType").options[document.getElementById("MainContent_ddlDoorType").selectedIndex].value + ": ");
+                    $('#MainContent_lblQuestion3PagerAnswer').text(document.getElementById("MainContent_ddlDoorType").options[document.getElementById("MainContent_ddlDoorType").selectedIndex].value);
                     document.getElementById('pagerThree').style.display = "inline";
+                }
+                else {
+                    //ERROR: Empty wall door position field
                 }
 
             }
@@ -314,7 +320,6 @@
 
                                             <asp:TableCell>
                                                 <asp:DropDownList ID="ddlDoorType" GroupName="question3" runat="server" >
-                                                    <asp:ListItem Text="------" Value="0"/>
                                                     <asp:ListItem Text="Cabana" Value="Cabana"/>
                                                     <asp:ListItem Text="French" Value="French" />
                                                     <asp:ListItem Text="Patio" Value="Patio" />
@@ -329,11 +334,25 @@
 
                                             <asp:TableCell>
                                                 <asp:DropDownList ID="ddlDoorColour" GroupName="question3" runat="server" >
-                                                    <asp:ListItem Text="------" Value="0" />
                                                     <asp:ListItem Text="Clear" Value="Clear" />
                                                     <asp:ListItem Text="Grey" Value="Grey" />
                                                     <asp:ListItem Text="Bronze" Value="Bronze" />
                                                 </asp:DropDownList>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblDoorHeight" AssociatedControlID="ddlDoorHeight" runat="server" Text="Door height:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlDoorHeight" GroupName="question3" runat="server" >
+                                                    <asp:ListItem Text="5'" Value="5"/>
+                                                    <asp:ListItem Text="6'" Value="6"/>
+                                                    <asp:ListItem Text="7'" Value="7" />
+                                                    <asp:ListItem Text="8'" Value="8" />
+                                                </asp:DropDownList>                                                
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -399,10 +418,48 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
             </div><%-- end #slide3 --%>
 
+            <%-- QUESTION 4 - WALL DETAILS
+            ======================================== --%>
+
+            <div id="slide4" class="slide">
+                <h1>
+                    <asp:Label ID="lblQuestion4" runat="server" Text="Would you like a door on your sunroom?"></asp:Label>
+                </h1>        
+                              
+                <ul id="WallDetails" class="toggleOptions">
+
+                    <%-- DOOR YES --%>
+                    <li>
+                        <asp:RadioButton ID="RadioButton1" GroupName="question4" runat="server" />
+                        <asp:Label ID="Label2" AssociatedControlID="radDoorYes" runat="server"></asp:Label>
+                        <asp:Label ID="Label3" AssociatedControlID="radDoorYes" runat="server" Text="Yes"></asp:Label>
+           
+                        <div class="toggleContent">
+                            <ul>
+                                <li>
+                                    <h3>Enter door details:</h3>
+
+                                </li>
+                            </ul>            
+                        </div> <%-- end .toggleContent --%>
+                    </li> <%-- end 'complete sunroom' option --%>
+
+                    <%-- DOOR NO --%>
+                    <li>
+                        <asp:RadioButton ID="RadioButton2" GroupName="question4" runat="server" />
+                        <asp:Label ID="Label4" AssociatedControlID="radDoorNo" runat="server"></asp:Label>
+                        <asp:Label ID="Label5" AssociatedControlID="radDoorNo" runat="server" Text="No"></asp:Label>
+                    </li> <%-- end 'existing customer' option --%>
+
+                </ul> <%-- end .toggleOptions --%>
+
+                <asp:Button ID="Button2"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
+
+            </div><%-- end #slide4 --%>
         </div> <%-- end .slide-wrapper --%>
 
     </div> 
@@ -495,43 +552,15 @@
     ======================= --%>
 <%-- %><input id="hidWallLengthsAndHeights" type="hidden" runat="server" /> wall length hidden fields will be created dynamically --%>
     <div id="hiddenFieldsDiv" runat="server">
+        
+    </div>
+
         <input id="hidDoorType" type="hidden" runat="server" />
         <input id="hidDoorColour" type="hidden" runat="server" />
+    <input id="hidDoorHeight" type="hidden" runat="server" />
         <input id="hidSwingingDoor" type="hidden" runat="server" />
         <input id="hidWallDoorPlacement" type="hidden" runat="server" />
         <input id="hidWallDoorPosition" type="hidden" runat="server" />
-    </div>
-    <%--<input id="hidFirstName" type="hidden" runat="server" />
-    <input id="hidLastName" type="hidden" runat="server" />
-    <input id="hidAddress" type="hidden" runat="server" />
-    <input id="hidCity" type="hidden" runat="server" />
-    <input id="hidZip" type="hidden" runat="server" />
-    <input id="hidPhone" type="hidden" runat="server" />
-   
-    <input id="hidProjectTag" type="hidden" runat="server" />
-       
-    <input id="hidProjectType" type="hidden" runat="server" />
-    <input id="hidModelNumber" type="hidden" runat="server" />
-
-    <input id="hidKneewallType" type="hidden" runat="server" />
-    <input id="hidKneewallColour" type="hidden" runat="server" />
-    <input id="hidKneewallHeight" type="hidden" runat="server" />
-    <input id="hidTransomType" type="hidden" runat="server" />
-    <input id="hidTransomColour" type="hidden" runat="server" />
-    <input id="hidTransomHeight" type="hidden" runat="server" />
-    <input id="hidInteriorColour" type="hidden" runat="server" />
-    <input id="hidInteriorSkin" type="hidden" runat="server" />
-    <input id="hidExteriorColour" type="hidden" runat="server" />
-    <input id="hidExteriorSkin" type="hidden" runat="server" />
-
-    <input id="hidFoamProtected" type="hidden" runat="server" />
-
-    <input id="hidPrefabFloor" type="hidden" runat="server" />
-
-    <input id="hidRoof" type="hidden" runat="server" />
-    <input id="hidRoofType" type="hidden" runat="server" />
-
-    <input id="hidLayoutSelection" type="hidden" runat="server" />--%>
 
     <%-- end hidden divs --%>
 
