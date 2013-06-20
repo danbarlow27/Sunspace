@@ -90,28 +90,6 @@
 
         
         $(document).ready(function() {
-            //var wallCount = '<% //Session["numberOfWalls"]; %>';
-            //alert(wallCount);
-            //var addItem = function (wallId) {
-            //    $("#WallDetails").append('<li id="' + wallId + '"></li>');
-            //}
-            //for (var i = 1; i <= wallCount; i++) //numberOfWalls is hard-coded to be 5 right now
-            //{
-            //    var wallIdString = "wall" + i;                
-            //    addItem(wallIdString);
-            //    var currentWall = document.getElementById(wallIdString);
-            //    var radioButton = document.createElement("input");
-            //    radioButton.type = "radio";
-            //    var labelRad = document.createElement("input");
-            //    labelRad.type = "label";
-            //    radioButton.appendChild(labelRad);
-            //    var labelRadio = document.createElement("input");
-            //    labelRadio.type = "label";
-            //    labelRadio.innerHTML = "The label";
-            //    radioButton.appendChild(labelRadio);
-
-            //    currentWall.appendChild(radioButton);
-            //}
         });
 
         function checkQuestion1() {
@@ -431,15 +409,13 @@
 
                 <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
-            </div><%-- end #slide3 --%>
+            </div>
+            <%-- end #slide3 --%>
 
             <%-- QUESTION 4 - WALL DETAILS
             ======================================== --%>
 
             <div id="slide4" class="slide">
-                    <%--<asp:RadioButton ID="Wall<%=i %>" GroupName="question4" runat="server" />
-                    <asp:Label ID="lblWallRad" AssociatedControlID="Wall<%=i %>" runat="server"></asp:Label>
-                    <asp:Label ID="lblWallRadio" AssociatedControlID="Wall<%=i %>" runat="server" Text="Wall"></asp:Label>--%>
                 <h1>
                     <asp:Label ID="lblQuestion4" runat="server" Text="Wall Details"></asp:Label>
                 </h1>        
