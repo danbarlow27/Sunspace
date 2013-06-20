@@ -11,13 +11,29 @@ namespace SunspaceDealerDesktop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //string newString = "abc";
-            Session["numberOfWalls"] = 5;
+            Session["numberOfWalls"] = 5; 
+
+            hiddenFieldsDiv.InnerHtml = createHiddenDivs(); //create hidden fields on page load dynamically
         }
 
         protected void txtWallLengths_TextChanged(object sender, EventArgs e)
         { 
             
+        }
+
+        /// <summary>
+        /// This method creates hidden fields dynamically on page load to store the values of wall lengths to be validated on client side
+        /// </summary>
+        /// <returns>html hidden field tags</returns>
+        protected string createHiddenDivs()
+        {
+            string html = "";
+
+            for (int i = 1; i <= (int)Session["numberOfWalls"]; i++)
+            {
+                html += "<input id=\"hidWall" + i + "Length\" type=\"hidden\" runat=\"server\" />";
+            }
+            return html;
         }
     }
 }

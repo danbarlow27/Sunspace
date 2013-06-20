@@ -109,7 +109,7 @@
             document.getElementById('MainContent_btnQuestion3').disabled = false;
 
             if ($('#MainContent_radWallLengths').is(':checked')) {
-                document.getElementById("MainContent_hidWallLengthsAndHeights").value = $('#MainContent_txtWall1Length').val();
+                document.getElementById("MainContent_hidWall1Length").value = $('#MainContent_txtWall1Length').val();
                 //document.getElementById("MainContent_hidLastName").value = $('#MainContent_txtCustomerLastName').val();
                 //document.getElementById("MainContent_hidAddress").value = $('#MainContent_txtCustomerAddress').val();
                 //document.getElementById("MainContent_hidCity").value = $('#MainContent_txtCustomerCity').val();
@@ -536,11 +536,14 @@
     <%-- Hidden input tags 
     ======================= --%>
 <%-- %><input id="hidWallLengthsAndHeights" type="hidden" runat="server" /> wall length hidden fields will be created dynamically --%>
-    <input id="hidDoorType" type="hidden" runat="server" />
-    <input id="hidDoorColour" type="hidden" runat="server" />
-    <input id="hidSwingingDoor" type="hidden" runat="server" />
-    <input id="hidWallDoorPlacement" type="hidden" runat="server" />
-    <input id="hidWallDoorPosition" type="hidden" runat="server" />
+    <div id="hiddenFieldsDiv" runat="server">
+        
+        <input id="hidDoorType" type="hidden" runat="server" />
+        <input id="hidDoorColour" type="hidden" runat="server" />
+        <input id="hidSwingingDoor" type="hidden" runat="server" />
+        <input id="hidWallDoorPlacement" type="hidden" runat="server" />
+        <input id="hidWallDoorPosition" type="hidden" runat="server" />
+    </div>
     <%--<input id="hidFirstName" type="hidden" runat="server" />
     <input id="hidLastName" type="hidden" runat="server" />
     <input id="hidAddress" type="hidden" runat="server" />
