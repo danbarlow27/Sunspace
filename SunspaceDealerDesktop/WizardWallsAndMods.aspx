@@ -11,14 +11,6 @@
 
         //alert(wallCount);
                 <%
-        
-                    //TableRow row = new TableRow();
-                    //TableCell cell1 = new TableCell();
-                    //TableCell cell2 = new TableCell();
-                    //TableCell cell3 = new TableCell();
-                    //Label lblWallNumber = new Label();
-                    //TextBox txtWallLength = new TextBox();
-                    //DropDownList ddlInchFractions = new DropDownList();
                     DropDownList ddlInFrac = new DropDownList();
                     ddlInFrac.ID = "inFrac";
                     ListItem lst0 = new ListItem("---", "", true);
@@ -72,7 +64,7 @@
                         txtWallLength.ID = "txtWall" + i + "Length";
                         txtWallLength.CssClass = "txtField txtInput";
                         txtWallLength.MaxLength = 3;
-                        txtWallLength.TextChanged += new EventHandler(txtWallLengths_TextChanged);
+                        //txtWallLength.TextChanged += new EventHandler(txtWallLengths_TextChanged);
                         txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
                         txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");
                         
@@ -161,6 +153,57 @@
 
             return false;
         }
+
+        function checkQuestion2() {
+
+            //disable 'next slide' button until after validation (this is currently enabled for debugging purposes)
+            //document.getElementById('MainContent_btnQuestion1').disabled = false;
+            //document.getElementById('MainContent_btnQuestion2').disabled = false;
+            //document.getElementById('MainContent_btnQuestion3').disabled = false;
+
+            //if ($('#MainContent_radWallLengths').is(':checked')) {
+
+            //var lengthList = new Array();
+            var isValid = true;
+            var answer = "";
+
+            //creating hidden fields dynamically using js (this is currently being done in codebehind)
+            /*for (var i = 1; i <= wallCount; i++) {
+                if (!document.getElementById("MainContent_hidWall1Length")) {
+                var hidWall1Length = document.createElement("input");
+                hidWall1Length.type = "hidden";
+                hidWall1Length.id = "hidWall1Length";
+                hidWall1Length.value = document.getElementById("MainContent_txtWall1Length").value;//$('#MainContent_txtWall1Length').val();
+            }*/
+
+            for (var i = 1; i <= wallCount; i++) {
+                if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0)
+                    isValid = false;
+            }
+
+            if (isValid) {
+                for (var i = 1; i <= wallCount; i++) {
+                    document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
+                    answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value;
+                }
+                //Set answer on side pager and enable button
+                $('#MainContent_lblWallLengthsAnswer').text(answer);
+                document.getElementById('pagerOne').style.display = "inline";
+                document.getElementById('MainContent_btnQuestion1').disabled = false;
+            }
+            else {
+                //error styling or something
+                //Set answer on side pager and enable button
+                $('#MainContent_lblWallLengthsAnswer').text("Wall Lengths Invalid");
+                document.getElementById('pagerOne').style.display = "inline";
+                document.getElementById('MainContent_btnQuestion1').disabled = false;
+            }
+
+            return false;
+        }
+
+
+
         /*
         *****Needs handling for multiple doors with different styles*****
         */
@@ -265,17 +308,18 @@
 
                                     <asp:Table ID="Table1" CssClass="tblTxtFields" runat="server">
 
-                                        <%--<asp:TableRow>
+                                        <asp:TableRow>
                                             <asp:TableCell>
-                                                <asp:Label ID="lblWall1Length" AssociatedControlID="txtWall1Length" runat="server" Text="Wall 1 Length:"></asp:Label>
+                                                <asp:Label ID="lblBackWallHeight" AssociatedControlID="txtBackWallHeight" runat="server" Text="Back Wall Height:"></asp:Label>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtWall1Length" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtBackWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
                                                 <asp:DropDownList ID="ddlInchFractions" CssClass="" runat="server" >
+                                                    <%-- there must be a better way to call a dropdown list from multiple places... --%>
                                                     <asp:ListItem Text="---" Value="0"></asp:ListItem>
                                                     <asp:ListItem Text="1/8" Value="1/8"></asp:ListItem>
                                                     <asp:ListItem Text="1/4" Value="1/4"></asp:ListItem>
@@ -286,7 +330,42 @@
                                                     <asp:ListItem Text="7/8" Value="7/8"></asp:ListItem>
                                                 </asp:DropDownList>
                                             </asp:TableCell>
-                                        </asp:TableRow>--%>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblFrontWallHeight" AssociatedControlID="txtFrontWallHeight" runat="server" Text="Front Wall Height:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtFrontWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="3"></asp:TextBox>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="DropDownList1" CssClass="" runat="server" >
+                                                    <%-- there must be a better way to call a dropdown list from multiple places... --%>
+                                                    <asp:ListItem Text="---" Value="0"></asp:ListItem>
+                                                    <asp:ListItem Text="1/8" Value="1/8"></asp:ListItem>
+                                                    <asp:ListItem Text="1/4" Value="1/4"></asp:ListItem>
+                                                    <asp:ListItem Text="3/8" Value="3/8"></asp:ListItem>
+                                                    <asp:ListItem Text="1/2" Value="1/2"></asp:ListItem>
+                                                    <asp:ListItem Text="5/8" Value="5/8"></asp:ListItem>
+                                                    <asp:ListItem Text="3/4" Value="3/4"></asp:ListItem>
+                                                    <asp:ListItem Text="7/8" Value="7/8"></asp:ListItem>
+                                                </asp:DropDownList>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblRoofSlope" AssociatedControlID="txtRoofSlope" runat="server" Text="Roof Slope:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtRoofSlope" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="3"></asp:TextBox>
+                                            </asp:TableCell>
+
+                                        </asp:TableRow>
 
                                     </asp:Table>
                                 </li>
@@ -299,7 +378,7 @@
                 <asp:Button ID="Button1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
 
             </div> 
-            <%-- end #slide1 --%>
+            <%-- end #slide2 --%>
 
              <%-- QUESTION 3 - DOOR DETAILS
             ======================================== --%>
