@@ -172,7 +172,7 @@
                 var dropdownDOM = document.getElementById("MainContent_inFrac");
                 var totalDoorDistance = document.getElementById("MainContent_txtWallDoorPosition").value + dropdownDOM.options[dropdownDOM.selectedIndex].value;
                 
-                document.getElementById("MainContent_hidDoorType").value = document.getElementById("MainContent_ddlDoorType").options[document.getElementById("MainContent_ddlDoorType").selectedIndex].value;
+                document.getElementById("MainContent_hidDoorType").value = document.getElementById("MainContent_ddlDoorType").options[document.getElementById("MainContent_ddlDoorType").selectedIndex].value;                
                 document.getElementById("MainContent_hidDoorColour").value = document.getElementById("MainContent_ddlDoorColour").options[document.getElementById("MainContent_ddlDoorColour").selectedIndex].value;
                 document.getElementById("MainContent_hidSwingingDoor").value = $('#MainContent_radSwingingDoorYes').is(':checked');
                 document.getElementById("MainContent_hidWallDoorPlacement").value = document.getElementById("MainContent_ddlWallDoorPlacement").options[document.getElementById("MainContent_ddlWallDoorPlacement").selectedIndex].value;
