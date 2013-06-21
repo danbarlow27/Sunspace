@@ -203,9 +203,7 @@
                 document.getElementById("MainContent_hidDoorHeight").value = document.getElementById("MainContent_ddlDoorHeight").options[document.getElementById("MainContent_ddlDoorHeight").selectedIndex].value;
                 document.getElementById("MainContent_hidSwingingDoor").value = $('#MainContent_radSwingingDoorYes').is(':checked');
                 document.getElementById("MainContent_hidWallDoorPlacement").value = document.getElementById("MainContent_ddlWallDoorPlacement").options[document.getElementById("MainContent_ddlWallDoorPlacement").selectedIndex].value;
-                document.getElementById("MainContent_hidWallDoorPosition").value = totalDoorDistance;
-                
-                alert(document.getElementById("MainContent_ddlDoorHeight").options[document.getElementById("MainContent_ddlDoorHeight").selectedIndex].value);
+                document.getElementById("MainContent_hidWallDoorPosition").value = totalDoorDistance;               
 
                 if (document.getElementById("MainContent_hidWallDoorPosition").value != 0) {
 
@@ -215,7 +213,9 @@
                     document.getElementById('pagerThree').style.display = "inline";
                 }
                 else {
-                    //ERROR: Empty wall door position field
+                    $('#MainContent_lblQuestion3Pager').text("Door");
+                    $('#MainContent_lblQuestion3PagerAnswer').text("");
+                    document.getElementById('pagerThree').style.display = "inline";
                 }
 
             }
@@ -262,7 +262,6 @@
                             </ul>            
                         </div> <%-- end .toggleContent --%>
                     </li> <%-- end 'complete sunroom' option --%>
-
                 </ul> <%-- end .toggleOptions --%>
 
                 <asp:Button ID="btnQuestion1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
@@ -376,7 +375,7 @@
 
                     <%-- DOOR YES --%>
                     <li>
-                        <asp:RadioButton ID="radDoorYes" GroupName="question3" runat="server" />
+                        <asp:RadioButton ID="radDoorYes" OnClick="checkQuestion3()" GroupName="question3" runat="server" />
                         <asp:Label ID="lblDoorYesRadio" AssociatedControlID="radDoorYes" runat="server"></asp:Label>
                         <asp:Label ID="lblDoorYes" AssociatedControlID="radDoorYes" runat="server" Text="Yes"></asp:Label>
            
@@ -393,7 +392,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlDoorType" GroupName="question3" runat="server" >
+                                                <asp:DropDownList ID="ddlDoorType" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
                                                     <asp:ListItem Text="Cabana" Value="Cabana"/>
                                                     <asp:ListItem Text="French" Value="French" />
                                                     <asp:ListItem Text="Patio" Value="Patio" />
@@ -407,7 +406,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlDoorColour" GroupName="question3" runat="server" >
+                                                <asp:DropDownList ID="ddlDoorColour" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
                                                     <asp:ListItem Text="Clear" Value="Clear" />
                                                     <asp:ListItem Text="Grey" Value="Grey" />
                                                     <asp:ListItem Text="Bronze" Value="Bronze" />
@@ -421,7 +420,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlDoorHeight" GroupName="question3" runat="server" >
+                                                <asp:DropDownList ID="ddlDoorHeight" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
                                                     <asp:ListItem Text="5'" Value="5"/>
                                                     <asp:ListItem Text="6'" Value="6"/>
                                                     <asp:ListItem Text="7'" Value="7" />
@@ -459,7 +458,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlWallDoorPlacement" GroupName="question3" runat="server" >
+                                                <asp:DropDownList ID="ddlWallDoorPlacement" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
                                                 </asp:DropDownList>
                                             </asp:TableCell>
                                         </asp:TableRow>
@@ -485,7 +484,7 @@
 
                     <%-- DOOR NO --%>
                     <li>
-                        <asp:RadioButton ID="radDoorNo" GroupName="question3" runat="server" />
+                        <asp:RadioButton ID="radDoorNo" OnClick="checkQuestion3()" GroupName="question3" runat="server" />
                         <asp:Label ID="lblDoorNoRadio" AssociatedControlID="radDoorNo" runat="server"></asp:Label>
                         <asp:Label ID="lblDoorNo" AssociatedControlID="radDoorNo" runat="server" Text="No"></asp:Label>
                     </li> <%-- end 'existing customer' option --%>
