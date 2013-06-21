@@ -526,6 +526,33 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl hiddenFieldsDiv;
         
         /// <summary>
+        /// hidFrontWallHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidFrontWallHeight;
+        
+        /// <summary>
+        /// hidBackWallHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidBackWallHeight;
+        
+        /// <summary>
+        /// hidRoofSlope control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidRoofSlope;
+        
+        /// <summary>
         /// hidDoorType control.
         /// </summary>
         /// <remarks>

@@ -134,6 +134,7 @@
 
         function checkQuestion2() {
 
+            //alert("here i am");
             //disable 'next slide' button until after validation (this is currently enabled for debugging purposes)
             //document.getElementById('MainContent_btnQuestion1').disabled = false;
             //document.getElementById('MainContent_btnQuestion2').disabled = false;
@@ -145,36 +146,41 @@
             var isValid = true;
             var answer = "";
 
-            //creating hidden fields dynamically using js (this is currently being done in codebehind)
-            /*for (var i = 1; i <= wallCount; i++) {
-                if (!document.getElementById("MainContent_hidWall1Length")) {
-                var hidWall1Length = document.createElement("input");
-                hidWall1Length.type = "hidden";
-                hidWall1Length.id = "hidWall1Length";
-                hidWall1Length.value = document.getElementById("MainContent_txtWall1Length").value;//$('#MainContent_txtWall1Length').val();
-            }*/
-
-            for (var i = 1; i <= wallCount; i++) {
-                if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0)
+            //for (var i = 1; i <= wallCount; i++) {
+            if (isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
+                || document.getElementById("MainContent_txtBackWallHeight").value <= 0
+                || (isNaN(document.getElementById("MainContent_txtFrontWallHeight").value))
+                || document.getElementById("MainContent_txtFrontWallHeight").value <= 0
+                || (isNaN(document.getElementById("MainContent_txtRoofSlope").value))
+                || document.getElementById("MainContent_txtRoofSlope").value <= 0)
                     isValid = false;
-            }
+            //}
+
 
             if (isValid) {
-                for (var i = 1; i <= wallCount; i++) {
-                    document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
-                    answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value;
-                }
+                
+                //for (var i = 1; i <= wallCount; i++) {
+                document.getElementById("MainContent_hidBackWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value;
+                document.getElementById("MainContent_hidFrontWallHeight").value = document.getElementById("MainContent_txtFrontWallHeight").value;
+                document.getElementById("MainContent_hidRoofSlope").value = document.getElementById("MainContent_txtRoofSlope").value;
+                answer += "Back Wall: " + document.getElementById("MainContent_hidBackWallHeight").value;
+                answer += "Front Wall: " + document.getElementById("MainContent_hidFrontWallHeight").value;
+                answer += "Roof Slope: " + document.getElementById("MainContent_hidRoofSlope").value;
+
+
+                //}
                 //Set answer on side pager and enable button
-                $('#MainContent_lblWallLengthsAnswer').text(answer);
-                document.getElementById('pagerOne').style.display = "inline";
-                document.getElementById('MainContent_btnQuestion1').disabled = false;
+                $('#MainContent_lblWallHeightsAnswer').text(answer);
+                document.getElementById('pagerTwo').style.display = "inline";
+                document.getElementById('MainContent_btnQuestion2').disabled = false;
+                
             }
             else {
                 //error styling or something
                 //Set answer on side pager and enable button
-                $('#MainContent_lblWallLengthsAnswer').text("Wall Lengths Invalid");
-                document.getElementById('pagerOne').style.display = "inline";
-                document.getElementById('MainContent_btnQuestion1').disabled = false;
+                $('#MainContent_lblWallHeightsAnswer').text("Wall Heights Invalid");
+                document.getElementById('pagerTwo').style.display = "inline";
+                document.getElementById('MainContent_btnQuestion2').disabled = false;
             }
 
             return false;
@@ -602,7 +608,9 @@
     <div id="hiddenFieldsDiv" runat="server">
         
     </div>
-
+        <input id="hidFrontWallHeight" type="hidden" runat="server" />
+        <input id="hidBackWallHeight" type="hidden" runat="server" />
+        <input id="hidRoofSlope" type="hidden" runat="server" />
         <input id="hidDoorType" type="hidden" runat="server" />
         <input id="hidDoorColour" type="hidden" runat="server" />
     <input id="hidDoorHeight" type="hidden" runat="server" />
