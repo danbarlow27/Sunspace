@@ -7,6 +7,15 @@
     <script>
 
         var wallCount = '<%= (int)Session["numberOfWalls"] %>';
+        var lines = '<%= (string)Session["coordList"] %>';
+        var lineList = lines.substr(0, -1).split("/");
+        var coordList = new Array();
+        for (var i = 0; i < lineList.length; i++) {
+            coordList[i] = lineList[i].split(",");
+        }
+
+
+
         //document.getElementById("btnQuestion1").onclick = checkQuestion1();
 
         //alert(wallCount);
