@@ -35,7 +35,7 @@
                     for(int i = 1; i <= (int)Session["numberOfWalls"]; i++)
                     {
                         ListItem numberOfWalls = new ListItem(Convert.ToString(i), Convert.ToString(i));
-                        ddlWallDoorPlacement.Items.Add(numberOfWalls);
+                        ddlWallDoorPlacement.Items.Add(numberOfWalls);                        
                     }
 
                     for(int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 5 right now
