@@ -10,5 +10,37 @@ namespace SunspaceDealerDesktop
         private int linearIndex;
         private bool sunshade;
         List<Object> modularItems = new List<Object>();
+
+        public Mod()
+        {
+            LinearIndex = 0;
+            Sunshade = false;
+        }
+
+        public int LinearIndex
+        {
+            get
+            {
+                return linearIndex;
+            }
+
+            set
+            {
+                linearIndex = value;
+            }
+        }
+
+        public bool Sunshade
+        {
+            get
+            {
+                return sunshade;
+            }
+
+            set
+            {
+                sunshade = value;
+            }
+        }
     }
 }
