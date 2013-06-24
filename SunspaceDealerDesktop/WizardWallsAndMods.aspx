@@ -19,7 +19,19 @@
         //document.getElementById("btnQuestion1").onclick = checkQuestion1();
 
         //alert(wallCount);
-                <%
+                <%                    
+        
+                    ArrayList walls = new ArrayList();
+                    walls.Add("1");
+                    walls.Add("2");
+
+                    slide4Repeater.DataSource = walls;
+                    slide4Repeater.DataBind();
+                    
+                    ArrayList mods = new ArrayList();
+                    walls.Add("1");
+                    walls.Add("2");                                                            
+        
                     DropDownList ddlInFrac = new DropDownList();
                     ddlInFrac.ID = "inFrac";
                     ListItem lst0 = new ListItem("---", "", true);
@@ -46,7 +58,7 @@
                         ListItem numberOfWalls = new ListItem(Convert.ToString(i), Convert.ToString(i));
                         ddlWallDoorPlacement.Items.Add(numberOfWalls);                        
                     }
-
+                    
                     for(int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 5 right now
                     {
                         TableRow row = new TableRow();
@@ -507,14 +519,79 @@
 
             <%-- QUESTION 4 - WALL DETAILS
             ======================================== --%>
-
             <div id="slide4" class="slide">
                 <h1>
                     <asp:Label ID="lblQuestion4" runat="server" Text="Wall Details"></asp:Label>
                 </h1>        
-                <ul class="toggleOptions">
+                
+                <asp:Repeater id="slide4Repeater" runat="server">
+                    <HeaderTemplate>
+                        <ul class="toggleOptions">
+                    </HeaderTemplate>
 
-                    <%-- WALL 1 --%>
+                    <ItemTemplate>
+                    <li>
+                        <asp:RadioButton ID="radWall1" GroupName="question4" runat="server" />
+                        <asp:Label ID="Label7" AssociatedControlID="radWall1" runat="server"></asp:Label>
+                        <asp:Label ID="Label8" AssociatedControlID="radWall1" runat="server" Text="Wall 1"></asp:Label>
+           
+                        <div class="toggleContent">
+                            <ul>
+                                <li> 
+                                    <asp:Label ID="Label11" AssociatedControlID="ddlNumberOfMods" runat="server" Text="Number of mods:"></asp:Label>
+                                            
+                                    <asp:DropDownList ID="ddlNumberOfMods" GroupName="question3" runat="server" >
+                                        <asp:ListItem Text="1" Value="1"/>
+                                        <asp:ListItem Text="2" Value="2"/>
+                                        <asp:ListItem Text="3" Value="3"/>
+                                        <asp:ListItem Text="4" Value="4"/>
+                                        <asp:ListItem Text="5" Value="5"/>
+                                        <asp:ListItem Text="6" Value="6"/>
+                                        <asp:ListItem Text="7" Value="7"/>
+                                        <asp:ListItem Text="8" Value="8"/>
+                                    </asp:DropDownList>
+                                    <ul class="toggleOptions">
+                                    <li>
+                                        <asp:RadioButton ID="radMod1" GroupName="questionMod4" runat="server" />
+                                        <asp:Label ID="Label12" AssociatedControlID="radMod1" runat="server"></asp:Label>
+                                        <asp:Label ID="Label13" AssociatedControlID="radMod1" runat="server" Text="Mod 1"></asp:Label>  
+           
+                                        <div class="toggleContent">
+                                            <ul>
+                                                <li> 
+                                                        <asp:TextBox>This is working</asp:TextBox>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        </li>
+                                    <li>
+                                        <asp:RadioButton ID="radMod2" GroupName="questionMod4" runat="server" />
+                                        <asp:Label ID="Label14" AssociatedControlID="radMod2" runat="server"></asp:Label>
+                                        <asp:Label ID="Label15" AssociatedControlID="radMod2" runat="server" Text="Mod 2"></asp:Label>  
+           
+                                        <div class="toggleContent">
+                                            <ul>
+                                                <li> 
+                                                        <asp:TextBox>This is working</asp:TextBox>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    </ul>
+                                </li>
+                            </ul> 
+                        </div> <%-- end .toggleContent --%>
+                    </li> <%-- end 'complete sunroom' option --%>
+                </ItemTemplate>
+
+                <FooterTemplate>
+                    </ul>
+                </FooterTemplate>
+
+                </asp:Repeater>
+
+                <%--<ul class="toggleOptions">
+
                     <li>
                         <asp:RadioButton ID="radWall1" GroupName="question4" runat="server" />
                         <asp:Label ID="Label1" AssociatedControlID="radWall1" runat="server"></asp:Label>
@@ -523,13 +600,8 @@
                         <div class="toggleContent">
                             <ul>
                                 <li> 
-                                    <asp:Table runat="server">
-                                        <asp:TableRow>
-                                            <asp:TableCell>
                                                 <asp:Label ID="lblNumberOfMods" AssociatedControlID="ddlNumberOfMods" runat="server" Text="Number of mods:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
+                                            
                                                 <asp:DropDownList ID="ddlNumberOfMods" GroupName="question3" runat="server" >
                                                     <asp:ListItem Text="1" Value="1"/>
                                                     <asp:ListItem Text="2" Value="2"/>
@@ -540,29 +612,39 @@
                                                     <asp:ListItem Text="7" Value="7"/>
                                                     <asp:ListItem Text="8" Value="8"/>
                                                 </asp:DropDownList>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:RadioButton ID="radMod1" GroupName="question4" runat="server" />
-                                                <asp:Label ID="Label5" AssociatedControlID="radMod1" runat="server"></asp:Label>
-                                                <asp:Label ID="Label6" AssociatedControlID="radMod1" runat="server" Text="Mod 1"></asp:Label>                                                
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:RadioButton ID="radMod2" GroupName="question4" runat="server" />
-                                                <asp:Label ID="Label7" AssociatedControlID="radMod2" runat="server"></asp:Label>
-                                                <asp:Label ID="Label8" AssociatedControlID="radMod2" runat="server" Text="Mod 2"></asp:Label>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-                                    </asp:Table>
+                                                <ul class="toggleOptions">
+                                                <li>
+                                                    <asp:RadioButton ID="radMod1" GroupName="questionMod4" runat="server" />
+                                                    <asp:Label ID="Label5" AssociatedControlID="radMod1" runat="server"></asp:Label>
+                                                    <asp:Label ID="Label6" AssociatedControlID="radMod1" runat="server" Text="Mod 1"></asp:Label>  
+           
+                                                    <div class="toggleContent">
+                                                        <ul>
+                                                            <li id="Mod1Controls"> 
+                                                                 <asp:TextBox>This is working</asp:TextBox>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                 </li>
+                                                <li>
+                                                    <asp:RadioButton ID="radMod2" GroupName="questionMod4" runat="server" />
+                                                    <asp:Label ID="Label9" AssociatedControlID="radMod2" runat="server"></asp:Label>
+                                                    <asp:Label ID="Label10" AssociatedControlID="radMod2" runat="server" Text="Mod 2"></asp:Label>  
+           
+                                                    <div class="toggleContent">
+                                                        <ul>
+                                                            <li> 
+                                                                 <asp:TextBox>This is working</asp:TextBox>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                               </ul>
                                 </li>
                             </ul> 
-                        </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'complete sunroom' option --%>
+                        </div>
+                    </li>
 
-                    <%-- WALL 2 --%>
                     <li>
                         <asp:RadioButton ID="radWall2" GroupName="question4" runat="server" />
                         <asp:Label ID="Label3" AssociatedControlID="radWall2" runat="server"></asp:Label>
@@ -573,10 +655,10 @@
                                 <li> 
                                 </li>
                             </ul> 
-                        </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'existing customer' option --%>
+                        </div> 
+                    </li> 
 
-                </ul> <%-- end .toggleOptions --%>     
+                </ul>--%>
 
                 <asp:Button ID="btnQuestion4"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" />
 
