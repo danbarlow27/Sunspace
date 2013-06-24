@@ -7,64 +7,39 @@ namespace SunspaceDealerDesktop
 {
     public class Mod
     {
-        private string modelType;
-        private int indices;
-        private float length;
-        private float height;
-        //colours?
+        private int linearIndex;
+        private bool sunshade;
+        List<Object> modularItems = new List<Object>();
 
         public Mod()
         {
-            modelType = "";
-            Indices = 0;
-            Length = 0f;
-            Height = 0f;
+            LinearIndex = 0;
+            Sunshade = false;
         }
 
-        public string ModelType
+        public int LinearIndex
         {
             get
             {
-                return modelType;
-            }
-            set
-            {
-                modelType = value;
-            }
-        }
-        public int Indices
-        {
-            get
-            {
-                return indices;
-            }
-            set
-            {
-                indices = value;
-            }
-        }
-        public float Length
-        {
-            get
-            {
-                return length;
+                return linearIndex;
             }
 
             set
             {
-                length = value;
+                linearIndex = value;
             }
         }
-        public float Height
+
+        public bool Sunshade
         {
             get
             {
-                return height;
+                return sunshade;
             }
 
             set
             {
-                height = value;
+                sunshade = value;
             }
         }
     }
