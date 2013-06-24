@@ -19,11 +19,12 @@
         //document.getElementById("btnQuestion1").onclick = checkQuestion1();
 
         //alert(wallCount);
-                <%                    
+                <%                   
         
                     ArrayList walls = new ArrayList();
-                    walls.Add("1");
-                    walls.Add("2");
+                    walls.Add(new PositionData("1", "Wall 1"));
+                    walls.Add(new PositionData("2", "Wall 2"));
+                    walls.Add(new PositionData("3", "Wall 3"));
 
                     slide4Repeater.DataSource = walls;
                     slide4Repeater.DataBind();
@@ -102,7 +103,15 @@
                   %>
 
         
-        $(document).ready(function() {
+        $(document).ready(function () {
+            for (var i = 1; i < wallCount; i++) {
+                var elementId = "";
+                var elementIdFirstPart = "ctl00_MainContent_slide4Repeater_ctl0"
+                var elementIdEndPart = "_radWall"
+                elementId = elementIdFirstPart + i + elementIdEndPart;
+                var elementToChange = document.getElementById(elementId);
+                elementToChange.setAttribute("name", "question4");
+            }
         });
 
         function checkQuestion1() {
@@ -207,8 +216,6 @@
             return false;
         }
 
-
-
         /*
         *****Needs handling for multiple doors with different styles*****
         */
@@ -247,6 +254,12 @@
                 document.getElementById('pagerThree').style.display = "inline";
             }
         }
+
+        function checkQuestion4() {
+            alert("This is working" + document.getElementById("ctl00_MainContent_slide4Repeater_ctl01_radWall"));
+        }
+
+
 
     </script>
     <%-- End hidden div populating scripts --%>
@@ -524,23 +537,25 @@
                     <asp:Label ID="lblQuestion4" runat="server" Text="Wall Details"></asp:Label>
                 </h1>        
                 
-                <asp:Repeater id="slide4Repeater" runat="server">
+                <asp:Repeater 
+                    id="slide4Repeater" 
+                    runat="server"
+                    ClientIdMode="AutoID">
                     <HeaderTemplate>
                         <ul class="toggleOptions">
                     </HeaderTemplate>
 
                     <ItemTemplate>
                     <li>
-                        <asp:RadioButton ID="radWall1" GroupName="question4" runat="server" />
-                        <asp:Label ID="Label7" AssociatedControlID="radWall1" runat="server"></asp:Label>
-                        <asp:Label ID="Label8" AssociatedControlID="radWall1" runat="server" Text="Wall 1"></asp:Label>
-           
+                        <asp:RadioButton ID="radWall" runat="server" />
+                        <asp:Label ID="Label7" AssociatedControlID="radWall" runat="server"></asp:Label>
+                        <asp:Label ID="Label8" AssociatedControlID="radWall" runat="server"> <%#  DataBinder.Eval(Container.DataItem, "ListName") %></asp:Label>
                         <div class="toggleContent">
                             <ul>
                                 <li> 
-                                    <asp:Label ID="Label11" AssociatedControlID="ddlNumberOfMods" runat="server" Text="Number of mods:"></asp:Label>
+                                    <asp:Label ID="lblNumberOfMods" AssociatedControlID="ddlNumberOfMods" runat="server" Text="Number of mods:"></asp:Label>
                                             
-                                    <asp:DropDownList ID="ddlNumberOfMods" GroupName="question3" runat="server" >
+                                    <asp:DropDownList ID="ddlNumberOfMods" GroupName="question4" runat="server" >
                                         <asp:ListItem Text="1" Value="1"/>
                                         <asp:ListItem Text="2" Value="2"/>
                                         <asp:ListItem Text="3" Value="3"/>
@@ -552,9 +567,9 @@
                                     </asp:DropDownList>
                                     <ul class="toggleOptions">
                                     <li>
-                                        <asp:RadioButton ID="radMod1" GroupName="questionMod4" runat="server" />
-                                        <asp:Label ID="Label12" AssociatedControlID="radMod1" runat="server"></asp:Label>
-                                        <asp:Label ID="Label13" AssociatedControlID="radMod1" runat="server" Text="Mod 1"></asp:Label>  
+                                        <asp:RadioButton ID="radMod" GroupName="questionMod4" runat="server" />
+                                        <asp:Label ID="lblModRadio" AssociatedControlID="radMod" runat="server"></asp:Label>
+                                        <asp:Label ID="lblModRad" AssociatedControlID="radMod" runat="server" Text="Mod 1"></asp:Label>  
            
                                         <div class="toggleContent">
                                             <ul>
@@ -566,7 +581,7 @@
                                         </li>
                                     <li>
                                         <asp:RadioButton ID="radMod2" GroupName="questionMod4" runat="server" />
-                                        <asp:Label ID="Label14" AssociatedControlID="radMod2" runat="server"></asp:Label>
+                                        <asp:Label ID="lbl" AssociatedControlID="radMod2" runat="server"></asp:Label>
                                         <asp:Label ID="Label15" AssociatedControlID="radMod2" runat="server" Text="Mod 2"></asp:Label>  
            
                                         <div class="toggleContent">
