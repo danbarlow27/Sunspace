@@ -161,8 +161,6 @@ namespace SunspaceDealerDesktop
                 rowRightFiller.Cells.Add(cellTextBoxRightFiller);
                 rowRightFiller.Cells.Add(cellDropDownRightFiller);
             }
-            
-            
         }
 
         protected void txtWallLengths_TextChanged(object sender, EventArgs e)

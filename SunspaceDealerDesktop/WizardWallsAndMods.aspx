@@ -500,6 +500,26 @@
         </div> <%-- end #paging --%>
     </div>
 
+    <%-- MINI CANVAS (HIGHLIGHTS CURRENT WALL)
+    ======================================== --%>
+    <!--Div tag to hold the canvas/grid-->
+    <div style="max-width:500px; max-height:500px; min-width:100px; min-height:100px; float:right;" id="mySunroom"></div>
+    <script>
+
+        /* CREATE CANVAS */
+        var canvas = d3.select("#mySunroom")            //Select the div tag with id "mySunroom"
+                    .append("svg")                      //Add an svg tag to the selected div tag
+                    .attr("width", 100)    //Set the width of the canvas/grid to MAX_CANVAS_WIDTH
+                    .attr("height", 100); //Set the height of the canvas/grid to MAX_CANVAS_HEIGHT  
+        var svgGrid = document.getElementById("mySunroom");     //create the svg grid on the canvas
+
+        //Creates rectangle area to draw in based on max canvas dimensions
+        var rect = canvas.append("rect")                //Draws a rectangle for the canvas/grid to sit in
+                    .attr("width", 100)    //Sets the width for the canvas/grid
+                    .attr("height", 100)  //Sets the height for the canvas/grid
+                    .attr("fill", "red")              //Sets the color of the rectangle to white
+
+    </script>
     <%-- Hidden input tags 
     ======================= --%>
 <%-- %><input id="hidWallLengthsAndHeights" type="hidden" runat="server" /> wall length hidden fields will be created dynamically --%>
