@@ -12,15 +12,18 @@ namespace SunspaceDealerDesktop
         private int firstItemIndex; //Index of First Item in Wall
         private int lastItemIndex; //Index of Last Item in Wall
         private String orientation; //N, NE, E, S, SE, NW, SW, W
-        private String name; //Name of the wall – For user few
-        private String wallType; 
+        private String name; //Name of the wall – For project editor referencing
+        private String wallType;
+        private String modelType; 
         private float startHeight; //Start height of the wall
         private float endHeight; //End height of the wall
         private float soffitLength; //Soffit length (only for fascia install)
+        private float gablePeak;
         private float totalCornerLength;
         private float totalReceiverLength;
         List<Object> linearItems = new List<Object>();
         List<Object> obstructions = new List<Object>();
+        //colours?
         #endregion
 
         #region Constructors
@@ -36,6 +39,8 @@ namespace SunspaceDealerDesktop
             SoffitLength = 0.0F;
             TotalCornerLength = 0.0f;
             TotalReceiverLength = 0.0f;
+            ModelType = "";
+            GablePeak = 0f;
         }
         #endregion
 
@@ -285,6 +290,44 @@ namespace SunspaceDealerDesktop
             }
         }
 
+        public List<Object> Obstructions
+        {
+            get
+            {
+                return obstructions;
+            }
+
+            set
+            {
+                obstructions = value;
+            }
+        }
+
+        public String ModelType
+        {
+            get
+            {
+                return modelType;
+            }
+
+            set
+            {
+                modelType = value;
+            }
+        }
+
+        public float GablePeak
+        {
+            get
+            {
+                return gablePeak;
+            }
+
+            set
+            {
+                gablePeak = value;
+            }
+        }
         #endregion
     }
 }

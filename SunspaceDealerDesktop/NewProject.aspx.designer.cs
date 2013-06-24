@@ -1696,33 +1696,6 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.Image imbPreset10;
         
         /// <summary>
-        /// radPresetF1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radPresetF1;
-        
-        /// <summary>
-        /// lblPresetF1Radio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPresetF1Radio;
-        
-        /// <summary>
-        /// imbPresetF1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imbPresetF1;
-        
-        /// <summary>
         /// radPresetC1 control.
         /// </summary>
         /// <remarks>

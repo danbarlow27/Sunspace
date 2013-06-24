@@ -4,8 +4,7 @@
     <script src="Scripts/Validation.js"></script>
     <%-- Hidden div populating scripts 
     =================================== --%>
-    <script>       
-
+    <script>
         function checkQuestion1() {
             //disable 'next slide' button until after validation
             document.getElementById('MainContent_btnQuestion1').disabled=true;
@@ -271,6 +270,7 @@
 
             return false;
         }
+
         function checkQuestion8() {
             document.getElementById('MainContent_btnQuestion8').disabled = true;
             
@@ -333,12 +333,6 @@
                 $('#MainContent_lblQuestion8PagerAnswer').text("Preset 10");
                 document.getElementById('pagerEight').style.display = "inline";
                 document.getElementById("MainContent_hidLayoutSelection").value = "10";
-            }
-            else if ($('#MainContent_radPresetF1').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset F1");
-                document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "F1";
             }
             else if ($('#MainContent_radPresetC1').is(':checked')) {
                 document.getElementById('MainContent_btnQuestion8').disabled = false;
@@ -919,11 +913,6 @@
                         <asp:RadioButton ID="radPreset10" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset10Radio" AssociatedControlID="radPreset10" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset10" GroupName="layout" AssociatedControlID="radPreset10" AlternateText="missing preset image" ImageUrl="./images/layout/Preset10.png" runat="server" />                  
-                    </li>
-                    <li>
-                        <asp:RadioButton ID="radPresetF1" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
-                        <asp:Label ID="lblPresetF1Radio" AssociatedControlID="radPresetF1" runat="server"></asp:Label>
-                        <asp:Image ID="imbPresetF1" GroupName="layout" AssociatedControlID="radPresetF1" AlternateText="missing preset image" ImageUrl="./images/layout/PresetS1.png" runat="server" />                  
                     </li>
                     <li>
                         <asp:RadioButton ID="radPresetC1" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
