@@ -176,23 +176,9 @@
                     <asp:Label ID="lblQuestion1" runat="server" Text="Please enter the wall lengths"></asp:Label>
                 </h1>        
                               
-                <ul class="toggleOptions">
-
-                    <%-- Wall Lengths --%>
-                    <li>
-                        <asp:RadioButton ID="radWallLengths" GroupName="question1" runat="server" />
-                        <asp:Label ID="lblWallLengthsRadio" AssociatedControlID="radWallLengths" runat="server"></asp:Label>
-                        <asp:Label ID="lblWallLengths" AssociatedControlID="radWallLengths" runat="server" Text="Wall Lengths"></asp:Label>
-           
-                        <div class="toggleContent">
-                            <ul>
-                                <li>
-                                    <asp:Table ID="tblWallLengths" CssClass="tblTxtFields" runat="server"></asp:Table>
-                                </li>
-                            </ul>            
-                        </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'complete sunroom' option --%>
-                </ul> <%-- end .toggleOptions --%>
+                <div  runat="server">
+                    <asp:Table ID="tblWallLengths" CssClass="tblWallLengths" runat="server"></asp:Table>
+                </div>
 
                 <asp:Button ID="btnQuestion1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
 

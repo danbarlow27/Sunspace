@@ -22,33 +22,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblQuestion1;
         
         /// <summary>
-        /// radWallLengths control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radWallLengths;
-        
-        /// <summary>
-        /// lblWallLengthsRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWallLengthsRadio;
-        
-        /// <summary>
-        /// lblWallLengths control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWallLengths;
-        
-        /// <summary>
         /// tblWallLengths control.
         /// </summary>
         /// <remarks>
