@@ -445,33 +445,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Button btnQuestion3;
         
         /// <summary>
-        /// lblQuestion4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblQuestion4;
-        
-        /// <summary>
-        /// slide4Repeater control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater slide4Repeater;
-        
-        /// <summary>
-        /// btnQuestion4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnQuestion4;
-        
-        /// <summary>
         /// lblWallLengthsSlidePanel control.
         /// </summary>
         /// <remarks>

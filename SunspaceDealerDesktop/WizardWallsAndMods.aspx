@@ -14,106 +14,6 @@
             coordList[i] = lineList[i].split(",");
         }
 
-
-
-        //document.getElementById("btnQuestion1").onclick = checkQuestion1();
-
-        //alert(wallCount);
-                <%                   
-        
-                    ArrayList walls = new ArrayList();
-                    walls.Add(new PositionData("1", "Wall 1"));
-                    walls.Add(new PositionData("2", "Wall 2"));
-                    walls.Add(new PositionData("3", "Wall 3"));
-
-                    slide4Repeater.DataSource = walls;
-                    slide4Repeater.DataBind();
-                    
-                    ArrayList mods = new ArrayList();
-                    walls.Add("1");
-                    walls.Add("2");                                                            
-        
-                    DropDownList ddlInFrac = new DropDownList();
-                    ddlInFrac.ID = "inFrac";
-                    ListItem lst0 = new ListItem("---", "", true);
-                    ListItem lst18 = new ListItem("1/8", ".125");
-                    ListItem lst14 = new ListItem("1/4", ".25");
-                    ListItem lst38 = new ListItem("3/8", ".375");
-                    ListItem lst12 = new ListItem("1/2", ".5");
-                    ListItem lst58 = new ListItem("5/8", ".625");
-                    ListItem lst34 = new ListItem("3/4", ".75");
-                    ListItem lst78 = new ListItem("7/8", ".875");
-                    ddlInFrac.Items.Add(lst0);
-                    ddlInFrac.Items.Add(lst18);
-                    ddlInFrac.Items.Add(lst14);
-                    ddlInFrac.Items.Add(lst38);
-                    ddlInFrac.Items.Add(lst12);
-                    ddlInFrac.Items.Add(lst58);
-                    ddlInFrac.Items.Add(lst34);
-                    ddlInFrac.Items.Add(lst78);
-                    inchesSpecifics.Controls.Add(ddlInFrac);
-                    
-                    //Used to dynamically add values to ddlWallDoorPlacement
-                    for(int i = 1; i <= (int)Session["numberOfWalls"]; i++)
-                    {
-                        ListItem numberOfWalls = new ListItem(Convert.ToString(i), Convert.ToString(i));
-                        ddlWallDoorPlacement.Items.Add(numberOfWalls);                        
-                    }
-                    
-                    for(int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 5 right now
-                    {
-                        TableRow row = new TableRow();
-                        TableCell cell1 = new TableCell();
-                        TableCell cell2 = new TableCell();
-                        TableCell cell3 = new TableCell();
-                        Label lblWallNumber = new Label();
-                        TextBox txtWallLength = new TextBox();
-                        DropDownList ddlInchFractions = new DropDownList();
-
-                        ddlInchFractions.Items.Add(lst0);
-                        ddlInchFractions.Items.Add(lst18);
-                        ddlInchFractions.Items.Add(lst14);
-                        ddlInchFractions.Items.Add(lst38);
-                        ddlInchFractions.Items.Add(lst12);
-                        ddlInchFractions.Items.Add(lst58);
-                        ddlInchFractions.Items.Add(lst34);
-                        ddlInchFractions.Items.Add(lst78);
-                        
-                        lblWallNumber.Text = "Wall " + i + " length: ";
-                        lblWallNumber.ID = "lblWall" + i + "Length";
-                        lblWallNumber.AssociatedControlID = "txtWall" + i + "Length";
-
-                        txtWallLength.ID = "txtWall" + i + "Length";
-                        txtWallLength.CssClass = "txtField txtInput";
-                        txtWallLength.MaxLength = 3;
-                        //txtWallLength.TextChanged += new EventHandler(txtWallLengths_TextChanged);
-                        txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
-                        txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");
-                        
-                        cell1.Controls.Add(lblWallNumber);
-                        cell2.Controls.Add(txtWallLength);
-                        cell3.Controls.Add(ddlInchFractions);
-
-                        tblWallLengths.Rows.Add(row);
-                        
-                        row.Cells.Add(cell1);
-                        row.Cells.Add(cell2);
-                        row.Cells.Add(cell3);
-                    }
-                  %>
-
-        
-        $(document).ready(function () {
-            for (var i = 1; i < wallCount; i++) {
-                var elementId = "";
-                var elementIdFirstPart = "ctl00_MainContent_slide4Repeater_ctl0"
-                var elementIdEndPart = "_radWall"
-                elementId = elementIdFirstPart + i + elementIdEndPart;
-                var elementToChange = document.getElementById(elementId);
-                elementToChange.setAttribute("name", "question4");
-            }
-        });
-
         function checkQuestion1() {
 
             //disable 'next slide' button until after validation (this is currently enabled for debugging purposes)
@@ -218,6 +118,8 @@
 
         /*
         *****Needs handling for multiple doors with different styles*****
+        Swing in or out
+        Sliding left or right
         */
         function checkQuestion3() {
 
@@ -254,13 +156,7 @@
                 document.getElementById('pagerThree').style.display = "inline";
             }
         }
-
-        function checkQuestion4() {
-            alert("This is working" + document.getElementById("ctl00_MainContent_slide4Repeater_ctl01_radWall"));
-        }
-
-
-
+        
     </script>
     <%-- End hidden div populating scripts --%>
 
@@ -530,154 +426,6 @@
             </div>
             <%-- end #slide3 --%>
 
-            <%-- QUESTION 4 - WALL DETAILS
-            ======================================== --%>
-            <div id="slide4" class="slide">
-                <h1>
-                    <asp:Label ID="lblQuestion4" runat="server" Text="Wall Details"></asp:Label>
-                </h1>        
-                
-                <asp:Repeater 
-                    id="slide4Repeater" 
-                    runat="server"
-                    ClientIdMode="AutoID">
-                    <HeaderTemplate>
-                        <ul class="toggleOptions">
-                    </HeaderTemplate>
-
-                    <ItemTemplate>
-                    <li>
-                        <asp:RadioButton ID="radWall" runat="server" />
-                        <asp:Label ID="Label7" AssociatedControlID="radWall" runat="server"></asp:Label>
-                        <asp:Label ID="Label8" AssociatedControlID="radWall" runat="server"> <%#  DataBinder.Eval(Container.DataItem, "ListName") %></asp:Label>
-                        <div class="toggleContent">
-                            <ul>
-                                <li> 
-                                    <asp:Label ID="lblNumberOfMods" AssociatedControlID="ddlNumberOfMods" runat="server" Text="Number of mods:"></asp:Label>
-                                            
-                                    <asp:DropDownList ID="ddlNumberOfMods" GroupName="question4" runat="server" >
-                                        <asp:ListItem Text="1" Value="1"/>
-                                        <asp:ListItem Text="2" Value="2"/>
-                                        <asp:ListItem Text="3" Value="3"/>
-                                        <asp:ListItem Text="4" Value="4"/>
-                                        <asp:ListItem Text="5" Value="5"/>
-                                        <asp:ListItem Text="6" Value="6"/>
-                                        <asp:ListItem Text="7" Value="7"/>
-                                        <asp:ListItem Text="8" Value="8"/>
-                                    </asp:DropDownList>
-                                    <ul class="toggleOptions">
-                                    <li>
-                                        <asp:RadioButton ID="radMod" GroupName="questionMod4" runat="server" />
-                                        <asp:Label ID="lblModRadio" AssociatedControlID="radMod" runat="server"></asp:Label>
-                                        <asp:Label ID="lblModRad" AssociatedControlID="radMod" runat="server" Text="Mod 1"></asp:Label>  
-           
-                                        <div class="toggleContent">
-                                            <ul>
-                                                <li> 
-                                                        <asp:TextBox>This is working</asp:TextBox>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        </li>
-                                    <li>
-                                        <asp:RadioButton ID="radMod2" GroupName="questionMod4" runat="server" />
-                                        <asp:Label ID="lbl" AssociatedControlID="radMod2" runat="server"></asp:Label>
-                                        <asp:Label ID="Label15" AssociatedControlID="radMod2" runat="server" Text="Mod 2"></asp:Label>  
-           
-                                        <div class="toggleContent">
-                                            <ul>
-                                                <li> 
-                                                        <asp:TextBox>This is working</asp:TextBox>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    </ul>
-                                </li>
-                            </ul> 
-                        </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'complete sunroom' option --%>
-                </ItemTemplate>
-
-                <FooterTemplate>
-                    </ul>
-                </FooterTemplate>
-
-                </asp:Repeater>
-
-                <%--<ul class="toggleOptions">
-
-                    <li>
-                        <asp:RadioButton ID="radWall1" GroupName="question4" runat="server" />
-                        <asp:Label ID="Label1" AssociatedControlID="radWall1" runat="server"></asp:Label>
-                        <asp:Label ID="Label2" AssociatedControlID="radWall1" runat="server" Text="Wall 1"></asp:Label>
-           
-                        <div class="toggleContent">
-                            <ul>
-                                <li> 
-                                                <asp:Label ID="lblNumberOfMods" AssociatedControlID="ddlNumberOfMods" runat="server" Text="Number of mods:"></asp:Label>
-                                            
-                                                <asp:DropDownList ID="ddlNumberOfMods" GroupName="question3" runat="server" >
-                                                    <asp:ListItem Text="1" Value="1"/>
-                                                    <asp:ListItem Text="2" Value="2"/>
-                                                    <asp:ListItem Text="3" Value="3"/>
-                                                    <asp:ListItem Text="4" Value="4"/>
-                                                    <asp:ListItem Text="5" Value="5"/>
-                                                    <asp:ListItem Text="6" Value="6"/>
-                                                    <asp:ListItem Text="7" Value="7"/>
-                                                    <asp:ListItem Text="8" Value="8"/>
-                                                </asp:DropDownList>
-                                                <ul class="toggleOptions">
-                                                <li>
-                                                    <asp:RadioButton ID="radMod1" GroupName="questionMod4" runat="server" />
-                                                    <asp:Label ID="Label5" AssociatedControlID="radMod1" runat="server"></asp:Label>
-                                                    <asp:Label ID="Label6" AssociatedControlID="radMod1" runat="server" Text="Mod 1"></asp:Label>  
-           
-                                                    <div class="toggleContent">
-                                                        <ul>
-                                                            <li id="Mod1Controls"> 
-                                                                 <asp:TextBox>This is working</asp:TextBox>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                 </li>
-                                                <li>
-                                                    <asp:RadioButton ID="radMod2" GroupName="questionMod4" runat="server" />
-                                                    <asp:Label ID="Label9" AssociatedControlID="radMod2" runat="server"></asp:Label>
-                                                    <asp:Label ID="Label10" AssociatedControlID="radMod2" runat="server" Text="Mod 2"></asp:Label>  
-           
-                                                    <div class="toggleContent">
-                                                        <ul>
-                                                            <li> 
-                                                                 <asp:TextBox>This is working</asp:TextBox>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </li>
-                                               </ul>
-                                </li>
-                            </ul> 
-                        </div>
-                    </li>
-
-                    <li>
-                        <asp:RadioButton ID="radWall2" GroupName="question4" runat="server" />
-                        <asp:Label ID="Label3" AssociatedControlID="radWall2" runat="server"></asp:Label>
-                        <asp:Label ID="Label4" AssociatedControlID="radWall2" runat="server" Text="Wall 2"></asp:Label>
-                        
-                        <div class="toggleContent">
-                            <ul>
-                                <li> 
-                                </li>
-                            </ul> 
-                        </div> 
-                    </li> 
-
-                </ul>--%>
-
-                <asp:Button ID="btnQuestion4"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" />
-
-            </div><%-- end #slide4 --%>
         </div> <%-- end .slide-wrapper --%>
 
     </div> 
