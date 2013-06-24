@@ -11,5 +11,8 @@ namespace SunspaceDealerDesktop
 
         public const float SOFT_MIN_WINDOW_SIZE = 30.0F; //Minimum size of a window (soft)
         public const float SOFT_MAX_WINDOW_SIZE = 58.0F; //Maximum size of a window (soft)
+
+        public const float SOFT_MIN_MOD_SIZE = 12.0F; //Minimum size of a mod (soft)
+        public const float SOFT_MAX_MOD_SIZE = 84.0f; //Maximum size of a mod (soft)
     }
 }

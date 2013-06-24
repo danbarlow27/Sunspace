@@ -55,9 +55,9 @@ namespace SunspaceDealerDesktop
             return workableSpace;
         }
 
-        public string FindOptimalNumberOfMods(float leftFiller, float rightFiller)
+        public float[] FindOptimalNumberOfMods(float leftFiller, float rightFiller)
         {
-            int numberOfMods = 0;
+            float numberOfMods = 0;
             float optimalModSize = 0;
             float remainingWallLength;
 
@@ -85,9 +85,58 @@ namespace SunspaceDealerDesktop
 
             GlobalFunctions.splitFillerToOutside(ref fillerOne, ref fillerTwo, extraFiller);
 
-            return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + extraFiller + " inches to filler.";
+            return new float[] { numberOfMods, optimalModSize, extraFiller };
         }
 
+        public float[] FindMinimumNumberOfMods(float leftFiller, float rightFiller)
+        {
+            float numberOfMods = 0;
+            float optimalModSize = 0;
+            float remainingWallLength;
+
+            remainingWallLength = calculateWorkableSpace();
+            remainingWallLength -= (leftFiller + rightFiller);
+
+            numberOfMods = (float)((int)(remainingWallLength / Constants.SOFT_MAX_MOD_SIZE));
+            optimalModSize = remainingWallLength / numberOfMods;
+
+            optimalModSize = GlobalFunctions.RoundDownToNearestEighthInch(optimalModSize);
+
+            float extraFiller = remainingWallLength - (optimalModSize * numberOfMods);
+
+            float fillerOne = 2f;
+            float fillerTwo = 2f;
+
+            GlobalFunctions.splitFillerToOutside(ref fillerOne, ref fillerTwo, extraFiller);
+
+            return new float[] { numberOfMods, optimalModSize, extraFiller };
+        }
+
+        public float[] FindMaximumNumberOfMods(float leftFiller, float rightFiller)
+        {
+            float numberOfMods = 0;
+            float optimalModSize = 0;
+            float remainingWallLength;
+
+            remainingWallLength = calculateWorkableSpace();
+            remainingWallLength -= (leftFiller + rightFiller);
+
+            numberOfMods = (float)((int)(remainingWallLength / Constants.SOFT_MIN_MOD_SIZE));
+            optimalModSize = remainingWallLength / numberOfMods;
+
+            optimalModSize = GlobalFunctions.RoundDownToNearestEighthInch(optimalModSize);
+
+            float extraFiller = remainingWallLength - (optimalModSize * numberOfMods);
+
+            float fillerOne = 2f;
+            float fillerTwo = 2f;
+
+            GlobalFunctions.splitFillerToOutside(ref fillerOne, ref fillerTwo, extraFiller);
+
+            return new float[] { numberOfMods, optimalModSize, extraFiller };
+        }
+
+        /*
         public String FindOptimalSizeOfMods(int numberOfMods)
         {
             float optimalModSize = 0;
@@ -138,6 +187,7 @@ namespace SunspaceDealerDesktop
 
             return "Suggested " + numberOfMods + " mods at " + optimalModSize + " inches, adding " + addedToFiller/2 + " inches to both fillers.";
         }
+        */
 
         public void addToItemList(Object anObject)
         {
