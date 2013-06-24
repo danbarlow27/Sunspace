@@ -207,6 +207,7 @@
     <Content Include="NewProject.aspx" />
     <Content Include="packages.config" />
     <Content Include="Content\fonts\Shanti-Regular.ttf" />
+    <Content Include="WizardWallsAndMods.aspx" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="SavedProjects.aspx" />
     <Content Include="Scripts\D3.js" />
@@ -246,7 +247,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Default.aspx" />
+    <Content Include="CustomDrawingTool.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\styles.css" />
@@ -313,12 +314,12 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="Corner.cs" />
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="CustomDrawingTool.aspx.cs">
+      <DependentUpon>CustomDrawingTool.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="CustomDrawingTool.aspx.designer.cs">
+      <DependentUpon>CustomDrawingTool.aspx</DependentUpon>
     </Compile>
     <Compile Include="Door.cs" />
     <Compile Include="Filler.cs" />
@@ -379,6 +380,13 @@
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
     <Compile Include="Wall.cs" />
+    <Compile Include="WizardWallsAndMods.aspx.cs">
+      <DependentUpon>WizardWallsAndMods.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WizardWallsAndMods.aspx.designer.cs">
+      <DependentUpon>WizardWallsAndMods.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
