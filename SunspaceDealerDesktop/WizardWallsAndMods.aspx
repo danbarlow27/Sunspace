@@ -8,11 +8,43 @@
 
         var wallCount = '<%= (int)Session["numberOfWalls"] %>';
         var lines = '<%= (string)Session["coordList"] %>';
-        var lineList = lines.substr(0, -1).split("/");
+        var lineList = lines.substr(0, lines.length-1).split("/");
         var coordList = new Array();
         for (var i = 0; i < lineList.length; i++) {
             coordList[i] = lineList[i].split(",");
+//            alert(coordList[i][0]);
         }
+
+//        alert(lineList.length);
+
+
+/*CANVAS STUFF**********************************************************************************************/
+        //var slideWindow = document.getElementById("slide-window");
+        //slideWindow.appendChild(document.getElementById("mySunroom"));
+
+        ///* CREATE CANVAS */
+        //var canvas = d3.select("#mySunroom")            //Select the div tag with id "mySunroom"
+        //            .append("svg")                      //Add an svg tag to the selected div tag
+        //            .attr("width", 200)    //Set the width of the canvas/grid to MAX_CANVAS_WIDTH
+        //            .attr("height", 200); //Set the height of the canvas/grid to MAX_CANVAS_HEIGHT  
+        //var svgGrid = document.getElementById("mySunroom");     //create the svg grid on the canvas
+
+        ////Creates rectangle area to draw in based on max canvas dimensions
+        //var rect = canvas.append("rect")                //Draws a rectangle for the canvas/grid to sit in
+        //            .attr("width", 200)    //Sets the width for the canvas/grid
+        //            .attr("height", 200)  //Sets the height for the canvas/grid
+        //            .attr("fill", "#f6f6f6")              //Sets the color of the rectangle to light grey
+
+        ////Local variable to store all the line information
+        //for (var i = 0; i < lineList.length; i++) { 
+        //    var line = canvas.append("line")
+        //            .attr("x1", coordList[i][0])
+        //            .attr("y1", coordList[i][1])
+        //            .attr("x2", coordList[i][2])
+        //            .attr("y2", coordList[i][3])
+        //            .attr("stroke", "red");
+        //}
+/*******************************************************************************************************/
 
         function checkQuestion1() {
 
@@ -164,7 +196,7 @@
     ======================================== 
         
         onmousedown="event.preventDefault ? event.preventDefault() : event.returnValue = false"--%>
-    <div class="slide-window"  >
+    <div class="slide-window" id="slide-window" >
 
         <div class="slide-wrapper">
             
@@ -503,21 +535,40 @@
     <%-- MINI CANVAS (HIGHLIGHTS CURRENT WALL)
     ======================================== --%>
     <!--Div tag to hold the canvas/grid-->
-    <div style="max-width:500px; max-height:500px; min-width:100px; min-height:100px; float:right;" id="mySunroom"></div>
+    <div style="max-width:500px; max-height:500px; min-width:200px; min-height:200px; margin: auto auto; position:inherit; padding-top:10%; padding-right:5%; /*position:fixed; */top:0px; right:0px;" id="mySunroom"></div>
     <script>
+
+        var slideWindow = document.getElementById("slide-window");
+        slideWindow.appendChild(document.getElementById("mySunroom"));
 
         /* CREATE CANVAS */
         var canvas = d3.select("#mySunroom")            //Select the div tag with id "mySunroom"
                     .append("svg")                      //Add an svg tag to the selected div tag
-                    .attr("width", 100)    //Set the width of the canvas/grid to MAX_CANVAS_WIDTH
-                    .attr("height", 100); //Set the height of the canvas/grid to MAX_CANVAS_HEIGHT  
+                    .attr("width", 200)    //Set the width of the canvas/grid to MAX_CANVAS_WIDTH
+                    .attr("height", 200); //Set the height of the canvas/grid to MAX_CANVAS_HEIGHT  
         var svgGrid = document.getElementById("mySunroom");     //create the svg grid on the canvas
-
+        
         //Creates rectangle area to draw in based on max canvas dimensions
         var rect = canvas.append("rect")                //Draws a rectangle for the canvas/grid to sit in
-                    .attr("width", 100)    //Sets the width for the canvas/grid
-                    .attr("height", 100)  //Sets the height for the canvas/grid
-                    .attr("fill", "red")              //Sets the color of the rectangle to white
+                    .attr("width", 200)    //Sets the width for the canvas/grid
+                    .attr("height", 200)  //Sets the height for the canvas/grid
+                    .attr("fill", "#f6f6f6")              //Sets the color of the rectangle to light grey
+
+        //Local variable to store all the line information
+        //Local variable to store all the line information
+        for (var i = 0; i < lineList.length; i++) {
+            var line = canvas.append("line")
+                    .attr("x1", (coordList[i][0] / 5) * 2)
+                    .attr("y1", (coordList[i][2] / 5) * 2)
+                    .attr("x2", (coordList[i][1] / 5) * 2)
+                    .attr("y2", (coordList[i][3] / 5) * 2)
+                    .attr("onmousedown", alert("hwllo"));
+            
+            if(coordList[i][4] === "E")
+                line.attr("stroke", "red");
+            else
+                line.attr("stroke", "black");
+        }
 
     </script>
     <%-- Hidden input tags 
@@ -531,7 +582,7 @@
         <input id="hidRoofSlope" type="hidden" runat="server" />
         <input id="hidDoorType" type="hidden" runat="server" />
         <input id="hidDoorColour" type="hidden" runat="server" />
-    <input id="hidDoorHeight" type="hidden" runat="server" />
+        <input id="hidDoorHeight" type="hidden" runat="server" />
         <input id="hidSwingingDoor" type="hidden" runat="server" />
         <input id="hidWallDoorPlacement" type="hidden" runat="server" />
         <input id="hidWallDoorPosition" type="hidden" runat="server" />
