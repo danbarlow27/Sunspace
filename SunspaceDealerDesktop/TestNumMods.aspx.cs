@@ -78,9 +78,10 @@ namespace SunspaceDealerDesktop
 
             tester.InnerHtml += "Total Wall Length currently set to: " + aWall.ProposedLength + "<br/>";
 
-            //int numberOfMods = aWall.FindOptimalNumberOfMods();
-            //tester.InnerHtml += "\n" + "Proposed: " + aWall.ProposedLength + ", Actual: " + aWall.ActualLength; 
-            //tester2.InnerHtml = aWall.FindOptimalSizeOfMods(10); 
+            float[] testArray = aWall.FindOptimalNumberOfMods(2f, 2f);
+            tester.InnerHtml = testArray[0] + " " + testArray[1] + " " + testArray[2];
+            testArray = aWall.FindMinimumNumberOfMods(2f, 2f);
+            tester2.InnerHtml = testArray[0] + " " + testArray[1] + " " + testArray[2]; 
         }
     }
 }
