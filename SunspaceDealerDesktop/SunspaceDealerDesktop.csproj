@@ -380,6 +380,7 @@
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
     <Compile Include="Wall.cs" />
+    <Compile Include="Window.cs" />
     <Compile Include="WizardWallsAndMods.aspx.cs">
       <DependentUpon>WizardWallsAndMods.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
