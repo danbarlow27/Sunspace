@@ -13,7 +13,7 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             /***hard coded session variables***/
-            Session["numberOfWalls"] = 4;
+            Session["numberOfWalls"] = 3;
             Session["coordList"] = "125,387.5,162.5,162.5,E,S/187.5,187.5,162.5,275,P,W/187.5,300,275,275,P,S/300,300,275,162.5,P,E/";
             /**********************************/
             hiddenFieldsDiv.InnerHtml = createHiddenFields(); //create hidden fields on page load dynamically

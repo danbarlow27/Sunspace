@@ -6,7 +6,6 @@
     =================================== --%>
     <script>
 
-        var wallCount = '<%= (int)Session["numberOfWalls"] %>'; //number of walls drawn by the user
         var lines = '<%= (string)Session["coordList"] %>'; //all the coordinates of all the lines
         var lineList = lines.substr(0, lines.length-1).split("/"); //a list of lines and their coordinates
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
@@ -28,7 +27,7 @@
                 var answer = "";
 
                 //creating hidden fields dynamically using js (this is currently being done in codebehind)
-                /*for (var i = 1; i <= wallCount; i++) {
+                /*for (var i = 1; i <= lineList.length; i++) {
                     if (!document.getElementById("MainContent_hidWall1Length")) {
                     var hidWall1Length = document.createElement("input");
                     hidWall1Length.type = "hidden";
@@ -36,13 +35,13 @@
                     hidWall1Length.value = document.getElementById("MainContent_txtWall1Length").value;//$('#MainContent_txtWall1Length').val();
                 }*/
 
-                for (var i = 1; i <= wallCount; i++) {
+                for (var i = 1; i <= lineList.length; i++) {
                     if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0)
                         isValid = false;
                 }
 
                 if (isValid) {
-                    for (var i = 1; i <= wallCount; i++) {
+                    for (var i = 1; i <= lineList.length; i++) {
                         document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
                         answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value;
                     }
@@ -76,7 +75,7 @@
             var isValid = true;
             var answer = "";
 
-            //for (var i = 1; i <= wallCount; i++) {
+            //for (var i = 1; i <= lineList.length; i++) {
             if (isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
                 || document.getElementById("MainContent_txtBackWallHeight").value <= 0
                 || (isNaN(document.getElementById("MainContent_txtFrontWallHeight").value))
@@ -89,7 +88,7 @@
 
             if (isValid) {
                 
-                //for (var i = 1; i <= wallCount; i++) {
+                //for (var i = 1; i <= lineList.length; i++) {
                 document.getElementById("MainContent_hidBackWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value;
                 document.getElementById("MainContent_hidFrontWallHeight").value = document.getElementById("MainContent_txtFrontWallHeight").value;
                 document.getElementById("MainContent_hidRoofSlope").value = document.getElementById("MainContent_txtRoofSlope").value;
@@ -503,7 +502,7 @@
                     .attr("height", 200)  //Sets the height for the canvas/grid
                     .attr("fill", "#f6f6f6");              //Sets the color of the rectangle to light grey
 
-        var lineArray = new Array(wallCount);
+        var lineArray = new Array();
 
         //Local variable to store all the line information
         for (var i = 0; i < lineList.length; i++) { //draw all the lines with the given attributes
@@ -522,12 +521,11 @@
         }
 
         function highlightWall() {
-            var wallNumber = (document.activeElement.id.substr(19,1) - 1);
+            var wallNumber = (document.activeElement.id.substr(19,1));
             
-            for (var i = 0; i < wallCount; i++) {
+            for (var i = 0; i < lineList.length; i++) {
                 if (coordList[i][4] == "P") {
                     if (i == wallNumber) {
-
                         lineArray[i].attr("stroke", "yellow");
                         lineArray[i].attr("stroke-width", "2");
                     }
