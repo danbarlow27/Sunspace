@@ -542,28 +542,39 @@
         //Local variable to store all the line information
         //Local variable to store all the line information
         for (var i = 0; i < lineList.length; i++) { //draw all the lines with the given attributes
-            var line = canvas.append("line")
+            lineArray[i] = canvas.append("line")
                     .attr("x1", (coordList[i][0] / 5) * 2)
                     .attr("y1", (coordList[i][2] / 5) * 2)
                     .attr("x2", (coordList[i][1] / 5) * 2)
-                    .attr("y2", (coordList[i][3] / 5) * 2)
-                    .attr("id", "wall" + i);
+                    .attr("y2", (coordList[i][3] / 5) * 2);
+                    //.attr("id", "wall" + i);
                     //line.attr("onmouseover", alert("hwllo"));
             
             if(coordList[i][4] === "E")
-                line.attr("stroke", "red");
+                lineArray[i].attr("stroke", "red");
             else
-                line.attr("stroke", "black");
+                lineArray[i].attr("stroke", "black");
         }
-
+        //alert(coordList[1][4]);
         function highlightWall() {
-            var wallNumber = document.activeElement.id.substr(19,1);
+            var wallNumber = (document.activeElement.id.substr(19,1) - 1);
             
+            for (var i = 0; i < wallCount; i++) {
+                if (coordList[i][4] == "P") {
+                //console.log("i: " + i);
+                //console.log("wallNumber: " + wallNumber);
+                //console.log(i == wallNumber);
+                    if (i == wallNumber) {
 
-            
-
-
-
+                        lineArray[i].attr("stroke", "yellow");
+                        lineArray[i].attr("stroke-width", "2");
+                    }
+                    else {
+                        lineArray[i].attr("stroke", "black");
+                        lineArray[i].attr("stroke-width", "1");
+                    }
+                }
+            }
         }
 /*******************************************************************************************************/
     </script>
