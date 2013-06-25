@@ -7,15 +7,27 @@ namespace SunspaceDealerDesktop
 {
     public class Mod
     {
+        #region Attributes
+
         private int linearIndex;
         private bool sunshade;
+        private float fixedValue;
         List<Object> modularItems = new List<Object>();
+
+        #endregion
+
+        #region Constructors
 
         public Mod()
         {
             LinearIndex = 0;
             Sunshade = false;
+            FixedValue = 0.0f;
         }
+
+        #endregion
+
+        #region Accessors
 
         public int LinearIndex
         {
@@ -42,5 +54,19 @@ namespace SunspaceDealerDesktop
                 sunshade = value;
             }
         }
+
+        public float FixedValue
+        {
+            get
+            {
+                return fixedValue;
+            }
+            set
+            {
+                fixedValue = value;
+            }
+        }
+
+        #endregion
     }
 }
