@@ -26,14 +26,6 @@
                 var isValid = true;
                 var answer = "";
 
-                //creating hidden fields dynamically using js (this is currently being done in codebehind)
-                /*for (var i = 1; i <= lineList.length; i++) {
-                    if (!document.getElementById("MainContent_hidWall1Length")) {
-                    var hidWall1Length = document.createElement("input");
-                    hidWall1Length.type = "hidden";
-                    hidWall1Length.id = "hidWall1Length";
-                    hidWall1Length.value = document.getElementById("MainContent_txtWall1Length").value;//$('#MainContent_txtWall1Length').val();
-                }*/
 
                 for (var i = 1; i <= lineList.length; i++) {
                     if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0)
@@ -43,7 +35,7 @@
                 if (isValid) {
                     for (var i = 1; i <= lineList.length; i++) {
                         document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
-                        answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value;
+                        answer += "Wall " + i + ": " + document.getElementById("txtWall" + i + "Length").value;
                     }
                     //Set answer on side pager and enable button
                     $('#MainContent_lblWallLengthsAnswer').text(answer);
@@ -175,7 +167,7 @@
                     <asp:Label ID="lblQuestion1" runat="server" Text="Please enter the wall lengths"></asp:Label>
                 </h1>        
                               
-                <div id="tableWallLengths" class="tblWallLengths" runat="server">
+                <div id="tableWallLengths" class="tblWallLengths" runat="server" style="padding-right:15%; padding-left:15%; padding-top:5%;">
                     <asp:Table ID="tblWallLengths" runat="server">
                         <asp:TableRow>
                             <asp:TableCell></asp:TableCell>
@@ -205,7 +197,7 @@
                     <asp:Label ID="lblQuestion2" runat="server" Text="Please enter the wall heights"></asp:Label>
                 </h1>
            
-                        <div class="tblWallLengths" runat="server">
+                        <div class="tblWallLengths" runat="server" style="padding-right:15%; padding-left:15%; padding-top:5%;">
                             <ul>
                                 <li>
                                     <asp:Table ID="Table1" CssClass="tblTxtFields" runat="server">
