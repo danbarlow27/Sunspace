@@ -115,20 +115,20 @@ namespace SunspaceDealerDesktop
                 lblRightFiller.AssociatedControlID = "txtWall" + i + "RightFiller";
 
                 txtWallLength.ID = "txtWall" + i + "Length";
-                txtWallLength.CssClass = "txtField txtInput";
+                txtWallLength.CssClass = "txtField txtLengthInput";
                 txtWallLength.MaxLength = 3;
                 //txtWallLength.TextChanged += new EventHandler(txtWallLengths_TextChanged);
                 txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
                 txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");
 
                 txtLeftFiller.ID = "txtWall" + i + "LeftFiller";
-                txtLeftFiller.CssClass = "txtField txtInput";
+                txtLeftFiller.CssClass = "txtField txtLengthInput";
                 txtLeftFiller.MaxLength = 3;
                 txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()");
                 txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");
 
                 txtRightFiller.ID = "txtWall" + i + "RightFiller";
-                txtRightFiller.CssClass = "txtField txtInput";
+                txtRightFiller.CssClass = "txtField txtLengthInput";
                 txtRightFiller.MaxLength = 3;
                 txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");
                 txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");

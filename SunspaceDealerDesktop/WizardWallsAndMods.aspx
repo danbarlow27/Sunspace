@@ -208,8 +208,8 @@
                     <asp:Label ID="lblQuestion1" runat="server" Text="Please enter the wall lengths"></asp:Label>
                 </h1>        
                               
-                <div  runat="server">
-                    <asp:Table ID="tblWallLengths" CssClass="tblWallLengths" runat="server"></asp:Table>
+                <div id="tableWallLengths" class="tblWallLengths" runat="server">
+                    <asp:Table ID="tblWallLengths"  runat="server"></asp:Table>
                 </div>
 
                 <asp:Button ID="btnQuestion1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
