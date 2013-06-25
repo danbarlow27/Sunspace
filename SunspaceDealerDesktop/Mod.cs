@@ -42,5 +42,18 @@ namespace SunspaceDealerDesktop
                 sunshade = value;
             }
         }
+
+        public List<Object> ModularItems
+        {
+            get
+            {
+                return modularItems;
+            }
+
+            set
+            {
+                modularItems = value;
+            }
+        }
     }
 }
