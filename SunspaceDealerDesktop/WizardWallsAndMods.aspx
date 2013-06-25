@@ -6,14 +6,12 @@
     =================================== --%>
     <script>
 
-        var wallCount = '<%= (int)Session["numberOfWalls"] %>'; //number of walls drawn by the user
         var lines = '<%= (string)Session["coordList"] %>'; //all the coordinates of all the lines
         var lineList = lines.substr(0, lines.length-1).split("/"); //a list of lines and their coordinates
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
         for (var i = 0; i < lineList.length; i++) { 
             coordList[i] = lineList[i].split(","); //populate the 2d array
         }
-
 
         function checkQuestion1() {
 
@@ -29,7 +27,7 @@
                 var answer = "";
 
                 //creating hidden fields dynamically using js (this is currently being done in codebehind)
-                /*for (var i = 1; i <= wallCount; i++) {
+                /*for (var i = 1; i <= lineList.length; i++) {
                     if (!document.getElementById("MainContent_hidWall1Length")) {
                     var hidWall1Length = document.createElement("input");
                     hidWall1Length.type = "hidden";
@@ -37,13 +35,13 @@
                     hidWall1Length.value = document.getElementById("MainContent_txtWall1Length").value;//$('#MainContent_txtWall1Length').val();
                 }*/
 
-                for (var i = 1; i <= wallCount; i++) {
+                for (var i = 1; i <= lineList.length; i++) {
                     if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0)
                         isValid = false;
                 }
 
                 if (isValid) {
-                    for (var i = 1; i <= wallCount; i++) {
+                    for (var i = 1; i <= lineList.length; i++) {
                         document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
                         answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value;
                     }
@@ -77,7 +75,7 @@
             var isValid = true;
             var answer = "";
 
-            //for (var i = 1; i <= wallCount; i++) {
+            //for (var i = 1; i <= lineList.length; i++) {
             if (isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
                 || document.getElementById("MainContent_txtBackWallHeight").value <= 0
                 || (isNaN(document.getElementById("MainContent_txtFrontWallHeight").value))
@@ -90,7 +88,7 @@
 
             if (isValid) {
                 
-                //for (var i = 1; i <= wallCount; i++) {
+                //for (var i = 1; i <= lineList.length; i++) {
                 document.getElementById("MainContent_hidBackWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value;
                 document.getElementById("MainContent_hidFrontWallHeight").value = document.getElementById("MainContent_txtFrontWallHeight").value;
                 document.getElementById("MainContent_hidRoofSlope").value = document.getElementById("MainContent_txtRoofSlope").value;
@@ -178,7 +176,7 @@
                 </h1>        
                               
                 <div id="tableWallLengths" class="tblWallLengths" runat="server">
-                    <asp:Table ID="tblWallLengths"  runat="server">
+                    <asp:Table ID="tblWallLengths" runat="server">
                         <asp:TableRow>
                             <asp:TableCell></asp:TableCell>
                             <asp:TableCell ColumnSpan="2" >
@@ -205,20 +203,11 @@
 
                 <h1>
                     <asp:Label ID="lblQuestion2" runat="server" Text="Please enter the wall heights"></asp:Label>
-                </h1>        
-                              
-                <ul class="toggleOptions">
-
-                    <%-- Wall Lengths --%>
-                    <li>
-                        <asp:RadioButton ID="radWallHeights" GroupName="question2" runat="server" />
-                        <asp:Label ID="lblWallHeightsRadio" AssociatedControlID="radWallHeights" runat="server"></asp:Label>
-                        <asp:Label ID="lblWallHeights" AssociatedControlID="radWallHeights" runat="server" Text="Wall Heights"></asp:Label>
+                </h1>
            
-                        <div class="toggleContent">
+                        <div class="tblWallLengths" runat="server">
                             <ul>
                                 <li>
-
                                     <asp:Table ID="Table1" CssClass="tblTxtFields" runat="server">
 
                                         <asp:TableRow>
@@ -231,17 +220,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlInchFractions" CssClass="" runat="server" >
-                                                    <%-- there must be a better way to call a dropdown list from multiple places... --%>
-                                                    <asp:ListItem Text="---" Value="0"></asp:ListItem>
-                                                    <asp:ListItem Text="1/8" Value="1/8"></asp:ListItem>
-                                                    <asp:ListItem Text="1/4" Value="1/4"></asp:ListItem>
-                                                    <asp:ListItem Text="3/8" Value="3/8"></asp:ListItem>
-                                                    <asp:ListItem Text="1/2" Value="1/2"></asp:ListItem>
-                                                    <asp:ListItem Text="5/8" Value="5/8"></asp:ListItem>
-                                                    <asp:ListItem Text="3/4" Value="3/4"></asp:ListItem>
-                                                    <asp:ListItem Text="7/8" Value="7/8"></asp:ListItem>
-                                                </asp:DropDownList>
+                                                <asp:PlaceHolder ID="phBackHeights" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -255,17 +234,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="DropDownList1" CssClass="" runat="server" >
-                                                    <%-- there must be a better way to call a dropdown list from multiple places... --%>
-                                                    <asp:ListItem Text="---" Value="0"></asp:ListItem>
-                                                    <asp:ListItem Text="1/8" Value="1/8"></asp:ListItem>
-                                                    <asp:ListItem Text="1/4" Value="1/4"></asp:ListItem>
-                                                    <asp:ListItem Text="3/8" Value="3/8"></asp:ListItem>
-                                                    <asp:ListItem Text="1/2" Value="1/2"></asp:ListItem>
-                                                    <asp:ListItem Text="5/8" Value="5/8"></asp:ListItem>
-                                                    <asp:ListItem Text="3/4" Value="3/4"></asp:ListItem>
-                                                    <asp:ListItem Text="7/8" Value="7/8"></asp:ListItem>
-                                                </asp:DropDownList>
+                                                <asp:PlaceHolder ID="phFrontHeights" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -284,9 +253,6 @@
                                 </li>
                             </ul>            
                         </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'complete sunroom' option --%>
-
-                </ul> <%-- end .toggleOptions --%>
 
                 <asp:Button ID="Button1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
 
@@ -536,34 +502,39 @@
                     .attr("height", 200)  //Sets the height for the canvas/grid
                     .attr("fill", "#f6f6f6");              //Sets the color of the rectangle to light grey
 
-        //Local variable to store all the line information
+        var lineArray = new Array();
+
         //Local variable to store all the line information
         for (var i = 0; i < lineList.length; i++) { //draw all the lines with the given attributes
-            var line = canvas.append("line")
+            lineArray[i] = canvas.append("line")
                     .attr("x1", (coordList[i][0] / 5) * 2)
                     .attr("y1", (coordList[i][2] / 5) * 2)
                     .attr("x2", (coordList[i][1] / 5) * 2)
                     .attr("y2", (coordList[i][3] / 5) * 2);
+                    //.attr("id", "wall" + i);
                     //line.attr("onmouseover", alert("hwllo"));
             
             if(coordList[i][4] === "E")
-                line.attr("stroke", "red");
+                lineArray[i].attr("stroke", "red");
             else
-                line.attr("stroke", "black");
+                lineArray[i].attr("stroke", "black");
         }
 
         function highlightWall() {
-            var activeTextbox = document.activeElement;
-            var wallNumber = activeTextbox.id;
-
-            alert("hello");
-
-            if(activeTextbox.id === "MainContent_txtWall1Length")
-                alert("hello");
-
-
-
-
+            var wallNumber = (document.activeElement.id.substr(19,1));
+            
+            for (var i = 0; i < lineList.length; i++) {
+                if (coordList[i][4] == "P") {
+                    if (i == wallNumber) {
+                        lineArray[i].attr("stroke", "yellow");
+                        lineArray[i].attr("stroke-width", "2");
+                    }
+                    else {
+                        lineArray[i].attr("stroke", "black");
+                        lineArray[i].attr("stroke-width", "1");
+                    }
+                }
+            }
         }
 /*******************************************************************************************************/
     </script>

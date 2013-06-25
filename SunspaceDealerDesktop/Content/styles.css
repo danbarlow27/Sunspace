@@ -216,10 +216,11 @@ footer {
 .tblWallLengths {
     border-collapse: collapse;
     background-color: rgb(242, 235, 214);
+    min-height:250px;
 }
 
 .tblWallLengths td{
-    text-align: right;
+    text-align:center;
     padding: 3px 8px 3px 0;
 }
 

@@ -58,33 +58,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblQuestion2;
         
         /// <summary>
-        /// radWallHeights control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radWallHeights;
-        
-        /// <summary>
-        /// lblWallHeightsRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWallHeightsRadio;
-        
-        /// <summary>
-        /// lblWallHeights control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWallHeights;
-        
-        /// <summary>
         /// Table1 control.
         /// </summary>
         /// <remarks>
@@ -112,13 +85,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txtBackWallHeight;
         
         /// <summary>
-        /// ddlInchFractions control.
+        /// phBackHeights control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlInchFractions;
+        protected global::System.Web.UI.WebControls.PlaceHolder phBackHeights;
         
         /// <summary>
         /// lblFrontWallHeight control.
@@ -139,13 +112,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txtFrontWallHeight;
         
         /// <summary>
-        /// DropDownList1 control.
+        /// phFrontHeights control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        protected global::System.Web.UI.WebControls.PlaceHolder phFrontHeights;
         
         /// <summary>
         /// lblRoofSlope control.
