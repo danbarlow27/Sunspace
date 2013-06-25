@@ -97,6 +97,7 @@
                 
             }
             else {
+                alert("error");
                 //error styling or something
                 //Set answer on side pager and enable button
                 $('#MainContent_lblWallHeightsAnswer').text("Wall Heights Invalid");
@@ -208,7 +209,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtBackWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtBackWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" onblur="resetWalls()" OnFocus="highlightWallsHeight()" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
@@ -222,7 +223,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtFrontWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtFrontWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" onblur="resetWalls()" OnFocus="highlightWallsHeight()" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
@@ -344,7 +345,6 @@
                                             <asp:TableCell>
                                                 <asp:Label ID="lblCustomerCity" AssociatedControlID="ddlWallDoorPlacement" runat="server" Text="Which wall is the door in:"></asp:Label>
                                             </asp:TableCell>
-
                                             <asp:TableCell>
                                                 <asp:DropDownList ID="ddlWallDoorPlacement" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
                                                 </asp:DropDownList>
@@ -355,7 +355,6 @@
                                             <asp:TableCell>
                                                 <asp:Label ID="lblWallDoorPosition" AssociatedControlID="txtWallDoorPosition" runat="server" Text="Inches from left side the wall:"></asp:Label>
                                             </asp:TableCell>
-
                                             <asp:TableCell>
                                                 <asp:TextBox ID="txtWallDoorPosition" onkeyup="checkQuestion3()" CssClass="txtField txtInput" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
@@ -506,8 +505,7 @@
                     .attr("y1", (coordList[i][2] / 5) * 2)
                     .attr("x2", (coordList[i][1] / 5) * 2)
                     .attr("y2", (coordList[i][3] / 5) * 2);
-                    //.attr("id", "wall" + i);
-                    //line.attr("onmouseover", alert("hwllo"));
+            //lineArray[i].attr("mouseover", alert("hwllo"));
             
             if(coordList[i][4] === "E")
                 lineArray[i].attr("stroke", "red");
@@ -515,12 +513,44 @@
                 lineArray[i].attr("stroke", "black");
         }
 
-        function highlightWall() {
+        function highlightWallsLength() {
             var wallNumber = (document.activeElement.id.substr(19,1));
             
+                if (coordList[wallNumber][4] == "P") {
+                        lineArray[wallNumber].attr("stroke", "yellow");
+                        lineArray[wallNumber].attr("stroke-width", "2");
+                }
+        }
+
+        function resetWalls() {
             for (var i = 0; i < lineList.length; i++) {
-                if (coordList[i][4] == "P") {
-                    if (i == wallNumber) {
+                if (coordList[i][4] === "E")
+                    lineArray[i].attr("stroke", "red");
+                else
+                    lineArray[i].attr("stroke", "black");
+
+                lineArray[i].attr("stroke-width", "1");
+            }
+        }
+
+        function highlightWallsHeight() {
+            var textbox = (document.activeElement.id.substr(15, 1));
+
+            if (textbox === "B") {
+                for (var i = 0; i < lineList.length; i++) {
+                    if (coordList[i][5] == "S") {
+                        lineArray[i].attr("stroke", "yellow");
+                        lineArray[i].attr("stroke-width", "2");
+                    }
+                    else {
+                        lineArray[i].attr("stroke", "black");
+                        lineArray[i].attr("stroke-width", "1");
+                    }
+                }
+            }
+            else if (textbox === "F") {
+                for (var i = 0; i < lineList.length; i++) {
+                    if (coordList[i][5] == "S") {
                         lineArray[i].attr("stroke", "yellow");
                         lineArray[i].attr("stroke-width", "2");
                     }
