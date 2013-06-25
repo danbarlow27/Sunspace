@@ -54,6 +54,10 @@ namespace SunspaceDealerDesktop
                 TableCell cell1 = new TableCell();
                 TableCell cell2 = new TableCell();
                 TableCell cell3 = new TableCell();
+                TableCell cell4 = new TableCell();
+                TableCell cell5 = new TableCell();
+                TableCell cell6 = new TableCell();
+                TableCell cell7 = new TableCell();
 
                 TableCell cellLabelLeftFiller = new TableCell();
                 TableCell cellTextBoxLeftFiller = new TableCell();
@@ -64,8 +68,8 @@ namespace SunspaceDealerDesktop
                 TableCell cellDropDownRightFiller = new TableCell();
 
                 Label lblWallNumber = new Label();
-                Label lblLeftFiller = new Label();
-                Label lblRightFiller = new Label();
+                //Label lblLeftFiller = new Label();
+                //Label lblRightFiller = new Label();
 
                 TextBox txtWallLength = new TextBox();
                 TextBox txtLeftFiller = new TextBox();
@@ -102,64 +106,74 @@ namespace SunspaceDealerDesktop
                 ddlRightInchFractions.Items.Add(lst34);
                 ddlRightInchFractions.Items.Add(lst78);
 
-                lblWallNumber.Text = "Wall " + i + " length: ";
+                lblWallNumber.Text = "Wall " + i + " : ";
                 lblWallNumber.ID = "lblWall" + i + "Length";
                 lblWallNumber.AssociatedControlID = "txtWall" + i + "Length";
 
-                lblLeftFiller.Text = "Left " + i + " Filler Length: ";
-                lblLeftFiller.ID = "lblWall" + i + "LeftFiller";
-                lblLeftFiller.AssociatedControlID = "txtWall" + i + "LeftFiller";
+                //lblLeftFiller.Text = "Left " + i + " Filler Length: ";
+                //lblLeftFiller.ID = "lblWall" + i + "LeftFiller";
+                //lblLeftFiller.AssociatedControlID = "txtWall" + i + "LeftFiller";
 
-                lblRightFiller.Text = "Right " + i + " Filler Length: ";
-                lblRightFiller.ID = "lblWall" + i + "RightFiller";
-                lblRightFiller.AssociatedControlID = "txtWall" + i + "RightFiller";
+                //lblRightFiller.Text = "Right " + i + " Filler Length: ";
+                //lblRightFiller.ID = "lblWall" + i + "RightFiller";
+                //lblRightFiller.AssociatedControlID = "txtWall" + i + "RightFiller";
 
                 txtWallLength.ID = "txtWall" + i + "Length";
                 txtWallLength.CssClass = "txtField txtLengthInput";
                 txtWallLength.MaxLength = 3;
-                //txtWallLength.TextChanged += new EventHandler(txtWallLengths_TextChanged);
                 txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
                 txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");
+                txtWallLength.Attributes.Add("OnFocus", "highlightWall()");
 
                 txtLeftFiller.ID = "txtWall" + i + "LeftFiller";
                 txtLeftFiller.CssClass = "txtField txtLengthInput";
                 txtLeftFiller.MaxLength = 3;
                 txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()");
                 txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");
+                txtLeftFiller.Attributes.Add("OnFocus", "highlightWall()");
 
                 txtRightFiller.ID = "txtWall" + i + "RightFiller";
                 txtRightFiller.CssClass = "txtField txtLengthInput";
                 txtRightFiller.MaxLength = 3;
                 txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");
                 txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");
+                txtRightFiller.Attributes.Add("OnFocus", "highlightWall()");
 
                 cell1.Controls.Add(lblWallNumber);
                 cell2.Controls.Add(txtWallLength);
                 cell3.Controls.Add(ddlInchFractions);
+                cell4.Controls.Add(txtLeftFiller);
+                cell5.Controls.Add(ddlLeftInchFractions);
+                cell6.Controls.Add(txtRightFiller);
+                cell7.Controls.Add(ddlRightInchFractions);
 
-                cellLabelLeftFiller.Controls.Add(lblLeftFiller);
-                cellTextBoxLeftFiller.Controls.Add(txtLeftFiller);
-                cellDropDownLeftFiller.Controls.Add(ddlLeftInchFractions);
+                //cellLabelLeftFiller.Controls.Add(lblLeftFiller);
+                //cellTextBoxLeftFiller.Controls.Add(txtLeftFiller);
+                //cellDropDownLeftFiller.Controls.Add(ddlLeftInchFractions);
 
-                cellLabelRightFiller.Controls.Add(lblRightFiller);
-                cellTextBoxRightFiller.Controls.Add(txtRightFiller);
-                cellDropDownRightFiller.Controls.Add(ddlRightInchFractions);
+                //cellLabelRightFiller.Controls.Add(lblRightFiller);
+                //cellTextBoxRightFiller.Controls.Add(txtRightFiller);
+                //cellDropDownRightFiller.Controls.Add(ddlRightInchFractions);
 
                 tblWallLengths.Rows.Add(row);
-                tblWallLengths.Rows.Add(rowLeftFiller);
-                tblWallLengths.Rows.Add(rowRightFiller);
+                //tblWallLengths.Rows.Add(rowLeftFiller);
+                //tblWallLengths.Rows.Add(rowRightFiller);
 
                 row.Cells.Add(cell1);
                 row.Cells.Add(cell2);
                 row.Cells.Add(cell3);
+                row.Cells.Add(cell4);
+                row.Cells.Add(cell5);
+                row.Cells.Add(cell6);
+                row.Cells.Add(cell7);
 
-                rowLeftFiller.Cells.Add(cellLabelLeftFiller);
-                rowLeftFiller.Cells.Add(cellTextBoxLeftFiller);
-                rowLeftFiller.Cells.Add(cellDropDownLeftFiller);
+                //rowLeftFiller.Cells.Add(cellLabelLeftFiller);
+                //rowLeftFiller.Cells.Add(cellTextBoxLeftFiller);
+                //rowLeftFiller.Cells.Add(cellDropDownLeftFiller);
 
-                rowRightFiller.Cells.Add(cellLabelRightFiller);
-                rowRightFiller.Cells.Add(cellTextBoxRightFiller);
-                rowRightFiller.Cells.Add(cellDropDownRightFiller);
+                //rowRightFiller.Cells.Add(cellLabelRightFiller);
+                //rowRightFiller.Cells.Add(cellTextBoxRightFiller);
+                //rowRightFiller.Cells.Add(cellDropDownRightFiller);
             }
         }
 

@@ -178,7 +178,20 @@
                 </h1>        
                               
                 <div id="tableWallLengths" class="tblWallLengths" runat="server">
-                    <asp:Table ID="tblWallLengths"  runat="server"></asp:Table>
+                    <asp:Table ID="tblWallLengths"  runat="server">
+                        <asp:TableRow>
+                            <asp:TableCell></asp:TableCell>
+                            <asp:TableCell ColumnSpan="2" >
+                                Left Filler
+                            </asp:TableCell>
+                            <asp:TableCell ColumnSpan="2">
+                                Length
+                            </asp:TableCell>
+                            <asp:TableCell ColumnSpan="2">
+                                Right Filler
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
                 </div>
 
                 <asp:Button ID="btnQuestion1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
