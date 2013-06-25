@@ -405,10 +405,10 @@
 
         function highlightWallsLength() {
             var wallNumber = (document.activeElement.id.substr(19,1));            
-                if (coordList[wallNumber][4] == "P") {
-                        lineArray[wallNumber].attr("stroke", "yellow");
-                        lineArray[wallNumber].attr("stroke-width", "2");
-                }
+
+            lineArray[wallNumber - 1].attr("stroke", "yellow");
+            lineArray[wallNumber - 1].attr("stroke-width", "2");
+               
         }
 
         function resetWalls() {
@@ -431,37 +431,27 @@
             var highestIndex;
             var index;
 
-            //if (textbox === "B") {
-                for (var i = 0; i < lineList.length; i++) {
-                    if (coordList[i][5] == "S") {
-                        southWalls.push({ "y2": lineArray[i].attr("y2"), "number": i });
-
-                        //lineArray[i].attr("stroke", "yellow");
-                        //lineArray[i].attr("stroke-width", "2");
-                    }
+            for (var i = 0; i < lineList.length; i++) {
+                if (coordList[i][5] == "S") {
+                    southWalls.push({ "y2": lineArray[i].attr("y2"), "number": i });
                 }
+            }
 
-                //console.log(lineArray[0].attr("y2"));
-                for (var i = 0; i < southWalls.length; i++) {
-                    if (southWalls[i].y2 > lowestWall) {
-                        lowestWall = southWalls[i].y2;
-                        lowestIndex = southWalls[i].number;
-                    }
-                    if (southWalls[i].y2 < highestWall) {
-                        highestWall = southWalls[i].y2;
-                        highestIndex = southWalls[i].number;
-                    }
+            for (var i = 0; i < southWalls.length; i++) {
+                if (southWalls[i].y2 > lowestWall) {
+                    lowestWall = southWalls[i].y2;
+                    lowestIndex = southWalls[i].number;
                 }
-                console.log(lowestIndex);
-                index = (textbox === "B") ? lowestIndex : highestIndex;
-                //alert(index);
-                lineArray[index].attr("stroke", "yellow");
-                lineArray[index].attr("stroke-width", "2");
-
+                if (southWalls[i].y2 < highestWall) {
+                    highestWall = southWalls[i].y2;
+                    highestIndex = southWalls[i].number;
+                }
+            }
+            console.log(lowestIndex);
+            index = (textbox === "B") ? lowestIndex : highestIndex;
+            lineArray[index].attr("stroke", "yellow");
+            lineArray[index].attr("stroke-width", "2");
         }
-
-
-        //}
             
 /*******************************************************************************************************/
     </script>
