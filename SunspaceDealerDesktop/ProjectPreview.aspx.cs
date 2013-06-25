@@ -11,7 +11,7 @@ namespace SunspaceDealerDesktop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            List<Wall> sentWalls = new List<Wall>;
+            List<Wall> sentWalls = new List<Wall>();
             sentWalls.Add(new Wall());
             sentWalls.Add(new Wall());
             sentWalls.Add(new Wall());

@@ -92,5 +92,7 @@ namespace SunspaceDealerDesktop
                 modType = value;
             }
         }
+
+        #endregion Accessors
     }
 }
