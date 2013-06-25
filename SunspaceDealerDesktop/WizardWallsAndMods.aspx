@@ -96,7 +96,7 @@
 
         function checkQuestion2() {
 
-            //alert("here i am");
+            //alert("here i am, rock you like a hurricane");
             //disable 'next slide' button until after validation (this is currently enabled for debugging purposes)
             //document.getElementById('MainContent_btnQuestion1').disabled = false;
             //document.getElementById('MainContent_btnQuestion2').disabled = false;
