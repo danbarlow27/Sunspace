@@ -21,6 +21,8 @@ namespace SunspaceDealerDesktop
             //SLIDE 3 DOOR DETAILS PER WALL
             #region Slide 3: Onload dynamic loop to insert wall door options
 
+            #region Wall #:Radio button section
+
             wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
 
             RadioButton wallRadio = new RadioButton();
@@ -47,7 +49,10 @@ namespace SunspaceDealerDesktop
             tblDoorDetails.CssClass = "tblTextFields";
             tblDoorDetails.Attributes.Add("runat", "server");
 
+            #endregion
+
             #region Table:First Row Type of Door (tblDoorDetails)
+
             TableRow typeOfDoorRow = new TableRow();            
             TableCell typeOfDoorLBLCell = new TableCell();
             TableCell typeOfDoorDDLCell = new TableCell();
@@ -66,9 +71,11 @@ namespace SunspaceDealerDesktop
             typeOfDoorDDL.Items.Add(patio);
 
             typeOfDoorLBL.AssociatedControlID = "ddlDoorType";
+
             #endregion
 
             #region Table:Second Row Color of Door (tblDoorDetails)
+
             TableRow colorOfDoorRow = new TableRow();
             TableCell colorOfDoorLBLCell = new TableCell();
             TableCell colorOfDoorDDLCell = new TableCell();
@@ -87,7 +94,82 @@ namespace SunspaceDealerDesktop
             colorOfDoorDDL.Items.Add(patio);
 
             colorOfDoorLBL.AssociatedControlID = "ddlDoorColor";
+
             #endregion
+
+            #region Table:Third Row Door Height (tblDoorDetails)
+
+            TableRow doorHeightRow = new TableRow();
+            TableCell doorHeightLBLCell = new TableCell();
+            TableCell doorHeightDDLCell = new TableCell();
+
+            Label doorHeightLBL = new Label();
+            doorHeightLBL.ID = "lblDoorHeight";
+            doorHeightLBL.Text = "Door Height:";
+
+            DropDownList doorHeightDDL = new DropDownList();
+            doorHeightDDL.ID = "ddlDoorHeight";
+            ListItem fiveFeet = new ListItem("5'", "5");
+            ListItem sixFeet = new ListItem("6'", "6");
+            ListItem sevenFeet = new ListItem("7'", "7");
+            ListItem eightFeet = new ListItem("8'", "8");
+            doorHeightDDL.Items.Add(fiveFeet);
+            doorHeightDDL.Items.Add(sixFeet);
+            doorHeightDDL.Items.Add(sevenFeet);
+            doorHeightDDL.Items.Add(eightFeet);
+
+            doorHeightLBL.AssociatedControlID = "ddlDoorHeight";
+
+            #endregion
+
+            #region Table:Fourth Row Door Swing In (tblDoorDetails)
+
+            TableRow doorSwingInRow = new TableRow();
+            TableCell doorSwingInLBLCell = new TableCell();
+            TableCell doorSwingInRADCell = new TableCell();
+
+            Label doorSwingInLBLMain = new Label();
+            doorSwingInLBLMain.ID = "lblDoorSwingMain";
+            doorSwingInLBLMain.Text = "Swing:";
+
+            Label doorSwingInLBLRad = new Label();
+            doorSwingInLBLRad.ID = "lblDoorSwingIn";
+
+            Label doorSwingInLBL = new Label();
+            doorSwingInLBL.ID = "lblDoorSwingInRad";
+            doorSwingInLBL.Text = "In";            
+
+            RadioButton doorSwingInRAD = new RadioButton();
+            doorSwingInRAD.ID = "radDoorSwingIn";
+            doorSwingInRAD.GroupName = "SwingInOut";
+
+            doorSwingInLBLRad.AssociatedControlID = "radDoorSwingIn";
+            doorSwingInLBL.AssociatedControlID = "radDoorSwingIn";
+
+            #endregion
+
+            #region Table:Fifth Row Door Swing Out (tblDoorDetails)
+
+            TableRow doorSwingOutRow = new TableRow();
+            TableCell doorSwingOutLBLCell = new TableCell();
+            TableCell doorSwingOutRADCell = new TableCell();
+
+            Label doorSwingOutLBLRad = new Label();
+            doorSwingOutLBLRad.ID = "lblDoorSwingOut";
+
+            Label doorSwingOutLBL = new Label();
+            doorSwingOutLBL.ID = "lblDoorSwingOutRad";
+            doorSwingOutLBL.Text = "Out";
+
+            RadioButton doorSwingOutRAD = new RadioButton();
+            doorSwingOutRAD.ID = "radDoorSwingOut";
+            doorSwingOutRAD.GroupName = "SwingInOut";
+
+            doorSwingOutLBLRad.AssociatedControlID = "radDoorSwingOut";
+            doorSwingOutLBL.AssociatedControlID = "radDoorSwingOut";
+
+            #endregion
+
 
             #region Table:First Row Type of Door Added to Table (tblDoorDetails)
             typeOfDoorLBLCell.Controls.Add(typeOfDoorLBL);
@@ -100,6 +182,7 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region Table:Second Row Color of Door Added to Table (tblDoorDetails)
+
             colorOfDoorLBLCell.Controls.Add(colorOfDoorLBL);
             colorOfDoorDDLCell.Controls.Add(colorOfDoorDDL);
 
@@ -107,11 +190,53 @@ namespace SunspaceDealerDesktop
 
             colorOfDoorRow.Cells.Add(colorOfDoorLBLCell);
             colorOfDoorRow.Cells.Add(colorOfDoorDDLCell);
+
+            #endregion
+
+            #region Table:Third Row Height Of Door Added To Table (tblDoorDetails)
+
+            doorHeightLBLCell.Controls.Add(doorHeightLBL);
+            doorHeightDDLCell.Controls.Add(doorHeightDDL);
+
+            tblDoorDetails.Rows.Add(doorHeightRow);
+
+            doorHeightRow.Cells.Add(doorHeightLBLCell);
+            doorHeightRow.Cells.Add(doorHeightDDLCell);
+
+            #endregion
+
+            #region Table:Fourth Row Swing In Added To Table (tblDoorDetails)
+
+            doorSwingInLBLCell.Controls.Add(doorSwingInLBLMain);
+
+            doorSwingInRADCell.Controls.Add(doorSwingInRAD);
+            doorSwingInRADCell.Controls.Add(doorSwingInLBLRad);
+            doorSwingInRADCell.Controls.Add(doorSwingInLBL);
+
+            tblDoorDetails.Rows.Add(doorSwingInRow);
+
+            doorSwingInRow.Cells.Add(doorSwingInLBLCell);
+            doorSwingInRow.Cells.Add(doorSwingInRADCell);
+
+            #endregion
+
+            #region Table:Fifth Row Swing Out Added To Table (tblDoorDetails)
+
+            doorSwingOutRADCell.Controls.Add(doorSwingOutRAD);
+            doorSwingOutRADCell.Controls.Add(doorSwingOutLBLRad);
+            doorSwingOutRADCell.Controls.Add(doorSwingOutLBL);
+
+            tblDoorDetails.Rows.Add(doorSwingOutRow);
+
+            doorSwingOutRow.Cells.Add(doorSwingOutLBLCell);
+            doorSwingOutRow.Cells.Add(doorSwingOutRADCell);
+
             #endregion
 
             wallDoorOptions.Controls.Add(tblDoorDetails);
 
             wallDoorOptions.Controls.Add(new LiteralControl("</li></ul></div>"));
+
             #endregion
 
             //DropDownList used in tables loaded to page
