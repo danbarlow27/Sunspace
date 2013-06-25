@@ -38,6 +38,7 @@ namespace SunspaceDealerDesktop
             ddlBackHeights.Controls.Add(ddlInFrac);
             ddlFrontHeights.Controls.Add(ddlInFrac);
             inchesSpecifics.Controls.Add(ddlInFrac);
+            //Hot fix
 
             //Used to dynamically add values to ddlWallDoorPlacement
             for (int i = 1; i <= (int)Session["numberOfWalls"]; i++)
