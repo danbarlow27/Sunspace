@@ -12,6 +12,18 @@
         for (var i = 0; i < lineList.length; i++) { 
             coordList[i] = lineList[i].split(","); //populate the 2d array
         }
+        var wallSetBacksArray = new Array();
+
+        function calculateSetBack() {
+            /*
+            WEST        :   LENGTH
+            SOUTHWEST   :   MATH (2a^2 = L^2)
+            SOUTH       :   ZERO
+            NORTH       :   ZERO
+            SOUTHEAST   :   NEGATIVE MATH 
+            EAST        :   NEGATIVE LENGTH
+            */
+        }
 
         function checkQuestion1() {
 
