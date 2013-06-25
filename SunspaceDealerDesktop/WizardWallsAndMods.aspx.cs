@@ -163,7 +163,7 @@ namespace SunspaceDealerDesktop
 
             RadioButton doorSwingOutRAD = new RadioButton();
             doorSwingOutRAD.ID = "radDoorSwingOut";
-            doorSwingInRAD.GroupName = "SwingInOut";
+            doorSwingOutRAD.GroupName = "SwingInOut";
 
             doorSwingOutLBLRad.AssociatedControlID = "radDoorSwingOut";
             doorSwingOutLBL.AssociatedControlID = "radDoorSwingOut";
