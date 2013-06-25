@@ -335,6 +335,7 @@
     <Compile Include="NewProject.aspx.designer.cs">
       <DependentUpon>NewProject.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Receiver.cs" />
     <Compile Include="SavedProjects.aspx.cs">
