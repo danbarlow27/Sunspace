@@ -505,8 +505,6 @@
 
         var lineArray = new Array(wallCount);
 
-
-        //Local variable to store all the line information
         //Local variable to store all the line information
         for (var i = 0; i < lineList.length; i++) { //draw all the lines with the given attributes
             lineArray[i] = canvas.append("line")
@@ -522,15 +520,12 @@
             else
                 lineArray[i].attr("stroke", "black");
         }
-        //alert(coordList[1][4]);
+
         function highlightWall() {
             var wallNumber = (document.activeElement.id.substr(19,1) - 1);
             
             for (var i = 0; i < wallCount; i++) {
                 if (coordList[i][4] == "P") {
-                //console.log("i: " + i);
-                //console.log("wallNumber: " + wallNumber);
-                //console.log(i == wallNumber);
                     if (i == wallNumber) {
 
                         lineArray[i].attr("stroke", "yellow");
