@@ -8,6 +8,7 @@ namespace SunspaceDealerDesktop
     public class Wall
     {
         #region Attributes
+
         private float proposedLength;
         private int firstItemIndex; //Index of First Item in Wall
         private int lastItemIndex; //Index of Last Item in Wall
@@ -24,6 +25,7 @@ namespace SunspaceDealerDesktop
         List<Object> linearItems = new List<Object>();
         List<Object> obstructions = new List<Object>();
         //colours?
+
         #endregion
 
         #region Constructors
