@@ -9,12 +9,14 @@ namespace SunspaceDealerDesktop
     {
         private int linearIndex;
         private bool sunshade;
+        private float fixedValue;
         List<Object> modularItems = new List<Object>();
 
         public Mod()
         {
             LinearIndex = 0;
             Sunshade = false;
+            FixedValue = 0.0f;
         }
 
         public int LinearIndex
@@ -40,6 +42,18 @@ namespace SunspaceDealerDesktop
             set
             {
                 sunshade = value;
+            }
+        }
+
+        public float FixedValue
+        {
+            get
+            {
+                return fixedValue;
+            }
+            set
+            {
+                fixedValue = value;
             }
         }
     }
