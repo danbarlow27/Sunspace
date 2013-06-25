@@ -17,7 +17,105 @@ namespace SunspaceDealerDesktop
             Session["coordList"] = "125,387.5,162.5,162.5,E,S/187.5,187.5,162.5,275,P,W/187.5,300,275,275,P,S/300,300,275,162.5,P,E/";
             /**********************************/
             hiddenFieldsDiv.InnerHtml = createHiddenFields(); //create hidden fields on page load dynamically
+
+            //SLIDE 3 DOOR DETAILS PER WALL
+            #region Slide 3: Onload dynamic loop to insert wall door options
+
+            wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
+
+            RadioButton wallRadio = new RadioButton();
+            wallRadio.ID = "radWall";
+
+            Label wallLabelRadio = new Label();
+            Label wallLabel = new Label();
+
+            wallLabelRadio.AssociatedControlID = "radWall";
+            wallLabel.AssociatedControlID = "radWall";
+            wallLabel.Text = "Wall 1 Door Options";
+
+            wallDoorOptions.Controls.Add(wallRadio);
+            wallDoorOptions.Controls.Add(wallLabelRadio);
+            wallDoorOptions.Controls.Add(wallLabel);            
+
+            wallDoorOptions.Controls.Add(new LiteralControl("<div class='toggleContent'><ul><li>"));
+
+            wallDoorOptions.Controls.Add(new LiteralControl("<h3>Select door details:</h3>"));
+
+            Table tblDoorDetails = new Table();
+
+            tblDoorDetails.ID = "tblDoorDetails";
+            tblDoorDetails.CssClass = "tblTextFields";
+            tblDoorDetails.Attributes.Add("runat", "server");
+
+            #region Table:First Row Type of Door (tblDoorDetails)
+            TableRow typeOfDoorRow = new TableRow();            
+            TableCell typeOfDoorLBLCell = new TableCell();
+            TableCell typeOfDoorDDLCell = new TableCell();
+
+            Label typeOfDoorLBL = new Label();
+            typeOfDoorLBL.ID = "lblDoorType";
+            typeOfDoorLBL.Text = "Door Type:";
+
+            DropDownList typeOfDoorDDL = new DropDownList();
+            typeOfDoorDDL.ID = "ddlDoorType";
+            ListItem cabana = new ListItem("Cabana", "cabana");
+            ListItem french = new ListItem("French", "french");
+            ListItem patio = new ListItem("Patio", "patio");
+            typeOfDoorDDL.Items.Add(cabana);
+            typeOfDoorDDL.Items.Add(french);
+            typeOfDoorDDL.Items.Add(patio);
+
+            typeOfDoorLBL.AssociatedControlID = "ddlDoorType";
+            #endregion
+
+            #region Table:Second Row Color of Door (tblDoorDetails)
+            TableRow colorOfDoorRow = new TableRow();
+            TableCell colorOfDoorLBLCell = new TableCell();
+            TableCell colorOfDoorDDLCell = new TableCell();
+
+            Label colorOfDoorLBL = new Label();
+            colorOfDoorLBL.ID = "lblDoorColor";
+            colorOfDoorLBL.Text = "Door Color:";
+
+            DropDownList colorOfDoorDDL = new DropDownList();
+            colorOfDoorDDL.ID = "ddlDoorColor";
+            ListItem clear = new ListItem("Clear", "clear");
+            ListItem grey = new ListItem("Grey", "grey");
+            ListItem bronze = new ListItem("Bronze", "bronze");
+            colorOfDoorDDL.Items.Add(clear);
+            colorOfDoorDDL.Items.Add(grey);
+            colorOfDoorDDL.Items.Add(patio);
+
+            colorOfDoorLBL.AssociatedControlID = "ddlDoorColor";
+            #endregion
+
+            #region Table:First Row Type of Door Added to Table (tblDoorDetails)
+            typeOfDoorLBLCell.Controls.Add(typeOfDoorLBL);
+            typeOfDoorDDLCell.Controls.Add(typeOfDoorDDL);
             
+            tblDoorDetails.Rows.Add(typeOfDoorRow);
+
+            typeOfDoorRow.Cells.Add(typeOfDoorLBLCell);
+            typeOfDoorRow.Cells.Add(typeOfDoorDDLCell);
+            #endregion
+
+            #region Table:Second Row Color of Door Added to Table (tblDoorDetails)
+            colorOfDoorLBLCell.Controls.Add(colorOfDoorLBL);
+            colorOfDoorDDLCell.Controls.Add(colorOfDoorDDL);
+
+            tblDoorDetails.Rows.Add(colorOfDoorRow);
+
+            colorOfDoorRow.Cells.Add(colorOfDoorLBLCell);
+            colorOfDoorRow.Cells.Add(colorOfDoorDDLCell);
+            #endregion
+
+            wallDoorOptions.Controls.Add(tblDoorDetails);
+
+            wallDoorOptions.Controls.Add(new LiteralControl("</li></ul></div>"));
+            #endregion
+
+            //DropDownList used in tables loaded to page
+            #region DropDownList Section
             DropDownList ddlInFrac = new DropDownList();
             ListItem lst0 = new ListItem("---", "", true);
             ListItem lst18 = new ListItem("1/8", ".125");
@@ -35,7 +133,7 @@ namespace SunspaceDealerDesktop
             ddlInFrac.Items.Add(lst58);
             ddlInFrac.Items.Add(lst34);
             ddlInFrac.Items.Add(lst78);
-            inchesSpecifics.Controls.Add(ddlInFrac);
+            //inchesSpecifics.Controls.Add(ddlInFrac);
 
             DropDownList ddlInFracBackWall = new DropDownList();
             ddlInFracBackWall.Items.Add(lst0);
@@ -58,12 +156,14 @@ namespace SunspaceDealerDesktop
             ddlInFracFrontWall.Items.Add(lst34);
             ddlInFracFrontWall.Items.Add(lst78);
             phFrontHeights.Controls.Add(ddlInFracFrontWall);
+            #endregion
 
+            #region For Loop for slide 1 and slide3
             //Used to dynamically add values to ddlWallDoorPlacement
             for (int i = 1; i <= (int)Session["numberOfWalls"]; i++)
             {
                 ListItem numberOfWalls = new ListItem(Convert.ToString(i), Convert.ToString(i));
-                ddlWallDoorPlacement.Items.Add(numberOfWalls);
+                //ddlWallDoorPlacement.Items.Add(numberOfWalls);
             }
 
             for (int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 5 right now
@@ -160,7 +260,9 @@ namespace SunspaceDealerDesktop
                 row.Cells.Add(cell6);
                 row.Cells.Add(cell7);
             }
+            #endregion
         }
+            
 
         protected void txtWallLengths_TextChanged(object sender, EventArgs e)
         { 
