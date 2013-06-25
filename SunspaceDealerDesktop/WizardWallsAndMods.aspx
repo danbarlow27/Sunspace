@@ -526,12 +526,12 @@
         //Local variable to store all the line information
         //Local variable to store all the line information
         for (var i = 0; i < lineList.length; i++) { //draw all the lines with the given attributes
-            var line = canvas.append("line") 
+            var line = canvas.append("line")
                     .attr("x1", (coordList[i][0] / 5) * 2)
                     .attr("y1", (coordList[i][2] / 5) * 2)
                     .attr("x2", (coordList[i][1] / 5) * 2)
-                    .attr("y2", (coordList[i][3] / 5) * 2)
-                    .attr("onmousedown", alert("hwllo"));
+                    .attr("y2", (coordList[i][3] / 5) * 2);
+                    //.attr("onmousedown", alert("hwllo"));
             
             if(coordList[i][4] === "E")
                 line.attr("stroke", "red");
