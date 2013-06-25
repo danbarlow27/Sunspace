@@ -536,6 +536,9 @@
                     .attr("height", 200)  //Sets the height for the canvas/grid
                     .attr("fill", "#f6f6f6");              //Sets the color of the rectangle to light grey
 
+        var lineArray = new Array(wallCount);
+
+
         //Local variable to store all the line information
         //Local variable to store all the line information
         for (var i = 0; i < lineList.length; i++) { //draw all the lines with the given attributes
@@ -543,7 +546,8 @@
                     .attr("x1", (coordList[i][0] / 5) * 2)
                     .attr("y1", (coordList[i][2] / 5) * 2)
                     .attr("x2", (coordList[i][1] / 5) * 2)
-                    .attr("y2", (coordList[i][3] / 5) * 2);
+                    .attr("y2", (coordList[i][3] / 5) * 2)
+                    .attr("id", "wall" + i);
                     //line.attr("onmouseover", alert("hwllo"));
             
             if(coordList[i][4] === "E")
@@ -553,14 +557,10 @@
         }
 
         function highlightWall() {
-            var activeTextbox = document.activeElement;
-            var wallNumber = activeTextbox.id;
+            var wallNumber = document.activeElement.id.substr(19,1);
+            
 
-            alert("hello");
-
-            if(activeTextbox.id === "MainContent_txtWall1Length")
-                alert("hello");
-
+            
 
 
 
