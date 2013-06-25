@@ -6,7 +6,6 @@
     =================================== --%>
     <script>
 
-        //var wallCount = '<%= //(int)Session["numberOfWalls"] %>'; //number of walls drawn by the user
         var lines = '<%= (string)Session["coordList"] %>'; //all the coordinates of all the lines
         var lineList = lines.substr(0, lines.length-1).split("/"); //a list of lines and their coordinates
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
@@ -522,12 +521,11 @@
         }
 
         function highlightWall() {
-            var wallNumber = (document.activeElement.id.substr(19,1) - 1);
+            var wallNumber = (document.activeElement.id.substr(19,1));
             
             for (var i = 0; i < lineList.length; i++) {
                 if (coordList[i][4] == "P") {
                     if (i == wallNumber) {
-
                         lineArray[i].attr("stroke", "yellow");
                         lineArray[i].attr("stroke-width", "2");
                     }
