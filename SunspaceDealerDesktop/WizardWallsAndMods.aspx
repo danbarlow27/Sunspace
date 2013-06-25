@@ -177,8 +177,21 @@
                     <asp:Label ID="lblQuestion1" runat="server" Text="Please enter the wall lengths"></asp:Label>
                 </h1>        
                               
-                <div  runat="server">
-                    <asp:Table ID="tblWallLengths" CssClass="tblWallLengths" runat="server"></asp:Table>
+                <div id="tableWallLengths" class="tblWallLengths" runat="server">
+                    <asp:Table ID="tblWallLengths"  runat="server">
+                        <asp:TableRow>
+                            <asp:TableCell></asp:TableCell>
+                            <asp:TableCell ColumnSpan="2" >
+                                Left Filler
+                            </asp:TableCell>
+                            <asp:TableCell ColumnSpan="2">
+                                Length
+                            </asp:TableCell>
+                            <asp:TableCell ColumnSpan="2">
+                                Right Filler
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
                 </div>
 
                 <asp:Button ID="btnQuestion1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
@@ -521,7 +534,7 @@
         var rect = canvas.append("rect")                //Draws a rectangle for the canvas/grid to sit in
                     .attr("width", 200)    //Sets the width for the canvas/grid
                     .attr("height", 200)  //Sets the height for the canvas/grid
-                    .attr("fill", "#f6f6f6")              //Sets the color of the rectangle to light grey
+                    .attr("fill", "#f6f6f6");              //Sets the color of the rectangle to light grey
 
         //Local variable to store all the line information
         //Local variable to store all the line information
@@ -531,12 +544,26 @@
                     .attr("y1", (coordList[i][2] / 5) * 2)
                     .attr("x2", (coordList[i][1] / 5) * 2)
                     .attr("y2", (coordList[i][3] / 5) * 2);
-                    //.attr("onmousedown", alert("hwllo"));
+                    //line.attr("onmouseover", alert("hwllo"));
             
             if(coordList[i][4] === "E")
                 line.attr("stroke", "red");
             else
                 line.attr("stroke", "black");
+        }
+
+        function highlightWall() {
+            var activeTextbox = document.activeElement;
+            var wallNumber = activeTextbox.id;
+
+            alert("hello");
+
+            if(activeTextbox.id === "MainContent_txtWall1Length")
+                alert("hello");
+
+
+
+
         }
 /*******************************************************************************************************/
     </script>
