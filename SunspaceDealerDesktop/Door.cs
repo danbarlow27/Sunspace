@@ -19,12 +19,12 @@ namespace SunspaceDealerDesktop
 
         public Door()
         {
-            TypeOfDoor = "entry"; 
+            TypeOfDoor = "cabana"; 
             ItemIndex = -1;
             TransomStyle = "solid"; 
             TransomTint = "glass";
-            Height = 80.5f; 
-            Width = 60.6f;
+            Height = 80f; 
+            Width = 40f;
         }
 
         public String TypeOfDoor

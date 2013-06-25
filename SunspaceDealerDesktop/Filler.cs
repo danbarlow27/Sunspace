@@ -14,6 +14,11 @@ namespace SunspaceDealerDesktop
             Length = Constants.DEFAULT_FILLER;
         }
 
+        public Filler(float sentLength)
+        {
+            Length = sentLength;
+        }
+
         public float Length
         {
             get
