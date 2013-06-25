@@ -7,6 +7,8 @@ namespace SunspaceDealerDesktop
 {
     public class Window
     {
+        #region Attributes
+
         private int linearIndex;
         private int moduleIndex;
         private string windowType;
@@ -16,6 +18,10 @@ namespace SunspaceDealerDesktop
         private string frameColour;
         private bool spreaderBar;
         private int numVents;
+
+        #endregion
+
+        #region Constructors
 
         public Window()
         {
@@ -29,6 +35,10 @@ namespace SunspaceDealerDesktop
             SpreaderBar = false;
             NumVents = 0;
         }
+
+        #endregion
+
+        #region Accessors
 
         public int LinearIndex
         {
@@ -137,5 +147,7 @@ namespace SunspaceDealerDesktop
                 numVents = value;
             }
         }
+
+        #endregion
     }
 }

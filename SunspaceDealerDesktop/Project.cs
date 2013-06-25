@@ -7,6 +7,8 @@ namespace SunspaceDealerDesktop
 {
     public class Project
     {
+        #region Attributes
+
         private int projectId;
         private string projectType;
         private string installType;
@@ -19,6 +21,10 @@ namespace SunspaceDealerDesktop
         private int revisedUserId;
         private float msrp;
         private string projectNotes;
+
+        #endregion
+
+        #region Constructors
 
         public Project()
         {
@@ -35,6 +41,10 @@ namespace SunspaceDealerDesktop
             Msrp = 0.0f;
             ProjectNotes = "";
         }
+
+        #endregion
+
+        #region Accessors
 
         public int ProjectId
         {
@@ -179,5 +189,7 @@ namespace SunspaceDealerDesktop
                 projectNotes = value;
             }
         }
+
+        #endregion
     }
 }
