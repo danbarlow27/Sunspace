@@ -235,7 +235,7 @@ namespace SunspaceDealerDesktop
                 txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()");
                 txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");
                 txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
-                txtWallLength.Attributes.Add("onblur", "resetWalls()");
+                txtLeftFiller.Attributes.Add("onblur", "resetWalls()");
 
                 txtRightFiller.ID = "txtWall" + i + "RightFiller";
                 txtRightFiller.CssClass = "txtField txtLengthInput";
@@ -243,7 +243,7 @@ namespace SunspaceDealerDesktop
                 txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");
                 txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");
                 txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
-                txtWallLength.Attributes.Add("onblur", "resetWalls()");
+                txtRightFiller.Attributes.Add("onblur", "resetWalls()");
 
                 cell1.Controls.Add(lblWallNumber);
                 cell2.Controls.Add(txtWallLength);

@@ -404,8 +404,7 @@
         }
 
         function highlightWallsLength() {
-            var wallNumber = (document.activeElement.id.substr(19,1));
-            
+            var wallNumber = (document.activeElement.id.substr(19,1));            
                 if (coordList[wallNumber][4] == "P") {
                         lineArray[wallNumber].attr("stroke", "yellow");
                         lineArray[wallNumber].attr("stroke-width", "2");
@@ -425,32 +424,45 @@
 
         function highlightWallsHeight() {
             var textbox = (document.activeElement.id.substr(15, 1));
+            var southWalls = new Array();
+            var lowestWall = 0; //arbitrary number
+            var lowestIndex;
+            var highestWall = 200; //arbitrary number
+            var highestIndex;
+            var index;
 
-            if (textbox === "B") {
+            //if (textbox === "B") {
                 for (var i = 0; i < lineList.length; i++) {
                     if (coordList[i][5] == "S") {
-                        lineArray[i].attr("stroke", "yellow");
-                        lineArray[i].attr("stroke-width", "2");
-                    }
-                    else {
-                        lineArray[i].attr("stroke", "black");
-                        lineArray[i].attr("stroke-width", "1");
+                        southWalls.push({ "y2": lineArray[i].attr("y2"), "number": i });
+
+                        //lineArray[i].attr("stroke", "yellow");
+                        //lineArray[i].attr("stroke-width", "2");
                     }
                 }
-            }
-            else if (textbox === "F") {
-            for (var i = 0; i < lineList.length; i++) {
-                    if (coordList[i][5] == "S") {
-                        lineArray[i].attr("stroke", "yellow");
-                        lineArray[i].attr("stroke-width", "2");
+
+                //console.log(lineArray[0].attr("y2"));
+                for (var i = 0; i < southWalls.length; i++) {
+                    if (southWalls[i].y2 > lowestWall) {
+                        lowestWall = southWalls[i].y2;
+                        lowestIndex = southWalls[i].number;
                     }
-                    else {
-                        lineArray[i].attr("stroke", "black");
-                        lineArray[i].attr("stroke-width", "1");
+                    if (southWalls[i].y2 < highestWall) {
+                        highestWall = southWalls[i].y2;
+                        highestIndex = southWalls[i].number;
                     }
                 }
-            }
+                console.log(lowestIndex);
+                index = (textbox === "B") ? lowestIndex : highestIndex;
+                //alert(index);
+                lineArray[index].attr("stroke", "yellow");
+                lineArray[index].attr("stroke-width", "2");
+
         }
+
+
+        //}
+            
 /*******************************************************************************************************/
     </script>
     <%-- Hidden input tags 
