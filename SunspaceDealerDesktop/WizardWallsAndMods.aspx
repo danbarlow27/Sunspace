@@ -261,122 +261,12 @@
                 </h1>        
                               
                 <ul class="toggleOptions">
+                    <asp:PlaceHolder ID="wallDoorOptions" runat="server">
 
-                    <%-- DOOR YES --%>
-                    <li>
-                        <asp:RadioButton ID="radDoorYes" OnClick="checkQuestion3()" GroupName="question3" runat="server" />
-                        <asp:Label ID="lblDoorYesRadio" AssociatedControlID="radDoorYes" runat="server"></asp:Label>
-                        <asp:Label ID="lblDoorYes" AssociatedControlID="radDoorYes" runat="server" Text="Yes"></asp:Label>
-           
-                        <div class="toggleContent">
-                            <ul>
-                                <li>
-                                    <h3>Enter door details:</h3>
+                    
 
-                                    <asp:Table ID="tblDoorYesInfo" CssClass="tblTxtFields" runat="server">
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblDoorType" AssociatedControlID="ddlDoorType" runat="server" Text="Type Of Door:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlDoorType" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
-                                                    <asp:ListItem Text="Cabana" Value="Cabana"/>
-                                                    <asp:ListItem Text="French" Value="French" />
-                                                    <asp:ListItem Text="Patio" Value="Patio" />
-                                                </asp:DropDownList>                                                
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblDoorColour" AssociatedControlID="ddlDoorColour" runat="server" Text="Door Colour:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlDoorColour" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
-                                                    <asp:ListItem Text="Clear" Value="Clear" />
-                                                    <asp:ListItem Text="Grey" Value="Grey" />
-                                                    <asp:ListItem Text="Bronze" Value="Bronze" />
-                                                </asp:DropDownList>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblDoorHeight" AssociatedControlID="ddlDoorHeight" runat="server" Text="Door height:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlDoorHeight" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
-                                                    <asp:ListItem Text="5'" Value="5"/>
-                                                    <asp:ListItem Text="6'" Value="6"/>
-                                                    <asp:ListItem Text="7'" Value="7" />
-                                                    <asp:ListItem Text="8'" Value="8" />
-                                                </asp:DropDownList>                                                
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblSwingingDoor" runat="server" Text="Swinging Door:" ></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:RadioButton ID="radSwingingDoorYes" checked="true" GroupName="Swinging" runat="server" />
-                                                <asp:Label ID="lblSwingingDoorYesRadio" AssociatedControlID="radSwingingDoorYes" runat="server"></asp:Label>
-                                                <asp:Label ID="lblSwingingDoorYes" AssociatedControlID="radSwingingDoorYes" runat="server" Text="&nbsp; Yes"></asp:Label>                                               
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:RadioButton ID="radSwingingDoorNo" GroupName="Swinging" runat="server" />
-                                                <asp:Label ID="lblSwingingDoorNoRadio" AssociatedControlID="radSwingingDoorNo" runat="server"></asp:Label>
-                                                <asp:Label ID="lblSwingingDoorNo" AssociatedControlID="radSwingingDoorNo" runat="server" Text="&nbsp; No"></asp:Label>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow ID="WallDoorPlacement">
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblCustomerCity" AssociatedControlID="ddlWallDoorPlacement" runat="server" Text="Which wall is the door in:"></asp:Label>
-                                            </asp:TableCell>
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlWallDoorPlacement" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
-                                                </asp:DropDownList>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblWallDoorPosition" AssociatedControlID="txtWallDoorPosition" runat="server" Text="Inches from left side the wall:"></asp:Label>
-                                            </asp:TableCell>
-                                            <asp:TableCell>
-                                                <asp:TextBox ID="txtWallDoorPosition" onkeyup="checkQuestion3()" CssClass="txtField txtInput" runat="server" MaxLength="3"></asp:TextBox>
-                                            </asp:TableCell>
-                                            <asp:TableCell >
-                                                <asp:PlaceHolder ID="inchesSpecifics" runat="server" />
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                    </asp:Table>
-                                </li>
-                            </ul>            
-                        </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'complete sunroom' option --%>
-
-                    <%-- DOOR NO --%>
-                    <li>
-                        <asp:RadioButton ID="radDoorNo" OnClick="checkQuestion3()" GroupName="question3" runat="server" />
-                        <asp:Label ID="lblDoorNoRadio" AssociatedControlID="radDoorNo" runat="server"></asp:Label>
-                        <asp:Label ID="lblDoorNo" AssociatedControlID="radDoorNo" runat="server" Text="No"></asp:Label>
-                    </li> <%-- end 'existing customer' option --%>
-
-                </ul> <%-- end .toggleOptions --%>
+</asp:PlaceHolder>                    
+        </ul>            
 
                 <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
@@ -549,7 +439,7 @@
                 }
             }
             else if (textbox === "F") {
-                for (var i = 0; i < lineList.length; i++) {
+            for (var i = 0; i < lineList.length; i++) {
                     if (coordList[i][5] == "S") {
                         lineArray[i].attr("stroke", "yellow");
                         lineArray[i].attr("stroke-width", "2");
