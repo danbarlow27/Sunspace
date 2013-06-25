@@ -177,7 +177,7 @@
                 </h1>        
                               
                 <div id="tableWallLengths" class="tblWallLengths" runat="server">
-                    <asp:Table ID="tblWallLengths" MinHeight="200px" runat="server">
+                    <asp:Table ID="tblWallLengths" runat="server">
                         <asp:TableRow>
                             <asp:TableCell></asp:TableCell>
                             <asp:TableCell ColumnSpan="2" >
@@ -221,7 +221,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:PlaceHolder ID="ddlBackHeights" runat="server" />
+                                                <asp:PlaceHolder ID="phBackHeights" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -235,7 +235,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:PlaceHolder ID="ddlFrontHeights" runat="server" />
+                                                <asp:PlaceHolder ID="phFrontHeights" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
 

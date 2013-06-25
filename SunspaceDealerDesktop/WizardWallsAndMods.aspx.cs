@@ -34,11 +34,30 @@ namespace SunspaceDealerDesktop
             ddlInFrac.Items.Add(lst12);
             ddlInFrac.Items.Add(lst58);
             ddlInFrac.Items.Add(lst34);
-            ddlInFrac.Items.Add(lst78);            
-            ddlBackHeights.Controls.Add(ddlInFrac);
-            ddlFrontHeights.Controls.Add(ddlInFrac);
+            ddlInFrac.Items.Add(lst78);
             inchesSpecifics.Controls.Add(ddlInFrac);
-            //Hot fix
+
+            DropDownList ddlInFracBackWall = new DropDownList();
+            ddlInFracBackWall.Items.Add(lst0);
+            ddlInFracBackWall.Items.Add(lst18);
+            ddlInFracBackWall.Items.Add(lst14);
+            ddlInFracBackWall.Items.Add(lst38);
+            ddlInFracBackWall.Items.Add(lst12);
+            ddlInFracBackWall.Items.Add(lst58);
+            ddlInFracBackWall.Items.Add(lst34);
+            ddlInFracBackWall.Items.Add(lst78);
+            phBackHeights.Controls.Add(ddlInFracBackWall);
+
+            DropDownList ddlInFracFrontWall = new DropDownList();
+            ddlInFracFrontWall.Items.Add(lst0);
+            ddlInFracFrontWall.Items.Add(lst18);
+            ddlInFracFrontWall.Items.Add(lst14);
+            ddlInFracFrontWall.Items.Add(lst38);
+            ddlInFracFrontWall.Items.Add(lst12);
+            ddlInFracFrontWall.Items.Add(lst58);
+            ddlInFracFrontWall.Items.Add(lst34);
+            ddlInFracFrontWall.Items.Add(lst78);
+            phFrontHeights.Controls.Add(ddlInFracFrontWall);
 
             //Used to dynamically add values to ddlWallDoorPlacement
             for (int i = 1; i <= (int)Session["numberOfWalls"]; i++)
@@ -61,17 +80,7 @@ namespace SunspaceDealerDesktop
                 TableCell cell6 = new TableCell();
                 TableCell cell7 = new TableCell();
 
-                TableCell cellLabelLeftFiller = new TableCell();
-                TableCell cellTextBoxLeftFiller = new TableCell();
-                TableCell cellDropDownLeftFiller = new TableCell();
-
-                TableCell cellLabelRightFiller = new TableCell();
-                TableCell cellTextBoxRightFiller = new TableCell();
-                TableCell cellDropDownRightFiller = new TableCell();
-
                 Label lblWallNumber = new Label();
-                //Label lblLeftFiller = new Label();
-                //Label lblRightFiller = new Label();
 
                 TextBox txtWallLength = new TextBox();
                 TextBox txtLeftFiller = new TextBox();
@@ -112,14 +121,6 @@ namespace SunspaceDealerDesktop
                 lblWallNumber.ID = "lblWall" + i + "Length";
                 lblWallNumber.AssociatedControlID = "txtWall" + i + "Length";
 
-                //lblLeftFiller.Text = "Left " + i + " Filler Length: ";
-                //lblLeftFiller.ID = "lblWall" + i + "LeftFiller";
-                //lblLeftFiller.AssociatedControlID = "txtWall" + i + "LeftFiller";
-
-                //lblRightFiller.Text = "Right " + i + " Filler Length: ";
-                //lblRightFiller.ID = "lblWall" + i + "RightFiller";
-                //lblRightFiller.AssociatedControlID = "txtWall" + i + "RightFiller";
-
                 txtWallLength.ID = "txtWall" + i + "Length";
                 txtWallLength.CssClass = "txtField txtLengthInput";
                 txtWallLength.MaxLength = 3;
@@ -149,17 +150,7 @@ namespace SunspaceDealerDesktop
                 cell6.Controls.Add(txtRightFiller);
                 cell7.Controls.Add(ddlRightInchFractions);
 
-                //cellLabelLeftFiller.Controls.Add(lblLeftFiller);
-                //cellTextBoxLeftFiller.Controls.Add(txtLeftFiller);
-                //cellDropDownLeftFiller.Controls.Add(ddlLeftInchFractions);
-
-                //cellLabelRightFiller.Controls.Add(lblRightFiller);
-                //cellTextBoxRightFiller.Controls.Add(txtRightFiller);
-                //cellDropDownRightFiller.Controls.Add(ddlRightInchFractions);
-
                 tblWallLengths.Rows.Add(row);
-                //tblWallLengths.Rows.Add(rowLeftFiller);
-                //tblWallLengths.Rows.Add(rowRightFiller);
 
                 row.Cells.Add(cell1);
                 row.Cells.Add(cell2);
@@ -168,14 +159,6 @@ namespace SunspaceDealerDesktop
                 row.Cells.Add(cell5);
                 row.Cells.Add(cell6);
                 row.Cells.Add(cell7);
-
-                //rowLeftFiller.Cells.Add(cellLabelLeftFiller);
-                //rowLeftFiller.Cells.Add(cellTextBoxLeftFiller);
-                //rowLeftFiller.Cells.Add(cellDropDownLeftFiller);
-
-                //rowRightFiller.Cells.Add(cellLabelRightFiller);
-                //rowRightFiller.Cells.Add(cellTextBoxRightFiller);
-                //rowRightFiller.Cells.Add(cellDropDownRightFiller);
             }
         }
 
