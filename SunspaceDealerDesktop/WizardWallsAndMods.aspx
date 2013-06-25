@@ -12,6 +12,18 @@
         for (var i = 0; i < lineList.length; i++) { 
             coordList[i] = lineList[i].split(","); //populate the 2d array
         }
+        var wallSetBacksArray = new Array();
+
+        function calculateSetBack() {
+            /*
+            WEST        :   LENGTH
+            SOUTHWEST   :   MATH (2a^2 = L^2)
+            SOUTH       :   ZERO
+            NORTH       :   ZERO
+            SOUTHEAST   :   NEGATIVE MATH 
+            EAST        :   NEGATIVE LENGTH
+            */
+        }
 
         function checkQuestion1() {
 
@@ -97,6 +109,7 @@
                 
             }
             else {
+                alert("error");
                 //error styling or something
                 //Set answer on side pager and enable button
                 $('#MainContent_lblWallHeightsAnswer').text("Wall Heights Invalid");
@@ -208,7 +221,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtBackWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtBackWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" onblur="resetWalls()" OnFocus="highlightWallsHeight()" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
@@ -222,7 +235,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtFrontWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtFrontWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" onblur="resetWalls()" OnFocus="highlightWallsHeight()" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
@@ -262,8 +275,10 @@
                 <ul class="toggleOptions">
                     <asp:PlaceHolder ID="wallDoorOptions" runat="server">
 
-                    </asp:PlaceHolder>
-                </ul>
+                    
+
+</asp:PlaceHolder>                    
+        </ul>            
 
                 <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
@@ -392,8 +407,7 @@
                     .attr("y1", (coordList[i][2] / 5) * 2)
                     .attr("x2", (coordList[i][1] / 5) * 2)
                     .attr("y2", (coordList[i][3] / 5) * 2);
-                    //.attr("id", "wall" + i);
-                    //line.attr("onmouseover", alert("hwllo"));
+            //lineArray[i].attr("mouseover", alert("hwllo"));
             
             if(coordList[i][4] === "E")
                 lineArray[i].attr("stroke", "red");
@@ -401,22 +415,56 @@
                 lineArray[i].attr("stroke", "black");
         }
 
-        function highlightWall() {
-            var wallNumber = (document.activeElement.id.substr(19,1));
-            
+        function highlightWallsLength() {
+            var wallNumber = (document.activeElement.id.substr(19,1));            
+
+            lineArray[wallNumber - 1].attr("stroke", "yellow");
+            lineArray[wallNumber - 1].attr("stroke-width", "2");
+               
+        }
+
+        function resetWalls() {
             for (var i = 0; i < lineList.length; i++) {
-                if (coordList[i][4] == "P") {
-                    if (i == wallNumber) {
-                        lineArray[i].attr("stroke", "yellow");
-                        lineArray[i].attr("stroke-width", "2");
-                    }
-                    else {
-                        lineArray[i].attr("stroke", "black");
-                        lineArray[i].attr("stroke-width", "1");
-                    }
-                }
+                if (coordList[i][4] === "E")
+                    lineArray[i].attr("stroke", "red");
+                else
+                    lineArray[i].attr("stroke", "black");
+
+                lineArray[i].attr("stroke-width", "1");
             }
         }
+
+        function highlightWallsHeight() {
+            var textbox = (document.activeElement.id.substr(15, 1));
+            var southWalls = new Array();
+            var lowestWall = 0; //arbitrary number
+            var lowestIndex;
+            var highestWall = 200; //arbitrary number
+            var highestIndex;
+            var index;
+
+            for (var i = 0; i < lineList.length; i++) {
+                if (coordList[i][5] == "S") {
+                    southWalls.push({ "y2": lineArray[i].attr("y2"), "number": i });
+                }
+            }
+
+            for (var i = 0; i < southWalls.length; i++) {
+                if (southWalls[i].y2 > lowestWall) {
+                    lowestWall = southWalls[i].y2;
+                    lowestIndex = southWalls[i].number;
+                }
+                if (southWalls[i].y2 < highestWall) {
+                    highestWall = southWalls[i].y2;
+                    highestIndex = southWalls[i].number;
+                }
+            }
+            console.log(lowestIndex);
+            index = (textbox === "B") ? lowestIndex : highestIndex;
+            lineArray[index].attr("stroke", "yellow");
+            lineArray[index].attr("stroke-width", "2");
+        }
+            
 /*******************************************************************************************************/
     </script>
     <%-- Hidden input tags 

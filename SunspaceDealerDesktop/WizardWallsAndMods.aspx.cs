@@ -13,7 +13,7 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             /***hard coded session variables***/
-            Session["numberOfWalls"] = 3;
+            Session["numberOfWalls"] = 4;
             Session["coordList"] = "125,387.5,162.5,162.5,E,S/187.5,187.5,162.5,275,P,W/187.5,300,275,275,P,S/300,300,275,162.5,P,E/";
             /**********************************/
             hiddenFieldsDiv.InnerHtml = createHiddenFields(); //create hidden fields on page load dynamically
@@ -351,21 +351,24 @@ namespace SunspaceDealerDesktop
                 txtWallLength.MaxLength = 3;
                 txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
                 txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");
-                txtWallLength.Attributes.Add("OnFocus", "highlightWall()");
+                txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()");
+                txtWallLength.Attributes.Add("onblur", "resetWalls()");
 
                 txtLeftFiller.ID = "txtWall" + i + "LeftFiller";
                 txtLeftFiller.CssClass = "txtField txtLengthInput";
                 txtLeftFiller.MaxLength = 3;
                 txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()");
                 txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");
-                txtLeftFiller.Attributes.Add("OnFocus", "highlightWall()");
+                txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
+                txtLeftFiller.Attributes.Add("onblur", "resetWalls()");
 
                 txtRightFiller.ID = "txtWall" + i + "RightFiller";
                 txtRightFiller.CssClass = "txtField txtLengthInput";
                 txtRightFiller.MaxLength = 3;
                 txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");
                 txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");
-                txtRightFiller.Attributes.Add("OnFocus", "highlightWall()");
+                txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
+                txtRightFiller.Attributes.Add("onblur", "resetWalls()");
 
                 cell1.Controls.Add(lblWallNumber);
                 cell2.Controls.Add(txtWallLength);
