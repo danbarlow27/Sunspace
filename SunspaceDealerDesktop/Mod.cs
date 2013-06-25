@@ -11,7 +11,8 @@ namespace SunspaceDealerDesktop
 
         private int linearIndex;
         private bool sunshade;
-        private float fixedValue;
+        private float fixedLocation;
+        private string modType;
         List<Object> modularItems = new List<Object>();
 
         #endregion
@@ -22,7 +23,8 @@ namespace SunspaceDealerDesktop
         {
             LinearIndex = 0;
             Sunshade = false;
-            FixedValue = 0.0f;
+            FixedLocation = 0.0f;
+            ModType = "";
         }
 
         #endregion
@@ -55,15 +57,27 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public float FixedValue
+        public float FixedLocation
         {
             get
             {
-                return fixedValue;
+                return fixedLocation;
             }
             set
             {
-                fixedValue = value;
+                fixedLocation = value;
+            }
+        }
+
+        public string ModType
+        {
+            get
+            {
+                return modType;
+            }
+            set
+            {
+                modType = value;
             }
         }
 
