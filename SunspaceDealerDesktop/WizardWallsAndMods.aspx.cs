@@ -19,7 +19,6 @@ namespace SunspaceDealerDesktop
             hiddenFieldsDiv.InnerHtml = createHiddenFields(); //create hidden fields on page load dynamically
             
             DropDownList ddlInFrac = new DropDownList();
-            ddlInFrac.ID = "inFrac";
             ListItem lst0 = new ListItem("---", "", true);
             ListItem lst18 = new ListItem("1/8", ".125");
             ListItem lst14 = new ListItem("1/4", ".25");
@@ -35,7 +34,9 @@ namespace SunspaceDealerDesktop
             ddlInFrac.Items.Add(lst12);
             ddlInFrac.Items.Add(lst58);
             ddlInFrac.Items.Add(lst34);
-            ddlInFrac.Items.Add(lst78);
+            ddlInFrac.Items.Add(lst78);            
+            ddlBackHeights.Controls.Add(ddlInFrac);
+            ddlFrontHeights.Controls.Add(ddlInFrac);
             inchesSpecifics.Controls.Add(ddlInFrac);
 
             //Used to dynamically add values to ddlWallDoorPlacement

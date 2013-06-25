@@ -14,7 +14,6 @@
             coordList[i] = lineList[i].split(","); //populate the 2d array
         }
 
-
         function checkQuestion1() {
 
             //disable 'next slide' button until after validation (this is currently enabled for debugging purposes)
@@ -178,7 +177,7 @@
                 </h1>        
                               
                 <div id="tableWallLengths" class="tblWallLengths" runat="server">
-                    <asp:Table ID="tblWallLengths"  runat="server">
+                    <asp:Table ID="tblWallLengths" MinHeight="200px" runat="server">
                         <asp:TableRow>
                             <asp:TableCell></asp:TableCell>
                             <asp:TableCell ColumnSpan="2" >
@@ -205,20 +204,11 @@
 
                 <h1>
                     <asp:Label ID="lblQuestion2" runat="server" Text="Please enter the wall heights"></asp:Label>
-                </h1>        
-                              
-                <ul class="toggleOptions">
-
-                    <%-- Wall Lengths --%>
-                    <li>
-                        <asp:RadioButton ID="radWallHeights" GroupName="question2" runat="server" />
-                        <asp:Label ID="lblWallHeightsRadio" AssociatedControlID="radWallHeights" runat="server"></asp:Label>
-                        <asp:Label ID="lblWallHeights" AssociatedControlID="radWallHeights" runat="server" Text="Wall Heights"></asp:Label>
+                </h1>
            
-                        <div class="toggleContent">
+                        <div class="tblWallLengths" runat="server">
                             <ul>
                                 <li>
-
                                     <asp:Table ID="Table1" CssClass="tblTxtFields" runat="server">
 
                                         <asp:TableRow>
@@ -231,17 +221,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlInchFractions" CssClass="" runat="server" >
-                                                    <%-- there must be a better way to call a dropdown list from multiple places... --%>
-                                                    <asp:ListItem Text="---" Value="0"></asp:ListItem>
-                                                    <asp:ListItem Text="1/8" Value="1/8"></asp:ListItem>
-                                                    <asp:ListItem Text="1/4" Value="1/4"></asp:ListItem>
-                                                    <asp:ListItem Text="3/8" Value="3/8"></asp:ListItem>
-                                                    <asp:ListItem Text="1/2" Value="1/2"></asp:ListItem>
-                                                    <asp:ListItem Text="5/8" Value="5/8"></asp:ListItem>
-                                                    <asp:ListItem Text="3/4" Value="3/4"></asp:ListItem>
-                                                    <asp:ListItem Text="7/8" Value="7/8"></asp:ListItem>
-                                                </asp:DropDownList>
+                                                <asp:PlaceHolder ID="ddlBackHeights" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -255,17 +235,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="DropDownList1" CssClass="" runat="server" >
-                                                    <%-- there must be a better way to call a dropdown list from multiple places... --%>
-                                                    <asp:ListItem Text="---" Value="0"></asp:ListItem>
-                                                    <asp:ListItem Text="1/8" Value="1/8"></asp:ListItem>
-                                                    <asp:ListItem Text="1/4" Value="1/4"></asp:ListItem>
-                                                    <asp:ListItem Text="3/8" Value="3/8"></asp:ListItem>
-                                                    <asp:ListItem Text="1/2" Value="1/2"></asp:ListItem>
-                                                    <asp:ListItem Text="5/8" Value="5/8"></asp:ListItem>
-                                                    <asp:ListItem Text="3/4" Value="3/4"></asp:ListItem>
-                                                    <asp:ListItem Text="7/8" Value="7/8"></asp:ListItem>
-                                                </asp:DropDownList>
+                                                <asp:PlaceHolder ID="ddlFrontHeights" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -284,9 +254,6 @@
                                 </li>
                             </ul>            
                         </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'complete sunroom' option --%>
-
-                </ul> <%-- end .toggleOptions --%>
 
                 <asp:Button ID="Button1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
 
