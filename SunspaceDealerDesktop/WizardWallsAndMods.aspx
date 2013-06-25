@@ -6,45 +6,12 @@
     =================================== --%>
     <script>
 
-        var wallCount = '<%= (int)Session["numberOfWalls"] %>';
-        var lines = '<%= (string)Session["coordList"] %>';
-        var lineList = lines.substr(0, lines.length-1).split("/");
-        var coordList = new Array();
-        for (var i = 0; i < lineList.length; i++) {
-            coordList[i] = lineList[i].split(",");
-//            alert(coordList[i][0]);
+        var lines = '<%= (string)Session["coordList"] %>'; //all the coordinates of all the lines
+        var lineList = lines.substr(0, lines.length-1).split("/"); //a list of lines and their coordinates
+        var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
+        for (var i = 0; i < lineList.length; i++) { 
+            coordList[i] = lineList[i].split(","); //populate the 2d array
         }
-
-//        alert(lineList.length);
-
-
-/*CANVAS STUFF**********************************************************************************************/
-        //var slideWindow = document.getElementById("slide-window");
-        //slideWindow.appendChild(document.getElementById("mySunroom"));
-
-        ///* CREATE CANVAS */
-        //var canvas = d3.select("#mySunroom")            //Select the div tag with id "mySunroom"
-        //            .append("svg")                      //Add an svg tag to the selected div tag
-        //            .attr("width", 200)    //Set the width of the canvas/grid to MAX_CANVAS_WIDTH
-        //            .attr("height", 200); //Set the height of the canvas/grid to MAX_CANVAS_HEIGHT  
-        //var svgGrid = document.getElementById("mySunroom");     //create the svg grid on the canvas
-
-        ////Creates rectangle area to draw in based on max canvas dimensions
-        //var rect = canvas.append("rect")                //Draws a rectangle for the canvas/grid to sit in
-        //            .attr("width", 200)    //Sets the width for the canvas/grid
-        //            .attr("height", 200)  //Sets the height for the canvas/grid
-        //            .attr("fill", "#f6f6f6")              //Sets the color of the rectangle to light grey
-
-        ////Local variable to store all the line information
-        //for (var i = 0; i < lineList.length; i++) { 
-        //    var line = canvas.append("line")
-        //            .attr("x1", coordList[i][0])
-        //            .attr("y1", coordList[i][1])
-        //            .attr("x2", coordList[i][2])
-        //            .attr("y2", coordList[i][3])
-        //            .attr("stroke", "red");
-        //}
-/*******************************************************************************************************/
 
         function checkQuestion1() {
 
@@ -59,24 +26,16 @@
                 var isValid = true;
                 var answer = "";
 
-                //creating hidden fields dynamically using js (this is currently being done in codebehind)
-                /*for (var i = 1; i <= wallCount; i++) {
-                    if (!document.getElementById("MainContent_hidWall1Length")) {
-                    var hidWall1Length = document.createElement("input");
-                    hidWall1Length.type = "hidden";
-                    hidWall1Length.id = "hidWall1Length";
-                    hidWall1Length.value = document.getElementById("MainContent_txtWall1Length").value;//$('#MainContent_txtWall1Length').val();
-                }*/
 
-                for (var i = 1; i <= wallCount; i++) {
+                for (var i = 1; i <= lineList.length; i++) {
                     if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0)
                         isValid = false;
                 }
 
                 if (isValid) {
-                    for (var i = 1; i <= wallCount; i++) {
+                    for (var i = 1; i <= lineList.length; i++) {
                         document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
-                        answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value;
+                        answer += "Wall " + i + ": " + document.getElementById("txtWall" + i + "Length").value;
                     }
                     //Set answer on side pager and enable button
                     $('#MainContent_lblWallLengthsAnswer').text(answer);
@@ -96,7 +55,7 @@
 
         function checkQuestion2() {
 
-            //alert("here i am");
+            //alert("here i am, rock you like a hurricane");
             //disable 'next slide' button until after validation (this is currently enabled for debugging purposes)
             //document.getElementById('MainContent_btnQuestion1').disabled = false;
             //document.getElementById('MainContent_btnQuestion2').disabled = false;
@@ -108,7 +67,7 @@
             var isValid = true;
             var answer = "";
 
-            //for (var i = 1; i <= wallCount; i++) {
+            //for (var i = 1; i <= lineList.length; i++) {
             if (isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
                 || document.getElementById("MainContent_txtBackWallHeight").value <= 0
                 || (isNaN(document.getElementById("MainContent_txtFrontWallHeight").value))
@@ -121,7 +80,7 @@
 
             if (isValid) {
                 
-                //for (var i = 1; i <= wallCount; i++) {
+                //for (var i = 1; i <= lineList.length; i++) {
                 document.getElementById("MainContent_hidBackWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value;
                 document.getElementById("MainContent_hidFrontWallHeight").value = document.getElementById("MainContent_txtFrontWallHeight").value;
                 document.getElementById("MainContent_hidRoofSlope").value = document.getElementById("MainContent_txtRoofSlope").value;
@@ -138,6 +97,7 @@
                 
             }
             else {
+                alert("error");
                 //error styling or something
                 //Set answer on side pager and enable button
                 $('#MainContent_lblWallHeightsAnswer').text("Wall Heights Invalid");
@@ -208,8 +168,21 @@
                     <asp:Label ID="lblQuestion1" runat="server" Text="Please enter the wall lengths"></asp:Label>
                 </h1>        
                               
-                <div  runat="server">
-                    <asp:Table ID="tblWallLengths" CssClass="tblWallLengths" runat="server"></asp:Table>
+                <div id="tableWallLengths" class="tblWallLengths" runat="server" style="padding-right:15%; padding-left:15%; padding-top:5%;">
+                    <asp:Table ID="tblWallLengths" runat="server">
+                        <asp:TableRow>
+                            <asp:TableCell></asp:TableCell>
+                            <asp:TableCell ColumnSpan="2" >
+                                Left Filler
+                            </asp:TableCell>
+                            <asp:TableCell ColumnSpan="2">
+                                Length
+                            </asp:TableCell>
+                            <asp:TableCell ColumnSpan="2">
+                                Right Filler
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
                 </div>
 
                 <asp:Button ID="btnQuestion1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
@@ -223,20 +196,11 @@
 
                 <h1>
                     <asp:Label ID="lblQuestion2" runat="server" Text="Please enter the wall heights"></asp:Label>
-                </h1>        
-                              
-                <ul class="toggleOptions">
-
-                    <%-- Wall Lengths --%>
-                    <li>
-                        <asp:RadioButton ID="radWallHeights" GroupName="question2" runat="server" />
-                        <asp:Label ID="lblWallHeightsRadio" AssociatedControlID="radWallHeights" runat="server"></asp:Label>
-                        <asp:Label ID="lblWallHeights" AssociatedControlID="radWallHeights" runat="server" Text="Wall Heights"></asp:Label>
+                </h1>
            
-                        <div class="toggleContent">
+                        <div class="tblWallLengths" runat="server" style="padding-right:15%; padding-left:15%; padding-top:5%;">
                             <ul>
                                 <li>
-
                                     <asp:Table ID="Table1" CssClass="tblTxtFields" runat="server">
 
                                         <asp:TableRow>
@@ -245,21 +209,11 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtBackWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtBackWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" onblur="resetWalls()" OnFocus="highlightWallsHeight()" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlInchFractions" CssClass="" runat="server" >
-                                                    <%-- there must be a better way to call a dropdown list from multiple places... --%>
-                                                    <asp:ListItem Text="---" Value="0"></asp:ListItem>
-                                                    <asp:ListItem Text="1/8" Value="1/8"></asp:ListItem>
-                                                    <asp:ListItem Text="1/4" Value="1/4"></asp:ListItem>
-                                                    <asp:ListItem Text="3/8" Value="3/8"></asp:ListItem>
-                                                    <asp:ListItem Text="1/2" Value="1/2"></asp:ListItem>
-                                                    <asp:ListItem Text="5/8" Value="5/8"></asp:ListItem>
-                                                    <asp:ListItem Text="3/4" Value="3/4"></asp:ListItem>
-                                                    <asp:ListItem Text="7/8" Value="7/8"></asp:ListItem>
-                                                </asp:DropDownList>
+                                                <asp:PlaceHolder ID="phBackHeights" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -269,21 +223,11 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtFrontWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtFrontWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" onblur="resetWalls()" OnFocus="highlightWallsHeight()" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="DropDownList1" CssClass="" runat="server" >
-                                                    <%-- there must be a better way to call a dropdown list from multiple places... --%>
-                                                    <asp:ListItem Text="---" Value="0"></asp:ListItem>
-                                                    <asp:ListItem Text="1/8" Value="1/8"></asp:ListItem>
-                                                    <asp:ListItem Text="1/4" Value="1/4"></asp:ListItem>
-                                                    <asp:ListItem Text="3/8" Value="3/8"></asp:ListItem>
-                                                    <asp:ListItem Text="1/2" Value="1/2"></asp:ListItem>
-                                                    <asp:ListItem Text="5/8" Value="5/8"></asp:ListItem>
-                                                    <asp:ListItem Text="3/4" Value="3/4"></asp:ListItem>
-                                                    <asp:ListItem Text="7/8" Value="7/8"></asp:ListItem>
-                                                </asp:DropDownList>
+                                                <asp:PlaceHolder ID="phFrontHeights" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -302,9 +246,6 @@
                                 </li>
                             </ul>            
                         </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'complete sunroom' option --%>
-
-                </ul> <%-- end .toggleOptions --%>
 
                 <asp:Button ID="Button1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
 
@@ -320,124 +261,12 @@
                 </h1>        
                               
                 <ul class="toggleOptions">
+                    <asp:PlaceHolder ID="wallDoorOptions" runat="server">
 
-                    <%-- DOOR YES --%>
-                    <li>
-                        <asp:RadioButton ID="radDoorYes" OnClick="checkQuestion3()" GroupName="question3" runat="server" />
-                        <asp:Label ID="lblDoorYesRadio" AssociatedControlID="radDoorYes" runat="server"></asp:Label>
-                        <asp:Label ID="lblDoorYes" AssociatedControlID="radDoorYes" runat="server" Text="Yes"></asp:Label>
-           
-                        <div class="toggleContent">
-                            <ul>
-                                <li>
-                                    <h3>Enter door details:</h3>
+                    
 
-                                    <asp:Table ID="tblDoorYesInfo" CssClass="tblTxtFields" runat="server">
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblDoorType" AssociatedControlID="ddlDoorType" runat="server" Text="Type Of Door:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlDoorType" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
-                                                    <asp:ListItem Text="Cabana" Value="Cabana"/>
-                                                    <asp:ListItem Text="French" Value="French" />
-                                                    <asp:ListItem Text="Patio" Value="Patio" />
-                                                </asp:DropDownList>                                                
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblDoorColour" AssociatedControlID="ddlDoorColour" runat="server" Text="Door Colour:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlDoorColour" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
-                                                    <asp:ListItem Text="Clear" Value="Clear" />
-                                                    <asp:ListItem Text="Grey" Value="Grey" />
-                                                    <asp:ListItem Text="Bronze" Value="Bronze" />
-                                                </asp:DropDownList>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblDoorHeight" AssociatedControlID="ddlDoorHeight" runat="server" Text="Door height:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlDoorHeight" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
-                                                    <asp:ListItem Text="5'" Value="5"/>
-                                                    <asp:ListItem Text="6'" Value="6"/>
-                                                    <asp:ListItem Text="7'" Value="7" />
-                                                    <asp:ListItem Text="8'" Value="8" />
-                                                </asp:DropDownList>                                                
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblSwingingDoor" runat="server" Text="Swinging Door:" ></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:RadioButton ID="radSwingingDoorYes" checked="true" GroupName="Swinging" runat="server" />
-                                                <asp:Label ID="lblSwingingDoorYesRadio" AssociatedControlID="radSwingingDoorYes" runat="server"></asp:Label>
-                                                <asp:Label ID="lblSwingingDoorYes" AssociatedControlID="radSwingingDoorYes" runat="server" Text="&nbsp; Yes"></asp:Label>                                               
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:RadioButton ID="radSwingingDoorNo" GroupName="Swinging" runat="server" />
-                                                <asp:Label ID="lblSwingingDoorNoRadio" AssociatedControlID="radSwingingDoorNo" runat="server"></asp:Label>
-                                                <asp:Label ID="lblSwingingDoorNo" AssociatedControlID="radSwingingDoorNo" runat="server" Text="&nbsp; No"></asp:Label>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow ID="WallDoorPlacement">
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblCustomerCity" AssociatedControlID="ddlWallDoorPlacement" runat="server" Text="Which wall is the door in:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlWallDoorPlacement" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
-                                                </asp:DropDownList>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblWallDoorPosition" AssociatedControlID="txtWallDoorPosition" runat="server" Text="Inches from left side the wall:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:TextBox ID="txtWallDoorPosition" onkeyup="checkQuestion3()" CssClass="txtField txtInput" runat="server" MaxLength="3"></asp:TextBox>
-                                            </asp:TableCell>
-                                            <asp:TableCell >
-                                                <asp:PlaceHolder ID="inchesSpecifics" runat="server" />
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                    </asp:Table>
-                                </li>
-                            </ul>            
-                        </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'complete sunroom' option --%>
-
-                    <%-- DOOR NO --%>
-                    <li>
-                        <asp:RadioButton ID="radDoorNo" OnClick="checkQuestion3()" GroupName="question3" runat="server" />
-                        <asp:Label ID="lblDoorNoRadio" AssociatedControlID="radDoorNo" runat="server"></asp:Label>
-                        <asp:Label ID="lblDoorNo" AssociatedControlID="radDoorNo" runat="server" Text="No"></asp:Label>
-                    </li> <%-- end 'existing customer' option --%>
-
-                </ul> <%-- end .toggleOptions --%>
+</asp:PlaceHolder>                    
+        </ul>            
 
                 <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
@@ -457,6 +286,9 @@
             <h2>Wall Specifications</h2>
 
             <ul>
+
+                <div style="/*max-width:500px; max-height:500px; min-width:200px; min-height:200px; margin: auto auto;*/ position:inherit; /*padding-top:10%; padding-right:5%;*/ text-align:center; /*position:fixed; */top:0px; right:0px;" id="mySunroom"></div>
+
                 <div style="display: none" id="pagerOne">
                     <li>
                             <a href="#" data-slide="#slide1" class="slidePanel">
@@ -535,11 +367,11 @@
     <%-- MINI CANVAS (HIGHLIGHTS CURRENT WALL)
     ======================================== --%>
     <!--Div tag to hold the canvas/grid-->
-    <div style="max-width:500px; max-height:500px; min-width:200px; min-height:200px; margin: auto auto; position:inherit; padding-top:10%; padding-right:5%; /*position:fixed; */top:0px; right:0px;" id="mySunroom"></div>
+    
     <script>
-
-        var slideWindow = document.getElementById("slide-window");
-        slideWindow.appendChild(document.getElementById("mySunroom"));
+/*CANVAS STUFF**********************************************************************************************/
+        //var slideWindow = document.getElementById("paging");
+        //slideWindow.appendChild(document.getElementById("mySunroom"));
 
         /* CREATE CANVAS */
         var canvas = d3.select("#mySunroom")            //Select the div tag with id "mySunroom"
@@ -552,24 +384,76 @@
         var rect = canvas.append("rect")                //Draws a rectangle for the canvas/grid to sit in
                     .attr("width", 200)    //Sets the width for the canvas/grid
                     .attr("height", 200)  //Sets the height for the canvas/grid
-                    .attr("fill", "#f6f6f6")              //Sets the color of the rectangle to light grey
+                    .attr("fill", "#f6f6f6");              //Sets the color of the rectangle to light grey
+
+        var lineArray = new Array();
 
         //Local variable to store all the line information
-        //Local variable to store all the line information
-        for (var i = 0; i < lineList.length; i++) {
-            var line = canvas.append("line")
+        for (var i = 0; i < lineList.length; i++) { //draw all the lines with the given attributes
+            lineArray[i] = canvas.append("line")
                     .attr("x1", (coordList[i][0] / 5) * 2)
                     .attr("y1", (coordList[i][2] / 5) * 2)
                     .attr("x2", (coordList[i][1] / 5) * 2)
-                    .attr("y2", (coordList[i][3] / 5) * 2)
-                    .attr("onmousedown", alert("hwllo"));
+                    .attr("y2", (coordList[i][3] / 5) * 2);
+            //lineArray[i].attr("mouseover", alert("hwllo"));
             
             if(coordList[i][4] === "E")
-                line.attr("stroke", "red");
+                lineArray[i].attr("stroke", "red");
             else
-                line.attr("stroke", "black");
+                lineArray[i].attr("stroke", "black");
         }
 
+        function highlightWallsLength() {
+            var wallNumber = (document.activeElement.id.substr(19,1));            
+
+            lineArray[wallNumber - 1].attr("stroke", "yellow");
+            lineArray[wallNumber - 1].attr("stroke-width", "2");
+               
+        }
+
+        function resetWalls() {
+            for (var i = 0; i < lineList.length; i++) {
+                if (coordList[i][4] === "E")
+                    lineArray[i].attr("stroke", "red");
+                else
+                    lineArray[i].attr("stroke", "black");
+
+                lineArray[i].attr("stroke-width", "1");
+            }
+        }
+
+        function highlightWallsHeight() {
+            var textbox = (document.activeElement.id.substr(15, 1));
+            var southWalls = new Array();
+            var lowestWall = 0; //arbitrary number
+            var lowestIndex;
+            var highestWall = 200; //arbitrary number
+            var highestIndex;
+            var index;
+
+            for (var i = 0; i < lineList.length; i++) {
+                if (coordList[i][5] == "S") {
+                    southWalls.push({ "y2": lineArray[i].attr("y2"), "number": i });
+                }
+            }
+
+            for (var i = 0; i < southWalls.length; i++) {
+                if (southWalls[i].y2 > lowestWall) {
+                    lowestWall = southWalls[i].y2;
+                    lowestIndex = southWalls[i].number;
+                }
+                if (southWalls[i].y2 < highestWall) {
+                    highestWall = southWalls[i].y2;
+                    highestIndex = southWalls[i].number;
+                }
+            }
+            console.log(lowestIndex);
+            index = (textbox === "B") ? lowestIndex : highestIndex;
+            lineArray[index].attr("stroke", "yellow");
+            lineArray[index].attr("stroke-width", "2");
+        }
+            
+/*******************************************************************************************************/
     </script>
     <%-- Hidden input tags 
     ======================= --%>

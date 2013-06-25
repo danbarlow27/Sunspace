@@ -194,6 +194,10 @@ footer {
     width: 100px;
 }
 
+.txtLengthInput {
+    width: 50px;
+}
+
 
 /* Table layout for text fields */
 
@@ -209,9 +213,15 @@ footer {
     text-align: right;
 }
 
-#tblWallLengths {
+.tblWallLengths {
     border-collapse: collapse;
-    background-color: purple;
+    background-color: rgb(242, 235, 214);
+    min-height:250px;
+}
+
+.tblWallLengths td{
+    text-align:center;
+    padding: 3px 8px 3px 0;
 }
 
 

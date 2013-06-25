@@ -17,9 +17,106 @@ namespace SunspaceDealerDesktop
             Session["coordList"] = "125,387.5,162.5,162.5,E,S/187.5,187.5,162.5,275,P,W/187.5,300,275,275,P,S/300,300,275,162.5,P,E/";
             /**********************************/
             hiddenFieldsDiv.InnerHtml = createHiddenFields(); //create hidden fields on page load dynamically
+
+            //SLIDE 3 DOOR DETAILS PER WALL
+            #region Slide 3: Onload dynamic loop to insert wall door options
+
+            wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
+
+            RadioButton wallRadio = new RadioButton();
+            wallRadio.ID = "radWall";
+
+            Label wallLabelRadio = new Label();
+            Label wallLabel = new Label();
+
+            wallLabelRadio.AssociatedControlID = "radWall";
+            wallLabel.AssociatedControlID = "radWall";
+            wallLabel.Text = "Wall 1 Door Options";
+
+            wallDoorOptions.Controls.Add(wallRadio);
+            wallDoorOptions.Controls.Add(wallLabelRadio);
+            wallDoorOptions.Controls.Add(wallLabel);            
+
+            wallDoorOptions.Controls.Add(new LiteralControl("<div class='toggleContent'><ul><li>"));
+
+            wallDoorOptions.Controls.Add(new LiteralControl("<h3>Select door details:</h3>"));
+
+            Table tblDoorDetails = new Table();
+
+            tblDoorDetails.ID = "tblDoorDetails";
+            tblDoorDetails.CssClass = "tblTextFields";
+            tblDoorDetails.Attributes.Add("runat", "server");
+
+            #region Table:First Row Type of Door (tblDoorDetails)
+            TableRow typeOfDoorRow = new TableRow();            
+            TableCell typeOfDoorLBLCell = new TableCell();
+            TableCell typeOfDoorDDLCell = new TableCell();
+
+            Label typeOfDoorLBL = new Label();
+            typeOfDoorLBL.ID = "lblDoorType";
+            typeOfDoorLBL.Text = "Door Type:";
+
+            DropDownList typeOfDoorDDL = new DropDownList();
+            typeOfDoorDDL.ID = "ddlDoorType";
+            ListItem cabana = new ListItem("Cabana", "cabana");
+            ListItem french = new ListItem("French", "french");
+            ListItem patio = new ListItem("Patio", "patio");
+            typeOfDoorDDL.Items.Add(cabana);
+            typeOfDoorDDL.Items.Add(french);
+            typeOfDoorDDL.Items.Add(patio);
+
+            typeOfDoorLBL.AssociatedControlID = "ddlDoorType";
+            #endregion
+
+            #region Table:Second Row Color of Door (tblDoorDetails)
+            TableRow colorOfDoorRow = new TableRow();
+            TableCell colorOfDoorLBLCell = new TableCell();
+            TableCell colorOfDoorDDLCell = new TableCell();
+
+            Label colorOfDoorLBL = new Label();
+            colorOfDoorLBL.ID = "lblDoorColor";
+            colorOfDoorLBL.Text = "Door Color:";
+
+            DropDownList colorOfDoorDDL = new DropDownList();
+            colorOfDoorDDL.ID = "ddlDoorColor";
+            ListItem clear = new ListItem("Clear", "clear");
+            ListItem grey = new ListItem("Grey", "grey");
+            ListItem bronze = new ListItem("Bronze", "bronze");
+            colorOfDoorDDL.Items.Add(clear);
+            colorOfDoorDDL.Items.Add(grey);
+            colorOfDoorDDL.Items.Add(patio);
+
+            colorOfDoorLBL.AssociatedControlID = "ddlDoorColor";
+            #endregion
+
+            #region Table:First Row Type of Door Added to Table (tblDoorDetails)
+            typeOfDoorLBLCell.Controls.Add(typeOfDoorLBL);
+            typeOfDoorDDLCell.Controls.Add(typeOfDoorDDL);
             
+            tblDoorDetails.Rows.Add(typeOfDoorRow);
+
+            typeOfDoorRow.Cells.Add(typeOfDoorLBLCell);
+            typeOfDoorRow.Cells.Add(typeOfDoorDDLCell);
+            #endregion
+
+            #region Table:Second Row Color of Door Added to Table (tblDoorDetails)
+            colorOfDoorLBLCell.Controls.Add(colorOfDoorLBL);
+            colorOfDoorDDLCell.Controls.Add(colorOfDoorDDL);
+
+            tblDoorDetails.Rows.Add(colorOfDoorRow);
+
+            colorOfDoorRow.Cells.Add(colorOfDoorLBLCell);
+            colorOfDoorRow.Cells.Add(colorOfDoorDDLCell);
+            #endregion
+
+            wallDoorOptions.Controls.Add(tblDoorDetails);
+
+            wallDoorOptions.Controls.Add(new LiteralControl("</li></ul></div>"));
+            #endregion
+
+            //DropDownList used in tables loaded to page
+            #region DropDownList Section
             DropDownList ddlInFrac = new DropDownList();
-            ddlInFrac.ID = "inFrac";
             ListItem lst0 = new ListItem("---", "", true);
             ListItem lst18 = new ListItem("1/8", ".125");
             ListItem lst14 = new ListItem("1/4", ".25");
@@ -36,13 +133,37 @@ namespace SunspaceDealerDesktop
             ddlInFrac.Items.Add(lst58);
             ddlInFrac.Items.Add(lst34);
             ddlInFrac.Items.Add(lst78);
-            inchesSpecifics.Controls.Add(ddlInFrac);
+            //inchesSpecifics.Controls.Add(ddlInFrac);
 
+            DropDownList ddlInFracBackWall = new DropDownList();
+            ddlInFracBackWall.Items.Add(lst0);
+            ddlInFracBackWall.Items.Add(lst18);
+            ddlInFracBackWall.Items.Add(lst14);
+            ddlInFracBackWall.Items.Add(lst38);
+            ddlInFracBackWall.Items.Add(lst12);
+            ddlInFracBackWall.Items.Add(lst58);
+            ddlInFracBackWall.Items.Add(lst34);
+            ddlInFracBackWall.Items.Add(lst78);
+            phBackHeights.Controls.Add(ddlInFracBackWall);
+
+            DropDownList ddlInFracFrontWall = new DropDownList();
+            ddlInFracFrontWall.Items.Add(lst0);
+            ddlInFracFrontWall.Items.Add(lst18);
+            ddlInFracFrontWall.Items.Add(lst14);
+            ddlInFracFrontWall.Items.Add(lst38);
+            ddlInFracFrontWall.Items.Add(lst12);
+            ddlInFracFrontWall.Items.Add(lst58);
+            ddlInFracFrontWall.Items.Add(lst34);
+            ddlInFracFrontWall.Items.Add(lst78);
+            phFrontHeights.Controls.Add(ddlInFracFrontWall);
+            #endregion
+
+            #region For Loop for slide 1 and slide3
             //Used to dynamically add values to ddlWallDoorPlacement
             for (int i = 1; i <= (int)Session["numberOfWalls"]; i++)
             {
                 ListItem numberOfWalls = new ListItem(Convert.ToString(i), Convert.ToString(i));
-                ddlWallDoorPlacement.Items.Add(numberOfWalls);
+                //ddlWallDoorPlacement.Items.Add(numberOfWalls);
             }
 
             for (int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 5 right now
@@ -54,18 +175,12 @@ namespace SunspaceDealerDesktop
                 TableCell cell1 = new TableCell();
                 TableCell cell2 = new TableCell();
                 TableCell cell3 = new TableCell();
-
-                TableCell cellLabelLeftFiller = new TableCell();
-                TableCell cellTextBoxLeftFiller = new TableCell();
-                TableCell cellDropDownLeftFiller = new TableCell();
-
-                TableCell cellLabelRightFiller = new TableCell();
-                TableCell cellTextBoxRightFiller = new TableCell();
-                TableCell cellDropDownRightFiller = new TableCell();
+                TableCell cell4 = new TableCell();
+                TableCell cell5 = new TableCell();
+                TableCell cell6 = new TableCell();
+                TableCell cell7 = new TableCell();
 
                 Label lblWallNumber = new Label();
-                Label lblLeftFiller = new Label();
-                Label lblRightFiller = new Label();
 
                 TextBox txtWallLength = new TextBox();
                 TextBox txtLeftFiller = new TextBox();
@@ -102,66 +217,55 @@ namespace SunspaceDealerDesktop
                 ddlRightInchFractions.Items.Add(lst34);
                 ddlRightInchFractions.Items.Add(lst78);
 
-                lblWallNumber.Text = "Wall " + i + " length: ";
+                lblWallNumber.Text = "Wall " + i + " : ";
                 lblWallNumber.ID = "lblWall" + i + "Length";
                 lblWallNumber.AssociatedControlID = "txtWall" + i + "Length";
 
-                lblLeftFiller.Text = "Left " + i + " Filler Length: ";
-                lblLeftFiller.ID = "lblWall" + i + "LeftFiller";
-                lblLeftFiller.AssociatedControlID = "txtWall" + i + "LeftFiller";
-
-                lblRightFiller.Text = "Right " + i + " Filler Length: ";
-                lblRightFiller.ID = "lblWall" + i + "RightFiller";
-                lblRightFiller.AssociatedControlID = "txtWall" + i + "RightFiller";
-
                 txtWallLength.ID = "txtWall" + i + "Length";
-                txtWallLength.CssClass = "txtField txtInput";
+                txtWallLength.CssClass = "txtField txtLengthInput";
                 txtWallLength.MaxLength = 3;
-                //txtWallLength.TextChanged += new EventHandler(txtWallLengths_TextChanged);
                 txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
                 txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");
+                txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()");
+                txtWallLength.Attributes.Add("onblur", "resetWalls()");
 
                 txtLeftFiller.ID = "txtWall" + i + "LeftFiller";
-                txtLeftFiller.CssClass = "txtField txtInput";
+                txtLeftFiller.CssClass = "txtField txtLengthInput";
                 txtLeftFiller.MaxLength = 3;
                 txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()");
                 txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");
+                txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
+                txtLeftFiller.Attributes.Add("onblur", "resetWalls()");
 
                 txtRightFiller.ID = "txtWall" + i + "RightFiller";
-                txtRightFiller.CssClass = "txtField txtInput";
+                txtRightFiller.CssClass = "txtField txtLengthInput";
                 txtRightFiller.MaxLength = 3;
                 txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");
                 txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");
+                txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
+                txtRightFiller.Attributes.Add("onblur", "resetWalls()");
 
                 cell1.Controls.Add(lblWallNumber);
                 cell2.Controls.Add(txtWallLength);
                 cell3.Controls.Add(ddlInchFractions);
-
-                cellLabelLeftFiller.Controls.Add(lblLeftFiller);
-                cellTextBoxLeftFiller.Controls.Add(txtLeftFiller);
-                cellDropDownLeftFiller.Controls.Add(ddlLeftInchFractions);
-
-                cellLabelRightFiller.Controls.Add(lblRightFiller);
-                cellTextBoxRightFiller.Controls.Add(txtRightFiller);
-                cellDropDownRightFiller.Controls.Add(ddlRightInchFractions);
+                cell4.Controls.Add(txtLeftFiller);
+                cell5.Controls.Add(ddlLeftInchFractions);
+                cell6.Controls.Add(txtRightFiller);
+                cell7.Controls.Add(ddlRightInchFractions);
 
                 tblWallLengths.Rows.Add(row);
-                tblWallLengths.Rows.Add(rowLeftFiller);
-                tblWallLengths.Rows.Add(rowRightFiller);
 
                 row.Cells.Add(cell1);
                 row.Cells.Add(cell2);
                 row.Cells.Add(cell3);
-
-                rowLeftFiller.Cells.Add(cellLabelLeftFiller);
-                rowLeftFiller.Cells.Add(cellTextBoxLeftFiller);
-                rowLeftFiller.Cells.Add(cellDropDownLeftFiller);
-
-                rowRightFiller.Cells.Add(cellLabelRightFiller);
-                rowRightFiller.Cells.Add(cellTextBoxRightFiller);
-                rowRightFiller.Cells.Add(cellDropDownRightFiller);
+                row.Cells.Add(cell4);
+                row.Cells.Add(cell5);
+                row.Cells.Add(cell6);
+                row.Cells.Add(cell7);
             }
+            #endregion
         }
+            
 
         protected void txtWallLengths_TextChanged(object sender, EventArgs e)
         { 

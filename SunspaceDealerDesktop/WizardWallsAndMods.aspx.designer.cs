@@ -22,6 +22,15 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblQuestion1;
         
         /// <summary>
+        /// tableWallLengths control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tableWallLengths;
+        
+        /// <summary>
         /// tblWallLengths control.
         /// </summary>
         /// <remarks>
@@ -47,33 +56,6 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblQuestion2;
-        
-        /// <summary>
-        /// radWallHeights control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radWallHeights;
-        
-        /// <summary>
-        /// lblWallHeightsRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWallHeightsRadio;
-        
-        /// <summary>
-        /// lblWallHeights control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWallHeights;
         
         /// <summary>
         /// Table1 control.
@@ -103,13 +85,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txtBackWallHeight;
         
         /// <summary>
-        /// ddlInchFractions control.
+        /// phBackHeights control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlInchFractions;
+        protected global::System.Web.UI.WebControls.PlaceHolder phBackHeights;
         
         /// <summary>
         /// lblFrontWallHeight control.
@@ -130,13 +112,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txtFrontWallHeight;
         
         /// <summary>
-        /// DropDownList1 control.
+        /// phFrontHeights control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        protected global::System.Web.UI.WebControls.PlaceHolder phFrontHeights;
         
         /// <summary>
         /// lblRoofSlope control.
@@ -175,238 +157,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblQuestion3;
         
         /// <summary>
-        /// radDoorYes control.
+        /// wallDoorOptions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radDoorYes;
-        
-        /// <summary>
-        /// lblDoorYesRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorYesRadio;
-        
-        /// <summary>
-        /// lblDoorYes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorYes;
-        
-        /// <summary>
-        /// tblDoorYesInfo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Table tblDoorYesInfo;
-        
-        /// <summary>
-        /// lblDoorType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorType;
-        
-        /// <summary>
-        /// ddlDoorType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDoorType;
-        
-        /// <summary>
-        /// lblDoorColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorColour;
-        
-        /// <summary>
-        /// ddlDoorColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDoorColour;
-        
-        /// <summary>
-        /// lblDoorHeight control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorHeight;
-        
-        /// <summary>
-        /// ddlDoorHeight control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDoorHeight;
-        
-        /// <summary>
-        /// lblSwingingDoor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSwingingDoor;
-        
-        /// <summary>
-        /// radSwingingDoorYes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radSwingingDoorYes;
-        
-        /// <summary>
-        /// lblSwingingDoorYesRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSwingingDoorYesRadio;
-        
-        /// <summary>
-        /// lblSwingingDoorYes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSwingingDoorYes;
-        
-        /// <summary>
-        /// radSwingingDoorNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radSwingingDoorNo;
-        
-        /// <summary>
-        /// lblSwingingDoorNoRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSwingingDoorNoRadio;
-        
-        /// <summary>
-        /// lblSwingingDoorNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSwingingDoorNo;
-        
-        /// <summary>
-        /// WallDoorPlacement control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableRow WallDoorPlacement;
-        
-        /// <summary>
-        /// lblCustomerCity control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCustomerCity;
-        
-        /// <summary>
-        /// ddlWallDoorPlacement control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlWallDoorPlacement;
-        
-        /// <summary>
-        /// lblWallDoorPosition control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWallDoorPosition;
-        
-        /// <summary>
-        /// txtWallDoorPosition control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtWallDoorPosition;
-        
-        /// <summary>
-        /// inchesSpecifics control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder inchesSpecifics;
-        
-        /// <summary>
-        /// radDoorNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radDoorNo;
-        
-        /// <summary>
-        /// lblDoorNoRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorNoRadio;
-        
-        /// <summary>
-        /// lblDoorNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorNo;
+        protected global::System.Web.UI.WebControls.PlaceHolder wallDoorOptions;
         
         /// <summary>
         /// btnQuestion3 control.
