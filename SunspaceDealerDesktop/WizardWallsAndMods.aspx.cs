@@ -182,34 +182,5 @@ namespace SunspaceDealerDesktop
             }
             return html;
         }
-
-        public class PositionData
-        {
-
-            private string listValue;
-            private string listName;
-
-            public PositionData(string listValue, string listName)
-            {
-                this.listValue = listValue;
-                this.listName = listName;
-            }
-
-            public string ListValue
-            {
-                get
-                {
-                    return listValue;
-                }
-            }
-
-            public string ListName
-            {
-                get
-                {
-                    return listName;
-                }
-            }
-        }
     }
 }
