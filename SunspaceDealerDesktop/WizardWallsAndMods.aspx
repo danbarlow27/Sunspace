@@ -405,6 +405,9 @@
             <h2>Wall Specifications</h2>
 
             <ul>
+
+                <div style="/*max-width:500px; max-height:500px; min-width:200px; min-height:200px; margin: auto auto;*/ position:inherit; /*padding-top:10%; padding-right:5%;*/ text-align:center; /*position:fixed; */top:0px; right:0px;" id="mySunroom"></div>
+
                 <div style="display: none" id="pagerOne">
                     <li>
                             <a href="#" data-slide="#slide1" class="slidePanel">
@@ -483,11 +486,11 @@
     <%-- MINI CANVAS (HIGHLIGHTS CURRENT WALL)
     ======================================== --%>
     <!--Div tag to hold the canvas/grid-->
-    <div style="max-width:500px; max-height:500px; min-width:200px; min-height:200px; margin: auto auto; position:inherit; padding-top:10%; padding-right:5%; /*position:fixed; */top:0px; right:0px;" id="mySunroom"></div>
+    
     <script>
 /*CANVAS STUFF**********************************************************************************************/
-        var slideWindow = document.getElementById("slide-window");
-        slideWindow.appendChild(document.getElementById("mySunroom"));
+        //var slideWindow = document.getElementById("paging");
+        //slideWindow.appendChild(document.getElementById("mySunroom"));
 
         /* CREATE CANVAS */
         var canvas = d3.select("#mySunroom")            //Select the div tag with id "mySunroom"
