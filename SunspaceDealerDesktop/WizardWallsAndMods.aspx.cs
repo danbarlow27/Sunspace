@@ -189,7 +189,7 @@ namespace SunspaceDealerDesktop
             doorSwingInLBLRad.AssociatedControlID = "radDoorSwingIn";
             doorSwingInLBL.AssociatedControlID = "radDoorSwingIn";
 
-            #endregion
+            #endregion            
 
             #region Table:Fifth Row Door Swing Out (tblDoorDetails)
 
@@ -198,10 +198,10 @@ namespace SunspaceDealerDesktop
             TableCell doorSwingOutRADCell = new TableCell();
 
             Label doorSwingOutLBLRad = new Label();
-            doorSwingOutLBLRad.ID = "lblDoorSwingOut";
+            doorSwingOutLBLRad.ID = "lblDoorSwingOutRad";
 
             Label doorSwingOutLBL = new Label();
-            doorSwingOutLBL.ID = "lblDoorSwingOutRad";
+            doorSwingOutLBL.ID = "lblDoorSwingOut";
             doorSwingOutLBL.Text = "Out";
 
             RadioButton doorSwingOutRAD = new RadioButton();
@@ -211,9 +211,57 @@ namespace SunspaceDealerDesktop
             doorSwingOutLBLRad.AssociatedControlID = "radDoorSwingOut";
             doorSwingOutLBL.AssociatedControlID = "radDoorSwingOut";
 
+            #endregion            
+
+            #region Table:Sixth Row Door Hinge LHH (tblDoorDetails)
+
+            TableRow doorLHHRow = new TableRow();
+            TableCell doorLHHLBLCell = new TableCell();
+            TableCell doorLHHRADCell = new TableCell();
+
+            Label doorLHHLBLMain = new Label();
+            doorLHHLBLMain.ID = "lblDoorLHHMain";
+            doorLHHLBLMain.Text = "Hinge placement:";
+
+            Label doorLHHLBLRad = new Label();
+            doorLHHLBLRad.ID = "lblLHHRad";
+
+            Label doorLHHLBL = new Label();
+            doorLHHLBL.ID = "lblLHH";
+            doorLHHLBL.Text = "LHH";
+
+            RadioButton doorLHHRad = new RadioButton();
+            doorLHHRad.ID = "radDoorLHH";
+            doorLHHRad.GroupName = "DoorHinge";
+
+            doorLHHLBLRad.AssociatedControlID = "radDoorLHH";
+            doorLHHLBL.AssociatedControlID = "radDoorLHH";
+
             #endregion
 
-            #region Table:Sixth Row Door Position (tblDoorDetails)
+            #region Table:Seventh Row Door Hinge RHH (tblDoorDetails)
+
+            TableRow doorRHHRow = new TableRow();
+            TableCell doorRHHLBLCell = new TableCell();
+            TableCell doorRHHRADCell = new TableCell();
+
+            Label doorRHHLBLRad = new Label();
+            doorRHHLBLRad.ID = "lblDoorRHHRad";
+
+            Label doorRHHLBL = new Label();
+            doorRHHLBL.ID = "lblDoorRHH";
+            doorRHHLBL.Text = "RHH";
+
+            RadioButton doorRHHRad = new RadioButton();
+            doorRHHRad.ID = "radDoorRHH";
+            doorRHHRad.GroupName = "DoorHinge";
+
+            doorRHHLBLRad.AssociatedControlID = "radDoorRHH";
+            doorRHHLBL.AssociatedControlID = "radDoorRHH";
+
+            #endregion
+
+            #region Table:# Row Door Position (tblDoorDetails)
 
             TableRow doorPositionRow = new TableRow();
             TableCell doorPositionLBLCell = new TableCell();
@@ -226,6 +274,7 @@ namespace SunspaceDealerDesktop
 
             TextBox doorPositionTXT = new TextBox();
             doorPositionTXT.ID = "txtDoorPosition";
+            doorPositionTXT.CssClass = "txtField txtLengthInput";
 
             DropDownList inchSpecificLeft = new DropDownList();
             inchSpecificLeft.ID = "ddlInchSpecificLeft";
@@ -241,6 +290,9 @@ namespace SunspaceDealerDesktop
             doorPositionLBL.AssociatedControlID = "txtDoorPosition";
 
             #endregion
+
+
+            //Adding to table
 
             #region Table:First Row Type of Door Added to Table (tblDoorDetails)
             typeOfDoorLBLCell.Controls.Add(typeOfDoorLBL);
@@ -304,9 +356,45 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
-            #region Table:Sixth Row Door Position Added To Table (tblDoorDetails)
+            #region Table:Sixth Row Door Hinge LHH (tblDoorDetails)
 
+            doorLHHLBLCell.Controls.Add(doorLHHLBLMain);
 
+            doorLHHRADCell.Controls.Add(doorLHHRad);
+            doorLHHRADCell.Controls.Add(doorLHHLBLRad);
+            doorLHHRADCell.Controls.Add(doorLHHLBL);
+
+            tblDoorDetails.Rows.Add(doorLHHRow);
+
+            doorLHHRow.Cells.Add(doorLHHLBLCell);
+            doorLHHRow.Cells.Add(doorLHHRADCell);
+
+            #endregion
+
+            #region Table:Seventh Row Door Hinge RHH (tblDoorDetails)
+
+            doorRHHRADCell.Controls.Add(doorRHHRad);
+            doorRHHRADCell.Controls.Add(doorRHHLBLRad);
+            doorRHHLBLCell.Controls.Add(doorRHHLBL);
+
+            tblDoorDetails.Rows.Add(doorRHHRow);
+
+            doorRHHRow.Cells.Add(doorRHHLBLCell);
+            doorRHHRow.Cells.Add(doorRHHRADCell);
+
+            #endregion
+
+            #region Table:# Row Door Position Added To Table (tblDoorDetails)
+
+            doorPositionLBLCell.Controls.Add(doorPositionLBL);
+            doorPositionTXTCell.Controls.Add(doorPositionTXT);
+            doorPositionDDLCell.Controls.Add(inchSpecificLeft);
+
+            tblDoorDetails.Rows.Add(doorPositionRow);
+
+            doorPositionRow.Cells.Add(doorPositionLBLCell);
+            doorPositionRow.Cells.Add(doorPositionTXTCell);
+            doorPositionRow.Cells.Add(doorPositionDDLCell);
 
             #endregion
 
