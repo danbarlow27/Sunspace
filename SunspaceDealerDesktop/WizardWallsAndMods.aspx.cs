@@ -270,7 +270,7 @@ namespace SunspaceDealerDesktop
 
             Label doorPositionLBL = new Label();
             doorPositionLBL.ID = "lblDoorPosition";
-            doorPositionLBL.Text = "Posiition of door from left side (inches):";
+            doorPositionLBL.Text = "Door position from left side (inches):";
 
             TextBox doorPositionTXT = new TextBox();
             doorPositionTXT.ID = "txtDoorPosition";
@@ -375,7 +375,7 @@ namespace SunspaceDealerDesktop
 
             doorRHHRADCell.Controls.Add(doorRHHRad);
             doorRHHRADCell.Controls.Add(doorRHHLBLRad);
-            doorRHHLBLCell.Controls.Add(doorRHHLBL);
+            doorRHHRADCell.Controls.Add(doorRHHLBL);
 
             tblDoorDetails.Rows.Add(doorRHHRow);
 
