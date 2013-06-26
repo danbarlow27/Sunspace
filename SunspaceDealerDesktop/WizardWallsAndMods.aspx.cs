@@ -18,6 +18,49 @@ namespace SunspaceDealerDesktop
             /**********************************/
             hiddenFieldsDiv.InnerHtml = createHiddenFields(); //create hidden fields on page load dynamically
 
+            #region DropDownList Section
+            DropDownList ddlInFrac = new DropDownList();
+            ListItem lst0 = new ListItem("---", "", true);
+            ListItem lst18 = new ListItem("1/8", ".125");
+            ListItem lst14 = new ListItem("1/4", ".25");
+            ListItem lst38 = new ListItem("3/8", ".375");
+            ListItem lst12 = new ListItem("1/2", ".5");
+            ListItem lst58 = new ListItem("5/8", ".625");
+            ListItem lst34 = new ListItem("3/4", ".75");
+            ListItem lst78 = new ListItem("7/8", ".875");
+            ddlInFrac.Items.Add(lst0);
+            ddlInFrac.Items.Add(lst18);
+            ddlInFrac.Items.Add(lst14);
+            ddlInFrac.Items.Add(lst38);
+            ddlInFrac.Items.Add(lst12);
+            ddlInFrac.Items.Add(lst58);
+            ddlInFrac.Items.Add(lst34);
+            ddlInFrac.Items.Add(lst78);
+            //inchesSpecifics.Controls.Add(ddlInFrac);
+
+            DropDownList ddlInFracBackWall = new DropDownList();
+            ddlInFracBackWall.Items.Add(lst0);
+            ddlInFracBackWall.Items.Add(lst18);
+            ddlInFracBackWall.Items.Add(lst14);
+            ddlInFracBackWall.Items.Add(lst38);
+            ddlInFracBackWall.Items.Add(lst12);
+            ddlInFracBackWall.Items.Add(lst58);
+            ddlInFracBackWall.Items.Add(lst34);
+            ddlInFracBackWall.Items.Add(lst78);
+            phBackHeights.Controls.Add(ddlInFracBackWall);
+
+            DropDownList ddlInFracFrontWall = new DropDownList();
+            ddlInFracFrontWall.Items.Add(lst0);
+            ddlInFracFrontWall.Items.Add(lst18);
+            ddlInFracFrontWall.Items.Add(lst14);
+            ddlInFracFrontWall.Items.Add(lst38);
+            ddlInFracFrontWall.Items.Add(lst12);
+            ddlInFracFrontWall.Items.Add(lst58);
+            ddlInFracFrontWall.Items.Add(lst34);
+            ddlInFracFrontWall.Items.Add(lst78);
+            phFrontHeights.Controls.Add(ddlInFracFrontWall);
+            #endregion
+
             //SLIDE 3 DOOR DETAILS PER WALL
             #region Slide 3: Onload dynamic loop to insert wall door options
 
@@ -170,6 +213,34 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
+            #region Table:Sixth Row Door Position (tblDoorDetails)
+
+            TableRow doorPositionRow = new TableRow();
+            TableCell doorPositionLBLCell = new TableCell();
+            TableCell doorPositionTXTCell = new TableCell();
+            TableCell doorPositionDDLCell = new TableCell();
+
+            Label doorPositionLBL = new Label();
+            doorPositionLBL.ID = "lblDoorPosition";
+            doorPositionLBL.Text = "Posiition of door from left side (inches):";
+
+            TextBox doorPositionTXT = new TextBox();
+            doorPositionTXT.ID = "txtDoorPosition";
+
+            DropDownList inchSpecificLeft = new DropDownList();
+            inchSpecificLeft.ID = "ddlInchSpecificLeft";
+            inchSpecificLeft.Items.Add(lst0);
+            inchSpecificLeft.Items.Add(lst18);
+            inchSpecificLeft.Items.Add(lst14);
+            inchSpecificLeft.Items.Add(lst38);
+            inchSpecificLeft.Items.Add(lst12);
+            inchSpecificLeft.Items.Add(lst58);
+            inchSpecificLeft.Items.Add(lst34);
+            inchSpecificLeft.Items.Add(lst78);
+
+            doorPositionLBL.AssociatedControlID = "txtDoorPosition";
+
+            #endregion
 
             #region Table:First Row Type of Door Added to Table (tblDoorDetails)
             typeOfDoorLBLCell.Controls.Add(typeOfDoorLBL);
@@ -233,6 +304,12 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
+            #region Table:Sixth Row Door Position Added To Table (tblDoorDetails)
+
+
+
+            #endregion
+
             wallDoorOptions.Controls.Add(tblDoorDetails);
 
             wallDoorOptions.Controls.Add(new LiteralControl("</li></ul></div>"));
@@ -240,48 +317,7 @@ namespace SunspaceDealerDesktop
             #endregion
 
             //DropDownList used in tables loaded to page
-            #region DropDownList Section
-            DropDownList ddlInFrac = new DropDownList();
-            ListItem lst0 = new ListItem("---", "", true);
-            ListItem lst18 = new ListItem("1/8", ".125");
-            ListItem lst14 = new ListItem("1/4", ".25");
-            ListItem lst38 = new ListItem("3/8", ".375");
-            ListItem lst12 = new ListItem("1/2", ".5");
-            ListItem lst58 = new ListItem("5/8", ".625");
-            ListItem lst34 = new ListItem("3/4", ".75");
-            ListItem lst78 = new ListItem("7/8", ".875");
-            ddlInFrac.Items.Add(lst0);
-            ddlInFrac.Items.Add(lst18);
-            ddlInFrac.Items.Add(lst14);
-            ddlInFrac.Items.Add(lst38);
-            ddlInFrac.Items.Add(lst12);
-            ddlInFrac.Items.Add(lst58);
-            ddlInFrac.Items.Add(lst34);
-            ddlInFrac.Items.Add(lst78);
-            //inchesSpecifics.Controls.Add(ddlInFrac);
-
-            DropDownList ddlInFracBackWall = new DropDownList();
-            ddlInFracBackWall.Items.Add(lst0);
-            ddlInFracBackWall.Items.Add(lst18);
-            ddlInFracBackWall.Items.Add(lst14);
-            ddlInFracBackWall.Items.Add(lst38);
-            ddlInFracBackWall.Items.Add(lst12);
-            ddlInFracBackWall.Items.Add(lst58);
-            ddlInFracBackWall.Items.Add(lst34);
-            ddlInFracBackWall.Items.Add(lst78);
-            phBackHeights.Controls.Add(ddlInFracBackWall);
-
-            DropDownList ddlInFracFrontWall = new DropDownList();
-            ddlInFracFrontWall.Items.Add(lst0);
-            ddlInFracFrontWall.Items.Add(lst18);
-            ddlInFracFrontWall.Items.Add(lst14);
-            ddlInFracFrontWall.Items.Add(lst38);
-            ddlInFracFrontWall.Items.Add(lst12);
-            ddlInFracFrontWall.Items.Add(lst58);
-            ddlInFracFrontWall.Items.Add(lst34);
-            ddlInFracFrontWall.Items.Add(lst78);
-            phFrontHeights.Controls.Add(ddlInFracFrontWall);
-            #endregion
+            
 
             #region For Loop for slide 1 and slide3
             //Used to dynamically add values to ddlWallDoorPlacement
