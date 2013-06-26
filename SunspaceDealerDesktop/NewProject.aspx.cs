@@ -27,7 +27,7 @@ namespace SunspaceDealerDesktop
             ddlExistingCustomer.Items.Add("Previous Customer One");
             ddlExistingCustomer.Items.Add("Previous Customer Two");
         }
-
+        
         protected void btnLayout_Click(object sender, EventArgs e)
         {
             //Session.Add("hidFirstName", hidFirstName.Value);

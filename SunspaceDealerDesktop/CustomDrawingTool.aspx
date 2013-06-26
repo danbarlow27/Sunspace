@@ -1,6 +1,6 @@
-﻿<%@ Page Title="Custom Drawing Tool" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CustomDrawingTool.aspx.cs" Inherits="SunspaceDealerDesktop.CustomDrawingTool" %>
+﻿﻿<%@ Page Title="Custom Drawing Tool" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CustomDrawingTool.aspx.cs" Inherits="SunspaceDealerDesktop.CustomDrawingTool" %>
 
-<asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
+<%--<asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
@@ -10,7 +10,7 @@
             
         </div>
     </section>
-</asp:Content>
+</asp:Content>--%>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     
