@@ -165,55 +165,42 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
-            #region Table:Fourth Row Door Swing In (tblDoorDetails)
+            #region Table:Fourth Row Door Swing and Hinge (tblDoorDetails)
 
-            TableRow doorSwingInRow = new TableRow();
-            TableCell doorSwingInLBLCell = new TableCell();
-            TableCell doorSwingInRADCell = new TableCell();
+            TableRow doorSwingRow = new TableRow();
+            TableCell doorSwingLBLCell = new TableCell();
+            TableCell doorSwingDDLCell = new TableCell();
 
-            Label doorSwingInLBLMain = new Label();
-            doorSwingInLBLMain.ID = "lblDoorSwingMain";
-            doorSwingInLBLMain.Text = "Swing:";
+            Label doorSwingLBL = new Label();
+            doorSwingLBL.ID = "lblDoorSwing";
+            doorSwingLBL.Text = "Hinge and Swing";
 
-            Label doorSwingInLBLRad = new Label();
-            doorSwingInLBLRad.ID = "lblDoorSwingIn";
-
-            Label doorSwingInLBL = new Label();
-            doorSwingInLBL.ID = "lblDoorSwingInRad";
-            doorSwingInLBL.Text = "In";            
-
-            RadioButton doorSwingInRAD = new RadioButton();
-            doorSwingInRAD.ID = "radDoorSwingIn";
-            doorSwingInRAD.GroupName = "SwingInOut";
-
-            doorSwingInLBLRad.AssociatedControlID = "radDoorSwingIn";
-            doorSwingInLBL.AssociatedControlID = "radDoorSwingIn";
+            DropDownList doorSwingDDL = new DropDownList();
+            doorSwingDDL.ID = "ddlDoorSwing";
+            ListItem lhhInSwing = new ListItem("LHH - Inswing", "lIn");
+            ListItem lhhOutSwing = new ListItem("LHH- Outswing", "lOut");
+            ListItem rhhInSwing = new ListItem("RHH - Inswing", "rIn");
+            ListItem rhhOutSwing = new ListItem("RHH - Outswing", "rOut");
+            doorSwingDDL.Items.Add(lhhInSwing);
+            doorSwingDDL.Items.Add(lhhOutSwing);
+            doorSwingDDL.Items.Add(rhhInSwing);
+            doorSwingDDL.Items.Add(rhhOutSwing);
 
             #endregion
 
-            #region Table:Fifth Row Door Swing Out (tblDoorDetails)
+            #region Table:Fifth Row Door Width
 
-            TableRow doorSwingOutRow = new TableRow();
-            TableCell doorSwingOutLBLCell = new TableCell();
-            TableCell doorSwingOutRADCell = new TableCell();
+            TableRow doorWidthRow = new TableRow();
+            TableCell doorWidthLBLCell = new TableCell();
+            TableCell doorwidthDDLCell = new TableCell();
 
-            Label doorSwingOutLBLRad = new Label();
-            doorSwingOutLBLRad.ID = "lblDoorSwingOut";
-
-            Label doorSwingOutLBL = new Label();
-            doorSwingOutLBL.ID = "lblDoorSwingOutRad";
-            doorSwingOutLBL.Text = "Out";
-
-            RadioButton doorSwingOutRAD = new RadioButton();
-            doorSwingOutRAD.ID = "radDoorSwingOut";
-            doorSwingOutRAD.GroupName = "SwingInOut";
-
-            doorSwingOutLBLRad.AssociatedControlID = "radDoorSwingOut";
-            doorSwingOutLBL.AssociatedControlID = "radDoorSwingOut";
+            Label doorWidthLBL = new Label();
+            doorWidthLBL.ID = "lblDoorWidth";
+            doorWidthLBL.Text = "Door width:";
 
             #endregion
 
-            #region Table:Sixth Row Door Position (tblDoorDetails)
+            #region Table:Fifth Row Door Position (tblDoorDetails)
 
             TableRow doorPositionRow = new TableRow();
             TableCell doorPositionLBLCell = new TableCell();
@@ -222,27 +209,30 @@ namespace SunspaceDealerDesktop
 
             Label doorPositionLBL = new Label();
             doorPositionLBL.ID = "lblDoorPosition";
-            doorPositionLBL.Text = "Posiition of door from left side (inches):";
+            doorPositionLBL.Text = "Position from left side of wall (inches):";
 
             TextBox doorPositionTXT = new TextBox();
             doorPositionTXT.ID = "txtDoorPosition";
+            doorPositionTXT.CssClass = "txtField txtLengthInput";
 
-            DropDownList inchSpecificLeft = new DropDownList();
-            inchSpecificLeft.ID = "ddlInchSpecificLeft";
-            inchSpecificLeft.Items.Add(lst0);
-            inchSpecificLeft.Items.Add(lst18);
-            inchSpecificLeft.Items.Add(lst14);
-            inchSpecificLeft.Items.Add(lst38);
-            inchSpecificLeft.Items.Add(lst12);
-            inchSpecificLeft.Items.Add(lst58);
-            inchSpecificLeft.Items.Add(lst34);
-            inchSpecificLeft.Items.Add(lst78);
+            DropDownList doorPositionInchSpecific = new DropDownList();
+            doorPositionInchSpecific.ID = "ddlInchSpecificLeft";
+            doorPositionInchSpecific.Items.Add(lst0);
+            doorPositionInchSpecific.Items.Add(lst18);
+            doorPositionInchSpecific.Items.Add(lst14);
+            doorPositionInchSpecific.Items.Add(lst38);
+            doorPositionInchSpecific.Items.Add(lst12);
+            doorPositionInchSpecific.Items.Add(lst58);
+            doorPositionInchSpecific.Items.Add(lst34);
+            doorPositionInchSpecific.Items.Add(lst78);
 
             doorPositionLBL.AssociatedControlID = "txtDoorPosition";
-
+            
             #endregion
 
-            #region Table:First Row Type of Door Added to Table (tblDoorDetails)
+
+            #region Table:First Row Type Of Door Added to Table (tblDoorDetails)
+            
             typeOfDoorLBLCell.Controls.Add(typeOfDoorLBL);
             typeOfDoorDDLCell.Controls.Add(typeOfDoorDDL);
             
@@ -250,9 +240,10 @@ namespace SunspaceDealerDesktop
 
             typeOfDoorRow.Cells.Add(typeOfDoorLBLCell);
             typeOfDoorRow.Cells.Add(typeOfDoorDDLCell);
+
             #endregion
 
-            #region Table:Second Row Color of Door Added to Table (tblDoorDetails)
+            #region Table:Second Row Color Of Door Added to Table (tblDoorDetails)
 
             colorOfDoorLBLCell.Controls.Add(colorOfDoorLBL);
             colorOfDoorDDLCell.Controls.Add(colorOfDoorDDL);
@@ -276,37 +267,29 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
-            #region Table:Fourth Row Swing In Added To Table (tblDoorDetails)
+            #region Table:Fourth Row Door Swing and Hinge Added To Table (tblDoorDetails)
 
-            doorSwingInLBLCell.Controls.Add(doorSwingInLBLMain);
+            doorSwingLBLCell.Controls.Add(doorSwingLBL);
+            doorSwingDDLCell.Controls.Add(doorSwingDDL);
 
-            doorSwingInRADCell.Controls.Add(doorSwingInRAD);
-            doorSwingInRADCell.Controls.Add(doorSwingInLBLRad);
-            doorSwingInRADCell.Controls.Add(doorSwingInLBL);
+            tblDoorDetails.Rows.Add(doorSwingRow);
 
-            tblDoorDetails.Rows.Add(doorSwingInRow);
-
-            doorSwingInRow.Cells.Add(doorSwingInLBLCell);
-            doorSwingInRow.Cells.Add(doorSwingInRADCell);
+            doorSwingRow.Cells.Add(doorSwingLBLCell);
+            doorSwingRow.Cells.Add(doorSwingDDLCell);
 
             #endregion
+                       
+            #region Table:Fifth Row Door Position Added To Table (tblDoorDetails)
 
-            #region Table:Fifth Row Swing Out Added To Table (tblDoorDetails)
+            doorPositionLBLCell.Controls.Add(doorPositionLBL);
+            doorPositionTXTCell.Controls.Add(doorPositionTXT);
+            doorPositionDDLCell.Controls.Add(doorPositionInchSpecific);
 
-            doorSwingOutRADCell.Controls.Add(doorSwingOutRAD);
-            doorSwingOutRADCell.Controls.Add(doorSwingOutLBLRad);
-            doorSwingOutRADCell.Controls.Add(doorSwingOutLBL);
+            tblDoorDetails.Rows.Add(doorPositionRow);
 
-            tblDoorDetails.Rows.Add(doorSwingOutRow);
-
-            doorSwingOutRow.Cells.Add(doorSwingOutLBLCell);
-            doorSwingOutRow.Cells.Add(doorSwingOutRADCell);
-
-            #endregion
-
-            #region Table:Sixth Row Door Position Added To Table (tblDoorDetails)
-
-
+            doorPositionRow.Cells.Add(doorPositionLBLCell);
+            doorPositionRow.Cells.Add(doorPositionTXTCell);
+            doorPositionRow.Cells.Add(doorPositionDDLCell);
 
             #endregion
 
@@ -317,16 +300,9 @@ namespace SunspaceDealerDesktop
             #endregion
 
             //DropDownList used in tables loaded to page
+
+            #region For Loop for slide 1
             
-
-            #region For Loop for slide 1 and slide3
-            //Used to dynamically add values to ddlWallDoorPlacement
-            for (int i = 1; i <= (int)Session["numberOfWalls"]; i++)
-            {
-                ListItem numberOfWalls = new ListItem(Convert.ToString(i), Convert.ToString(i));
-                //ddlWallDoorPlacement.Items.Add(numberOfWalls);
-            }
-
             for (int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 5 right now
             {
                 TableRow row = new TableRow();
