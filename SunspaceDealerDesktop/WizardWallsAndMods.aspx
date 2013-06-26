@@ -12,17 +12,53 @@
         for (var i = 0; i < lineList.length; i++) { 
             coordList[i] = lineList[i].split(","); //populate the 2d array
         }
-        var wallSetBacksArray = new Array();
+        var wallSetBackArray = new Array();
+        var projection = 0;
 
-        function calculateSetBack() {
+        function calculateSetBack(index) {
             /*
-            WEST        :   LENGTH
-            SOUTHWEST   :   MATH (2a^2 = L^2)
             SOUTH       :   ZERO
             NORTH       :   ZERO
-            SOUTHEAST   :   NEGATIVE MATH 
+            WEST        :   LENGTH
             EAST        :   NEGATIVE LENGTH
+            SOUTHWEST   :   (2a^2 = L^2)
+            NORTHWEST   :   (2a^2 = L^2)            
+            SOUTHEAST   :   NEGATIVE (2a^2 = L^2)  
+            NORTHEAST   :   NEGATIVE (2a^2 = L^2) 
             */
+
+            switch (coordList[index][5]) { //5 = orientation
+                case "S":
+                case "N":
+                    wallSetBackArray[index] = 0;
+                    break;
+                case "W":
+                    wallSetBackArray[index] = document.getElementById("MainContent_txtWall" + i + "Length").value;
+                    break;
+                case "E":
+                    wallSetBackArray[index] = (document.getElementById("MainContent_txtWall" + i + "Length").value) * (-1);
+                    break;
+                case "SW":
+                case "NW":
+                    wallSetBackArray[index] = Math.sqrt((Math.pow((document.getElementById("MainContent_txtWall" + i + "Length").value), 2)) / 2)
+                    break;
+                case "SE":
+                case "NE":
+                    wallSetBackArray[index] = (Math.sqrt((Math.pow((document.getElementById("MainContent_txtWall" + i + "Length").value), 2)) / 2)) * (-1);
+                    break;
+            }
+        }
+
+        function calculateProjection() {
+            var tempProjection = 0;
+            var highestSetBack = 0;
+            for (var i = 0; i < wallSetBackArray.length; i++) {
+                tempProjection = +tempProjection + +wallSetBackArray[i];
+                if (tempProjection > highestSetBack)
+                    highestSetBack = tempProjection;
+                //console.log("tempProjection: " + tempProjection + ", highestSetBack: " + highestSetBack);
+            }
+            return highestSetBack;
         }
 
         function checkQuestion1() {
@@ -32,35 +68,45 @@
             //document.getElementById('MainContent_btnQuestion2').disabled = false;
             //document.getElementById('MainContent_btnQuestion3').disabled = false;
 
-            //if ($('#MainContent_radWallLengths').is(':checked')) {
+            //var lengthList = new Array();
+            var isValid = true;
+            var answer = "";
 
-                //var lengthList = new Array();
-                var isValid = true;
-                var answer = "";
+            for (var i = 1; i <= lineList.length; i++) {
+                if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value)
+                    || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0 //zero should be changed to MIN_WALL_LENGTH
+                    || isNaN(document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value)
+                    || document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value < 0
+                    || isNaN(document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value)
+                    || document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value < 0)
+                    isValid = false;
+            }
 
-
-                for (var i = 1; i <= lineList.length; i++) {
-                    if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0)
-                        isValid = false;
+            if (isValid) {
+                for (var i = 1; i <= lineList.length; i++) { //add up length and filler and populate the hidden fields
+                    document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i]; //store wall setback
+                    document.getElementById("hidWall" + i + "LeftFiller").value = document.getElementById("MainContent_txtWall" + i + "Length").value; 
+                    document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
+                    document.getElementById("hidWall" + i + "RightFiller").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
+                    answer += "Wall " + i + ": " + document.getElementById("MainContent_txtWall" + i + "Length").value;
+                    calculateSetBack((i - 1));
                 }
 
-                if (isValid) {
-                    for (var i = 1; i <= lineList.length; i++) {
-                        document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
-                        answer += "Wall " + i + ": " + document.getElementById("txtWall" + i + "Length").value;
-                    }
-                    //Set answer on side pager and enable button
-                    $('#MainContent_lblWallLengthsAnswer').text(answer);
-                    document.getElementById('pagerOne').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion1').disabled = false;
-                }
-                else {
-                    //error styling or something
-                    //Set answer on side pager and enable button
-                    $('#MainContent_lblWallLengthsAnswer').text("Wall Lengths Invalid");
-                    document.getElementById('pagerOne').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion1').disabled = false;
-                }
+                //store projection in the projection variable and hidden field
+                document.getElementById("MainContent_hidProjection").value = projection = calculateProjection(); 
+
+                //Set answer on side pager and enable button
+                $('#MainContent_lblWallLengthsAnswer').text(answer);
+                document.getElementById('pagerOne').style.display = "inline";
+                document.getElementById('MainContent_btnQuestion1').disabled = false;
+            }
+            else { //not valid
+                //error styling or something
+                //Set answer on side pager and enable button
+                $('#MainContent_lblWallLengthsAnswer').text("Wall Lengths Invalid");
+                document.getElementById('pagerOne').style.display = "inline";
+                document.getElementById('MainContent_btnQuestion1').disabled = false;
+            }
 
             return false;
         }
@@ -79,7 +125,6 @@
             var isValid = true;
             var answer = "";
 
-            //for (var i = 1; i <= lineList.length; i++) {
             if (isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
                 || document.getElementById("MainContent_txtBackWallHeight").value <= 0
                 || (isNaN(document.getElementById("MainContent_txtFrontWallHeight").value))
@@ -87,12 +132,9 @@
                 || (isNaN(document.getElementById("MainContent_txtRoofSlope").value))
                 || document.getElementById("MainContent_txtRoofSlope").value <= 0)
                     isValid = false;
-            //}
-
+            
 
             if (isValid) {
-                
-                //for (var i = 1; i <= lineList.length; i++) {
                 document.getElementById("MainContent_hidBackWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value;
                 document.getElementById("MainContent_hidFrontWallHeight").value = document.getElementById("MainContent_txtFrontWallHeight").value;
                 document.getElementById("MainContent_hidRoofSlope").value = document.getElementById("MainContent_txtRoofSlope").value;
@@ -101,15 +143,12 @@
                 answer += "Roof Slope: " + document.getElementById("MainContent_hidRoofSlope").value;
 
 
-                //}
-                //Set answer on side pager and enable button
                 $('#MainContent_lblWallHeightsAnswer').text(answer);
                 document.getElementById('pagerTwo').style.display = "inline";
                 document.getElementById('MainContent_btnQuestion2').disabled = false;
                 
             }
             else {
-                alert("error");
                 //error styling or something
                 //Set answer on side pager and enable button
                 $('#MainContent_lblWallHeightsAnswer').text("Wall Heights Invalid");
@@ -403,20 +442,20 @@
         //Local variable to store all the line information
         for (var i = 0; i < lineList.length; i++) { //draw all the lines with the given attributes
             lineArray[i] = canvas.append("line")
-                    .attr("x1", (coordList[i][0] / 5) * 2)
-                    .attr("y1", (coordList[i][2] / 5) * 2)
-                    .attr("x2", (coordList[i][1] / 5) * 2)
-                    .attr("y2", (coordList[i][3] / 5) * 2);
+                    .attr("x1", (coordList[i][0] / 5) * 2) //0 = x1
+                    .attr("y1", (coordList[i][2] / 5) * 2) //1 = y1
+                    .attr("x2", (coordList[i][1] / 5) * 2) //2 = x2
+                    .attr("y2", (coordList[i][3] / 5) * 2); //3 = y2
             //lineArray[i].attr("mouseover", alert("hwllo"));
             
-            if(coordList[i][4] === "E")
+            if(coordList[i][4] === "E") //4 = wall facing
                 lineArray[i].attr("stroke", "red");
             else
                 lineArray[i].attr("stroke", "black");
         }
 
         function highlightWallsLength() {
-            var wallNumber = (document.activeElement.id.substr(19,1));            
+            var wallNumber = (document.activeElement.id.substr(19,1)); //parse out the wall number from the id           
 
             lineArray[wallNumber - 1].attr("stroke", "yellow");
             lineArray[wallNumber - 1].attr("stroke-width", "2");
@@ -425,7 +464,7 @@
 
         function resetWalls() {
             for (var i = 0; i < lineList.length; i++) {
-                if (coordList[i][4] === "E")
+                if (coordList[i][4] === "E") //4 = wall facing
                     lineArray[i].attr("stroke", "red");
                 else
                     lineArray[i].attr("stroke", "black");
@@ -435,7 +474,7 @@
         }
 
         function highlightWallsHeight() {
-            var textbox = (document.activeElement.id.substr(15, 1));
+            var textbox = (document.activeElement.id.substr(15, 1)); //parse out B or F (for back wall or front wall) from the id
             var southWalls = new Array();
             var lowestWall = 0; //arbitrary number
             var lowestIndex;
@@ -444,7 +483,7 @@
             var index;
 
             for (var i = 0; i < lineList.length; i++) {
-                if (coordList[i][5] == "S") {
+                if (coordList[i][5] == "S") { //5 = orientation
                     southWalls.push({ "y2": lineArray[i].attr("y2"), "number": i });
                 }
             }
@@ -459,8 +498,8 @@
                     highestIndex = southWalls[i].number;
                 }
             }
-            console.log(lowestIndex);
-            index = (textbox === "B") ? lowestIndex : highestIndex;
+            //console.log(lowestIndex);
+            index = (textbox === "B") ? /*if backwall*/ lowestIndex : /*else frontwall*/ highestIndex; 
             lineArray[index].attr("stroke", "yellow");
             lineArray[index].attr("stroke-width", "2");
         }
@@ -470,18 +509,17 @@
     <%-- Hidden input tags 
     ======================= --%>
 <%-- %><input id="hidWallLengthsAndHeights" type="hidden" runat="server" /> wall length hidden fields will be created dynamically --%>
-    <div id="hiddenFieldsDiv" runat="server">
-        
-    </div>
-        <input id="hidFrontWallHeight" type="hidden" runat="server" />
-        <input id="hidBackWallHeight" type="hidden" runat="server" />
-        <input id="hidRoofSlope" type="hidden" runat="server" />
-        <input id="hidDoorType" type="hidden" runat="server" />
-        <input id="hidDoorColour" type="hidden" runat="server" />
-        <input id="hidDoorHeight" type="hidden" runat="server" />
-        <input id="hidSwingingDoor" type="hidden" runat="server" />
-        <input id="hidWallDoorPlacement" type="hidden" runat="server" />
-        <input id="hidWallDoorPosition" type="hidden" runat="server" />
+    <div id="hiddenFieldsDiv" runat="server"></div>
+    <input id="hidProjection" type="hidden" runat="server" />
+    <input id="hidFrontWallHeight" type="hidden" runat="server" />
+    <input id="hidBackWallHeight" type="hidden" runat="server" />
+    <input id="hidRoofSlope" type="hidden" runat="server" />
+    <input id="hidDoorType" type="hidden" runat="server" />
+    <input id="hidDoorColour" type="hidden" runat="server" />
+    <input id="hidDoorHeight" type="hidden" runat="server" />
+    <input id="hidSwingingDoor" type="hidden" runat="server" />
+    <input id="hidWallDoorPlacement" type="hidden" runat="server" />
+    <input id="hidWallDoorPosition" type="hidden" runat="server" />
 
     <%-- end hidden divs --%>
 

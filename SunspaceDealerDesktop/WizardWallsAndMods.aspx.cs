@@ -327,7 +327,7 @@ namespace SunspaceDealerDesktop
                 //ddlWallDoorPlacement.Items.Add(numberOfWalls);
             }
 
-            for (int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 5 right now
+            for (int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 4 right now
             {
                 TableRow row = new TableRow();
                 TableRow rowLeftFiller = new TableRow();
@@ -407,10 +407,10 @@ namespace SunspaceDealerDesktop
                 txtRightFiller.Attributes.Add("onblur", "resetWalls()");
 
                 cell1.Controls.Add(lblWallNumber);
-                cell2.Controls.Add(txtWallLength);
-                cell3.Controls.Add(ddlInchFractions);
-                cell4.Controls.Add(txtLeftFiller);
-                cell5.Controls.Add(ddlLeftInchFractions);
+                cell2.Controls.Add(txtLeftFiller);
+                cell3.Controls.Add(ddlLeftInchFractions);
+                cell4.Controls.Add(txtWallLength);
+                cell5.Controls.Add(ddlInchFractions);
                 cell6.Controls.Add(txtRightFiller);
                 cell7.Controls.Add(ddlRightInchFractions);
 
@@ -443,7 +443,10 @@ namespace SunspaceDealerDesktop
 
             for (int i = 1; i <= (int)Session["numberOfWalls"]; i++)
             {
+                html += "<input id=\"hidWall" + i + "SetBack\" type=\"hidden\" runat=\"server\" />";
+                html += "<input id=\"hidWall" + i + "LeftFiller\" type=\"hidden\" runat=\"server\" />";
                 html += "<input id=\"hidWall" + i + "Length\" type=\"hidden\" runat=\"server\" />";
+                html += "<input id=\"hidWall" + i + "RightFiller\" type=\"hidden\" runat=\"server\" />";
             }
             return html;
         }
