@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SunspaceWizard
+namespace SunspaceDealerDesktop
 {
-    public partial class _Default : Page
+    public partial class NewProject : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -17,10 +17,15 @@ namespace SunspaceWizard
                 //Response.Redirect("Login.aspx");
                 Session.Add("loggedIn", "userA");
             }
-            
-            //ddlExistingCustomer.Items.Add("Choose a Customer...");
-            //ddlExistingCustomer.Items.Add("Previous Customer One");
-            //ddlExistingCustomer.Items.Add("Previous Customer Two");
+
+            Customer aCustomer = new Customer();
+            ddlExistingCustomer.Items.Add("Choose a Customer...");
+            aCustomer.FirstName = "Butt";
+            aCustomer.LastName = "Hole";
+            ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
+
+            ddlExistingCustomer.Items.Add("Previous Customer One");
+            ddlExistingCustomer.Items.Add("Previous Customer Two");
         }
 
         protected void btnLayout_Click(object sender, EventArgs e)

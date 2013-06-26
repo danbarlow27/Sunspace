@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SunspaceWizard {
+namespace SunspaceDealerDesktop {
     
     
-    public partial class _Default {
+    public partial class NewProject {
         
         /// <summary>
         /// lblQuestion1 control.

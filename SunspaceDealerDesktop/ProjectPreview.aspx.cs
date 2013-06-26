@@ -33,6 +33,7 @@ namespace SunspaceDealerDesktop
             modularItems.Add(new Door());
             listOfDoors.Add(aMod);
 
+
             aMod = new Mod();
             modularItems = aMod.ModularItems;
             modularItems.Add(new Door());
