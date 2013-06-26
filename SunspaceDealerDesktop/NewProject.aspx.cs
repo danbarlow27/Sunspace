@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SunspaceWizard
+namespace SunspaceDealerDesktop
 {
-    public partial class _Default : Page
+    public partial class NewProject : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -18,7 +18,7 @@ namespace SunspaceWizard
                 Session.Add("loggedIn", "userA");
             }
 
-            Customer poop = new Customer();
+            Customer aCustomer = new Customer();
             ddlExistingCustomer.Items.Add("Choose a Customer...");
             aCustomer.FirstName = "Butt";
             aCustomer.LastName = "Hole";
