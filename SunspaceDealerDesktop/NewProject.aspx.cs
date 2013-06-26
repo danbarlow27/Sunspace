@@ -99,5 +99,10 @@ namespace SunspaceWizard
                 Response.Redirect("Home.aspx");
             }
         }
+
+        protected void radProjectComponents_CheckedChanged(object sender, EventArgs e)
+        {
+            Response.Redirect("Home.aspx");
+        }
     }
 }
