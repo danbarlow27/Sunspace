@@ -19,13 +19,11 @@ function newProjectCheckQuestion1() {
         document.getElementById("MainContent_hidZip").value = $('#MainContent_txtCustomerZip').val();
         document.getElementById("MainContent_hidPhone").value = $('#MainContent_txtCustomerPhone').val();
 
-        //Make sure the text boxes aren't blank
+        //Make sure the text boxes aren't blank before manually checking zip/postal and phone
         if (document.getElementById("MainContent_hidFirstName").value != "" &&
             document.getElementById("MainContent_hidLastName").value != "" &&
             document.getElementById("MainContent_hidAddress").value != "" &&
-            document.getElementById("MainContent_hidCity").value != "" &&
-            document.getElementById("MainContent_hidZip").value != "" &&
-            document.getElementById("MainContent_hidPhone").value != "") {
+            document.getElementById("MainContent_hidCity").value != "") {
 
             //having troubles checking .value.length, so setting .value into a variable
             var lengthCheck = document.getElementById("MainContent_hidPhone").value;
@@ -33,6 +31,7 @@ function newProjectCheckQuestion1() {
             //only check if a full 10digit number is entered
             if (lengthCheck.length == 10) {
                 //validatePhone function returns an error message, blank if valid
+                console.log();
                 var validPhone = validatePhone(document.getElementById("MainContent_hidPhone").value);
             }
 
