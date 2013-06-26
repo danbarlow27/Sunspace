@@ -211,7 +211,6 @@
     <Content Include="packages.config" />
     <Content Include="Content\fonts\Shanti-Regular.ttf" />
     <Content Include="ProjectPreview.aspx" />
-    <Content Include="Scripts\NewProjectValidation.js" />
     <Content Include="WizardWallsAndMods.aspx" />
     <Content Include="NoIcons.Master" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />

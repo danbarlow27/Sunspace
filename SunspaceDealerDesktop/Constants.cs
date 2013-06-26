@@ -15,6 +15,8 @@ namespace SunspaceDealerDesktop
         public const float SOFT_MIN_MOD_SIZE = 12.0F; //Minimum size of a mod (soft)
         public const float SOFT_MAX_MOD_SIZE = 84.0f; //Maximum size of a mod (soft)
 
+        public const float SPREADER_BAR_SIZE = 1.0f; //width of a spreader bar (does not vary)
+
         public static string[] MODEL_100_FRAMING_COLOURS = { "White", "Driftwood", "Bronze" };
         //public const static string[] MODEL_100_WINDOW_COLOURS = { "White", "Driftwood", "Bronze" };//CURRENTLY NO COLOURS, ONLY VINYL
 

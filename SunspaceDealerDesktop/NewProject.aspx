@@ -2,6 +2,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script src="Scripts/Validation.js"></script>
+  
     <script>
         function goComponents() {
             //change me when component ordering is put into place

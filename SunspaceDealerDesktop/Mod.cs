@@ -13,6 +13,9 @@ namespace SunspaceDealerDesktop
         private bool sunshade;
         private float fixedLocation;
         private string modType;
+        private float visibleSpace;
+        private float physicalSpace;
+        private float usableSpace;
         List<Object> modularItems = new List<Object>();
 
         #endregion
@@ -25,6 +28,9 @@ namespace SunspaceDealerDesktop
             Sunshade = false;
             FixedLocation = 0.0f;
             ModType = "";
+            VisibleSpace = 0f;
+            PhysicalSpace = 0f;
+            UsableSpace = 0f;
         }
 
         #endregion
@@ -92,7 +98,40 @@ namespace SunspaceDealerDesktop
                 modType = value;
             }
         }
-
+        public float VisibleSpace
+        {
+            get
+            {
+                return visibleSpace;
+            }
+            set
+            {
+                visibleSpace = value;
+            }
+        }
+        public float PhysicalSpace
+        {
+            get
+            {
+                return physicalSpace;
+            }
+            set
+            {
+                physicalSpace = value;
+            }
+        }
+        public float UsableSpace
+        {
+            get
+            {
+                return usableSpace;
+            }
+            set
+            {
+                usableSpace = value;
+            }
+        }
+        
         #endregion Accessors
     }
 }
