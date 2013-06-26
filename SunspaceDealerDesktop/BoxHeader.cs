@@ -5,19 +5,20 @@ using System.Web;
 
 namespace SunspaceDealerDesktop
 {
-    public class Filler
+    public class BoxHeader
     {
+        #region Attributes
         private float length;
+        #endregion
 
-        public Filler()
+        #region Constructors
+        public BoxHeader()
         {
-            Length = Constants.DEFAULT_FILLER;
+            length = 3.25f;
         }
+        #endregion
 
-        public Filler(float sentLength)
-        {
-            Length = sentLength;
-        }
+        #region Accessors
 
         public float Length
         {
@@ -31,5 +32,6 @@ namespace SunspaceDealerDesktop
                 length = value;
             }
         }
+        #endregion
     }
 }

@@ -11,6 +11,13 @@ namespace SunspaceWizard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["loggedIn"] == null)
+            {
+                //uncomment me when login functionality is working
+                //Response.Redirect("Login.aspx");
+                Session.Add("loggedIn", "userA");
+            }
+            
             //ddlExistingCustomer.Items.Add("Choose a Customer...");
             //ddlExistingCustomer.Items.Add("Previous Customer One");
             //ddlExistingCustomer.Items.Add("Previous Customer Two");
@@ -83,6 +90,14 @@ namespace SunspaceWizard
 
             //If custom btnLayout, Page 2, else, page3
             Response.Redirect("TestingHiddens.aspx");
+        }
+
+        protected void btnQuestion3_Click(object sender, EventArgs e)
+        {
+            if (radProjectRoof.Checked)
+            {
+                Response.Redirect("Home.aspx");
+            }
         }
     }
 }

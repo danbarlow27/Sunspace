@@ -8,7 +8,8 @@ namespace SunspaceDealerDesktop
     public class Wall
     {
         #region Attributes
-        private float proposedLength;
+
+        private float length;
         private int firstItemIndex; //Index of First Item in Wall
         private int lastItemIndex; //Index of Last Item in Wall
         private String orientation; //N, NE, E, S, SE, NW, SW, W
@@ -21,15 +22,17 @@ namespace SunspaceDealerDesktop
         private float gablePeak;
         private float totalCornerLength;
         private float totalReceiverLength;
+        private float slope;
         List<Object> linearItems = new List<Object>();
         List<Object> obstructions = new List<Object>();
         //colours?
+
         #endregion
 
         #region Constructors
         public Wall()
         {
-            ProposedLength = 0.0F;
+            Length = 0.0F;
             FirstItemIndex = -1;
             LastItemIndex = -1;
             Orientation = "";
@@ -41,6 +44,7 @@ namespace SunspaceDealerDesktop
             TotalReceiverLength = 0.0f;
             ModelType = "";
             GablePeak = 0f;
+            Slope = 0f;
         }
         #endregion
 
@@ -48,7 +52,7 @@ namespace SunspaceDealerDesktop
 
         public float calculateWorkableSpace()
         {
-            float workableSpace = ProposedLength;
+            float workableSpace = Length;
             workableSpace -= TotalCornerLength;
             workableSpace -= TotalReceiverLength;
 
@@ -197,16 +201,16 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Accessors
-        public float ProposedLength
+        public float Length
         {
             get
             {
-                return proposedLength;
+                return length;
             }
 
             set
             {
-                proposedLength = value;
+                length = value;
             }
         }
         
@@ -324,6 +328,18 @@ namespace SunspaceDealerDesktop
             set
             {
                 totalReceiverLength = value;
+            }
+        }
+        public float Slope
+        {
+            get
+            {
+                return slope;
+            }
+
+            set
+            {
+                slope = value;
             }
         }
 

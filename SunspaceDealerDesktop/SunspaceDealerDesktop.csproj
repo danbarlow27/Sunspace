@@ -187,6 +187,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="GenerateMods.aspx" />
+    <Content Include="Home.aspx" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
     <Content Include="Images\heroAccent.png" />
@@ -204,10 +206,13 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Content\jquery.bxslider.css" />
+    <Content Include="Login.aspx" />
     <Content Include="NewProject.aspx" />
     <Content Include="packages.config" />
     <Content Include="Content\fonts\Shanti-Regular.ttf" />
+    <Content Include="ProjectPreview.aspx" />
     <Content Include="WizardWallsAndMods.aspx" />
+    <Content Include="NoIcons.Master" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="SavedProjects.aspx" />
     <Content Include="Scripts\D3.js" />
@@ -305,6 +310,8 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BoxHeader.cs" />
+    <Compile Include="CabanaDoor.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
@@ -323,10 +330,32 @@
     </Compile>
     <Compile Include="Door.cs" />
     <Compile Include="Filler.cs" />
+    <Compile Include="FrenchDoor.cs" />
+    <Compile Include="GenerateMods.aspx.cs">
+      <DependentUpon>GenerateMods.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GenerateMods.aspx.designer.cs">
+      <DependentUpon>GenerateMods.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalFunctions.cs" />
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Mod.cs" />
     <Compile Include="NewProject.aspx.cs">
       <DependentUpon>NewProject.aspx</DependentUpon>
@@ -334,6 +363,21 @@
     </Compile>
     <Compile Include="NewProject.aspx.designer.cs">
       <DependentUpon>NewProject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PatioDoor.cs" />
+    <Compile Include="NoIcons.Master.cs">
+      <DependentUpon>NoIcons.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NoIcons.Master.designer.cs">
+      <DependentUpon>NoIcons.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectPreview.aspx.cs">
+      <DependentUpon>ProjectPreview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectPreview.aspx.designer.cs">
+      <DependentUpon>ProjectPreview.aspx</DependentUpon>
     </Compile>
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -359,6 +403,7 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
+    <Compile Include="Sunroom.cs" />
     <Compile Include="TestingHiddens.aspx.cs">
       <DependentUpon>TestingHiddens.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

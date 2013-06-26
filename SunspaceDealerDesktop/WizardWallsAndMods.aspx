@@ -6,12 +6,61 @@
     =================================== --%>
     <script>
 
-        var wallCount = '<%= (int)Session["numberOfWalls"] %>'; //number of walls drawn by the user
-        var lines = '<%= (string)Session["coordList"] %>'; //all the coordinates of all the lines
-        var lineList = lines.substr(0, lines.length-1).split("/"); //a list of lines and their coordinates
+        var detailsOfAllLines = '<%= (string)Session["coordList"] %>'; //all the coordinates and details of all the lines
+        var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/"); //a list of individual lines and their coordinates and details 
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
         for (var i = 0; i < lineList.length; i++) { 
             coordList[i] = lineList[i].split(","); //populate the 2d array
+        }
+        var wallSetBackArray = new Array();
+        var projection = 10; //hard coded to testing
+
+        function calculateSetBack(index) {
+            /*
+            SOUTH       :   ZERO
+            NORTH       :   ZERO
+            WEST        :   LENGTH
+            EAST        :   NEGATIVE LENGTH
+            SOUTHWEST   :   (2a^2 = L^2)
+            NORTHWEST   :   (2a^2 = L^2)            
+            SOUTHEAST   :   NEGATIVE (2a^2 = L^2)  
+            NORTHEAST   :   NEGATIVE (2a^2 = L^2) 
+            */
+
+            var L = document.getElementById("MainContent_txtWall" + i + "Length").value;
+
+            switch (coordList[index][5]) { //5 = orientation
+                case "S":
+                case "N":
+                    wallSetBackArray[index] = 0;
+                    break;
+                case "W":
+                    wallSetBackArray[index] = L;
+                    break;
+                case "E":
+                    wallSetBackArray[index] = -L;
+                    break;
+                case "SW":
+                case "NW":
+                    wallSetBackArray[index] = Math.sqrt((Math.pow(L, 2)) / 2);
+                    break;
+                case "SE":
+                case "NE":
+                    wallSetBackArray[index] = -(Math.sqrt((Math.pow(L, 2)) / 2));
+                    break;
+            }
+        }
+
+        function calculateProjection() {
+            var tempProjection = 0;
+            var highestSetBack = 0;
+            for (var i = 0; i < wallSetBackArray.length; i++) {
+                tempProjection = +tempProjection + +wallSetBackArray[i];
+                if (tempProjection > highestSetBack)
+                    highestSetBack = tempProjection;
+                //console.log("tempProjection: " + tempProjection + ", highestSetBack: " + highestSetBack);
+            }
+            return highestSetBack;
         }
 
         function checkQuestion1() {
@@ -21,43 +70,45 @@
             //document.getElementById('MainContent_btnQuestion2').disabled = false;
             //document.getElementById('MainContent_btnQuestion3').disabled = false;
 
-            //if ($('#MainContent_radWallLengths').is(':checked')) {
+            //var lengthList = new Array();
+            var isValid = true;
+            var answer = "";
 
-                //var lengthList = new Array();
-                var isValid = true;
-                var answer = "";
+            for (var i = 1; i <= lineList.length; i++) {
+                if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value)
+                    || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0 //zero should be changed to MIN_WALL_LENGTH
+                    || isNaN(document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value)
+                    || document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value < 0
+                    || isNaN(document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value)
+                    || document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value < 0)
+                    isValid = false;
+            }
 
-                //creating hidden fields dynamically using js (this is currently being done in codebehind)
-                /*for (var i = 1; i <= wallCount; i++) {
-                    if (!document.getElementById("MainContent_hidWall1Length")) {
-                    var hidWall1Length = document.createElement("input");
-                    hidWall1Length.type = "hidden";
-                    hidWall1Length.id = "hidWall1Length";
-                    hidWall1Length.value = document.getElementById("MainContent_txtWall1Length").value;//$('#MainContent_txtWall1Length').val();
-                }*/
-
-                for (var i = 1; i <= wallCount; i++) {
-                    if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0)
-                        isValid = false;
+            if (isValid) {
+                for (var i = 1; i <= lineList.length; i++) { //add up length and filler and populate the hidden fields
+                    document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i]; //store wall setback
+                    document.getElementById("hidWall" + i + "LeftFiller").value = document.getElementById("MainContent_txtWall" + i + "Length").value; 
+                    document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
+                    document.getElementById("hidWall" + i + "RightFiller").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
+                    answer += "Wall " + i + ": " + document.getElementById("MainContent_txtWall" + i + "Length").value;
+                    calculateSetBack((i - 1));
                 }
 
-                if (isValid) {
-                    for (var i = 1; i <= wallCount; i++) {
-                        document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
-                        answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value;
-                    }
-                    //Set answer on side pager and enable button
-                    $('#MainContent_lblWallLengthsAnswer').text(answer);
-                    document.getElementById('pagerOne').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion1').disabled = false;
-                }
-                else {
-                    //error styling or something
-                    //Set answer on side pager and enable button
-                    $('#MainContent_lblWallLengthsAnswer').text("Wall Lengths Invalid");
-                    document.getElementById('pagerOne').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion1').disabled = false;
-                }
+                //store projection in the projection variable and hidden field
+                document.getElementById("MainContent_hidProjection").value = projection = calculateProjection();
+
+                //Set answer on side pager and enable button
+                $('#MainContent_lblWallLengthsAnswer').text(answer);
+                document.getElementById('pagerOne').style.display = "inline";
+                document.getElementById('MainContent_btnQuestion1').disabled = false;
+            }
+            else { //not valid
+                //error styling or something
+                //Set answer on side pager and enable button
+                $('#MainContent_lblWallLengthsAnswer').text("Invalid Input");
+                document.getElementById('pagerOne').style.display = "inline";
+                document.getElementById('MainContent_btnQuestion1').disabled = false;
+            }
 
             return false;
         }
@@ -70,26 +121,83 @@
             //document.getElementById('MainContent_btnQuestion2').disabled = false;
             //document.getElementById('MainContent_btnQuestion3').disabled = false;
 
-            //if ($('#MainContent_radWallLengths').is(':checked')) {
-
-            //var lengthList = new Array();
-            var isValid = true;
+            var isValid = false;
             var answer = "";
+            var m;    //m = rise/run
+            var rise; //m = rise/run
+            var run = projection / 12;  // to get slope over 12
 
-            //for (var i = 1; i <= wallCount; i++) {
-            if (isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
-                || document.getElementById("MainContent_txtBackWallHeight").value <= 0
-                || (isNaN(document.getElementById("MainContent_txtFrontWallHeight").value))
-                || document.getElementById("MainContent_txtFrontWallHeight").value <= 0
-                || (isNaN(document.getElementById("MainContent_txtRoofSlope").value))
-                || document.getElementById("MainContent_txtRoofSlope").value <= 0)
-                    isValid = false;
-            //}
 
+            if (document.getElementById("MainContent_chkAutoRoofSlope").checked) {
+                //we have front wall height and back wall height, calculate slope
+                if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
+                    && document.getElementById("MainContent_txtBackWallHeight").value > 0
+                    //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
+                    && !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                    && document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
+                    //&& document.getElementById("MainContent_txtFrontWallHeight").value != ""
+                    //|| isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                    //|| document.getElementById("MainContent_txtRoofSlope").value <= 0)
+
+                    //alert("yello");
+                    isValid = true;
+
+                    rise = (document.getElementById("MainContent_txtBackWallHeight").value - document.getElementById("MainContent_txtFrontWallHeight").value) / run; //to get slope over 12
+                    //run = projection;
+
+                    document.getElementById("MainContent_txtRoofSlope").value = m = (Math.round((rise / run) * 100)) / (100); //round m to 2 decimal places
+                }
+            }
+
+            if (document.getElementById("MainContent_chkAutoFrontWallHeight").checked) {
+                //we have back wall height and slope, calculate front wall height
+                if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
+                    && document.getElementById("MainContent_txtBackWallHeight").value > 0
+                    //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
+                    //|| !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                    //|| document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
+                    && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                    && document.getElementById("MainContent_txtRoofSlope").value > 0) {
+                    //&& document.getElementById("MainContent_txtRoofSlope").value != ""
+
+                    isValid = true;
+
+                    m = document.getElementById("MainContent_txtRoofSlope").value;
+                    //run = projection;
+                    rise = run * m;
+
+                    document.getElementById("MainContent_txtFrontWallHeight").value = +document.getElementById("MainContent_txtBackWallHeight").value - rise;
+                }
+            }
+
+            if (document.getElementById("MainContent_chkAutoBackWallHeight").checked) {
+                //we have front wall height and slope, calculate back wall height
+                if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                    && document.getElementById("MainContent_txtFrontWallHeight").value > 0
+                    //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
+                    //|| !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                    //|| document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
+                    && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                    && document.getElementById("MainContent_txtRoofSlope").value > 0) {
+                    //&& document.getElementById("MainContent_txtRoofSlope").value != ""
+
+                    isValid = true;
+
+                    m = document.getElementById("MainContent_txtRoofSlope").value;
+                    //run = projection;
+                    rise = run * m;
+
+                    document.getElementById("MainContent_txtBackWallHeight").value = +document.getElementById("MainContent_txtFrontWallHeight").value + +rise;
+                }
+            }
+
+            if (document.getElementById("MainContent_txtBackWallHeight").value <= document.getElementById("MainContent_txtFrontWallHeight").value)
+                isValid = false;
 
             if (isValid) {
-                
-                //for (var i = 1; i <= wallCount; i++) {
+
+                //alert("yello");
+
                 document.getElementById("MainContent_hidBackWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value;
                 document.getElementById("MainContent_hidFrontWallHeight").value = document.getElementById("MainContent_txtFrontWallHeight").value;
                 document.getElementById("MainContent_hidRoofSlope").value = document.getElementById("MainContent_txtRoofSlope").value;
@@ -98,8 +206,6 @@
                 answer += "Roof Slope: " + document.getElementById("MainContent_hidRoofSlope").value;
 
 
-                //}
-                //Set answer on side pager and enable button
                 $('#MainContent_lblWallHeightsAnswer').text(answer);
                 document.getElementById('pagerTwo').style.display = "inline";
                 document.getElementById('MainContent_btnQuestion2').disabled = false;
@@ -108,7 +214,7 @@
             else {
                 //error styling or something
                 //Set answer on side pager and enable button
-                $('#MainContent_lblWallHeightsAnswer').text("Wall Heights Invalid");
+                $('#MainContent_lblWallHeightsAnswer').text("Invalid Input");
                 document.getElementById('pagerTwo').style.display = "inline";
                 document.getElementById('MainContent_btnQuestion2').disabled = false;
             }
@@ -176,8 +282,8 @@
                     <asp:Label ID="lblQuestion1" runat="server" Text="Please enter the wall lengths"></asp:Label>
                 </h1>        
                               
-                <div id="tableWallLengths" class="tblWallLengths" runat="server">
-                    <asp:Table ID="tblWallLengths" MinHeight="200px" runat="server">
+                <div id="tableWallLengths" class="tblWallLengths" runat="server" style="padding-right:15%; padding-left:15%; padding-top:5%;">
+                    <asp:Table ID="tblWallLengths" runat="server">
                         <asp:TableRow>
                             <asp:TableCell></asp:TableCell>
                             <asp:TableCell ColumnSpan="2" >
@@ -206,10 +312,10 @@
                     <asp:Label ID="lblQuestion2" runat="server" Text="Please enter the wall heights"></asp:Label>
                 </h1>
            
-                        <div class="tblWallLengths" runat="server">
+                        <div class="tblWallLengths" runat="server" style="padding-right:15%; padding-left:15%; padding-top:5%;">
                             <ul>
                                 <li>
-                                    <asp:Table ID="Table1" CssClass="tblTxtFields" runat="server">
+                                    <asp:Table ID="tblWallHeights" CssClass="tblTxtFields" runat="server">
 
                                         <asp:TableRow>
                                             <asp:TableCell>
@@ -217,11 +323,17 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtBackWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtBackWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" onblur="resetWalls()" OnFocus="highlightWallsHeight()" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:PlaceHolder ID="ddlBackHeights" runat="server" />
+                                                <asp:PlaceHolder ID="phBackHeights" runat="server" />
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:CheckBox ID="chkAutoBackWallHeight" runat="server" OnClick="checkQuestion2()" />
+                                                <asp:Label ID="lblAutoBackWallHeightCheckBox" AssociatedControlID="chkAutoBackWallHeight" runat="server"></asp:Label>
+                                                <asp:Label ID="lblAutoBackWallHeight" AssociatedControlID="chkAutoBackWallHeight" runat="server" Text="Auto Populate"></asp:Label>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -231,11 +343,17 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtFrontWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtFrontWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" onblur="resetWalls()" OnFocus="highlightWallsHeight()" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:PlaceHolder ID="ddlFrontHeights" runat="server" />
+                                                <asp:PlaceHolder ID="phFrontHeights" runat="server" />
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:CheckBox ID="chkAutoFrontWallHeight" runat="server" OnClick="checkQuestion2()" />
+                                                <asp:Label ID="lblAutoFrontWallHeightCheckBox" AssociatedControlID="chkAutoFrontWallHeight" runat="server"></asp:Label>
+                                                <asp:Label ID="lblAutoFrontWallHeight" AssociatedControlID="chkAutoFrontWallHeight" runat="server" Text="Auto Populate"></asp:Label>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -246,6 +364,16 @@
 
                                             <asp:TableCell>
                                                 <asp:TextBox ID="txtRoofSlope" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="3"></asp:TextBox>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                            
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:CheckBox ID="chkAutoRoofSlope" runat="server" OnClick="checkQuestion2()" />
+                                                <asp:Label ID="lblAutoRoofSlopeCheckBox" AssociatedControlID="chkAutoBackWallHeight" runat="server"></asp:Label>
+                                                <asp:Label ID="lblAutoRoofSlope" AssociatedControlID="chkAutoBackWallHeight" runat="server" Text="Auto Populate"></asp:Label>
                                             </asp:TableCell>
 
                                         </asp:TableRow>
@@ -269,124 +397,12 @@
                 </h1>        
                               
                 <ul class="toggleOptions">
+                    <asp:PlaceHolder ID="wallDoorOptions" runat="server">
 
-                    <%-- DOOR YES --%>
-                    <li>
-                        <asp:RadioButton ID="radDoorYes" OnClick="checkQuestion3()" GroupName="question3" runat="server" />
-                        <asp:Label ID="lblDoorYesRadio" AssociatedControlID="radDoorYes" runat="server"></asp:Label>
-                        <asp:Label ID="lblDoorYes" AssociatedControlID="radDoorYes" runat="server" Text="Yes"></asp:Label>
-           
-                        <div class="toggleContent">
-                            <ul>
-                                <li>
-                                    <h3>Enter door details:</h3>
+                    
 
-                                    <asp:Table ID="tblDoorYesInfo" CssClass="tblTxtFields" runat="server">
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblDoorType" AssociatedControlID="ddlDoorType" runat="server" Text="Type Of Door:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlDoorType" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
-                                                    <asp:ListItem Text="Cabana" Value="Cabana"/>
-                                                    <asp:ListItem Text="French" Value="French" />
-                                                    <asp:ListItem Text="Patio" Value="Patio" />
-                                                </asp:DropDownList>                                                
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblDoorColour" AssociatedControlID="ddlDoorColour" runat="server" Text="Door Colour:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlDoorColour" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
-                                                    <asp:ListItem Text="Clear" Value="Clear" />
-                                                    <asp:ListItem Text="Grey" Value="Grey" />
-                                                    <asp:ListItem Text="Bronze" Value="Bronze" />
-                                                </asp:DropDownList>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblDoorHeight" AssociatedControlID="ddlDoorHeight" runat="server" Text="Door height:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlDoorHeight" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
-                                                    <asp:ListItem Text="5'" Value="5"/>
-                                                    <asp:ListItem Text="6'" Value="6"/>
-                                                    <asp:ListItem Text="7'" Value="7" />
-                                                    <asp:ListItem Text="8'" Value="8" />
-                                                </asp:DropDownList>                                                
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblSwingingDoor" runat="server" Text="Swinging Door:" ></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:RadioButton ID="radSwingingDoorYes" checked="true" GroupName="Swinging" runat="server" />
-                                                <asp:Label ID="lblSwingingDoorYesRadio" AssociatedControlID="radSwingingDoorYes" runat="server"></asp:Label>
-                                                <asp:Label ID="lblSwingingDoorYes" AssociatedControlID="radSwingingDoorYes" runat="server" Text="&nbsp; Yes"></asp:Label>                                               
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:RadioButton ID="radSwingingDoorNo" GroupName="Swinging" runat="server" />
-                                                <asp:Label ID="lblSwingingDoorNoRadio" AssociatedControlID="radSwingingDoorNo" runat="server"></asp:Label>
-                                                <asp:Label ID="lblSwingingDoorNo" AssociatedControlID="radSwingingDoorNo" runat="server" Text="&nbsp; No"></asp:Label>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow ID="WallDoorPlacement">
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblCustomerCity" AssociatedControlID="ddlWallDoorPlacement" runat="server" Text="Which wall is the door in:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlWallDoorPlacement" OnChange="checkQuestion3()" GroupName="question3" runat="server" >
-                                                </asp:DropDownList>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblWallDoorPosition" AssociatedControlID="txtWallDoorPosition" runat="server" Text="Inches from left side the wall:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <asp:TextBox ID="txtWallDoorPosition" onkeyup="checkQuestion3()" CssClass="txtField txtInput" runat="server" MaxLength="3"></asp:TextBox>
-                                            </asp:TableCell>
-                                            <asp:TableCell >
-                                                <asp:PlaceHolder ID="inchesSpecifics" runat="server" />
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                    </asp:Table>
-                                </li>
-                            </ul>            
-                        </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'complete sunroom' option --%>
-
-                    <%-- DOOR NO --%>
-                    <li>
-                        <asp:RadioButton ID="radDoorNo" OnClick="checkQuestion3()" GroupName="question3" runat="server" />
-                        <asp:Label ID="lblDoorNoRadio" AssociatedControlID="radDoorNo" runat="server"></asp:Label>
-                        <asp:Label ID="lblDoorNo" AssociatedControlID="radDoorNo" runat="server" Text="No"></asp:Label>
-                    </li> <%-- end 'existing customer' option --%>
-
-                </ul> <%-- end .toggleOptions --%>
+</asp:PlaceHolder>                    
+        </ul>            
 
                 <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
@@ -406,6 +422,9 @@
             <h2>Wall Specifications</h2>
 
             <ul>
+
+                <div style="/*max-width:500px; max-height:500px; min-width:200px; min-height:200px; margin: auto auto;*/ position:inherit; /*padding-top:10%; padding-right:5%;*/ text-align:center; /*position:fixed; */top:0px; right:0px;" id="mySunroom"></div>
+
                 <div style="display: none" id="pagerOne">
                     <li>
                             <a href="#" data-slide="#slide1" class="slidePanel">
@@ -484,11 +503,11 @@
     <%-- MINI CANVAS (HIGHLIGHTS CURRENT WALL)
     ======================================== --%>
     <!--Div tag to hold the canvas/grid-->
-    <div style="max-width:500px; max-height:500px; min-width:200px; min-height:200px; margin: auto auto; position:inherit; padding-top:10%; padding-right:5%; /*position:fixed; */top:0px; right:0px;" id="mySunroom"></div>
+    
     <script>
 /*CANVAS STUFF**********************************************************************************************/
-        var slideWindow = document.getElementById("slide-window");
-        slideWindow.appendChild(document.getElementById("mySunroom"));
+        //var slideWindow = document.getElementById("paging");
+        //slideWindow.appendChild(document.getElementById("mySunroom"));
 
         /* CREATE CANVAS */
         var canvas = d3.select("#mySunroom")            //Select the div tag with id "mySunroom"
@@ -503,58 +522,119 @@
                     .attr("height", 200)  //Sets the height for the canvas/grid
                     .attr("fill", "#f6f6f6");              //Sets the color of the rectangle to light grey
 
-        var lineArray = new Array(wallCount);
+        var lineArray = new Array();
 
-        //Local variable to store all the line information
+        //draw the canvas with the lines
         for (var i = 0; i < lineList.length; i++) { //draw all the lines with the given attributes
             lineArray[i] = canvas.append("line")
-                    .attr("x1", (coordList[i][0] / 5) * 2)
-                    .attr("y1", (coordList[i][2] / 5) * 2)
-                    .attr("x2", (coordList[i][1] / 5) * 2)
-                    .attr("y2", (coordList[i][3] / 5) * 2);
-                    //.attr("id", "wall" + i);
-                    //line.attr("onmouseover", alert("hwllo"));
+                    .attr("x1", (coordList[i][0] / 5) * 2) //0 = x1
+                    .attr("y1", (coordList[i][2] / 5) * 2) //1 = y1
+                    .attr("x2", (coordList[i][1] / 5) * 2) //2 = x2
+                    .attr("y2", (coordList[i][3] / 5) * 2); //3 = y2
+            //lineArray[i].attr("mouseover", alert("hwllo"));
             
-            if(coordList[i][4] === "E")
+            if(coordList[i][4] === "E") //4 = wall facing
                 lineArray[i].attr("stroke", "red");
             else
                 lineArray[i].attr("stroke", "black");
         }
 
-        function highlightWall() {
-            var wallNumber = (document.activeElement.id.substr(19,1) - 1);
-            
-            for (var i = 0; i < wallCount; i++) {
-                if (coordList[i][4] == "P") {
-                    if (i == wallNumber) {
+        //highlight each individual walls for length question
+        function highlightWallsLength() {
+            var wallNumber = (document.activeElement.id.substr(19,1)); //parse out the wall number from the id           
 
-                        lineArray[i].attr("stroke", "yellow");
-                        lineArray[i].attr("stroke-width", "2");
-                    }
-                    else {
-                        lineArray[i].attr("stroke", "black");
-                        lineArray[i].attr("stroke-width", "1");
-                    }
-                }
+            lineArray[wallNumber - 1].attr("stroke", "yellow");
+            lineArray[wallNumber - 1].attr("stroke-width", "2");
+               
+        }
+
+        //reset wall colours onblur
+        function resetWalls() {
+            for (var i = 0; i < lineList.length; i++) {
+                lineArray[i].attr("stroke-width", "1");
+                if (coordList[i][4] === "E") //4 = wall facing
+                    lineArray[i].attr("stroke", "red");
+                else
+                    lineArray[i].attr("stroke", "black");
             }
         }
+
+        //highlight back and front walls for height question
+        function highlightWallsHeight() {
+            var textbox = (document.activeElement.id.substr(15, 1)); //parse out B or F (for back wall or front wall) from the id
+            var southWalls = new Array();
+            var lowestWall = 0; //arbitrary number
+            var lowestIndex;
+            var highestWall = 200; //arbitrary number
+            var highestIndex;
+            var index;
+            var typeOfWall;
+
+            for (var i = 0; i < lineList.length; i++)
+                if (coordList[i][5] == "S") //5 = orientation
+                    southWalls.push({ "y2": lineArray[i].attr("y2"), "number": i, "type": coordList[i][4] }); //populate south walls array
+
+            if (textbox === "B")
+                index = getBackWall(southWalls);
+            else { //if (textbox === "F")
+                if (southWalls[southWalls.length - 1].type === "P")
+                    index = getFrontWall(southWalls);
+            }
+            
+
+            lineArray[index].attr("stroke", "yellow");
+            lineArray[index].attr("stroke-width", "2");
+        }
+
+        //determine the back wall index
+        function getBackWall(southWalls) {
+            var lowestWall;
+            var lowestIndex;
+            for (var i = 0; i < southWalls.length; i++) {
+                if (southWalls[i].y2 > lowestWall) {
+                    lowestWall = southWalls[i].y2;
+                    lowestIndex = southWalls[i].number;
+                }
+            }
+            return lowestIndex;
+        }
+
+        //determine the front wall index
+        function getFrontWall(southWalls) {
+            var highestWall;
+            var highestIndex;
+            for (var i = 0; i < southWalls.length; i++) {
+                if (southWalls[i].y2 < highestWall) {
+                    highestWall = southWalls[i].y2;
+                    highestIndex = southWalls[i].number;
+                }
+            }
+
+            return highestIndex;
+        }
+
+        //highlight the front point if there is no front wall
+        function highlightFrontPoint() {
+
+        }
+
+            
 /*******************************************************************************************************/
     </script>
     <%-- Hidden input tags 
     ======================= --%>
 <%-- %><input id="hidWallLengthsAndHeights" type="hidden" runat="server" /> wall length hidden fields will be created dynamically --%>
-    <div id="hiddenFieldsDiv" runat="server">
-        
-    </div>
-        <input id="hidFrontWallHeight" type="hidden" runat="server" />
-        <input id="hidBackWallHeight" type="hidden" runat="server" />
-        <input id="hidRoofSlope" type="hidden" runat="server" />
-        <input id="hidDoorType" type="hidden" runat="server" />
-        <input id="hidDoorColour" type="hidden" runat="server" />
-        <input id="hidDoorHeight" type="hidden" runat="server" />
-        <input id="hidSwingingDoor" type="hidden" runat="server" />
-        <input id="hidWallDoorPlacement" type="hidden" runat="server" />
-        <input id="hidWallDoorPosition" type="hidden" runat="server" />
+    <div id="hiddenFieldsDiv" runat="server"></div>
+    <input id="hidProjection" type="hidden" runat="server" />
+    <input id="hidFrontWallHeight" type="hidden" runat="server" />
+    <input id="hidBackWallHeight" type="hidden" runat="server" />
+    <input id="hidRoofSlope" type="hidden" runat="server" />
+    <input id="hidDoorType" type="hidden" runat="server" />
+    <input id="hidDoorColour" type="hidden" runat="server" />
+    <input id="hidDoorHeight" type="hidden" runat="server" />
+    <input id="hidSwingingDoor" type="hidden" runat="server" />
+    <input id="hidWallDoorPlacement" type="hidden" runat="server" />
+    <input id="hidWallDoorPosition" type="hidden" runat="server" />
 
     <%-- end hidden divs --%>
 
