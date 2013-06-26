@@ -20,7 +20,13 @@ namespace SunspaceDealerDesktop
         #region Constructors
         public Customer()
         {
-
+            FirstName = "";
+            LastName = "";
+            Address = "";
+            City = "";
+            Country = "";
+            ZipOrPostal = "";
+            PhoneNumber = "";
         }
         #endregion
 
