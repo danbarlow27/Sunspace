@@ -125,61 +125,70 @@
             var answer = "";
             var m;    //m = rise/run
             var rise; //m = rise/run
-            var run = projection;  //m = rise/run
+            var run = projection / 12;  // to get slope over 12
 
-            //we have front wall height and back wall height, calculate slope
-            if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
-                && document.getElementById("MainContent_txtBackWallHeight").value > 0
-                //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
-                && !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
-                && document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
-                //&& document.getElementById("MainContent_txtFrontWallHeight").value != ""
-                //|| isNaN(document.getElementById("MainContent_txtRoofSlope").value)
-                //|| document.getElementById("MainContent_txtRoofSlope").value <= 0)
 
-                //alert("yello");
-                isValid = true;
+            if (document.getElementById("MainContent_chkAutoRoofSlope").checked) {
+                //we have front wall height and back wall height, calculate slope
+                if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
+                    && document.getElementById("MainContent_txtBackWallHeight").value > 0
+                    //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
+                    && !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                    && document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
+                    //&& document.getElementById("MainContent_txtFrontWallHeight").value != ""
+                    //|| isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                    //|| document.getElementById("MainContent_txtRoofSlope").value <= 0)
 
-                rise = document.getElementById("MainContent_txtBackWallHeight").value - document.getElementById("MainContent_txtFrontWallHeight").value;
-                //run = projection;
+                    //alert("yello");
+                    isValid = true;
 
-                document.getElementById("MainContent_txtRoofSlope").value = m = (Math.round((rise / run) * 100)) / (100); //round m to 2 decimal places
+                    rise = (document.getElementById("MainContent_txtBackWallHeight").value - document.getElementById("MainContent_txtFrontWallHeight").value) / run; //to get slope over 12
+                    //run = projection;
+
+                    document.getElementById("MainContent_txtRoofSlope").value = m = (Math.round((rise / run) * 100)) / (100); //round m to 2 decimal places
+                }
             }
 
-            else if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
-                && document.getElementById("MainContent_txtBackWallHeight").value > 0
-                //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
-                //|| !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
-                //|| document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
-                && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
-                && document.getElementById("MainContent_txtRoofSlope").value > 0) {
-                //&& document.getElementById("MainContent_txtRoofSlope").value != ""
-            
-                isValid = true;
+            if (document.getElementById("MainContent_chkAutoFrontWallHeight").checked) {
+                //we have back wall height and slope, calculate front wall height
+                if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
+                    && document.getElementById("MainContent_txtBackWallHeight").value > 0
+                    //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
+                    //|| !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                    //|| document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
+                    && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                    && document.getElementById("MainContent_txtRoofSlope").value > 0) {
+                    //&& document.getElementById("MainContent_txtRoofSlope").value != ""
 
-                m = document.getElementById("MainContent_txtRoofSlope").value;
-                //run = projection;
-                rise = run * m;
+                    isValid = true;
 
-                document.getElementById("MainContent_txtFrontWallHeight").value = +document.getElementById("MainContent_txtBackWallHeight").value - rise;
+                    m = document.getElementById("MainContent_txtRoofSlope").value;
+                    //run = projection;
+                    rise = run * m;
+
+                    document.getElementById("MainContent_txtFrontWallHeight").value = +document.getElementById("MainContent_txtBackWallHeight").value - rise;
+                }
             }
 
-            else if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
-                && document.getElementById("MainContent_txtFrontWallHeight").value > 0
-                //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
-                //|| !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
-                //|| document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
-                && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
-                && document.getElementById("MainContent_txtRoofSlope").value > 0) {
-                //&& document.getElementById("MainContent_txtRoofSlope").value != ""
+            if (document.getElementById("MainContent_chkAutoBackWallHeight").checked) {
+                //we have front wall height and slope, calculate back wall height
+                if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                    && document.getElementById("MainContent_txtFrontWallHeight").value > 0
+                    //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
+                    //|| !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                    //|| document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
+                    && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                    && document.getElementById("MainContent_txtRoofSlope").value > 0) {
+                    //&& document.getElementById("MainContent_txtRoofSlope").value != ""
 
-                isValid = true;
+                    isValid = true;
 
-                m = document.getElementById("MainContent_txtRoofSlope").value;
-                //run = projection;
-                rise = run * m;
+                    m = document.getElementById("MainContent_txtRoofSlope").value;
+                    //run = projection;
+                    rise = run * m;
 
-                document.getElementById("MainContent_txtBackWallHeight").value = +document.getElementById("MainContent_txtFrontWallHeight").value + +rise;
+                    document.getElementById("MainContent_txtBackWallHeight").value = +document.getElementById("MainContent_txtFrontWallHeight").value + +rise;
+                }
             }
 
             if (document.getElementById("MainContent_txtBackWallHeight").value <= document.getElementById("MainContent_txtFrontWallHeight").value)
@@ -306,7 +315,7 @@
                         <div class="tblWallLengths" runat="server" style="padding-right:15%; padding-left:15%; padding-top:5%;">
                             <ul>
                                 <li>
-                                    <asp:Table ID="Table1" CssClass="tblTxtFields" runat="server">
+                                    <asp:Table ID="tblWallHeights" CssClass="tblTxtFields" runat="server">
 
                                         <asp:TableRow>
                                             <asp:TableCell>
@@ -319,6 +328,12 @@
 
                                             <asp:TableCell>
                                                 <asp:PlaceHolder ID="phBackHeights" runat="server" />
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:CheckBox ID="chkAutoBackWallHeight" runat="server" OnClick="checkQuestion2()" />
+                                                <asp:Label ID="lblAutoBackWallHeightCheckBox" AssociatedControlID="chkAutoBackWallHeight" runat="server"></asp:Label>
+                                                <asp:Label ID="lblAutoBackWallHeight" AssociatedControlID="chkAutoBackWallHeight" runat="server" Text="Auto Populate"></asp:Label>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -334,6 +349,12 @@
                                             <asp:TableCell>
                                                 <asp:PlaceHolder ID="phFrontHeights" runat="server" />
                                             </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:CheckBox ID="chkAutoFrontWallHeight" runat="server" OnClick="checkQuestion2()" />
+                                                <asp:Label ID="lblAutoFrontWallHeightCheckBox" AssociatedControlID="chkAutoFrontWallHeight" runat="server"></asp:Label>
+                                                <asp:Label ID="lblAutoFrontWallHeight" AssociatedControlID="chkAutoFrontWallHeight" runat="server" Text="Auto Populate"></asp:Label>
+                                            </asp:TableCell>
                                         </asp:TableRow>
 
                                         <asp:TableRow>
@@ -343,6 +364,16 @@
 
                                             <asp:TableCell>
                                                 <asp:TextBox ID="txtRoofSlope" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="3"></asp:TextBox>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                            
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:CheckBox ID="chkAutoRoofSlope" runat="server" OnClick="checkQuestion2()" />
+                                                <asp:Label ID="lblAutoRoofSlopeCheckBox" AssociatedControlID="chkAutoBackWallHeight" runat="server"></asp:Label>
+                                                <asp:Label ID="lblAutoRoofSlope" AssociatedControlID="chkAutoBackWallHeight" runat="server" Text="Auto Populate"></asp:Label>
                                             </asp:TableCell>
 
                                         </asp:TableRow>
@@ -546,11 +577,10 @@
             if (textbox === "B")
                 index = getBackWall(southWalls);
             else { //if (textbox === "F")
-                if(southWalls[southWalls.length - 1].type === "P")
+                if (southWalls[southWalls.length - 1].type === "P")
                     index = getFrontWall(southWalls);
-                else
-                    highlightFrontPoint();
             }
+            
 
             lineArray[index].attr("stroke", "yellow");
             lineArray[index].attr("stroke-width", "2");
@@ -587,6 +617,7 @@
         function highlightFrontPoint() {
 
         }
+
             
 /*******************************************************************************************************/
     </script>
