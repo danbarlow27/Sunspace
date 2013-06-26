@@ -3,6 +3,19 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script src="Scripts/Validation.js"></script>
     <script>
+        function checkProjectSelection(radioGroup) {
+            console.log("this stinks");
+            var radioName;
+            for (var i = 0; i < radioGroup.length; i++) {
+                var currentRadio = radioGroup[i];
+
+                if (currentRadio.checked) {
+                    radioName = radioGroup[i].value;
+                }
+            }
+
+            console.log(radioName);
+        }
         function newProjectCheckQuestion1() {
             //disable 'next slide' button until after validation
             document.getElementById('MainContent_btnQuestion1').disabled = true;
@@ -677,7 +690,7 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion3" Enabled="false" OnClick="btnQuestion3_Click" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3" Enabled="false" OnClientClick="checkProjectSelection(document.getElementById(projectType)" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide3 --%>
