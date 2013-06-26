@@ -10,7 +10,7 @@
 namespace SunspaceDealerDesktop {
     
     
-    public partial class _Default {
+    public partial class _NewProject {
         
         /// <summary>
         /// Button1 control.

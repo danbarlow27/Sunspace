@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace SunspaceDealerDesktop
 {
-    public partial class _Default : Page
+    public partial class NewProject : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
