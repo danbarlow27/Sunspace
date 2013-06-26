@@ -311,6 +311,8 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BoxHeader.cs" />
+    <Compile Include="CabanaDoor.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
@@ -329,6 +331,7 @@
     </Compile>
     <Compile Include="Door.cs" />
     <Compile Include="Filler.cs" />
+    <Compile Include="FrenchDoor.cs" />
     <Compile Include="GenerateMods.aspx.cs">
       <DependentUpon>GenerateMods.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -362,6 +365,7 @@
     <Compile Include="NewProject.aspx.designer.cs">
       <DependentUpon>NewProject.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PatioDoor.cs" />
     <Compile Include="NoIcons.Master.cs">
       <DependentUpon>NoIcons.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
