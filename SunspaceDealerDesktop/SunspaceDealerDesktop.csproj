@@ -188,6 +188,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="GenerateMods.aspx" />
+    <Content Include="Home.aspx" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
     <Content Include="Images\heroAccent.png" />
@@ -205,12 +206,14 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Content\jquery.bxslider.css" />
+    <Content Include="Login.aspx" />
     <Content Include="NewProject.aspx" />
     <Content Include="packages.config" />
     <Content Include="Content\fonts\Shanti-Regular.ttf" />
     <Content Include="ProjectPreview.aspx" />
     <Content Include="Scripts\NewProjectValidation.js" />
     <Content Include="WizardWallsAndMods.aspx" />
+    <Content Include="NoIcons.Master" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="SavedProjects.aspx" />
     <Content Include="Scripts\D3.js" />
@@ -337,6 +340,20 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalFunctions.cs" />
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Mod.cs" />
     <Compile Include="NewProject.aspx.cs">
       <DependentUpon>NewProject.aspx</DependentUpon>
@@ -344,6 +361,13 @@
     </Compile>
     <Compile Include="NewProject.aspx.designer.cs">
       <DependentUpon>NewProject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NoIcons.Master.cs">
+      <DependentUpon>NoIcons.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NoIcons.Master.designer.cs">
+      <DependentUpon>NoIcons.Master</DependentUpon>
     </Compile>
     <Compile Include="ProjectPreview.aspx.cs">
       <DependentUpon>ProjectPreview.aspx</DependentUpon>
