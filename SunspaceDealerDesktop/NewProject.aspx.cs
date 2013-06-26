@@ -20,6 +20,10 @@ namespace SunspaceWizard
 
             Customer poop = new Customer();
             ddlExistingCustomer.Items.Add("Choose a Customer...");
+            aCustomer.FirstName = "Butt";
+            aCustomer.LastName = "Hole";
+            ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
+
             ddlExistingCustomer.Items.Add("Previous Customer One");
             ddlExistingCustomer.Items.Add("Previous Customer Two");
         }
