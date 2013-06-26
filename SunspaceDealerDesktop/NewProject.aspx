@@ -2,352 +2,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script src="Scripts/Validation.js"></script>
-    <%-- Hidden div populating scripts 
-    =================================== --%>
-    <script>
-        function checkQuestion1() {
-            //disable 'next slide' button until after validation
-            document.getElementById('MainContent_btnQuestion1').disabled=true;
-
-            if ($('#MainContent_radNewCustomer').is(':checked'))
-            {
-                document.getElementById("MainContent_hidFirstName").value = $('#MainContent_txtCustomerFirstName').val();
-                document.getElementById("MainContent_hidLastName").value = $('#MainContent_txtCustomerLastName').val();
-                document.getElementById("MainContent_hidAddress").value = $('#MainContent_txtCustomerAddress').val();
-                document.getElementById("MainContent_hidCity").value = $('#MainContent_txtCustomerCity').val();
-                document.getElementById("MainContent_hidZip").value = $('#MainContent_txtCustomerZip').val();
-                document.getElementById("MainContent_hidPhone").value = $('#MainContent_txtCustomerPhone').val();
-
-                //Make sure the text boxes aren't blank
-                if (document.getElementById("MainContent_hidFirstName").value != "" &&
-                    document.getElementById("MainContent_hidLastName").value != "" &&
-                    document.getElementById("MainContent_hidAddress").value != "" &&
-                    document.getElementById("MainContent_hidCity").value != "" &&
-                    document.getElementById("MainContent_hidZip").value != "" &&
-                    document.getElementById("MainContent_hidPhone").value != "") {
-
-                    var lengthCheck = document.getElementById("MainContent_hidPhone").value;
-
-                    if (lengthCheck.length == 10) {
-                        var validPhone = validatePhone(document.getElementById("MainContent_hidPhone").value);
-                        console.log(validPhone);
-                    }
-
-                    var zipCode = document.getElementById("MainContent_hidZip").value;
-
-                    if (isNaN(zipCode) || zipCode.length < 5) {
-                        console.log("invalid zip");
-                    }
-                    else {
-                        console.log("valid zip");
-                    }
-
-                    //Set answer to 'new' on side pager and enable button
-                    $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
-                    document.getElementById('pagerOne').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion1').disabled = false;
-                }
-                else {
-                    //error styling or something
-                }
-            }
-            else if ($('#MainContent_radExistingCustomer').is(':checked'))
-            {
-                document.getElementById("MainContent_ddlExistingCustomer").value = $('#MainContent_ddlCustomerFirstName').val();
-
-                if (document.getElementById("MainContent_ddlExistingCustomer").value != "Choose a Customer...") {
-                    //valid, so update pager and enable button
-                    $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing");
-                    document.getElementById('pagerOne').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion1').disabled = false;
-                }
-            }
-
-            return false;
-        }
-
-        function checkQuestion2() {
-            //disable 'next slide' button until after validation
-            document.getElementById('MainContent_btnQuestion2').disabled = true;
-
-            document.getElementById("MainContent_hidProjectTag").value = $('#MainContent_txtProjectName').val();
-
-            if (document.getElementById("MainContent_hidProjectTag").value != "") {
-                //valid, so update pager and enable button
-                $('#MainContent_lblProjectTagAnswer').text(document.getElementById("MainContent_hidProjectTag").value);
-                document.getElementById('pagerTwo').style.display = "inline";
-                document.getElementById('MainContent_btnQuestion2').disabled = false;
-            }
-            else {
-                //error styling or something
-            }
-            return false;
-        }
-
-        function checkQuestion3() {
-            document.getElementById('MainContent_btnQuestion3').disabled = true;
-
-            if ($('#MainContent_radProjectSunroom').is(':checked')) {
-                if ($('#MainContent_radSunroomModel100').is(':checked')) {
-                    document.getElementById("MainContent_hidModelNumber").value = "100";
-                    document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion3').disabled = false;
-                }
-                else if($('#MainContent_radSunroomModel200').is(':checked')) {
-                    document.getElementById("MainContent_hidModelNumber").value = "200";
-                    document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion3').disabled = false;
-                }
-                else if($('#MainContent_radSunroomModel300').is(':checked')) {
-                    document.getElementById("MainContent_hidModelNumber").value = "300";
-                    document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion3').disabled = false;
-                }
-                else if($('#MainContent_radSunroomModel400').is(':checked')) {
-                    document.getElementById("MainContent_hidModelNumber").value = "400";
-                    document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion3').disabled = false;
-                } 
-                else if ($('#MainContent_radSunroomModelShowroom').is(':checked')) {
-                    document.getElementById("MainContent_hidModelNumber").value = "Showroom";
-                    document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion3').disabled = false;
-                }
-                
-                document.getElementById("MainContent_hidProjectType").value = "Sunroom";
-                $('#MainContent_lblProjectTypeAnswer').text(document.getElementById("MainContent_hidProjectType").value + " of Model " + document.getElementById("MainContent_hidModelNumber").value);
-            }
-            return false;
-        }
-
-        function checkQuestion4() {
-            console.log("Checking q4");
-            document.getElementById('MainContent_btnQuestion4').disabled = true;
-            var optionChecksPassed = false;
-
-            if (document.getElementById("MainContent_txtKneewallHeight").value != "" &&
-                document.getElementById("MainContent_ddlKneewallType").value != "" &&
-                document.getElementById("MainContent_ddlKneewallColour").value != "") {
-            
-                if (isNaN(document.getElementById("MainContent_txtKneewallHeight").value)) {
-                    console.log("Invalid kneewall height");
-                }
-                else {
-                document.getElementById("MainContent_hidKneewallHeight").value = document.getElementById("MainContent_txtKneewallHeight").value;
-                document.getElementById("MainContent_hidKneewallType").value = document.getElementById("MainContent_ddlKneewallType").value;
-                document.getElementById("MainContent_hidKneewallColour").value = document.getElementById("MainContent_ddlKneewallColour").value;
-                optionChecksPassed = true;
-                }
-            }
-            else {
-                optionChecksPassed = false;
-                //kneewall error styling
-            }
-
-            if (document.getElementById("MainContent_txtTransomHeight").value != "" &&
-                document.getElementById("MainContent_ddlTransomType").value != "" &&
-                document.getElementById("MainContent_ddlTransomColour").value != "") {
-            
-                if (isNaN(document.getElementById("MainContent_txtTransomHeight").value)) {
-                    console.log("Invalid transom height");
-                }
-                else {
-                document.getElementById("MainContent_hidTransomHeight").value = document.getElementById("MainContent_txtTransomHeight").value;
-                document.getElementById("MainContent_hidTransomType").value = document.getElementById("MainContent_ddlTransomType").value;
-                document.getElementById("MainContent_hidTransomColour").value = document.getElementById("MainContent_ddlTransomColour").value;
-                optionChecksPassed = true;
-                }
-
-            }
-            else {
-                optionChecksPassed = false;
-                //transom error styling
-            }
-
-            if (document.getElementById("MainContent_ddlInteriorColour").value != "" &&
-                document.getElementById("MainContent_ddlInteriorSkin").value != "" &&
-                document.getElementById("MainContent_ddlExteriorColour").value != "" &&
-                document.getElementById("MainContent_ddlExteriorSkin").value != "") {
-
-                document.getElementById("MainContent_hidInteriorColour").value = document.getElementById("MainContent_ddlInteriorColour").value;
-                document.getElementById("MainContent_hidInteriorSkin").value = document.getElementById("MainContent_ddlInteriorSkin").value;
-                document.getElementById("MainContent_hidExteriorColour").value = document.getElementById("MainContent_ddlExteriorColour").value;
-                document.getElementById("MainContent_hidExteriorSkin").value = document.getElementById("MainContent_ddlExteriorSkin").value;
-                optionChecksPassed = true;
-            }
-            else {
-                optionChecksPassed = false;
-                //framing error styling
-            }
-
-            if (optionChecksPassed) {
-                document.getElementById('MainContent_btnQuestion4').disabled = false;
-                $('#MainContent_lblQuestion4PagerAnswer').text("Entry Complete");
-                document.getElementById('pagerFour').style.display = "inline";
-            }
-            document.getElementById('MainContent_btnQuestion4').disabled = false; //autoenable, remove when dropdowns are populated
-            return false;
-        }
-
-        function checkQuestion5() {
-            document.getElementById('MainContent_btnQuestion5').disabled = true;
-
-            if ($('#MainContent_radFoamProtectedYes').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion5').disabled = false;
-                $('#MainContent_lblQuestion5PagerAnswer').text("Yes");
-                document.getElementById('pagerFive').style.display = "inline";
-                document.getElementById("MainContent_hidFoamProtected").value = "Yes";
-            }
-            else if ($('#MainContent_radFoamProtectedNo').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion5').disabled = false;
-                $('#MainContent_lblQuestion5PagerAnswer').text("No");
-                document.getElementById('pagerFive').style.display = "inline";
-                document.getElementById("MainContent_hidFoamProtected").value = "No";
-            }
-            else {
-                //no selection, errors
-            }
-
-            return false;
-        }
-
-        function checkQuestion6() {
-            document.getElementById('MainContent_btnQuestion6').disabled = true;
-            
-            if ($('#MainContent_radPrefabFloorYes').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion6').disabled = false;
-                $('#MainContent_lblQuestion6PagerAnswer').text("Yes");
-                document.getElementById('pagerSix').style.display = "inline";
-                document.getElementById("MainContent_hidPrefabFloor").value = "Yes";
-            }
-            else if ($('#MainContent_radPrefabFloorNo').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion6').disabled = false;
-                $('#MainContent_lblQuestion6PagerAnswer').text("No");
-                document.getElementById('pagerSix').style.display = "inline";
-                document.getElementById("MainContent_hidPrefabFloor").value = "No";
-            }
-            else {
-                //no selection, errors
-            }
-
-            return false;
-        }
-
-        function checkQuestion7() {
-            document.getElementById('MainContent_btnQuestion7').disabled = true;
-            
-            
-            if ($('#MainContent_radRoofNo').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion7').disabled = false;
-                $('#MainContent_lblQuestion7PagerAnswer').text("None");
-                document.getElementById('pagerSeven').style.display = "inline";
-                document.getElementById("MainContent_hidRoof").value = "No";
-            }
-            else if ($('#MainContent_radStudio').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion7').disabled = false;
-                $('#MainContent_lblQuestion7PagerAnswer').text("Studio");
-                document.getElementById('pagerSeven').style.display = "inline";
-                document.getElementById("MainContent_hidRoof").value = "Yes";
-                document.getElementById("MainContent_hidRoofType").value = "Studio";
-            }
-            else if ($('#MainContent_radDealerGable').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion7').disabled = false;
-                $('#MainContent_lblQuestion7PagerAnswer').text("Dealer Gable");
-                document.getElementById('pagerSeven').style.display = "inline";
-                document.getElementById("MainContent_hidRoof").value = "Yes";
-                document.getElementById("MainContent_hidRoofType").value = "Dealer Gable";
-            }
-            else if ($('#MainContent_radSunspaceGable').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion7').disabled = false;
-                $('#MainContent_lblQuestion7PagerAnswer').text("Sunspace Gable");
-                document.getElementById('pagerSeven').style.display = "inline";
-                document.getElementById("MainContent_hidRoof").value = "Yes";
-                document.getElementById("MainContent_hidRoofType").value = "Sunspace Gable";
-            }
-            else {
-                //no selection, errors
-            }
-
-            return false;
-        }
-
-        function checkQuestion8() {
-            document.getElementById('MainContent_btnQuestion8').disabled = true;
-            
-            if ($('#MainContent_radPreset1').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 1");
-                document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "1";
-            }
-            else if ($('#MainContent_radPreset2').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 2");
-                document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "2";
-            }
-            else if ($('#MainContent_radPreset3').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 3");
-                document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "3";
-            }
-            else if ($('#MainContent_radPreset4').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 4");
-                document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "4";
-            }
-            else if ($('#MainContent_radPreset5').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 5");
-                document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "5";
-            }
-            else if ($('#MainContent_radPreset6').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 6");
-                document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "6";
-            }
-            else if ($('#MainContent_radPreset7').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 7");
-                document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "7";
-            }
-            else if ($('#MainContent_radPreset8').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 8");
-                document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "8";
-            }
-            else if ($('#MainContent_radPreset9').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 9");
-                document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "9";
-            }
-            else if ($('#MainContent_radPreset10').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 10");
-                document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "10";
-            }
-            else if ($('#MainContent_radPresetC1').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Custom");
-                document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "Custom";
-            }
-            else {
-                //no selection, errors
-            }
-
-            return false;
-        }
-    </script>
-    <%-- End hidden div populating scripts --%>
+    <script src="Scripts/NewProjectValidation.js"></script>
 
     <%-- SLIDES (QUESTIONS)
     ======================================== 
@@ -386,7 +41,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerFirstName" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server" MaxLength="25"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerFirstName" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="25"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -396,7 +51,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerLastName" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server" MaxLength="25"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerLastName" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="25"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -406,7 +61,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerAddress" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server" MaxLength="50"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerAddress" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="50"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -416,7 +71,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerCity" CssClass="txtField txtInput" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server" MaxLength="30"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerCity" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="30"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -426,7 +81,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerZip" CssClass="txtField txtZipPhone" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server" MaxLength="5"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerZip" CssClass="txtField txtZipPhone" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="5"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -436,7 +91,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerPhone" CssClass="txtField txtZipPhone" onkeyup="checkQuestion1()" OnChange="checkQuestion1()" runat="server" MaxLength="10"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerPhone" CssClass="txtField txtZipPhone" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="10"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -455,7 +110,7 @@
                         <div class="toggleContent">
                             <ul>
                                 <li>
-                                    <asp:DropDownList ID="ddlExistingCustomer" OnChange="checkQuestion1()" GroupName="question1" runat="server" />
+                                    <asp:DropDownList ID="ddlExistingCustomer" OnChange="newProjectCheckQuestion1()" GroupName="question1" runat="server" />
                                 </li>
                             </ul>            
                         </div> <%-- end .toggleContent --%>
@@ -486,7 +141,7 @@
                                 </asp:TableCell>
 
                                 <asp:TableCell>
-                                    <asp:TextBox ID="txtProjectName" CssClass="txtField txtInput" onkeyup="checkQuestion2()" runat="server" MaxLength="50"></asp:TextBox>
+                                    <asp:TextBox ID="txtProjectName" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion2()" runat="server" MaxLength="50"></asp:TextBox>
                                 </asp:TableCell>
                             </asp:TableRow>
                         </asp:Table>
@@ -519,27 +174,27 @@
                         <div class="toggleContent">
                             <ul>
                                 <li>
-                                    <asp:RadioButton ID="radSunroomModel100" OnClick="checkQuestion3()" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radSunroomModel100" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblSunroomModel100Radio" AssociatedControlID="radSunroomModel100" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel100" AssociatedControlID="radSunroomModel100" runat="server" Text="Model 100"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radSunroomModel200" OnClick="checkQuestion3()" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radSunroomModel200" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblSunroomModel200Radio" AssociatedControlID="radSunroomModel200" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel200" AssociatedControlID="radSunroomModel200" runat="server" Text="Model 200"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radSunroomModel300" OnClick="checkQuestion3()" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radSunroomModel300" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblSunroomModel300Radio" AssociatedControlID="radSunroomModel300" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel300" AssociatedControlID="radSunroomModel300" runat="server" Text="Model 300"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radSunroomModel400" OnClick="checkQuestion3()" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radSunroomModel400" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblSunroomModel400Radio" AssociatedControlID="radSunroomModel400" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel400" AssociatedControlID="radSunroomModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radSunroomModelShowroom" OnClick="checkQuestion3()" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radSunroomModelShowroom" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblSunroomModelShowroomRadio" AssociatedControlID="radSunroomModelShowroom" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModelShowroom" AssociatedControlID="radSunroomModelShowroom" runat="server" Text="Showroom"></asp:Label>
                                 </li>
@@ -672,14 +327,14 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:TextBox ID="txtKneewallHeight" onkeyup="checkQuestion4()" OnChange="checkQuestion4()" GroupName="styling" CssClass="txtField" runat="server" MaxLength="3" />
+                                    <asp:TextBox ID="txtKneewallHeight" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" runat="server" MaxLength="3" />
                                     
                                     <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height" />
                                     <br />
-                                    <asp:DropDownList ID="ddlKneewallType" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlKneewallType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblKneewallType" AssociatedControlID="txtKneewallHeight" runat="server" Text="Type" />
                                     <br />
-                                    <asp:DropDownList ID="ddlKneewallColour" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlKneewallColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblKneewallColour" AssociatedControlID="txtKneewallHeight" runat="server" Text="Colour" />
                                 </li>
                             </ul>   
@@ -698,13 +353,13 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:TextBox ID="txtTransomHeight" onkeyup="checkQuestion4()" OnChange="checkQuestion4()" GroupName="styling" CssClass="txtField" runat="server" />
+                                    <asp:TextBox ID="txtTransomHeight" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" runat="server" />
                                     <asp:Label ID="lblTransomHeight" AssociatedControlID="txtTransomHeight" runat="server" Text="Height" />
                                     <br />
-                                    <asp:DropDownList ID="ddlTransomType" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlTransomType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblTransomType" AssociatedControlID="txtTransomHeight" runat="server" Text="Type" />
                                     <br />
-                                    <asp:DropDownList ID="ddlTransomColour" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlTransomColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblTransomColour" AssociatedControlID="txtTransomHeight" runat="server" Text="Colour" />
                                 </li>
                             </ul>
@@ -723,16 +378,16 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:DropDownList ID="ddlInteriorColour" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlInteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblInteriorColour" AssociatedControlID="ddlInteriorColour" runat="server" Text="Interior Colour" />
                                     <br />
-                                    <asp:DropDownList ID="ddlInteriorSkin" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlInteriorSkin" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblInteriorSkin" AssociatedControlID="ddlInteriorSkin" runat="server" Text="Interior Skin" />
                                     <br />
-                                    <asp:DropDownList ID="ddlExteriorColour" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlExteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblExteriorColour" AssociatedControlID="ddlExteriorColour" runat="server" Text="Exterior Colour" />
                                     <br />
-                                    <asp:DropDownList ID="ddlExteriorSkin" OnChange="checkQuestion4()" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlExteriorSkin" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblExteriorSkin" AssociatedControlID="ddlExteriorSkin" runat="server" Text="Exterior Skin" />
                                 </li>
                             </ul>
@@ -758,13 +413,13 @@
                 <ul class="toggleOptions">
 
                     <li>
-                        <asp:RadioButton ID="radFoamProtectedYes" OnClick="checkQuestion5()" GroupName="foam" runat="server" />
+                        <asp:RadioButton ID="radFoamProtectedYes" OnClick="newProjectCheckQuestion5()" GroupName="foam" runat="server" />
                         <asp:Label ID="lblFoamProtectedYesRadio" AssociatedControlID="radFoamProtectedYes" runat="server"></asp:Label>
                         <asp:Label ID="lblFoamProtectedYes" AssociatedControlID="radFoamProtectedYes" runat="server" Text="Yes"></asp:Label>
                     </li>
 
                     <li>
-                        <asp:RadioButton ID="radFoamProtectedNo" OnClick="checkQuestion5()" GroupName="foam" runat="server" />
+                        <asp:RadioButton ID="radFoamProtectedNo" OnClick="newProjectCheckQuestion5()" GroupName="foam" runat="server" />
                         <asp:Label ID="lblFoamProtectedNoRadio" AssociatedControlID="radFoamProtectedNo" runat="server"></asp:Label>
                         <asp:Label ID="lblFoamProtectedNo" AssociatedControlID="radFoamProtectedNo" runat="server" Text="No"></asp:Label>
                     </li>
@@ -787,13 +442,13 @@
                 <ul class="toggleOptions">
 
                     <li>
-                        <asp:RadioButton ID="radPrefabFloorYes" OnClick="checkQuestion6()" GroupName="floor" runat="server" />
+                        <asp:RadioButton ID="radPrefabFloorYes" OnClick="newProjectCheckQuestion6()" GroupName="floor" runat="server" />
                         <asp:Label ID="lblPrefabFloorYesRadio" AssociatedControlID="radPrefabFloorYes" runat="server"></asp:Label>
                         <asp:Label ID="lblPrefabFloorYes" AssociatedControlID="radPrefabFloorYes" runat="server" Text="Yes"></asp:Label>
                     </li>
 
                     <li>
-                        <asp:RadioButton ID="radPrefabFloorNo" OnClick="checkQuestion6()" GroupName="floor" runat="server" />
+                        <asp:RadioButton ID="radPrefabFloorNo" OnClick="newProjectCheckQuestion6()" GroupName="floor" runat="server" />
                         <asp:Label ID="lblPrefabFloorNoRadio" AssociatedControlID="radPrefabFloorNo" runat="server"></asp:Label>
                         <asp:Label ID="lblPrefabFloorNo" AssociatedControlID="radPrefabFloorNo" runat="server" Text="No"></asp:Label>
                     </li>
@@ -823,17 +478,17 @@
                         <div class="toggleContent">
                             <ul>
                                 <li>
-                                    <asp:RadioButton ID="radStudio" OnClick="checkQuestion7()" GroupName="roofSub" runat="server" />
+                                    <asp:RadioButton ID="radStudio" OnClick="newProjectCheckQuestion7()" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblStudioRadio" AssociatedControlID="radStudio" runat="server"></asp:Label>
                                     <asp:Label ID="lblStudio" AssociatedControlID="radStudio" runat="server" Text="Studio"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radDealerGable" OnClick="checkQuestion7()" GroupName="roofSub" runat="server" />
+                                    <asp:RadioButton ID="radDealerGable" OnClick="newProjectCheckQuestion7()" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblDealerGableRadio" AssociatedControlID="radDealerGable" runat="server"></asp:Label>
                                     <asp:Label ID="lblDealerGable" AssociatedControlID="radDealerGable" runat="server" Text="Dealer gable"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radSunspaceGable" OnClick="checkQuestion7()" GroupName="roofSub" runat="server" />
+                                    <asp:RadioButton ID="radSunspaceGable" OnClick="newProjectCheckQuestion7()" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblSunspaceGableRadio" AssociatedControlID="radSunspaceGable" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunspaceGable" AssociatedControlID="radSunspaceGable" runat="server" Text="Sunspace gable"></asp:Label>
                                 </li>
@@ -842,7 +497,7 @@
                     </li>
 
                     <li>
-                        <asp:RadioButton ID="radRoofNo" OnClick="checkQuestion7()" GroupName="roof" runat="server" />
+                        <asp:RadioButton ID="radRoofNo" OnClick="newProjectCheckQuestion7()" GroupName="roof" runat="server" />
                         <asp:Label ID="lblRoofNoRadio" AssociatedControlID="radRoofNo" runat="server"></asp:Label>
                         <asp:Label ID="lblRoofNo" AssociatedControlID="radRoofNo" runat="server" Text="No"></asp:Label>
                     </li>
@@ -865,62 +520,62 @@
                 <ul class="toggleOptions">
 
                     <li>
-                        <asp:RadioButton ID="radPreset1" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset1" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset1Radio" AssociatedControlID="radPreset1" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset1" GroupName="layout" AssociatedControlID="radPreset1" AlternateText="missing preset image" ImageUrl="./images/layout/Preset1.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset2" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset2" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset2Radio" AssociatedControlID="radPreset2" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset2" GroupName="layout" AssociatedControlID="radPreset2" AlternateText="missing preset image" ImageUrl="./images/layout/Preset2.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset3" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset3" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset3Radio" AssociatedControlID="radPreset3" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset3" GroupName="layout" AssociatedControlID="radPreset3" AlternateText="missing preset image" ImageUrl="./images/layout/Preset3.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset4" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset4" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset4Radio" AssociatedControlID="radPreset4" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset4" GroupName="layout" AssociatedControlID="radPreset4" AlternateText="missing preset image" ImageUrl="./images/layout/Preset4.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset5" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset5" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset5Radio" AssociatedControlID="radPreset5" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset5" GroupName="layout" AssociatedControlID="radPreset5" AlternateText="missing preset image" ImageUrl="./images/layout/Preset5.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset6" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset6" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset6Radio" AssociatedControlID="radPreset6" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset6" GroupName="layout" AssociatedControlID="radPreset6" AlternateText="missing preset image" ImageUrl="./images/layout/Preset6.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset7" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset7" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset7Radio" AssociatedControlID="radPreset7" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset7" GroupName="layout" AssociatedControlID="radPreset7" AlternateText="missing preset image" ImageUrl="./images/layout/Preset7.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset8" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset8" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset8Radio" AssociatedControlID="radPreset8" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset8" GroupName="layout" AssociatedControlID="radPreset8" AlternateText="missing preset image" ImageUrl="./images/layout/Preset8.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset9" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset9" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset9Radio" AssociatedControlID="radPreset9" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset9" GroupName="layout" AssociatedControlID="radPreset9" AlternateText="missing preset image" ImageUrl="./images/layout/Preset9.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPreset10" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPreset10" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset10Radio" AssociatedControlID="radPreset10" runat="server"></asp:Label>
                         <asp:Image ID="imbPreset10" GroupName="layout" AssociatedControlID="radPreset10" AlternateText="missing preset image" ImageUrl="./images/layout/Preset10.png" runat="server" />                  
                     </li>
                     <li>
-                        <asp:RadioButton ID="radPresetC1" OnClick="checkQuestion8()" GroupName="layout" runat="server" />                        
+                        <asp:RadioButton ID="radPresetC1" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPresetC1Radio" AssociatedControlID="radPresetC1" runat="server"></asp:Label>
                         <asp:Image ID="imbPresetC1" GroupName="layout" AssociatedControlID="radPresetC1" AlternateText="missing preset image" ImageUrl="./images/layout/PresetC1.png" runat="server" />                  
                     </li>
 
-                    <asp:Button ID="btnQuestion8" Enabled="false" CssClass="btnSubmit float-right slidePanel" Text="Confirm all selections" runat="server" OnClientClick="checkQuestion8()" OnClick="btnLayout_Click"/>
+                    <asp:Button ID="btnQuestion8" Enabled="false" CssClass="btnSubmit float-right slidePanel" Text="Confirm all selections" runat="server" OnClientClick="newProjectCheckQuestion8()" OnClick="btnLayout_Click"/>
 
                 </ul> <%-- end .toggleOptions --%>
 

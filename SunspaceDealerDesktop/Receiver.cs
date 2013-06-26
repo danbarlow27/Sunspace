@@ -20,6 +20,13 @@ namespace SunspaceDealerDesktop
             Colour = "red";
         }
 
+        public Receiver(float sentLength)
+        {
+            ItemIndex = -1;
+            Length = sentLength;
+            Colour = "Red";
+        }
+
         public int ItemIndex
         {
             get

@@ -187,6 +187,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="GenerateMods.aspx" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
     <Content Include="Images\heroAccent.png" />
@@ -207,6 +208,8 @@
     <Content Include="NewProject.aspx" />
     <Content Include="packages.config" />
     <Content Include="Content\fonts\Shanti-Regular.ttf" />
+    <Content Include="ProjectPreview.aspx" />
+    <Content Include="Scripts\NewProjectValidation.js" />
     <Content Include="WizardWallsAndMods.aspx" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="SavedProjects.aspx" />
@@ -323,6 +326,13 @@
     </Compile>
     <Compile Include="Door.cs" />
     <Compile Include="Filler.cs" />
+    <Compile Include="GenerateMods.aspx.cs">
+      <DependentUpon>GenerateMods.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GenerateMods.aspx.designer.cs">
+      <DependentUpon>GenerateMods.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -334,6 +344,13 @@
     </Compile>
     <Compile Include="NewProject.aspx.designer.cs">
       <DependentUpon>NewProject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectPreview.aspx.cs">
+      <DependentUpon>ProjectPreview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectPreview.aspx.designer.cs">
+      <DependentUpon>ProjectPreview.aspx</DependentUpon>
     </Compile>
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

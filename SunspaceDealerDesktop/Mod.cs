@@ -57,6 +57,18 @@ namespace SunspaceDealerDesktop
             }
         }
 
+        public List<Object> ModularItems
+        {
+            get
+            {
+                return modularItems;
+            }
+
+            set
+            {
+                modularItems = value;
+            }
+        }
         public float FixedLocation
         {
             get
@@ -81,6 +93,6 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        #endregion
+        #endregion Accessors
     }
 }
