@@ -133,12 +133,20 @@ namespace SunspaceDealerDesktop
 
             DropDownList colorOfDoorDDL = new DropDownList();
             colorOfDoorDDL.ID = "ddlDoorColor";
-            ListItem clear = new ListItem("Clear", "clear");
-            ListItem grey = new ListItem("Grey", "grey");
+            ListItem white = new ListItem("White", "white");
+            ListItem driftwood = new ListItem("Driftwood", "driftwood");
             ListItem bronze = new ListItem("Bronze", "bronze");
-            colorOfDoorDDL.Items.Add(clear);
-            colorOfDoorDDL.Items.Add(grey);
+            ListItem green = new ListItem("Green", "green");
+            ListItem black = new ListItem("Black", "black");
+            ListItem ivory = new ListItem("Ivory", "ivory");
+            ListItem cherrywood = new ListItem("Cherrywood", "cherrywood");
+            colorOfDoorDDL.Items.Add(white);
+            colorOfDoorDDL.Items.Add(driftwood);
             colorOfDoorDDL.Items.Add(bronze);
+            colorOfDoorDDL.Items.Add(green);
+            colorOfDoorDDL.Items.Add(black);
+            colorOfDoorDDL.Items.Add(ivory);
+            colorOfDoorDDL.Items.Add(cherrywood);
 
             colorOfDoorLBL.AssociatedControlID = "ddlDoorColor";
 
@@ -156,15 +164,9 @@ namespace SunspaceDealerDesktop
 
             DropDownList doorHeightDDL = new DropDownList();
             doorHeightDDL.ID = "ddlDoorHeight";
-            ListItem fiveFeet = new ListItem("5'", "5");
-            ListItem sixFeet = new ListItem("6'", "6");
-            ListItem sevenFeet = new ListItem("7'", "7");
-            ListItem eightFeet = new ListItem("8'", "8");
-            ListItem customHeight = new ListItem("Custom", "cHeight");
-            doorHeightDDL.Items.Add(fiveFeet);
-            doorHeightDDL.Items.Add(sixFeet);
-            doorHeightDDL.Items.Add(sevenFeet);
-            doorHeightDDL.Items.Add(eightFeet);
+            ListItem eighty = new ListItem("80\" (Default)", "80");
+            ListItem customHeight = new ListItem("Custom", "cHeight");            
+            doorHeightDDL.Items.Add(eighty);
             doorHeightDDL.Items.Add(customHeight);
 
             doorHeightLBL.AssociatedControlID = "ddlDoorHeight";
@@ -187,12 +189,20 @@ namespace SunspaceDealerDesktop
             ListItem thirtyTwo = new ListItem("32\"", "32");
             ListItem thirtyFour = new ListItem("34\"", "34");
             ListItem thirtySix = new ListItem("36\"", "36");
+            ListItem fiveFeet = new ListItem("5'", "5");
+            ListItem sixFeet = new ListItem("6'", "6");
+            ListItem sevenFeet = new ListItem("7'", "7");
+            ListItem eightFeet = new ListItem("8'", "8");
             ListItem customWidth = new ListItem("Custom", "cWidth");
             doorWidthDDL.Items.Add(thirty);
             doorWidthDDL.Items.Add(thirtyTwo);
             doorWidthDDL.Items.Add(thirtyFour);
             doorWidthDDL.Items.Add(thirtySix);
-            doorWidthDDL.Items.Add(customWidth);
+            doorWidthDDL.Items.Add(fiveFeet);
+            doorWidthDDL.Items.Add(sixFeet);
+            doorWidthDDL.Items.Add(sevenFeet);
+            doorWidthDDL.Items.Add(eightFeet);
+            doorWidthDDL.Items.Add(customWidth);            
 
             doorWidthLBL.AssociatedControlID = "ddlDoorWidth";
 
