@@ -328,6 +328,7 @@
     <Compile Include="CustomDrawingTool.aspx.designer.cs">
       <DependentUpon>CustomDrawingTool.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Customer.cs" />
     <Compile Include="Door.cs" />
     <Compile Include="Filler.cs" />
     <Compile Include="FrenchDoor.cs" />
