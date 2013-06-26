@@ -1,11 +1,11 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SunspaceWizard.SiteMaster" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="NoIcons.master.cs" Inherits="SunspaceDealerDesktop.NoIcons" %>
 
 <!DOCTYPE html>
 <html lang="en">
-<head runat="server">
+<head id="Head1" runat="server">
     <meta charset="utf-8" />
     <title><%: Page.Title %> | Sunspace Sunrooms Wizard</title>
-    <asp:PlaceHolder runat="server">     
+    <asp:PlaceHolder ID="PlaceHolder1" runat="server">     
           <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>  
     <%--<webopt:BundleReference runat="server" Path="~/Content/css" /> --%>
@@ -23,8 +23,8 @@
 </head>
 
 <body>
-    <form runat="server">
-    <asp:ScriptManager runat="server" EnablePageMethods="true">
+    <form id="Form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
         <Scripts>
             <%--Framework Scripts--%>
             <asp:ScriptReference Name="MsAjaxBundle" />
@@ -51,10 +51,6 @@
             <div id="logo">Sunspace Sunrooms</div>
 
             <ul class="ulNavMain">
-                <li><asp:HyperLink ID="lnkMainNavHome" NavigateUrl="Home.aspx" runat="server">Home</asp:HyperLink></li>
-                <li><asp:HyperLink ID="lnkMainNavSavedProjects" NavigateUrl="SavedProjects.aspx" runat="server">Saved Projects</asp:HyperLink></li>
-                <li><asp:HyperLink ID="lnkMainNavNewProject" NavigateUrl="NewProject.aspx" runat="server">New Project</asp:HyperLink></li>
-                <li><asp:HyperLink ID="lnkMainNavCloseProject" runat="server">Close Project</asp:HyperLink></li>
             </ul>
         </nav>    
     </header>
@@ -119,13 +115,13 @@
                 $(this).parent().siblings().children('.toggleContent').slideUp(400);
             });
 
-            
+
             // set height of content wrapper
             //var contentWrapperHeight = $(window).height() - 100;
             //$('.content-wrapper').css('height', contentWrapperHeight);
 
             // set max height of scrollbox div
-            var scrollHeight = $(window).height() - 280; 
+            var scrollHeight = $(window).height() - 280;
             $('.scrollbox').css('max-height', scrollHeight);
 
             // set max height of paging div
@@ -136,7 +132,7 @@
             var pagingWidth = $('.content-wrapper').width() - $('.slide-window').width() - 30;
             $('#paging-wrapper').css('width', pagingWidth);
 
-                      
+
             function resizePanel() {
                 //get the browser width and height
                 width = $(window).width();
@@ -152,7 +148,7 @@
                 $('.slide-window').scrollTo($('.selected').attr('href'), 0);
 
             }
-            
+
 
             // window resize events
             $(window).resize(function () {
@@ -164,7 +160,7 @@
                 //$('.content-wrapper').css('height', contentWrapperHeight);
 
                 // set max height of scrollbox div
-                var scrollHeight = $(window).height() - 280; 
+                var scrollHeight = $(window).height() - 280;
                 $('.scrollbox').css('max-height', scrollHeight);
 
                 // set max height of paging div
