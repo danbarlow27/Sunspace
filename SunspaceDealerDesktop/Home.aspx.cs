@@ -11,7 +11,12 @@ namespace SunspaceDealerDesktop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["loggedIn"] == null)
+            {
+                //uncomment me when login functionality is working
+                //Response.Redirect("Login.aspx");
+                Session.Add("loggedIn", "userA");
+            }
         }
     }
 }
