@@ -41,5 +41,8 @@ namespace SunspaceDealerDesktop
 
         public static string[] SUNSHADE_COLOURS = { "Chalk", "Alabaster", "Pebblestone", "Tobacco", "Ebony", "Greystone" };
         public static string[] SUNSHADE_VALANCE_COLOURS = { "White", "Driftwood", "Bronze" };
+
+        public const float CUSTOM_DOOR_MIN_WIDTH = 25f;
+        public const float CUSTOM_DOOR_MAX_WIDTH = 42f;
     }
 }
