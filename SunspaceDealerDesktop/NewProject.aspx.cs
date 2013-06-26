@@ -17,10 +17,11 @@ namespace SunspaceWizard
                 //Response.Redirect("Login.aspx");
                 Session.Add("loggedIn", "userA");
             }
-            
-            //ddlExistingCustomer.Items.Add("Choose a Customer...");
-            //ddlExistingCustomer.Items.Add("Previous Customer One");
-            //ddlExistingCustomer.Items.Add("Previous Customer Two");
+
+            Customer aCustomer = new Customer();
+            ddlExistingCustomer.Items.Add("Choose a Customer...");
+            ddlExistingCustomer.Items.Add("Previous Customer One");
+            ddlExistingCustomer.Items.Add("Previous Customer Two");
         }
 
         protected void btnLayout_Click(object sender, EventArgs e)
