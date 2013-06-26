@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace SunspaceDealerDesktop
 {
-    public partial class _Default : Page
+    public partial class NewProject : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -20,6 +20,10 @@ namespace SunspaceDealerDesktop
 
             Customer aCustomer = new Customer();
             ddlExistingCustomer.Items.Add("Choose a Customer...");
+            aCustomer.FirstName = "Butt";
+            aCustomer.LastName = "Hole";
+            ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
+
             ddlExistingCustomer.Items.Add("Previous Customer One");
             ddlExistingCustomer.Items.Add("Previous Customer Two");
         }
