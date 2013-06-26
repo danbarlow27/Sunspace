@@ -301,7 +301,7 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3" Enabled="false" OnClick="btnQuestion3_Click" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide3 --%>
