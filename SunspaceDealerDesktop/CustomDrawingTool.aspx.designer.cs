@@ -10,7 +10,11 @@
 namespace SunspaceDealerDesktop {
     
     
+<<<<<<< HEAD
     public partial class _NewProject {
+=======
+    public partial class CustomDrawingTool {
+>>>>>>> 4840acf32eea2e36285a1227bb836bc490f22108
         
         /// <summary>
         /// Button1 control.
