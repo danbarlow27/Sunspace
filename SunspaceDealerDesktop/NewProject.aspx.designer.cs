@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SunspaceWizard {
+namespace SunspaceDealerDesktop {
     
     
     public partial class _Default {
