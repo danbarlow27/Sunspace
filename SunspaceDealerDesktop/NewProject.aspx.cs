@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SunspaceDealerDesktop
+namespace SunspaceWizard
 {
     public partial class _Default : Page
     {
@@ -18,7 +18,7 @@ namespace SunspaceDealerDesktop
                 Session.Add("loggedIn", "userA");
             }
 
-            Customer aCustomer = new Customer();
+            Customer poop = new Customer();
             ddlExistingCustomer.Items.Add("Choose a Customer...");
             ddlExistingCustomer.Items.Add("Previous Customer One");
             ddlExistingCustomer.Items.Add("Previous Customer Two");
