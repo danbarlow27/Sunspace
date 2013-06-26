@@ -13,7 +13,7 @@
             coordList[i] = lineList[i].split(","); //populate the 2d array
         }
         var wallSetBackArray = new Array();
-        var projection = 0;
+        var projection = 10; //hard coded to testing
 
         function calculateSetBack(index) {
             /*
@@ -27,24 +27,26 @@
             NORTHEAST   :   NEGATIVE (2a^2 = L^2) 
             */
 
+            var L = document.getElementById("MainContent_txtWall" + i + "Length").value;
+
             switch (coordList[index][5]) { //5 = orientation
                 case "S":
                 case "N":
                     wallSetBackArray[index] = 0;
                     break;
                 case "W":
-                    wallSetBackArray[index] = document.getElementById("MainContent_txtWall" + i + "Length").value;
+                    wallSetBackArray[index] = L;
                     break;
                 case "E":
-                    wallSetBackArray[index] = (document.getElementById("MainContent_txtWall" + i + "Length").value) * (-1);
+                    wallSetBackArray[index] = -L;
                     break;
                 case "SW":
                 case "NW":
-                    wallSetBackArray[index] = Math.sqrt((Math.pow((document.getElementById("MainContent_txtWall" + i + "Length").value), 2)) / 2)
+                    wallSetBackArray[index] = Math.sqrt((Math.pow(L, 2)) / 2);
                     break;
                 case "SE":
                 case "NE":
-                    wallSetBackArray[index] = (Math.sqrt((Math.pow((document.getElementById("MainContent_txtWall" + i + "Length").value), 2)) / 2)) * (-1);
+                    wallSetBackArray[index] = -(Math.sqrt((Math.pow(L, 2)) / 2));
                     break;
             }
         }
@@ -93,7 +95,7 @@
                 }
 
                 //store projection in the projection variable and hidden field
-                document.getElementById("MainContent_hidProjection").value = projection = calculateProjection(); 
+                document.getElementById("MainContent_hidProjection").value = projection = calculateProjection();
 
                 //Set answer on side pager and enable button
                 $('#MainContent_lblWallLengthsAnswer').text(answer);
@@ -103,7 +105,7 @@
             else { //not valid
                 //error styling or something
                 //Set answer on side pager and enable button
-                $('#MainContent_lblWallLengthsAnswer').text("Wall Lengths Invalid");
+                $('#MainContent_lblWallLengthsAnswer').text("Invalid Input");
                 document.getElementById('pagerOne').style.display = "inline";
                 document.getElementById('MainContent_btnQuestion1').disabled = false;
             }
@@ -119,22 +121,71 @@
             //document.getElementById('MainContent_btnQuestion2').disabled = false;
             //document.getElementById('MainContent_btnQuestion3').disabled = false;
 
-            //if ($('#MainContent_radWallLengths').is(':checked')) {
-
-            //var lengthList = new Array();
-            var isValid = true;
+            var isValid = false;
             var answer = "";
+            var m;    //m = rise/run
+            var rise; //m = rise/run
+            var run;  //m = rise/run
 
-            if (isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
-                || document.getElementById("MainContent_txtBackWallHeight").value <= 0
-                || (isNaN(document.getElementById("MainContent_txtFrontWallHeight").value))
-                || document.getElementById("MainContent_txtFrontWallHeight").value <= 0
-                || (isNaN(document.getElementById("MainContent_txtRoofSlope").value))
-                || document.getElementById("MainContent_txtRoofSlope").value <= 0)
-                    isValid = false;
+            //we have front wall height and back wall height, calculate slope
+            if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
+                && document.getElementById("MainContent_txtBackWallHeight").value > 0
+                //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
+                && !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                && document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
+                //&& document.getElementById("MainContent_txtFrontWallHeight").value != ""
+                //|| isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                //|| document.getElementById("MainContent_txtRoofSlope").value <= 0)
+
+                //alert("yello");
+                isValid = true;
+
+                rise = document.getElementById("MainContent_txtBackWallHeight").value - document.getElementById("MainContent_txtFrontWallHeight").value;
+                run = projection;
+
+                document.getElementById("MainContent_txtRoofSlope").value = m = rise / run;
+            }
+
+            else if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
+                && document.getElementById("MainContent_txtBackWallHeight").value > 0
+                //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
+                //|| !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                //|| document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
+                && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                && document.getElementById("MainContent_txtRoofSlope").value > 0) {
+                //&& document.getElementById("MainContent_txtRoofSlope").value != ""
             
+                isValid = true;
+
+                m = document.getElementById("MainContent_txtRoofSlope").value;
+                run = projection;
+                rise = run * m;
+
+                document.getElementById("MainContent_txtFrontWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value - rise;
+            }
+
+            else if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                && document.getElementById("MainContent_txtFrontWallHeight").value > 0
+                //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
+                //|| !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                //|| document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
+                && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                && document.getElementById("MainContent_txtRoofSlope").value > 0) {
+                //&& document.getElementById("MainContent_txtRoofSlope").value != ""
+
+                isValid = true;
+
+                m = document.getElementById("MainContent_txtRoofSlope").value;
+                run = projection;
+                rise = run * m;
+
+                document.getElementById("MainContent_txtBackWallHeight").value = +document.getElementById("MainContent_txtFrontWallHeight").value + +rise;
+            }
 
             if (isValid) {
+
+                //alert("yello");
+
                 document.getElementById("MainContent_hidBackWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value;
                 document.getElementById("MainContent_hidFrontWallHeight").value = document.getElementById("MainContent_txtFrontWallHeight").value;
                 document.getElementById("MainContent_hidRoofSlope").value = document.getElementById("MainContent_txtRoofSlope").value;
@@ -151,7 +202,7 @@
             else {
                 //error styling or something
                 //Set answer on side pager and enable button
-                $('#MainContent_lblWallHeightsAnswer').text("Wall Heights Invalid");
+                $('#MainContent_lblWallHeightsAnswer').text("Invalid Input");
                 document.getElementById('pagerTwo').style.display = "inline";
                 document.getElementById('MainContent_btnQuestion2').disabled = false;
             }
