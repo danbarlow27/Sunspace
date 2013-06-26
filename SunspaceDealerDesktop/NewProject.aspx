@@ -3,19 +3,9 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script src="Scripts/Validation.js"></script>
     <script>
-        function checkProjectSelection(radioGroup) {
-            var radioGroup = document.getElementsByName("projectType");
-            console.log("this stinks");
-            var radioName;
-            for (var i = 0; i < radioGroup.length; i++) {
-                var currentRadio = radioGroup[i];
-
-                if (currentRadio.checked) {
-                    radioName = radioGroup[i].value;
-                }
-            }
-
-            console.log(radioName);
+        function goComponents() {
+            //change me when component ordering is put into place
+            window.location.replace("Home.aspx");
         }
         function newProjectCheckQuestion1() {
             //disable 'next slide' button until after validation
@@ -684,14 +674,14 @@
 
                     <%-- COMPONENTS --%>
                     <li>
-                        <asp:RadioButton ID="radProjectComponents" GroupName="projectType" runat="server" />
+                        <asp:RadioButton ID="radProjectComponents" GroupName="projectType" runat="server"  OnClick="goComponents()"/>
                         <asp:Label ID="lblProjectComponentsRadio" AssociatedControlID="radProjectComponents" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectComponents" AssociatedControlID="radProjectComponents" runat="server" Text="Components"></asp:Label>
                     </li> <%-- end 'components' --%>
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion3" Enabled="false" OnClientClick="checkProjectSelection()" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide3 --%>

@@ -6,8 +6,8 @@
     =================================== --%>
     <script>
 
-        var lines = '<%= (string)Session["coordList"] %>'; //all the coordinates of all the lines
-        var lineList = lines.substr(0, lines.length-1).split("/"); //a list of lines and their coordinates
+        var detailsOfAllLines = '<%= (string)Session["coordList"] %>'; //all the coordinates and details of all the lines
+        var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/"); //a list of individual lines and their coordinates and details 
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
         for (var i = 0; i < lineList.length; i++) { 
             coordList[i] = lineList[i].split(","); //populate the 2d array
@@ -125,7 +125,7 @@
             var answer = "";
             var m;    //m = rise/run
             var rise; //m = rise/run
-            var run;  //m = rise/run
+            var run = projection;  //m = rise/run
 
             //we have front wall height and back wall height, calculate slope
             if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
@@ -141,9 +141,9 @@
                 isValid = true;
 
                 rise = document.getElementById("MainContent_txtBackWallHeight").value - document.getElementById("MainContent_txtFrontWallHeight").value;
-                run = projection;
+                //run = projection;
 
-                document.getElementById("MainContent_txtRoofSlope").value = m = rise / run;
+                document.getElementById("MainContent_txtRoofSlope").value = m = (Math.round((rise / run) * 100)) / (100); //round m to 2 decimal places
             }
 
             else if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
@@ -158,10 +158,10 @@
                 isValid = true;
 
                 m = document.getElementById("MainContent_txtRoofSlope").value;
-                run = projection;
+                //run = projection;
                 rise = run * m;
 
-                document.getElementById("MainContent_txtFrontWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value - rise;
+                document.getElementById("MainContent_txtFrontWallHeight").value = +document.getElementById("MainContent_txtBackWallHeight").value - rise;
             }
 
             else if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
@@ -176,11 +176,14 @@
                 isValid = true;
 
                 m = document.getElementById("MainContent_txtRoofSlope").value;
-                run = projection;
+                //run = projection;
                 rise = run * m;
 
                 document.getElementById("MainContent_txtBackWallHeight").value = +document.getElementById("MainContent_txtFrontWallHeight").value + +rise;
             }
+
+            if (document.getElementById("MainContent_txtBackWallHeight").value <= document.getElementById("MainContent_txtFrontWallHeight").value)
+                isValid = false;
 
             if (isValid) {
 
@@ -490,7 +493,7 @@
 
         var lineArray = new Array();
 
-        //Local variable to store all the line information
+        //draw the canvas with the lines
         for (var i = 0; i < lineList.length; i++) { //draw all the lines with the given attributes
             lineArray[i] = canvas.append("line")
                     .attr("x1", (coordList[i][0] / 5) * 2) //0 = x1
@@ -505,6 +508,7 @@
                 lineArray[i].attr("stroke", "black");
         }
 
+        //highlight each individual walls for length question
         function highlightWallsLength() {
             var wallNumber = (document.activeElement.id.substr(19,1)); //parse out the wall number from the id           
 
@@ -513,17 +517,18 @@
                
         }
 
+        //reset wall colours onblur
         function resetWalls() {
             for (var i = 0; i < lineList.length; i++) {
+                lineArray[i].attr("stroke-width", "1");
                 if (coordList[i][4] === "E") //4 = wall facing
                     lineArray[i].attr("stroke", "red");
                 else
                     lineArray[i].attr("stroke", "black");
-
-                lineArray[i].attr("stroke-width", "1");
             }
         }
 
+        //highlight back and front walls for height question
         function highlightWallsHeight() {
             var textbox = (document.activeElement.id.substr(15, 1)); //parse out B or F (for back wall or front wall) from the id
             var southWalls = new Array();
@@ -532,27 +537,57 @@
             var highestWall = 200; //arbitrary number
             var highestIndex;
             var index;
+            var typeOfWall;
 
-            for (var i = 0; i < lineList.length; i++) {
-                if (coordList[i][5] == "S") { //5 = orientation
-                    southWalls.push({ "y2": lineArray[i].attr("y2"), "number": i });
-                }
+            for (var i = 0; i < lineList.length; i++)
+                if (coordList[i][5] == "S") //5 = orientation
+                    southWalls.push({ "y2": lineArray[i].attr("y2"), "number": i, "type": coordList[i][4] }); //populate south walls array
+
+            if (textbox === "B")
+                index = getBackWall(southWalls);
+            else { //if (textbox === "F")
+                if(southWalls[southWalls.length - 1].type === "P")
+                    index = getFrontWall(southWalls);
+                else
+                    highlightFrontPoint();
             }
 
+            lineArray[index].attr("stroke", "yellow");
+            lineArray[index].attr("stroke-width", "2");
+        }
+
+        //determine the back wall index
+        function getBackWall(southWalls) {
+            var lowestWall;
+            var lowestIndex;
             for (var i = 0; i < southWalls.length; i++) {
                 if (southWalls[i].y2 > lowestWall) {
                     lowestWall = southWalls[i].y2;
                     lowestIndex = southWalls[i].number;
                 }
+            }
+            return lowestIndex;
+        }
+
+        //determine the front wall index
+        function getFrontWall(southWalls) {
+            var highestWall;
+            var highestIndex;
+            for (var i = 0; i < southWalls.length; i++) {
                 if (southWalls[i].y2 < highestWall) {
                     highestWall = southWalls[i].y2;
                     highestIndex = southWalls[i].number;
                 }
             }
-            //console.log(lowestIndex);
-            index = (textbox === "B") ? /*if backwall*/ lowestIndex : /*else frontwall*/ highestIndex; 
-            lineArray[index].attr("stroke", "yellow");
-            lineArray[index].attr("stroke-width", "2");
+
+            if
+
+            return highestIndex;
+        }
+
+        //highlight the front point if there is no front wall
+        function highlightFrontPoint() {
+
         }
             
 /*******************************************************************************************************/
