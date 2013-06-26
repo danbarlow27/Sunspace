@@ -4,5 +4,6 @@
     <div>
         <asp:Label runat="server" ID="lblLogin" Text="Please Login: "></asp:Label>
         <asp:TextBox runat="server" ID="txtLogin" CssClass="txtField txtInput"></asp:TextBox>
+        <asp:Button runat="server" ID="btnLogin" CssClass="btnSubmit" Text="Login" OnClick="btnLogin_Click"/>
     </div>
 </asp:Content>

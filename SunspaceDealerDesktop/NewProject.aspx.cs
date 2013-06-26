@@ -91,5 +91,13 @@ namespace SunspaceWizard
             //If custom btnLayout, Page 2, else, page3
             Response.Redirect("TestingHiddens.aspx");
         }
+
+        protected void btnQuestion3_Click(object sender, EventArgs e)
+        {
+            if (radProjectRoof.Checked)
+            {
+                Response.Redirect("Home.aspx");
+            }
+        }
     }
 }

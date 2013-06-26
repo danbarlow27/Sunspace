@@ -13,5 +13,13 @@ namespace SunspaceDealerDesktop
         {
 
         }
+
+        protected void btnLogin_Click(object sender, EventArgs e)
+        {
+            //something like so
+            //Session.Add("loggedIn", aUser.UserId);
+            Session.Add("loggedIn", "userA");
+            Response.Redirect("Home.aspx");
+        }
     }
 }
