@@ -94,6 +94,8 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
+            //Creating cells and controls for rows
+
             #region Table:First Row Type of Door (tblDoorDetails)
 
             TableRow typeOfDoorRow = new TableRow();            
@@ -109,9 +111,11 @@ namespace SunspaceDealerDesktop
             ListItem cabana = new ListItem("Cabana", "cabana");
             ListItem french = new ListItem("French", "french");
             ListItem patio = new ListItem("Patio", "patio");
+            ListItem noDoor = new ListItem("Opening Only (No Door)", "noDoor");
             typeOfDoorDDL.Items.Add(cabana);
             typeOfDoorDDL.Items.Add(french);
             typeOfDoorDDL.Items.Add(patio);
+            typeOfDoorDDL.Items.Add(noDoor);
 
             typeOfDoorLBL.AssociatedControlID = "ddlDoorType";
 
@@ -134,7 +138,7 @@ namespace SunspaceDealerDesktop
             ListItem bronze = new ListItem("Bronze", "bronze");
             colorOfDoorDDL.Items.Add(clear);
             colorOfDoorDDL.Items.Add(grey);
-            colorOfDoorDDL.Items.Add(patio);
+            colorOfDoorDDL.Items.Add(bronze);
 
             colorOfDoorLBL.AssociatedControlID = "ddlDoorColor";
 
@@ -148,7 +152,7 @@ namespace SunspaceDealerDesktop
 
             Label doorHeightLBL = new Label();
             doorHeightLBL.ID = "lblDoorHeight";
-            doorHeightLBL.Text = "Door Height:";
+            doorHeightLBL.Text = "Height:";
 
             DropDownList doorHeightDDL = new DropDownList();
             doorHeightDDL.ID = "ddlDoorHeight";
@@ -156,16 +160,105 @@ namespace SunspaceDealerDesktop
             ListItem sixFeet = new ListItem("6'", "6");
             ListItem sevenFeet = new ListItem("7'", "7");
             ListItem eightFeet = new ListItem("8'", "8");
+            ListItem customHeight = new ListItem("Custom", "cHeight");
             doorHeightDDL.Items.Add(fiveFeet);
             doorHeightDDL.Items.Add(sixFeet);
             doorHeightDDL.Items.Add(sevenFeet);
             doorHeightDDL.Items.Add(eightFeet);
+            doorHeightDDL.Items.Add(customHeight);
 
             doorHeightLBL.AssociatedControlID = "ddlDoorHeight";
 
             #endregion
 
-            #region Table:Fourth Row Door Swing In (tblDoorDetails)
+            #region Table:Fourth Row Door Width (tblDoorDetails)
+
+            TableRow doorWidthRow = new TableRow();
+            TableCell doorWidthLBLCell = new TableCell();
+            TableCell doorWidthDDLCell = new TableCell();
+
+            Label doorWidthLBL = new Label();
+            doorWidthLBL.ID = "lblDoorWidth";
+            doorWidthLBL.Text = "Width:";
+
+            DropDownList doorWidthDDL = new DropDownList();
+            doorWidthDDL.ID = "ddlDoorWidth";
+            ListItem thirty = new ListItem("30\"", "30");
+            ListItem thirtyTwo = new ListItem("32\"", "32");
+            ListItem thirtyFour = new ListItem("34\"", "34");
+            ListItem thirtySix = new ListItem("36\"", "36");
+            ListItem customWidth = new ListItem("Custom", "cWidth");
+            doorWidthDDL.Items.Add(thirty);
+            doorWidthDDL.Items.Add(thirtyTwo);
+            doorWidthDDL.Items.Add(thirtyFour);
+            doorWidthDDL.Items.Add(thirtySix);
+            doorWidthDDL.Items.Add(customWidth);
+
+            doorWidthLBL.AssociatedControlID = "ddlDoorWidth";
+
+            #endregion
+
+            #region Table:Fifth Row Door Custom Height (tblDoorDetails)
+
+            TableRow doorCustomHeightRow = new TableRow();
+            TableCell doorCustomHeightLBLCell = new TableCell();
+            TableCell doorCustomHeightTXTCell = new TableCell();
+            TableCell doorCustomHeightDDLCell = new TableCell();
+
+            Label doorCustomHeightLBL = new Label();
+            doorCustomHeightLBL.ID = "lblDoorCustomHeight";
+            doorCustomHeightLBL.Text = "Custom Height (inches):";
+
+            TextBox doorCustomHeightTXT = new TextBox();
+            doorCustomHeightTXT.ID = "txtDoorCustomHeight";
+            doorCustomHeightTXT.CssClass = "txtField txtDoorInput";
+
+            DropDownList inchCustomHeight = new DropDownList();
+            inchCustomHeight.ID = "ddlInchCustomHeight";
+            inchCustomHeight.Items.Add(lst0);
+            inchCustomHeight.Items.Add(lst18);
+            inchCustomHeight.Items.Add(lst14);
+            inchCustomHeight.Items.Add(lst38);
+            inchCustomHeight.Items.Add(lst12);
+            inchCustomHeight.Items.Add(lst58);
+            inchCustomHeight.Items.Add(lst34);
+            inchCustomHeight.Items.Add(lst78);
+
+            doorCustomHeightLBL.AssociatedControlID = "txtDoorCustomHeight";
+
+            #endregion
+
+            #region Table:Sixth Row Door Custom Width (tblDoorDetails)
+
+            TableRow doorCustomWidthRow = new TableRow();
+            TableCell doorCustomWidthLBLCell = new TableCell();
+            TableCell doorCustomWidthTXTCell = new TableCell();
+            TableCell doorCustomWidthDDLCell = new TableCell();
+
+            Label doorCustomWidthLBL = new Label();
+            doorCustomWidthLBL.ID = "lblDoorCustomWidth";
+            doorCustomWidthLBL.Text = "Custom Width (inches):";
+
+            TextBox doorCustomWidthTXT = new TextBox();
+            doorCustomWidthTXT.ID = "txtDoorCustomWidth";
+            doorCustomWidthTXT.CssClass = "txtField txtDoorInput";
+
+            DropDownList inchCustomWidth = new DropDownList();
+            inchCustomWidth.ID = "ddlInchCustomWidth";
+            inchCustomWidth.Items.Add(lst0);
+            inchCustomWidth.Items.Add(lst18);
+            inchCustomWidth.Items.Add(lst14);
+            inchCustomWidth.Items.Add(lst38);
+            inchCustomWidth.Items.Add(lst12);
+            inchCustomWidth.Items.Add(lst58);
+            inchCustomWidth.Items.Add(lst34);
+            inchCustomWidth.Items.Add(lst78);
+
+            doorCustomWidthLBL.AssociatedControlID = "txtDoorCustomWidth";
+
+            #endregion
+
+            #region Table:Seventh Row Door Swing In (tblDoorDetails)
 
             TableRow doorSwingInRow = new TableRow();
             TableCell doorSwingInLBLCell = new TableCell();
@@ -191,7 +284,7 @@ namespace SunspaceDealerDesktop
 
             #endregion            
 
-            #region Table:Fifth Row Door Swing Out (tblDoorDetails)
+            #region Table:Eight Row Door Swing Out (tblDoorDetails)
 
             TableRow doorSwingOutRow = new TableRow();
             TableCell doorSwingOutLBLCell = new TableCell();
@@ -213,7 +306,7 @@ namespace SunspaceDealerDesktop
 
             #endregion            
 
-            #region Table:Sixth Row Door Hinge LHH (tblDoorDetails)
+            #region Table:Ninth Row Door Hinge LHH (tblDoorDetails)
 
             TableRow doorLHHRow = new TableRow();
             TableCell doorLHHLBLCell = new TableCell();
@@ -239,7 +332,7 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
-            #region Table:Seventh Row Door Hinge RHH (tblDoorDetails)
+            #region Table:Tenth Row Door Hinge RHH (tblDoorDetails)
 
             TableRow doorRHHRow = new TableRow();
             TableCell doorRHHLBLCell = new TableCell();
@@ -274,7 +367,7 @@ namespace SunspaceDealerDesktop
 
             TextBox doorPositionTXT = new TextBox();
             doorPositionTXT.ID = "txtDoorPosition";
-            doorPositionTXT.CssClass = "txtField txtLengthInput";
+            doorPositionTXT.CssClass = "txtField txtDoorInput";
 
             DropDownList inchSpecificLeft = new DropDownList();
             inchSpecificLeft.ID = "ddlInchSpecificLeft";
@@ -290,8 +383,7 @@ namespace SunspaceDealerDesktop
             doorPositionLBL.AssociatedControlID = "txtDoorPosition";
 
             #endregion
-
-
+            
             //Adding to table
 
             #region Table:First Row Type of Door Added to Table (tblDoorDetails)
@@ -328,7 +420,47 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
-            #region Table:Fourth Row Swing In Added To Table (tblDoorDetails)
+            #region Table:Fourth Row Width Of Door Added To Table (tblDoorDetails)
+
+            doorWidthLBLCell.Controls.Add(doorWidthLBL);
+            doorWidthDDLCell.Controls.Add(doorWidthDDL);
+
+            tblDoorDetails.Rows.Add(doorWidthRow);
+
+            doorWidthRow.Cells.Add(doorWidthLBLCell);
+            doorWidthRow.Cells.Add(doorWidthDDLCell);
+
+            #endregion
+
+            #region Table:Fifth Row Custom Height Of Door Added To Table (tblDoorDetails)
+
+            doorCustomHeightLBLCell.Controls.Add(doorCustomHeightLBL);
+            doorCustomHeightTXTCell.Controls.Add(doorCustomHeightTXT);
+            doorCustomHeightDDLCell.Controls.Add(inchCustomHeight);
+
+            tblDoorDetails.Rows.Add(doorCustomHeightRow);
+
+            doorCustomHeightRow.Cells.Add(doorCustomHeightLBLCell);
+            doorCustomHeightRow.Cells.Add(doorCustomHeightTXTCell);
+            doorCustomHeightRow.Cells.Add(doorCustomHeightDDLCell);
+
+            #endregion
+
+            #region Table:Sixth Row Custom Width Of Door Added To Table (tblDoorDetails)
+
+            doorCustomWidthLBLCell.Controls.Add(doorCustomWidthLBL);
+            doorCustomWidthTXTCell.Controls.Add(doorCustomWidthTXT);
+            doorCustomWidthDDLCell.Controls.Add(inchCustomWidth);
+
+            tblDoorDetails.Rows.Add(doorCustomWidthRow);
+
+            doorCustomWidthRow.Cells.Add(doorCustomWidthLBLCell);
+            doorCustomWidthRow.Cells.Add(doorCustomWidthTXTCell);
+            doorCustomWidthRow.Cells.Add(doorCustomWidthDDLCell);
+
+            #endregion
+
+            #region Table:Seventh Row Swing In Added To Table (tblDoorDetails)
 
             doorSwingInLBLCell.Controls.Add(doorSwingInLBLMain);
 
@@ -343,7 +475,7 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
-            #region Table:Fifth Row Swing Out Added To Table (tblDoorDetails)
+            #region Table:Eight Row Swing Out Added To Table (tblDoorDetails)
 
             doorSwingOutRADCell.Controls.Add(doorSwingOutRAD);
             doorSwingOutRADCell.Controls.Add(doorSwingOutLBLRad);
@@ -356,7 +488,7 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
-            #region Table:Sixth Row Door Hinge LHH (tblDoorDetails)
+            #region Table:Ninth Row Door Hinge LHH (tblDoorDetails)
 
             doorLHHLBLCell.Controls.Add(doorLHHLBLMain);
 
@@ -371,7 +503,7 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
-            #region Table:Seventh Row Door Hinge RHH (tblDoorDetails)
+            #region Table:Tenth Row Door Hinge RHH (tblDoorDetails)
 
             doorRHHRADCell.Controls.Add(doorRHHRad);
             doorRHHRADCell.Controls.Add(doorRHHLBLRad);

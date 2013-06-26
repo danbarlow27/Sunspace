@@ -198,6 +198,10 @@ footer {
     width: 50px;
 }
 
+.txtDoorInput {
+    width:inherit;
+}
+
 
 /* Table layout for text fields */
 
