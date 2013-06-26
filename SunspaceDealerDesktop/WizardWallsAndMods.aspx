@@ -580,8 +580,6 @@
                 }
             }
 
-            if
-
             return highestIndex;
         }
 
