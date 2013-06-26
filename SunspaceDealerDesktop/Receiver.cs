@@ -7,6 +7,9 @@ namespace SunspaceDealerDesktop
 {
     public class Receiver
     {
+        
+        //anthony smells
+        
         int itemIndex; //LinearItems Array Index
         float length; //temporary
         //float cutLength; //Length to Cut Starter At ?????????????????
