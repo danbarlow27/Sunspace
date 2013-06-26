@@ -3,7 +3,10 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script src="Scripts/Validation.js"></script>
     <script>
-
+        function goComponents() {
+            //change me when component ordering is put into place
+            window.location.replace("Home.aspx");
+        }
         function newProjectCheckQuestion1() {
             //disable 'next slide' button until after validation
             document.getElementById('MainContent_btnQuestion1').disabled = true;
@@ -671,7 +674,7 @@
 
                     <%-- COMPONENTS --%>
                     <li>
-                        <asp:RadioButton ID="radProjectComponents" GroupName="projectType" runat="server"  OnCheckedChanged="radProjectComponents_CheckedChanged" AutoPostBack="true"/>
+                        <asp:RadioButton ID="radProjectComponents" GroupName="projectType" runat="server"  OnClick="goComponents()"/>
                         <asp:Label ID="lblProjectComponentsRadio" AssociatedControlID="radProjectComponents" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectComponents" AssociatedControlID="radProjectComponents" runat="server" Text="Components"></asp:Label>
                     </li> <%-- end 'components' --%>
