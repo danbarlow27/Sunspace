@@ -239,6 +239,13 @@
             return false;
         }
         
+        function checkQuestion3() {
+            for (var i = 1; i <= lineList.length; i++) {
+                if (document.getElementById("MainContent_ddlWallDoorType").value != 0) {
+
+                }
+            }
+        }
     </script>
     <%-- End hidden div populating scripts --%>
 
@@ -371,10 +378,9 @@
                 <h1>
                     <asp:Label ID="lblQuestion3" runat="server" Text="Would you like a door on your sunroom?"></asp:Label>
                 </h1>        
-                              
-                <ul class="toggleOptions">
-                    <asp:Table ID="tblDoorQuantity" runat="server" ></asp:Table>
-                </ul>            
+                <div class="tblWallLengths">
+                    <asp:Table ID="tblDoorQuantity" style="padding-right:15%; padding-left:15%; padding-top:5%;" runat="server" ></asp:Table>
+                </div>          
 
                 <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
