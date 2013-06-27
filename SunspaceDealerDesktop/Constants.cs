@@ -46,5 +46,6 @@ namespace SunspaceDealerDesktop
 
         public const float CUSTOM_DOOR_MIN_WIDTH = 25f;
         public const float CUSTOM_DOOR_MAX_WIDTH = 42f;
+        public const float CUSTOM_FRENCH_DOOR_MAX_WIDTH = 82.75f;
     }
 }
