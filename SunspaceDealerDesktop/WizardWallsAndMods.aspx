@@ -5,7 +5,6 @@
     <%-- Hidden div populating scripts 
     =================================== --%>
     <script>
-
         var detailsOfAllLines = '<%= (string)Session["coordList"] %>'; //all the coordinates and details of all the lines
         var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/"); //a list of individual lines and their coordinates and details 
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
@@ -14,6 +13,12 @@
         }
         var wallSetBackArray = new Array();
         var projection = 10; //hard coded to testing
+        var DOOR_MAX_WIDTH = '<%= DOOR_MAX_WIDTH %>';
+        var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
+        var DOOR_FRENCH_MIN_WIDTH = '<%= DOOR_FRENCH_MIN_WIDTH %>';
+        var DOOR_FRENCH_MAX_WIDTH = '<%= DOOR_FRENCH_MAX_WIDTH %>';
+        var projection = 10; //hard coded for testing
+        var soffitLength = 0; //hard coded for testing
 
         function calculateSetBack(index) {
             /*
@@ -56,9 +61,9 @@
             var highestSetBack = 0;
             for (var i = 0; i < wallSetBackArray.length; i++) {
                 tempProjection = +tempProjection + +wallSetBackArray[i];
-                if (tempProjection > highestSetBack)
+                if (tempProjection > highestSetBack) {
                     highestSetBack = tempProjection;
-                //console.log("tempProjection: " + tempProjection + ", highestSetBack: " + highestSetBack);
+                }
             }
             return highestSetBack;
         }
@@ -87,10 +92,14 @@
             if (isValid) {
                 for (var i = 1; i <= lineList.length; i++) { //add up length and filler and populate the hidden fields
                     document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i]; //store wall setback
-                    document.getElementById("hidWall" + i + "LeftFiller").value = document.getElementById("MainContent_txtWall" + i + "Length").value; 
-                    document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
-                    document.getElementById("hidWall" + i + "RightFiller").value = document.getElementById("MainContent_txtWall" + i + "Length").value;
-                    answer += "Wall " + i + ": " + document.getElementById("MainContent_txtWall" + i + "Length").value;
+
+                    document.getElementById("hidWall" + i + "LeftFiller").value = document.getElementById("MainContent_txtWall" + i + "LeftFiller").value + document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").selectedIndex].value;
+                    document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value + document.getElementById("MainContent_ddlWall" + i + "InchFractions").options[document.getElementById("MainContent_ddlWall" + i + "InchFractions").selectedIndex].value;
+                    document.getElementById("hidWall" + i + "RightFiller").value = document.getElementById("MainContent_txtWall" + i + "RightFiller").value + document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").selectedIndex].value;
+
+                    //alert(document.getElementById("hidWall" + i + "Length").value);
+
+                    answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value;
                     calculateSetBack((i - 1));
                 }
 
@@ -122,9 +131,9 @@
 
             var isValid = true;
             var answer = "";
-            var m;    //m = rise/run
-            var rise; //m = rise/run
-            var run = projection;  // m = rise/run
+            var m;    //m = (rise((projection-soffitLength)/12)) slope over 12
+            var rise; //m = (rise((projection-soffitLength)/12)) slope over 12
+            var run = 12;  // m = (rise((projection-soffitLength)/12)) slope over 12
 
             if (document.getElementById("MainContent_chkAutoRoofSlope").checked) {
                 document.getElementById("MainContent_chkAutoBackWallHeight").checked = false;
@@ -141,16 +150,19 @@
 
                     //alert("yello");
                     isValid = true;
-                    run = run / 12; //to get slope over 12 inches
-                    rise = (document.getElementById("MainContent_txtBackWallHeight").value - document.getElementById("MainContent_txtFrontWallHeight").value) / run; //to get slope over 12
-                    //run = projection;
-
-                    document.getElementById("MainContent_txtRoofSlope").value = m = (Math.round((rise / run) * 100)) / (100); //round m to 2 decimal places
+                    //run = run / 12; //to get slope over 12 inches
+                    rise = ((document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - (document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value));
+                    rise = rise * ((projection - soffitLength) / 12); //to get slope over 12
+                    
+                    document.getElementById("MainContent_txtRoofSlope").value = m = (rise / run).toFixed(2); //round m to 2 decimal places
                 }
                 else
                     isValid = false;
             }
             else if (document.getElementById("MainContent_chkAutoFrontWallHeight").checked) {
+
+                var frontHeight;
+
                 document.getElementById("MainContent_chkAutoRoofSlope").checked = false;
                 document.getElementById("MainContent_chkAutoBackWallHeight").checked = false;
                 //we have back wall height and slope, calculate front wall height
@@ -167,14 +179,18 @@
 
                     m = document.getElementById("MainContent_txtRoofSlope").value;
                     //run = projection;
-                    rise = run * m;
+                    rise = ((run * m) / ((projection - soffitLength) / 12)).toFixed(2);
+                    
+                    frontHeight = document.getElementById("MainContent_txtFrontWallHeight").value = +(document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - +rise;
 
-                    document.getElementById("MainContent_txtFrontWallHeight").value = +document.getElementById("MainContent_txtBackWallHeight").value - rise;
+
                 }
                 else
                     isValid = false;
             }
             else if (document.getElementById("MainContent_chkAutoBackWallHeight").checked) {
+                var backHeight;
+
                 document.getElementById("MainContent_chkAutoFrontWallHeight").checked = false;
                 document.getElementById("MainContent_chkAutoRoofSlope").checked = false;
                 //we have front wall height and slope, calculate back wall height
@@ -191,15 +207,16 @@
 
                     m = document.getElementById("MainContent_txtRoofSlope").value;
                     //run = projection;
-                    rise = run * m;
+                    rise = ((run * m) / ((projection - soffitLength) / 12)).toFixed(2);
 
-                    document.getElementById("MainContent_txtBackWallHeight").value = +document.getElementById("MainContent_txtFrontWallHeight").value + +rise;
+                    backHeight = document.getElementById("MainContent_txtBackWallHeight").value = +(document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value) + +rise;
+
+
                 }
                 else
                     isValid = false;
             }
             else {
-                //isValid = +(document.getElementById("MainContent_txtBackWallHeight").value <= +document.getElementById("MainContent_txtFrontWallHeight").value) ? false : true;
                 if (isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
                     || document.getElementById("MainContent_txtFrontWallHeight").value <= 0
                     || document.getElementById("MainContent_txtFrontWallHeight").value != ""
@@ -218,8 +235,8 @@
 
 
             if (isValid) {
-                document.getElementById("MainContent_hidBackWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value;
-                document.getElementById("MainContent_hidFrontWallHeight").value = document.getElementById("MainContent_txtFrontWallHeight").value;
+                document.getElementById("MainContent_hidBackWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value;
+                document.getElementById("MainContent_hidFrontWallHeight").value = document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value;
                 document.getElementById("MainContent_hidRoofSlope").value = document.getElementById("MainContent_txtRoofSlope").value;
                 answer += "Back Wall: " + document.getElementById("MainContent_hidBackWallHeight").value;
                 answer += "Front Wall: " + document.getElementById("MainContent_hidFrontWallHeight").value;
@@ -239,6 +256,48 @@
             return false;
         }
         
+        function checkQuestion3(toChange) {
+            var currentDropDown = document.getElementById("MainContent_ddlWallDoorAmount" + toChange);
+            if (document.getElementById("MainContent_ddlWallDoorType" + toChange).value != 0) {
+                currentDropDown.disabled = false;
+                var doorType = document.getElementById("MainContent_ddlWallDoorType" + toChange).options[document.getElementById("MainContent_ddlWallDoorType" + toChange).selectedIndex].value;
+
+                var doorQuantityLimits = calculatePossibleDoors(doorType, toChange);                
+
+                for(var i = 0; i < doorQuantityLimits.max; i++) {
+                    var option = document.createElement("option");
+                    option.text = i;
+                    option.value = i;
+                    currentDropDown.appendChild(option);
+                }
+            }
+            else {
+                document.getElementById("MainContent_ddlWallDoorAmount" + toChange).disabled = true;
+            }
+        }
+
+        function calculatePossibleDoors(type, index) {
+            var maxQuantityOfDoors, minQuantityOfDoors;
+            var lengthOfWall = document.getElementById("MainContent_txtWall" + index + "Length").value
+
+            alert(lengthOfWall + " and " + type + " and " + DOOR_MIN_WIDTH);
+
+            switch (type) {
+                case "cabana":
+                    maxQuantityOfDoors = lengthOfWall / DOOR_MIN_WIDTH; //25
+                    minQuantityOfDoors = lengthOfWall / DOOR_MAX_WIDTH; //42
+                    break;
+                case "french":
+                    maxQuantityOfDoors = lengthOfWall / DOOR_FRENCH_MIN_WIDTH; //48.75
+                    minQuantityOfDoors = lengthOfWall / DOOR_FRENCH_MAX_WIDTH; //82.75
+                    break;
+                //case "patio":
+            }
+            return {
+                "max": maxQuantityOfDoors,
+                "min": minQuantityOfDoors
+            }
+        }
     </script>
     <%-- End hidden div populating scripts --%>
 
@@ -339,11 +398,11 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtRoofSlope" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtRoofSlope" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="6"></asp:TextBox>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                            
+                                                <asp:Label ID="lblSlopeOver12" runat="server" Text="/ 12"></asp:Label>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
@@ -364,27 +423,36 @@
             </div> 
             <%-- end #slide2 --%>
 
-             <%-- QUESTION 3 - DOOR DETAILS
+             <%-- QUESTION 3 - HOW MANY DOORS PER WALL
             ======================================== --%>
 
             <div id="slide3" class="slide">
                 <h1>
                     <asp:Label ID="lblQuestion3" runat="server" Text="Would you like a door on your sunroom?"></asp:Label>
                 </h1>        
-                              
-                <ul class="toggleOptions">
-                    <asp:PlaceHolder ID="wallDoorOptions" runat="server">
-
-                    
-
-</asp:PlaceHolder>                    
-        </ul>            
+                <div class="tblWallLengths">
+                    <asp:Table ID="tblDoorQuantity" style="padding-right:15%; padding-left:15%; padding-top:5%;" runat="server" ></asp:Table>
+                </div>          
 
                 <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
             </div>
             <%-- end #slide3 --%>
 
+            <%-- QUESTION 4 - DOOR DETAILS
+            ======================================== --%>
+            <div id="slide4" class="slide">
+                <h1>
+                    <asp:Label ID="lblQuestion4" runat="server" Text="Door Details"></asp:Label>
+                </h1>        
+                              
+                <ul class="toggleOptions">
+                    <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
+                </ul>            
+
+                <asp:Button ID="btnQuestion4"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" />
+
+            </div>
         </div> <%-- end .slide-wrapper --%>
 
     </div> 
@@ -428,7 +496,7 @@
                     </li>
                 </div>
 
- <%--               <div style="display: none" id="pagerFour">
+                <div style="display: none" id="pagerFour">
                     <li>
                             <a href="#" data-slide="#slide4" class="slidePanel">
                                 <asp:Label ID="Label27" runat="server" Text="Styling options"></asp:Label>
@@ -437,7 +505,7 @@
                     </li>
                 </div>
 
-                <div style="display: none" id="pagerFive">
+ <%--               <div style="display: none" id="pagerFive">
                     <li>
                             <a href="#" data-slide="#slide5" class="slidePanel">
                                 <asp:Label ID="Label31" runat="server" Text="Foam protection"></asp:Label>
@@ -506,7 +574,8 @@
                     .attr("x1", (coordList[i][0] / 5) * 2) //0 = x1
                     .attr("y1", (coordList[i][2] / 5) * 2) //1 = y1
                     .attr("x2", (coordList[i][1] / 5) * 2) //2 = x2
-                    .attr("y2", (coordList[i][3] / 5) * 2); //3 = y2
+                    .attr("y2", (coordList[i][3] / 5) * 2) //3 = y2
+                    .attr("stroke-width", "2");
             //lineArray[i].attr("mouseover", alert("hwllo"));
             
             if(coordList[i][4] === "E") //4 = wall facing
@@ -519,20 +588,22 @@
         function highlightWallsLength() {
             var wallNumber = (document.activeElement.id.substr(19,1)); //parse out the wall number from the id           
 
-            lineArray[wallNumber - 1].attr("stroke", "orange");
-            lineArray[wallNumber - 1].attr("stroke-width", "2");
+            lineArray[wallNumber - 1].attr("stroke", "cyan"); 
+            lineArray[wallNumber - 1].attr("stroke-width", "5");
                
         }
 
         //reset wall colours onblur
         function resetWalls() {
             for (var i = 0; i < lineList.length; i++) {
-                lineArray[i].attr("stroke-width", "1");
+                lineArray[i].attr("stroke-width", "2");
                 if (coordList[i][4] === "E") //4 = wall facing
                     lineArray[i].attr("stroke", "red");
                 else
                     lineArray[i].attr("stroke", "black");
             }
+            if (document.getElementById("lowestPoint"))
+                d3.selectAll("#lowestPoint").remove();
         }
 
         //highlight back and front walls for height question
@@ -543,23 +614,26 @@
             var lowestIndex;
             var highestWall = 200; //arbitrary number
             var highestIndex;
-            var index = -1; //to determine if there is a wall or not
-            var typeOfWall;
+            var index = -1; //invalid to determine if there is a wall or not
+            //var typeOfWall;
 
             for (var i = 0; i < lineList.length; i++) {
                 if (coordList[i][5] == "S") //5 = orientation
-                    southWalls.push({ "y2": lineArray[i].attr("y2"), "number": i, "type": coordList[i][4] }); //populate south walls array
+                    southWalls.push({ "y2": lineArray[i].attr("y2"), "number": i, "type": coordList[i][4] }); //populate south walls array.. 4 = wall type
             }
             if (textbox === "B")
                 index = getBackWall(southWalls);
             else { //if (textbox === "F")
-                if (southWalls[southWalls.length - 1].type === "P")
+                if (southWalls[southWalls.length - 1].type == "P")
                     index = getFrontWall(southWalls);
             }
 
-            if (index >= 0) { 
-                lineArray[index].attr("stroke", "orange");
-                lineArray[index].attr("stroke-width", "2");
+            if (index >= 0) { //if valid index
+                lineArray[index].attr("stroke", "cyan");
+                lineArray[index].attr("stroke-width", "5");
+            }
+            else { //there is no front wall
+                highlightFrontPoint(); //highlight front point
             }
         }
 
@@ -578,7 +652,7 @@
 
         //determine the front wall index
         function getFrontWall(southWalls) {
-            var highestWall = 200; //arbitrary number
+            var highestWall = 501; //arbitrary number
             var highestIndex;
             for (var i = 0; i < southWalls.length; i++) {
                 if (southWalls[i].y2 < highestWall) {
@@ -586,13 +660,26 @@
                     highestIndex = southWalls[i].number;
                 }
             }
-
             return highestIndex;
         }
 
         //highlight the front point if there is no front wall
         function highlightFrontPoint() {
-
+            var lowestX = 0;
+            var lowestY = 0;
+            var circle;
+            for (var i = 0; i < coordList.length; i++) {
+                if (coordList[i][3] > lowestY) { //3 = y2 coordinate
+                    lowestY = coordList[i][3]; //3 = y2 coordinate
+                    lowestX = coordList[i][1]; //1 = x2 coordinate
+                }
+            }
+            circle = canvas.append("circle")
+                           .attr("cx", (lowestX / 5) * 2)
+                           .attr("cy", (lowestY / 5) * 2)
+                           .attr("r", 5) //radius
+                           .style("fill", "cyan")
+                           .attr("id", "lowestPoint");
         }
 
             

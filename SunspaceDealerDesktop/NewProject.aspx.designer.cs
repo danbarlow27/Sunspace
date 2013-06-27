@@ -400,33 +400,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblSunroomModel400;
         
         /// <summary>
-        /// radSunroomModelShowroom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radSunroomModelShowroom;
-        
-        /// <summary>
-        /// lblSunroomModelShowroomRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSunroomModelShowroomRadio;
-        
-        /// <summary>
-        /// lblSunroomModelShowroom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSunroomModelShowroom;
-        
-        /// <summary>
         /// radProjectWalls control.
         /// </summary>
         /// <remarks>
@@ -805,6 +778,141 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblRoofOSB;
         
         /// <summary>
+        /// radSunroomModelShowroom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radSunroomModelShowroom;
+        
+        /// <summary>
+        /// lblSunroomModelShowroomRadio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSunroomModelShowroomRadio;
+        
+        /// <summary>
+        /// lblSunroomModelShowroom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSunroomModelShowroom;
+        
+        /// <summary>
+        /// radShowroomModel100 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radShowroomModel100;
+        
+        /// <summary>
+        /// lblShowroomModel100 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel100;
+        
+        /// <summary>
+        /// lblShowroomModel100Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel100Radio;
+        
+        /// <summary>
+        /// radShowroomModel200 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radShowroomModel200;
+        
+        /// <summary>
+        /// lblShowroomModel200 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel200;
+        
+        /// <summary>
+        /// lblShowroomModel200Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel200Radio;
+        
+        /// <summary>
+        /// radShowroomModel300 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radShowroomModel300;
+        
+        /// <summary>
+        /// lblShowroomModel300 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel300;
+        
+        /// <summary>
+        /// lblShowroomModel300Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel300Radio;
+        
+        /// <summary>
+        /// radShowroomModel400 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radShowroomModel400;
+        
+        /// <summary>
+        /// lblShowroomModel400 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel400;
+        
+        /// <summary>
+        /// lblShowroomModel400Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel400Radio;
+        
+        /// <summary>
         /// radProjectComponents control.
         /// </summary>
         /// <remarks>
@@ -913,24 +1021,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblKneewallType;
         
         /// <summary>
-        /// ddlKneewallColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlKneewallColour;
-        
-        /// <summary>
-        /// lblKneewallColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblKneewallColour;
-        
-        /// <summary>
         /// radTransomOptions control.
         /// </summary>
         /// <remarks>
@@ -994,24 +1084,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblTransomType;
         
         /// <summary>
-        /// ddlTransomColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTransomColour;
-        
-        /// <summary>
-        /// lblTransomColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTransomColour;
-        
-        /// <summary>
         /// radFramingOptions control.
         /// </summary>
         /// <remarks>
@@ -1037,6 +1109,24 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFramingOptions;
+        
+        /// <summary>
+        /// ddlFramingColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFramingColour;
+        
+        /// <summary>
+        /// lblFramingColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFramingColour;
         
         /// <summary>
         /// ddlInteriorColour control.
@@ -1750,22 +1840,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblSpecsProjectTypeAnswer;
         
         /// <summary>
-        /// lblProjectTag control.
+        /// lblProjectNamePager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProjectTag;
+        protected global::System.Web.UI.WebControls.Label lblProjectNamePager;
         
         /// <summary>
-        /// lblProjectTagAnswer control.
+        /// lblProjectNameAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProjectTagAnswer;
+        protected global::System.Web.UI.WebControls.Label lblProjectNameAnswer;
         
         /// <summary>
         /// lblProjectType control.
@@ -1939,13 +2029,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidPhone;
         
         /// <summary>
-        /// hidProjectTag control.
+        /// hidProjectName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidProjectTag;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidProjectName;
         
         /// <summary>
         /// hidProjectType control.
@@ -1975,15 +2065,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidKneewallType;
         
         /// <summary>
-        /// hidKneewallColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidKneewallColour;
-        
-        /// <summary>
         /// hidKneewallHeight control.
         /// </summary>
         /// <remarks>
@@ -2002,15 +2083,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidTransomType;
         
         /// <summary>
-        /// hidTransomColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidTransomColour;
-        
-        /// <summary>
         /// hidTransomHeight control.
         /// </summary>
         /// <remarks>
@@ -2018,6 +2090,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidTransomHeight;
+        
+        /// <summary>
+        /// hidFramingColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidFramingColour;
         
         /// <summary>
         /// hidInteriorColour control.

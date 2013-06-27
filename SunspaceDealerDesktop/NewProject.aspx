@@ -13,12 +13,18 @@
             document.getElementById('MainContent_btnQuestion1').disabled = true;
             //if they select new customer
             if ($('#MainContent_radNewCustomer').is(':checked')) {
+                //if checked, clear possible pager value from existing
+                $('#MainContent_lblSpecsProjectTypeAnswer').text("");
+
+                //move textbox data into hidden fields
                 document.getElementById("MainContent_hidFirstName").value = $('#MainContent_txtCustomerFirstName').val();
                 document.getElementById("MainContent_hidLastName").value = $('#MainContent_txtCustomerLastName').val();
                 document.getElementById("MainContent_hidAddress").value = $('#MainContent_txtCustomerAddress').val();
                 document.getElementById("MainContent_hidCity").value = $('#MainContent_txtCustomerCity').val();
                 document.getElementById("MainContent_hidZip").value = $('#MainContent_txtCustomerZip').val();
                 document.getElementById("MainContent_hidPhone").value = $('#MainContent_txtCustomerPhone').val();
+                //blank out existing
+                document.getElementById("MainContent_hidExisting").value = "";
 
                 //Make sure the text boxes aren't blank before manually checking zip/postal and phone
                 if (document.getElementById("MainContent_hidFirstName").value != "" &&
@@ -69,12 +75,20 @@
             }
                 //if they select existing customer
             else if ($('#MainContent_radExistingCustomer').is(':checked')) {
-                document.getElementById("MainContent_ddlExistingCustomer").value = $('#MainContent_ddlCustomerFirstName').val(); //what is this doing? ~Kyle
+                //blank out new customer hiddens, just in case they did it first then came existing after
+                document.getElementById("MainContent_hidFirstName").value = "";
+                document.getElementById("MainContent_hidLastName").value = "";
+                document.getElementById("MainContent_hidAddress").value = "";
+                document.getElementById("MainContent_hidCity").value = "";
+                document.getElementById("MainContent_hidZip").value = "";
+                document.getElementById("MainContent_hidPhone").value = "";
+                $('#MainContent_lblSpecsProjectTypeAnswer').text("");
 
                 //if selected value from dropdown is not the generic, it is a valid choice
                 if (document.getElementById("MainContent_ddlExistingCustomer").value != "Choose a Customer...") {
                     //valid, so update pager and enable button
-                    $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing");
+                    $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing - " + $('#MainContent_ddlExistingCustomer').val());
+                    document.getElementById("MainContent_hidExisting").value = $('#MainContent_ddlExistingCustomer').val();
                     document.getElementById('pagerOne').style.display = "inline";
                     document.getElementById('MainContent_btnQuestion1').disabled = false;
                 }
@@ -87,11 +101,11 @@
             //disable 'next slide' button until after validation
             document.getElementById('MainContent_btnQuestion2').disabled = true;
 
-            document.getElementById("MainContent_hidProjectTag").value = $('#MainContent_txtProjectName').val();
+            document.getElementById("MainContent_hidProjectName").value = $('#MainContent_txtProjectName').val();
 
-            if (document.getElementById("MainContent_hidProjectTag").value != "") {
+            if (document.getElementById("MainContent_hidProjectName").value != "") {
                 //valid, so update pager and enable button
-                $('#MainContent_lblProjectTagAnswer').text(document.getElementById("MainContent_hidProjectTag").value);
+                $('#MainContent_lblProjectNameAnswer').text(document.getElementById("MainContent_hidProjectName").value);
                 document.getElementById('pagerTwo').style.display = "inline";
                 document.getElementById('MainContent_btnQuestion2').disabled = false;
             }
@@ -106,7 +120,7 @@
 
             //if they pick sunroom
             if ($('#MainContent_radProjectSunroom').is(':checked')) {
-                //They check one of 5 model types
+                //They check one of 4 model types
                 //update pager, enable button, and update hidden value
                 //corresponding to selected model #
                 if ($('#MainContent_radSunroomModel100').is(':checked')) {
@@ -129,17 +143,13 @@
                     document.getElementById('pagerThree').style.display = "inline";
                     document.getElementById('MainContent_btnQuestion3').disabled = false;
                 }
-                else if ($('#MainContent_radSunroomModelShowroom').is(':checked')) {
-                    document.getElementById("MainContent_hidModelNumber").value = "Showroom";
-                    document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion3').disabled = false;
-                }
 
                 //update hidden value for type, and display pager message based on the now
                 //two hidden values type and model#
                 document.getElementById("MainContent_hidProjectType").value = "Sunroom";
                 $('#MainContent_lblProjectTypeAnswer').text(document.getElementById("MainContent_hidProjectType").value + " of Model " + document.getElementById("MainContent_hidModelNumber").value);
             }
+            newProjectChangeColours();
             return false;
         }
 
@@ -150,8 +160,7 @@
 
             //Only run validation if a number is entered and values selected
             if (document.getElementById("MainContent_txtKneewallHeight").value != "" &&
-                document.getElementById("MainContent_ddlKneewallType").value != "" &&
-                document.getElementById("MainContent_ddlKneewallColour").value != "") {
+                document.getElementById("MainContent_ddlKneewallType").value != "") {
 
                 //only requirement on height at this moment is that it is a valid number
                 if (isNaN(document.getElementById("MainContent_txtKneewallHeight").value)) {
@@ -162,7 +171,6 @@
                     //dropdowns have a selected value, its valid, set check bool to true, update hidden values
                     document.getElementById("MainContent_hidKneewallHeight").value = document.getElementById("MainContent_txtKneewallHeight").value;
                     document.getElementById("MainContent_hidKneewallType").value = document.getElementById("MainContent_ddlKneewallType").value;
-                    document.getElementById("MainContent_hidKneewallColour").value = document.getElementById("MainContent_ddlKneewallColour").value;
                     optionChecksPassed = true;
                 }
             }
@@ -173,8 +181,7 @@
 
             //similar checks as above for transom, update hidden values
             if (document.getElementById("MainContent_txtTransomHeight").value != "" &&
-                document.getElementById("MainContent_ddlTransomType").value != "" &&
-                document.getElementById("MainContent_ddlTransomColour").value != "") {
+                document.getElementById("MainContent_ddlTransomType").value != "") {
 
                 if (isNaN(document.getElementById("MainContent_txtTransomHeight").value)) {
                     console.log("Invalid transom height");
@@ -182,7 +189,6 @@
                 else {
                     document.getElementById("MainContent_hidTransomHeight").value = document.getElementById("MainContent_txtTransomHeight").value;
                     document.getElementById("MainContent_hidTransomType").value = document.getElementById("MainContent_ddlTransomType").value;
-                    document.getElementById("MainContent_hidTransomColour").value = document.getElementById("MainContent_ddlTransomColour").value;
                     optionChecksPassed = true;
                 }
 
@@ -193,11 +199,13 @@
             }
 
             //make sure skins and colours are selected, update hidden values
-            if (document.getElementById("MainContent_ddlInteriorColour").value != "" &&
+            if (document.getElementById("MainContent_ddlFramingColour").value != "" &&
+                document.getElementById("MainContent_ddlInteriorColour").value != "" &&
                 document.getElementById("MainContent_ddlInteriorSkin").value != "" &&
                 document.getElementById("MainContent_ddlExteriorColour").value != "" &&
                 document.getElementById("MainContent_ddlExteriorSkin").value != "") {
 
+                document.getElementById("MainContent_hidFramingColour").value = document.getElementById("MainContent_FramingColour").value;
                 document.getElementById("MainContent_hidInteriorColour").value = document.getElementById("MainContent_ddlInteriorColour").value;
                 document.getElementById("MainContent_hidInteriorSkin").value = document.getElementById("MainContent_ddlInteriorSkin").value;
                 document.getElementById("MainContent_hidExteriorColour").value = document.getElementById("MainContent_ddlExteriorColour").value;
@@ -383,6 +391,60 @@
 
             return false;
         }
+
+        function newProjectChangeColours() {
+            console.log("new project change colours");
+            
+            modelNumber = document.getElementById("MainContent_hidModelNumber");
+            ddlFramingColour = document.getElementById("MainContent_ddlFramingColour");
+            ddlFramingColour.options.length = 0;
+
+            switch (modelNumber.value) {
+                case '100':
+                    var anArray =  <%= model100FramingColoursJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
+                    }
+                    break;
+
+                case '200':
+                    var anArray =  <%= model200FramingColoursJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        console.log(anArray[i]);
+                    }                    
+                    break;
+
+                case '300':
+                    var anArray =  <%= model300FramingColoursJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        console.log(anArray[i]);
+                    }                    
+                    break;
+
+                case '400':
+                    var anArray =  <%= model400FramingColoursJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        console.log(anArray[i]);
+                    }   
+                    break;
+            }
+            
+            /* document.getElementById("MainContent_ddlFramingColour").value != "" &&
+             document.getElementById("MainContent_ddlInteriorColour").value != "" &&
+             document.getElementById("MainContent_ddlInteriorSkin").value != "" &&
+             document.getElementById("MainContent_ddlExteriorColour").value != "" &&
+             document.getElementById("MainContent_ddlExteriorSkin").value != ""*/
+            return true;
+        }
     </script>
 
     <%-- SLIDES (QUESTIONS)
@@ -405,7 +467,7 @@
 
                     <%-- NEW CUSTOMER --%>
                     <li>
-                        <asp:RadioButton ID="radNewCustomer" GroupName="question1" runat="server" />
+                        <asp:RadioButton ID="radNewCustomer" GroupName="question1" runat="server" OnClick="newProjectCheckQuestion1()" />
                         <asp:Label ID="lblNewCustomerRadio" AssociatedControlID="radNewCustomer" runat="server"></asp:Label>
                         <asp:Label ID="lblNewCustomer" AssociatedControlID="radNewCustomer" runat="server" Text="New customer"></asp:Label>
            
@@ -505,7 +567,7 @@
             <%-- end #slide1 --%>
 
 
-            <%-- QUESTION 2 - Project tag
+            <%-- QUESTION 2 - Project name
             ======================================== --%>
             <div id="slide2" class="slide">
                 
@@ -574,11 +636,6 @@
                                     <asp:Label ID="lblSunroomModel400Radio" AssociatedControlID="radSunroomModel400" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel400" AssociatedControlID="radSunroomModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
-                                <li>
-                                    <asp:RadioButton ID="radSunroomModelShowroom" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
-                                    <asp:Label ID="lblSunroomModelShowroomRadio" AssociatedControlID="radSunroomModelShowroom" runat="server"></asp:Label>
-                                    <asp:Label ID="lblSunroomModelShowroom" AssociatedControlID="radSunroomModelShowroom" runat="server" Text="Showroom"></asp:Label>
-                                </li>
                             </ul>            
                         </div> <%-- end 'complete sunroom' options --%>
                     </li> <%-- end 'complete sunroom' --%>
@@ -592,22 +649,22 @@
                         <div class="toggleContent">
                             <ul class="checkboxes">
                                 <li>
-                                    <asp:RadioButton ID="radWallsModel100" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radWallsModel100" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblWallsModel100Radio" AssociatedControlID="radWallsModel100" runat="server"></asp:Label>
                                     <asp:Label ID="lblWallsModel100" AssociatedControlID="radWallsModel100" runat="server" Text="Model 100"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radWallsModel200" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radWallsModel200" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblWallsModel200Radio" AssociatedControlID="radWallsModel200" runat="server"></asp:Label>
                                     <asp:Label ID="lblWallsModel200" AssociatedControlID="radWallsModel200" runat="server" Text="Model 200"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radWallsModel300" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radWallsModel300" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblWallsModel300Radio" AssociatedControlID="radWallsModel300" runat="server"></asp:Label>
                                     <asp:Label ID="lblWallsModel300" AssociatedControlID="radWallsModel300" runat="server" Text="Model 300"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radWallsModel400" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radWallsModel400" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblWallsModel400Radio" AssociatedControlID="radWallsModel400" runat="server"></asp:Label>
                                     <asp:Label ID="lblWallsModel400" AssociatedControlID="radWallsModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
@@ -672,6 +729,37 @@
                             </ul>            
                         </div> <%-- end 'roof' options --%>
                     </li> <%-- end 'roof' --%>
+                    <%-- SHOWROOM --%>                    
+                    <li>
+                        <asp:RadioButton ID="radSunroomModelShowroom" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
+                        <asp:Label ID="lblSunroomModelShowroomRadio" AssociatedControlID="radSunroomModelShowroom" runat="server"></asp:Label>
+                        <asp:Label ID="lblSunroomModelShowroom" AssociatedControlID="radSunroomModelShowroom" runat="server" Text="Showroom"></asp:Label>
+
+                        <div class="toggleContent">
+                            <ul class="checkboxes">
+                                <li>
+                                    <asp:RadioButton ID="radShowroomModel100" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
+                                    <asp:Label ID="lblShowroomModel100" AssociatedControlID="radShowroomModel100" runat="server"></asp:Label>
+                                    <asp:Label ID="lblShowroomModel100Radio" AssociatedControlID="radShowroomModel100" runat="server" Text="Model 100"></asp:Label>
+                                </li>
+                                <li>
+                                    <asp:RadioButton ID="radShowroomModel200" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
+                                    <asp:Label ID="lblShowroomModel200" AssociatedControlID="radShowroomModel200" runat="server"></asp:Label>
+                                    <asp:Label ID="lblShowroomModel200Radio" AssociatedControlID="radShowroomModel200" runat="server" Text="Model 200"></asp:Label>
+                                </li>
+                                <li>
+                                    <asp:RadioButton ID="radShowroomModel300" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
+                                    <asp:Label ID="lblShowroomModel300" AssociatedControlID="radShowroomModel300" runat="server"></asp:Label>
+                                    <asp:Label ID="lblShowroomModel300Radio" AssociatedControlID="radShowroomModel300" runat="server" Text="Model 300"></asp:Label>
+                                </li>
+                                <li>
+                                    <asp:RadioButton ID="radShowroomModel400" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
+                                    <asp:Label ID="lblShowroomModel400" AssociatedControlID="radShowroomModel400" runat="server"></asp:Label>
+                                    <asp:Label ID="lblShowroomModel400Radio" AssociatedControlID="radShowroomModel400" runat="server" Text="Model 400"></asp:Label>
+                                </li>
+                            </ul>            
+                        </div> <%-- end 'showroom' options --%>
+                    </li>
 
                     <%-- COMPONENTS --%>
                     <li>
@@ -709,14 +797,10 @@
                             <ul>                                
                                 <li>
                                     <asp:TextBox ID="txtKneewallHeight" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" runat="server" MaxLength="3" />
-                                    
                                     <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height" />
                                     <br />
                                     <asp:DropDownList ID="ddlKneewallType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblKneewallType" AssociatedControlID="txtKneewallHeight" runat="server" Text="Type" />
-                                    <br />
-                                    <asp:DropDownList ID="ddlKneewallColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
-                                    <asp:Label ID="lblKneewallColour" AssociatedControlID="txtKneewallHeight" runat="server" Text="Colour" />
                                 </li>
                             </ul>   
                         </div> <%-- end .toggleContent --%>
@@ -739,9 +823,6 @@
                                     <br />
                                     <asp:DropDownList ID="ddlTransomType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblTransomType" AssociatedControlID="txtTransomHeight" runat="server" Text="Type" />
-                                    <br />
-                                    <asp:DropDownList ID="ddlTransomColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
-                                    <asp:Label ID="lblTransomColour" AssociatedControlID="txtTransomHeight" runat="server" Text="Colour" />
                                 </li>
                             </ul>
                         </div> <%-- end .toggleContent --%>
@@ -759,6 +840,9 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
+                                    <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                    <asp:Label ID="lblFramingColour" AssociatedControlID="ddlFramingColour" runat="server" Text="Framing Colour" />
+                                    <br />
                                     <asp:DropDownList ID="ddlInteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblInteriorColour" AssociatedControlID="ddlInteriorColour" runat="server" Text="Interior Colour" />
                                     <br />
@@ -990,8 +1074,8 @@
                 <div style="display: none" id="pagerTwo">
                     <li>
                             <a href="#" data-slide="#slide2" class="slidePanel">
-                                <asp:Label ID="lblProjectTag" runat="server" Text="Project tag"></asp:Label>
-                                <asp:Label ID="lblProjectTagAnswer" runat="server" Text="Question 2 Answer"></asp:Label>
+                                <asp:Label ID="lblProjectNamePager" runat="server" Text="Project Name"></asp:Label>
+                                <asp:Label ID="lblProjectNameAnswer" runat="server" Text="Question 2 Answer"></asp:Label>
                             </a>
                     </li>
                 </div>
@@ -1063,17 +1147,17 @@
     <input id="hidZip" type="hidden" runat="server" />
     <input id="hidPhone" type="hidden" runat="server" />
    
-    <input id="hidProjectTag" type="hidden" runat="server" />
+    <input id="hidProjectName" type="hidden" runat="server" />
        
     <input id="hidProjectType" type="hidden" runat="server" />
     <input id="hidModelNumber" type="hidden" runat="server" />
 
     <input id="hidKneewallType" type="hidden" runat="server" />
-    <input id="hidKneewallColour" type="hidden" runat="server" />
     <input id="hidKneewallHeight" type="hidden" runat="server" />
     <input id="hidTransomType" type="hidden" runat="server" />
-    <input id="hidTransomColour" type="hidden" runat="server" />
     <input id="hidTransomHeight" type="hidden" runat="server" />
+
+    <input id="hidFramingColour" type="hidden" runat="server" />
     <input id="hidInteriorColour" type="hidden" runat="server" />
     <input id="hidInteriorSkin" type="hidden" runat="server" />
     <input id="hidExteriorColour" type="hidden" runat="server" />
