@@ -144,7 +144,7 @@
                     rise = (document.getElementById("MainContent_txtBackWallHeight").value - document.getElementById("MainContent_txtFrontWallHeight").value);
                     rise = rise * (projection / 12); //to get slope over 12
                     
-                    document.getElementById("MainContent_txtRoofSlope").value = m = (Math.round((rise / run) * 100)) / (100); //round m to 2 decimal places
+                    document.getElementById("MainContent_txtRoofSlope").value = m = (rise / run).toFixed(2); //round m to 2 decimal places
                 }
                 else
                     isValid = false;
@@ -166,7 +166,7 @@
 
                     m = document.getElementById("MainContent_txtRoofSlope").value;
                     //run = projection;
-                    rise = (run * m) / (projection / 12);
+                    rise = ((run * m) / (projection / 12)).toFixed(2);
 
                     document.getElementById("MainContent_txtFrontWallHeight").value = +document.getElementById("MainContent_txtBackWallHeight").value - rise;
                 }
@@ -190,7 +190,7 @@
 
                     m = document.getElementById("MainContent_txtRoofSlope").value;
                     //run = projection;
-                    rise = (run * m) / (projection / 12);
+                    rise = ((run * m) / (projection / 12)).toFixed(2);
 
                     document.getElementById("MainContent_txtBackWallHeight").value = +document.getElementById("MainContent_txtFrontWallHeight").value + +rise;
                 }
@@ -520,7 +520,8 @@
                     .attr("x1", (coordList[i][0] / 5) * 2) //0 = x1
                     .attr("y1", (coordList[i][2] / 5) * 2) //1 = y1
                     .attr("x2", (coordList[i][1] / 5) * 2) //2 = x2
-                    .attr("y2", (coordList[i][3] / 5) * 2); //3 = y2
+                    .attr("y2", (coordList[i][3] / 5) * 2) //3 = y2
+                    .attr("stroke-width", "2");
             //lineArray[i].attr("mouseover", alert("hwllo"));
             
             if(coordList[i][4] === "E") //4 = wall facing
@@ -534,14 +535,14 @@
             var wallNumber = (document.activeElement.id.substr(19,1)); //parse out the wall number from the id           
 
             lineArray[wallNumber - 1].attr("stroke", "cyan"); 
-            lineArray[wallNumber - 1].attr("stroke-width", "2");
+            lineArray[wallNumber - 1].attr("stroke-width", "5");
                
         }
 
         //reset wall colours onblur
         function resetWalls() {
             for (var i = 0; i < lineList.length; i++) {
-                lineArray[i].attr("stroke-width", "1");
+                lineArray[i].attr("stroke-width", "2");
                 if (coordList[i][4] === "E") //4 = wall facing
                     lineArray[i].attr("stroke", "red");
                 else
@@ -575,7 +576,7 @@
 
             if (index >= 0) { //if valid index
                 lineArray[index].attr("stroke", "cyan");
-                lineArray[index].attr("stroke-width", "2");
+                lineArray[index].attr("stroke-width", "5");
             }
             else {
                 highlightFrontPoint();
