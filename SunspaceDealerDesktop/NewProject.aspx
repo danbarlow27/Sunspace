@@ -13,12 +13,18 @@
             document.getElementById('MainContent_btnQuestion1').disabled = true;
             //if they select new customer
             if ($('#MainContent_radNewCustomer').is(':checked')) {
+                //if checked, clear possible pager value from existing
+                $('#MainContent_lblSpecsProjectTypeAnswer').text("");
+
+                //move textbox data into hidden fields
                 document.getElementById("MainContent_hidFirstName").value = $('#MainContent_txtCustomerFirstName').val();
                 document.getElementById("MainContent_hidLastName").value = $('#MainContent_txtCustomerLastName').val();
                 document.getElementById("MainContent_hidAddress").value = $('#MainContent_txtCustomerAddress').val();
                 document.getElementById("MainContent_hidCity").value = $('#MainContent_txtCustomerCity').val();
                 document.getElementById("MainContent_hidZip").value = $('#MainContent_txtCustomerZip').val();
                 document.getElementById("MainContent_hidPhone").value = $('#MainContent_txtCustomerPhone').val();
+                //blank out existing
+                document.getElementById("MainContent_hidExisting").value = "";
 
                 //Make sure the text boxes aren't blank before manually checking zip/postal and phone
                 if (document.getElementById("MainContent_hidFirstName").value != "" &&
@@ -69,12 +75,20 @@
             }
                 //if they select existing customer
             else if ($('#MainContent_radExistingCustomer').is(':checked')) {
-                document.getElementById("MainContent_ddlExistingCustomer").value = $('#MainContent_ddlCustomerFirstName').val(); //what is this doing? ~Kyle
+                //blank out new customer hiddens, just in case they did it first then came existing after
+                document.getElementById("MainContent_hidFirstName").value = "";
+                document.getElementById("MainContent_hidLastName").value = "";
+                document.getElementById("MainContent_hidAddress").value = "";
+                document.getElementById("MainContent_hidCity").value = "";
+                document.getElementById("MainContent_hidZip").value = "";
+                document.getElementById("MainContent_hidPhone").value = "";
+                $('#MainContent_lblSpecsProjectTypeAnswer').text("");
 
                 //if selected value from dropdown is not the generic, it is a valid choice
                 if (document.getElementById("MainContent_ddlExistingCustomer").value != "Choose a Customer...") {
                     //valid, so update pager and enable button
-                    $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing");
+                    $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing - " + $('#MainContent_ddlExistingCustomer').val());
+                    document.getElementById("MainContent_hidExisting").value = $('#MainContent_ddlExistingCustomer').val();
                     document.getElementById('pagerOne').style.display = "inline";
                     document.getElementById('MainContent_btnQuestion1').disabled = false;
                 }
@@ -87,11 +101,11 @@
             //disable 'next slide' button until after validation
             document.getElementById('MainContent_btnQuestion2').disabled = true;
 
-            document.getElementById("MainContent_hidProjectTag").value = $('#MainContent_txtProjectName').val();
+            document.getElementById("MainContent_hidProjectName").value = $('#MainContent_txtProjectName').val();
 
-            if (document.getElementById("MainContent_hidProjectTag").value != "") {
+            if (document.getElementById("MainContent_hidProjectName").value != "") {
                 //valid, so update pager and enable button
-                $('#MainContent_lblProjectTagAnswer').text(document.getElementById("MainContent_hidProjectTag").value);
+                $('#MainContent_lblProjectNameAnswer').text(document.getElementById("MainContent_hidProjectName").value);
                 document.getElementById('pagerTwo').style.display = "inline";
                 document.getElementById('MainContent_btnQuestion2').disabled = false;
             }
@@ -150,8 +164,7 @@
 
             //Only run validation if a number is entered and values selected
             if (document.getElementById("MainContent_txtKneewallHeight").value != "" &&
-                document.getElementById("MainContent_ddlKneewallType").value != "" &&
-                document.getElementById("MainContent_ddlKneewallColour").value != "") {
+                document.getElementById("MainContent_ddlKneewallType").value != "") {
 
                 //only requirement on height at this moment is that it is a valid number
                 if (isNaN(document.getElementById("MainContent_txtKneewallHeight").value)) {
@@ -162,7 +175,6 @@
                     //dropdowns have a selected value, its valid, set check bool to true, update hidden values
                     document.getElementById("MainContent_hidKneewallHeight").value = document.getElementById("MainContent_txtKneewallHeight").value;
                     document.getElementById("MainContent_hidKneewallType").value = document.getElementById("MainContent_ddlKneewallType").value;
-                    document.getElementById("MainContent_hidKneewallColour").value = document.getElementById("MainContent_ddlKneewallColour").value;
                     optionChecksPassed = true;
                 }
             }
@@ -173,8 +185,7 @@
 
             //similar checks as above for transom, update hidden values
             if (document.getElementById("MainContent_txtTransomHeight").value != "" &&
-                document.getElementById("MainContent_ddlTransomType").value != "" &&
-                document.getElementById("MainContent_ddlTransomColour").value != "") {
+                document.getElementById("MainContent_ddlTransomType").value != "") {
 
                 if (isNaN(document.getElementById("MainContent_txtTransomHeight").value)) {
                     console.log("Invalid transom height");
@@ -182,7 +193,6 @@
                 else {
                     document.getElementById("MainContent_hidTransomHeight").value = document.getElementById("MainContent_txtTransomHeight").value;
                     document.getElementById("MainContent_hidTransomType").value = document.getElementById("MainContent_ddlTransomType").value;
-                    document.getElementById("MainContent_hidTransomColour").value = document.getElementById("MainContent_ddlTransomColour").value;
                     optionChecksPassed = true;
                 }
 
@@ -405,7 +415,7 @@
 
                     <%-- NEW CUSTOMER --%>
                     <li>
-                        <asp:RadioButton ID="radNewCustomer" GroupName="question1" runat="server" />
+                        <asp:RadioButton ID="radNewCustomer" GroupName="question1" runat="server" OnClick="newProjectCheckQuestion1()" />
                         <asp:Label ID="lblNewCustomerRadio" AssociatedControlID="radNewCustomer" runat="server"></asp:Label>
                         <asp:Label ID="lblNewCustomer" AssociatedControlID="radNewCustomer" runat="server" Text="New customer"></asp:Label>
            
@@ -505,7 +515,7 @@
             <%-- end #slide1 --%>
 
 
-            <%-- QUESTION 2 - Project tag
+            <%-- QUESTION 2 - Project name
             ======================================== --%>
             <div id="slide2" class="slide">
                 
@@ -714,9 +724,6 @@
                                     <br />
                                     <asp:DropDownList ID="ddlKneewallType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblKneewallType" AssociatedControlID="txtKneewallHeight" runat="server" Text="Type" />
-                                    <br />
-                                    <asp:DropDownList ID="ddlKneewallColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
-                                    <asp:Label ID="lblKneewallColour" AssociatedControlID="txtKneewallHeight" runat="server" Text="Colour" />
                                 </li>
                             </ul>   
                         </div> <%-- end .toggleContent --%>
@@ -739,9 +746,6 @@
                                     <br />
                                     <asp:DropDownList ID="ddlTransomType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblTransomType" AssociatedControlID="txtTransomHeight" runat="server" Text="Type" />
-                                    <br />
-                                    <asp:DropDownList ID="ddlTransomColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
-                                    <asp:Label ID="lblTransomColour" AssociatedControlID="txtTransomHeight" runat="server" Text="Colour" />
                                 </li>
                             </ul>
                         </div> <%-- end .toggleContent --%>
@@ -759,6 +763,9 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
+                                    <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                    <asp:Label ID="lblFramingColour" AssociatedControlID="ddlFramingColour" runat="server" Text="Framing Colour" />
+                                    <br />
                                     <asp:DropDownList ID="ddlInteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblInteriorColour" AssociatedControlID="ddlInteriorColour" runat="server" Text="Interior Colour" />
                                     <br />
@@ -990,8 +997,8 @@
                 <div style="display: none" id="pagerTwo">
                     <li>
                             <a href="#" data-slide="#slide2" class="slidePanel">
-                                <asp:Label ID="lblProjectTag" runat="server" Text="Project tag"></asp:Label>
-                                <asp:Label ID="lblProjectTagAnswer" runat="server" Text="Question 2 Answer"></asp:Label>
+                                <asp:Label ID="lblProjectNamePager" runat="server" Text="Project Name"></asp:Label>
+                                <asp:Label ID="lblProjectNameAnswer" runat="server" Text="Question 2 Answer"></asp:Label>
                             </a>
                     </li>
                 </div>
@@ -1063,17 +1070,17 @@
     <input id="hidZip" type="hidden" runat="server" />
     <input id="hidPhone" type="hidden" runat="server" />
    
-    <input id="hidProjectTag" type="hidden" runat="server" />
+    <input id="hidProjectName" type="hidden" runat="server" />
        
     <input id="hidProjectType" type="hidden" runat="server" />
     <input id="hidModelNumber" type="hidden" runat="server" />
 
     <input id="hidKneewallType" type="hidden" runat="server" />
-    <input id="hidKneewallColour" type="hidden" runat="server" />
     <input id="hidKneewallHeight" type="hidden" runat="server" />
     <input id="hidTransomType" type="hidden" runat="server" />
-    <input id="hidTransomColour" type="hidden" runat="server" />
     <input id="hidTransomHeight" type="hidden" runat="server" />
+
+    <input id="hidFramingColour" type="hidden" runat="server" />
     <input id="hidInteriorColour" type="hidden" runat="server" />
     <input id="hidInteriorSkin" type="hidden" runat="server" />
     <input id="hidExteriorColour" type="hidden" runat="server" />

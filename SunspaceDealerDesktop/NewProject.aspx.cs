@@ -18,14 +18,25 @@ namespace SunspaceDealerDesktop
                 Session.Add("loggedIn", "userA");
             }
 
-            Customer aCustomer = new Customer();
             ddlExistingCustomer.Items.Add("Choose a Customer...");
+
+            Customer aCustomer = new Customer();
             aCustomer.FirstName = "Butt";
             aCustomer.LastName = "Hole";
+
             ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
 
-            ddlExistingCustomer.Items.Add("Previous Customer One");
-            ddlExistingCustomer.Items.Add("Previous Customer Two");
+            aCustomer = new Customer();
+            aCustomer.FirstName = "Ass";
+            aCustomer.LastName = "Man";
+
+            ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
+
+            aCustomer = new Customer();
+            aCustomer.FirstName = "Gay-ass";
+            aCustomer.LastName = "Anthony";
+
+            ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
         }
         
         protected void btnLayout_Click(object sender, EventArgs e)

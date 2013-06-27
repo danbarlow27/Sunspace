@@ -913,24 +913,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblKneewallType;
         
         /// <summary>
-        /// ddlKneewallColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlKneewallColour;
-        
-        /// <summary>
-        /// lblKneewallColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblKneewallColour;
-        
-        /// <summary>
         /// radTransomOptions control.
         /// </summary>
         /// <remarks>
@@ -994,24 +976,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblTransomType;
         
         /// <summary>
-        /// ddlTransomColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTransomColour;
-        
-        /// <summary>
-        /// lblTransomColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTransomColour;
-        
-        /// <summary>
         /// radFramingOptions control.
         /// </summary>
         /// <remarks>
@@ -1037,6 +1001,24 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFramingOptions;
+        
+        /// <summary>
+        /// ddlFramingColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFramingColour;
+        
+        /// <summary>
+        /// lblFramingColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFramingColour;
         
         /// <summary>
         /// ddlInteriorColour control.
@@ -1750,22 +1732,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblSpecsProjectTypeAnswer;
         
         /// <summary>
-        /// lblProjectTag control.
+        /// lblProjectNamePager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProjectTag;
+        protected global::System.Web.UI.WebControls.Label lblProjectNamePager;
         
         /// <summary>
-        /// lblProjectTagAnswer control.
+        /// lblProjectNameAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProjectTagAnswer;
+        protected global::System.Web.UI.WebControls.Label lblProjectNameAnswer;
         
         /// <summary>
         /// lblProjectType control.
@@ -1939,13 +1921,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidPhone;
         
         /// <summary>
-        /// hidProjectTag control.
+        /// hidProjectName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidProjectTag;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidProjectName;
         
         /// <summary>
         /// hidProjectType control.
@@ -1975,15 +1957,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidKneewallType;
         
         /// <summary>
-        /// hidKneewallColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidKneewallColour;
-        
-        /// <summary>
         /// hidKneewallHeight control.
         /// </summary>
         /// <remarks>
@@ -2002,15 +1975,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidTransomType;
         
         /// <summary>
-        /// hidTransomColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidTransomColour;
-        
-        /// <summary>
         /// hidTransomHeight control.
         /// </summary>
         /// <remarks>
@@ -2018,6 +1982,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidTransomHeight;
+        
+        /// <summary>
+        /// hidFramingColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidFramingColour;
         
         /// <summary>
         /// hidInteriorColour control.
