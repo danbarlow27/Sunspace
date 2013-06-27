@@ -5,7 +5,6 @@
     <%-- Hidden div populating scripts 
     =================================== --%>
     <script>
-
         var detailsOfAllLines = '<%= (string)Session["coordList"] %>'; //all the coordinates and details of all the lines
         var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/"); //a list of individual lines and their coordinates and details 
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
@@ -535,7 +534,7 @@
         function highlightWallsLength() {
             var wallNumber = (document.activeElement.id.substr(19,1)); //parse out the wall number from the id           
 
-            lineArray[wallNumber - 1].attr("stroke", "#01FFFF");
+            lineArray[wallNumber - 1].attr("stroke", "cyan"); 
             lineArray[wallNumber - 1].attr("stroke-width", "2");
                
         }
@@ -549,6 +548,8 @@
                 else
                     lineArray[i].attr("stroke", "black");
             }
+            if (document.getElementById("lowestPoint"))
+                d3.selectAll("#lowestPoint").remove();
         }
 
         //highlight back and front walls for height question
@@ -559,8 +560,8 @@
             var lowestIndex;
             var highestWall = 200; //arbitrary number
             var highestIndex;
-            var index = -1; //to determine if there is a wall or not
-            var typeOfWall;
+            var index = -1; //invalid to determine if there is a wall or not
+            //var typeOfWall;
 
             for (var i = 0; i < lineList.length; i++) {
                 if (coordList[i][5] == "S") //5 = orientation
@@ -569,13 +570,16 @@
             if (textbox === "B")
                 index = getBackWall(southWalls);
             else { //if (textbox === "F")
-                if (southWalls[southWalls.length - 1].type === "P")
+                if (southWalls[southWalls.length - 1].type == "P")
                     index = getFrontWall(southWalls);
             }
 
-            if (index >= 0) { 
-                lineArray[index].attr("stroke", "#01FFFF");
+            if (index >= 0) { //if valid index
+                lineArray[index].attr("stroke", "cyan");
                 lineArray[index].attr("stroke-width", "2");
+            }
+            else {
+                highlightFrontPoint();
             }
         }
 
@@ -602,13 +606,26 @@
                     highestIndex = southWalls[i].number;
                 }
             }
-
             return highestIndex;
         }
 
         //highlight the front point if there is no front wall
         function highlightFrontPoint() {
-
+            var lowestX = 0;
+            var lowestY = 0;
+            var circle;
+            for (var i = 0; i < coordList.length; i++) {
+                if (coordList[i][3] > lowestY) { //3 = y2 coordinate
+                    lowestY = coordList[i][3]; //3 = y2 coordinate
+                    lowestX = coordList[i][1]; //1 = x2 coordinate
+                }
+            }
+            circle = canvas.append("circle")
+                           .attr("cx", (lowestX / 5) * 2)
+                           .attr("cy", (lowestY / 5) * 2)
+                           .attr("r", 5) //radius
+                           .style("fill", "cyan")
+                           .attr("id", "lowestPoint");
         }
 
             
