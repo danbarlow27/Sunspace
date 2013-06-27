@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -11,10 +12,14 @@ namespace SunspaceDealerDesktop
     {
         //colour lists
         //NOTETOSELF change constants to have lists instead of arrays
-        protected List<string> model100FramingColours = Constants.MODEL_100_FRAMING_COLOURS.ToList();
-        protected List<string> model200FramingColours = Constants.MODEL_200_FRAMING_COLOURS.ToList();
-        protected List<string> model300FramingColours = Constants.MODEL_300_FRAMING_COLOURS.ToList();
-        protected List<string> model400FramingColours = Constants.MODEL_400_FRAMING_COLOURS.ToList();
+        protected static string[] model100FramingColours = Constants.MODEL_100_FRAMING_COLOURS;
+        public string model100FramingColoursJ = new JavaScriptSerializer().Serialize(model100FramingColours);
+        protected static string[] model200FramingColours = Constants.MODEL_200_FRAMING_COLOURS;
+        public string model200FramingColoursJ = new JavaScriptSerializer().Serialize(model200FramingColours);
+        protected static string[] model300FramingColours = Constants.MODEL_300_FRAMING_COLOURS;
+        public string model300FramingColoursJ = new JavaScriptSerializer().Serialize(model300FramingColours);
+        protected static string[] model400FramingColours = Constants.MODEL_400_FRAMING_COLOURS;
+        public string model400FramingColoursJ = new JavaScriptSerializer().Serialize(model400FramingColours);
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -50,7 +55,7 @@ namespace SunspaceDealerDesktop
 
             //slide4
             #region Slide 4 pageload
-
+            //ddlFramingColour.Items.Add("Test");
             #endregion
         }
         
