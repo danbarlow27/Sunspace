@@ -156,9 +156,10 @@
                     startNewWall = true;                        //reset click count
                 }
                     //if walltype is not "E", means they have not drawn any existing walls
-                else
+                else {
                     //show error message
-                    log.innerHTML += "No existing walls drawn, please draw one\n\n";
+                    log.innerHTML = "No existing walls drawn, please draw one\n\n";
+                }
             }
                 //if user wants to finish drawing external (i.e. proposed) walls
             else if (doneButton.value === "Done Proposed Walls") {
@@ -573,13 +574,15 @@
             //Variable to say whether or not the sunroom is valid
             var isValid = false;
             //If logic to see that at least 1 wall exist
-            if (coordList.length < MIN_NUMBER_OF_WALLS)
+            if (coordList.length < MIN_NUMBER_OF_WALLS) {
                 //Error message to tell the user there current error
-                log.innerHTML += "A complete sunroom must be enclosed (3 walls minimum). Please try again!\n\n";
+                log.innerHTML = "A complete sunroom must be enclosed (3 walls minimum). Please try again!\n\n";
+            }
                 //Else if to check for standAlone rooms and if the room is closed
-            else if (standAlone && coordList[coordList.length - 1].attr("x2") != coordList[0].x1)
+            else if (standAlone && coordList[coordList.length - 1].attr("x2") != coordList[0].x1) {
                 //Alert to tell the user there current error
-                log.innerHTML += "A stand-alone sunroom must end at the start of the starting wall. Please try again!\n\n";
+                log.innerHTML = "A stand-alone sunroom must end at the start of the starting wall. Please try again!\n\n";
+            }
                 //Else if logic to check for non-standAlone rooms
             else if (!standAlone) {
                 //Assign isValid the value returned by validateNotStandAlone()

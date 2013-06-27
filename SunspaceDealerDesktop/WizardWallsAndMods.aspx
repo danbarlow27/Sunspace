@@ -237,6 +237,13 @@
             return false;
         }
         
+        function checkQuestion3() {
+            for (var i = 1; i <= lineList.length; i++) {
+                if (document.getElementById("MainContent_ddlWallDoorType").value != 0) {
+
+                }
+            }
+        }
     </script>
     <%-- End hidden div populating scripts --%>
 
@@ -362,27 +369,36 @@
             </div> 
             <%-- end #slide2 --%>
 
-             <%-- QUESTION 3 - DOOR DETAILS
+             <%-- QUESTION 3 - HOW MANY DOORS PER WALL
             ======================================== --%>
 
             <div id="slide3" class="slide">
                 <h1>
                     <asp:Label ID="lblQuestion3" runat="server" Text="Would you like a door on your sunroom?"></asp:Label>
                 </h1>        
-                              
-                <ul class="toggleOptions">
-                    <asp:PlaceHolder ID="wallDoorOptions" runat="server">
-
-                    
-
-</asp:PlaceHolder>                    
-        </ul>            
+                <div class="tblWallLengths">
+                    <asp:Table ID="tblDoorQuantity" style="padding-right:15%; padding-left:15%; padding-top:5%;" runat="server" ></asp:Table>
+                </div>          
 
                 <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
             </div>
             <%-- end #slide3 --%>
 
+            <%-- QUESTION 4 - DOOR DETAILS
+            ======================================== --%>
+            <div id="slide4" class="slide">
+                <h1>
+                    <asp:Label ID="lblQuestion4" runat="server" Text="Door Details"></asp:Label>
+                </h1>        
+                              
+                <ul class="toggleOptions">
+                    <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
+                </ul>            
+
+                <asp:Button ID="btnQuestion4"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" />
+
+            </div>
         </div> <%-- end .slide-wrapper --%>
 
     </div> 
@@ -426,7 +442,7 @@
                     </li>
                 </div>
 
- <%--               <div style="display: none" id="pagerFour">
+                <div style="display: none" id="pagerFour">
                     <li>
                             <a href="#" data-slide="#slide4" class="slidePanel">
                                 <asp:Label ID="Label27" runat="server" Text="Styling options"></asp:Label>
@@ -435,7 +451,7 @@
                     </li>
                 </div>
 
-                <div style="display: none" id="pagerFive">
+ <%--               <div style="display: none" id="pagerFive">
                     <li>
                             <a href="#" data-slide="#slide5" class="slidePanel">
                                 <asp:Label ID="Label31" runat="server" Text="Foam protection"></asp:Label>
