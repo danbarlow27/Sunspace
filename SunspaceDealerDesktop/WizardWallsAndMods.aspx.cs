@@ -17,8 +17,9 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             /***hard coded session variables***/
-            Session["numberOfWalls"] = 6;
-            Session["coordList"] = "100,412.5,137.5,137.5,E,S/150,150,137.5,287.5,P,W/150,225,287.5,362.5,P,SW/225,312.5,362.5,362.5,P,S/312,387.5,362.5,287.5,P,SE/387.5,387.5,287.5,137.5,P,E/";
+            Session["numberOfWalls"] = 4;
+            //Session["coordList"] = "100,412.5,137.5,137.5,E,S/150,150,137.5,287.5,P,W/150,225,287.5,362.5,P,SW/225,312.5,362.5,362.5,P,S/312,387.5,362.5,287.5,P,SE/387.5,387.5,287.5,137.5,P,E/";
+            Session["coordList"] = "112.5,350,112.5,112.5,E,S/350,350,112.5,337.5,E,W/175,175,112.5,262.5,P,W/175,350,262.5,262.5,P,S/";
             string coordList = (string)Session["coordList"];                                    //not functional yet
             string[] separator = new string[] { "/" };                                             //not functional yet
             string[] walls = coordList.Split(separator, StringSplitOptions.RemoveEmptyEntries);  //not functional yet
@@ -28,6 +29,9 @@ namespace SunspaceDealerDesktop
 
             #region DropDownList Section
             DropDownList ddlInFrac = new DropDownList();
+            DropDownList ddlInFracBackWall = new DropDownList();
+            DropDownList ddlInFracFrontWall = new DropDownList();
+
             ListItem lst0 = new ListItem("---", "", true);
             ListItem lst18 = new ListItem("1/8", ".125");
             ListItem lst14 = new ListItem("1/4", ".25");
@@ -36,6 +40,9 @@ namespace SunspaceDealerDesktop
             ListItem lst58 = new ListItem("5/8", ".625");
             ListItem lst34 = new ListItem("3/4", ".75");
             ListItem lst78 = new ListItem("7/8", ".875");
+            
+
+
             ddlInFrac.Items.Add(lst0);
             ddlInFrac.Items.Add(lst18);
             ddlInFrac.Items.Add(lst14);
@@ -44,9 +51,7 @@ namespace SunspaceDealerDesktop
             ddlInFrac.Items.Add(lst58);
             ddlInFrac.Items.Add(lst34);
             ddlInFrac.Items.Add(lst78);
-            //inchesSpecifics.Controls.Add(ddlInFrac);
-
-            DropDownList ddlInFracBackWall = new DropDownList();
+            
             ddlInFracBackWall.Items.Add(lst0);
             ddlInFracBackWall.Items.Add(lst18);
             ddlInFracBackWall.Items.Add(lst14);
@@ -55,9 +60,9 @@ namespace SunspaceDealerDesktop
             ddlInFracBackWall.Items.Add(lst58);
             ddlInFracBackWall.Items.Add(lst34);
             ddlInFracBackWall.Items.Add(lst78);
+            ddlInFracBackWall.ID = "ddlBackInchFractions";
             phBackHeights.Controls.Add(ddlInFracBackWall);
 
-            DropDownList ddlInFracFrontWall = new DropDownList();
             ddlInFracFrontWall.Items.Add(lst0);
             ddlInFracFrontWall.Items.Add(lst18);
             ddlInFracFrontWall.Items.Add(lst14);
@@ -66,6 +71,7 @@ namespace SunspaceDealerDesktop
             ddlInFracFrontWall.Items.Add(lst58);
             ddlInFracFrontWall.Items.Add(lst34);
             ddlInFracFrontWall.Items.Add(lst78);
+            ddlInFracFrontWall.ID = "ddlFrontInchFractions";
             phFrontHeights.Controls.Add(ddlInFracFrontWall);
             #endregion
 
@@ -725,6 +731,10 @@ namespace SunspaceDealerDesktop
                 ddlRightInchFractions.Items.Add(lst58);
                 ddlRightInchFractions.Items.Add(lst34);
                 ddlRightInchFractions.Items.Add(lst78);
+
+                ddlInchFractions.ID = "ddlWall" + i + "InchFractions";
+                ddlLeftInchFractions.ID = "ddlWall" + i + "LeftInchFractions";
+                ddlRightInchFractions.ID = "ddlWall" + i + "RightInchFractions";
 
                 lblWallNumber.Text = "Wall " + i + " : ";
                 lblWallNumber.ID = "lblWall" + i + "Length";
