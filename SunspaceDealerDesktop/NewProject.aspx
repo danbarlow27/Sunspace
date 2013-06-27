@@ -120,7 +120,7 @@
 
             //if they pick sunroom
             if ($('#MainContent_radProjectSunroom').is(':checked')) {
-                //They check one of 5 model types
+                //They check one of 4 model types
                 //update pager, enable button, and update hidden value
                 //corresponding to selected model #
                 if ($('#MainContent_radSunroomModel100').is(':checked')) {
@@ -140,11 +140,6 @@
                 }
                 else if ($('#MainContent_radSunroomModel400').is(':checked')) {
                     document.getElementById("MainContent_hidModelNumber").value = "400";
-                    document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion3').disabled = false;
-                }
-                else if ($('#MainContent_radSunroomModelShowroom').is(':checked')) {
-                    document.getElementById("MainContent_hidModelNumber").value = "Showroom";
                     document.getElementById('pagerThree').style.display = "inline";
                     document.getElementById('MainContent_btnQuestion3').disabled = false;
                 }
@@ -408,7 +403,7 @@
              document.getElementById("MainContent_ddlInteriorSkin").value != "" &&
              document.getElementById("MainContent_ddlExteriorColour").value != "" &&
              document.getElementById("MainContent_ddlExteriorSkin").value != ""*/
-            newProjectCheckQuestion4();
+            newProjectCheckQuestion3();
         }
     </script>
 
@@ -582,29 +577,24 @@
                         <div class="toggleContent">
                             <ul>
                                 <li>
-                                    <asp:RadioButton ID="radSunroomModel100" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radSunroomModel100" OnClick="newProjectChangeColours()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblSunroomModel100Radio" AssociatedControlID="radSunroomModel100" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel100" AssociatedControlID="radSunroomModel100" runat="server" Text="Model 100"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radSunroomModel200" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radSunroomModel200" OnClick="newProjectChangeColours()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblSunroomModel200Radio" AssociatedControlID="radSunroomModel200" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel200" AssociatedControlID="radSunroomModel200" runat="server" Text="Model 200"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radSunroomModel300" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radSunroomModel300" OnClick="newProjectChangeColours()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblSunroomModel300Radio" AssociatedControlID="radSunroomModel300" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel300" AssociatedControlID="radSunroomModel300" runat="server" Text="Model 300"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radSunroomModel400" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radSunroomModel400" OnClick="newProjectChangeColours()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblSunroomModel400Radio" AssociatedControlID="radSunroomModel400" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel400" AssociatedControlID="radSunroomModel400" runat="server" Text="Model 400"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:RadioButton ID="radSunroomModelShowroom" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
-                                    <asp:Label ID="lblSunroomModelShowroomRadio" AssociatedControlID="radSunroomModelShowroom" runat="server"></asp:Label>
-                                    <asp:Label ID="lblSunroomModelShowroom" AssociatedControlID="radSunroomModelShowroom" runat="server" Text="Showroom"></asp:Label>
                                 </li>
                             </ul>            
                         </div> <%-- end 'complete sunroom' options --%>
@@ -619,22 +609,22 @@
                         <div class="toggleContent">
                             <ul class="checkboxes">
                                 <li>
-                                    <asp:RadioButton ID="radWallsModel100" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radWallsModel100" OnClick="newProjectChangeColours()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblWallsModel100Radio" AssociatedControlID="radWallsModel100" runat="server"></asp:Label>
                                     <asp:Label ID="lblWallsModel100" AssociatedControlID="radWallsModel100" runat="server" Text="Model 100"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radWallsModel200" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radWallsModel200" OnClick="newProjectChangeColours()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblWallsModel200Radio" AssociatedControlID="radWallsModel200" runat="server"></asp:Label>
                                     <asp:Label ID="lblWallsModel200" AssociatedControlID="radWallsModel200" runat="server" Text="Model 200"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radWallsModel300" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radWallsModel300" OnClick="newProjectChangeColours()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblWallsModel300Radio" AssociatedControlID="radWallsModel300" runat="server"></asp:Label>
                                     <asp:Label ID="lblWallsModel300" AssociatedControlID="radWallsModel300" runat="server" Text="Model 300"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:RadioButton ID="radWallsModel400" GroupName="sunroomModel" runat="server" />
+                                    <asp:RadioButton ID="radWallsModel400" OnClick="newProjectChangeColours()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblWallsModel400Radio" AssociatedControlID="radWallsModel400" runat="server"></asp:Label>
                                     <asp:Label ID="lblWallsModel400" AssociatedControlID="radWallsModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
@@ -699,6 +689,37 @@
                             </ul>            
                         </div> <%-- end 'roof' options --%>
                     </li> <%-- end 'roof' --%>
+                    <%-- SHOWROOM --%>                    
+                    <li>
+                        <asp:RadioButton ID="radSunroomModelShowroom" OnClick="newProjectChangeColours()" GroupName="projectType" runat="server" />
+                        <asp:Label ID="lblSunroomModelShowroomRadio" AssociatedControlID="radSunroomModelShowroom" runat="server"></asp:Label>
+                        <asp:Label ID="lblSunroomModelShowroom" AssociatedControlID="radSunroomModelShowroom" runat="server" Text="Showroom"></asp:Label>
+
+                        <div class="toggleContent">
+                            <ul class="checkboxes">
+                                <li>
+                                    <asp:RadioButton ID="radShowroomModel100" OnClick="newProjectChangeColours()" GroupName="sunroomModel" runat="server" />
+                                    <asp:Label ID="lblShowroomModel100" AssociatedControlID="radShowroomModel100" runat="server"></asp:Label>
+                                    <asp:Label ID="lblShowroomModel100Radio" AssociatedControlID="radShowroomModel100" runat="server" Text="Model 100"></asp:Label>
+                                </li>
+                                <li>
+                                    <asp:RadioButton ID="radShowroomModel200" OnClick="newProjectChangeColours()" GroupName="sunroomModel" runat="server" />
+                                    <asp:Label ID="lblShowroomModel200" AssociatedControlID="radShowroomModel200" runat="server"></asp:Label>
+                                    <asp:Label ID="lblShowroomModel200Radio" AssociatedControlID="radShowroomModel200" runat="server" Text="Model 200"></asp:Label>
+                                </li>
+                                <li>
+                                    <asp:RadioButton ID="radShowroomModel300" OnClick="newProjectChangeColours()" GroupName="sunroomModel" runat="server" />
+                                    <asp:Label ID="lblShowroomModel300" AssociatedControlID="radShowroomModel300" runat="server"></asp:Label>
+                                    <asp:Label ID="lblShowroomModel300Radio" AssociatedControlID="radShowroomModel300" runat="server" Text="Model 300"></asp:Label>
+                                </li>
+                                <li>
+                                    <asp:RadioButton ID="radShowroomModel400" OnClick="newProjectChangeColours()" GroupName="sunroomModel" runat="server" />
+                                    <asp:Label ID="lblShowroomModel400" AssociatedControlID="radShowroomModel400" runat="server"></asp:Label>
+                                    <asp:Label ID="lblShowroomModel400Radio" AssociatedControlID="radShowroomModel400" runat="server" Text="Model 400"></asp:Label>
+                                </li>
+                            </ul>            
+                        </div> <%-- end 'showroom' options --%>
+                    </li>
 
                     <%-- COMPONENTS --%>
                     <li>
@@ -709,7 +730,7 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" OnClientClick="newProjectChangeColours()" />
+                <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide3 --%>

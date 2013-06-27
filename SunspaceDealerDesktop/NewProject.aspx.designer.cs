@@ -400,33 +400,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblSunroomModel400;
         
         /// <summary>
-        /// radSunroomModelShowroom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radSunroomModelShowroom;
-        
-        /// <summary>
-        /// lblSunroomModelShowroomRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSunroomModelShowroomRadio;
-        
-        /// <summary>
-        /// lblSunroomModelShowroom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSunroomModelShowroom;
-        
-        /// <summary>
         /// radProjectWalls control.
         /// </summary>
         /// <remarks>
@@ -803,6 +776,141 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblRoofOSB;
+        
+        /// <summary>
+        /// radSunroomModelShowroom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radSunroomModelShowroom;
+        
+        /// <summary>
+        /// lblSunroomModelShowroomRadio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSunroomModelShowroomRadio;
+        
+        /// <summary>
+        /// lblSunroomModelShowroom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSunroomModelShowroom;
+        
+        /// <summary>
+        /// radShowroomModel100 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radShowroomModel100;
+        
+        /// <summary>
+        /// lblShowroomModel100 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel100;
+        
+        /// <summary>
+        /// lblShowroomModel100Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel100Radio;
+        
+        /// <summary>
+        /// radShowroomModel200 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radShowroomModel200;
+        
+        /// <summary>
+        /// lblShowroomModel200 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel200;
+        
+        /// <summary>
+        /// lblShowroomModel200Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel200Radio;
+        
+        /// <summary>
+        /// radShowroomModel300 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radShowroomModel300;
+        
+        /// <summary>
+        /// lblShowroomModel300 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel300;
+        
+        /// <summary>
+        /// lblShowroomModel300Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel300Radio;
+        
+        /// <summary>
+        /// radShowroomModel400 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radShowroomModel400;
+        
+        /// <summary>
+        /// lblShowroomModel400 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel400;
+        
+        /// <summary>
+        /// lblShowroomModel400Radio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShowroomModel400Radio;
         
         /// <summary>
         /// radProjectComponents control.

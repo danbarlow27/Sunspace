@@ -43,7 +43,7 @@ namespace SunspaceDealerDesktop
 
             aCustomer = new Customer();
             aCustomer.FirstName = "Gay-ass";
-            aCustomer.LastName = "Anthony";
+            aCustomer.LastName = "Tester";
 
             ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
             #endregion
