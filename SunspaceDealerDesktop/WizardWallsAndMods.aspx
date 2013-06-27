@@ -519,7 +519,7 @@
         function highlightWallsLength() {
             var wallNumber = (document.activeElement.id.substr(19,1)); //parse out the wall number from the id           
 
-            lineArray[wallNumber - 1].attr("stroke", "orange");
+            lineArray[wallNumber - 1].attr("stroke", "#01FFFF");
             lineArray[wallNumber - 1].attr("stroke-width", "2");
                
         }
@@ -558,7 +558,7 @@
             }
 
             if (index >= 0) { 
-                lineArray[index].attr("stroke", "orange");
+                lineArray[index].attr("stroke", "#01FFFF");
                 lineArray[index].attr("stroke-width", "2");
             }
         }
