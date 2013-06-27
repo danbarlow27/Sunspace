@@ -203,11 +203,13 @@
             }
 
             //make sure skins and colours are selected, update hidden values
-            if (document.getElementById("MainContent_ddlInteriorColour").value != "" &&
+            if (document.getElementById("MainContent_ddlFramingColour").value != "" &&
+                document.getElementById("MainContent_ddlInteriorColour").value != "" &&
                 document.getElementById("MainContent_ddlInteriorSkin").value != "" &&
                 document.getElementById("MainContent_ddlExteriorColour").value != "" &&
                 document.getElementById("MainContent_ddlExteriorSkin").value != "") {
 
+                document.getElementById("MainContent_hidFramingColour").value = document.getElementById("MainContent_FramingColour").value;
                 document.getElementById("MainContent_hidInteriorColour").value = document.getElementById("MainContent_ddlInteriorColour").value;
                 document.getElementById("MainContent_hidInteriorSkin").value = document.getElementById("MainContent_ddlInteriorSkin").value;
                 document.getElementById("MainContent_hidExteriorColour").value = document.getElementById("MainContent_ddlExteriorColour").value;
@@ -392,6 +394,21 @@
             }
 
             return false;
+        }
+
+        function newProjectChangeColours() {
+            console.log("new project change colours");
+            
+            for (var i=0;i<<%=model100FramingColours.Count()%>;i++)
+            {
+                document.getElementById("MainContent_ddlFramingColour").options.add("test");
+            }
+            /* document.getElementById("MainContent_ddlFramingColour").value != "" &&
+             document.getElementById("MainContent_ddlInteriorColour").value != "" &&
+             document.getElementById("MainContent_ddlInteriorSkin").value != "" &&
+             document.getElementById("MainContent_ddlExteriorColour").value != "" &&
+             document.getElementById("MainContent_ddlExteriorSkin").value != ""*/
+            newProjectCheckQuestion4();
         }
     </script>
 
@@ -692,7 +709,7 @@
 
                 </ul> <%-- end .toggleOptions --%>
 
-                <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" OnClientClick="newProjectChangeColours()" />
 
             </div> 
             <%-- end #slide3 --%>
@@ -719,7 +736,6 @@
                             <ul>                                
                                 <li>
                                     <asp:TextBox ID="txtKneewallHeight" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" runat="server" MaxLength="3" />
-                                    
                                     <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height" />
                                     <br />
                                     <asp:DropDownList ID="ddlKneewallType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
@@ -763,7 +779,7 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectChangeColours()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblFramingColour" AssociatedControlID="ddlFramingColour" runat="server" Text="Framing Colour" />
                                     <br />
                                     <asp:DropDownList ID="ddlInteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />

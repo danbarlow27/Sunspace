@@ -9,6 +9,13 @@ namespace SunspaceDealerDesktop
 {
     public partial class NewProject : Page
     {
+        //colour lists
+        //NOTETOSELF change constants to have lists instead of arrays
+        protected List<string> model100FramingColours = Constants.MODEL_100_FRAMING_COLOURS.ToList();
+        protected List<string> model200FramingColours = Constants.MODEL_200_FRAMING_COLOURS.ToList();
+        protected List<string> model300FramingColours = Constants.MODEL_300_FRAMING_COLOURS.ToList();
+        protected List<string> model400FramingColours = Constants.MODEL_400_FRAMING_COLOURS.ToList();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["loggedIn"] == null)
@@ -16,8 +23,10 @@ namespace SunspaceDealerDesktop
                 //uncomment me when login functionality is working
                 //Response.Redirect("Login.aspx");
                 Session.Add("loggedIn", "userA");
-            }
+            }           
 
+            //slide1
+            #region Slide 1 pageload
             ddlExistingCustomer.Items.Add("Choose a Customer...");
 
             Customer aCustomer = new Customer();
@@ -37,6 +46,12 @@ namespace SunspaceDealerDesktop
             aCustomer.LastName = "Anthony";
 
             ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
+            #endregion
+
+            //slide4
+            #region Slide 4 pageload
+
+            #endregion
         }
         
         protected void btnLayout_Click(object sender, EventArgs e)
