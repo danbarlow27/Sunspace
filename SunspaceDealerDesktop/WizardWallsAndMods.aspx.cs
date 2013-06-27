@@ -664,16 +664,11 @@ namespace SunspaceDealerDesktop
             //DropDownList used in tables loaded to page
             
 
-            #region For Loop for slide 1 and slide3
-            //Used to dynamically add values to ddlWallDoorPlacement
-            for (int i = 1; i <= (int)Session["numberOfWalls"]; i++)
-            {
-                ListItem numberOfWalls = new ListItem(Convert.ToString(i), Convert.ToString(i));
-                //ddlWallDoorPlacement.Items.Add(numberOfWalls);
-            }
+            #region For Loop for slide 1 and slide3            
 
             for (int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 4 right now
             {
+                #region Slide1/Question1 Table
                 TableRow row = new TableRow();
                 TableRow rowLeftFiller = new TableRow();
                 TableRow rowRightFiller = new TableRow();
@@ -768,6 +763,22 @@ namespace SunspaceDealerDesktop
                 row.Cells.Add(cell5);
                 row.Cells.Add(cell6);
                 row.Cells.Add(cell7);
+                #endregion
+
+                #region Slide3/Question3 Quantity of Doors
+
+                TableRow wallRow = new TableRow();
+                TableCell wallLBLCell = new TableCell();
+                TableCell wallDDLCell = new TableCell();
+
+                Label wallLBL = new Label();
+                wallLBL.ID = "lblWallDoorId";
+                wallLBL.Text = "Amount of Doors In Wall " + i;
+
+                DropDownList wallDDL = new DropDownList();
+                wallDDL.ID = "ddlWallDoorAmount";
+
+                #endregion
             }
             #endregion
         }
