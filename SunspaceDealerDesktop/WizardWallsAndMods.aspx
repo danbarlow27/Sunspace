@@ -68,6 +68,39 @@
             return highestSetBack;
         }
 
+        //validate decimal to eighth of an inch 
+        function validateDecimal(number) {
+            var oneEighth;
+            var twoEighth;
+            var threeEighth;
+            var fourEighth;
+            var fiveEighth;
+            var sixEighth;
+            var sevenEighth;
+            var wholeNumber;
+
+            switch (number) {
+                //case number >:
+                //    break;
+                case "25":
+                    break;
+                case "375":
+                    break;
+                case "5":
+                    break;
+                case "625":
+                    break;
+                case "75":
+                    break;
+                case "875":
+                    break;
+                default:
+                    break;
+            }
+
+            return number;
+        }
+
         function checkQuestion1() {
 
             //disable 'next slide' button until after validation (this is currently enabled for debugging purposes)
@@ -183,7 +216,7 @@
                     
                     frontHeight = document.getElementById("MainContent_txtFrontWallHeight").value = +(document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - +rise;
 
-
+                    frontHeight = validateDecimal(frontHeight);
                 }
                 else
                     isValid = false;
@@ -211,7 +244,7 @@
 
                     backHeight = document.getElementById("MainContent_txtBackWallHeight").value = +(document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value) + +rise;
 
-
+                    backHeight = validateDecimal(backHeight);
                 }
                 else
                     isValid = false;
