@@ -12,7 +12,7 @@
             coordList[i] = lineList[i].split(","); //populate the 2d array
         }
         var wallSetBackArray = new Array();
-        var projection = 10; //hard coded to testing
+        var projection = 10; //hard coded for testing
 
         function calculateSetBack(index) {
             /*
@@ -55,9 +55,9 @@
             var highestSetBack = 0;
             for (var i = 0; i < wallSetBackArray.length; i++) {
                 tempProjection = +tempProjection + +wallSetBackArray[i];
-                if (tempProjection > highestSetBack)
+                if (tempProjection > highestSetBack) {
                     highestSetBack = tempProjection;
-                //console.log("tempProjection: " + tempProjection + ", highestSetBack: " + highestSetBack);
+                }
             }
             return highestSetBack;
         }
@@ -121,9 +121,9 @@
 
             var isValid = true;
             var answer = "";
-            var m;    //m = rise/run
-            var rise; //m = rise/run
-            var run = projection;  // m = rise/run
+            var m;    //m = (rise(projection/12))/12 slope over 12
+            var rise; //m = (rise(projection/12))/12 slope over 12
+            var run = 12;  // m = (rise(projection/12))/12 slope over 12
 
             if (document.getElementById("MainContent_chkAutoRoofSlope").checked) {
                 document.getElementById("MainContent_chkAutoBackWallHeight").checked = false;
@@ -140,10 +140,10 @@
 
                     //alert("yello");
                     isValid = true;
-                    run = run / 12; //to get slope over 12 inches
-                    rise = (document.getElementById("MainContent_txtBackWallHeight").value - document.getElementById("MainContent_txtFrontWallHeight").value) / run; //to get slope over 12
-                    //run = projection;
-
+                    //run = run / 12; //to get slope over 12 inches
+                    rise = (document.getElementById("MainContent_txtBackWallHeight").value - document.getElementById("MainContent_txtFrontWallHeight").value);
+                    rise = rise * (projection / 12); //to get slope over 12
+                    
                     document.getElementById("MainContent_txtRoofSlope").value = m = (Math.round((rise / run) * 100)) / (100); //round m to 2 decimal places
                 }
                 else
@@ -166,7 +166,7 @@
 
                     m = document.getElementById("MainContent_txtRoofSlope").value;
                     //run = projection;
-                    rise = run * m;
+                    rise = (run * m) / (projection / 12);
 
                     document.getElementById("MainContent_txtFrontWallHeight").value = +document.getElementById("MainContent_txtBackWallHeight").value - rise;
                 }
@@ -190,7 +190,7 @@
 
                     m = document.getElementById("MainContent_txtRoofSlope").value;
                     //run = projection;
-                    rise = run * m;
+                    rise = (run * m) / (projection / 12);
 
                     document.getElementById("MainContent_txtBackWallHeight").value = +document.getElementById("MainContent_txtFrontWallHeight").value + +rise;
                 }
@@ -198,7 +198,6 @@
                     isValid = false;
             }
             else {
-                //isValid = +(document.getElementById("MainContent_txtBackWallHeight").value <= +document.getElementById("MainContent_txtFrontWallHeight").value) ? false : true;
                 if (isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
                     || document.getElementById("MainContent_txtFrontWallHeight").value <= 0
                     || document.getElementById("MainContent_txtFrontWallHeight").value != ""

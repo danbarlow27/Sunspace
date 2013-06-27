@@ -15,6 +15,10 @@ namespace SunspaceDealerDesktop
             /***hard coded session variables***/
             Session["numberOfWalls"] = 6;
             Session["coordList"] = "100,412.5,137.5,137.5,E,S/150,150,137.5,287.5,P,W/150,225,287.5,362.5,P,SW/225,312.5,362.5,362.5,P,S/312,387.5,362.5,287.5,P,SE/387.5,387.5,287.5,137.5,P,E/";
+            string coordList = (string)Session["coordList"];                                    //not functional yet
+            string[] separator = new string[] { "/" };                                             //not functional yet
+            string[] walls = coordList.Split(separator, StringSplitOptions.RemoveEmptyEntries);  //not functional yet
+            int numberOfWalls = walls.Count();                                                  //not functional yet
             /**********************************/
             hiddenFieldsDiv.InnerHtml = createHiddenFields(); //create hidden fields on page load dynamically
 
