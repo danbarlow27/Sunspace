@@ -55,7 +55,7 @@ namespace SunspaceDealerDesktop
 
             //slide4
             #region Slide 4 pageload
-            //ddlFramingColour.Items.Add("Test");
+            ddlFramingColour.Items.Add("Choose a colour...");
             #endregion
         }
         
