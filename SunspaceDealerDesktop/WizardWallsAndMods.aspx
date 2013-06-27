@@ -13,6 +13,10 @@
         }
         var wallSetBackArray = new Array();
         var projection = 10; //hard coded to testing
+        var DOOR_MAX_WIDTH = '<%= DOOR_MAX_WIDTH %>';
+        var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
+        var DOOR_FRENCH_MIN_WIDTH = '<%= DOOR_FRENCH_MIN_WIDTH %>';
+        var DOOR_FRENCH_MAX_WIDTH = '<%= DOOR_FRENCH_MAX_WIDTH %>';
 
         function calculateSetBack(index) {
             /*
@@ -238,11 +242,46 @@
             return false;
         }
         
-        function checkQuestion3() {
-            for (var i = 1; i <= lineList.length; i++) {
-                if (document.getElementById("MainContent_ddlWallDoorType").value != 0) {
+        function checkQuestion3(toChange) {
+            var currentDropDown = document.getElementById("MainContent_ddlWallDoorAmount" + toChange);
+            if (document.getElementById("MainContent_ddlWallDoorType" + toChange).value != 0) {
+                currentDropDown.disabled = false;
+                var doorType = document.getElementById("MainContent_ddlWallDoorType" + toChange).options[document.getElementById("MainContent_ddlWallDoorType" + toChange).selectedIndex].value;
 
+                var doorQuantityLimits = calculatePossibleDoors(doorType, toChange);                
+
+                for(var i = 0; i < doorQuantityLimits.max; i++) {
+                    var option = document.createElement("option");
+                    option.text = i;
+                    option.value = i;
+                    currentDropDown.appendChild(option);
                 }
+            }
+            else {
+                document.getElementById("MainContent_ddlWallDoorAmount" + toChange).disabled = true;
+            }
+        }
+
+        function calculatePossibleDoors(type, index) {
+            var maxQuantityOfDoors, minQuantityOfDoors;
+            var lengthOfWall = document.getElementById("MainContent_txtWall" + index + "Length").value
+
+            alert(lengthOfWall + " and " + type + " and " + DOOR_MIN_WIDTH);
+
+            switch (type) {
+                case "cabana":
+                    maxQuantityOfDoors = lengthOfWall / DOOR_MIN_WIDTH; //25
+                    minQuantityOfDoors = lengthOfWall / DOOR_MAX_WIDTH; //42
+                    break;
+                case "french":
+                    maxQuantityOfDoors = lengthOfWall / DOOR_FRENCH_MIN_WIDTH; //48.75
+                    minQuantityOfDoors = lengthOfWall / DOOR_FRENCH_MAX_WIDTH; //82.75
+                    break;
+                //case "patio":
+            }
+            return {
+                "max": maxQuantityOfDoors,
+                "min": minQuantityOfDoors
             }
         }
     </script>

@@ -10,9 +10,10 @@ namespace SunspaceDealerDesktop
 {
     public partial class WizardWallsAndMods : System.Web.UI.Page
     {
-        const float DOOR_MAX_WIDTH = Constants.CUSTOM_DOOR_MAX_WIDTH;
-        const float DOOR_MIN_WIDTH = Constants.CUSTOM_DOOR_MIN_WIDTH;
-        const float DOOR_FRENCH_MAX_WIDTH = Constants.CUSTOM_FRENCH_DOOR_MAX_WIDTH;
+        protected const float DOOR_MAX_WIDTH = Constants.CUSTOM_DOOR_MAX_WIDTH;
+        protected const float DOOR_MIN_WIDTH = Constants.CUSTOM_DOOR_MIN_WIDTH;
+        protected const float DOOR_FRENCH_MIN_WIDTH = Constants.CUSTOM_FRENCH_DOOR_MIN_WIDTH;
+        protected const float DOOR_FRENCH_MAX_WIDTH = Constants.CUSTOM_FRENCH_DOOR_MAX_WIDTH;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -782,6 +783,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList wallDDLType = new DropDownList();
                 wallDDLType.ID = "ddlWallDoorType" + i;
+                wallDDLType.Attributes.Add("OnChange", "checkQuestion3("+ i +")");
                 ListItem zero = new ListItem("None", "0");
                 ListItem cabana = new ListItem("Cabana", "cabana");
                 ListItem french = new ListItem("French", "french");
