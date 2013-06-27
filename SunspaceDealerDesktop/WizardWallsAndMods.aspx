@@ -200,11 +200,23 @@
             }
             else {
                 //isValid = +(document.getElementById("MainContent_txtBackWallHeight").value <= +document.getElementById("MainContent_txtFrontWallHeight").value) ? false : true;
-                if (document.getElementById("MainContent_txtBackWallHeight").value <= document.getElementById("MainContent_txtFrontWallHeight").value)
+                if (isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                    || document.getElementById("MainContent_txtFrontWallHeight").value <= 0
+                    || document.getElementById("MainContent_txtFrontWallHeight").value != ""
+                    || isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
+                    || document.getElementById("MainContent_txtBackWallHeight").value <= 0
+                    || document.getElementById("MainContent_txtBackWallHeight").value != ""
+                    || isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                    || document.getElementById("MainContent_txtRoofSlope").value <= 0
+                    || document.getElementById("MainContent_txtRoofSlope").value != ""
+                    || document.getElementById("MainContent_txtBackWallHeight").value <= document.getElementById("MainContent_txtFrontWallHeight").value)
                     isValid = false;
                 else
                     isValid = true;
             }
+
+
+
             if (isValid) {
                 document.getElementById("MainContent_hidBackWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value;
                 document.getElementById("MainContent_hidFrontWallHeight").value = document.getElementById("MainContent_txtFrontWallHeight").value;
