@@ -840,7 +840,7 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectChangeColours()" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblFramingColour" AssociatedControlID="ddlFramingColour" runat="server" Text="Framing Colour" />
                                     <br />
                                     <asp:DropDownList ID="ddlInteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
