@@ -155,6 +155,9 @@
                     isValid = false;
             }
             else if (document.getElementById("MainContent_chkAutoFrontWallHeight").checked) {
+
+                var frontHeight;
+
                 document.getElementById("MainContent_chkAutoRoofSlope").checked = false;
                 document.getElementById("MainContent_chkAutoBackWallHeight").checked = false;
                 //we have back wall height and slope, calculate front wall height
@@ -172,13 +175,17 @@
                     m = document.getElementById("MainContent_txtRoofSlope").value;
                     //run = projection;
                     rise = ((run * m) / ((projection - soffitLength) / 12)).toFixed(2);
+                    
+                    frontHeight = document.getElementById("MainContent_txtFrontWallHeight").value = +(document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - +rise;
 
-                    document.getElementById("MainContent_txtFrontWallHeight").value = +document.getElementById("MainContent_txtBackWallHeight").value - rise;
+
                 }
                 else
                     isValid = false;
             }
             else if (document.getElementById("MainContent_chkAutoBackWallHeight").checked) {
+                var backHeight;
+
                 document.getElementById("MainContent_chkAutoFrontWallHeight").checked = false;
                 document.getElementById("MainContent_chkAutoRoofSlope").checked = false;
                 //we have front wall height and slope, calculate back wall height
@@ -197,7 +204,9 @@
                     //run = projection;
                     rise = ((run * m) / ((projection - soffitLength) / 12)).toFixed(2);
 
-                    document.getElementById("MainContent_txtBackWallHeight").value = +document.getElementById("MainContent_txtFrontWallHeight").value + +rise;
+                    backHeight = document.getElementById("MainContent_txtBackWallHeight").value = +(document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value) + +rise;
+
+
                 }
                 else
                     isValid = false;
