@@ -13,9 +13,10 @@ namespace SunspaceDealerDesktop
         private bool sunshade;
         private float fixedLocation;
         private string modType;
-        private float visibleSpace;
-        private float physicalSpace;
-        private float usableSpace;
+        private float visibleSpace; //The visible space of the mod on the wall
+        private float physicalSpace; //the actual physical width of the mod itself including extrusion
+        private float usableSpace; //The space within the mod where items can take up space
+        private string sex; //MM MF FM FF
         List<Object> modularItems = new List<Object>();
 
         #endregion
@@ -31,6 +32,7 @@ namespace SunspaceDealerDesktop
             VisibleSpace = 0f;
             PhysicalSpace = 0f;
             UsableSpace = 0f;
+            Sex = "";
         }
 
         #endregion
@@ -131,7 +133,17 @@ namespace SunspaceDealerDesktop
                 usableSpace = value;
             }
         }
-        
+        public string Sex
+        {
+            get
+            {
+                return sex;
+            }
+            set
+            {
+                sex = value;
+            }
+        }
         #endregion Accessors
     }
 }

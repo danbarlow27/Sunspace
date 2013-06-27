@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -9,6 +10,17 @@ namespace SunspaceDealerDesktop
 {
     public partial class NewProject : Page
     {
+        //colour lists
+        //NOTETOSELF change constants to have lists instead of arrays
+        protected static string[] model100FramingColours = Constants.MODEL_100_FRAMING_COLOURS;
+        public string model100FramingColoursJ = new JavaScriptSerializer().Serialize(model100FramingColours);
+        protected static string[] model200FramingColours = Constants.MODEL_200_FRAMING_COLOURS;
+        public string model200FramingColoursJ = new JavaScriptSerializer().Serialize(model200FramingColours);
+        protected static string[] model300FramingColours = Constants.MODEL_300_FRAMING_COLOURS;
+        public string model300FramingColoursJ = new JavaScriptSerializer().Serialize(model300FramingColours);
+        protected static string[] model400FramingColours = Constants.MODEL_400_FRAMING_COLOURS;
+        public string model400FramingColoursJ = new JavaScriptSerializer().Serialize(model400FramingColours);
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["loggedIn"] == null)
@@ -16,16 +28,35 @@ namespace SunspaceDealerDesktop
                 //uncomment me when login functionality is working
                 //Response.Redirect("Login.aspx");
                 Session.Add("loggedIn", "userA");
-            }
+            }           
+
+            //slide1
+            #region Slide 1 pageload
+            ddlExistingCustomer.Items.Add("Choose a Customer...");
 
             Customer aCustomer = new Customer();
-            ddlExistingCustomer.Items.Add("Choose a Customer...");
             aCustomer.FirstName = "Butt";
             aCustomer.LastName = "Hole";
+
             ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
 
-            ddlExistingCustomer.Items.Add("Previous Customer One");
-            ddlExistingCustomer.Items.Add("Previous Customer Two");
+            aCustomer = new Customer();
+            aCustomer.FirstName = "Ass";
+            aCustomer.LastName = "Man";
+
+            ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
+
+            aCustomer = new Customer();
+            aCustomer.FirstName = "Gay-ass";
+            aCustomer.LastName = "Tester";
+
+            ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
+            #endregion
+
+            //slide4
+            #region Slide 4 pageload
+            //ddlFramingColour.Items.Add("Test");
+            #endregion
         }
         
         protected void btnLayout_Click(object sender, EventArgs e)

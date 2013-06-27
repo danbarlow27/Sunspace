@@ -1,4 +1,4 @@
-﻿<%@Page Title="Custom Drawing Tool" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CustomDrawingTool.aspx.cs" Inherits="SunspaceDealerDesktop.CustomDrawingTool" %>
+﻿<%@Page Title="Custom Drawing Tool" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CustomDrawingTool.aspx.cs" Inherits="SunspaceDealerDesktop.CustomDrawingTool" EnableViewStateMac="false"%>
 <%--<asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
