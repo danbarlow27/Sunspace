@@ -62,6 +62,7 @@ namespace SunspaceDealerDesktop
             ddlInFracBackWall.Items.Add(lst34);
             ddlInFracBackWall.Items.Add(lst78);
             ddlInFracBackWall.ID = "ddlBackInchFractions";
+            ddlInFracBackWall.Attributes.Add("onchange", "checkQuestion2()");
             phBackHeights.Controls.Add(ddlInFracBackWall);
 
             ddlInFracFrontWall.Items.Add(lst0);
@@ -73,6 +74,7 @@ namespace SunspaceDealerDesktop
             ddlInFracFrontWall.Items.Add(lst34);
             ddlInFracFrontWall.Items.Add(lst78);
             ddlInFracFrontWall.ID = "ddlFrontInchFractions";
+            ddlInFracFrontWall.Attributes.Add("onchange", "checkQuestion2()");
             phFrontHeights.Controls.Add(ddlInFracFrontWall);
             #endregion
 
@@ -714,6 +716,7 @@ namespace SunspaceDealerDesktop
                 ddlInchFractions.Items.Add(lst58);
                 ddlInchFractions.Items.Add(lst34);
                 ddlInchFractions.Items.Add(lst78);
+                ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()");
 
                 ddlLeftInchFractions.Items.Add(lst0);
                 ddlLeftInchFractions.Items.Add(lst18);
@@ -723,6 +726,7 @@ namespace SunspaceDealerDesktop
                 ddlLeftInchFractions.Items.Add(lst58);
                 ddlLeftInchFractions.Items.Add(lst34);
                 ddlLeftInchFractions.Items.Add(lst78);
+                ddlLeftInchFractions.Attributes.Add("onchange", "checkQuestion1()");
 
                 ddlRightInchFractions.Items.Add(lst0);
                 ddlRightInchFractions.Items.Add(lst18);
@@ -732,6 +736,7 @@ namespace SunspaceDealerDesktop
                 ddlRightInchFractions.Items.Add(lst58);
                 ddlRightInchFractions.Items.Add(lst34);
                 ddlRightInchFractions.Items.Add(lst78);
+                ddlRightInchFractions.Attributes.Add("onchange", "checkQuestion1()");
 
                 ddlInchFractions.ID = "ddlWall" + i + "InchFractions";
                 ddlLeftInchFractions.ID = "ddlWall" + i + "LeftInchFractions";
