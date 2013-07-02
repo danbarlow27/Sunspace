@@ -112,6 +112,7 @@
                 - (document.getElementById("MainContent_txtFrontWallHeight").value //textbox value
                 + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value)); //dropdown listitem value
 
+            alert(rise);
 
             return (((rise * run) / (projection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
 
