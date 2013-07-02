@@ -1,4 +1,4 @@
-﻿<%@ Page Title="New Project - Project Details" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NewProject.aspx.cs" Inherits="SunspaceDealerDesktop.NewProject" %>
+﻿<%@ Page Title="New Project - Project Details" EnableEventValidation="false" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NewProject.aspx.cs" Inherits="SunspaceDealerDesktop.NewProject" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script src="Scripts/Validation.js"></script>
@@ -840,7 +840,7 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectChangeColours()" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblFramingColour" AssociatedControlID="ddlFramingColour" runat="server" Text="Framing Colour" />
                                     <br />
                                     <asp:DropDownList ID="ddlInteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
