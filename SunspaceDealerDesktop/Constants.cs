@@ -29,11 +29,14 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_400_FRAMING_COLOURS = { "White", "Driftwood" };
         public static string[] MODEL_400_WINDOW_COLOURS = { "White", "Driftwood" };
 
-        public static string[] EXTERIOR_SKIN_TYPES = { "White Aluminum Stucco", "Driftwood Aluminum Stucco", "Bronze Aluminum Stucco",
+        public static string[] INTERIOR_WALL_COLOURS = { "White", "Driftwood", "Bronze" };
+        public static string[] EXTERIOR_WALL_COLOURS = { "White", "Driftwood", "Bronze" };
+
+        public static string[] EXTERIOR_WALL_SKIN_TYPES = { "White Aluminum Stucco", "Driftwood Aluminum Stucco", "Bronze Aluminum Stucco",
                                                "White Cedar Aluminum Woodgrain", "White Cedar Forestex", "White Rigiwall Pebble",
                                                "Driftwood Rigiwall Pebble", "White Rigiwall Stucco", "Driftwood Rigiwall Stucco"};
 
-        public static string[] INTEROR_SKIN_TYPES = { "White Aluminum Stucco", "Driftwood Aluminum Stucco", "Bronze Aluminum Stucco",
+        public static string[] INTERIOR_WALL_SKIN_TYPES = { "White Aluminum Stucco", "Driftwood Aluminum Stucco", "Bronze Aluminum Stucco",
                                                "White Cedar Aluminum Woodgrain", "White Cedar Forestex", "White Rigiwall Pebble",
                                                "Driftwood Rigiwall Pebble", "White Rigiwall Stucco", "Driftwood Rigiwall Stucco",
                                                "White FRP (Interior Only)", "Driftwood (Interior Only)", "Bronze (Interior Only)"};

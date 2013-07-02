@@ -205,7 +205,7 @@
                 document.getElementById("MainContent_ddlExteriorColour").value != "" &&
                 document.getElementById("MainContent_ddlExteriorSkin").value != "") {
 
-                document.getElementById("MainContent_hidFramingColour").value = document.getElementById("MainContent_FramingColour").value;
+                document.getElementById("MainContent_hidFramingColour").value = document.getElementById("MainContent_ddlFramingColour").value;
                 document.getElementById("MainContent_hidInteriorColour").value = document.getElementById("MainContent_ddlInteriorColour").value;
                 document.getElementById("MainContent_hidInteriorSkin").value = document.getElementById("MainContent_ddlInteriorSkin").value;
                 document.getElementById("MainContent_hidExteriorColour").value = document.getElementById("MainContent_ddlExteriorColour").value;
@@ -402,6 +402,8 @@
             switch (modelNumber.value) {
                 case '100':
                     var anArray =  <%= model100FramingColoursJ %>;
+                    var blankOption = new Option("Choose a colour...", "Choose a colour...");
+                    ddlFramingColour.options.add(blankOption);
 
                     for (var i=0;i<anArray.length;i++)
                     {
@@ -444,6 +446,35 @@
              document.getElementById("MainContent_ddlExteriorColour").value != "" &&
              document.getElementById("MainContent_ddlExteriorSkin").value != ""*/
             return true;
+        }
+
+        function newProjectCascadeColours() {
+            console.log("Cascading Colours");
+            ddlFramingColour = document.getElementById("<%= ddlFramingColour.ClientID %>");
+            
+            if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "White")
+            {
+                $("#MainContent_ddlInteriorColour").val('White');
+                $("#MainContent_ddlInteriorSkin").val('White Aluminum Stucco');
+                $("#MainContent_ddlExteriorColour").val('White');
+                $("#MainContent_ddlExteriorSkin").val('White Aluminum Stucco');
+            }
+            else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Driftwood")
+            {
+                $("#MainContent_ddlInteriorColour").val('Driftwood');
+                $("#MainContent_ddlInteriorSkin").val('Driftwood Aluminum Stucco');
+                $("#MainContent_ddlExteriorColour").val('Driftwood');
+                $("#MainContent_ddlExteriorSkin").val('Driftwood Aluminum Stucco');
+            }
+            else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Bronze")
+            {
+                $("#MainContent_ddlInteriorColour").val('Bronze');
+                $("#MainContent_ddlInteriorSkin").val('Bronze Aluminum Stucco');
+                $("#MainContent_ddlExteriorColour").val('Bronze');
+                $("#MainContent_ddlExteriorSkin").val('Bronze Aluminum Stucco');
+            }
+
+            newProjectCheckQuestion4();
         }
     </script>
 
@@ -840,7 +871,7 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectCascadeColours()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblFramingColour" AssociatedControlID="ddlFramingColour" runat="server" Text="Framing Colour" />
                                     <br />
                                     <asp:DropDownList ID="ddlInteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
