@@ -18,7 +18,7 @@
         var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
         var DOOR_FRENCH_MIN_WIDTH = '<%= DOOR_FRENCH_MIN_WIDTH %>';
         var DOOR_FRENCH_MAX_WIDTH = '<%= DOOR_FRENCH_MAX_WIDTH %>';
-        var projection = 10; //hard coded for testing
+        var projection = 120; //hard coded for testing
         var soffitLength = 0; //hard coded for testing
 
         function calculateSetBack(index) {
@@ -270,7 +270,7 @@
 
                     m = document.getElementById("MainContent_txtRoofSlope").value;
                     //run = projection;
-                    rise = ((run * m) / ((projection - soffitLength) / 12)).toFixed(2);
+                    rise = (((projection - soffitLength) * m) / run).toFixed(2);
 
                     backHeight = +(document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value) + +rise;
 
