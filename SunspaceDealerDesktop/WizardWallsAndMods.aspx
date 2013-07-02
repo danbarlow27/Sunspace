@@ -332,6 +332,24 @@
                 "min": minQuantityOfDoors
             }
         }
+
+        function onClickAddDoor(currentDoor) {
+            var $doorDetails = $('#doorDetails');
+            var $doorDetailsList = $('#doorDetailsList');
+            var tblDoor = document.getElementById("MainContent_tblDoorDetails" + currentDoor);
+
+            alert($doorDetailsList.size());
+
+            if (tblDoor.style.display === "block") {
+                var newClonedLi = $doorDetails.find('li:first').clone(true);
+                newClonedLi.appendTo($doorDetails.find('ul'));
+            }
+            else {
+                alert("Is this working?");
+                tblDoor.style.display = "block";                
+            }
+
+        }
     </script>
     <%-- End hidden div populating scripts --%>
 
@@ -457,36 +475,22 @@
             </div> 
             <%-- end #slide2 --%>
 
-             <%-- QUESTION 3 - HOW MANY DOORS PER WALL
+             <%-- QUESTION 3 - DOOR OPTIONS/DETAILS
             ======================================== --%>
 
             <div id="slide3" class="slide">
                 <h1>
-                    <asp:Label ID="lblQuestion3" runat="server" Text="Would you like a door on your sunroom?"></asp:Label>
-                </h1>        
-                <div class="tblWallLengths">
-                    <asp:Table ID="tblDoorQuantity" style="padding-right:15%; padding-left:15%; padding-top:5%;" runat="server" ></asp:Table>
-                </div>          
-
-                <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
-
-            </div>
-            <%-- end #slide3 --%>
-
-            <%-- QUESTION 4 - DOOR DETAILS
-            ======================================== --%>
-            <div id="slide4" class="slide">
-                <h1>
-                    <asp:Label ID="lblQuestion4" runat="server" Text="Door Details"></asp:Label>
+                    <asp:Label ID="lblDoorDetails" runat="server" Text="Door Details"></asp:Label>
                 </h1>        
                               
                 <ul class="toggleOptions">
                     <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion4"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" />
 
             </div>
+            <%-- end #slide3 --%>
         </div> <%-- end .slide-wrapper --%>
 
     </div> 

@@ -238,40 +238,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
-        /// lblQuestion3 control.
+        /// lblDoorDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblQuestion3;
-        
-        /// <summary>
-        /// tblDoorQuantity control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Table tblDoorQuantity;
-        
-        /// <summary>
-        /// btnQuestion3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnQuestion3;
-        
-        /// <summary>
-        /// lblQuestion4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblQuestion4;
+        protected global::System.Web.UI.WebControls.Label lblDoorDetails;
         
         /// <summary>
         /// wallDoorOptions control.
@@ -283,13 +256,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.PlaceHolder wallDoorOptions;
         
         /// <summary>
-        /// btnQuestion4 control.
+        /// btnQuestion3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnQuestion4;
+        protected global::System.Web.UI.WebControls.Button btnQuestion3;
         
         /// <summary>
         /// lblWallLengthsSlidePanel control.
