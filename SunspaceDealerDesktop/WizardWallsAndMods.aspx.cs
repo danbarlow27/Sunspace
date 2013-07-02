@@ -472,7 +472,7 @@ namespace SunspaceDealerDesktop
 
             DropDownList doorScreenOptionsDDL = new DropDownList();
             doorScreenOptionsDDL.ID = "ddlDoorScreenOptions";
-            ListItem betterVueInsect = new ListItem("Better Vue Insect Screen - Default", "betterVueInsectScreen");
+            ListItem betterVueInsect = new ListItem("Better Vue Insect Screen (Default)", "betterVueInsectScreen");
             ListItem noSeeUms = new ListItem("No See Ums 20x20 Mesh", "noSeeUms");
             ListItem solarInsectScreening = new ListItem("Solar Insect Screening", "solarInsectScreening");
             ListItem tuffScreen = new ListItem("Tuff Screen", "tuffScreen");
@@ -482,6 +482,27 @@ namespace SunspaceDealerDesktop
             doorScreenOptionsDDL.Items.Add(solarInsectScreening);
             doorScreenOptionsDDL.Items.Add(tuffScreen);
             doorScreenOptionsDDL.Items.Add(noScreen);
+
+            #endregion
+
+            #region Table:Fifteenth Row Door Hardware (tblDoorDetails)
+
+            TableRow doorHardwareRow = new TableRow();
+            TableCell doorHardwareLBLCell = new TableCell();
+            TableCell doorHardwareDDLCell = new TableCell();
+
+            Label doorHardwareLBL = new Label();
+            doorHardwareLBL.ID = "lblDoorHardware";
+            doorHardwareLBL.Text = "Door Hardware";
+
+            DropDownList doorHardwareDDL = new DropDownList();
+            doorHardwareDDL.ID = "ddlDoorHardware";
+            ListItem satinSilver = new ListItem("Satin Silver", "satinSilver");
+            ListItem brightBrass = new ListItem("Bright Brass", "brightBrass");
+            ListItem antiqueBrass = new ListItem("Antique Brass", "antiqueBrass");
+            doorHardwareDDL.Items.Add(satinSilver);
+            doorHardwareDDL.Items.Add(brightBrass);
+            doorHardwareDDL.Items.Add(antiqueBrass);
 
             #endregion
 
@@ -631,7 +652,7 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
-            #region Table:Tenth Row Door Hinge LHH (tblDoorDetails)
+            #region Table:Tenth Row Door Hinge LHH Added To Table (tblDoorDetails)
 
             doorLHHLBLCell.Controls.Add(doorLHHLBLMain);
 
@@ -646,7 +667,7 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
-            #region Table:Eleventh Row Door Hinge RHH (tblDoorDetails)
+            #region Table:Eleventh Row Door Hinge RHH Added To Table (tblDoorDetails)
 
             doorRHHRADCell.Controls.Add(doorRHHRad);
             doorRHHRADCell.Controls.Add(doorRHHLBLRad);
@@ -659,7 +680,7 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
-            #region Table:Twelfth Row Door Number Of Vents (tblDoorDetails)
+            #region Table:Twelfth Row Door Number Of Vents Added To Table (tblDoorDetails)
 
             doorNumberOfVentsLBLCell.Controls.Add(doorNumberOfVentsLBL);
             doorNumberOfVentsDDLCell.Controls.Add(doorNumberOfVentsDDL);
@@ -671,7 +692,7 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
-            #region Table:Thirteenth Row Door Glass Tint (tblDoorDetails)
+            #region Table:Thirteenth Row Door Glass Tint Added To Table (tblDoorDetails)
 
             doorGlassTintLBLCell.Controls.Add(doorGlassTintLBL);
             doorGlassTintDDLCell.Controls.Add(doorGlassTintDDL);
@@ -683,7 +704,7 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
-            #region Table:Fourteenth Row Door Screen Options (tblDoorDetails)
+            #region Table:Fourteenth Row Door Screen Options Added To Table (tblDoorDetails)
 
             doorScreenOptionsLBLCell.Controls.Add(doorScreenOptionsLBL);
             doorScreenOptionsDDLCell.Controls.Add(doorScreenOptionsDDL);
@@ -692,6 +713,18 @@ namespace SunspaceDealerDesktop
 
             doorScreenOptionsRow.Cells.Add(doorScreenOptionsLBLCell);
             doorScreenOptionsRow.Cells.Add(doorScreenOptionsDDLCell);
+
+            #endregion
+
+            #region Table:Fifteenth Row Door Hardware Added To Table (tblDoorDetails)
+
+            doorHardwareLBLCell.Controls.Add(doorHardwareLBL);
+            doorHardwareDDLCell.Controls.Add(doorHardwareDDL);
+
+            tblDoorDetails.Rows.Add(doorHardwareRow);
+
+            doorHardwareRow.Cells.Add(doorHardwareLBLCell);
+            doorHardwareRow.Cells.Add(doorHardwareDDLCell);
 
             #endregion
 
