@@ -139,6 +139,24 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblSunroom200;
         
         /// <summary>
+        /// lbl200Input control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl200Input;
+        
+        /// <summary>
+        /// txt200Input control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt200Input;
+        
+        /// <summary>
         /// radSunroom300 control.
         /// </summary>
         /// <remarks>
@@ -164,6 +182,24 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSunroom300;
+        
+        /// <summary>
+        /// lbl300Input control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl300Input;
+        
+        /// <summary>
+        /// txt300Input control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt300Input;
         
         /// <summary>
         /// radSunroom400 control.
@@ -193,264 +229,183 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblSunroom400;
         
         /// <summary>
-        /// radWallsPref control.
+        /// lbl400Input control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radWallsPref;
+        protected global::System.Web.UI.WebControls.Label lbl400Input;
         
         /// <summary>
-        /// lblWallsPrefRadio control.
+        /// txt400Input control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWallsPrefRadio;
+        protected global::System.Web.UI.WebControls.TextBox txt400Input;
         
         /// <summary>
-        /// lblWallsPref control.
+        /// radCompanyDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWallsPref;
+        protected global::System.Web.UI.WebControls.RadioButton radCompanyDetails;
         
         /// <summary>
-        /// radWalls100 control.
+        /// lblCompanyDetailsRadio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radWalls100;
+        protected global::System.Web.UI.WebControls.Label lblCompanyDetailsRadio;
         
         /// <summary>
-        /// lblWalls100Radio control.
+        /// lblCompanyDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWalls100Radio;
+        protected global::System.Web.UI.WebControls.Label lblCompanyDetails;
         
         /// <summary>
-        /// lblWalls100 control.
+        /// lblCompanyNameInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWalls100;
+        protected global::System.Web.UI.WebControls.Label lblCompanyNameInput;
         
         /// <summary>
-        /// lblWalls100Input control.
+        /// txtCompanyNameInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWalls100Input;
+        protected global::System.Web.UI.WebControls.TextBox txtCompanyNameInput;
         
         /// <summary>
-        /// txtWalls100Input control.
+        /// radPriceCalc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtWalls100Input;
+        protected global::System.Web.UI.WebControls.RadioButton radPriceCalc;
         
         /// <summary>
-        /// radWalls200 control.
+        /// lblPriceCalcRadio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radWalls200;
+        protected global::System.Web.UI.WebControls.Label lblPriceCalcRadio;
         
         /// <summary>
-        /// lblWalls200Radio control.
+        /// lblPriceCalc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWalls200Radio;
+        protected global::System.Web.UI.WebControls.Label lblPriceCalc;
         
         /// <summary>
-        /// lblWalls200 control.
+        /// radShippingAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWalls200;
+        protected global::System.Web.UI.WebControls.RadioButton radShippingAddress;
         
         /// <summary>
-        /// radWalls300 control.
+        /// lblShippingAddressRadio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radWalls300;
+        protected global::System.Web.UI.WebControls.Label lblShippingAddressRadio;
         
         /// <summary>
-        /// lblWalls300Radio control.
+        /// lblShippingAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWalls300Radio;
+        protected global::System.Web.UI.WebControls.Label lblShippingAddress;
         
         /// <summary>
-        /// lblWalls300 control.
+        /// radBillingAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWalls300;
+        protected global::System.Web.UI.WebControls.RadioButton radBillingAddress;
         
         /// <summary>
-        /// radWalls400 control.
+        /// lblBillingAddressRadio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radWalls400;
+        protected global::System.Web.UI.WebControls.Label lblBillingAddressRadio;
         
         /// <summary>
-        /// lblWalls400Radio control.
+        /// lblBillingAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWalls400Radio;
+        protected global::System.Web.UI.WebControls.Label lblBillingAddress;
         
         /// <summary>
-        /// lblWalls400 control.
+        /// radInvoiceData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWalls400;
+        protected global::System.Web.UI.WebControls.RadioButton radInvoiceData;
         
         /// <summary>
-        /// radWindows control.
+        /// lblInvoiceDataRadio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radWindows;
+        protected global::System.Web.UI.WebControls.Label lblInvoiceDataRadio;
         
         /// <summary>
-        /// lblWindowsRadio control.
+        /// lblInvoiceData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWindowsRadio;
+        protected global::System.Web.UI.WebControls.Label lblInvoiceData;
         
         /// <summary>
-        /// lblWindows control.
+        /// btnUpdate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWindows;
-        
-        /// <summary>
-        /// radDoors control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radDoors;
-        
-        /// <summary>
-        /// lblDoorsRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorsRadio;
-        
-        /// <summary>
-        /// lblDoors control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoors;
-        
-        /// <summary>
-        /// radFloor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radFloor;
-        
-        /// <summary>
-        /// lblFloorRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFloorRadio;
-        
-        /// <summary>
-        /// lblFloor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFloor;
-        
-        /// <summary>
-        /// radRoof control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radRoof;
-        
-        /// <summary>
-        /// lblRoofRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRoofRadio;
-        
-        /// <summary>
-        /// lblRoof control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRoof;
+        protected global::System.Web.UI.WebControls.Button btnUpdate;
     }
 }
