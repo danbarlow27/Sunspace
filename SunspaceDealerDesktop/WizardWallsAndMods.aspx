@@ -71,13 +71,12 @@
 
         //validate decimal to eighth of an inch 
         function validateDecimal(number) {
-            number += '';
-            var validNumber = number;
-            //if(number.contains(".")) {
+            var givenDecimal;
+            number += ''; //covert to string
             var decimal = number.split(".");
             decimal[1] = "0." + decimal[1];
 
-            alert(decimal[1]);
+            givenDecimal = decimal[1];
 
             var ONE_EIGHTH = 0.125;
             var TWO_EIGHTH = 0.25;
@@ -87,50 +86,44 @@
             var SIX_EIGHTH = 0.75;
             var SEVEN_EIGHTH = 0.875;
             
-            //switch (decimal[1]) {
-            //    case decimal[1] > SEVEN_EIGHTH:
-            //        decimal[1] = SEVEN_EIGHTH;
-            //        break;
-            //    case decimal[1] > SIX_EIGHTH:
-            //        decimal[1] = SIX_EIGHTH;
-            //        break;
-            //    case decimal[1] > FIVE_EIGHTH:
-            //        decimal[1] = FIVE_EIGHTH;
-            //        break;
-            //    case decimal[1] > FOUR_EIGHTH:
-            //        decimal[1] = FOUR_EIGHTH;
-            //        break;
-            //    case decimal[1] > THREE_EIGHTH:
-            //        decimal[1] = THREE_EIGHTH;
-            //        break;
-            //    case decimal[1] > TWO_EIGHTH:
-            //        decimal[1] = TWO_EIGHTH;
-            //        break;
-            //    case decimal[1] > ONE_EIGHTH:
-            //        decimal[1] = ONE_EIGHTH;
-            //        break;
-            //    case decimal[1]> 0:
-            //        decimal[1] = 0;
-            //        break;
+            decimal[1] = (decimal[1] >= SEVEN_EIGHTH) ? SEVEN_EIGHTH :
+                (decimal[1] >= SIX_EIGHTH) ? SIX_EIGHTH :
+                (decimal[1] >= FIVE_EIGHTH) ? FIVE_EIGHTH :
+                (decimal[1] >= FOUR_EIGHTH) ? FOUR_EIGHTH :
+                (decimal[1] >= THREE_EIGHTH) ? THREE_EIGHTH :
+                (decimal[1] >= TWO_EIGHTH) ? TWO_EIGHTH :
+                (decimal[1] >= ONE_EIGHTH) ? ONE_EIGHTH : 0;
+
+            //if (decimal[1] != givenDecimal) {
+            //    //checkQuestion2();
+            //    //var m = calculateSlope();
+            //    document.getElementById("MainContent_txtRoofSlope").value = calculateSlope();
             //}
+            return decimal;
+        }
+
+        function calculateSlope() {
+            //var m;    //m = ((rise * run)/(projection - soffitLength)) slope over 12
+            var rise; //m = ((rise * run)/(projection - soffitLength)) slope over 12
+            var run = 12;  // m = ((rise * run)/(projection - soffitLength)) slope over 12
+
+            rise = ((document.getElementById("MainContent_txtBackWallHeight").value //textbox value
+                + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) //dropdown listitem value
+                - (document.getElementById("MainContent_txtFrontWallHeight").value //textbox value
+                + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value)); //dropdown listitem value
 
 
+            return (((rise * run) / (projection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
 
-            decimal[1] = (decimal[1] > SEVEN_EIGHTH) ? SEVEN_EIGHTH :
-                (decimal[1] > SIX_EIGHTH) ? SIX_EIGHTH :
-                (decimal[1] > FIVE_EIGHTH) ? FIVE_EIGHTH :
-                (decimal[1] > FOUR_EIGHTH) ? FOUR_EIGHTH :
-                (decimal[1] > THREE_EIGHTH) ? THREE_EIGHTH :
-                (decimal[1] > TWO_EIGHTH) ? TWO_EIGHTH :
-                (decimal[1] > ONE_EIGHTH) ? ONE_EIGHTH : 0;
+        }
+        function calculateRise() {
+            var m;    //m = ((rise * run)/(projection - soffitLength)) slope over 12
+            //var rise; //m = ((rise * run)/(projection - soffitLength)) slope over 12
+            var run = 12;  // m = ((rise * run)/(projection - soffitLength)) slope over 12
 
+            m = document.getElementById("MainContent_txtRoofSlope").value;
 
-
-            //alert(decimal[1] < ONE_EIGHTH);
-            alert(decimal[1]);
-            validNumber = +decimal[0] + +decimal[1];
-            //}
-            return validNumber;
+            return ((((projection - soffitLength) * m) / run).toFixed(2));
         }
 
         function checkQuestion1() {
@@ -196,9 +189,9 @@
 
             var isValid = true;
             var answer = "";
-            var m;    //m = (rise((projection-soffitLength)/12)) slope over 12
-            var rise; //m = (rise((projection-soffitLength)/12)) slope over 12
-            var run = 12;  // m = (rise((projection-soffitLength)/12)) slope over 12
+            //var m;    //m = ((rise * run)/(projection - soffitLength)) slope over 12
+            //var rise; //m = ((rise * run)/(projection - soffitLength)) slope over 12
+            //var run = 12;  // m = ((rise * run)/(projection - soffitLength)) slope over 12
 
             if (document.getElementById("MainContent_chkAutoRoofSlope").checked) {
                 document.getElementById("MainContent_chkAutoBackWallHeight").checked = false;
@@ -206,77 +199,90 @@
                 //we have front wall height and back wall height, calculate slope
                 if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
                     && document.getElementById("MainContent_txtBackWallHeight").value > 0
-                    //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
                     && !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
                     && document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
-                    //&& document.getElementById("MainContent_txtFrontWallHeight").value != ""
-                    //|| isNaN(document.getElementById("MainContent_txtRoofSlope").value)
-                    //|| document.getElementById("MainContent_txtRoofSlope").value <= 0)
-
-                    //alert("yello");
-                    isValid = true;
-                    //run = run / 12; //to get slope over 12 inches
-                    rise = ((document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - (document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value));
-                    rise = rise * ((projection - soffitLength) / 12); //to get slope over 12
                     
-                    document.getElementById("MainContent_txtRoofSlope").value = m = (rise / run).toFixed(2); //round m to 2 decimal places
+                    isValid = true;
+                    //rise = ((document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - (document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value));
+                    
+                    m = calculateSlope();
+
+                    document.getElementById("MainContent_txtRoofSlope").value = m;
                 }
                 else
                     isValid = false;
             }
             else if (document.getElementById("MainContent_chkAutoFrontWallHeight").checked) {
-
-                var frontHeight;
-
                 document.getElementById("MainContent_chkAutoRoofSlope").checked = false;
                 document.getElementById("MainContent_chkAutoBackWallHeight").checked = false;
                 //we have back wall height and slope, calculate front wall height
                 if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
                     && document.getElementById("MainContent_txtBackWallHeight").value > 0
-                    //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
-                    //|| !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
-                    //|| document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
                     && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
                     && document.getElementById("MainContent_txtRoofSlope").value > 0) {
-                    //&& document.getElementById("MainContent_txtRoofSlope").value != ""
+
+                    var frontHeight;
+                    var newFrontHeight;
 
                     isValid = true;
 
-                    m = document.getElementById("MainContent_txtRoofSlope").value;
-                    //run = projection;
-                    rise = (((projection - soffitLength) * m) / run).toFixed(2);
+                    //m = document.getElementById("MainContent_txtRoofSlope").value;
+                    
+                    rise = calculateRise();
                     
                     frontHeight = +(document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - +rise;
 
-                    document.getElementById("MainContent_txtFrontWallHeight").value = frontHeight = validateDecimal(frontHeight);
+                    newFrontHeight = validateDecimal(frontHeight);
+
+                    if (frontHeight != (+newFrontHeight[0] + +newFrontHeight[1]))
+                        document.getElementById("MainContent_txtRoofSlope").value = calculateSlope();
+
+                    document.getElementById("MainContent_txtFrontWallHeight").value = newFrontHeight[0];
+
+                    for (var i = 0; i < document.getElementById("MainContent_ddlFrontInchFractions").length - 1 ; i++) {
+                        if ((newFrontHeight[1] += '') === ("0" + document.getElementById("MainContent_ddlFrontInchFractions").options[i].value))
+                            document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex = i;
+                    }
+
                 }
                 else
                     isValid = false;
             }
             else if (document.getElementById("MainContent_chkAutoBackWallHeight").checked) {
-                var backHeight;
-
                 document.getElementById("MainContent_chkAutoFrontWallHeight").checked = false;
                 document.getElementById("MainContent_chkAutoRoofSlope").checked = false;
                 //we have front wall height and slope, calculate back wall height
                 if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
                     && document.getElementById("MainContent_txtFrontWallHeight").value > 0
-                    //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
-                    //|| !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
-                    //|| document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
                     && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
                     && document.getElementById("MainContent_txtRoofSlope").value > 0) {
-                    //&& document.getElementById("MainContent_txtRoofSlope").value != ""
+
+                    var backHeight;
+                    var newBackHeight;
 
                     isValid = true;
 
-                    m = document.getElementById("MainContent_txtRoofSlope").value;
+                    //m = document.getElementById("MainContent_txtRoofSlope").value;
 
-                    rise = (((projection - soffitLength) * m) / run).toFixed(2);
+                    rise = calculateRise();
 
                     backHeight = +(document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value) + +rise;
 
-                    document.getElementById("MainContent_txtBackWallHeight").value = backHeight = validateDecimal(backHeight);
+                    newBackHeight = validateDecimal(backHeight);
+
+                    //alert("back: " + backHeight + " ... newback: " + (+newBackHeight[0] + +newBackHeight[1]));
+
+                    if (backHeight != (+newBackHeight[0] + +newBackHeight[1])) 
+                        document.getElementById("MainContent_txtRoofSlope").value = calculateSlope();
+                    
+
+
+                    document.getElementById("MainContent_txtBackWallHeight").value = newBackHeight[0];
+
+                    for (var i = 0; i < document.getElementById("MainContent_ddlBackInchFractions").length - 1 ; i++) {
+                        if ((newBackHeight[1] += '') === ("0" + document.getElementById("MainContent_ddlBacktInchFractions").options[i].value))
+                            document.getElementById("MainContent_ddlBackInchFractions").selectedIndex = i;
+                    }
                 }
                 else
                     isValid = false;
