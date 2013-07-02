@@ -5,6 +5,7 @@
     <%-- Hidden div populating scripts 
     =================================== --%>
     <script>
+
         var detailsOfAllLines = '<%= (string)Session["coordList"] %>'; //all the coordinates and details of all the lines
         var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/"); //a list of individual lines and their coordinates and details 
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
@@ -70,35 +71,48 @@
 
         //validate decimal to eighth of an inch 
         function validateDecimal(number) {
-            var oneEighth;
-            var twoEighth;
-            var threeEighth;
-            var fourEighth;
-            var fiveEighth;
-            var sixEighth;
-            var sevenEighth;
-            var wholeNumber;
 
+            var validNumber = number;
+            //if(number.contains(".")) {
+            var decimal = number.split(".");
+            decimal[1] = "0." + decimal[1];
+            var ONE_EIGHTH = 0.125;
+            var TWO_EIGHTH = 0.25;
+            var THREE_EIGHTH = 0.375;
+            var FOUR_EIGHTH = 0.5;
+            var FIVE_EIGHTH = 0.625;
+            var SIX_EIGHTH = 0.75;
+            var SEVEN_EIGHTH = 0.875;
+            
             switch (number) {
-                //case number >:
-                //    break;
-                case "25":
+                case +decimal[1] > SEVEN_EIGHTH:
+                    decimal[1] = SEVEN_EIGHTH;
                     break;
-                case "375":
+                case +decimal[1]> SIX_EIGHTH:
+                    decimal[1] = SIX_EIGHTH;
                     break;
-                case "5":
+                case +decimal[1]> FIVE_EIGHTH:
+                    decimal[1] = FIVE_EIGHTH;
                     break;
-                case "625":
+                case +decimal[1]> FOUR_EIGHTH:
+                    decimal[1] = FOUR_EIGHTH;
                     break;
-                case "75":
+                case +decimal[1]> THREE_EIGHTH:
+                    decimal[1] = THREE_EIGHTH;
                     break;
-                case "875":
+                case +decimal[1]> TWO_EIGHTH:
+                    decimal[1] = TWO_EIGHTH;
                     break;
-                default:
+                case +decimal[1]> ONE_EIGHTH:
+                    decimal[1] = ONE_EIGHTH;
+                    break;
+                case +decimal[1]> 0:
+                    decimal[1] = 0;
                     break;
             }
-
-            return number;
+            validNumber = +decimal[0] + +decimal[1];
+            //}
+            return validNumber;
         }
 
         function checkQuestion1() {
@@ -214,9 +228,9 @@
                     //run = projection;
                     rise = ((run * m) / ((projection - soffitLength) / 12)).toFixed(2);
                     
-                    frontHeight = document.getElementById("MainContent_txtFrontWallHeight").value = +(document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - +rise;
+                    frontHeight = +(document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - +rise;
 
-                    frontHeight = validateDecimal(frontHeight);
+                    document.getElementById("MainContent_txtFrontWallHeight").value = frontHeight = validateDecimal(frontHeight);
                 }
                 else
                     isValid = false;
@@ -242,9 +256,9 @@
                     //run = projection;
                     rise = ((run * m) / ((projection - soffitLength) / 12)).toFixed(2);
 
-                    backHeight = document.getElementById("MainContent_txtBackWallHeight").value = +(document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value) + +rise;
+                    backHeight = +(document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value) + +rise;
 
-                    backHeight = validateDecimal(backHeight);
+                    document.getElementById("MainContent_txtBackWallHeight").value = backHeight = validateDecimal(backHeight);
                 }
                 else
                     isValid = false;
@@ -264,8 +278,6 @@
                 else
                     isValid = true;
             }
-
-
 
             if (isValid) {
                 document.getElementById("MainContent_hidBackWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value;
