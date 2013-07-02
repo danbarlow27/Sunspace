@@ -345,23 +345,23 @@
             }
         }
 
-        function onClickAddDoor(currentDoor) {
-            var $doorDetails = $('#doorDetails');
-            var $doorDetailsList = $('#doorDetailsList');
-            var tblDoor = document.getElementById("MainContent_tblDoorDetails" + currentDoor);
+        //function onClickAddDoor(currentDoor) {
+        //    var $doorDetails = $('#doorDetails');
+        //    var $doorDetailsList = $('#doorDetailsList');
+        //    var tblDoor = document.getElementById("MainContent_tblDoorDetails" + currentDoor);
 
-            alert($doorDetailsList.size());
+        //    alert($doorDetailsList.size());
 
-            if (tblDoor.style.display === "block") {
-                var newClonedLi = $doorDetails.find('li:first').clone(true);
-                newClonedLi.appendTo($doorDetails.find('ul'));
-            }
-            else {
-                alert("Is this working?");
-                tblDoor.style.display = "block";                
-            }
+        //    if (tblDoor.style.display === "block") {
+        //        var newClonedLi = $doorDetails.find('li:first').clone(true);
+        //        newClonedLi.appendTo($doorDetails.find('ul'));
+        //    }
+        //    else {
+        //        alert("Is this working?");
+        //        tblDoor.style.display = "block";                
+        //    }
 
-        }
+        //}
     </script>
     <%-- End hidden div populating scripts --%>
 

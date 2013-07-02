@@ -104,33 +104,19 @@ namespace SunspaceDealerDesktop
 
             wallDoorOptions.Controls.Add(new LiteralControl("<div id='doorDetails' class='toggleContent'>"));
 
-            wallDoorOptions.Controls.Add(new LiteralControl("<button type='button' class='btnSubmit' onclick='onClickAddDoor(" + currentWall + ")'>Add Door To This Wall:</button>"));
+            //wallDoorOptions.Controls.Add(new LiteralControl("<button type='button' class='btnSubmit' onclick='onClickAddDoor(" + currentWall + ")'>Add Door To This Wall:</button>"));
 
-            wallDoorOptions.Controls.Add(new LiteralControl("<ul id='doorDetailsList'><li>"));
+            wallDoorOptions.Controls.Add(new LiteralControl("<ul id='doorDetailsList' class='toggleOptions'>"));
 
             Table tblDoorDetails = new Table();
-
-            tblDoorDetails.ID = "tblDoorDetails" + currentWall;
+            
             tblDoorDetails.CssClass = "tblTextFields";
             tblDoorDetails.Attributes.Add("runat", "server");
-            tblDoorDetails.Attributes.Add("style", "display:none;");
-            //tblDoorDetails.Attributes.Add("hidden", "hidden");
+            //tblDoorDetails.Attributes.Add("style", "display:none;");
 
             #endregion
 
             //Creating cells and controls for rows
-
-            #region Table:Default Row Add Door (tblDoorDetails)
-
-            /*TableRow addDoorRow = new TableRow();
-            TableCell addDoorBTNCell = new TableCell();
-
-            Button addDoorButton = new Button();
-            addDoorButton.ID = "btnAddDoor";
-            addDoorButton.Text = "Add Door To This Wall";
-            addDoorButton.CssClass = "btnSubmit";*/
-
-            #endregion
 
             #region Table:Default Row Title Current Door (tblDoorDetails)
 
@@ -554,6 +540,11 @@ namespace SunspaceDealerDesktop
             ListItem darkGreyVinyl = new ListItem("Dark Grey", "darkGrey");
             ListItem bronzeVinyl = new ListItem("Bronze", "bronze");
             ListItem mixedVinyl = new ListItem("Mixed", "mixed");
+            doorVinylTintDDL.Items.Add(clearVinyl);
+            doorVinylTintDDL.Items.Add(smokeGreyVinyl);
+            doorVinylTintDDL.Items.Add(darkGreyVinyl);
+            doorVinylTintDDL.Items.Add(bronzeVinyl);
+            doorVinylTintDDL.Items.Add(mixedVinyl);
 
             #endregion
 
@@ -588,16 +579,6 @@ namespace SunspaceDealerDesktop
             #endregion
 
             //Adding to table
-
-            #region Table:Default Row Add Door Added To Table (tblDoorDetails)
-
-            /*addDoorBTNCell.Controls.Add(addDoorButton);
-
-            tblDoorDetails.Rows.Add(addDoorRow);
-
-            addDoorRow.Cells.Add(addDoorBTNCell);*/
-
-            #endregion
 
             #region Table:Default Row Title Current Door Added To Table (tblDoorDetails)
 
@@ -824,9 +805,59 @@ namespace SunspaceDealerDesktop
             doorPositionRow.Cells.Add(doorPositionDDLCell);
 
             #endregion
+                           
 
-            
-            wallDoorOptions.Controls.Add(tblDoorDetails);
+            for (int typeCount = 1; typeCount <= 3; typeCount++)
+            {
+                string title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : "Patio";
+
+                wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
+
+                RadioButton typeRadio = new RadioButton();
+                typeRadio.ID = "radType" + currentWall + title;
+                typeRadio.GroupName = "doorTypeRadios";
+
+                Label typeLabelRadio = new Label();
+                typeLabelRadio.AssociatedControlID = "radType" + currentWall + title;
+
+                Label typeLabel = new Label();
+                typeLabel.AssociatedControlID = "radType" + currentWall + title;
+                typeLabel.Text = title;
+
+                wallDoorOptions.Controls.Add(typeRadio);
+                wallDoorOptions.Controls.Add(typeLabelRadio);
+                wallDoorOptions.Controls.Add(typeLabel);
+
+                wallDoorOptions.Controls.Add(new LiteralControl("<div class='toggleContent'><ul>"));
+
+                wallDoorOptions.Controls.Add(new LiteralControl("<li><h3>"+ title + "</h3>"));
+
+                tblDoorDetails.ID = "tblDoorDetails" + currentWall + title;
+
+                wallDoorOptions.Controls.Add(tblDoorDetails);
+
+                wallDoorOptions.Controls.Add(new LiteralControl("</li></li></ul></div>"));
+            }
+
+            //wallDoorOptions.Controls.Add(new LiteralControl("<li><h3>Cabana</h3>"));
+
+            //    tblDoorDetails.ID = "tblDoorDetails" + currentWall + typeCount;
+
+            //    wallDoorOptions.Controls.Add(tblDoorDetails);
+
+            //    typeCount++;
+
+            //wallDoorOptions.Controls.Add(new LiteralControl("</li>"));
+
+            //wallDoorOptions.Controls.Add(new LiteralControl("<li><h3>French</h3>"));
+
+            //    tblDoorDetails.ID = "tblDoorDetails" + currentWall + typeCount;
+
+            //    wallDoorOptions.Controls.Add(tblDoorDetails);
+
+            //    typeCount++;
+
+            //wallDoorOptions.Controls.Add(new LiteralControl("</li>"));
 
             wallDoorOptions.Controls.Add(new LiteralControl("</li></ul></div>"));
 
