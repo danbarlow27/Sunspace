@@ -6,7 +6,11 @@
         <asp:Label Text ="*Insert User Name*" ID="lblUser" runat="server"></asp:Label>
     </div>
 
-    <div id="slide1" class="slide">
+    <div class="slide-window no-sidebar">
+
+        <div class="slide-wrapper">
+
+            <div id="slide1" class="slide">
 
                 <h1>
                     <asp:Label ID="lblPreferences" runat="server" Text="Set your preferences below"></asp:Label>
@@ -23,18 +27,22 @@
                         <div class="toggleContent">
                             <ul>
                                 <li>
-                                    <asp:RadioButton ID="radSunroom100" GroupName="sunroomModels" runat="server" />
-                                    <asp:Label ID="lblSunroom100Radio" AssociatedControlID="radSunroom100" runat="server"></asp:Label>
-                                    <asp:Label ID="lblSunroom100" AssociatedControlID="radSunroom100" runat="server" Text="Model 100"></asp:Label>
-                                        
-                                    <div class="toggleContent">
-                                        <ul class="toggleOptions">
-                                            <li>
-                                                <asp:Label ID="lbl100Input" runat="server" Text="Model 100 Input: "></asp:Label>
-                                                <asp:TextBox ID="txt100Input" CssClass="txtField txtInput" runat="server"></asp:TextBox>
-                                            </li>                                            
-                                        </ul>
-                                    </div>
+                                    <ul class="toggleOptions">
+                                        <li>
+                                            <asp:RadioButton ID="radSunroom100" GroupName="sunroomModels" runat="server" />
+                                            <asp:Label ID="lblSunroom100Radio" AssociatedControlID="radSunroom100" runat="server"></asp:Label>
+                                            <asp:Label ID="lblSunroom100" AssociatedControlID="radSunroom100" runat="server" Text="Model 100"></asp:Label>
+                                    
+                                            <div class="toggleContent">
+                                                <ul>
+                                                    <li>
+                                                        <asp:Label ID="lbl100Input" runat="server" Text="Model 100 Input: "></asp:Label>
+                                                        <asp:TextBox ID="txt100Input" CssClass="txtField txtInput" runat="server"></asp:TextBox>
+                                                    </li>                                            
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>                                         
                                 </li>
 
                                 <li>
@@ -134,5 +142,11 @@
                         <asp:Label ID="lblRoof" AssociatedControlID="radRoof" runat="server" Text="Roof Only"></asp:Label>
                     </li>
                 </ul>
-    </div>
+
+            </div> <%-- end #slide1 --%>
+
+        </div> <%-- end .slide-wrapper --%>
+
+    </div> <%-- end .slide-window --%>
+
 </asp:Content>
