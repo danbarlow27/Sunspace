@@ -71,11 +71,14 @@
 
         //validate decimal to eighth of an inch 
         function validateDecimal(number) {
-
+            number += '';
             var validNumber = number;
             //if(number.contains(".")) {
             var decimal = number.split(".");
             decimal[1] = "0." + decimal[1];
+
+            alert(decimal[1]);
+
             var ONE_EIGHTH = 0.125;
             var TWO_EIGHTH = 0.25;
             var THREE_EIGHTH = 0.375;
@@ -84,32 +87,45 @@
             var SIX_EIGHTH = 0.75;
             var SEVEN_EIGHTH = 0.875;
             
-            switch (number) {
-                case +decimal[1] > SEVEN_EIGHTH:
-                    decimal[1] = SEVEN_EIGHTH;
-                    break;
-                case +decimal[1]> SIX_EIGHTH:
-                    decimal[1] = SIX_EIGHTH;
-                    break;
-                case +decimal[1]> FIVE_EIGHTH:
-                    decimal[1] = FIVE_EIGHTH;
-                    break;
-                case +decimal[1]> FOUR_EIGHTH:
-                    decimal[1] = FOUR_EIGHTH;
-                    break;
-                case +decimal[1]> THREE_EIGHTH:
-                    decimal[1] = THREE_EIGHTH;
-                    break;
-                case +decimal[1]> TWO_EIGHTH:
-                    decimal[1] = TWO_EIGHTH;
-                    break;
-                case +decimal[1]> ONE_EIGHTH:
-                    decimal[1] = ONE_EIGHTH;
-                    break;
-                case +decimal[1]> 0:
-                    decimal[1] = 0;
-                    break;
-            }
+            //switch (decimal[1]) {
+            //    case decimal[1] > SEVEN_EIGHTH:
+            //        decimal[1] = SEVEN_EIGHTH;
+            //        break;
+            //    case decimal[1] > SIX_EIGHTH:
+            //        decimal[1] = SIX_EIGHTH;
+            //        break;
+            //    case decimal[1] > FIVE_EIGHTH:
+            //        decimal[1] = FIVE_EIGHTH;
+            //        break;
+            //    case decimal[1] > FOUR_EIGHTH:
+            //        decimal[1] = FOUR_EIGHTH;
+            //        break;
+            //    case decimal[1] > THREE_EIGHTH:
+            //        decimal[1] = THREE_EIGHTH;
+            //        break;
+            //    case decimal[1] > TWO_EIGHTH:
+            //        decimal[1] = TWO_EIGHTH;
+            //        break;
+            //    case decimal[1] > ONE_EIGHTH:
+            //        decimal[1] = ONE_EIGHTH;
+            //        break;
+            //    case decimal[1]> 0:
+            //        decimal[1] = 0;
+            //        break;
+            //}
+
+            decimal[1] = (decimal[1] > SEVEN_EIGHTH) ? SEVEN_EIGHTH :
+                (decimal[1] > SIX_EIGHTH) ? SIX_EIGHTH :
+                (decimal[1] > FIVE_EIGHTH) ? FIVE_EIGHTH :
+                (decimal[1] > FOUR_EIGHTH) ? FOUR_EIGHTH :
+                (decimal[1] > THREE_EIGHTH) ? THREE_EIGHTH :
+                (decimal[1] > TWO_EIGHTH) ? TWO_EIGHTH :
+                (decimal[1] > ONE_EIGHTH) ? ONE_EIGHTH : 0;
+
+
+
+            //alert(decimal[1] < ONE_EIGHTH);
+            alert(decimal[1]);
             validNumber = +decimal[0] + +decimal[1];
             //}
             return validNumber;
