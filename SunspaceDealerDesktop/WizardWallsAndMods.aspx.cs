@@ -458,6 +458,31 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
+            #region Table:Fourteenth Row Door Screen Options (tblDoorDetails)
+
+            TableRow doorScreenOptionsRow = new TableRow();
+            TableCell doorScreenOptionsLBLCell = new TableCell();
+            TableCell doorScreenOptionsDDLCell = new TableCell();
+
+            Label doorScreenOptionsLBL = new Label();
+            doorScreenOptionsLBL.ID = "lblDoorScreenOptions";
+            doorScreenOptionsLBL.Text = "Door Screen Option:";
+
+            DropDownList doorScreenOptionsDDL = new DropDownList();
+            doorScreenOptionsDDL.ID = "ddlDoorScreenOptions";
+            ListItem betterVueInsect = new ListItem("Better Vue Insect Screen - Default", "betterVueInsectScreen");
+            ListItem noSeeUms = new ListItem("No See Ums 20x20 Mesh", "noSeeUms");
+            ListItem solarInsectScreening = new ListItem("Solar Insect Screening", "solarInsectScreening");
+            ListItem tuffScreen = new ListItem("Tuff Screen", "tuffScreen");
+            ListItem noScreen = new ListItem("No Screen", "noScreen");
+            doorScreenOptionsDDL.Items.Add(betterVueInsect);
+            doorScreenOptionsDDL.Items.Add(noSeeUms);
+            doorScreenOptionsDDL.Items.Add(solarInsectScreening);
+            doorScreenOptionsDDL.Items.Add(tuffScreen);
+            doorScreenOptionsDDL.Items.Add(noScreen);
+
+            #endregion
+
             #region Table:# Row Door Position (tblDoorDetails)
 
             TableRow doorPositionRow = new TableRow();
@@ -653,6 +678,18 @@ namespace SunspaceDealerDesktop
 
             doorGlassTintRow.Cells.Add(doorGlassTintLBLCell);
             doorGlassTintRow.Cells.Add(doorGlassTintDDLCell);
+
+            #endregion
+
+            #region Table:Fourteenth Row Door Screen Options (tblDoorDetails)
+
+            doorScreenOptionsLBLCell.Controls.Add(doorScreenOptionsLBL);
+            doorScreenOptionsDDLCell.Controls.Add(doorScreenOptionsDDL);
+
+            tblDoorDetails.Rows.Add(doorScreenOptionsRow);
+
+            doorScreenOptionsRow.Cells.Add(doorScreenOptionsLBLCell);
+            doorScreenOptionsRow.Cells.Add(doorScreenOptionsDDLCell);
 
             #endregion
 

@@ -258,6 +258,7 @@
         
         function checkQuestion3(toChange) {
             var currentDropDown = document.getElementById("MainContent_ddlWallDoorAmount" + toChange);
+            currentDropDown.innerHTML = "";
             if (document.getElementById("MainContent_ddlWallDoorType" + toChange).value != 0) {
                 currentDropDown.disabled = false;
                 var doorType = document.getElementById("MainContent_ddlWallDoorType" + toChange).options[document.getElementById("MainContent_ddlWallDoorType" + toChange).selectedIndex].value;
