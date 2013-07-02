@@ -18,5 +18,10 @@ namespace SunspaceDealerDesktop
                 Session.Add("loggedIn", "userA");
             }
         }
+
+        protected void btnUpdate_Click(object sender, EventArgs e)
+        {
+            //save all preferences
+        }
     }
 }

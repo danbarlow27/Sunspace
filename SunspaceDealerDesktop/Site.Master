@@ -54,7 +54,7 @@
                 <li><asp:HyperLink ID="lnkMainNavHome" NavigateUrl="Home.aspx" runat="server">Home</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkMainNavSavedProjects" NavigateUrl="SavedProjects.aspx" runat="server">Saved Projects</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkMainNavNewProject" NavigateUrl="NewProject.aspx" runat="server">New Project</asp:HyperLink></li>
-                <li><asp:HyperLink ID="lnkMainNavCloseProject" runat="server">Close Project</asp:HyperLink></li>
+                <li><asp:Button ID="btnMainNavLogout" Text="Logout" runat="server" OnClick="btnMainNavLogout_Click" CssClass ="btnSubmit float-right"/></li>
             </ul>
         </nav>    
     </header>

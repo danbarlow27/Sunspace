@@ -28,11 +28,15 @@
                             <ul>
                                 <li>
                                     <ul class="toggleOptions">
+                                        
+                                        <%-- Model 100 Preferences --%>
                                         <li>
                                             <asp:RadioButton ID="radSunroom100" GroupName="sunroomModels" runat="server" />
                                             <asp:Label ID="lblSunroom100Radio" AssociatedControlID="radSunroom100" runat="server"></asp:Label>
                                             <asp:Label ID="lblSunroom100" AssociatedControlID="radSunroom100" runat="server" Text="Model 100"></asp:Label>
                                     
+                                            
+                                            <%-- Model 100 Inputs --%>
                                             <div class="toggleContent">
                                                 <ul>
                                                     <li>
@@ -42,106 +46,120 @@
                                                 </ul>
                                             </div>
                                         </li>
-                                    </ul>                                         
-                                </li>
 
-                                <li>
-                                    <asp:RadioButton ID="radSunroom200" GroupName="sunroomModels" runat="server" />
-                                    <asp:Label ID="lblSunroom200Radio" AssociatedControlID="radSunroom200" runat="server"></asp:Label>
-                                    <asp:Label ID="lblSunroom200" AssociatedControlID="radSunroom200" runat="server" Text="Model 200"></asp:Label>
-                                </li>
 
-                                <li>
-                                    <asp:RadioButton ID="radSunroom300" GroupName="sunroomModels" runat="server" />
-                                    <asp:Label ID="lblSunroom300Radio" AssociatedControlID="radSunroom300" runat="server"></asp:Label>
-                                    <asp:Label ID="lblSunroom300" AssociatedControlID="radSunroom300" runat="server" Text="Model 300"></asp:Label>
-                                </li>
+                                        <%-- Model 200 Preferences --%>
+                                        <li>
+                                            <asp:RadioButton ID="radSunroom200" GroupName="sunroomModels" runat="server" />
+                                            <asp:Label ID="lblSunroom200Radio" AssociatedControlID="radSunroom200" runat="server"></asp:Label>
+                                            <asp:Label ID="lblSunroom200" AssociatedControlID="radSunroom200" runat="server" Text="Model 200"></asp:Label>
 
-                                <li>
-                                    <asp:RadioButton ID="radSunroom400" GroupName="sunroomModels" runat="server" />
-                                    <asp:Label ID="lblSunroom400Radio" AssociatedControlID="radSunroom400" runat="server"></asp:Label>
-                                    <asp:Label ID="lblSunroom400" AssociatedControlID="radSunroom400" runat="server" Text="Model 400"></asp:Label>
+                                            
+                                            <%-- Model 200 Inputs --%>
+                                            <div class="toggleContent">
+                                                <ul>
+                                                    <li>
+                                                        <asp:Label ID="lbl200Input" runat="server" Text="Model 200 Input: "></asp:Label>
+                                                        <asp:TextBox ID="txt200Input" CssClass="txtField txtInput" runat="server"></asp:TextBox>
+                                                    </li>                                            
+                                                </ul>
+                                            </div>
+                                        </li>
+
+
+                                        <%-- Model 300 Preferences --%>
+                                        <li>
+                                            <asp:RadioButton ID="radSunroom300" GroupName="sunroomModels" runat="server" />
+                                            <asp:Label ID="lblSunroom300Radio" AssociatedControlID="radSunroom300" runat="server"></asp:Label>
+                                            <asp:Label ID="lblSunroom300" AssociatedControlID="radSunroom300" runat="server" Text="Model 300"></asp:Label>
+
+                                            
+                                            <%-- Model 300 Inputs --%>
+                                            <div class="toggleContent">
+                                                <ul>
+                                                    <li>
+                                                        <asp:Label ID="lbl300Input" runat="server" Text="Model 300 Input: "></asp:Label>
+                                                        <asp:TextBox ID="txt300Input" CssClass="txtField txtInput" runat="server"></asp:TextBox>
+                                                    </li>                                            
+                                                </ul>
+                                            </div>
+                                        </li>
+
+
+                                        <%-- Model 400 Preferences --%>
+                                        <li>
+                                            <asp:RadioButton ID="radSunroom400" GroupName="sunroomModels" runat="server" />
+                                            <asp:Label ID="lblSunroom400Radio" AssociatedControlID="radSunroom400" runat="server"></asp:Label>
+                                            <asp:Label ID="lblSunroom400" AssociatedControlID="radSunroom400" runat="server" Text="Model 400"></asp:Label>
+
+                                            
+                                            <%-- Model 400 Inputs --%>
+                                            <div class="toggleContent">
+                                                <ul>
+                                                    <li>
+                                                        <asp:Label ID="lbl400Input" runat="server" Text="Model 400 Input: "></asp:Label>
+                                                        <asp:TextBox ID="txt400Input" CssClass="txtField txtInput" runat="server"></asp:TextBox>
+                                                    </li>                                            
+                                                </ul>
+                                            </div>
+                                        </li>
+
+                                    </ul>
                                 </li>
                             </ul>
                         </div>
                     </li>
 
-                    <%-- Wall Preferences --%>
+                    <%-- Company Details --%>
                     <li>
-                        <asp:RadioButton ID="radWallsPref" GroupName="preferences" runat="server" />
-                        <asp:Label ID="lblWallsPrefRadio" AssociatedControlID="radWallsPref" runat="server"></asp:Label>
-                        <asp:Label ID="lblWallsPref" AssociatedControlID="radWallsPref" runat="server" Text="Wall Only"></asp:Label>
+                        <asp:RadioButton ID="radCompanyDetails" GroupName="preferences" runat="server" />
+                        <asp:Label ID="lblCompanyDetailsRadio" AssociatedControlID="radCompanyDetails" runat="server"></asp:Label>
+                        <asp:Label ID="lblCompanyDetails" AssociatedControlID="radCompanyDetails" runat="server" Text="Company Details"></asp:Label>
 
                         <div class="toggleContent">
                             <ul>
-                                <li>
-                                    <asp:RadioButton ID="radWalls100" GroupName="wallModels" runat="server" />
-                                    <asp:Label ID="lblWalls100Radio" AssociatedControlID="radWalls100" runat="server"></asp:Label>
-                                    <asp:Label ID="lblWalls100" AssociatedControlID="radWalls100" runat="server" Text="Model 100"></asp:Label>
-                                        
-                                    <div class="toggleContent">
-                                        <ul class="toggleOptions">
-                                            <li>
-                                                <asp:Label ID="lblWalls100Input" runat="server" Text="Model 100 Input: "></asp:Label>
-                                                <asp:TextBox ID="txtWalls100Input" CssClass="txtField txtInput" runat="server"></asp:TextBox>
-                                            </li>                                            
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <asp:RadioButton ID="radWalls200" GroupName="wallModels" runat="server" />
-                                    <asp:Label ID="lblWalls200Radio" AssociatedControlID="radWalls200" runat="server"></asp:Label>
-                                    <asp:Label ID="lblWalls200" AssociatedControlID="radWalls200" runat="server" Text="Model 200"></asp:Label>
-                                </li>
-
-                                <li>
-                                    <asp:RadioButton ID="radWalls300" GroupName="wallModels" runat="server" />
-                                    <asp:Label ID="lblWalls300Radio" AssociatedControlID="radWalls300" runat="server"></asp:Label>
-                                    <asp:Label ID="lblWalls300" AssociatedControlID="radWalls300" runat="server" Text="Model 300"></asp:Label>
-                                </li>
-
-                                <li>
-                                    <asp:RadioButton ID="radWalls400" GroupName="wallModels" runat="server" />
-                                    <asp:Label ID="lblWalls400Radio" AssociatedControlID="radWalls400" runat="server"></asp:Label>
-                                    <asp:Label ID="lblWalls400" AssociatedControlID="radWalls400" runat="server" Text="Model 400"></asp:Label>
+                                <li>                                        
+                                    <asp:Label ID="lblCompanyNameInput" runat="server" Text="Company Name Input: "></asp:Label>
+                                    <asp:TextBox ID="txtCompanyNameInput" CssClass="txtField txtInput" runat="server"></asp:TextBox>
                                 </li>
                             </ul>
                         </div>
                     </li>
 
 
-                    <%-- Window Preferences --%>
+                    <%-- Price Calculator Preferences --%>
                     <li>
-                        <asp:RadioButton ID="radWindows" GroupName="preferences" runat="server" />
-                        <asp:Label ID="lblWindowsRadio" AssociatedControlID="radWindows" runat="server"></asp:Label>
-                        <asp:Label ID="lblWindows" AssociatedControlID="radWindows" runat="server" Text="Window Only"></asp:Label>
+                        <asp:RadioButton ID="radPriceCalc" GroupName="preferences" runat="server" />
+                        <asp:Label ID="lblPriceCalcRadio" AssociatedControlID="radPriceCalc" runat="server"></asp:Label>
+                        <asp:Label ID="lblPriceCalc" AssociatedControlID="radPriceCalc" runat="server" Text="Price Calculator Preferences"></asp:Label>
                     </li>
 
 
-                    <%-- Door Preferences --%>
+                    <%-- Shipping Address --%>
                     <li>
-                        <asp:RadioButton ID="radDoors" GroupName="preferences" runat="server" />
-                        <asp:Label ID="lblDoorsRadio" AssociatedControlID="radDoors" runat="server"></asp:Label>
-                        <asp:Label ID="lblDoors" AssociatedControlID="radDoors" runat="server" Text="Door Only"></asp:Label>
+                        <asp:RadioButton ID="radShippingAddress" GroupName="preferences" runat="server" />
+                        <asp:Label ID="lblShippingAddressRadio" AssociatedControlID="radShippingAddress" runat="server"></asp:Label>
+                        <asp:Label ID="lblShippingAddress" AssociatedControlID="radShippingAddress" runat="server" Text="Shipping Address"></asp:Label>
                     </li>
 
 
-                    <%-- Floor Preferences --%>
+                    <%-- Billing Address --%>
                     <li>
-                        <asp:RadioButton ID="radFloor" GroupName="preferences" runat="server" />
-                        <asp:Label ID="lblFloorRadio" AssociatedControlID="radFloor" runat="server"></asp:Label>
-                        <asp:Label ID="lblFloor" AssociatedControlID="radFloor" runat="server" Text="Floor Only"></asp:Label>
+                        <asp:RadioButton ID="radBillingAddress" GroupName="preferences" runat="server" />
+                        <asp:Label ID="lblBillingAddressRadio" AssociatedControlID="radBillingAddress" runat="server"></asp:Label>
+                        <asp:Label ID="lblBillingAddress" AssociatedControlID="radBillingAddress" runat="server" Text="Billing Address"></asp:Label>
                     </li>
 
 
-                    <%-- Roof Preferences --%>
+                    <%-- Invoice Data --%>
                     <li>
-                        <asp:RadioButton ID="radRoof" GroupName="preferences" runat="server" />
-                        <asp:Label ID="lblRoofRadio" AssociatedControlID="radRoof" runat="server"></asp:Label>
-                        <asp:Label ID="lblRoof" AssociatedControlID="radRoof" runat="server" Text="Roof Only"></asp:Label>
+                        <asp:RadioButton ID="radInvoiceData" GroupName="preferences" runat="server" />
+                        <asp:Label ID="lblInvoiceDataRadio" AssociatedControlID="radInvoiceData" runat="server"></asp:Label>
+                        <asp:Label ID="lblInvoiceData" AssociatedControlID="radInvoiceData" runat="server" Text="Invoice Data (Sunspace CSR Only)"></asp:Label>
                     </li>
                 </ul>
+
+                <asp:Button ID="btnUpdate" runat="server" Text="Update Preferences" CssClass="btnSubmit float-right" OnClick="btnUpdate_Click"/>
 
             </div> <%-- end #slide1 --%>
 
