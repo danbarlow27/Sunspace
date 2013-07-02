@@ -114,6 +114,8 @@
             //        break;
             //}
 
+
+
             decimal[1] = (decimal[1] > SEVEN_EIGHTH) ? SEVEN_EIGHTH :
                 (decimal[1] > SIX_EIGHTH) ? SIX_EIGHTH :
                 (decimal[1] > FIVE_EIGHTH) ? FIVE_EIGHTH :
@@ -242,7 +244,7 @@
 
                     m = document.getElementById("MainContent_txtRoofSlope").value;
                     //run = projection;
-                    rise = ((run * m) / ((projection - soffitLength) / 12)).toFixed(2);
+                    rise = (((projection - soffitLength) * m) / run).toFixed(2);
                     
                     frontHeight = +(document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - +rise;
 
@@ -269,7 +271,7 @@
                     isValid = true;
 
                     m = document.getElementById("MainContent_txtRoofSlope").value;
-                    //run = projection;
+
                     rise = (((projection - soffitLength) * m) / run).toFixed(2);
 
                     backHeight = +(document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value) + +rise;
