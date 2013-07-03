@@ -149,6 +149,28 @@
                 document.getElementById("MainContent_hidProjectType").value = "Sunroom";
                 $('#MainContent_lblProjectTypeAnswer').text(document.getElementById("MainContent_hidProjectType").value + " of Model " + document.getElementById("MainContent_hidModelNumber").value);
             }
+            else if ($('#<%=radProjectWalls.ClientID%>').is(':checked')) {
+                if ($('#<%=radWallsModel100.ClientID%>').is(':checked')) {
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "100";
+                    document.getElementById('pagerThree').style.display = "inline";
+                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
+                }
+                else if ($('#<%=radWallsModel200.ClientID%>').is(':checked')) {
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "200";
+                    document.getElementById('pagerThree').style.display = "inline";
+                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
+                }
+                else if ($('#<%=radWallsModel300.ClientID%>').is(':checked')) {
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "300";
+                    document.getElementById('pagerThree').style.display = "inline";
+                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
+                }
+                else if ($('#<%=radWallsModel400.ClientID%>').is(':checked')) {
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "400";
+                    document.getElementById('pagerThree').style.display = "inline";
+                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
+                }
+            }
             newProjectChangeColours();
             return false;
         }
@@ -220,7 +242,14 @@
                 $('#MainContent_lblQuestion4PagerAnswer').text("Entry Complete");
                 document.getElementById('pagerFour').style.display = "inline";
             }
-            //document.getElementById('MainContent_btnQuestion4').disabled = false; //autoenable, remove when dropdowns are populated
+
+            //When 'walls only' is selected, this will need additional logic to skip the next few slides
+            //we'll do this by having a duplicate button in the same spot that goes to the desired slide
+            if ($('#<%=radProjectWalls.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion4.ClientID%>').disabled = true;
+                document.getElementById('<%=btnQuestion4.ClientID%>').style.display="none";
+                document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="none";
+            }
             return false;
         }
 
@@ -855,7 +884,6 @@
                 </ul> <%-- end .toggleOptions --%>
 
                 <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
-
             </div> 
             <%-- end #slide3 --%>
 
@@ -946,6 +974,7 @@
                 </ul> <%-- end .toggleOptions --%>
 
                 <asp:Button ID="btnQuestion4" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion4Walls" Enabled="false" CssClass="btnSubmit float-right slidePanel" OnClick="btnQuestion4Walls_Click" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide4 --%>

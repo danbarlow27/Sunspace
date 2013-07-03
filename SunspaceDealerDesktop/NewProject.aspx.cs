@@ -165,5 +165,11 @@ namespace SunspaceDealerDesktop
                 Response.Redirect("Home.aspx");
             }
         }
+
+        protected void btnQuestion4Walls_Click(object sender, EventArgs e)
+        {
+            //required session stuff before forwarding
+            Response.Redirect("Home.aspx");
+        }
     }
 }
