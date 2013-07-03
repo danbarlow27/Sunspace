@@ -12,14 +12,10 @@ namespace SunspaceDealerDesktop
     {
         //colour lists
         //NOTETOSELF change constants to have lists instead of arrays
-        protected static string[] model100FramingColours = Constants.MODEL_100_FRAMING_COLOURS;
-        public string model100FramingColoursJ = new JavaScriptSerializer().Serialize(model100FramingColours);
-        protected static string[] model200FramingColours = Constants.MODEL_200_FRAMING_COLOURS;
-        public string model200FramingColoursJ = new JavaScriptSerializer().Serialize(model200FramingColours);
-        protected static string[] model300FramingColours = Constants.MODEL_300_FRAMING_COLOURS;
-        public string model300FramingColoursJ = new JavaScriptSerializer().Serialize(model300FramingColours);
-        protected static string[] model400FramingColours = Constants.MODEL_400_FRAMING_COLOURS;
-        public string model400FramingColoursJ = new JavaScriptSerializer().Serialize(model400FramingColours);
+        public string model100FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_100_FRAMING_COLOURS);
+        public string model200FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_200_FRAMING_COLOURS);
+        public string model300FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_300_FRAMING_COLOURS);
+        public string model400FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_400_FRAMING_COLOURS);
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -35,20 +31,20 @@ namespace SunspaceDealerDesktop
             ddlExistingCustomer.Items.Add("Choose a Customer...");
 
             Customer aCustomer = new Customer();
-            aCustomer.FirstName = "Butt";
-            aCustomer.LastName = "Hole";
+            aCustomer.FirstName = "Kyle";
+            aCustomer.LastName = "Brougham";
 
             ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
 
             aCustomer = new Customer();
-            aCustomer.FirstName = "Ass";
-            aCustomer.LastName = "Man";
+            aCustomer.FirstName = "Anthony";
+            aCustomer.LastName = "Smeelen";
 
             ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
 
             aCustomer = new Customer();
-            aCustomer.FirstName = "Gay-ass";
-            aCustomer.LastName = "Tester";
+            aCustomer.FirstName = "Dan";
+            aCustomer.LastName = "Barlow";
 
             ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
             #endregion
@@ -56,6 +52,30 @@ namespace SunspaceDealerDesktop
             //slide4
             #region Slide 4 pageload
             ddlFramingColour.Items.Add("Choose a colour...");
+
+            ddlInteriorColour.Items.Add("Choose a colour...");
+            for (int i = 0; i < Constants.INTERIOR_WALL_COLOURS.Length; i++)
+            {
+                ddlInteriorColour.Items.Add(Constants.INTERIOR_WALL_COLOURS[i]);
+            }
+
+            ddlInteriorSkin.Items.Add("Choose a skin...");
+            for (int i = 0; i < Constants.INTERIOR_WALL_SKIN_TYPES.Length; i++)
+            {
+                ddlInteriorSkin.Items.Add(Constants.INTERIOR_WALL_SKIN_TYPES[i]);
+            }
+
+            ddlExteriorColour.Items.Add("Choose a colour...");
+            for (int i = 0; i < Constants.EXTERIOR_WALL_COLOURS.Length; i++)
+            {
+                ddlExteriorColour.Items.Add(Constants.EXTERIOR_WALL_COLOURS[i]);
+            }
+
+            ddlExteriorSkin.Items.Add("Choose a skin...");
+            for (int i = 0; i < Constants.EXTERIOR_WALL_SKIN_TYPES.Length; i++)
+            {
+                ddlExteriorSkin.Items.Add(Constants.EXTERIOR_WALL_SKIN_TYPES[i]);
+            }
             #endregion
         }
         
