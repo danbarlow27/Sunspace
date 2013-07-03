@@ -10,12 +10,16 @@ namespace SunspaceDealerDesktop
 {
     public partial class NewProject : Page
     {
-        //colour lists
-        //NOTETOSELF change constants to have lists instead of arrays
+        //colour arrays generated as javascript usable objects
         public string model100FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_100_FRAMING_COLOURS);
         public string model200FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_200_FRAMING_COLOURS);
         public string model300FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_300_FRAMING_COLOURS);
         public string model400FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_400_FRAMING_COLOURS);
+
+        public string model100TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_100_TRANSOM_TYPES);
+        public string model200TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_200_TRANSOM_TYPES);
+        public string model300TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_300_TRANSOM_TYPES);
+        public string model400TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_400_TRANSOM_TYPES);
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -28,7 +32,7 @@ namespace SunspaceDealerDesktop
 
             //slide1
             #region Slide 1 pageload
-            ddlExistingCustomer.Items.Add("Choose a Customer...");
+            //ddlExistingCustomer.Items.Add("Choose a Customer...");
 
             Customer aCustomer = new Customer();
             aCustomer.FirstName = "Kyle";
@@ -51,34 +55,40 @@ namespace SunspaceDealerDesktop
 
             //slide4
             #region Slide 4 pageload
-            ddlFramingColour.Items.Add("Choose a colour...");
-
-            ddlInteriorColour.Items.Add("Choose a colour...");
+            //ddlInteriorColour.Items.Add("Choose a colour...");
             for (int i = 0; i < Constants.INTERIOR_WALL_COLOURS.Length; i++)
             {
                 ddlInteriorColour.Items.Add(Constants.INTERIOR_WALL_COLOURS[i]);
             }
 
-            ddlInteriorSkin.Items.Add("Choose a skin...");
+            //ddlInteriorSkin.Items.Add("Choose a skin...");
             for (int i = 0; i < Constants.INTERIOR_WALL_SKIN_TYPES.Length; i++)
             {
                 ddlInteriorSkin.Items.Add(Constants.INTERIOR_WALL_SKIN_TYPES[i]);
             }
 
-            ddlExteriorColour.Items.Add("Choose a colour...");
+            //ddlExteriorColour.Items.Add("Choose a colour...");
             for (int i = 0; i < Constants.EXTERIOR_WALL_COLOURS.Length; i++)
             {
                 ddlExteriorColour.Items.Add(Constants.EXTERIOR_WALL_COLOURS[i]);
             }
 
-            ddlExteriorSkin.Items.Add("Choose a skin...");
+            //ddlExteriorSkin.Items.Add("Choose a skin...");
             for (int i = 0; i < Constants.EXTERIOR_WALL_SKIN_TYPES.Length; i++)
             {
                 ddlExteriorSkin.Items.Add(Constants.EXTERIOR_WALL_SKIN_TYPES[i]);
             }
+
+            //ddlKneewallType.Items.Add("Choose a type...");
+            for (int i = 0; i < Constants.KNEEWALL_TYPES.Length; i++)
+            {
+                ddlKneewallType.Items.Add(Constants.KNEEWALL_TYPES[i]);
+            }
+
+            //Must populate transom dropdown based on model#
             #endregion
         }
-        
+
         protected void btnLayout_Click(object sender, EventArgs e)
         {
             //Session.Add("hidFirstName", hidFirstName.Value);

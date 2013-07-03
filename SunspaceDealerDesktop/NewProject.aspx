@@ -5,7 +5,7 @@
   
     <script>
         function goComponents() {
-            //change me when component ordering is put into place
+            //changeme when component ordering is put into place
             window.location.replace("Home.aspx");
         }
         function newProjectCheckQuestion1() {
@@ -156,7 +156,7 @@
         function newProjectCheckQuestion4() {
             document.getElementById('MainContent_btnQuestion4').disabled = true;
             //overall error check boolean
-            var optionChecksPassed = false;
+            var optionChecksPassed = true;
 
             //Only run validation if a number is entered and values selected
             if (document.getElementById("MainContent_txtKneewallHeight").value != "" &&
@@ -165,13 +165,13 @@
                 //only requirement on height at this moment is that it is a valid number
                 if (isNaN(document.getElementById("MainContent_txtKneewallHeight").value)) {
                     //kneewall height error handling
+                    optionChecksPassed = false;
                 }
                 else {
                     //by default, preferences will populate a selected value, but as long as a number is entered, and
                     //dropdowns have a selected value, its valid, set check bool to true, update hidden values
                     document.getElementById("MainContent_hidKneewallHeight").value = document.getElementById("MainContent_txtKneewallHeight").value;
                     document.getElementById("MainContent_hidKneewallType").value = document.getElementById("MainContent_ddlKneewallType").value;
-                    optionChecksPassed = true;
                 }
             }
             else {
@@ -184,12 +184,11 @@
                 document.getElementById("MainContent_ddlTransomType").value != "") {
 
                 if (isNaN(document.getElementById("MainContent_txtTransomHeight").value)) {
-                    console.log("Invalid transom height");
+                    optionChecksPassed = false;
                 }
                 else {
                     document.getElementById("MainContent_hidTransomHeight").value = document.getElementById("MainContent_txtTransomHeight").value;
                     document.getElementById("MainContent_hidTransomType").value = document.getElementById("MainContent_ddlTransomType").value;
-                    optionChecksPassed = true;
                 }
 
             }
@@ -210,7 +209,6 @@
                 document.getElementById("MainContent_hidInteriorSkin").value = document.getElementById("MainContent_ddlInteriorSkin").value;
                 document.getElementById("MainContent_hidExteriorColour").value = document.getElementById("MainContent_ddlExteriorColour").value;
                 document.getElementById("MainContent_hidExteriorSkin").value = document.getElementById("MainContent_ddlExteriorSkin").value;
-                optionChecksPassed = true;
             }
             else {
                 optionChecksPassed = false;
@@ -222,7 +220,7 @@
                 $('#MainContent_lblQuestion4PagerAnswer').text("Entry Complete");
                 document.getElementById('pagerFour').style.display = "inline";
             }
-            document.getElementById('MainContent_btnQuestion4').disabled = false; //autoenable, remove when dropdowns are populated
+            //document.getElementById('MainContent_btnQuestion4').disabled = false; //autoenable, remove when dropdowns are populated
             return false;
         }
 
@@ -399,11 +397,12 @@
             ddlFramingColour = document.getElementById("MainContent_ddlFramingColour");
             ddlFramingColour.options.length = 0;
 
+            //var blankOption = new Option("Choose a colour...", "Choose a colour...");
+            //ddlFramingColour.options.add(blankOption);
+
             switch (modelNumber.value) {
                 case '100':
                     var anArray =  <%= model100FramingColoursJ %>;
-                    var blankOption = new Option("Choose a colour...", "Choose a colour...");
-                    ddlFramingColour.options.add(blankOption);
 
                     for (var i=0;i<anArray.length;i++)
                     {
@@ -417,7 +416,8 @@
 
                     for (var i=0;i<anArray.length;i++)
                     {
-                        console.log(anArray[i]);
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
                     }                    
                     break;
 
@@ -426,7 +426,8 @@
 
                     for (var i=0;i<anArray.length;i++)
                     {
-                        console.log(anArray[i]);
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
                     }                    
                     break;
 
@@ -435,16 +436,13 @@
 
                     for (var i=0;i<anArray.length;i++)
                     {
-                        console.log(anArray[i]);
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
                     }   
                     break;
             }
             
-            /* document.getElementById("MainContent_ddlFramingColour").value != "" &&
-             document.getElementById("MainContent_ddlInteriorColour").value != "" &&
-             document.getElementById("MainContent_ddlInteriorSkin").value != "" &&
-             document.getElementById("MainContent_ddlExteriorColour").value != "" &&
-             document.getElementById("MainContent_ddlExteriorSkin").value != ""*/
+            newProjectPopulateKneewallTransom();
             return true;
         }
 
@@ -474,7 +472,62 @@
                 $("#MainContent_ddlExteriorSkin").val('Bronze Aluminum Stucco');
             }
 
+            //now that colours have cascading we still need to validate the slide
             newProjectCheckQuestion4();
+        }
+
+        function newProjectPopulateKneewallTransom() {
+            console.log("populate kneewall transom");
+            
+            modelNumber = document.getElementById("<%=hidModelNumber.ClientID%>");
+            ddlTransomTypes = document.getElementById("<%=ddlTransomType.ClientID%>");
+            ddlTransomTypes.options.length = 0;
+            
+            //var blankOption = new Option("Choose a type...", "Choose a type...");
+            //ddlTransomTypes.options.add(blankOption);
+
+            switch (modelNumber.value) {
+                case '100':
+                    var anArray =  <%= model100TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }
+                    break;
+
+                case '200':
+                    var anArray =  <%= model200TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }                    
+                    break;
+
+                case '300':
+                    var anArray =  <%= model300TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }                    
+                    break;
+
+                case '400':
+                    var anArray =  <%= model400TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }   
+                    break;
+            }
+            return true;
         }
     </script>
 
@@ -577,7 +630,7 @@
 
                     <%-- EXISTING CUSTOMER --%>
                     <li>
-                        <asp:RadioButton ID="radExistingCustomer" GroupName="question1" runat="server" />
+                        <asp:RadioButton ID="radExistingCustomer" GroupName="question1" runat="server" OnClick="newProjectCheckQuestion1()" />
                         <asp:Label ID="lblExistingCustomerRadio" AssociatedControlID="radExistingCustomer" runat="server"></asp:Label>
                         <asp:Label ID="lblExistingCustomer" AssociatedControlID="radExistingCustomer" runat="server" Text="Existing customer"></asp:Label>
 
