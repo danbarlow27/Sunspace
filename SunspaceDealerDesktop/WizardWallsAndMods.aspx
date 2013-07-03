@@ -5,6 +5,7 @@
     <%-- Hidden div populating scripts 
     =================================== --%>
     <script>
+
         var detailsOfAllLines = '<%= (string)Session["coordList"] %>'; //all the coordinates and details of all the lines
         var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/"); //a list of individual lines and their coordinates and details 
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
@@ -17,7 +18,7 @@
         var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
         var DOOR_FRENCH_MIN_WIDTH = '<%= DOOR_FRENCH_MIN_WIDTH %>';
         var DOOR_FRENCH_MAX_WIDTH = '<%= DOOR_FRENCH_MAX_WIDTH %>';
-        var projection = 10; //hard coded for testing
+        var projection = 120; //hard coded for testing
         var soffitLength = 0; //hard coded for testing
 
         function calculateSetBack(index) {
@@ -70,35 +71,60 @@
 
         //validate decimal to eighth of an inch 
         function validateDecimal(number) {
-            var oneEighth;
-            var twoEighth;
-            var threeEighth;
-            var fourEighth;
-            var fiveEighth;
-            var sixEighth;
-            var sevenEighth;
-            var wholeNumber;
+            var givenDecimal;
+            number += ''; //covert to string
+            var decimal = number.split(".");
+            decimal[1] = "0." + decimal[1];
 
-            switch (number) {
-                //case number >:
-                //    break;
-                case "25":
-                    break;
-                case "375":
-                    break;
-                case "5":
-                    break;
-                case "625":
-                    break;
-                case "75":
-                    break;
-                case "875":
-                    break;
-                default:
-                    break;
-            }
+            givenDecimal = decimal[1];
 
-            return number;
+            var ONE_EIGHTH = 0.125;
+            var TWO_EIGHTH = 0.25;
+            var THREE_EIGHTH = 0.375;
+            var FOUR_EIGHTH = 0.5;
+            var FIVE_EIGHTH = 0.625;
+            var SIX_EIGHTH = 0.75;
+            var SEVEN_EIGHTH = 0.875;
+            
+            decimal[1] = (decimal[1] >= SEVEN_EIGHTH) ? SEVEN_EIGHTH :
+                (decimal[1] >= SIX_EIGHTH) ? SIX_EIGHTH :
+                (decimal[1] >= FIVE_EIGHTH) ? FIVE_EIGHTH :
+                (decimal[1] >= FOUR_EIGHTH) ? FOUR_EIGHTH :
+                (decimal[1] >= THREE_EIGHTH) ? THREE_EIGHTH :
+                (decimal[1] >= TWO_EIGHTH) ? TWO_EIGHTH :
+                (decimal[1] >= ONE_EIGHTH) ? ONE_EIGHTH : 0;
+
+            //if (decimal[1] != givenDecimal) {
+            //    //checkQuestion2();
+            //    //var m = calculateSlope();
+            //    document.getElementById("MainContent_txtRoofSlope").value = calculateSlope();
+            //}
+            return decimal;
+        }
+
+        function calculateSlope() {
+            //var m;    //m = ((rise * run)/(projection - soffitLength)) slope over 12
+            var rise; //m = ((rise * run)/(projection - soffitLength)) slope over 12
+            var run = 12;  // m = ((rise * run)/(projection - soffitLength)) slope over 12
+
+            rise = ((document.getElementById("MainContent_txtBackWallHeight").value //textbox value
+                + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) //dropdown listitem value
+                - (document.getElementById("MainContent_txtFrontWallHeight").value //textbox value
+                + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value)); //dropdown listitem value
+
+            alert(rise);
+
+            return (((rise * run) / (projection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
+
+        }
+        function calculateRise() {
+            var m;    //m = ((rise * run)/(projection - soffitLength)) slope over 12
+            //var rise; //m = ((rise * run)/(projection - soffitLength)) slope over 12
+            var run = 12;  // m = ((rise * run)/(projection - soffitLength)) slope over 12
+
+            m = document.getElementById("MainContent_txtRoofSlope").value;
+
+            return ((((projection - soffitLength) * m) / run).toFixed(2));
         }
 
         function checkQuestion1() {
@@ -164,9 +190,9 @@
 
             var isValid = true;
             var answer = "";
-            var m;    //m = (rise((projection-soffitLength)/12)) slope over 12
-            var rise; //m = (rise((projection-soffitLength)/12)) slope over 12
-            var run = 12;  // m = (rise((projection-soffitLength)/12)) slope over 12
+            //var m;    //m = ((rise * run)/(projection - soffitLength)) slope over 12
+            //var rise; //m = ((rise * run)/(projection - soffitLength)) slope over 12
+            //var run = 12;  // m = ((rise * run)/(projection - soffitLength)) slope over 12
 
             if (document.getElementById("MainContent_chkAutoRoofSlope").checked) {
                 document.getElementById("MainContent_chkAutoBackWallHeight").checked = false;
@@ -174,77 +200,90 @@
                 //we have front wall height and back wall height, calculate slope
                 if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
                     && document.getElementById("MainContent_txtBackWallHeight").value > 0
-                    //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
                     && !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
                     && document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
-                    //&& document.getElementById("MainContent_txtFrontWallHeight").value != ""
-                    //|| isNaN(document.getElementById("MainContent_txtRoofSlope").value)
-                    //|| document.getElementById("MainContent_txtRoofSlope").value <= 0)
-
-                    //alert("yello");
-                    isValid = true;
-                    //run = run / 12; //to get slope over 12 inches
-                    rise = ((document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - (document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value));
-                    rise = rise * ((projection - soffitLength) / 12); //to get slope over 12
                     
-                    document.getElementById("MainContent_txtRoofSlope").value = m = (rise / run).toFixed(2); //round m to 2 decimal places
+                    isValid = true;
+                    //rise = ((document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - (document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value));
+                    
+                    m = calculateSlope();
+
+                    document.getElementById("MainContent_txtRoofSlope").value = m;
                 }
                 else
                     isValid = false;
             }
             else if (document.getElementById("MainContent_chkAutoFrontWallHeight").checked) {
-
-                var frontHeight;
-
                 document.getElementById("MainContent_chkAutoRoofSlope").checked = false;
                 document.getElementById("MainContent_chkAutoBackWallHeight").checked = false;
                 //we have back wall height and slope, calculate front wall height
                 if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
                     && document.getElementById("MainContent_txtBackWallHeight").value > 0
-                    //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
-                    //|| !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
-                    //|| document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
                     && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
                     && document.getElementById("MainContent_txtRoofSlope").value > 0) {
-                    //&& document.getElementById("MainContent_txtRoofSlope").value != ""
+
+                    var frontHeight;
+                    var newFrontHeight;
 
                     isValid = true;
 
-                    m = document.getElementById("MainContent_txtRoofSlope").value;
-                    //run = projection;
-                    rise = ((run * m) / ((projection - soffitLength) / 12)).toFixed(2);
+                    //m = document.getElementById("MainContent_txtRoofSlope").value;
                     
-                    frontHeight = document.getElementById("MainContent_txtFrontWallHeight").value = +(document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - +rise;
+                    rise = calculateRise();
+                    
+                    frontHeight = +(document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - +rise;
 
-                    frontHeight = validateDecimal(frontHeight);
+                    newFrontHeight = validateDecimal(frontHeight);
+
+                    if (frontHeight != (+newFrontHeight[0] + +newFrontHeight[1]))
+                        document.getElementById("MainContent_txtRoofSlope").value = calculateSlope();
+
+                    document.getElementById("MainContent_txtFrontWallHeight").value = newFrontHeight[0];
+
+                    for (var i = 0; i < document.getElementById("MainContent_ddlFrontInchFractions").length - 1 ; i++) {
+                        if ((newFrontHeight[1] += '') === ("0" + document.getElementById("MainContent_ddlFrontInchFractions").options[i].value))
+                            document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex = i;
+                    }
+
                 }
                 else
                     isValid = false;
             }
             else if (document.getElementById("MainContent_chkAutoBackWallHeight").checked) {
-                var backHeight;
-
                 document.getElementById("MainContent_chkAutoFrontWallHeight").checked = false;
                 document.getElementById("MainContent_chkAutoRoofSlope").checked = false;
                 //we have front wall height and slope, calculate back wall height
                 if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
                     && document.getElementById("MainContent_txtFrontWallHeight").value > 0
-                    //&& document.getElementById("MainContent_txtBackWallHeight").value != ""
-                    //|| !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
-                    //|| document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
                     && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
                     && document.getElementById("MainContent_txtRoofSlope").value > 0) {
-                    //&& document.getElementById("MainContent_txtRoofSlope").value != ""
+
+                    var backHeight;
+                    var newBackHeight;
 
                     isValid = true;
 
-                    m = document.getElementById("MainContent_txtRoofSlope").value;
-                    //run = projection;
-                    rise = ((run * m) / ((projection - soffitLength) / 12)).toFixed(2);
+                    //m = document.getElementById("MainContent_txtRoofSlope").value;
 
-                    backHeight = document.getElementById("MainContent_txtBackWallHeight").value = +(document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value) + +rise;
+                    rise = calculateRise();
 
-                    backHeight = validateDecimal(backHeight);
+                    backHeight = +(document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value) + +rise;
+
+                    newBackHeight = validateDecimal(backHeight);
+
+                    //alert("back: " + backHeight + " ... newback: " + (+newBackHeight[0] + +newBackHeight[1]));
+
+                    if (backHeight != (+newBackHeight[0] + +newBackHeight[1])) 
+                        document.getElementById("MainContent_txtRoofSlope").value = calculateSlope();
+                    
+
+
+                    document.getElementById("MainContent_txtBackWallHeight").value = newBackHeight[0];
+
+                    for (var i = 0; i < document.getElementById("MainContent_ddlBackInchFractions").length - 1 ; i++) {
+                        if ((newBackHeight[1] += '') === ("0" + document.getElementById("MainContent_ddlBacktInchFractions").options[i].value))
+                            document.getElementById("MainContent_ddlBackInchFractions").selectedIndex = i;
+                    }
                 }
                 else
                     isValid = false;
@@ -264,8 +303,6 @@
                 else
                     isValid = true;
             }
-
-
 
             if (isValid) {
                 document.getElementById("MainContent_hidBackWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value;
@@ -332,6 +369,24 @@
                 "min": minQuantityOfDoors
             }
         }
+
+        //function onClickAddDoor(currentDoor) {
+        //    var $doorDetails = $('#doorDetails');
+        //    var $doorDetailsList = $('#doorDetailsList');
+        //    var tblDoor = document.getElementById("MainContent_tblDoorDetails" + currentDoor);
+
+        //    alert($doorDetailsList.size());
+
+        //    if (tblDoor.style.display === "block") {
+        //        var newClonedLi = $doorDetails.find('li:first').clone(true);
+        //        newClonedLi.appendTo($doorDetails.find('ul'));
+        //    }
+        //    else {
+        //        alert("Is this working?");
+        //        tblDoor.style.display = "block";                
+        //    }
+
+        //}
     </script>
     <%-- End hidden div populating scripts --%>
 
@@ -457,36 +512,22 @@
             </div> 
             <%-- end #slide2 --%>
 
-             <%-- QUESTION 3 - HOW MANY DOORS PER WALL
+             <%-- QUESTION 3 - DOOR OPTIONS/DETAILS
             ======================================== --%>
 
             <div id="slide3" class="slide">
                 <h1>
-                    <asp:Label ID="lblQuestion3" runat="server" Text="Would you like a door on your sunroom?"></asp:Label>
-                </h1>        
-                <div class="tblWallLengths">
-                    <asp:Table ID="tblDoorQuantity" style="padding-right:15%; padding-left:15%; padding-top:5%;" runat="server" ></asp:Table>
-                </div>          
-
-                <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
-
-            </div>
-            <%-- end #slide3 --%>
-
-            <%-- QUESTION 4 - DOOR DETAILS
-            ======================================== --%>
-            <div id="slide4" class="slide">
-                <h1>
-                    <asp:Label ID="lblQuestion4" runat="server" Text="Door Details"></asp:Label>
+                    <asp:Label ID="lblDoorDetails" runat="server" Text="Door Details"></asp:Label>
                 </h1>        
                               
                 <ul class="toggleOptions">
                     <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion4"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" />
 
             </div>
+            <%-- end #slide3 --%>
         </div> <%-- end .slide-wrapper --%>
 
     </div> 

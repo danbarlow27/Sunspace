@@ -69,5 +69,14 @@ namespace SunspaceWizard
         {
 
         }
+
+        protected void btnMainNavLogout_Click(object sender, EventArgs e)
+        {
+            //Remove user from session
+            //Session.Remove("loggedIn");
+
+            //Redirect to Login.aspx
+            Response.Redirect("Login.aspx");
+        }
     }
 }
