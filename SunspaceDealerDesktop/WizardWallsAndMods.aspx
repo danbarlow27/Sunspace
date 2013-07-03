@@ -94,11 +94,6 @@
                 (decimal[1] >= TWO_EIGHTH) ? TWO_EIGHTH :
                 (decimal[1] >= ONE_EIGHTH) ? ONE_EIGHTH : 0;
 
-            //if (decimal[1] != givenDecimal) {
-            //    //checkQuestion2();
-            //    //var m = calculateSlope();
-            //    document.getElementById("MainContent_txtRoofSlope").value = calculateSlope();
-            //}
             return decimal;
         }
 
@@ -112,7 +107,7 @@
                 - (document.getElementById("MainContent_txtFrontWallHeight").value //textbox value
                 + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value)); //dropdown listitem value
 
-            alert(rise);
+            //alert(rise);
 
             return (((rise * run) / (projection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
 
@@ -124,11 +119,10 @@
 
             m = document.getElementById("MainContent_txtRoofSlope").value;
 
-            return ((((projection - soffitLength) * m) / run).toFixed(2));
+            return ((((projection - soffitLength) * m) / run).toFixed(2)); //rise, rounded to 2 decimal places
         }
 
         function checkQuestion1() {
-
             //disable 'next slide' button until after validation (this is currently enabled for debugging purposes)
             document.getElementById('MainContent_btnQuestion1').disabled = false;
             //document.getElementById('MainContent_btnQuestion2').disabled = false;
@@ -190,13 +184,11 @@
 
             var isValid = true;
             var answer = "";
-            //var m;    //m = ((rise * run)/(projection - soffitLength)) slope over 12
-            //var rise; //m = ((rise * run)/(projection - soffitLength)) slope over 12
-            //var run = 12;  // m = ((rise * run)/(projection - soffitLength)) slope over 12
-
-            if (document.getElementById("MainContent_chkAutoRoofSlope").checked) {
-                document.getElementById("MainContent_chkAutoBackWallHeight").checked = false;
-                document.getElementById("MainContent_chkAutoFrontWallHeight").checked = false;
+            var rise;
+            
+            if (document.getElementById("MainContent_radAutoRoofSlope").checked) {
+                //document.getElementById("MainContent_radAutoBackWallHeight").checked = false;
+                //document.getElementById("MainContent_radAutoFrontWallHeight").checked = false;
                 //we have front wall height and back wall height, calculate slope
                 if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
                     && document.getElementById("MainContent_txtBackWallHeight").value > 0
@@ -204,18 +196,15 @@
                     && document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
                     
                     isValid = true;
-                    //rise = ((document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - (document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value));
                     
-                    m = calculateSlope();
-
-                    document.getElementById("MainContent_txtRoofSlope").value = m;
+                    document.getElementById("MainContent_txtRoofSlope").value = calculateSlope(); //output the slope to the appropriate textbox
                 }
                 else
                     isValid = false;
             }
-            else if (document.getElementById("MainContent_chkAutoFrontWallHeight").checked) {
-                document.getElementById("MainContent_chkAutoRoofSlope").checked = false;
-                document.getElementById("MainContent_chkAutoBackWallHeight").checked = false;
+            else if (document.getElementById("MainContent_radAutoFrontWallHeight").checked) {
+                //document.getElementById("MainContent_radAutoRoofSlope").checked = false;
+                //document.getElementById("MainContent_radAutoBackWallHeight").checked = false;
                 //we have back wall height and slope, calculate front wall height
                 if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
                     && document.getElementById("MainContent_txtBackWallHeight").value > 0
@@ -227,8 +216,6 @@
 
                     isValid = true;
 
-                    //m = document.getElementById("MainContent_txtRoofSlope").value;
-                    
                     rise = calculateRise();
                     
                     frontHeight = +(document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - +rise;
@@ -244,14 +231,13 @@
                         if ((newFrontHeight[1] += '') === ("0" + document.getElementById("MainContent_ddlFrontInchFractions").options[i].value))
                             document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex = i;
                     }
-
                 }
                 else
                     isValid = false;
             }
-            else if (document.getElementById("MainContent_chkAutoBackWallHeight").checked) {
-                document.getElementById("MainContent_chkAutoFrontWallHeight").checked = false;
-                document.getElementById("MainContent_chkAutoRoofSlope").checked = false;
+            else if (document.getElementById("MainContent_radAutoBackWallHeight").checked) {
+                //document.getElementById("MainContent_radAutoFrontWallHeight").checked = false;
+                //document.getElementById("MainContent_radAutoRoofSlope").checked = false;
                 //we have front wall height and slope, calculate back wall height
                 if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
                     && document.getElementById("MainContent_txtFrontWallHeight").value > 0
@@ -263,21 +249,15 @@
 
                     isValid = true;
 
-                    //m = document.getElementById("MainContent_txtRoofSlope").value;
-
                     rise = calculateRise();
 
                     backHeight = +(document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value) + +rise;
 
                     newBackHeight = validateDecimal(backHeight);
 
-                    //alert("back: " + backHeight + " ... newback: " + (+newBackHeight[0] + +newBackHeight[1]));
-
                     if (backHeight != (+newBackHeight[0] + +newBackHeight[1])) 
                         document.getElementById("MainContent_txtRoofSlope").value = calculateSlope();
                     
-
-
                     document.getElementById("MainContent_txtBackWallHeight").value = newBackHeight[0];
 
                     for (var i = 0; i < document.getElementById("MainContent_ddlBackInchFractions").length - 1 ; i++) {
@@ -288,22 +268,12 @@
                 else
                     isValid = false;
             }
-            else {
-                if (isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
-                    || document.getElementById("MainContent_txtFrontWallHeight").value <= 0
-                    || document.getElementById("MainContent_txtFrontWallHeight").value != ""
-                    || isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
-                    || document.getElementById("MainContent_txtBackWallHeight").value <= 0
-                    || document.getElementById("MainContent_txtBackWallHeight").value != ""
-                    || isNaN(document.getElementById("MainContent_txtRoofSlope").value)
-                    || document.getElementById("MainContent_txtRoofSlope").value <= 0
-                    || document.getElementById("MainContent_txtRoofSlope").value != ""
-                    || document.getElementById("MainContent_txtBackWallHeight").value <= document.getElementById("MainContent_txtFrontWallHeight").value)
-                    isValid = false;
-                else
-                    isValid = true;
-            }
 
+            if (document.getElementById("MainContent_txtBackWallHeight").value <= document.getElementById("MainContent_txtFrontWallHeight").value)
+                isValid = false;
+            else
+                isValid = true;
+            
             if (isValid) {
                 document.getElementById("MainContent_hidBackWallHeight").value = document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value;
                 document.getElementById("MainContent_hidFrontWallHeight").value = document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value;
@@ -554,9 +524,9 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:CheckBox ID="chkAutoBackWallHeight" runat="server" OnClick="checkQuestion2()" />
-                                                <asp:Label ID="lblAutoBackWallHeightCheckBox" AssociatedControlID="chkAutoBackWallHeight" runat="server"></asp:Label>
-                                                <asp:Label ID="lblAutoBackWallHeight" AssociatedControlID="chkAutoBackWallHeight" runat="server" Text="Auto Populate"></asp:Label>
+                                                <asp:RadioButton ID="radAutoBackWallHeight" GroupName="autoPopulate" runat="server" OnClick="checkQuestion2()" />
+                                                <asp:Label ID="lblAutoBackWallHeightRadio" AssociatedControlID="radAutoBackWallHeight" runat="server"></asp:Label>
+                                                <asp:Label ID="lblAutoBackWallHeight" AssociatedControlID="radAutoBackWallHeight" runat="server" Text="Auto Populate"></asp:Label>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -574,9 +544,9 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:CheckBox ID="chkAutoFrontWallHeight" runat="server" OnClick="checkQuestion2()" />
-                                                <asp:Label ID="lblAutoFrontWallHeightCheckBox" AssociatedControlID="chkAutoFrontWallHeight" runat="server"></asp:Label>
-                                                <asp:Label ID="lblAutoFrontWallHeight" AssociatedControlID="chkAutoFrontWallHeight" runat="server" Text="Auto Populate"></asp:Label>
+                                                <asp:RadioButton ID="radAutoFrontWallHeight" GroupName="autoPopulate" runat="server" OnClick="checkQuestion2()" />
+                                                <asp:Label ID="lblAutoFrontWallHeightRadio" AssociatedControlID="radAutoFrontWallHeight" runat="server"></asp:Label>
+                                                <asp:Label ID="lblAutoFrontWallHeight" AssociatedControlID="radAutoFrontWallHeight" runat="server" Text="Auto Populate"></asp:Label>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -594,9 +564,9 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:CheckBox ID="chkAutoRoofSlope" runat="server" OnClick="checkQuestion2()" />
-                                                <asp:Label ID="lblAutoRoofSlopeCheckBox" AssociatedControlID="chkAutoRoofSlope" runat="server"></asp:Label>
-                                                <asp:Label ID="lblAutoRoofSlope" AssociatedControlID="chkAutoRoofSlope" runat="server" Text="Auto Populate"></asp:Label>
+                                                <asp:RadioButton ID="radAutoRoofSlope" GroupName="autoPopulate" runat="server" OnClick="checkQuestion2()" Checked="true"/>
+                                                <asp:Label ID="lblAutoRoofSlopeRadio" AssociatedControlID="radAutoRoofSlope" runat="server"></asp:Label>
+                                                <asp:Label ID="lblAutoRoofSlope" AssociatedControlID="radAutoRoofSlope" runat="server" Text="Auto Populate"></asp:Label>
                                             </asp:TableCell>
 
                                         </asp:TableRow>
