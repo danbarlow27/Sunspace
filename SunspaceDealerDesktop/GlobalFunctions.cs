@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SunspaceDealerDesktop
 {
@@ -96,6 +98,22 @@ namespace SunspaceDealerDesktop
                 fillerOne += (decimalHeld/2f);
                 fillerTwo += (decimalHeld/2f);
             }
+        }
+
+        public static string CalculateMD5Hash(string input)
+        {
+            // step 1, calculate sha512 hash from input
+            SHA512 sha512 = SHA512Managed.Create();
+            byte[] inputBytes = Encoding.ASCII.GetBytes(input);
+            byte[] hash = sha512.ComputeHash(inputBytes);
+            
+            // step 2, convert byte array to hex string
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("X2"));
+            }
+            return sb.ToString();
         }
     }
 }
