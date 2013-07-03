@@ -49,13 +49,13 @@ namespace SunspaceWizard {
         protected global::System.Web.UI.WebControls.HyperLink lnkMainNavNewProject;
         
         /// <summary>
-        /// lnkMainNavCloseProject control.
+        /// btnMainNavLogout control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkMainNavCloseProject;
+        protected global::System.Web.UI.WebControls.Button btnMainNavLogout;
         
         /// <summary>
         /// FeaturedContent control.
