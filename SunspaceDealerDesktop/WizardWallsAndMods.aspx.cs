@@ -15,34 +15,66 @@ namespace SunspaceDealerDesktop
         protected const float DOOR_FRENCH_MIN_WIDTH = Constants.CUSTOM_FRENCH_DOOR_MIN_WIDTH;
         protected const float DOOR_FRENCH_MAX_WIDTH = Constants.CUSTOM_FRENCH_DOOR_MAX_WIDTH;
 
+        protected ListItem lst0 = new ListItem("---", "", true);
+        protected ListItem lst18 = new ListItem("1/8", ".125");
+        protected ListItem lst14 = new ListItem("1/4", ".25");
+        protected ListItem lst38 = new ListItem("3/8", ".375");
+        protected ListItem lst12 = new ListItem("1/2", ".5");
+        protected ListItem lst58 = new ListItem("5/8", ".625");
+        protected ListItem lst34 = new ListItem("3/4", ".75");
+        protected ListItem lst78 = new ListItem("7/8", ".875");
+
         protected void Page_Load(object sender, EventArgs e)
         {
             /***hard coded session variables***/
             int currentModel = 200;
             Session["numberOfWalls"] = 4;
+            //Session["numberOfWalls"] = 4;
             //Session["coordList"] = "100,412.5,137.5,137.5,E,S/150,150,137.5,287.5,P,W/150,225,287.5,362.5,P,SW/225,312.5,362.5,362.5,P,S/312,387.5,362.5,287.5,P,SE/387.5,387.5,287.5,137.5,P,E/";
             Session["coordList"] = "112.5,350,112.5,112.5,E,S/350,350,112.5,337.5,E,W/175,175,112.5,262.5,P,W/175,350,262.5,262.5,P,S/";
-            string coordList = (string)Session["coordList"];                                    //not functional yet
-            string[] separator = new string[] { "/" };                                             //not functional yet
-            string[] walls = coordList.Split(separator, StringSplitOptions.RemoveEmptyEntries);  //not functional yet
-            int numberOfWalls = walls.Count();                                                  //not functional yet
+            string coordList = (string)Session["coordList"];                                    
+            char[] lineDelimiter = { '/' };   
+            char[] detailsDelimiter = { ',' };                                 
+            string[] walls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries);
+            string[,] wallDetails = new string[walls.Count(),6];
+            //Dictionary<string, string>[] wallDetails = new Dictionary<string, string>[]{};
+            int existingWallCount = 0;
+            int proposedWallCount = 0;
+            string[] tempDetails;
+
+            for (int i = 0; i < walls.Count(); i++) //populate the array with all the wall details for each wall
+            {
+                tempDetails = walls[i].Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries);
+
+                for (int j = 0; j < tempDetails.Count(); j++)
+                {
+                wallDetails[i, j] = tempDetails[j];
+                //wallDetails[i] = new Dictionary<string, string>(); //trying associative array/dictionary
+                
+                //wallDetails[i].Add("x1", tempDetails[0]);
+                //wallDetails[i].Add("x2", tempDetails[1]);
+                //wallDetails[i].Add("y1", tempDetails[2]);
+                //wallDetails[i].Add("y2", tempDetails[3]);
+                //wallDetails[i].Add("type", tempDetails[4]);
+                //wallDetails[i].Add("orientation", tempDetails[5]);
+                }
+            }
             /**********************************/
-            hiddenFieldsDiv.InnerHtml = createHiddenFields(); //create hidden fields on page load dynamically
+            hiddenFieldsDiv.InnerHtml = createHiddenFields(walls.Count()); //create hidden fields on page load dynamically, pass it number of walls
 
             #region DropDownList Section
             DropDownList ddlInFrac = new DropDownList();
             DropDownList ddlInFracBackWall = new DropDownList();
             DropDownList ddlInFracFrontWall = new DropDownList();
 
-            ListItem lst0 = new ListItem("---", "", true);
-            ListItem lst18 = new ListItem("1/8", ".125");
-            ListItem lst14 = new ListItem("1/4", ".25");
-            ListItem lst38 = new ListItem("3/8", ".375");
-            ListItem lst12 = new ListItem("1/2", ".5");
-            ListItem lst58 = new ListItem("5/8", ".625");
-            ListItem lst34 = new ListItem("3/4", ".75");
-            ListItem lst78 = new ListItem("7/8", ".875");
-            
+            //ListItem lst0 = new ListItem("---", "", true);
+            //ListItem lst18 = new ListItem("1/8", ".125");
+            //ListItem lst14 = new ListItem("1/4", ".25");
+            //ListItem lst38 = new ListItem("3/8", ".375");
+            //ListItem lst12 = new ListItem("1/2", ".5");
+            //ListItem lst58 = new ListItem("5/8", ".625");
+            //ListItem lst34 = new ListItem("3/4", ".75");
+            //ListItem lst78 = new ListItem("7/8", ".875");
 
 
             ddlInFrac.Items.Add(lst0);
@@ -82,7 +114,7 @@ namespace SunspaceDealerDesktop
             //SLIDE 3 DOOR DETAILS PER WALL
             #region Slide 3: Onload dynamic loop to insert wall door options            
 
-            for (int currentWall = 1; currentWall <= (int)Session["numberOfWalls"]; currentWall++) //numberOfWalls is hard-coded to be 4 right now
+            for (int currentWall = 1; currentWall <= walls.Count(); currentWall++) //numberOfWalls is hard-coded to be 4 right now
             {
                 #region Wall #:Radio button section
                 wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
@@ -797,9 +829,13 @@ namespace SunspaceDealerDesktop
 
                         doorPositionLBL.AssociatedControlID = "txtDoorPosition" + currentWall + title;
 
+<<<<<<< HEAD
                         #endregion
 
                         //Adding to table
+=======
+                    #region Table:Twelfth Row Door Number Of Vents Added To Table (tblDoorDetails)
+>>>>>>> 57b5f8ccf258e14111c6b259a5437538d7708ed1
 
                         #region Table:Default Row Title Current Door Added To Table (tblDoorDetails)
 
@@ -1124,110 +1160,20 @@ namespace SunspaceDealerDesktop
 
             #region For Loop for slide 1 and slide3            
 
-            for (int i = 1; i <= (int)Session["numberOfWalls"]; i++) //numberOfWalls is hard-coded to be 4 right now
+            for (int i = 1; i <= walls.Count(); i++) 
             {
                 #region Slide1/Question1 Table
-                TableRow row = new TableRow();
-                TableRow rowLeftFiller = new TableRow();
-                TableRow rowRightFiller = new TableRow();
-
-                TableCell cell1 = new TableCell();
-                TableCell cell2 = new TableCell();
-                TableCell cell3 = new TableCell();
-                TableCell cell4 = new TableCell();
-                TableCell cell5 = new TableCell();
-                TableCell cell6 = new TableCell();
-                TableCell cell7 = new TableCell();
-
-                Label lblWallNumber = new Label();
-
-                TextBox txtWallLength = new TextBox();
-                TextBox txtLeftFiller = new TextBox();
-                TextBox txtRightFiller = new TextBox();
-
-                DropDownList ddlInchFractions = new DropDownList();
-                DropDownList ddlLeftInchFractions = new DropDownList();
-                DropDownList ddlRightInchFractions = new DropDownList();
-
-                ddlInchFractions.Items.Add(lst0);
-                ddlInchFractions.Items.Add(lst18);
-                ddlInchFractions.Items.Add(lst14);
-                ddlInchFractions.Items.Add(lst38);
-                ddlInchFractions.Items.Add(lst12);
-                ddlInchFractions.Items.Add(lst58);
-                ddlInchFractions.Items.Add(lst34);
-                ddlInchFractions.Items.Add(lst78);
-                ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()");
-
-                ddlLeftInchFractions.Items.Add(lst0);
-                ddlLeftInchFractions.Items.Add(lst18);
-                ddlLeftInchFractions.Items.Add(lst14);
-                ddlLeftInchFractions.Items.Add(lst38);
-                ddlLeftInchFractions.Items.Add(lst12);
-                ddlLeftInchFractions.Items.Add(lst58);
-                ddlLeftInchFractions.Items.Add(lst34);
-                ddlLeftInchFractions.Items.Add(lst78);
-                ddlLeftInchFractions.Attributes.Add("onchange", "checkQuestion1()");
-
-                ddlRightInchFractions.Items.Add(lst0);
-                ddlRightInchFractions.Items.Add(lst18);
-                ddlRightInchFractions.Items.Add(lst14);
-                ddlRightInchFractions.Items.Add(lst38);
-                ddlRightInchFractions.Items.Add(lst12);
-                ddlRightInchFractions.Items.Add(lst58);
-                ddlRightInchFractions.Items.Add(lst34);
-                ddlRightInchFractions.Items.Add(lst78);
-                ddlRightInchFractions.Attributes.Add("onchange", "checkQuestion1()");
-
-                ddlInchFractions.ID = "ddlWall" + i + "InchFractions";
-                ddlLeftInchFractions.ID = "ddlWall" + i + "LeftInchFractions";
-                ddlRightInchFractions.ID = "ddlWall" + i + "RightInchFractions";
-
-                lblWallNumber.Text = "Wall " + i + " : ";
-                lblWallNumber.ID = "lblWall" + i + "Length";
-                lblWallNumber.AssociatedControlID = "txtWall" + i + "Length";
-
-                txtWallLength.ID = "txtWall" + i + "Length";
-                txtWallLength.CssClass = "txtField txtLengthInput";
-                txtWallLength.MaxLength = 3;
-                txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
-                txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");
-                txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()");
-                txtWallLength.Attributes.Add("onblur", "resetWalls()");
-
-                txtLeftFiller.ID = "txtWall" + i + "LeftFiller";
-                txtLeftFiller.CssClass = "txtField txtLengthInput";
-                txtLeftFiller.MaxLength = 3;
-                txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()");
-                txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");
-                txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
-                txtLeftFiller.Attributes.Add("onblur", "resetWalls()");
-
-                txtRightFiller.ID = "txtWall" + i + "RightFiller";
-                txtRightFiller.CssClass = "txtField txtLengthInput";
-                txtRightFiller.MaxLength = 3;
-                txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");
-                txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");
-                txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
-                txtRightFiller.Attributes.Add("onblur", "resetWalls()");
-
-                cell1.Controls.Add(lblWallNumber);
-                cell2.Controls.Add(txtLeftFiller);
-                cell3.Controls.Add(ddlLeftInchFractions);
-                cell4.Controls.Add(txtWallLength);
-                cell5.Controls.Add(ddlInchFractions);
-                cell6.Controls.Add(txtRightFiller);
-                cell7.Controls.Add(ddlRightInchFractions);
-
-                tblWallLengths.Rows.Add(row);
-
-                row.Cells.Add(cell1);
-                row.Cells.Add(cell2);
-                row.Cells.Add(cell3);
-                row.Cells.Add(cell4);
-                row.Cells.Add(cell5);
-                row.Cells.Add(cell6);
-                row.Cells.Add(cell7);
+                
+                if (wallDetails[i - 1, 4] == "E") //wall type is existing
+                {
+                    existingWallCount++;
+                    populateTblExisting(i, existingWallCount);
+                }
+                else //wall type is proposed
+                {
+                    proposedWallCount++;
+                    populateTblProposed(i, proposedWallCount);
+                }
                 #endregion
 
                 #region Slide3/Question3 Quantity of Doors
@@ -1277,7 +1223,195 @@ namespace SunspaceDealerDesktop
             }
             #endregion
         }
+
+        protected void populateTblExisting(int i, int existingWallCount)
+        {
+            TableRow row = new TableRow();
             
+            TableCell cell1 = new TableCell();
+            TableCell cell2 = new TableCell();
+            TableCell cell3 = new TableCell();
+            
+            Label lblWallNumber = new Label();
+
+            TextBox txtWallLength = new TextBox();
+            
+            DropDownList ddlInchFractions = new DropDownList();
+
+            ddlInchFractions.Items.Add(lst0);
+            ddlInchFractions.Items.Add(lst18);
+            ddlInchFractions.Items.Add(lst14);
+            ddlInchFractions.Items.Add(lst38);
+            ddlInchFractions.Items.Add(lst12);
+            ddlInchFractions.Items.Add(lst58);
+            ddlInchFractions.Items.Add(lst34);
+            ddlInchFractions.Items.Add(lst78);
+            ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()");
+
+            lblWallNumber.Text = "Wall " + existingWallCount + " : ";
+    
+            ddlInchFractions.ID = "ddlWall" + i + "InchFractions";
+            lblWallNumber.ID = "lblWall" + i + "Length";
+            lblWallNumber.AssociatedControlID = "txtWall" + i + "Length";
+
+            txtWallLength.ID = "txtWall" + i + "Length";
+            txtWallLength.CssClass = "txtField txtLengthInput";
+            txtWallLength.MaxLength = 3;
+            txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
+            txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");
+            txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()");
+            txtWallLength.Attributes.Add("onblur", "resetWalls()");
+
+            cell1.Controls.Add(lblWallNumber);
+            cell2.Controls.Add(txtWallLength);
+            cell3.Controls.Add(ddlInchFractions);
+            
+            tblExistingWalls.Rows.Add(row);
+            
+            row.Cells.Add(cell1);
+            row.Cells.Add(cell2);
+            row.Cells.Add(cell3);
+        }
+
+        protected void populateTblProposed(int i, int proposedWallCount)
+        {
+            TableRow row = new TableRow();
+            
+            TableCell cell1 = new TableCell();
+            TableCell cell2 = new TableCell();
+            TableCell cell3 = new TableCell();
+            TableCell cell4 = new TableCell();
+            TableCell cell5 = new TableCell();
+            TableCell cell6 = new TableCell();
+            TableCell cell7 = new TableCell();
+            
+            Label lblWallNumber = new Label();
+
+            TextBox txtWallLength = new TextBox();
+            TextBox txtLeftFiller = new TextBox();
+            TextBox txtRightFiller = new TextBox();
+
+            DropDownList ddlInchFractions = new DropDownList();
+            DropDownList ddlLeftInchFractions = new DropDownList();
+            DropDownList ddlRightInchFractions = new DropDownList();            
+            
+            
+            ddlInchFractions.Items.Add(lst0);
+            ddlInchFractions.Items.Add(lst18);
+            ddlInchFractions.Items.Add(lst14);
+            ddlInchFractions.Items.Add(lst38);
+            ddlInchFractions.Items.Add(lst12);
+            ddlInchFractions.Items.Add(lst58);
+            ddlInchFractions.Items.Add(lst34);
+            ddlInchFractions.Items.Add(lst78);
+            ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()");
+
+            lblWallNumber.Text = "Wall " + proposedWallCount + " : ";
+    
+            ddlInchFractions.ID = "ddlWall" + i + "InchFractions";
+            lblWallNumber.ID = "lblWall" + i + "Length";
+            lblWallNumber.AssociatedControlID = "txtWall" + i + "Length";
+
+            txtWallLength.ID = "txtWall" + i + "Length";
+            txtWallLength.CssClass = "txtField txtLengthInput";
+            txtWallLength.MaxLength = 3;
+            txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
+            txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");
+            txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()");
+            txtWallLength.Attributes.Add("onblur", "resetWalls()");
+
+            ddlLeftInchFractions.Items.Add(lst0);
+            ddlLeftInchFractions.Items.Add(lst18);
+            ddlLeftInchFractions.Items.Add(lst14);
+            ddlLeftInchFractions.Items.Add(lst38);
+            ddlLeftInchFractions.Items.Add(lst12);
+            ddlLeftInchFractions.Items.Add(lst58);
+            ddlLeftInchFractions.Items.Add(lst34);
+            ddlLeftInchFractions.Items.Add(lst78);
+            ddlLeftInchFractions.Attributes.Add("onchange", "checkQuestion1()");
+            ddlRightInchFractions.Items.Add(lst0);
+            ddlRightInchFractions.Items.Add(lst18);
+            ddlRightInchFractions.Items.Add(lst14);
+            ddlRightInchFractions.Items.Add(lst38);
+            ddlRightInchFractions.Items.Add(lst12);
+            ddlRightInchFractions.Items.Add(lst58);
+            ddlRightInchFractions.Items.Add(lst34);
+            ddlRightInchFractions.Items.Add(lst78);
+            ddlRightInchFractions.Attributes.Add("onchange", "checkQuestion1()");
+
+            ddlLeftInchFractions.ID = "ddlWall" + i + "LeftInchFractions";
+            ddlRightInchFractions.ID = "ddlWall" + i + "RightInchFractions";
+
+            lblWallNumber.Text = "Wall " + proposedWallCount + " : ";
+            txtLeftFiller.ID = "txtWall" + i + "LeftFiller";
+            txtLeftFiller.CssClass = "txtField txtLengthInput";
+            txtLeftFiller.MaxLength = 3;
+            txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()");
+            txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");
+            txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
+            txtLeftFiller.Attributes.Add("onblur", "resetWalls()");
+
+            txtRightFiller.ID = "txtWall" + i + "RightFiller";
+            txtRightFiller.CssClass = "txtField txtLengthInput";
+            txtRightFiller.MaxLength = 3;
+            txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");
+            txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");
+            txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
+            txtRightFiller.Attributes.Add("onblur", "resetWalls()");
+
+            cell2.Controls.Add(txtLeftFiller);
+            cell3.Controls.Add(ddlLeftInchFractions);
+            cell4.Controls.Add(txtWallLength);
+            cell5.Controls.Add(ddlInchFractions);
+            cell6.Controls.Add(txtRightFiller);
+            cell7.Controls.Add(ddlRightInchFractions);
+    
+            ddlInchFractions.ID = "ddlWall" + i + "InchFractions";
+            lblWallNumber.ID = "lblWall" + i + "Length";
+            lblWallNumber.AssociatedControlID = "txtWall" + i + "Length";
+
+            txtWallLength.ID = "txtWall" + i + "Length";
+            txtWallLength.CssClass = "txtField txtLengthInput";
+            txtWallLength.MaxLength = 3;
+            txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
+            txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");
+            txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()");
+            txtWallLength.Attributes.Add("onblur", "resetWalls()");
+
+            txtLeftFiller.ID = "txtWall" + i + "LeftFiller";
+            txtLeftFiller.CssClass = "txtField txtLengthInput";
+            txtLeftFiller.MaxLength = 3;
+            txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()");
+            txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");
+            txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
+            txtLeftFiller.Attributes.Add("onblur", "resetWalls()");
+
+            txtRightFiller.ID = "txtWall" + i + "RightFiller";
+            txtRightFiller.CssClass = "txtField txtLengthInput";
+            txtRightFiller.MaxLength = 3;
+            txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");
+            txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");
+            txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
+            txtRightFiller.Attributes.Add("onblur", "resetWalls()");
+
+            cell1.Controls.Add(lblWallNumber);
+            cell2.Controls.Add(txtLeftFiller);
+            cell3.Controls.Add(ddlLeftInchFractions);
+            cell4.Controls.Add(txtWallLength);
+            cell5.Controls.Add(ddlInchFractions);
+            cell6.Controls.Add(txtRightFiller);
+            cell7.Controls.Add(ddlRightInchFractions);
+
+            tblProposedWalls.Rows.Add(row);
+
+            row.Cells.Add(cell1);
+            row.Cells.Add(cell2);
+            row.Cells.Add(cell3);
+            row.Cells.Add(cell4);
+            row.Cells.Add(cell5);
+            row.Cells.Add(cell6);
+            row.Cells.Add(cell7);
+        }
 
         protected void txtWallLengths_TextChanged(object sender, EventArgs e)
         { 
@@ -1287,12 +1421,13 @@ namespace SunspaceDealerDesktop
         /// <summary>
         /// This method creates hidden fields dynamically on page load to store the values of wall lengths to be validated on client side
         /// </summary>
+        /// <param name="number">the number of fields to create</param> 
         /// <returns>html hidden field tags</returns>
-        protected string createHiddenFields()
+        protected string createHiddenFields(int number)
         {
             string html = "";
 
-            for (int i = 1; i <= (int)Session["numberOfWalls"]; i++)
+            for (int i = 1; i <= number; i++)
             {
                 html += "<input id=\"hidWall" + i + "SetBack\" type=\"hidden\" runat=\"server\" />";
                 html += "<input id=\"hidWall" + i + "LeftFiller\" type=\"hidden\" runat=\"server\" />";

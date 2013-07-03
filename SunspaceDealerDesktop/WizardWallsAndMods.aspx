@@ -20,6 +20,7 @@
         var DOOR_FRENCH_MAX_WIDTH = '<%= DOOR_FRENCH_MAX_WIDTH %>';
         var projection = 120; //hard coded for testing
         var soffitLength = 0; //hard coded for testing
+        var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
 
         function calculateSetBack(index) {
             /*
@@ -98,28 +99,23 @@
         }
 
         function calculateSlope() {
-            //var m;    //m = ((rise * run)/(projection - soffitLength)) slope over 12
             var rise; //m = ((rise * run)/(projection - soffitLength)) slope over 12
-            var run = 12;  // m = ((rise * run)/(projection - soffitLength)) slope over 12
-
+           
             rise = ((document.getElementById("MainContent_txtBackWallHeight").value //textbox value
                 + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) //dropdown listitem value
                 - (document.getElementById("MainContent_txtFrontWallHeight").value //textbox value
                 + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value)); //dropdown listitem value
 
-            //alert(rise);
-
-            return (((rise * run) / (projection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
+            return (((rise * RUN) / (projection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
 
         }
+
         function calculateRise() {
             var m;    //m = ((rise * run)/(projection - soffitLength)) slope over 12
-            //var rise; //m = ((rise * run)/(projection - soffitLength)) slope over 12
-            var run = 12;  // m = ((rise * run)/(projection - soffitLength)) slope over 12
 
             m = document.getElementById("MainContent_txtRoofSlope").value;
 
-            return ((((projection - soffitLength) * m) / run).toFixed(2)); //rise, rounded to 2 decimal places
+            return ((((projection - soffitLength) * m) / RUN).toFixed(2)); //rise, rounded to 2 decimal places
         }
 
         function checkQuestion1() {
@@ -187,8 +183,6 @@
             var rise;
             
             if (document.getElementById("MainContent_radAutoRoofSlope").checked) {
-                //document.getElementById("MainContent_radAutoBackWallHeight").checked = false;
-                //document.getElementById("MainContent_radAutoFrontWallHeight").checked = false;
                 //we have front wall height and back wall height, calculate slope
                 if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
                     && document.getElementById("MainContent_txtBackWallHeight").value > 0
@@ -203,8 +197,6 @@
                     isValid = false;
             }
             else if (document.getElementById("MainContent_radAutoFrontWallHeight").checked) {
-                //document.getElementById("MainContent_radAutoRoofSlope").checked = false;
-                //document.getElementById("MainContent_radAutoBackWallHeight").checked = false;
                 //we have back wall height and slope, calculate front wall height
                 if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value)
                     && document.getElementById("MainContent_txtBackWallHeight").value > 0
@@ -222,10 +214,11 @@
 
                     newFrontHeight = validateDecimal(frontHeight);
 
+                    document.getElementById("MainContent_txtFrontWallHeight").value = newFrontHeight[0];
+
                     if (frontHeight != (+newFrontHeight[0] + +newFrontHeight[1]))
                         document.getElementById("MainContent_txtRoofSlope").value = calculateSlope();
 
-                    document.getElementById("MainContent_txtFrontWallHeight").value = newFrontHeight[0];
 
                     for (var i = 0; i < document.getElementById("MainContent_ddlFrontInchFractions").length - 1 ; i++) {
                         if ((newFrontHeight[1] += '') === ("0" + document.getElementById("MainContent_ddlFrontInchFractions").options[i].value))
@@ -236,8 +229,6 @@
                     isValid = false;
             }
             else if (document.getElementById("MainContent_radAutoBackWallHeight").checked) {
-                //document.getElementById("MainContent_radAutoFrontWallHeight").checked = false;
-                //document.getElementById("MainContent_radAutoRoofSlope").checked = false;
                 //we have front wall height and slope, calculate back wall height
                 if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
                     && document.getElementById("MainContent_txtFrontWallHeight").value > 0
@@ -541,7 +532,27 @@
                 </h1>        
                               
                 <div id="tableWallLengths" class="tblWallLengths" runat="server" style="padding-right:15%; padding-left:15%; padding-top:5%;">
-                    <asp:Table ID="tblWallLengths" runat="server">
+                    <asp:Table ID="tblExistingWalls" runat="server">
+                        <asp:TableRow>
+                            <asp:TableHeaderCell >
+                                Existing Walls
+                            </asp:TableHeaderCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell></asp:TableCell>
+                            <asp:TableCell ColumnSpan="6" >
+                                Length
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
+                    <br />
+                    <asp:Table ID="tblProposedWalls" runat="server">
+                        <asp:TableRow>
+                            <asp:TableHeaderCell >
+                                Proposed Walls
+                            </asp:TableHeaderCell>
+                        </asp:TableRow>
+                        
                         <asp:TableRow>
                             <asp:TableCell></asp:TableCell>
                             <asp:TableCell ColumnSpan="2" >
@@ -555,6 +566,7 @@
                             </asp:TableCell>
                         </asp:TableRow>
                     </asp:Table>
+                    
                 </div>
 
                 <asp:Button ID="btnQuestion1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
