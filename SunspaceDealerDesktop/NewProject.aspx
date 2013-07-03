@@ -148,6 +148,10 @@
                 //two hidden values type and model#
                 document.getElementById("MainContent_hidProjectType").value = "Sunroom";
                 $('#MainContent_lblProjectTypeAnswer').text(document.getElementById("MainContent_hidProjectType").value + " of Model " + document.getElementById("MainContent_hidModelNumber").value);
+
+                //selected sunroom, so hide the walls only button, and re-show the normal button
+                document.getElementById('<%=btnQuestion4.ClientID%>').style.display="inline";
+                document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="none";
             }
             else if ($('#<%=radProjectWalls.ClientID%>').is(':checked')) {
                 if ($('#<%=radWallsModel100.ClientID%>').is(':checked')) {
@@ -169,7 +173,15 @@
                     document.getElementById("<%=hidModelNumber.ClientID%>").value = "400";
                     document.getElementById('pagerThree').style.display = "inline";
                     document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
-                }
+                }                
+                //update hidden value for type, and display pager message based on the now
+                //two hidden values type and model#
+                document.getElementById("<%=hidProjectType.ClientID%>").value = "Walls";
+                $('#<%=lblProjectTypeAnswer.ClientID%>').text(document.getElementById("<%=hidProjectType.ClientID%>").value + " of Model " + document.getElementById("<%=hidModelNumber.ClientID%>").value);
+
+                //selected walls, so hide the sunroom button, and re-show the walls button
+                document.getElementById('<%=btnQuestion4.ClientID%>').style.display="none";
+                document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="inline";
             }
             newProjectChangeColours();
             return false;
@@ -239,6 +251,7 @@
 
             if (optionChecksPassed) {
                 document.getElementById('MainContent_btnQuestion4').disabled = false;
+                document.getElementById('<%=btnQuestion4Walls.ClientID%>').disabled = false;
                 $('#MainContent_lblQuestion4PagerAnswer').text("Entry Complete");
                 document.getElementById('pagerFour').style.display = "inline";
             }
@@ -246,9 +259,8 @@
             //When 'walls only' is selected, this will need additional logic to skip the next few slides
             //we'll do this by having a duplicate button in the same spot that goes to the desired slide
             if ($('#<%=radProjectWalls.ClientID%>').is(':checked')) {
-                document.getElementById('<%=btnQuestion4.ClientID%>').disabled = true;
                 document.getElementById('<%=btnQuestion4.ClientID%>').style.display="none";
-                document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="none";
+                document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="inline";
             }
             return false;
         }
