@@ -829,13 +829,10 @@ namespace SunspaceDealerDesktop
 
                         doorPositionLBL.AssociatedControlID = "txtDoorPosition" + currentWall + title;
 
-<<<<<<< HEAD
                         #endregion
 
                         //Adding to table
-=======
-                    #region Table:Twelfth Row Door Number Of Vents Added To Table (tblDoorDetails)
->>>>>>> 57b5f8ccf258e14111c6b259a5437538d7708ed1
+
 
                         #region Table:Default Row Title Current Door Added To Table (tblDoorDetails)
 

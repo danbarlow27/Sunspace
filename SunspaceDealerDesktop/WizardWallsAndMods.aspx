@@ -13,7 +13,7 @@
             coordList[i] = lineList[i].split(","); //populate the 2d array
         }
         var wallSetBackArray = new Array();
-        var projection = 10; //hard coded to testing
+        //var projection = 10; //hard coded to testing
         var DOOR_MAX_WIDTH = '<%= DOOR_MAX_WIDTH %>';
         var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
         var DOOR_FRENCH_MIN_WIDTH = '<%= DOOR_FRENCH_MIN_WIDTH %>';
@@ -209,6 +209,8 @@
                     isValid = true;
 
                     rise = calculateRise();
+                    
+                    //alert(rise);
                     
                     frontHeight = +(document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - +rise;
 
@@ -593,7 +595,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtBackWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" onblur="resetWalls()" OnFocus="highlightWallsHeight()" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtBackWallHeight" CssClass="txtField txtInput"  OnChange="checkQuestion2()" onblur="resetWalls()" OnFocus="highlightWallsHeight()" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
@@ -613,7 +615,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtFrontWallHeight" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" onblur="resetWalls()" OnFocus="highlightWallsHeight()" runat="server" MaxLength="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtFrontWallHeight" CssClass="txtField txtInput"  OnChange="checkQuestion2()" onblur="resetWalls()" OnFocus="highlightWallsHeight()" runat="server" MaxLength="3"></asp:TextBox>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
