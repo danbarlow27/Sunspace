@@ -135,9 +135,9 @@ namespace SunspaceDealerDesktop
 
                     Table tblDoorDetails = new Table();
 
+                    tblDoorDetails.ID = "tblDoorDetails";
                     tblDoorDetails.CssClass = "tblTextFields";
-                    tblDoorDetails.Attributes.Add("runat", "server");
-                    //tblDoorDetails.Attributes.Add("style", "display:none;");            
+                    tblDoorDetails.Attributes.Add("runat", "server");          
 
                     //Creating cells and controls for rows
 
@@ -912,7 +912,7 @@ namespace SunspaceDealerDesktop
 
                     #endregion
 
-                    wallDoorOptions.Controls.Add(new LiteralControl("<div class='toggleContent'><ul>"));
+                    wallDoorOptions.Controls.Add(new LiteralControl("<div class='toggleContent' id='div_" + currentWall + title + "'><ul>"));
 
                     wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
 

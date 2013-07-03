@@ -302,13 +302,14 @@
 
                 if (document.getElementById('MainContent_radWall' + wallCount).checked) {                    
 
-                    if (document.getElementById('MainContent_radType' + wallCount + 'Cabana').checked) {                        
-                        
+                    if (document.getElementById('MainContent_radType' + wallCount + 'Cabana').checked) {
+
                         var doorTitle = document.getElementById("MainContent_rowDoorTitle" + wallCount + "Cabana");
                         var doorStyle = document.getElementById("MainContent_rowDoorStyle" + wallCount + "Cabana");
                         var doorColor = document.getElementById("MainContent_rowDoorColor" + wallCount + "Cabana");
                         var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "Cabana");
                         var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "Cabana");
+
                         var doorCustomHeight = document.getElementById("MainContent_rowDoorCustomHeight" + wallCount + "Cabana");
                         var doorCustomWidth = document.getElementById("MainContent_rowDoorCustomWidth" + wallCount + "Cabana");
                         var doorOperatorLHH = document.getElementById("MainContent_rowOperatorLHH" + wallCount + "Cabana");
@@ -324,11 +325,22 @@
                         var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallCount + "Cabana");
                         var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Cabana");
 
+                        //General
                         doorTitle.style.display = "inherit";
                         doorStyle.style.display = "inherit";
                         doorColor.style.display = "inherit";
                         doorHeight.style.display = "inherit";
                         doorWidth.style.display = "inherit";
+
+                        //Cabana Specific
+                        doorGlassTint.style.display = "inherit";
+                        doorLHH.style.display = "inherit";
+                        doorRHH.style.display = "inherit";
+                        doorSwingIn.style.display = "inherit";
+                        doorSwingOut.style.display = "inherit";
+                        doorHardware.style.display = "inherit";
+                        doorNumberOfVents.style.display = "inherit";
+                        doorPosition.style.display = "inherit";
                     }
                     else if (document.getElementById('MainContent_radType' + wallCount + 'French').checked) {
 
@@ -337,26 +349,38 @@
                         var doorColor = document.getElementById("MainContent_rowDoorColor" + wallCount + "French");
                         var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "French");
                         var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "French");
+
                         var doorCustomHeight = document.getElementById("MainContent_rowDoorCustomHeight" + wallCount + "French");
                         var doorCustomWidth = document.getElementById("MainContent_rowDoorCustomWidth" + wallCount + "French");
-                        var doorOperatorLHH = document.getElementById("MainContent_rowOperatorLHH" + wallCount + "French");
-                        var doorOperatorRHH = document.getElementById("MainContent_rowOperatorRHH" + wallCount + "French");
+                        var doorOperatorLHH = document.getElementById("MainContent_rowDoorOperatorLHH" + wallCount+ "French");
+                        var doorOperatorRHH = document.getElementById("MainContent_rowDoorOperatorRHH" + wallCount + "French");
                         var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallCount + "French");
                         var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallCount + "French");
                         var doorLHH = document.getElementById("MainContent_rowDoorLHH" + wallCount + "French");
                         var doorRHH = document.getElementById("MainContent_rowDoorRHH" + wallCount + "French");
                         var doorScreenOptions = document.getElementById("MainContent_rowDoorScreenOptions" + wallCount + "French");
-                        var doorHardware = document.getElementById("MainContent_rowDoorHardware" + wallCount + "French");
+                        var doorHardware = document.getElementById("MainContent_rowDoorHardware" + wallCount+ "French");
                         var doorVinylTint = document.getElementById("MainContent_rowDoorVinylTint" + wallCount + "French");
                         var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + wallCount + "French");
                         var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallCount + "French");
                         var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "French");
 
+                        //General
                         doorTitle.style.display = "inherit";
                         doorStyle.style.display = "inherit";
                         doorColor.style.display = "inherit";
                         doorHeight.style.display = "inherit";
                         doorWidth.style.display = "inherit";
+
+                        //French specific
+                        doorVinylTint.style.display = "inherit";
+                        doorOperatorLHH.style.display = "inherit";
+                        doorOperatorRHH.style.display = "inherit";
+                        doorSwingIn.style.display = "inherit";
+                        doorSwingOut.style.display = "inherit";
+                        doorHardware.style.display = "inherit";
+                        doorNumberOfVents.style.display = "inherit";
+                        doorPosition.style.display = "inherit";
                     }
                     else if (document.getElementById('MainContent_radType' + wallCount + 'Patio').checked) {
 
@@ -365,10 +389,11 @@
                         var doorColor = document.getElementById("MainContent_rowDoorColor" + wallCount + "Patio");
                         var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "Patio");
                         var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "Patio");
+
                         var doorCustomHeight = document.getElementById("MainContent_rowDoorCustomHeight" + wallCount + "Patio");
                         var doorCustomWidth = document.getElementById("MainContent_rowDoorCustomWidth" + wallCount + "Patio");
-                        var doorOperatorLHH = document.getElementById("MainContent_rowOperatorLHH" + wallCount + "Patio");
-                        var doorOperatorRHH = document.getElementById("MainContent_rowOperatorRHH" + wallCount + "Patio");
+                        var doorOperatorLHH = document.getElementById("MainContent_rowDoorOperatorLHH" + wallCount + "Patio");
+                        var doorOperatorRHH = document.getElementById("MainContent_rowDoorOperatorRHH" + wallCount + "Patio");
                         var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallCount + "Patio");
                         var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallCount + "Patio");
                         var doorLHH = document.getElementById("MainContent_rowDoorLHH" + wallCount + "Patio");
@@ -380,33 +405,22 @@
                         var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallCount + "Patio");
                         var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Patio");
 
+                        //General
                         doorTitle.style.display = "inherit";
                         doorStyle.style.display = "inherit";
                         doorColor.style.display = "inherit";
                         doorHeight.style.display = "inherit";
                         doorWidth.style.display = "inherit";
+
+                        //Patio Specifics
+                        doorGlassTint.style.display = "inherit";
+                        doorOperatorLHH.style.display = "inherit";
+                        doorOperatorRHH.style.display = "inherit";
+                        doorNumberOfVents.style.display = "inherit";
                     }
                     else if (document.getElementById('MainContent_radType' + wallCount + 'Opening Only (No Door)').checked) {
-
-                        var doorTitle = document.getElementById("MainContent_rowDoorTitle" + wallCount + "Opening Only (No Door)");
-                        var doorStyle = document.getElementById("MainContent_rowDoorStyle" + wallCount + "Opening Only (No Door)");
-                        var doorColor = document.getElementById("MainContent_rowDoorColor" + wallCount + "Opening Only (No Door)");
-                        var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "Opening Only (No Door)");
-                        var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "Opening Only (No Door)");
-                        var doorCustomHeight = document.getElementById("MainContent_rowDoorCustomHeight" + wallCount + "Opening Only (No Door)");
-                        var doorCustomWidth = document.getElementById("MainContent_rowDoorCustomWidth" + wallCount + "Opening Only (No Door)");
-                        var doorOperatorLHH = document.getElementById("MainContent_rowOperatorLHH" + wallCount + "Opening Only (No Door)");
-                        var doorOperatorRHH = document.getElementById("MainContent_rowOperatorRHH" + wallCount + "Opening Only (No Door)");
-                        var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallCount + "Opening Only (No Door)");
-                        var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallCount + "Opening Only (No Door)");
-                        var doorLHH = document.getElementById("MainContent_rowDoorLHH" + wallCount + "Opening Only (No Door)");
-                        var doorRHH = document.getElementById("MainContent_rowDoorRHH" + wallCount + "Opening Only (No Door)");
-                        var doorScreenOptions = document.getElementById("MainContent_rowDoorScreenOptions" + wallCount + "Opening Only (No Door)");
-                        var doorHardware = document.getElementById("MainContent_rowDoorHardware" + wallCount + "Opening Only (No Door)");
-                        var doorVinylTint = document.getElementById("MainContent_rowDoorVinylTint" + wallCount + "Opening Only (No Door)");
-                        var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + wallCount + "Opening Only (No Door)");
-                        var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallCount + "Opening Only (No Door)");
-                        var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Opening Only (No Door)");
+                        document.getElementById("div_" + wallCount + "Opening Only (No Door)").className = "";
+                        document.getElementById("div_" + wallCount + "Opening Only (No Door)").style.display = "none";
                     }
                 }
 
