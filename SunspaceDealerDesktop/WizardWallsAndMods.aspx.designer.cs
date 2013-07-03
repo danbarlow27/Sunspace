@@ -94,22 +94,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.PlaceHolder phBackHeights;
         
         /// <summary>
-        /// chkAutoBackWallHeight control.
+        /// radAutoBackWallHeight control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkAutoBackWallHeight;
+        protected global::System.Web.UI.WebControls.RadioButton radAutoBackWallHeight;
         
         /// <summary>
-        /// lblAutoBackWallHeightCheckBox control.
+        /// lblAutoBackWallHeightRadio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAutoBackWallHeightCheckBox;
+        protected global::System.Web.UI.WebControls.Label lblAutoBackWallHeightRadio;
         
         /// <summary>
         /// lblAutoBackWallHeight control.
@@ -148,22 +148,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.PlaceHolder phFrontHeights;
         
         /// <summary>
-        /// chkAutoFrontWallHeight control.
+        /// radAutoFrontWallHeight control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkAutoFrontWallHeight;
+        protected global::System.Web.UI.WebControls.RadioButton radAutoFrontWallHeight;
         
         /// <summary>
-        /// lblAutoFrontWallHeightCheckBox control.
+        /// lblAutoFrontWallHeightRadio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAutoFrontWallHeightCheckBox;
+        protected global::System.Web.UI.WebControls.Label lblAutoFrontWallHeightRadio;
         
         /// <summary>
         /// lblAutoFrontWallHeight control.
@@ -202,22 +202,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblSlopeOver12;
         
         /// <summary>
-        /// chkAutoRoofSlope control.
+        /// radAutoRoofSlope control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkAutoRoofSlope;
+        protected global::System.Web.UI.WebControls.RadioButton radAutoRoofSlope;
         
         /// <summary>
-        /// lblAutoRoofSlopeCheckBox control.
+        /// lblAutoRoofSlopeRadio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAutoRoofSlopeCheckBox;
+        protected global::System.Web.UI.WebControls.Label lblAutoRoofSlopeRadio;
         
         /// <summary>
         /// lblAutoRoofSlope control.
