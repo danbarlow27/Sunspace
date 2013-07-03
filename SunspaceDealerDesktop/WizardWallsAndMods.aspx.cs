@@ -811,8 +811,6 @@ namespace SunspaceDealerDesktop
 
                     #endregion
 
-                    
-
                     #region Table:Twelfth Row Door Number Of Vents Added To Table (tblDoorDetails)
 
                     doorNumberOfVentsLBLCell.Controls.Add(doorNumberOfVentsLBL);
@@ -1045,7 +1043,6 @@ namespace SunspaceDealerDesktop
             
             DropDownList ddlInchFractions = new DropDownList();
 
-            
             ddlInchFractions.Items.Add(lst0);
             ddlInchFractions.Items.Add(lst18);
             ddlInchFractions.Items.Add(lst14);
@@ -1074,13 +1071,11 @@ namespace SunspaceDealerDesktop
             cell2.Controls.Add(txtWallLength);
             cell3.Controls.Add(ddlInchFractions);
             
-
             tblExistingWalls.Rows.Add(row);
             
             row.Cells.Add(cell1);
             row.Cells.Add(cell2);
             row.Cells.Add(cell3);
-                
         }
 
         protected void populateTblProposed(int i, int proposedWallCount)
@@ -1231,6 +1226,7 @@ namespace SunspaceDealerDesktop
         /// <summary>
         /// This method creates hidden fields dynamically on page load to store the values of wall lengths to be validated on client side
         /// </summary>
+        /// <param name="number">the number of fields to create</param> 
         /// <returns>html hidden field tags</returns>
         protected string createHiddenFields(int number)
         {

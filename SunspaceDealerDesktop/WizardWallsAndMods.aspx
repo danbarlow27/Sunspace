@@ -482,7 +482,7 @@
                 <div id="tableWallLengths" class="tblWallLengths" runat="server" style="padding-right:15%; padding-left:15%; padding-top:5%;">
                     <asp:Table ID="tblExistingWalls" runat="server">
                         <asp:TableRow>
-                            <asp:TableHeaderCell ColumnSpan="7">
+                            <asp:TableHeaderCell >
                                 Existing Walls
                             </asp:TableHeaderCell>
                         </asp:TableRow>
@@ -496,7 +496,7 @@
                     <br />
                     <asp:Table ID="tblProposedWalls" runat="server">
                         <asp:TableRow>
-                            <asp:TableHeaderCell ColumnSpan="7">
+                            <asp:TableHeaderCell >
                                 Proposed Walls
                             </asp:TableHeaderCell>
                         </asp:TableRow>
