@@ -214,10 +214,11 @@
 
                     newFrontHeight = validateDecimal(frontHeight);
 
+                    document.getElementById("MainContent_txtFrontWallHeight").value = newFrontHeight[0];
+
                     if (frontHeight != (+newFrontHeight[0] + +newFrontHeight[1]))
                         document.getElementById("MainContent_txtRoofSlope").value = calculateSlope();
 
-                    document.getElementById("MainContent_txtFrontWallHeight").value = newFrontHeight[0];
 
                     for (var i = 0; i < document.getElementById("MainContent_ddlFrontInchFractions").length - 1 ; i++) {
                         if ((newFrontHeight[1] += '') === ("0" + document.getElementById("MainContent_ddlFrontInchFractions").options[i].value))

@@ -3,6 +3,7 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <div>
         <asp:Label runat="server" ID="lblError" Text= "" ></asp:Label>
+        <br />
         <asp:Label runat="server" ID="lblUsername" Text="Username: "></asp:Label>
         <asp:TextBox runat="server" ID="txtUsername" CssClass="txtField txtInput"></asp:TextBox>
         <br />

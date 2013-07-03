@@ -32,7 +32,7 @@ namespace SunspaceDealerDesktop
                 else
                 {
                     string userHash = GlobalFunctions.CalculateMD5Hash(txtPassword.Text);
-                    Console.WriteLine(userHash);
+                    Response.Write(userHash);
                     //queries here
                     //WHERE username = txtusername.text
                     //AND password = userHash

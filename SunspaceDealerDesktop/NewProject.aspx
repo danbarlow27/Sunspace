@@ -9,6 +9,7 @@
             window.location.replace("Home.aspx");
         }
         function newProjectCheckQuestion1() {
+            console.log("onkeyup slide1");
             //disable 'next slide' button until after validation
             document.getElementById('MainContent_btnQuestion1').disabled = true;
             //if they select new customer
@@ -98,6 +99,7 @@
         }
 
         function newProjectCheckQuestion2() {
+            console.log("onkeyup slide2");
             //disable 'next slide' button until after validation
             document.getElementById('MainContent_btnQuestion2').disabled = true;
 
