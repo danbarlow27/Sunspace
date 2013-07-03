@@ -11,7 +11,7 @@
         <div class="slide-wrapper">
 
             <div id="slide1" class="slide">
-
+                <%-- fancy --%>
                 <h1>
                     <asp:Label ID="lblPreferences" runat="server" Text="Set your preferences below"></asp:Label>
                 </h1>        
