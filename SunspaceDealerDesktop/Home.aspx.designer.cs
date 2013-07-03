@@ -94,22 +94,58 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblSunroom100;
         
         /// <summary>
-        /// lbl100Input control.
+        /// chk100Cut control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl100Input;
+        protected global::System.Web.UI.WebControls.CheckBox chk100Cut;
         
         /// <summary>
-        /// txt100Input control.
+        /// lbl100CutCheck control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt100Input;
+        protected global::System.Web.UI.WebControls.Label lbl100CutCheck;
+        
+        /// <summary>
+        /// lbl100Cut control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl100Cut;
+        
+        /// <summary>
+        /// lbl100DefaultFiller control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl100DefaultFiller;
+        
+        /// <summary>
+        /// txt100DefaultFiller control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt100DefaultFiller;
+        
+        /// <summary>
+        /// ddl100DefaultFiller control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl100DefaultFiller;
         
         /// <summary>
         /// radSunroom200 control.

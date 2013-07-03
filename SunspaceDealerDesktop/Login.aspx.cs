@@ -11,37 +11,39 @@ namespace SunspaceDealerDesktop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["loginErrorMessage"] == null)
-            {
-                Session.Add("loginErrorMessage", "");
-            }
+                if (Session["loginErrorMessage"] == null)
+                {
+                    Session.Add("loginErrorMessage", "");
+                }
 
-            lblError.Text = Session["loginErrorMessage"].ToString();
+                lblError.Text = Session["loginErrorMessage"].ToString();
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            //something like so
-            //Session.Add("loggedIn", aUser.UserId);
-            if (txtUsername.Text == "" || txtPassword.Text == "")
-            {
-                Session["loginErrorMessage"] = "Please enter your information into the text boxes.";
-            }
-            else
-            {
-                string userHash = GlobalFunctions.CalculateMD5Hash(txtPassword.Text);
-                Console.WriteLine(userHash);
-                //queries here
-                //WHERE username = txtusername.text
-                //AND password = userHash
-                //if results=0, error
+            
+                //something like so
+                //Session.Add("loggedIn", aUser.UserId);
+                if (txtUsername.Text == "" || txtPassword.Text == "")
+                {
+                    Session["loginErrorMessage"] = "Please enter your information into the text boxes.";
+                    lblError.Text = Session["loginErrorMessage"].ToString();
+                }
+                else
+                {
+                    string userHash = GlobalFunctions.CalculateMD5Hash(txtPassword.Text);
+                    Console.WriteLine(userHash);
+                    //queries here
+                    //WHERE username = txtusername.text
+                    //AND password = userHash
+                    //if results=0, error
 
-                //else login                
-                Session["loginErrorMessage"] = "";                
+                    //else login                
+                    Session["loginErrorMessage"] = "";
 
-                Session.Add("loggedIn", "userA");
-                Response.Redirect("Home.aspx");
-            }
+                    Session.Add("loggedIn", "userA");
+                    Response.Redirect("Home.aspx");
+                }
         }
     }
 }
