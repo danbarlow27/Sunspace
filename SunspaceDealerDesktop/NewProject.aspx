@@ -11,44 +11,57 @@
         function newProjectCheckQuestion1() {
             console.log("onkeyup slide1");
             //disable 'next slide' button until after validation
-            document.getElementById('MainContent_btnQuestion1').disabled = true;
+            document.getElementById('<%=btnQuestion1.ClientID%>').disabled = true;
             //if they select new customer
-            if ($('#MainContent_radNewCustomer').is(':checked')) {
+            if ($('#<%=radNewCustomer.ClientID%>').is(':checked')) {
                 //if checked, clear possible pager value from existing
-                $('#MainContent_lblSpecsProjectTypeAnswer').text("");
+                $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("");
 
                 //move textbox data into hidden fields
-                document.getElementById("MainContent_hidFirstName").value = $('#MainContent_txtCustomerFirstName').val();
-                document.getElementById("MainContent_hidLastName").value = $('#MainContent_txtCustomerLastName').val();
-                document.getElementById("MainContent_hidAddress").value = $('#MainContent_txtCustomerAddress').val();
-                document.getElementById("MainContent_hidCity").value = $('#MainContent_txtCustomerCity').val();
-                document.getElementById("MainContent_hidZip").value = $('#MainContent_txtCustomerZip').val();
-                document.getElementById("MainContent_hidPhone").value = $('#MainContent_txtCustomerPhone').val();
+                document.getElementById("<%=hidCountry.ClientID%>").value = $('#<%=ddlCustomerCountry.ClientID%>').val();
+                document.getElementById("<%=hidFirstName.ClientID%>").value = $('#<%=txtCustomerFirstName.ClientID%>').val();
+                document.getElementById("<%=hidLastName.ClientID%>").value = $('#<%=txtCustomerLastName.ClientID%>').val();
+                document.getElementById("<%=hidAddress.ClientID%>").value = $('#<%=txtCustomerAddress.ClientID%>').val();
+                document.getElementById("<%=hidCity.ClientID%>").value = $('#<%=txtCustomerCity.ClientID%>').val();
+                document.getElementById("<%=hidZip.ClientID%>").value = $('#<%=txtCustomerZip.ClientID%>').val();
+                document.getElementById("<%=hidPhone.ClientID%>").value = $('#<%=txtCustomerPhone.ClientID%>').val();
+                document.getElementById("<%=hidCell.ClientID%>").value = $('#<%=txtCustomerCell.ClientID%>').val();
+                document.getElementById("<%=hidEmail.ClientID%>").value = $('#<%=txtCustomerEmail.ClientID%>').val();
                 //blank out existing
-                document.getElementById("MainContent_hidExisting").value = "";
-
+                document.getElementById("<%=hidExisting.ClientID%>").value = "";
+                
                 //Make sure the text boxes aren't blank before manually checking zip/postal and phone
-                if (document.getElementById("MainContent_hidFirstName").value != "" &&
-                    document.getElementById("MainContent_hidLastName").value != "" &&
-                    document.getElementById("MainContent_hidAddress").value != "" &&
-                    document.getElementById("MainContent_hidCity").value != "") {
+                if (document.getElementById("<%=hidFirstName.ClientID%>").value != "" &&
+                    document.getElementById("<%=hidLastName.ClientID%>").value != "" &&
+                    document.getElementById("<%=hidAddress.ClientID%>").value != "" &&
+                    document.getElementById("<%=hidCity.ClientID%>").value != "" &&
+                    document.getElementById("<%=hidEmail.ClientID%>").value != "") {
 
                     //having troubles checking .value.length, so setting .value into a variable
-                    var lengthCheck = document.getElementById("MainContent_hidPhone").value;
+                    var lengthCheck = document.getElementById("<%=hidPhone.ClientID%>").value;
 
                     //only check if a full 10digit number is entered
                     if (lengthCheck.length == 10) {
                         //validatePhone function returns an error message, blank if valid
-                        var validPhone = validatePhone(document.getElementById("MainContent_hidPhone").value);
+                        var validPhone = validatePhone(document.getElementById("<%=hidPhone.ClientID%>").value);
+                    }
+
+                    //having troubles checking .value.length, so setting .value into a variable
+                    var lengthCheck = document.getElementById("<%=hidCell.ClientID%>").value;
+
+                    //only check if a full 10digit number is entered
+                    if (lengthCheck.length == 10) {
+                        //validatePhone function returns an error message, blank if valid
+                        var validCell = validatePhone(document.getElementById("<%=hidCell.ClientID%>").value);
                     }
 
                     //same troubles as before, checking .value.length
-                    var zipCode = document.getElementById("MainContent_hidZip").value;
-                    var isValid = false;
+                    var zipCode = document.getElementById("<%=hidZip.ClientID%>").value;
+                    var isValid = true;
 
                     //if zip code is not valid numeric, or it is not 5 digits, it is not valid
                     if (!isNaN(zipCode) && zipCode.length == 5) {
-                        isValid = true;
+                        
                     }
                     else {
                         isValid = false;
@@ -56,7 +69,14 @@
 
                     //only fully valid if no error message was returned
                     if (validPhone == "") {
-                        isValid = true;
+                    }
+                    else {
+                        //invalid phone
+                        isValid = false;
+                    }
+
+                    //only fully valid if no error message was returned
+                    if (validCell == "") {
                     }
                     else {
                         //invalid phone
@@ -65,9 +85,9 @@
 
                     if (isValid == true) {
                         //Set answer to 'new' on side pager and enable button
-                        $('#MainContent_lblSpecsProjectTypeAnswer').text("New");
+                        $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("New");
                         document.getElementById('pagerOne').style.display = "inline";
-                        document.getElementById('MainContent_btnQuestion1').disabled = false;
+                        document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
                     }
                 }
                 else {
@@ -75,23 +95,23 @@
                 }
             }
                 //if they select existing customer
-            else if ($('#MainContent_radExistingCustomer').is(':checked')) {
+            else if ($('#<%=radExistingCustomer.ClientID%>').is(':checked')) {
                 //blank out new customer hiddens, just in case they did it first then came existing after
-                document.getElementById("MainContent_hidFirstName").value = "";
-                document.getElementById("MainContent_hidLastName").value = "";
-                document.getElementById("MainContent_hidAddress").value = "";
-                document.getElementById("MainContent_hidCity").value = "";
-                document.getElementById("MainContent_hidZip").value = "";
-                document.getElementById("MainContent_hidPhone").value = "";
-                $('#MainContent_lblSpecsProjectTypeAnswer').text("");
+                document.getElementById("<%=hidFirstName.ClientID%>").value = "";
+                document.getElementById("<%=hidLastName.ClientID%>").value = "";
+                document.getElementById("<%=hidAddress.ClientID%>").value = "";
+                document.getElementById("<%=hidCity.ClientID%>").value = "";
+                document.getElementById("<%=hidZip.ClientID%>").value = "";
+                document.getElementById("<%=hidPhone.ClientID%>").value = "";
+                $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("");
 
                 //if selected value from dropdown is not the generic, it is a valid choice
-                if (document.getElementById("MainContent_ddlExistingCustomer").value != "Choose a Customer...") {
+                if (document.getElementById("<%=ddlExistingCustomer.ClientID%>").value != "Choose a Customer...") {
                     //valid, so update pager and enable button
-                    $('#MainContent_lblSpecsProjectTypeAnswer').text("Existing - " + $('#MainContent_ddlExistingCustomer').val());
-                    document.getElementById("MainContent_hidExisting").value = $('#MainContent_ddlExistingCustomer').val();
+                    $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("Existing - " + $('#<%=ddlExistingCustomer.ClientID%>').val());
+                    document.getElementById("<%=hidExisting.ClientID%>").value = $('#<%=ddlExistingCustomer.ClientID%>').val();
                     document.getElementById('pagerOne').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion1').disabled = false;
+                    document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
                 }
             }
 
@@ -101,15 +121,15 @@
         function newProjectCheckQuestion2() {
             console.log("onkeyup slide2");
             //disable 'next slide' button until after validation
-            document.getElementById('MainContent_btnQuestion2').disabled = true;
+            document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
 
-            document.getElementById("MainContent_hidProjectName").value = $('#MainContent_txtProjectName').val();
+            document.getElementById("<%=hidProjectName.ClientID%>").value = $('#<%=txtProjectName.ClientID%>').val();
 
-            if (document.getElementById("MainContent_hidProjectName").value != "") {
+            if (document.getElementById("<%=hidProjectName.ClientID%>").value != "") {
                 //valid, so update pager and enable button
-                $('#MainContent_lblProjectNameAnswer').text(document.getElementById("MainContent_hidProjectName").value);
+                $('#<%=lblProjectNameAnswer.ClientID%>').text(document.getElementById("<%=hidProjectName.ClientID%>").value);
                 document.getElementById('pagerTwo').style.display = "inline";
-                document.getElementById('MainContent_btnQuestion2').disabled = false;
+                document.getElementById('<%=btnQuestion2.ClientID%>').disabled = false;
             }
             else {
                 //error styling or something
@@ -118,38 +138,38 @@
         }
 
         function newProjectCheckQuestion3() {
-            document.getElementById('MainContent_btnQuestion3').disabled = true;
+            document.getElementById('<%=btnQuestion3.ClientID%>').disabled = true;
 
             //if they pick sunroom
-            if ($('#MainContent_radProjectSunroom').is(':checked')) {
+            if ($('#<%=radProjectSunroom.ClientID%>').is(':checked')) {
                 //They check one of 4 model types
                 //update pager, enable button, and update hidden value
                 //corresponding to selected model #
-                if ($('#MainContent_radSunroomModel100').is(':checked')) {
-                    document.getElementById("MainContent_hidModelNumber").value = "100";
+                if ($('#<%=radSunroomModel100.ClientID%>').is(':checked')) {
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "100";
                     document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion3').disabled = false;
+                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
                 }
-                else if ($('#MainContent_radSunroomModel200').is(':checked')) {
-                    document.getElementById("MainContent_hidModelNumber").value = "200";
+                else if ($('#<%=radSunroomModel200.ClientID%>').is(':checked')) {
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "200";
                     document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion3').disabled = false;
+                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
                 }
-                else if ($('#MainContent_radSunroomModel300').is(':checked')) {
-                    document.getElementById("MainContent_hidModelNumber").value = "300";
+                else if ($('#<%=radSunroomModel300.ClientID%>').is(':checked')) {
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "300";
                     document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion3').disabled = false;
+                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
                 }
-                else if ($('#MainContent_radSunroomModel400').is(':checked')) {
-                    document.getElementById("MainContent_hidModelNumber").value = "400";
+                else if ($('#<%=radSunroomModel400.ClientID%>').is(':checked')) {
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "400";
                     document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion3').disabled = false;
+                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
                 }
 
                 //update hidden value for type, and display pager message based on the now
                 //two hidden values type and model#
-                document.getElementById("MainContent_hidProjectType").value = "Sunroom";
-                $('#MainContent_lblProjectTypeAnswer').text(document.getElementById("MainContent_hidProjectType").value + " of Model " + document.getElementById("MainContent_hidModelNumber").value);
+                document.getElementById("<%=hidProjectType.ClientID%>").value = "Sunroom";
+                $('#<%=lblProjectTypeAnswer.ClientID%>').text(document.getElementById("<%=hidProjectType.ClientID%>").value + " of Model " + document.getElementById("<%=hidModelNumber.ClientID%>").value);
 
                 //selected sunroom, so hide the walls only button, and re-show the normal button
                 document.getElementById('<%=btnQuestion4.ClientID%>').style.display="inline";
@@ -190,24 +210,24 @@
         }
 
         function newProjectCheckQuestion4() {
-            document.getElementById('MainContent_btnQuestion4').disabled = true;
+            document.getElementById('<%=btnQuestion4.ClientID%>').disabled = true;
             //overall error check boolean
             var optionChecksPassed = true;
 
             //Only run validation if a number is entered and values selected
-            if (document.getElementById("MainContent_txtKneewallHeight").value != "" &&
-                document.getElementById("MainContent_ddlKneewallType").value != "") {
+            if (document.getElementById("<%=txtKneewallHeight.ClientID%>").value != "" &&
+                document.getElementById("<%=ddlKneewallType.ClientID%>").value != "") {
 
                 //only requirement on height at this moment is that it is a valid number
-                if (isNaN(document.getElementById("MainContent_txtKneewallHeight").value)) {
+                if (isNaN(document.getElementById("<%=txtKneewallHeight.ClientID%>").value)) {
                     //kneewall height error handling
                     optionChecksPassed = false;
                 }
                 else {
                     //by default, preferences will populate a selected value, but as long as a number is entered, and
                     //dropdowns have a selected value, its valid, set check bool to true, update hidden values
-                    document.getElementById("MainContent_hidKneewallHeight").value = document.getElementById("MainContent_txtKneewallHeight").value;
-                    document.getElementById("MainContent_hidKneewallType").value = document.getElementById("MainContent_ddlKneewallType").value;
+                    document.getElementById("<%=hidKneewallHeight.ClientID%>").value = document.getElementById("<%=txtKneewallHeight.ClientID%>").value;
+                    document.getElementById("<%=hidKneewallType.ClientID%>").value = document.getElementById("<%=ddlKneewallType.ClientID%>").value;
                 }
             }
             else {
@@ -216,15 +236,15 @@
             }
 
             //similar checks as above for transom, update hidden values
-            if (document.getElementById("MainContent_txtTransomHeight").value != "" &&
-                document.getElementById("MainContent_ddlTransomType").value != "") {
+            if (document.getElementById("<%=txtTransomHeight.ClientID%>").value != "" &&
+                document.getElementById("<%=ddlTransomType.ClientID%>").value != "") {
 
-                if (isNaN(document.getElementById("MainContent_txtTransomHeight").value)) {
-                    optionChecksPassed = false;
+                if (isNaN(document.getElementById("<%=txtTransomHeight.ClientID%>").value)) {
+                    console.log("Invalid transom height");
                 }
                 else {
-                    document.getElementById("MainContent_hidTransomHeight").value = document.getElementById("MainContent_txtTransomHeight").value;
-                    document.getElementById("MainContent_hidTransomType").value = document.getElementById("MainContent_ddlTransomType").value;
+                    document.getElementById("<%=hidTransomHeight.ClientID%>").value = document.getElementById("<%=txtTransomHeight.ClientID%>").value;
+                    document.getElementById("<%=hidTransomType.ClientID%>").value = document.getElementById("<%=ddlTransomType.ClientID%>").value;
                 }
 
             }
@@ -234,17 +254,17 @@
             }
 
             //make sure skins and colours are selected, update hidden values
-            if (document.getElementById("MainContent_ddlFramingColour").value != "" &&
-                document.getElementById("MainContent_ddlInteriorColour").value != "" &&
-                document.getElementById("MainContent_ddlInteriorSkin").value != "" &&
-                document.getElementById("MainContent_ddlExteriorColour").value != "" &&
-                document.getElementById("MainContent_ddlExteriorSkin").value != "") {
+            if (document.getElementById("<%=ddlFramingColour.ClientID%>").value != "" &&
+                document.getElementById("<%=ddlInteriorColour.ClientID%>").value != "" &&
+                document.getElementById("<%=ddlInteriorSkin.ClientID%>").value != "" &&
+                document.getElementById("<%=ddlExteriorColour.ClientID%>").value != "" &&
+                document.getElementById("<%=ddlExteriorSkin.ClientID%>").value != "") {
 
-                document.getElementById("MainContent_hidFramingColour").value = document.getElementById("MainContent_ddlFramingColour").value;
-                document.getElementById("MainContent_hidInteriorColour").value = document.getElementById("MainContent_ddlInteriorColour").value;
-                document.getElementById("MainContent_hidInteriorSkin").value = document.getElementById("MainContent_ddlInteriorSkin").value;
-                document.getElementById("MainContent_hidExteriorColour").value = document.getElementById("MainContent_ddlExteriorColour").value;
-                document.getElementById("MainContent_hidExteriorSkin").value = document.getElementById("MainContent_ddlExteriorSkin").value;
+                document.getElementById("<%=hidFramingColour.ClientID%>").value = document.getElementById("<%=ddlFramingColour.ClientID%>").value;
+                document.getElementById("<%=hidInteriorColour.ClientID%>").value = document.getElementById("<%=ddlInteriorColour.ClientID%>").value;
+                document.getElementById("<%=hidInteriorSkin.ClientID%>").value = document.getElementById("<%=ddlInteriorSkin.ClientID%>").value;
+                document.getElementById("<%=hidExteriorColour.ClientID%>").value = document.getElementById("<%=ddlExteriorColour.ClientID%>").value;
+                document.getElementById("<%=hidExteriorSkin.ClientID%>").value = document.getElementById("<%=ddlExteriorSkin.ClientID%>").value;
             }
             else {
                 optionChecksPassed = false;
@@ -252,9 +272,9 @@
             }
 
             if (optionChecksPassed) {
-                document.getElementById('MainContent_btnQuestion4').disabled = false;
+                document.getElementById('<%=btnQuestion4.ClientID%>').disabled = false;
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').disabled = false;
-                $('#MainContent_lblQuestion4PagerAnswer').text("Entry Complete");
+                $('#<%=lblQuestion4PagerAnswer.ClientID%>').text("Entry Complete");
                 document.getElementById('pagerFour').style.display = "inline";
             }
 
@@ -268,20 +288,20 @@
         }
 
         function newProjectCheckQuestion5() {
-            document.getElementById('MainContent_btnQuestion5').disabled = true;
+            document.getElementById('<%=btnQuestion5.ClientID%>').disabled = true;
 
             //confirm that an answer is selected, and update hidden values, and pager as needed
-            if ($('#MainContent_radFoamProtectedYes').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion5').disabled = false;
-                $('#MainContent_lblQuestion5PagerAnswer').text("Yes");
+            if ($('#<%=radFoamProtectedYes.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion5.ClientID%>').disabled = false;
+                $('#<%=lblQuestion5PagerAnswer.ClientID%>').text("Yes");
                 document.getElementById('pagerFive').style.display = "inline";
-                document.getElementById("MainContent_hidFoamProtected").value = "Yes";
+                document.getElementById("<%=hidFoamProtected.ClientID%>").value = "Yes";
             }
-            else if ($('#MainContent_radFoamProtectedNo').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion5').disabled = false;
-                $('#MainContent_lblQuestion5PagerAnswer').text("No");
+            else if ($('#<%=radFoamProtectedNo.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion5.ClientID%>').disabled = false;
+                $('#<%=lblQuestion5PagerAnswer.ClientID%>').text("No");
                 document.getElementById('pagerFive').style.display = "inline";
-                document.getElementById("MainContent_hidFoamProtected").value = "No";
+                document.getElementById("<%=hidFoamProtected.ClientID%>").value = "No";
             }
             else {
                 //no selection, errors
@@ -291,20 +311,20 @@
         }
 
         function newProjectCheckQuestion6() {
-            document.getElementById('MainContent_btnQuestion6').disabled = true;
+            document.getElementById('<%=btnQuestion6.ClientID%>').disabled = true;
 
             //confirm that an answer is selected, and update hidden values, and pager as needed
-            if ($('#MainContent_radPrefabFloorYes').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion6').disabled = false;
-                $('#MainContent_lblQuestion6PagerAnswer').text("Yes");
+            if ($('#<%=radPrefabFloorYes.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion6.ClientID%>').disabled = false;
+                $('#<%=lblQuestion6PagerAnswer.ClientID%>').text("Yes");
                 document.getElementById('pagerSix').style.display = "inline";
-                document.getElementById("MainContent_hidPrefabFloor").value = "Yes";
+                document.getElementById("<%=hidPrefabFloor.ClientID%>").value = "Yes";
             }
-            else if ($('#MainContent_radPrefabFloorNo').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion6').disabled = false;
-                $('#MainContent_lblQuestion6PagerAnswer').text("No");
+            else if ($('#<%=radPrefabFloorNo.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion6.ClientID%>').disabled = false;
+                $('#<%=lblQuestion6PagerAnswer.ClientID%>').text("No");
                 document.getElementById('pagerSix').style.display = "inline";
-                document.getElementById("MainContent_hidPrefabFloor").value = "No";
+                document.getElementById("<%=hidPrefabFloor.ClientID%>").value = "No";
             }
             else {
                 //no selection, errors
@@ -314,36 +334,36 @@
         }
 
         function newProjectCheckQuestion7() {
-            document.getElementById('MainContent_btnQuestion7').disabled = true;
+            document.getElementById('<%=btnQuestion7.ClientID%>').disabled = true;
 
             //confirm that an answer is selected, and update hidden values, and pager as needed
-            if ($('#MainContent_radRoofNo').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion7').disabled = false;
-                $('#MainContent_lblQuestion7PagerAnswer').text("None");
+            if ($('#<%=radRoofNo.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion7.ClientID%>').disabled = false;
+                $('#<%=lblQuestion7PagerAnswer.ClientID%>').text("None");
                 document.getElementById('pagerSeven').style.display = "inline";
-                document.getElementById("MainContent_hidRoof").value = "No";
+                document.getElementById("<%=hidRoof.ClientID%>").value = "No";
             }
-            else if ($('#MainContent_radRoofYes').is(':checked')) {
-                if ($('#MainContent_radStudio').is(':checked')) {
-                    document.getElementById('MainContent_btnQuestion7').disabled = false;
-                    $('#MainContent_lblQuestion7PagerAnswer').text("Studio");
+            else if ($('#<%=radRoofYes.ClientID%>').is(':checked')) {
+                if ($('#<%=radStudio.ClientID%>').is(':checked')) {
+                    document.getElementById('<%=btnQuestion7.ClientID%>').disabled = false;
+                    $('#<%=lblQuestion7PagerAnswer.ClientID%>').text("Studio");
                     document.getElementById('pagerSeven').style.display = "inline";
-                    document.getElementById("MainContent_hidRoof").value = "Yes";
-                    document.getElementById("MainContent_hidRoofType").value = "Studio";
+                    document.getElementById("<%=hidRoof.ClientID%>").value = "Yes";
+                    document.getElementById("<%=hidRoofType.ClientID%>").value = "Studio";
                 }
-                else if ($('#MainContent_radDealerGable').is(':checked')) {
-                    document.getElementById('MainContent_btnQuestion7').disabled = false;
-                    $('#MainContent_lblQuestion7PagerAnswer').text("Dealer Gable");
+                else if ($('#<%=radDealerGable.ClientID%>').is(':checked')) {
+                    document.getElementById('<%=btnQuestion7.ClientID%>').disabled = false;
+                    $('#<%=lblQuestion7PagerAnswer.ClientID%>').text("Dealer Gable");
                     document.getElementById('pagerSeven').style.display = "inline";
-                    document.getElementById("MainContent_hidRoof").value = "Yes";
-                    document.getElementById("MainContent_hidRoofType").value = "Dealer Gable";
+                    document.getElementById("<%=hidRoof.ClientID%>").value = "Yes";
+                    document.getElementById("<%=hidRoofType.ClientID%>").value = "Dealer Gable";
                 }
-                else if ($('#MainContent_radSunspaceGable').is(':checked')) {
-                    document.getElementById('MainContent_btnQuestion7').disabled = false;
-                    $('#MainContent_lblQuestion7PagerAnswer').text("Sunspace Gable");
+                else if ($('#<%=radSunspaceGable.ClientID%>').is(':checked')) {
+                    document.getElementById('<%=btnQuestion7.ClientID%>').disabled = false;
+                    $('#<%=lblQuestion7PagerAnswer.ClientID%>').text("Sunspace Gable");
                     document.getElementById('pagerSeven').style.display = "inline";
-                    document.getElementById("MainContent_hidRoof").value = "Yes";
-                    document.getElementById("MainContent_hidRoofType").value = "Sunspace Gable";
+                    document.getElementById("<%=hidRoof.ClientID%>").value = "Yes";
+                    document.getElementById("<%=hidRoofType.ClientID%>").value = "Sunspace Gable";
                 }
                 else {
                     //no type selection, errors
@@ -357,74 +377,74 @@
         }
 
         function newProjectCheckQuestion8() {
-            document.getElementById('MainContent_btnQuestion8').disabled = true;
+            document.getElementById('<%=btnQuestion8.ClientID%>').disabled = true;
 
             //make sure at least one option is selected, update pager and hidden accordingly
-            if ($('#MainContent_radPreset1').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 1");
+            if ($('#<%=radPreset1.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion8.ClientID%>').disabled = false;
+                $('#<%=lblQuestion8PagerAnswer.ClientID%>').text("Preset 1");
                 document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "1";
+                document.getElementById("<%=hidLayoutSelection.ClientID%>").value = "1";
             }
-            else if ($('#MainContent_radPreset2').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 2");
+            else if ($('#<%=radPreset2.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion8.ClientID%>').disabled = false;
+                $('#<%=lblQuestion8PagerAnswer.ClientID%>').text("Preset 2");
                 document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "2";
+                document.getElementById("<%=hidLayoutSelection.ClientID%>").value = "2";
             }
-            else if ($('#MainContent_radPreset3').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 3");
+            else if ($('#<%=radPreset3.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion8.ClientID%>').disabled = false;
+                $('#<%=lblQuestion8PagerAnswer.ClientID%>').text("Preset 3");
                 document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "3";
+                document.getElementById("<%=hidLayoutSelection.ClientID%>").value = "3";
             }
-            else if ($('#MainContent_radPreset4').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 4");
+            else if ($('#<%=radPreset4.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion8.ClientID%>').disabled = false;
+                $('#<%=lblQuestion8PagerAnswer.ClientID%>').text("Preset 4");
                 document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "4";
+                document.getElementById("<%=hidLayoutSelection.ClientID%>").value = "4";
             }
-            else if ($('#MainContent_radPreset5').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 5");
+            else if ($('#<%=radPreset5.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion8.ClientID%>').disabled = false;
+                $('#<%=lblQuestion8PagerAnswer.ClientID%>').text("Preset 5");
                 document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "5";
+                document.getElementById("<%=hidLayoutSelection.ClientID%>").value = "5";
             }
-            else if ($('#MainContent_radPreset6').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 6");
+            else if ($('#<%=radPreset6.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion8.ClientID%>').disabled = false;
+                $('#<%=lblQuestion8PagerAnswer.ClientID%>').text("Preset 6");
                 document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "6";
+                document.getElementById("<%=hidLayoutSelection.ClientID%>").value = "6";
             }
-            else if ($('#MainContent_radPreset7').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 7");
+            else if ($('#<%=radPreset7.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion8.ClientID%>').disabled = false;
+                $('#<%=lblQuestion8PagerAnswer.ClientID%>').text("Preset 7");
                 document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "7";
+                document.getElementById("<%=hidLayoutSelection.ClientID%>").value = "7";
             }
-            else if ($('#MainContent_radPreset8').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 8");
+            else if ($('#<%=radPreset8.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion8.ClientID%>').disabled = false;
+                $('#<%=lblQuestion8PagerAnswer.ClientID%>').text("Preset 8");
                 document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "8";
+                document.getElementById("<%=hidLayoutSelection.ClientID%>").value = "8";
             }
-            else if ($('#MainContent_radPreset9').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 9");
+            else if ($('#<%=radPreset9.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion8.ClientID%>').disabled = false;
+                $('#<%=lblQuestion8PagerAnswer.ClientID%>').text("Preset 9");
                 document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "9";
+                document.getElementById("<%=hidLayoutSelection.ClientID%>").value = "9";
             }
-            else if ($('#MainContent_radPreset10').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Preset 10");
+            else if ($('#<%=radPreset10.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion8.ClientID%>').disabled = false;
+                $('#<%=lblQuestion8PagerAnswer.ClientID%>').text("Preset 10");
                 document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "10";
+                document.getElementById("<%=hidLayoutSelection.ClientID%>").value = "10";
             }
-            else if ($('#MainContent_radPresetC1').is(':checked')) {
-                document.getElementById('MainContent_btnQuestion8').disabled = false;
-                $('#MainContent_lblQuestion8PagerAnswer').text("Custom");
+            else if ($('#<%=radPresetC1.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion8.ClientID%>').disabled = false;
+                $('#<%=lblQuestion8PagerAnswer.ClientID%>').text("Custom");
                 document.getElementById('pagerEight').style.display = "inline";
-                document.getElementById("MainContent_hidLayoutSelection").value = "Custom";
+                document.getElementById("<%=hidLayoutSelection.ClientID%>").value = "Custom";
             }
             else {
                 //no selection, errors
@@ -436,8 +456,8 @@
         function newProjectChangeColours() {
             console.log("new project change colours");
             
-            modelNumber = document.getElementById("MainContent_hidModelNumber");
-            ddlFramingColour = document.getElementById("MainContent_ddlFramingColour");
+            modelNumber = document.getElementById("<%=hidModelNumber.ClientID%>");
+            ddlFramingColour = document.getElementById("<%=ddlFramingColour.ClientID%>");
             ddlFramingColour.options.length = 0;
 
             //var blankOption = new Option("Choose a colour...", "Choose a colour...");
@@ -495,24 +515,24 @@
             
             if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "White")
             {
-                $("#MainContent_ddlInteriorColour").val('White');
-                $("#MainContent_ddlInteriorSkin").val('White Aluminum Stucco');
-                $("#MainContent_ddlExteriorColour").val('White');
-                $("#MainContent_ddlExteriorSkin").val('White Aluminum Stucco');
+                $("#<%=ddlInteriorColour.ClientID%>").val('White');
+                $("#<%=ddlInteriorSkin.ClientID%>").val('White Aluminum Stucco');
+                $("#<%=ddlExteriorColour.ClientID%>").val('White');
+                $("#<%=ddlExteriorSkin.ClientID%>").val('White Aluminum Stucco');
             }
             else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Driftwood")
             {
-                $("#MainContent_ddlInteriorColour").val('Driftwood');
-                $("#MainContent_ddlInteriorSkin").val('Driftwood Aluminum Stucco');
-                $("#MainContent_ddlExteriorColour").val('Driftwood');
-                $("#MainContent_ddlExteriorSkin").val('Driftwood Aluminum Stucco');
+                $("#<%=ddlInteriorColour.ClientID%>").val('Driftwood');
+                $("#<%=ddlInteriorSkin.ClientID%>").val('Driftwood Aluminum Stucco');
+                $("#<%=ddlExteriorColour.ClientID%>").val('Driftwood');
+                $("#<%=ddlExteriorSkin.ClientID%>").val('Driftwood Aluminum Stucco');
             }
             else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Bronze")
             {
-                $("#MainContent_ddlInteriorColour").val('Bronze');
-                $("#MainContent_ddlInteriorSkin").val('Bronze Aluminum Stucco');
-                $("#MainContent_ddlExteriorColour").val('Bronze');
-                $("#MainContent_ddlExteriorSkin").val('Bronze Aluminum Stucco');
+                $("#<%=ddlInteriorColour.ClientID%>").val('Bronze');
+                $("#<%=ddlInteriorSkin.ClientID%>").val('Bronze Aluminum Stucco');
+                $("#<%=ddlExteriorColour.ClientID%>").val('Bronze');
+                $("#<%=ddlExteriorSkin.ClientID%>").val('Bronze Aluminum Stucco');
             }
 
             //now that colours have cascading we still need to validate the slide
@@ -574,16 +594,14 @@
         }
     </script>
 
-    <%-- SLIDES (QUESTIONS)
-    ======================================== 
-        
-        onmousedown="event.preventDefault ? event.preventDefault() : event.returnValue = false"--%>
+    <%-- end 'complete sunroom' option --%>    
+
+    <%-- EXISTING CUSTOMER --%>
     <div class="slide-window"  >
 
         <div class="slide-wrapper">
             
-            <%-- QUESTION 1 - New or existing customer
-            ======================================== --%>
+            <%-- end .toggleContent --%>
             <div id="slide1" class="slide">
 
                 <h1>
@@ -592,7 +610,7 @@
                               
                 <ul class="toggleOptions">
 
-                    <%-- NEW CUSTOMER --%>
+                    <%-- end 'existing customer' option --%>
                     <li>
                         <asp:RadioButton ID="radNewCustomer" GroupName="question1" runat="server" OnClick="newProjectCheckQuestion1()" />
                         <asp:Label ID="lblNewCustomerRadio" AssociatedControlID="radNewCustomer" runat="server"></asp:Label>
@@ -604,6 +622,15 @@
                                     <h3>Enter customer details:</h3>
 
                                     <asp:Table ID="tblNewCustomerInfo" CssClass="tblTxtFields" runat="server">
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblCustomerCountry" AssociatedControlID="ddlCustomerCountry" runat="server" Text="Country:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlCustomerCountry" OnChange="newProjectCheckQuestion1()" runat="server" ></asp:DropDownList>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
 
                                         <asp:TableRow>
                                             <asp:TableCell>
@@ -657,6 +684,16 @@
 
                                         <asp:TableRow>
                                             <asp:TableCell>
+                                                <asp:Label ID="lblCustomerEmail" AssociatedControlID="txtCustomerEmail" runat="server" Text="Email:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtCustomerEmail" CssClass="txtField" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="50"></asp:TextBox>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
                                                 <asp:Label ID="lblCustomerPhone" AssociatedControlID="txtCustomerPhone" runat="server" Text="Phone Number:"></asp:Label>
                                             </asp:TableCell>
 
@@ -665,13 +702,22 @@
                                             </asp:TableCell>
                                         </asp:TableRow>
 
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblCustomerCell" AssociatedControlID="txtCustomerCell" runat="server" Text="Cell Number:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtCustomerCell" CssClass="txtField txtZipPhone" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="10"></asp:TextBox>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
                                     </asp:Table>
                                 </li>
                             </ul>            
-                        </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'complete sunroom' option --%>
-
-                    <%-- EXISTING CUSTOMER --%>
+                        </div> <%-- end .toggleOptions --%>
+                    </li> <%-- end #slide1 --%>
+                    <%-- QUESTION 2 - Project name
+            ======================================== --%>
                     <li>
                         <asp:RadioButton ID="radExistingCustomer" GroupName="question1" runat="server" OnClick="newProjectCheckQuestion1()" />
                         <asp:Label ID="lblExistingCustomerRadio" AssociatedControlID="radExistingCustomer" runat="server"></asp:Label>
@@ -681,21 +727,21 @@
                             <ul>
                                 <li>
                                     <asp:DropDownList ID="ddlExistingCustomer" OnChange="newProjectCheckQuestion1()" GroupName="question1" runat="server" />
+                                    <!-- DataTextField="percentage" DataValueField="id" DataSourceId="sds_Items" in case we decide to data-bind -->
                                 </li>
                             </ul>            
-                        </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'existing customer' option --%>
+                        </div> <%-- end .toggleOptions --%>
+                    </li> <%-- end #slide2 --%>
 
-                </ul> <%-- end .toggleOptions --%>
+                </ul> <%-- QUESTION 3 - What type of project?
+            ======================================== --%>
 
                 <asp:Button ID="btnQuestion1" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
 
             </div> 
-            <%-- end #slide1 --%>
+            <%-- COMPLETE SUNROOM --%>
 
-
-            <%-- QUESTION 2 - Project name
-            ======================================== --%>
+            <%-- end 'complete sunroom' options --%>
             <div id="slide2" class="slide">
                 
                 <h1>
@@ -717,16 +763,14 @@
                         </asp:Table>
                     </li>
 
-                </ul> <%-- end .toggleOptions --%>
+                </ul> <%-- end 'complete sunroom' --%>
 
                 <asp:Button ID="btnQuestion2" Enabled = "false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
                 
             </div> 
-            <%-- end #slide2 --%>
+            <%-- WALLS --%>
 
-
-            <%-- QUESTION 3 - What type of project?
-            ======================================== --%>
+            <%-- end 'wall' options --%>
             <div id="slide3" class="slide">
 
                 <h1>
@@ -735,7 +779,7 @@
                               
                 <ul class="toggleOptions">
 
-                    <%-- COMPLETE SUNROOM --%>
+                    <%-- end 'walls' --%>
                     <li>
                         <asp:RadioButton ID="radProjectSunroom" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectSunroomRadio" AssociatedControlID="radProjectSunroom" runat="server"></asp:Label>
@@ -764,10 +808,9 @@
                                     <asp:Label ID="lblSunroomModel400" AssociatedControlID="radSunroomModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
                             </ul>            
-                        </div> <%-- end 'complete sunroom' options --%>
-                    </li> <%-- end 'complete sunroom' --%>
-
-                    <%-- WALLS --%>
+                        </div> <%-- WINDOWS --%>
+                    </li> <%-- end 'windows' --%>
+                    <%-- DOORS --%>
                     <li>
                         <asp:RadioButton ID="radProjectWalls" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectWallsRadio" AssociatedControlID="radProjectWalls" runat="server"></asp:Label>
@@ -796,31 +839,27 @@
                                     <asp:Label ID="lblWallsModel400" AssociatedControlID="radWallsModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
                             </ul>            
-                        </div> <%-- end 'wall' options --%>
-                    </li> <%-- end 'walls' --%>
-
-                    <%-- WINDOWS --%>
+                        </div> <%-- end 'doors' --%>
+                    </li> <%-- FLOORING --%>
+                    <%-- end 'flooring' --%>
                     <li>
                         <asp:RadioButton ID="radProjectWindows" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectWindowsRadio" AssociatedControlID="radProjectWindows" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectWindows" AssociatedControlID="radProjectWindows" runat="server" Text="Windows"></asp:Label>
-                    </li> <%-- end 'windows' --%>
-
-                    <%-- DOORS --%>
+                    </li> <%-- ROOF --%>
+                    <%-- end 'roof' options --%>
                     <li>
                         <asp:RadioButton ID="radProjectDoors" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectDoorsRadio" AssociatedControlID="radProjectDoors" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectDoors" AssociatedControlID="radProjectDoors" runat="server" Text="Doors"></asp:Label>
-                    </li> <%-- end 'doors' --%>
-
-                    <%-- FLOORING --%>
+                    </li> <%-- end 'roof' --%>
+                    <%-- SHOWROOM --%>
                     <li>
                         <asp:RadioButton ID="radProjectFlooring" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectFlooringRadio" AssociatedControlID="radProjectFlooring" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectFlooring" AssociatedControlID="radProjectFlooring" runat="server" Text="Flooring"></asp:Label>
-                    </li> <%-- end 'flooring' --%>
-
-                    <%-- ROOF --%>
+                    </li> <%-- end 'showroom' options --%>
+                    <%-- COMPONENTS --%>
                     <li>
                         <asp:RadioButton ID="radProjectRoof" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectRoofRadio" AssociatedControlID="radProjectRoof" runat="server"></asp:Label>
@@ -854,9 +893,8 @@
                                     <asp:Label ID="lblRoofOSB" AssociatedControlID="radRoofOSB" runat="server" Text="OSB/OSB"></asp:Label>
                                 </li>
                             </ul>            
-                        </div> <%-- end 'roof' options --%>
-                    </li> <%-- end 'roof' --%>
-                    <%-- SHOWROOM --%>                    
+                        </div> <%-- end 'components' --%>
+                    </li> <%-- end .toggleOptions --%>                    <%-- end #slide3 --%>                    
                     <li>
                         <asp:RadioButton ID="radSunroomModelShowroom" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblSunroomModelShowroomRadio" AssociatedControlID="radSunroomModelShowroom" runat="server"></asp:Label>
@@ -885,25 +923,26 @@
                                     <asp:Label ID="lblShowroomModel400Radio" AssociatedControlID="radShowroomModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
                             </ul>            
-                        </div> <%-- end 'showroom' options --%>
+                        </div> <%-- QUESTION 4 - Styling Options
+            ======================================== --%>
                     </li>
 
-                    <%-- COMPONENTS --%>
+                    <%-- Option 1 - Kneewall 
+                    ======================================== --%>
                     <li>
                         <asp:RadioButton ID="radProjectComponents" GroupName="projectType" runat="server"  OnClick="goComponents()"/>
                         <asp:Label ID="lblProjectComponentsRadio" AssociatedControlID="radProjectComponents" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectComponents" AssociatedControlID="radProjectComponents" runat="server" Text="Components"></asp:Label>
-                    </li> <%-- end 'components' --%>
+                    </li> <%-- end .toggleContent --%>
 
-                </ul> <%-- end .toggleOptions --%>
+                </ul> <%-- end Q4 option 1 --%>
 
                 <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
             </div> 
-            <%-- end #slide3 --%>
-
+            <%-- Option 2 - Transom
+                    ======================================== --%>
             
-            <%-- QUESTION 4 - Styling Options
-            ======================================== --%>
+            <%-- end .toggleContent --%>
             <div id="slide4" class="slide">
                 
                 <h1>
@@ -911,8 +950,7 @@
                 </h1>  
 
                 <ul class="toggleOptions">
-                    <%-- Option 1 - Kneewall 
-                    ======================================== --%>
+                    <%-- end Q4 option 2 --%>
                     <li>
                                     
                         <asp:RadioButton ID="radKneewallOptions" GroupName="styling" runat="server" />
@@ -929,12 +967,11 @@
                                     <asp:Label ID="lblKneewallType" AssociatedControlID="txtKneewallHeight" runat="server" Text="Type" />
                                 </li>
                             </ul>   
-                        </div> <%-- end .toggleContent --%>
-
-                    </li> <%-- end Q4 option 1 --%>
-
-                    <%-- Option 2 - Transom
+                        </div> <%-- Option 3 - Framing
                     ======================================== --%>
+
+                    </li> <%-- end .toggleContent --%>
+                    <%-- end Q2 option 2 --%>
                     <li>
                 
                         <asp:RadioButton ID="radTransomOptions" GroupName="styling" runat="server" />
@@ -951,12 +988,11 @@
                                     <asp:Label ID="lblTransomType" AssociatedControlID="txtTransomHeight" runat="server" Text="Type" />
                                 </li>
                             </ul>
-                        </div> <%-- end .toggleContent --%>
+                        </div> <%-- end .toggleOptions --%>
 
-                    </li> <%-- end Q4 option 2 --%>  
-              
-                    <%-- Option 3 - Framing
-                    ======================================== --%>
+                    </li> <%-- end #slide4 --%>              
+                    <%-- QUESTION 5 - Foam Protection
+            ======================================== --%>
                     <li>
                 
                         <asp:RadioButton ID="radFramingOptions" GroupName="styling" runat="server" />
@@ -982,20 +1018,19 @@
                                     <asp:Label ID="lblExteriorSkin" AssociatedControlID="ddlExteriorSkin" runat="server" Text="Exterior Skin" />
                                 </li>
                             </ul>
-                        </div> <%-- end .toggleContent --%>
+                        </div> <%-- end .toggleOptions --%>
 
-                    </li> <%-- end Q2 option 2 --%>
-                </ul> <%-- end .toggleOptions --%>
+                    </li> <%-- end #slide5 --%>
+                </ul> <%-- QUESTION 6 - Prefab Floor
+            ======================================== --%>
 
                 <asp:Button ID="btnQuestion4" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" />
                 <asp:Button ID="btnQuestion4Walls" Enabled="false" CssClass="btnSubmit float-right slidePanel" OnClick="btnQuestion4Walls_Click" runat="server" Text="Next Question" />
 
             </div> 
-            <%-- end #slide4 --%>
+            <%-- end .toggleOptions --%>
 
-
-            <%-- QUESTION 5 - Foam Protection
-            ======================================== --%>
+            <%-- end #slide6 --%>
             <div id="slide5" class="slide">
                 
                 <h1>
@@ -1016,15 +1051,14 @@
                         <asp:Label ID="lblFoamProtectedNo" AssociatedControlID="radFoamProtectedNo" runat="server" Text="No"></asp:Label>
                     </li>
 
-                </ul> <%-- end .toggleOptions --%>
+                </ul> <%-- QUESTION 7 - Roof
+            ======================================== --%>
 
                 <asp:Button ID="btnQuestion5" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide6" runat="server" Text="Next Question" />
 
             </div> 
-            <%-- end #slide5 --%>
-
-            <%-- QUESTION 6 - Prefab Floor
-            ======================================== --%>
+            <%-- end 'yes' option --%>
+            <%-- end .toggleOptions --%>
             <div id="slide6" class="slide">
                 
                 <h1>
@@ -1045,15 +1079,14 @@
                         <asp:Label ID="lblPrefabFloorNo" AssociatedControlID="radPrefabFloorNo" runat="server" Text="No"></asp:Label>
                     </li>
 
-                </ul> <%-- end .toggleOptions --%>
+                </ul> <%-- end #slide7 --%>
 
                 <asp:Button ID="btnQuestion6" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide7" runat="server" Text="Next Question" />
 
             </div> 
-            <%-- end #slide6 --%>
-
-            <%-- QUESTION 7 - Roof
+            <%-- QUESTION 8 - Layout
             ======================================== --%>
+            <%-- end .toggleOptions --%>
             <div id="slide7" class="slide">
                 
                 <h1>
@@ -1085,7 +1118,7 @@
                                     <asp:Label ID="lblSunspaceGable" AssociatedControlID="radSunspaceGable" runat="server" Text="Sunspace gable"></asp:Label>
                                 </li>
                             </ul>
-                        </div> <%-- end 'yes' option --%>
+                        </div> <%-- end #slide8 --%>
                     </li>
 
                     <li>
@@ -1094,15 +1127,14 @@
                         <asp:Label ID="lblRoofNo" AssociatedControlID="radRoofNo" runat="server" Text="No"></asp:Label>
                     </li>
 
-                </ul> <%-- end .toggleOptions --%>
+                </ul> <%-- end .slide-wrapper --%>
 
                 <asp:Button ID="btnQuestion7" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide8" runat="server" Text="Next Question" />
 
             </div> 
-            <%-- end #slide7 --%>
-
-            <%-- QUESTION 8 - Layout
-            ======================================== --%>
+            <%-- end .slide-window --%>
+            <%-- SLIDE PAGING (QUESTION NAVIGATION)
+    ======================================== --%>
             <div id="slide8" class="slide">
                 
                 <h1>
@@ -1169,14 +1201,16 @@
 
                     <asp:Button ID="btnQuestion8" Enabled="false" CssClass="btnSubmit float-right slidePanel" Text="Confirm all selections" runat="server" OnClientClick="newProjectCheckQuestion8()" OnClick="btnLayout_Click"/>
 
-                </ul> <%-- end .toggleOptions --%>
+                </ul> <%-- end #paging --%>
 
             </div> 
-            <%-- end #slide8 --%>
+            <%-- Hidden input tags 
+    ======================= --%>
+            <asp:SqlDataSource ID="sdsCustomers" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [customers]"></asp:SqlDataSource>
 
             
 
-        </div> <%-- end .slide-wrapper --%>
+        </div> <%-- end hidden divs --%>
 
     </div> 
     <%-- end .slide-window --%>
@@ -1266,6 +1300,7 @@
 
     <%-- Hidden input tags 
     ======================= --%>
+    <input id="hidCountry" type="hidden" runat="server" />
     <input id="hidExisting" type="hidden" runat="server" />
     <input id="hidFirstName" type="hidden" runat="server" />
     <input id="hidLastName" type="hidden" runat="server" />
@@ -1273,6 +1308,8 @@
     <input id="hidCity" type="hidden" runat="server" />
     <input id="hidZip" type="hidden" runat="server" />
     <input id="hidPhone" type="hidden" runat="server" />
+    <input id="hidCell" type="hidden" runat="server" />
+    <input id="hidEmail" type="hidden" runat="server" />
    
     <input id="hidProjectName" type="hidden" runat="server" />
        
