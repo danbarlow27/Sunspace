@@ -15,7 +15,9 @@ namespace SunspaceDealerDesktop
         protected const float DOOR_FRENCH_MIN_WIDTH = Constants.CUSTOM_FRENCH_DOOR_MIN_WIDTH;
         protected const float DOOR_FRENCH_MAX_WIDTH = Constants.CUSTOM_FRENCH_DOOR_MAX_WIDTH;
 
-        protected ListItem lst0 = new ListItem("---", "", true);
+        //ListItems to be used in multiple dropdown lists for decimal points
+        //This should eventually be stored in the constants file
+        protected ListItem lst0 = new ListItem("---", "", true); //0, i.e. no decimal value, selected by default
         protected ListItem lst18 = new ListItem("1/8", ".125");
         protected ListItem lst14 = new ListItem("1/4", ".25");
         protected ListItem lst38 = new ListItem("3/8", ".375");
@@ -23,61 +25,46 @@ namespace SunspaceDealerDesktop
         protected ListItem lst58 = new ListItem("5/8", ".625");
         protected ListItem lst34 = new ListItem("3/4", ".75");
         protected ListItem lst78 = new ListItem("7/8", ".875");
+
+
         protected int currentModel = 200;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             /***hard coded session variables***/
             
-            Session["numberOfWalls"] = 4;
             //Session["numberOfWalls"] = 4;
-            //Session["coordList"] = "100,412.5,137.5,137.5,E,S/150,150,137.5,287.5,P,W/150,225,287.5,362.5,P,SW/225,312.5,362.5,362.5,P,S/312,387.5,362.5,287.5,P,SE/387.5,387.5,287.5,137.5,P,E/";
-            Session["coordList"] = "112.5,350,112.5,112.5,E,S/350,350,112.5,337.5,E,W/175,175,112.5,262.5,P,W/175,350,262.5,262.5,P,S/";
-            string coordList = (string)Session["coordList"];                                    
-            char[] lineDelimiter = { '/' };   
-            char[] detailsDelimiter = { ',' };                                 
-            string[] walls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries);
-            string[,] wallDetails = new string[walls.Count(),6];
-            //Dictionary<string, string>[] wallDetails = new Dictionary<string, string>[]{};
-            int existingWallCount = 0;
-            int proposedWallCount = 0;
-            string[] tempDetails;
+            Session["coordList"] = "100,412.5,137.5,137.5,E,S/150,150,137.5,287.5,P,W/150,225,287.5,362.5,P,SW/225,312.5,362.5,362.5,P,S/312,387.5,362.5,287.5,P,SE/387.5,387.5,287.5,137.5,P,E/";
+            //Session["coordList"] = "112.5,350,112.5,112.5,E,S/350,350,112.5,337.5,E,W/175,175,112.5,262.5,P,W/175,350,262.5,262.5,P,S/";
+            string coordList = (string)Session["coordList"]; //get the string from the session and store it in a local variable for further use                                    
+            char[] lineDelimiter = { '/' }; //character(s) that seperate lines in a session string variable
+            char[] detailsDelimiter = { ',' }; //character(s) that seperate details of each line                                 
+            string[] walls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
+            string[,] wallDetails = new string[walls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
+            
+            int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
+            int proposedWallCount = 0; //used to determine how many proposed walls are in a drawing
 
-            for (int i = 0; i < walls.Count(); i++) //populate the array with all the wall details for each wall
+            //populate the array with all the wall details for each wall
+            for (int i = 0; i < walls.Count(); i++) //run through all the walls in the array
             {
-                tempDetails = walls[i].Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries);
+                string[] tempDetails = walls[i].Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the given wall string into its individual detail items and store it in temporary array
 
-                for (int j = 0; j < tempDetails.Count(); j++)
+                for (int j = 0; j < tempDetails.Count(); j++) //for each item in the tempDetails array
                 {
-                wallDetails[i, j] = tempDetails[j];
-                //wallDetails[i] = new Dictionary<string, string>(); //trying associative array/dictionary
-                
-                //wallDetails[i].Add("x1", tempDetails[0]);
-                //wallDetails[i].Add("x2", tempDetails[1]);
-                //wallDetails[i].Add("y1", tempDetails[2]);
-                //wallDetails[i].Add("y2", tempDetails[3]);
-                //wallDetails[i].Add("type", tempDetails[4]);
-                //wallDetails[i].Add("orientation", tempDetails[5]);
+                    wallDetails[i, j] = tempDetails[j]; //store it in the appropriate spot for the appropriate line in the wallDetails array 
                 }
             }
-            /**********************************/
+            
+    
             hiddenFieldsDiv.InnerHtml = createHiddenFields(walls.Count()); //create hidden fields on page load dynamically, pass it number of walls
 
             #region DropDownList Section
-            DropDownList ddlInFrac = new DropDownList();
-            DropDownList ddlInFracBackWall = new DropDownList();
-            DropDownList ddlInFracFrontWall = new DropDownList();
+            DropDownList ddlInFrac = new DropDownList(); //a dropdown list for length inch fractions
+            DropDownList ddlInFracBackWall = new DropDownList(); //a dropdown list for back wall inch fractions
+            DropDownList ddlInFracFrontWall = new DropDownList(); //a dropdown list for front wall inch fractions
 
-            //ListItem lst0 = new ListItem("---", "", true);
-            //ListItem lst18 = new ListItem("1/8", ".125");
-            //ListItem lst14 = new ListItem("1/4", ".25");
-            //ListItem lst38 = new ListItem("3/8", ".375");
-            //ListItem lst12 = new ListItem("1/2", ".5");
-            //ListItem lst58 = new ListItem("5/8", ".625");
-            //ListItem lst34 = new ListItem("3/4", ".75");
-            //ListItem lst78 = new ListItem("7/8", ".875");
-
-
+            //add all the inch fraction list items to the lengths dropdown list 
             ddlInFrac.Items.Add(lst0);
             ddlInFrac.Items.Add(lst18);
             ddlInFrac.Items.Add(lst14);
@@ -87,7 +74,8 @@ namespace SunspaceDealerDesktop
             ddlInFrac.Items.Add(lst34);
             ddlInFrac.Items.Add(lst78);
             
-            ddlInFracBackWall.Items.Add(lst0);
+            //add all the inch fraction list items to the back wall dropdown list 
+            ddlInFracBackWall.Items.Add(lst0); 
             ddlInFracBackWall.Items.Add(lst18);
             ddlInFracBackWall.Items.Add(lst14);
             ddlInFracBackWall.Items.Add(lst38);
@@ -95,10 +83,11 @@ namespace SunspaceDealerDesktop
             ddlInFracBackWall.Items.Add(lst58);
             ddlInFracBackWall.Items.Add(lst34);
             ddlInFracBackWall.Items.Add(lst78);
-            ddlInFracBackWall.ID = "ddlBackInchFractions";
-            ddlInFracBackWall.Attributes.Add("onchange", "checkQuestion2()");
-            phBackHeights.Controls.Add(ddlInFracBackWall);
+            ddlInFracBackWall.ID = "ddlBackInchFractions"; //give the dropdown list an ID
+            ddlInFracBackWall.Attributes.Add("onchange", "checkQuestion2()"); //set its attributes to validate question2 when its changed
+            phBackHeights.Controls.Add(ddlInFracBackWall); //add it to the placeholder field in the table
 
+            //add all the inch fraction list items to the front wall dropdown list
             ddlInFracFrontWall.Items.Add(lst0);
             ddlInFracFrontWall.Items.Add(lst18);
             ddlInFracFrontWall.Items.Add(lst14);
@@ -107,9 +96,9 @@ namespace SunspaceDealerDesktop
             ddlInFracFrontWall.Items.Add(lst58);
             ddlInFracFrontWall.Items.Add(lst34);
             ddlInFracFrontWall.Items.Add(lst78);
-            ddlInFracFrontWall.ID = "ddlFrontInchFractions";
-            ddlInFracFrontWall.Attributes.Add("onchange", "checkQuestion2()");
-            phFrontHeights.Controls.Add(ddlInFracFrontWall);
+            ddlInFracFrontWall.ID = "ddlFrontInchFractions"; //give the dropdown list an ID
+            ddlInFracFrontWall.Attributes.Add("onchange", "checkQuestion2()"); //set its attributes to validate question2 when its changed
+            phFrontHeights.Controls.Add(ddlInFracFrontWall);//add it to the placeholder field in the table
             #endregion
 
             //SLIDE 3 DOOR DETAILS PER WALL
@@ -1113,19 +1102,19 @@ namespace SunspaceDealerDesktop
 
             #region For Loop for slide 1 and slide3            
 
-            for (int i = 1; i <= walls.Count(); i++) 
+            for (int i = 1; i <= walls.Count(); i++) //for each wall in walls 
             {
                 #region Slide1/Question1 Table
                 
                 if (wallDetails[i - 1, 4] == "E") //wall type is existing
                 {
-                    existingWallCount++;
-                    populateTblExisting(i, existingWallCount);
+                    existingWallCount++; //increment the existing wall counter
+                    populateTblExisting(i, existingWallCount); //populate the existing walls table on slide 1
                 }
                 else //wall type is proposed
                 {
-                    proposedWallCount++;
-                    populateTblProposed(i, proposedWallCount);
+                    proposedWallCount++; //increment the proposed wall counter
+                    populateTblProposed(i, proposedWallCount); //populate the proposed walls table on slide 1
                 }
                 #endregion
 
@@ -1177,20 +1166,28 @@ namespace SunspaceDealerDesktop
             #endregion
         }
 
+        /// <summary>
+        /// This method is used to dynamically populate the table for existing walls on slide/question 1.
+        /// It creates table a table row and cells and appends appropriate input fields to each cell for user input,
+        ///     and gives each input field appropriate values
+        /// </summary>
+        /// <param name="i">index of the given wall, used to give appropriate ID's to input fields</param>
+        /// <param name="existingWallCount">used to give appropriate values to the wall name labels</param>
         protected void populateTblExisting(int i, int existingWallCount)
         {
-            TableRow row = new TableRow();
+            TableRow row = new TableRow(); //new table to to be appended to the table with all the appropriate fields in it
             
-            TableCell cell1 = new TableCell();
-            TableCell cell2 = new TableCell();
-            TableCell cell3 = new TableCell();
+            TableCell cell1 = new TableCell(); //new table cell to store the wall name label
+            TableCell cell2 = new TableCell(); //new table cell to store the textbox
+            TableCell cell3 = new TableCell(); //new table cell to store the dropdown list
             
-            Label lblWallNumber = new Label();
+            Label lblWallNumber = new Label(); //new label to display the wall name/number
 
-            TextBox txtWallLength = new TextBox();
+            TextBox txtWallLength = new TextBox(); //new textbox for user input for length
             
-            DropDownList ddlInchFractions = new DropDownList();
+            DropDownList ddlInchFractions = new DropDownList(); //new dropdown list for length inch fractions
 
+            //add the inch fraction list items to the dropdown list
             ddlInchFractions.Items.Add(lst0);
             ddlInchFractions.Items.Add(lst18);
             ddlInchFractions.Items.Add(lst14);
@@ -1199,56 +1196,64 @@ namespace SunspaceDealerDesktop
             ddlInchFractions.Items.Add(lst58);
             ddlInchFractions.Items.Add(lst34);
             ddlInchFractions.Items.Add(lst78);
-            ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()");
+            ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
 
-            lblWallNumber.Text = "Wall " + existingWallCount + " : ";
+            lblWallNumber.Text = "Wall " + existingWallCount + " : "; //output wall name/number to the label
     
-            ddlInchFractions.ID = "ddlWall" + i + "InchFractions";
-            lblWallNumber.ID = "lblWall" + i + "Length";
-            lblWallNumber.AssociatedControlID = "txtWall" + i + "Length";
+            ddlInchFractions.ID = "ddlWall" + i + "InchFractions"; //give an appropriate id to dropdown list
+            lblWallNumber.ID = "lblWall" + i + "Length"; //give an appropriate id to the label
+            lblWallNumber.AssociatedControlID = "txtWall" + i + "Length"; //set the label's associated control id
 
-            txtWallLength.ID = "txtWall" + i + "Length";
-            txtWallLength.CssClass = "txtField txtLengthInput";
-            txtWallLength.MaxLength = 3;
-            txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
-            txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");
-            txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()");
-            txtWallLength.Attributes.Add("onblur", "resetWalls()");
+            txtWallLength.ID = "txtWall" + i + "Length"; //give an appropriate id to the textbox
+            txtWallLength.CssClass = "txtField txtLengthInput"; //give the textbox a css class
+            txtWallLength.MaxLength = 3; //set the max length of the textbox to prevent invalid input
+            txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
+            txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+            txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()"); //set its attribute to highlight walls on focus
+            txtWallLength.Attributes.Add("onblur", "resetWalls()"); //set its attribute to reset walls on blur
 
-            cell1.Controls.Add(lblWallNumber);
-            cell2.Controls.Add(txtWallLength);
-            cell3.Controls.Add(ddlInchFractions);
+            cell1.Controls.Add(lblWallNumber); //append the label to cell 1
+            cell2.Controls.Add(txtWallLength); //append the textbox to cell 2
+            cell3.Controls.Add(ddlInchFractions); //append the dropdown to cell 3
             
-            tblExistingWalls.Rows.Add(row);
-            
-            row.Cells.Add(cell1);
+            tblExistingWalls.Rows.Add(row); //append the row to the existing walls table
+
+            //append all the cells to the row
+            row.Cells.Add(cell1); 
             row.Cells.Add(cell2);
             row.Cells.Add(cell3);
         }
 
+        /// <summary>
+        /// This method is used to dynamically populate the table for proposed walls on slide/question 1.
+        /// It creates table a table row and cells and appends appropriate input fields to each cell for user input,
+        ///     and gives each input field appropriate values
+        /// </summary>
+        /// <param name="i">index of the given wall, used to give appropriate ID's to input fields</param>
+        /// <param name="proposedWallCount">used to give appropriate values to the wall name labels</param>
         protected void populateTblProposed(int i, int proposedWallCount)
         {
-            TableRow row = new TableRow();
-            
-            TableCell cell1 = new TableCell();
-            TableCell cell2 = new TableCell();
-            TableCell cell3 = new TableCell();
-            TableCell cell4 = new TableCell();
-            TableCell cell5 = new TableCell();
-            TableCell cell6 = new TableCell();
-            TableCell cell7 = new TableCell();
-            
-            Label lblWallNumber = new Label();
+            TableRow row = new TableRow();//new table to to be appended to the table with all the appropriate fields in it
 
-            TextBox txtWallLength = new TextBox();
-            TextBox txtLeftFiller = new TextBox();
-            TextBox txtRightFiller = new TextBox();
+            TableCell cell1 = new TableCell(); //new table cell to store the wall name label
+            TableCell cell2 = new TableCell();//new table cell to store the textbox for left filler
+            TableCell cell3 = new TableCell();//new table cell to store the dropdown list for left filler inch fractions
+            TableCell cell4 = new TableCell();//new table cell to store the textbox length
+            TableCell cell5 = new TableCell();//new table cell to store the dropdown list for length
+            TableCell cell6 = new TableCell();//new table cell to store the textbox for right filler
+            TableCell cell7 = new TableCell();//new table cell to store the dropdown list for right filler inch fractions
 
-            DropDownList ddlInchFractions = new DropDownList();
-            DropDownList ddlLeftInchFractions = new DropDownList();
-            DropDownList ddlRightInchFractions = new DropDownList();            
-            
-            
+            Label lblWallNumber = new Label(); //new label to display the wall name/number
+
+            TextBox txtWallLength = new TextBox(); //new textbox for user input for length
+            TextBox txtLeftFiller = new TextBox(); //new textbox for user input for left filler
+            TextBox txtRightFiller = new TextBox();//new textbox for user input for right filler
+
+            DropDownList ddlInchFractions = new DropDownList(); //new dropdown list for length inch fractions
+            DropDownList ddlLeftInchFractions = new DropDownList(); //new dropdown list for left filler inch fractions
+            DropDownList ddlRightInchFractions = new DropDownList();//new dropdown list for right filler inch fractions
+
+            //add the inch fraction list items to the dropdown list
             ddlInchFractions.Items.Add(lst0);
             ddlInchFractions.Items.Add(lst18);
             ddlInchFractions.Items.Add(lst14);
@@ -1257,22 +1262,9 @@ namespace SunspaceDealerDesktop
             ddlInchFractions.Items.Add(lst58);
             ddlInchFractions.Items.Add(lst34);
             ddlInchFractions.Items.Add(lst78);
-            ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()");
+            ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
 
-            lblWallNumber.Text = "Wall " + proposedWallCount + " : ";
-    
-            ddlInchFractions.ID = "ddlWall" + i + "InchFractions";
-            lblWallNumber.ID = "lblWall" + i + "Length";
-            lblWallNumber.AssociatedControlID = "txtWall" + i + "Length";
-
-            txtWallLength.ID = "txtWall" + i + "Length";
-            txtWallLength.CssClass = "txtField txtLengthInput";
-            txtWallLength.MaxLength = 3;
-            txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
-            txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");
-            txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()");
-            txtWallLength.Attributes.Add("onblur", "resetWalls()");
-
+            //add the inch fraction list items to the dropdown list
             ddlLeftInchFractions.Items.Add(lst0);
             ddlLeftInchFractions.Items.Add(lst18);
             ddlLeftInchFractions.Items.Add(lst14);
@@ -1281,7 +1273,9 @@ namespace SunspaceDealerDesktop
             ddlLeftInchFractions.Items.Add(lst58);
             ddlLeftInchFractions.Items.Add(lst34);
             ddlLeftInchFractions.Items.Add(lst78);
-            ddlLeftInchFractions.Attributes.Add("onchange", "checkQuestion1()");
+            ddlLeftInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
+
+            //add the inch fraction list items to the dropdown list
             ddlRightInchFractions.Items.Add(lst0);
             ddlRightInchFractions.Items.Add(lst18);
             ddlRightInchFractions.Items.Add(lst14);
@@ -1290,74 +1284,54 @@ namespace SunspaceDealerDesktop
             ddlRightInchFractions.Items.Add(lst58);
             ddlRightInchFractions.Items.Add(lst34);
             ddlRightInchFractions.Items.Add(lst78);
-            ddlRightInchFractions.Attributes.Add("onchange", "checkQuestion1()");
+            ddlRightInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
 
-            ddlLeftInchFractions.ID = "ddlWall" + i + "LeftInchFractions";
-            ddlRightInchFractions.ID = "ddlWall" + i + "RightInchFractions";
 
-            lblWallNumber.Text = "Wall " + proposedWallCount + " : ";
-            txtLeftFiller.ID = "txtWall" + i + "LeftFiller";
-            txtLeftFiller.CssClass = "txtField txtLengthInput";
-            txtLeftFiller.MaxLength = 3;
-            txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()");
-            txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");
-            txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
-            txtLeftFiller.Attributes.Add("onblur", "resetWalls()");
+            lblWallNumber.Text = "Wall " + proposedWallCount + " : "; //output wall name/number to the label
 
-            txtRightFiller.ID = "txtWall" + i + "RightFiller";
-            txtRightFiller.CssClass = "txtField txtLengthInput";
-            txtRightFiller.MaxLength = 3;
-            txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");
-            txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");
-            txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
-            txtRightFiller.Attributes.Add("onblur", "resetWalls()");
+            ddlInchFractions.ID = "ddlWall" + i + "InchFractions"; //give an appropriate id to dropdown list for length
+            lblWallNumber.ID = "lblWall" + i + "Length"; //give an appropriate id to label
+            lblWallNumber.AssociatedControlID = "txtWall" + i + "Length"; //set the label's associated control id
 
-            cell2.Controls.Add(txtLeftFiller);
-            cell3.Controls.Add(ddlLeftInchFractions);
-            cell4.Controls.Add(txtWallLength);
-            cell5.Controls.Add(ddlInchFractions);
-            cell6.Controls.Add(txtRightFiller);
-            cell7.Controls.Add(ddlRightInchFractions);
-    
-            ddlInchFractions.ID = "ddlWall" + i + "InchFractions";
-            lblWallNumber.ID = "lblWall" + i + "Length";
-            lblWallNumber.AssociatedControlID = "txtWall" + i + "Length";
+            txtWallLength.ID = "txtWall" + i + "Length"; //give an appropriate id to the textbox
+            txtWallLength.CssClass = "txtField txtLengthInput"; //give the textbox a css class
+            txtWallLength.MaxLength = 3; //give the textbox a max length of 3 to prevent invalid input
+            txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
+            txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+            txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
+            txtWallLength.Attributes.Add("onblur", "resetWalls()");//set its attribute to reset walls on blur
 
-            txtWallLength.ID = "txtWall" + i + "Length";
-            txtWallLength.CssClass = "txtField txtLengthInput";
-            txtWallLength.MaxLength = 3;
-            txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()");
-            txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");
-            txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()");
-            txtWallLength.Attributes.Add("onblur", "resetWalls()");
+            ddlLeftInchFractions.ID = "ddlWall" + i + "LeftInchFractions"; //give an appropriate id to dropdown list for left filler
+            ddlRightInchFractions.ID = "ddlWall" + i + "RightInchFractions";//give an appropriate id to dropdown list for right filler
 
-            txtLeftFiller.ID = "txtWall" + i + "LeftFiller";
-            txtLeftFiller.CssClass = "txtField txtLengthInput";
-            txtLeftFiller.MaxLength = 3;
-            txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()");
-            txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");
-            txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
-            txtLeftFiller.Attributes.Add("onblur", "resetWalls()");
+            txtLeftFiller.ID = "txtWall" + i + "LeftFiller"; //give an appropriate id to the left filler textbox
+            txtLeftFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
+            txtLeftFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
+            txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
+            txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+            txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
+            txtLeftFiller.Attributes.Add("onblur", "resetWalls()");//set its attribute to reset walls on blur
 
-            txtRightFiller.ID = "txtWall" + i + "RightFiller";
-            txtRightFiller.CssClass = "txtField txtLengthInput";
-            txtRightFiller.MaxLength = 3;
-            txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");
-            txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");
-            txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");
-            txtRightFiller.Attributes.Add("onblur", "resetWalls()");
+            txtRightFiller.ID = "txtWall" + i + "RightFiller";//give an appropriate id to the right filler textbox
+            txtRightFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
+            txtRightFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
+            txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");//set its attribute to check question 1 on key up
+            txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+            txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
+            txtRightFiller.Attributes.Add("onblur", "resetWalls()");//set its attribute to check reset walls on blur
 
-            cell1.Controls.Add(lblWallNumber);
-            cell2.Controls.Add(txtLeftFiller);
-            cell3.Controls.Add(ddlLeftInchFractions);
-            cell4.Controls.Add(txtWallLength);
-            cell5.Controls.Add(ddlInchFractions);
-            cell6.Controls.Add(txtRightFiller);
-            cell7.Controls.Add(ddlRightInchFractions);
+            cell1.Controls.Add(lblWallNumber); //append the wall number/name label to cell 1
+            cell2.Controls.Add(txtLeftFiller); //append the left filler textbox in cell 2
+            cell3.Controls.Add(ddlLeftInchFractions); //append the left filler dropdown list in cell 3
+            cell4.Controls.Add(txtWallLength); //append the wall length textbox in cell 4
+            cell5.Controls.Add(ddlInchFractions); //append the wall length dropdown list in cell 5
+            cell6.Controls.Add(txtRightFiller); //append the right filler textbox in cell 6
+            cell7.Controls.Add(ddlRightInchFractions); //append the right filler dropdown list in cell 7
 
-            tblProposedWalls.Rows.Add(row);
+            tblProposedWalls.Rows.Add(row); //append the row to the proposed walls table
 
-            row.Cells.Add(cell1);
+            //append all the cells to the row
+            row.Cells.Add(cell1); 
             row.Cells.Add(cell2);
             row.Cells.Add(cell3);
             row.Cells.Add(cell4);
@@ -1378,16 +1352,16 @@ namespace SunspaceDealerDesktop
         /// <returns>html hidden field tags</returns>
         protected string createHiddenFields(int number)
         {
-            string html = "";
+            string html = ""; //empty string to store html hidden field tags
 
-            for (int i = 1; i <= number; i++)
+            for (int i = 1; i <= number; i++) //run through this loop as many times as the number of hidden fields to create
             {
-                html += "<input id=\"hidWall" + i + "SetBack\" type=\"hidden\" runat=\"server\" />";
-                html += "<input id=\"hidWall" + i + "LeftFiller\" type=\"hidden\" runat=\"server\" />";
-                html += "<input id=\"hidWall" + i + "Length\" type=\"hidden\" runat=\"server\" />";
-                html += "<input id=\"hidWall" + i + "RightFiller\" type=\"hidden\" runat=\"server\" />";
+                html += "<input id=\"hidWall" + i + "SetBack\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall setback
+                html += "<input id=\"hidWall" + i + "LeftFiller\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall left filler
+                html += "<input id=\"hidWall" + i + "Length\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall length
+                html += "<input id=\"hidWall" + i + "RightFiller\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall right filler
             }
-            return html;
+            return html; //return the hidden field tags
         }
     }
 }
