@@ -21,6 +21,7 @@
         var projection = 120; //hard coded for testing
         var soffitLength = 0; //hard coded for testing
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
+        var model = '<%= currentModel %>';
 
         function calculateSetBack(index) {
             /*
@@ -446,35 +447,19 @@
 
         }
 
-        function customWidth(type) {
+        function customDimension(type, dimension) {
             for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
 
                 if (document.getElementById('MainContent_radWall' + wallCount).checked) {
 
-                    var widthDDL = document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).selectedIndex].value;
+                    var widthDDL = document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).selectedIndex].value;
 
-                    if (document.getElementById('MainContent_radType' + wallCount + type).checked && widthDDL === 'cWidth') {
-                        document.getElementById('MainContent_rowDoorCustomWidth' + wallCount + type).style.display = 'inherit';
+                    if (document.getElementById('MainContent_radType' + wallCount + type).checked && widthDDL === 'c' + dimension) {
+                        document.getElementById('MainContent_rowDoorCustom' + dimension + wallCount + type).style.display = 'inherit';                        
                     }
                     else {
-                        document.getElementById('MainContent_rowDoorCustomWidth' + wallCount + type).style.display = 'none';
-                    }
-                }
-            }
-        }
-
-        function customHeight(type) {
-            for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
-
-                if (document.getElementById('MainContent_radWall' + wallCount).checked) {
-
-                    var HeightDDL = document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).options[document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).selectedIndex].value;
-
-                    if (document.getElementById('MainContent_radType' + wallCount + type).checked && HeightDDL === 'cHeight') {
-                        document.getElementById('MainContent_rowDoorCustomHeight' + wallCount + type).style.display = 'inherit';
-                    }
-                    else {
-                        document.getElementById('MainContent_rowDoorCustomHeight' + wallCount + type).style.display = 'none';
+                        document.getElementById('MainContent_rowDoorCustom' + dimension + wallCount + type).style.display = 'none';
+                        alert(calculateActualDoorDimension(type, dimension, false));
                     }
                 }
             }
@@ -495,6 +480,42 @@
                     }
                 }
             }
+        }
+
+        function calculateActualDoorDimension(type, dimension, custom) {
+            
+            var newDimension;
+
+            for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
+
+                if (document.getElementById('MainContent_radWall' + wallCount).checked) {
+
+                    var controlToUse;
+
+                    if (custom === true) {
+                        controlToUse = document.getElementById('MainContent_txtDoorCustom' + dimension + wallCount + type).value
+                    }
+                    else {
+                        controlToUse = document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).selectedIndex].value;
+                    }
+
+                    if (type === 'Cabana') {
+
+                        newDimension = (model === 400) ? parseInt(controlToUse) + 3.625 : parseInt(controlToUse) + 2.125;
+
+                    }
+                    else if (type === 'French') {
+
+                        newDimension = (model === 400) ? ((parseInt(controlToUse) + 3.625) - 1.625) * 2 + 2 : ((parseInt(controlToUse) + 2.125) - 1.625) * 2 + 2;
+                        
+                    }
+                    else if (type === 'Patio') {
+                        //Need more information
+                    }
+                }
+            }
+
+            return newDimension;
         }
 
         //function onClickAddDoor(currentDoor) {

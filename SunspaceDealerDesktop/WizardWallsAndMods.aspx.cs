@@ -23,11 +23,12 @@ namespace SunspaceDealerDesktop
         protected ListItem lst58 = new ListItem("5/8", ".625");
         protected ListItem lst34 = new ListItem("3/4", ".75");
         protected ListItem lst78 = new ListItem("7/8", ".875");
+        protected int currentModel = 200;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             /***hard coded session variables***/
-            int currentModel = 200;
+            
             Session["numberOfWalls"] = 4;
             //Session["numberOfWalls"] = 4;
             //Session["coordList"] = "100,412.5,137.5,137.5,E,S/150,150,137.5,287.5,P,W/150,225,287.5,362.5,P,SW/225,312.5,362.5,362.5,P,S/312,387.5,362.5,287.5,P,SE/387.5,387.5,287.5,137.5,P,E/";
@@ -323,7 +324,7 @@ namespace SunspaceDealerDesktop
 
                         DropDownList doorHeightDDL = new DropDownList();
                         doorHeightDDL.ID = "ddlDoorHeight" + currentWall + title;
-                        doorHeightDDL.Attributes.Add("onchange", "customHeight('" + title + "')");
+                        doorHeightDDL.Attributes.Add("onchange", "customDimension('" + title + "','Height')");
                         ListItem eighty = new ListItem("80\" (Default)", "80");
                         ListItem customHeight = new ListItem("Custom", "cHeight");
                         doorHeightDDL.Items.Add(eighty);
@@ -379,11 +380,13 @@ namespace SunspaceDealerDesktop
 
                         DropDownList doorWidthDDL = new DropDownList();
                         doorWidthDDL.ID = "ddlDoorWidth" + currentWall + title;
-                        doorWidthDDL.Attributes.Add("onchange", "customWidth('" + title + "')");
+                        doorWidthDDL.Attributes.Add("onchange", "customDimension('" + title + "','Width')");
                         ListItem thirty = new ListItem("30\"", "30");
                         ListItem thirtyTwo = new ListItem("32\"", "32");
                         ListItem thirtyFour = new ListItem("34\"", "34");
                         ListItem thirtySix = new ListItem("36\"", "36");
+                        ListItem sixty = new ListItem("60\"", "60");
+                        ListItem seventyTwo = new ListItem("72\"", "72");
                         ListItem fiveFeet = new ListItem("5'", "5");
                         ListItem sixFeet = new ListItem("6'", "6");
                         ListItem sevenFeet = new ListItem("7'", "7");
@@ -396,6 +399,12 @@ namespace SunspaceDealerDesktop
                             doorWidthDDL.Items.Add(sixFeet);
                             doorWidthDDL.Items.Add(sevenFeet);
                             doorWidthDDL.Items.Add(eightFeet);
+                            doorWidthDDL.Items.Add(customWidth);
+                        }
+                        else if (title == "French") 
+                        {
+                            doorWidthDDL.Items.Add(sixty);
+                            doorWidthDDL.Items.Add(seventyTwo);
                             doorWidthDDL.Items.Add(customWidth);
                         }
                         else
