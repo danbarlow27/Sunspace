@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
 
 namespace SunspaceDealerDesktop
 {
@@ -27,30 +28,45 @@ namespace SunspaceDealerDesktop
             {
                 //uncomment me when login functionality is working
                 //Response.Redirect("Login.aspx");
-                Session.Add("loggedIn", "userA");
+                Session.Add("loggedIn", "1");
             }           
 
             //slide1
             #region Slide 1 pageload
-            //ddlExistingCustomer.Items.Add("Choose a Customer...");
+            //Add countries to country ddl
+            ddlCustomerCountry.Items.Add(new ListItem("United States", "USA"));
 
-            Customer aCustomer = new Customer();
-            aCustomer.FirstName = "Kyle";
-            aCustomer.LastName = "Brougham";
+            //Get the customers assosciated with this dealer
+            sdsCustomers.SelectCommand = "SELECT first_name, last_name FROM customers WHERE dealer_id=" + Session["loggedIn"] + "ORDER BY last_name, first_name";
+                
+            //assign the table names to the dataview object
+            DataView dvExistingCustomers = (DataView)sdsCustomers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
 
-            ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
+            ddlExistingCustomer.Items.Clear();
 
-            aCustomer = new Customer();
-            aCustomer.FirstName = "Anthony";
-            aCustomer.LastName = "Smeelen";
+            for (int i = 0; i < dvExistingCustomers.Count; i++)
+            {
+                ddlExistingCustomer.Items.Add(dvExistingCustomers[i][0].ToString() + " " + dvExistingCustomers[i][1].ToString());
+            }
+            #region Old Preset Customers
+            //Customer aCustomer = new Customer();
+            //aCustomer.FirstName = "Kyle";
+            //aCustomer.LastName = "Brougham";
 
-            ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
+            //ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
 
-            aCustomer = new Customer();
-            aCustomer.FirstName = "Dan";
-            aCustomer.LastName = "Barlow";
+            //aCustomer = new Customer();
+            //aCustomer.FirstName = "Anthony";
+            //aCustomer.LastName = "Smeelen";
 
-            ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
+            //ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
+
+            //aCustomer = new Customer();
+            //aCustomer.FirstName = "Dan";
+            //aCustomer.LastName = "Barlow";
+
+            //ddlExistingCustomer.Items.Add(aCustomer.FirstName + " " + aCustomer.LastName);
+            #endregion
             #endregion
 
             //slide4
@@ -91,6 +107,27 @@ namespace SunspaceDealerDesktop
 
         protected void btnLayout_Click(object sender, EventArgs e)
         {
+            sdsCustomers.SelectCommand = "SELECT * FROM customers"; ;
+            DataView dvCustomers = (DataView)sdsCustomers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+            //ANTHONYCHECK
+            //table-customers
+            //customers will never be removed, correct? Currently adding 1 to count for next autogen number
+            
+            int count = dvCustomers.Count;
+
+            //If new customer is selected, lets add this customer to our customer list
+            //CHANGEME Uses logged in session number as dealerID, this is likely userID in the future, and needs to be changed
+
+            string sqlInsert = "INSERT INTO customers (dealer_id,first_name,last_name,address,city,prov_city,country,zip_postal,main_phone,cell_phone,email,accept_email)"
+            + "VALUES("
+            + Convert.ToInt32(Session["loggedIn"].ToString()) + ",'" + hidFirstName.Value + "','" + hidLastName.Value + "','" + hidAddress.Value + "','" + hidCity.Value + "','"
+            + "Ontario" + "','" + hidCountry.Value + "','" + hidZip.Value + "','" + hidPhone.Value + "','" + hidCell.Value + "','" + hidEmail.Value + "',"
+            + 1 + ")";
+
+            sdsCustomers.InsertCommand = sqlInsert;
+            sdsCustomers.Insert();
+
             //Session.Add("hidFirstName", hidFirstName.Value);
             //Session.Add("hidExisting", hidExisting.Value);
             //Session.Add("hidFirstName", hidFirstName.Value);
