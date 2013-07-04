@@ -5,10 +5,11 @@
   
     <script>
         function goComponents() {
-            //change me when component ordering is put into place
+            //changeme when component ordering is put into place
             window.location.replace("Home.aspx");
         }
         function newProjectCheckQuestion1() {
+            console.log("onkeyup slide1");
             //disable 'next slide' button until after validation
             document.getElementById('<%=btnQuestion1.ClientID%>').disabled = true;
             //if they select new customer
@@ -98,6 +99,7 @@
         }
 
         function newProjectCheckQuestion2() {
+            console.log("onkeyup slide2");
             //disable 'next slide' button until after validation
             document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
 
@@ -148,6 +150,40 @@
                 //two hidden values type and model#
                 document.getElementById("<%=hidProjectType.ClientID%>").value = "Sunroom";
                 $('#<%=lblProjectTypeAnswer.ClientID%>').text(document.getElementById("<%=hidProjectType.ClientID%>").value + " of Model " + document.getElementById("<%=hidModelNumber.ClientID%>").value);
+
+                //selected sunroom, so hide the walls only button, and re-show the normal button
+                document.getElementById('<%=btnQuestion4.ClientID%>').style.display="inline";
+                document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="none";
+            }
+            else if ($('#<%=radProjectWalls.ClientID%>').is(':checked')) {
+                if ($('#<%=radWallsModel100.ClientID%>').is(':checked')) {
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "100";
+                    document.getElementById('pagerThree').style.display = "inline";
+                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
+                }
+                else if ($('#<%=radWallsModel200.ClientID%>').is(':checked')) {
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "200";
+                    document.getElementById('pagerThree').style.display = "inline";
+                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
+                }
+                else if ($('#<%=radWallsModel300.ClientID%>').is(':checked')) {
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "300";
+                    document.getElementById('pagerThree').style.display = "inline";
+                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
+                }
+                else if ($('#<%=radWallsModel400.ClientID%>').is(':checked')) {
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "400";
+                    document.getElementById('pagerThree').style.display = "inline";
+                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
+                }                
+                //update hidden value for type, and display pager message based on the now
+                //two hidden values type and model#
+                document.getElementById("<%=hidProjectType.ClientID%>").value = "Walls";
+                $('#<%=lblProjectTypeAnswer.ClientID%>').text(document.getElementById("<%=hidProjectType.ClientID%>").value + " of Model " + document.getElementById("<%=hidModelNumber.ClientID%>").value);
+
+                //selected walls, so hide the sunroom button, and re-show the walls button
+                document.getElementById('<%=btnQuestion4.ClientID%>').style.display="none";
+                document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="inline";
             }
             newProjectChangeColours();
             return false;
@@ -156,7 +192,7 @@
         function newProjectCheckQuestion4() {
             document.getElementById('<%=btnQuestion4.ClientID%>').disabled = true;
             //overall error check boolean
-            var optionChecksPassed = false;
+            var optionChecksPassed = true;
 
             //Only run validation if a number is entered and values selected
             if (document.getElementById("<%=txtKneewallHeight.ClientID%>").value != "" &&
@@ -165,13 +201,13 @@
                 //only requirement on height at this moment is that it is a valid number
                 if (isNaN(document.getElementById("<%=txtKneewallHeight.ClientID%>").value)) {
                     //kneewall height error handling
+                    optionChecksPassed = false;
                 }
                 else {
                     //by default, preferences will populate a selected value, but as long as a number is entered, and
                     //dropdowns have a selected value, its valid, set check bool to true, update hidden values
                     document.getElementById("<%=hidKneewallHeight.ClientID%>").value = document.getElementById("<%=txtKneewallHeight.ClientID%>").value;
                     document.getElementById("<%=hidKneewallType.ClientID%>").value = document.getElementById("<%=ddlKneewallType.ClientID%>").value;
-                    optionChecksPassed = true;
                 }
             }
             else {
@@ -189,7 +225,6 @@
                 else {
                     document.getElementById("<%=hidTransomHeight.ClientID%>").value = document.getElementById("<%=txtTransomHeight.ClientID%>").value;
                     document.getElementById("<%=hidTransomType.ClientID%>").value = document.getElementById("<%=ddlTransomType.ClientID%>").value;
-                    optionChecksPassed = true;
                 }
 
             }
@@ -210,7 +245,6 @@
                 document.getElementById("<%=hidInteriorSkin.ClientID%>").value = document.getElementById("<%=ddlInteriorSkin.ClientID%>").value;
                 document.getElementById("<%=hidExteriorColour.ClientID%>").value = document.getElementById("<%=ddlExteriorColour.ClientID%>").value;
                 document.getElementById("<%=hidExteriorSkin.ClientID%>").value = document.getElementById("<%=ddlExteriorSkin.ClientID%>").value;
-                optionChecksPassed = true;
             }
             else {
                 optionChecksPassed = false;
@@ -219,10 +253,17 @@
 
             if (optionChecksPassed) {
                 document.getElementById('<%=btnQuestion4.ClientID%>').disabled = false;
+                document.getElementById('<%=btnQuestion4Walls.ClientID%>').disabled = false;
                 $('#<%=lblQuestion4PagerAnswer.ClientID%>').text("Entry Complete");
                 document.getElementById('pagerFour').style.display = "inline";
             }
-            document.getElementById('<%=btnQuestion4.ClientID%>').disabled = false; //autoenable, remove when dropdowns are populated
+
+            //When 'walls only' is selected, this will need additional logic to skip the next few slides
+            //we'll do this by having a duplicate button in the same spot that goes to the desired slide
+            if ($('#<%=radProjectWalls.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion4.ClientID%>').style.display="none";
+                document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="inline";
+            }
             return false;
         }
 
@@ -399,6 +440,9 @@
             ddlFramingColour = document.getElementById("<%=ddlFramingColour.ClientID%>");
             ddlFramingColour.options.length = 0;
 
+            //var blankOption = new Option("Choose a colour...", "Choose a colour...");
+            //ddlFramingColour.options.add(blankOption);
+
             switch (modelNumber.value) {
                 case '100':
                     var anArray =  <%= model100FramingColoursJ %>;
@@ -415,7 +459,8 @@
 
                     for (var i=0;i<anArray.length;i++)
                     {
-                        console.log(anArray[i]);
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
                     }                    
                     break;
 
@@ -424,7 +469,8 @@
 
                     for (var i=0;i<anArray.length;i++)
                     {
-                        console.log(anArray[i]);
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
                     }                    
                     break;
 
@@ -433,16 +479,97 @@
 
                     for (var i=0;i<anArray.length;i++)
                     {
-                        console.log(anArray[i]);
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
                     }   
                     break;
             }
             
-            /* document.getElementById("MainContent_ddlFramingColour").value != "" &&
-             document.getElementById("MainContent_ddlInteriorColour").value != "" &&
-             document.getElementById("MainContent_ddlInteriorSkin").value != "" &&
-             document.getElementById("MainContent_ddlExteriorColour").value != "" &&
-             document.getElementById("MainContent_ddlExteriorSkin").value != ""*/
+            newProjectPopulateKneewallTransom();
+            return true;
+        }
+
+        function newProjectCascadeColours() {
+            console.log("Cascading Colours");
+            ddlFramingColour = document.getElementById("<%= ddlFramingColour.ClientID %>");
+            
+            if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "White")
+            {
+                $("#MainContent_ddlInteriorColour").val('White');
+                $("#MainContent_ddlInteriorSkin").val('White Aluminum Stucco');
+                $("#MainContent_ddlExteriorColour").val('White');
+                $("#MainContent_ddlExteriorSkin").val('White Aluminum Stucco');
+            }
+            else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Driftwood")
+            {
+                $("#MainContent_ddlInteriorColour").val('Driftwood');
+                $("#MainContent_ddlInteriorSkin").val('Driftwood Aluminum Stucco');
+                $("#MainContent_ddlExteriorColour").val('Driftwood');
+                $("#MainContent_ddlExteriorSkin").val('Driftwood Aluminum Stucco');
+            }
+            else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Bronze")
+            {
+                $("#MainContent_ddlInteriorColour").val('Bronze');
+                $("#MainContent_ddlInteriorSkin").val('Bronze Aluminum Stucco');
+                $("#MainContent_ddlExteriorColour").val('Bronze');
+                $("#MainContent_ddlExteriorSkin").val('Bronze Aluminum Stucco');
+            }
+
+            //now that colours have cascading we still need to validate the slide
+            newProjectCheckQuestion4();
+        }
+
+        function newProjectPopulateKneewallTransom() {
+            console.log("populate kneewall transom");
+            
+            modelNumber = document.getElementById("<%=hidModelNumber.ClientID%>");
+            ddlTransomTypes = document.getElementById("<%=ddlTransomType.ClientID%>");
+            ddlTransomTypes.options.length = 0;
+            
+            //var blankOption = new Option("Choose a type...", "Choose a type...");
+            //ddlTransomTypes.options.add(blankOption);
+
+            switch (modelNumber.value) {
+                case '100':
+                    var anArray =  <%= model100TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }
+                    break;
+
+                case '200':
+                    var anArray =  <%= model200TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }                    
+                    break;
+
+                case '300':
+                    var anArray =  <%= model300TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }                    
+                    break;
+
+                case '400':
+                    var anArray =  <%= model400TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }   
+                    break;
+            }
             return true;
         }
     </script>
@@ -546,7 +673,7 @@
 
                     <%-- EXISTING CUSTOMER --%>
                     <li>
-                        <asp:RadioButton ID="radExistingCustomer" GroupName="question1" runat="server" />
+                        <asp:RadioButton ID="radExistingCustomer" GroupName="question1" runat="server" OnClick="newProjectCheckQuestion1()" />
                         <asp:Label ID="lblExistingCustomerRadio" AssociatedControlID="radExistingCustomer" runat="server"></asp:Label>
                         <asp:Label ID="lblExistingCustomer" AssociatedControlID="radExistingCustomer" runat="server" Text="Existing customer"></asp:Label>
 
@@ -771,7 +898,6 @@
                 </ul> <%-- end .toggleOptions --%>
 
                 <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
-
             </div> 
             <%-- end #slide3 --%>
 
@@ -840,7 +966,7 @@
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                    <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectCascadeColours()" GroupName="styling" runat="server" />
                                     <asp:Label ID="lblFramingColour" AssociatedControlID="ddlFramingColour" runat="server" Text="Framing Colour" />
                                     <br />
                                     <asp:DropDownList ID="ddlInteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
@@ -862,6 +988,7 @@
                 </ul> <%-- end .toggleOptions --%>
 
                 <asp:Button ID="btnQuestion4" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion4Walls" Enabled="false" CssClass="btnSubmit float-right slidePanel" OnClick="btnQuestion4Walls_Click" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide4 --%>

@@ -11,7 +11,7 @@
         <div class="slide-wrapper">
 
             <div id="slide1" class="slide">
-
+                <%-- fancy --%>
                 <h1>
                     <asp:Label ID="lblPreferences" runat="server" Text="Set your preferences below"></asp:Label>
                 </h1>        
@@ -40,8 +40,31 @@
                                             <div class="toggleContent">
                                                 <ul>
                                                     <li>
-                                                        <asp:Label ID="lbl100Input" runat="server" Text="Model 100 Input: "></asp:Label>
-                                                        <asp:TextBox ID="txt100Input" CssClass="txtField txtInput" runat="server"></asp:TextBox>
+                                                        <%-- Cut Pitch Option --%>
+                                                        <asp:CheckBox ID="chk100Cut" runat="server" />
+                                                        <asp:Label ID="lbl100CutCheck" AssociatedControlID="chk100Cut" runat="server"></asp:Label>
+                                                        <asp:Label ID="lbl100Cut" AssociatedControlID="chk100Cut" runat="server" Text="Cut Pitch"></asp:Label>
+
+                                                        <%-- Default Filler Option --%>
+                                                        <asp:Label ID="lbl100DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
+                                                        <asp:TextBox ID="txt100DefaultFiller" runat="server" CssClass="txtLengthInput"></asp:TextBox>
+                                                        <asp:DropDownList ID="ddl100DefaultFiller" runat="server"></asp:DropDownList>
+
+
+
+                                                        <%--InteriorSkin
+	                                                    ExteriorSkin
+	                                                    DoorType/DoorSubtype/DoorOptions
+	                                                    WindowType/WindowOptions
+	                                                    PresetLayout
+	                                                    InstallType
+	                                                    Sunshades/SunshadeOptions
+	                                                    RoofType/RoofOptions
+	                                                    FloorType/FloorOptions
+	                                                    KneewallOptions
+	                                                    TransomOptions
+	                                                    CutPitch
+	                                                    DefaultFiller--%>
                                                     </li>                                            
                                                 </ul>
                                             </div>
