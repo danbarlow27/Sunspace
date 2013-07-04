@@ -385,8 +385,8 @@ namespace SunspaceDealerDesktop
                         ListItem thirtyTwo = new ListItem("32\"", "32");
                         ListItem thirtyFour = new ListItem("34\"", "34");
                         ListItem thirtySix = new ListItem("36\"", "36");
-                        ListItem sixty = new ListItem("60\"", "60");
-                        ListItem seventyTwo = new ListItem("72\"", "72");
+                        ListItem sixty = new ListItem("60\"", "30");
+                        ListItem seventyTwo = new ListItem("72\"", "36");
                         ListItem fiveFeet = new ListItem("5'", "5");
                         ListItem sixFeet = new ListItem("6'", "6");
                         ListItem sevenFeet = new ListItem("7'", "7");
@@ -840,6 +840,18 @@ namespace SunspaceDealerDesktop
 
                         #endregion
 
+                        #region Table:# Row Add This Door (tblDoorDetails)
+
+                        TableRow doorAddRow = new TableRow();
+                        TableCell doorAddButtonCell = new TableCell();
+
+                        Button doorAddButton = new Button();
+                        doorAddButton.ID = "btnAddThisDoor" + currentWall + title;
+                        doorAddButton.Text = "Add This " + title + " Door";
+                        doorAddButton.CssClass = "btnSubmit";
+
+                        #endregion
+
                         //Adding to table
 
 
@@ -1138,6 +1150,16 @@ namespace SunspaceDealerDesktop
                         doorPositionRow.Cells.Add(doorPositionLBLCell);
                         doorPositionRow.Cells.Add(doorPositionTXTCell);
                         doorPositionRow.Cells.Add(doorPositionDDLCell);
+
+                        #endregion
+
+                        #region Table:# Row Add This Door (tblDoorDetails)
+
+                        doorAddButtonCell.Controls.Add(doorAddButton);
+
+                        tblDoorDetails.Rows.Add(doorAddRow);
+
+                        doorAddRow.Cells.Add(doorAddButtonCell);
 
                         #endregion
 
