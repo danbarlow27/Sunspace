@@ -787,16 +787,9 @@ namespace SunspaceDealerDesktop
                         TableCell doorAddButtonBlankCell = new TableCell();
                         TableCell doorAddButtonCell = new TableCell();
 
-                        Button doorAddButton = new Button();
-                        doorAddButton.ID = "btnAddThisDoor" + currentWall + title;
-                        doorAddButton.Text = "Add This " + title + " Door";
-                        doorAddButton.CssClass = "btnSubmit";
-                        doorAddButton.Attributes.Add("onclick", "addDoor('"+ title +"')");
-
                         #endregion
 
                         //Adding to table
-
 
                         #region Table:Default Row Title Current Door Added To Table (tblDoorDetails)
 
@@ -1068,8 +1061,8 @@ namespace SunspaceDealerDesktop
 
                         #region Table:# Row Add This Door (tblDoorDetails)
 
-                        doorAddButtonCell.Controls.Add(doorAddButton);
-
+                        doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + currentWall + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' runat='server' value='Add This " + title + " Door'></input>"));
+                       
                         tblDoorDetails.Rows.Add(doorAddButtonRow);
 
                         doorAddButtonRow.Cells.Add(doorAddButtonBlankCell);

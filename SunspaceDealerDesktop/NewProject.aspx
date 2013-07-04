@@ -664,6 +664,16 @@
 
                                         <asp:TableRow>
                                             <asp:TableCell>
+                                                <asp:Label ID="lblCustomerProvState" AssociatedControlID="ddlCustomerProvState" runat="server" Text="Province:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlCustomerProvState" runat="server" OnChange="newProjectCheckQuestion1()" ></asp:DropDownList>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
                                                 <asp:Label ID="lblCustomerCity" AssociatedControlID="txtCustomerCity" runat="server" Text="City:"></asp:Label>
                                             </asp:TableCell>
 
@@ -1305,6 +1315,7 @@
     <input id="hidFirstName" type="hidden" runat="server" />
     <input id="hidLastName" type="hidden" runat="server" />
     <input id="hidAddress" type="hidden" runat="server" />
+    <input id="hidProvState" type="hidden" runat="server" />
     <input id="hidCity" type="hidden" runat="server" />
     <input id="hidZip" type="hidden" runat="server" />
     <input id="hidPhone" type="hidden" runat="server" />

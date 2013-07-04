@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace SunspaceDealerDesktop
 {
@@ -71,6 +73,81 @@ namespace SunspaceDealerDesktop
         public const float SOFT_MAX_MOD_SIZE = 84.0f; //Maximum size of a mod (soft)
 
         public const float SPREADER_BAR_SIZE = 1.0f; //width of a spreader bar (does not vary)
+        #endregion
+
+        #region Countries, States, Provinces
+        public static List<ListItem> COUNTRY_LIST = new List<ListItem>()
+            {
+                new ListItem("Canada", "Canada"), 
+                new ListItem("United States", "USA")
+            };
+
+        public static List<ListItem> PROVINCE_LIST = new List<ListItem>()
+            {
+                new ListItem("Ontario", "ON"), 
+                new ListItem("British Columbia", "BC"),
+                new ListItem("Québec", "QC"), 
+                new ListItem("Alberta", "AB"), 
+                new ListItem("Nova Scotia", "NS"),
+                new ListItem("Manitoba", "MB"), 
+                new ListItem("Saskatchewan States", "SK"),
+                new ListItem("New Brunswick", "NB"), 
+                new ListItem("Prince Edward Island", "PEI"),
+                new ListItem("Newfoundland and Labrador", "NFL")
+            };
+        public static List<ListItem> STATE_LIST = new List<ListItem>()
+            {
+                new ListItem("Alabama", "AL"),
+                new ListItem("Alaska", "AK"),
+                new ListItem("Arizona", "AZ"),
+                new ListItem("Arkansas", "AR"),
+                new ListItem("California", "CA"),
+                new ListItem("Colorado", "CO"),
+                new ListItem("Connecticut", "CT"),
+                new ListItem("Delaware", "DE"),
+                new ListItem("Florida", "FL"),
+                new ListItem("Georgia", "GA"),
+                new ListItem("Hawaii", "HI"),
+                new ListItem("Idaho", "ID"),
+                new ListItem("Illinois", "IL"),
+                new ListItem("Indiana", "IN"),
+                new ListItem("Iowa", "IA"),
+                new ListItem("Kansas", "KS"),
+                new ListItem("Kentucky", "KY"),
+                new ListItem("Louisiana", "LA"),
+                new ListItem("Maine", "ME"),
+                new ListItem("Maryland", "MD"),
+                new ListItem("Massachusetts", "MA"),
+                new ListItem("Michigan", "MI"),
+                new ListItem("Minnesota", "MN"),
+                new ListItem("Mississippi", "MS"),
+                new ListItem("Missouri", "MO"),
+                new ListItem("Montana", "MT"),
+                new ListItem("Nebraska", "NE"),
+                new ListItem("Nevada", "NV"),
+                new ListItem("New Hampshire", "NH"),
+                new ListItem("New Jersey", "NJ"),
+                new ListItem("New Mexico", "NM"),
+                new ListItem("New York", "NY"),
+                new ListItem("North Carolina", "NC"),
+                new ListItem("North Dakota", "ND"),
+                new ListItem("Ohio", "OH"),
+                new ListItem("Oklahoma", "OK"),
+                new ListItem("Oregon", "OR"),
+                new ListItem("Pennsylvania", "PA"),
+                new ListItem("Rhode Island", "RI"),
+                new ListItem("South Carolina", "SC"),
+                new ListItem("South Dakota", "SD"),
+                new ListItem("Tennessee", "TN"),
+                new ListItem("Texas", "TX"),
+                new ListItem("Utah", "UT"),
+                new ListItem("Vermont", "VT"),
+                new ListItem("Virginia", "VA"),
+                new ListItem("Washington", "WA"),
+                new ListItem("West Virginia", "WV"),
+                new ListItem("Wisconsin", "WI"),
+                new ListItem("Wyoming", "WY")
+            };
         #endregion
     }
 }
