@@ -115,7 +115,7 @@ namespace SunspaceDealerDesktop
             //SLIDE 3 DOOR DETAILS PER WALL
             #region Slide 3: Onload dynamic loop to insert wall door options            
 
-            for (int currentWall = 1; currentWall <= walls.Count(); currentWall++) //numberOfWalls is hard-coded to be 4 right now
+            for (int currentWall = 1; currentWall <= walls.Count(); currentWall++) 
             {
                 #region Wall #:Radio button section
                 wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
@@ -506,101 +506,26 @@ namespace SunspaceDealerDesktop
 
                         #region Table:Tenth Row Door Box Header LHH (tblDoorDetails)
 
-                        TableRow doorBoxHeaderLHHRow = new TableRow();
-                        doorBoxHeaderLHHRow.ID = "rowDoorBoxHeaderLHH" + currentWall + title;
-                        doorBoxHeaderLHHRow.Attributes.Add("style", "display:none;");
-                        TableCell doorBoxHeaderLHHLBLCell = new TableCell();
-                        TableCell doorBoxHeaderLHHRADCell = new TableCell();
+                        TableRow doorBoxHeaderRow = new TableRow();
+                        doorBoxHeaderRow.ID = "rowDoorBoxHeader" + currentWall + title;
+                        doorBoxHeaderRow.Attributes.Add("style", "display:none;");
+                        TableCell doorBoxHeaderLBLCell = new TableCell();
+                        TableCell doorBoxHeaderDDLCell = new TableCell();
 
-                        Label doorBoxHeaderLHHLBLMain = new Label();
-                        doorBoxHeaderLHHLBLMain.ID = "lblDoorBoxHeaderLHHMain" + currentWall + title;
-                        doorBoxHeaderLHHLBLMain.Text = "Box Header Position:";
+                        Label doorBoxHeaderLBL = new Label();
+                        doorBoxHeaderLBL.ID = "lblDoorBoxHeader" + currentWall + title;
+                        doorBoxHeaderLBL.Text = "Box Header Position:";
 
-                        Label doorBoxHeaderLHHLBLRad = new Label();
-                        doorBoxHeaderLHHLBLRad.ID = "lblDoorBoxHeaderRadLHH" + currentWall + title;
-
-                        Label doorBoxHeaderLHHLBL = new Label();
-                        doorBoxHeaderLHHLBL.ID = "lblDoorBoxHeaderLHH" + currentWall + title;
-                        doorBoxHeaderLHHLBL.Text = "LHH";
-
-                        RadioButton doorBoxHeaderLHHRad = new RadioButton();
-                        doorBoxHeaderLHHRad.ID = "radDoorBoxHeaderLHH" + currentWall + title;
-                        doorBoxHeaderLHHRad.GroupName = "BoxHeader";
-
-                        doorBoxHeaderLHHLBLRad.AssociatedControlID = "radDoorBoxHeaderLHH" + currentWall + title;
-                        doorBoxHeaderLHHLBL.AssociatedControlID = "radDoorBoxHeaderLHH" + currentWall + title;
-
-                        #endregion
-
-                        #region Table:Eleventh Row Door Box Header RHH (tblDoorDetails)
-
-                        TableRow doorBoxHeaderRHHRow = new TableRow();
-                        doorBoxHeaderRHHRow.ID = "rowDoorBoxHeaderRHH" + currentWall + title;
-                        doorBoxHeaderRHHRow.Attributes.Add("style", "display:none;");
-                        TableCell doorBoxHeaderRHHLBLCell = new TableCell();
-                        TableCell doorBoxHeaderRHHRADCell = new TableCell();
-
-                        Label doorBoxHeaderRHHLBLRad = new Label();
-                        doorBoxHeaderRHHLBLRad.ID = "lblDoorBoxHeaderRadRHH" + currentWall + title;
-
-                        Label doorBoxHeaderRHHLBL = new Label();
-                        doorBoxHeaderRHHLBL.ID = "lblDoorBoxHeaderRHH" + currentWall + title;
-                        doorBoxHeaderRHHLBL.Text = "RHH";
-
-                        RadioButton doorBoxHeaderRHHRad = new RadioButton();
-                        doorBoxHeaderRHHRad.ID = "radDoorBoxHeaderRHH" + currentWall + title;
-                        doorBoxHeaderRHHRad.GroupName = "BoxHeader";
-
-                        doorBoxHeaderRHHLBLRad.AssociatedControlID = "radDoorBoxHeaderRHH" + currentWall + title;
-                        doorBoxHeaderRHHLBL.AssociatedControlID = "radDoorBoxHeaderRHH" + currentWall + title;
-
-                        #endregion
-
-                        #region Table:Twelfth Row Door Box Header Both (tblDoorDetails)
-
-                        TableRow doorBoxHeaderBothRow = new TableRow();
-                        doorBoxHeaderBothRow.ID = "rowDoorBoxHeaderBoth" + currentWall + title;
-                        doorBoxHeaderBothRow.Attributes.Add("style", "display:none;");
-                        TableCell doorBoxHeaderBothLBLCell = new TableCell();
-                        TableCell doorBoxHeaderBothRADCell = new TableCell();
-
-                        Label doorBoxHeaderBothLBLRad = new Label();
-                        doorBoxHeaderBothLBLRad.ID = "lblDoorBoxHeaderRadBoth" + currentWall + title;
-
-                        Label doorBoxHeaderBothLBL = new Label();
-                        doorBoxHeaderBothLBL.ID = "lblDoorBoxHeaderBoth" + currentWall + title;
-                        doorBoxHeaderBothLBL.Text = "Both";
-
-                        RadioButton doorBoxHeaderBothRad = new RadioButton();
-                        doorBoxHeaderBothRad.ID = "radDoorBoxHeaderBoth" + currentWall + title;
-                        doorBoxHeaderBothRad.GroupName = "BoxHeader";
-
-                        doorBoxHeaderBothLBLRad.AssociatedControlID = "radDoorBoxHeaderBoth" + currentWall + title;
-                        doorBoxHeaderBothLBL.AssociatedControlID = "radDoorBoxHeaderBoth" + currentWall + title;
-
-                        #endregion
-
-                        #region Table:Twelfth Row Door Box Header None (tblDoorDetails)
-
-                        TableRow doorBoxHeaderNoneRow = new TableRow();
-                        doorBoxHeaderNoneRow.ID = "rowDoorBoxHeaderNone" + currentWall + title;
-                        doorBoxHeaderNoneRow.Attributes.Add("style", "display:none;");
-                        TableCell doorBoxHeaderNoneLBLCell = new TableCell();
-                        TableCell doorBoxHeaderNoneRADCell = new TableCell();
-
-                        Label doorBoxHeaderNoneLBLRad = new Label();
-                        doorBoxHeaderNoneLBLRad.ID = "lblDoorBoxHeaderRadNone" + currentWall + title;
-
-                        Label doorBoxHeaderNoneLBL = new Label();
-                        doorBoxHeaderNoneLBL.ID = "lblDoorBoxHeaderNone" + currentWall + title;
-                        doorBoxHeaderNoneLBL.Text = "None";
-
-                        RadioButton doorBoxHeaderNoneRad = new RadioButton();
-                        doorBoxHeaderNoneRad.ID = "radDoorBoxHeaderNone" + currentWall + title;
-                        doorBoxHeaderNoneRad.GroupName = "BoxHeader";
-
-                        doorBoxHeaderNoneLBLRad.AssociatedControlID = "radDoorBoxHeaderNone" + currentWall + title;
-                        doorBoxHeaderNoneLBL.AssociatedControlID = "radDoorBoxHeaderNone" + currentWall + title;
+                        DropDownList doorBoxHeaderDDL = new DropDownList();
+                        doorBoxHeaderDDL.ID = "ddlDoorBoxHeader" + currentWall + title;
+                        ListItem LHH = new ListItem("Left", "left");
+                        ListItem RHH = new ListItem("Right", "right");
+                        ListItem Both = new ListItem("Both", "both");
+                        ListItem None = new ListItem("None", "none");
+                        doorBoxHeaderDDL.Items.Add(LHH);
+                        doorBoxHeaderDDL.Items.Add(RHH);
+                        doorBoxHeaderDDL.Items.Add(Both);
+                        doorBoxHeaderDDL.Items.Add(None);
 
                         #endregion
 
@@ -981,57 +906,15 @@ namespace SunspaceDealerDesktop
 
                         #endregion
 
-                        #region Table:Tenth Row Door Box Header LHH Added To Table (tblDoorDetails)
+                        #region Table:Tenth Row Door Box Header Position (tblDoorDetails)
 
-                        doorBoxHeaderLHHLBLCell.Controls.Add(doorBoxHeaderLHHLBLMain);
+                        doorBoxHeaderLBLCell.Controls.Add(doorBoxHeaderLBL);
+                        doorBoxHeaderDDLCell.Controls.Add(doorBoxHeaderDDL);
 
-                        doorBoxHeaderLHHRADCell.Controls.Add(doorBoxHeaderLHHRad);
-                        doorBoxHeaderLHHRADCell.Controls.Add(doorBoxHeaderLHHLBLRad);
-                        doorBoxHeaderLHHRADCell.Controls.Add(doorBoxHeaderLHHLBL);
+                        tblDoorDetails.Rows.Add(doorBoxHeaderRow);
 
-                        tblDoorDetails.Rows.Add(doorBoxHeaderLHHRow);
-
-                        doorBoxHeaderLHHRow.Cells.Add(doorBoxHeaderLHHLBLCell);
-                        doorBoxHeaderLHHRow.Cells.Add(doorBoxHeaderLHHRADCell);
-
-                        #endregion
-
-                        #region Table:Eleventh Row Door Box Header RHH Added To Table (tblDoorDetails)
-
-                        doorBoxHeaderRHHRADCell.Controls.Add(doorBoxHeaderRHHRad);
-                        doorBoxHeaderRHHRADCell.Controls.Add(doorBoxHeaderRHHLBLRad);
-                        doorBoxHeaderRHHRADCell.Controls.Add(doorBoxHeaderRHHLBL);
-
-                        tblDoorDetails.Rows.Add(doorBoxHeaderRHHRow);
-
-                        doorBoxHeaderRHHRow.Cells.Add(doorBoxHeaderRHHLBLCell);
-                        doorBoxHeaderRHHRow.Cells.Add(doorBoxHeaderRHHRADCell);
-
-                        #endregion
-
-                        #region Table:Twelfth Row Door Box Header Both Added To Table (tblDoorDetails)
-
-                        doorBoxHeaderBothRADCell.Controls.Add(doorBoxHeaderBothRad);
-                        doorBoxHeaderBothRADCell.Controls.Add(doorBoxHeaderBothLBLRad);
-                        doorBoxHeaderBothRADCell.Controls.Add(doorBoxHeaderBothLBL);
-
-                        tblDoorDetails.Rows.Add(doorBoxHeaderBothRow);
-
-                        doorBoxHeaderBothRow.Cells.Add(doorBoxHeaderBothLBLCell);
-                        doorBoxHeaderBothRow.Cells.Add(doorBoxHeaderBothRADCell);
-
-                        #endregion
-
-                        #region Table:Twelfth Row Door Box Header None Added To Table (tblDoorDetails)
-
-                        doorBoxHeaderNoneRADCell.Controls.Add(doorBoxHeaderNoneRad);
-                        doorBoxHeaderNoneRADCell.Controls.Add(doorBoxHeaderNoneLBLRad);
-                        doorBoxHeaderNoneRADCell.Controls.Add(doorBoxHeaderNoneLBL);
-
-                        tblDoorDetails.Rows.Add(doorBoxHeaderNoneRow);
-
-                        doorBoxHeaderNoneRow.Cells.Add(doorBoxHeaderNoneLBLCell);
-                        doorBoxHeaderNoneRow.Cells.Add(doorBoxHeaderNoneRADCell);
+                        doorBoxHeaderRow.Cells.Add(doorBoxHeaderLBLCell);
+                        doorBoxHeaderRow.Cells.Add(doorBoxHeaderDDLCell);
 
                         #endregion
 
