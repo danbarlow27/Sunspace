@@ -34,7 +34,27 @@ namespace SunspaceDealerDesktop
             //slide1
             #region Slide 1 pageload
             //Add countries to country ddl
-            ddlCustomerCountry.Items.Add(new ListItem("United States", "USA"));
+            for (int i = 0; i < Constants.COUNTRY_LIST.Count; i++)
+            {
+                ddlCustomerCountry.Items.Add(Constants.COUNTRY_LIST[i]);
+            }
+
+            if (ddlCustomerCountry.SelectedValue = "Canada")
+            {
+                //Add provinces to the province/state ddl
+                for (int i = 0; i < Constants.PROVINCE_LIST.Count; i++)
+                {
+                    ddlCustomerProvState.Items.Add(Constants.COUNTRY_LIST[i]);
+                }
+            }
+            else
+            {
+                //Add states to the province/state ddl
+                for (int i = 0; i < Constants.COUNTRY_LIST.Count; i++)
+                {
+                    ddlCustomerCountry.Items.Add(Constants.COUNTRY_LIST[i]);
+                }
+            }
 
             //Get the customers assosciated with this dealer
             sdsCustomers.SelectCommand = "SELECT first_name, last_name FROM customers WHERE dealer_id=" + Session["loggedIn"] + "ORDER BY last_name, first_name";
@@ -107,27 +127,10 @@ namespace SunspaceDealerDesktop
 
         protected void btnLayout_Click(object sender, EventArgs e)
         {
-            sdsCustomers.SelectCommand = "SELECT * FROM customers"; ;
-            DataView dvCustomers = (DataView)sdsCustomers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
-
-            //ANTHONYCHECK
-            //table-customers
-            //customers will never be removed, correct? Currently adding 1 to count for next autogen number
-            
-            int count = dvCustomers.Count;
-
-            //If new customer is selected, lets add this customer to our customer list
-            //CHANGEME Uses logged in session number as dealerID, this is likely userID in the future, and needs to be changed
-
-            string sqlInsert = "INSERT INTO customers (dealer_id,first_name,last_name,address,city,prov_city,country,zip_postal,main_phone,cell_phone,email,accept_email)"
-            + "VALUES("
-            + Convert.ToInt32(Session["loggedIn"].ToString()) + ",'" + hidFirstName.Value + "','" + hidLastName.Value + "','" + hidAddress.Value + "','" + hidCity.Value + "','"
-            + "Ontario" + "','" + hidCountry.Value + "','" + hidZip.Value + "','" + hidPhone.Value + "','" + hidCell.Value + "','" + hidEmail.Value + "',"
-            + 1 + ")";
-
-            sdsCustomers.InsertCommand = sqlInsert;
-            sdsCustomers.Insert();
-
+            if (hidExisting.Value == "")
+            {
+                insertNewCustomer();
+            }
             //Session.Add("hidFirstName", hidFirstName.Value);
             //Session.Add("hidExisting", hidExisting.Value);
             //Session.Add("hidFirstName", hidFirstName.Value);
@@ -199,14 +202,41 @@ namespace SunspaceDealerDesktop
         {
             if (radProjectRoof.Checked)
             {
+                //if existing is blank, it must be a new customer
+                if (hidExisting.Value == "")
+                {
+                    insertNewCustomer();
+                }
                 Response.Redirect("Home.aspx");
             }
         }
 
         protected void btnQuestion4Walls_Click(object sender, EventArgs e)
         {
+            if (hidExisting.Value == "")
+            {
+                insertNewCustomer();
+            }
             //required session stuff before forwarding
             Response.Redirect("Home.aspx");
+        }
+
+        protected void insertNewCustomer()
+        {
+            sdsCustomers.SelectCommand = "SELECT * FROM customers"; ;
+            DataView dvCustomers = (DataView)sdsCustomers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+            //If new customer is selected, lets add this customer to our customer list
+            //CHANGEME Uses logged in session number as dealerID, this is likely userID in the future, and needs to be changed
+
+            string sqlInsert = "INSERT INTO customers (dealer_id,first_name,last_name,address,city,prov_city,country,zip_postal,main_phone,cell_phone,email,accept_email)"
+            + "VALUES("
+            + Convert.ToInt32(Session["loggedIn"].ToString()) + ",'" + hidFirstName.Value + "','" + hidLastName.Value + "','" + hidAddress.Value + "','" + hidCity.Value + "','"
+            + "Ontario" + "','" + hidCountry.Value + "','" + hidZip.Value + "','" + hidPhone.Value + "','" + hidCell.Value + "','" + hidEmail.Value + "',"
+            + 1 + ")";
+
+            sdsCustomers.InsertCommand = sqlInsert;
+            sdsCustomers.Insert();
         }
     }
 }
