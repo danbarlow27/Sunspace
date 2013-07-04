@@ -159,7 +159,7 @@ namespace SunspaceDealerDesktop
                         RadioButton typeRadio = new RadioButton();
                         typeRadio.ID = "radType" + currentWall + title;
                         typeRadio.GroupName = "doorTypeRadios";
-                        typeRadio.Attributes.Add("onclick", "checkQuestion3()");
+                        typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()");
 
                         Label typeLabelRadio = new Label();
                         typeLabelRadio.AssociatedControlID = "radType" + currentWall + title;
@@ -504,7 +504,7 @@ namespace SunspaceDealerDesktop
 
                         #endregion
 
-                        #region Table:Tenth Row Door Box Header LHH (tblDoorDetails)
+                        #region Table:Tenth Row Door Box Header (tblDoorDetails)
 
                         TableRow doorBoxHeaderRow = new TableRow();
                         doorBoxHeaderRow.ID = "rowDoorBoxHeader" + currentWall + title;
@@ -518,12 +518,12 @@ namespace SunspaceDealerDesktop
 
                         DropDownList doorBoxHeaderDDL = new DropDownList();
                         doorBoxHeaderDDL.ID = "ddlDoorBoxHeader" + currentWall + title;
-                        ListItem LHH = new ListItem("Left", "left");
-                        ListItem RHH = new ListItem("Right", "right");
+                        ListItem Left = new ListItem("Left", "left");
+                        ListItem Right = new ListItem("Right", "right");
                         ListItem Both = new ListItem("Both", "both");
                         ListItem None = new ListItem("None", "none");
-                        doorBoxHeaderDDL.Items.Add(LHH);
-                        doorBoxHeaderDDL.Items.Add(RHH);
+                        doorBoxHeaderDDL.Items.Add(Left);
+                        doorBoxHeaderDDL.Items.Add(Right);
                         doorBoxHeaderDDL.Items.Add(Both);
                         doorBoxHeaderDDL.Items.Add(None);
 
@@ -733,6 +733,32 @@ namespace SunspaceDealerDesktop
 
                         #endregion
 
+                        #region Table:# Row Door Position DDL (tblDoorDetails)
+
+                        TableRow doorPositionDDLRow = new TableRow();
+                        doorPositionDDLRow.ID = "rowDoorPositionDDL" + currentWall + title;
+                        doorPositionDDLRow.Attributes.Add("style", "display:none;");
+                        TableCell doorPositionDDLLBLCell = new TableCell();
+                        TableCell doorPositionDDLDDLCell = new TableCell();
+
+                        Label doorPositionDDLLBL = new Label();
+                        doorPositionDDLLBL.ID = "lblDoorPositionDDL" + currentWall + title;
+                        doorPositionDDLLBL.Text = "PositionDDL:";
+
+                        DropDownList doorPositionDDLDDL = new DropDownList();
+                        doorPositionDDLDDL.ID = "ddlDoorPositionDDL" + currentWall + title;
+                        doorPositionDDLDDL.Attributes.Add("onchange", "customPosition('" + title + "')");
+                        ListItem PositionLeft = new ListItem("Left", "left");
+                        ListItem PositionCenter = new ListItem("Center", "center");
+                        ListItem PositionRight = new ListItem("Right", "right");
+                        ListItem PositionCustom = new ListItem("Custom", "cPosition");
+                        doorPositionDDLDDL.Items.Add(PositionLeft);
+                        doorPositionDDLDDL.Items.Add(PositionCenter);
+                        doorPositionDDLDDL.Items.Add(PositionRight);
+                        doorPositionDDLDDL.Items.Add(PositionCustom);
+
+                        #endregion
+
                         #region Table:# Row Door Position (tblDoorDetails)
 
                         TableRow doorPositionRow = new TableRow();
@@ -763,17 +789,20 @@ namespace SunspaceDealerDesktop
 
                         doorPositionLBL.AssociatedControlID = "txtDoorPosition" + currentWall + title;
 
-                        #endregion
+                        #endregion                        
 
                         #region Table:# Row Add This Door (tblDoorDetails)
 
-                        TableRow doorAddRow = new TableRow();
+                        TableRow doorAddButtonRow = new TableRow();
+                        doorAddButtonRow.Attributes.Add("style", "display:inherit;");
+                        TableCell doorAddButtonBlankCell = new TableCell();
                         TableCell doorAddButtonCell = new TableCell();
 
                         Button doorAddButton = new Button();
                         doorAddButton.ID = "btnAddThisDoor" + currentWall + title;
                         doorAddButton.Text = "Add This " + title + " Door";
                         doorAddButton.CssClass = "btnSubmit";
+                        doorAddButton.Attributes.Add("onclick", "addDoor('"+ title +"')");
 
                         #endregion
 
@@ -1022,6 +1051,18 @@ namespace SunspaceDealerDesktop
 
                         #endregion
 
+                        #region Table:# Row Door Position DDL Added To Table (tblDoorDetails)
+
+                        doorPositionDDLLBLCell.Controls.Add(doorPositionDDLLBL);
+                        doorPositionDDLDDLCell.Controls.Add(doorPositionDDLDDL);
+
+                        tblDoorDetails.Rows.Add(doorPositionDDLRow);
+
+                        doorPositionDDLRow.Cells.Add(doorPositionDDLLBLCell);
+                        doorPositionDDLRow.Cells.Add(doorPositionDDLDDLCell);
+
+                        #endregion
+
                         #region Table:# Row Door Position Added To Table (tblDoorDetails)
 
                         doorPositionLBLCell.Controls.Add(doorPositionLBL);
@@ -1040,9 +1081,10 @@ namespace SunspaceDealerDesktop
 
                         doorAddButtonCell.Controls.Add(doorAddButton);
 
-                        tblDoorDetails.Rows.Add(doorAddRow);
+                        tblDoorDetails.Rows.Add(doorAddButtonRow);
 
-                        doorAddRow.Cells.Add(doorAddButtonCell);
+                        doorAddButtonRow.Cells.Add(doorAddButtonBlankCell);
+                        doorAddButtonRow.Cells.Add(doorAddButtonCell);
 
                         #endregion
 
