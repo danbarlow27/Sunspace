@@ -15,23 +15,27 @@
             //if they select new customer
             if ($('#<%=radNewCustomer.ClientID%>').is(':checked')) {
                 //if checked, clear possible pager value from existing
-                $('# <%=lblSpecsProjectTypeAnswer.ClientID%>').text("");
+                $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("");
 
                 //move textbox data into hidden fields
+                document.getElementById("<%=hidCountry.ClientID%>").value = $('#<%=ddlCustomerCountry.ClientID%>').val();
                 document.getElementById("<%=hidFirstName.ClientID%>").value = $('#<%=txtCustomerFirstName.ClientID%>').val();
                 document.getElementById("<%=hidLastName.ClientID%>").value = $('#<%=txtCustomerLastName.ClientID%>').val();
                 document.getElementById("<%=hidAddress.ClientID%>").value = $('#<%=txtCustomerAddress.ClientID%>').val();
                 document.getElementById("<%=hidCity.ClientID%>").value = $('#<%=txtCustomerCity.ClientID%>').val();
                 document.getElementById("<%=hidZip.ClientID%>").value = $('#<%=txtCustomerZip.ClientID%>').val();
                 document.getElementById("<%=hidPhone.ClientID%>").value = $('#<%=txtCustomerPhone.ClientID%>').val();
+                document.getElementById("<%=hidCell.ClientID%>").value = $('#<%=txtCustomerCell.ClientID%>').val();
+                document.getElementById("<%=hidEmail.ClientID%>").value = $('#<%=txtCustomerEmail.ClientID%>').val();
                 //blank out existing
                 document.getElementById("<%=hidExisting.ClientID%>").value = "";
                 
                 //Make sure the text boxes aren't blank before manually checking zip/postal and phone
-                if (document.getElementById(" <%=hidFirstName.ClientID%>").value != "" &&
-                    document.getElementById(" <%=hidLastName.ClientID%>").value != "" &&
-                    document.getElementById(" <%=hidAddress.ClientID%>").value != "" &&
-                    document.getElementById(" <%=hidCity.ClientID%>").value != "") {
+                if (document.getElementById("<%=hidFirstName.ClientID%>").value != "" &&
+                    document.getElementById("<%=hidLastName.ClientID%>").value != "" &&
+                    document.getElementById("<%=hidAddress.ClientID%>").value != "" &&
+                    document.getElementById("<%=hidCity.ClientID%>").value != "" &&
+                    document.getElementById("<%=hidEmail.ClientID%>").value != "") {
 
                     //having troubles checking .value.length, so setting .value into a variable
                     var lengthCheck = document.getElementById("<%=hidPhone.ClientID%>").value;
@@ -39,16 +43,25 @@
                     //only check if a full 10digit number is entered
                     if (lengthCheck.length == 10) {
                         //validatePhone function returns an error message, blank if valid
-                        var validPhone = validatePhone(document.getElementById(" <%=hidPhone.ClientID%>").value);
+                        var validPhone = validatePhone(document.getElementById("<%=hidPhone.ClientID%>").value);
+                    }
+
+                    //having troubles checking .value.length, so setting .value into a variable
+                    var lengthCheck = document.getElementById("<%=hidCell.ClientID%>").value;
+
+                    //only check if a full 10digit number is entered
+                    if (lengthCheck.length == 10) {
+                        //validatePhone function returns an error message, blank if valid
+                        var validCell = validatePhone(document.getElementById("<%=hidCell.ClientID%>").value);
                     }
 
                     //same troubles as before, checking .value.length
                     var zipCode = document.getElementById("<%=hidZip.ClientID%>").value;
-                    var isValid = false;
+                    var isValid = true;
 
                     //if zip code is not valid numeric, or it is not 5 digits, it is not valid
                     if (!isNaN(zipCode) && zipCode.length == 5) {
-                        isValid = true;
+                        
                     }
                     else {
                         isValid = false;
@@ -56,7 +69,14 @@
 
                     //only fully valid if no error message was returned
                     if (validPhone == "") {
-                        isValid = true;
+                    }
+                    else {
+                        //invalid phone
+                        isValid = false;
+                    }
+
+                    //only fully valid if no error message was returned
+                    if (validCell == "") {
                     }
                     else {
                         //invalid phone
@@ -495,24 +515,24 @@
             
             if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "White")
             {
-                $("#MainContent_ddlInteriorColour").val('White');
-                $("#MainContent_ddlInteriorSkin").val('White Aluminum Stucco');
-                $("#MainContent_ddlExteriorColour").val('White');
-                $("#MainContent_ddlExteriorSkin").val('White Aluminum Stucco');
+                $("#<%=ddlInteriorColour.ClientID%>").val('White');
+                $("#<%=ddlInteriorSkin.ClientID%>").val('White Aluminum Stucco');
+                $("#<%=ddlExteriorColour.ClientID%>").val('White');
+                $("#<%=ddlExteriorSkin.ClientID%>").val('White Aluminum Stucco');
             }
             else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Driftwood")
             {
-                $("#MainContent_ddlInteriorColour").val('Driftwood');
-                $("#MainContent_ddlInteriorSkin").val('Driftwood Aluminum Stucco');
-                $("#MainContent_ddlExteriorColour").val('Driftwood');
-                $("#MainContent_ddlExteriorSkin").val('Driftwood Aluminum Stucco');
+                $("#<%=ddlInteriorColour.ClientID%>").val('Driftwood');
+                $("#<%=ddlInteriorSkin.ClientID%>").val('Driftwood Aluminum Stucco');
+                $("#<%=ddlExteriorColour.ClientID%>").val('Driftwood');
+                $("#<%=ddlExteriorSkin.ClientID%>").val('Driftwood Aluminum Stucco');
             }
             else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Bronze")
             {
-                $("#MainContent_ddlInteriorColour").val('Bronze');
-                $("#MainContent_ddlInteriorSkin").val('Bronze Aluminum Stucco');
-                $("#MainContent_ddlExteriorColour").val('Bronze');
-                $("#MainContent_ddlExteriorSkin").val('Bronze Aluminum Stucco');
+                $("#<%=ddlInteriorColour.ClientID%>").val('Bronze');
+                $("#<%=ddlInteriorSkin.ClientID%>").val('Bronze Aluminum Stucco');
+                $("#<%=ddlExteriorColour.ClientID%>").val('Bronze');
+                $("#<%=ddlExteriorSkin.ClientID%>").val('Bronze Aluminum Stucco');
             }
 
             //now that colours have cascading we still need to validate the slide
@@ -574,16 +594,14 @@
         }
     </script>
 
-    <%-- SLIDES (QUESTIONS)
-    ======================================== 
-        
-        onmousedown="event.preventDefault ? event.preventDefault() : event.returnValue = false"--%>
+    <%-- end 'complete sunroom' option --%>    
+
+    <%-- EXISTING CUSTOMER --%>
     <div class="slide-window"  >
 
         <div class="slide-wrapper">
             
-            <%-- QUESTION 1 - New or existing customer
-            ======================================== --%>
+            <%-- end .toggleContent --%>
             <div id="slide1" class="slide">
 
                 <h1>
@@ -592,7 +610,7 @@
                               
                 <ul class="toggleOptions">
 
-                    <%-- NEW CUSTOMER --%>
+                    <%-- end 'existing customer' option --%>
                     <li>
                         <asp:RadioButton ID="radNewCustomer" GroupName="question1" runat="server" OnClick="newProjectCheckQuestion1()" />
                         <asp:Label ID="lblNewCustomerRadio" AssociatedControlID="radNewCustomer" runat="server"></asp:Label>
@@ -604,6 +622,15 @@
                                     <h3>Enter customer details:</h3>
 
                                     <asp:Table ID="tblNewCustomerInfo" CssClass="tblTxtFields" runat="server">
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblCustomerCountry" AssociatedControlID="ddlCustomerCountry" runat="server" Text="Country:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlCustomerCountry" OnChange="newProjectCheckQuestion1()" runat="server" ></asp:DropDownList>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
 
                                         <asp:TableRow>
                                             <asp:TableCell>
@@ -657,6 +684,16 @@
 
                                         <asp:TableRow>
                                             <asp:TableCell>
+                                                <asp:Label ID="lblCustomerEmail" AssociatedControlID="txtCustomerEmail" runat="server" Text="Email:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtCustomerEmail" CssClass="txtField" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="50"></asp:TextBox>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
                                                 <asp:Label ID="lblCustomerPhone" AssociatedControlID="txtCustomerPhone" runat="server" Text="Phone Number:"></asp:Label>
                                             </asp:TableCell>
 
@@ -665,13 +702,22 @@
                                             </asp:TableCell>
                                         </asp:TableRow>
 
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblCustomerCell" AssociatedControlID="txtCustomerCell" runat="server" Text="Cell Number:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtCustomerCell" CssClass="txtField txtZipPhone" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="10"></asp:TextBox>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
                                     </asp:Table>
                                 </li>
                             </ul>            
-                        </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'complete sunroom' option --%>
-
-                    <%-- EXISTING CUSTOMER --%>
+                        </div> <%-- end .toggleOptions --%>
+                    </li> <%-- end #slide1 --%>
+                    <%-- QUESTION 2 - Project name
+            ======================================== --%>
                     <li>
                         <asp:RadioButton ID="radExistingCustomer" GroupName="question1" runat="server" OnClick="newProjectCheckQuestion1()" />
                         <asp:Label ID="lblExistingCustomerRadio" AssociatedControlID="radExistingCustomer" runat="server"></asp:Label>
@@ -681,21 +727,21 @@
                             <ul>
                                 <li>
                                     <asp:DropDownList ID="ddlExistingCustomer" OnChange="newProjectCheckQuestion1()" GroupName="question1" runat="server" />
+                                    <!-- DataTextField="percentage" DataValueField="id" DataSourceId="sds_Items" in case we decide to data-bind -->
                                 </li>
                             </ul>            
-                        </div> <%-- end .toggleContent --%>
-                    </li> <%-- end 'existing customer' option --%>
+                        </div> <%-- end .toggleOptions --%>
+                    </li> <%-- end #slide2 --%>
 
-                </ul> <%-- end .toggleOptions --%>
+                </ul> <%-- QUESTION 3 - What type of project?
+            ======================================== --%>
 
                 <asp:Button ID="btnQuestion1" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
 
             </div> 
-            <%-- end #slide1 --%>
+            <%-- COMPLETE SUNROOM --%>
 
-
-            <%-- QUESTION 2 - Project name
-            ======================================== --%>
+            <%-- end 'complete sunroom' options --%>
             <div id="slide2" class="slide">
                 
                 <h1>
@@ -717,16 +763,14 @@
                         </asp:Table>
                     </li>
 
-                </ul> <%-- end .toggleOptions --%>
+                </ul> <%-- end 'complete sunroom' --%>
 
                 <asp:Button ID="btnQuestion2" Enabled = "false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
                 
             </div> 
-            <%-- end #slide2 --%>
+            <%-- WALLS --%>
 
-
-            <%-- QUESTION 3 - What type of project?
-            ======================================== --%>
+            <%-- end 'wall' options --%>
             <div id="slide3" class="slide">
 
                 <h1>
@@ -735,7 +779,7 @@
                               
                 <ul class="toggleOptions">
 
-                    <%-- COMPLETE SUNROOM --%>
+                    <%-- end 'walls' --%>
                     <li>
                         <asp:RadioButton ID="radProjectSunroom" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectSunroomRadio" AssociatedControlID="radProjectSunroom" runat="server"></asp:Label>
@@ -764,10 +808,9 @@
                                     <asp:Label ID="lblSunroomModel400" AssociatedControlID="radSunroomModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
                             </ul>            
-                        </div> <%-- end 'complete sunroom' options --%>
-                    </li> <%-- end 'complete sunroom' --%>
-
-                    <%-- WALLS --%>
+                        </div> <%-- WINDOWS --%>
+                    </li> <%-- end 'windows' --%>
+                    <%-- DOORS --%>
                     <li>
                         <asp:RadioButton ID="radProjectWalls" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectWallsRadio" AssociatedControlID="radProjectWalls" runat="server"></asp:Label>
@@ -796,31 +839,27 @@
                                     <asp:Label ID="lblWallsModel400" AssociatedControlID="radWallsModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
                             </ul>            
-                        </div> <%-- end 'wall' options --%>
-                    </li> <%-- end 'walls' --%>
-
-                    <%-- WINDOWS --%>
+                        </div> <%-- end 'doors' --%>
+                    </li> <%-- FLOORING --%>
+                    <%-- end 'flooring' --%>
                     <li>
                         <asp:RadioButton ID="radProjectWindows" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectWindowsRadio" AssociatedControlID="radProjectWindows" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectWindows" AssociatedControlID="radProjectWindows" runat="server" Text="Windows"></asp:Label>
-                    </li> <%-- end 'windows' --%>
-
-                    <%-- DOORS --%>
+                    </li> <%-- ROOF --%>
+                    <%-- end 'roof' options --%>
                     <li>
                         <asp:RadioButton ID="radProjectDoors" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectDoorsRadio" AssociatedControlID="radProjectDoors" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectDoors" AssociatedControlID="radProjectDoors" runat="server" Text="Doors"></asp:Label>
-                    </li> <%-- end 'doors' --%>
-
-                    <%-- FLOORING --%>
+                    </li> <%-- end 'roof' --%>
+                    <%-- SHOWROOM --%>
                     <li>
                         <asp:RadioButton ID="radProjectFlooring" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectFlooringRadio" AssociatedControlID="radProjectFlooring" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectFlooring" AssociatedControlID="radProjectFlooring" runat="server" Text="Flooring"></asp:Label>
-                    </li> <%-- end 'flooring' --%>
-
-                    <%-- ROOF --%>
+                    </li> <%-- end 'showroom' options --%>
+                    <%-- COMPONENTS --%>
                     <li>
                         <asp:RadioButton ID="radProjectRoof" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectRoofRadio" AssociatedControlID="radProjectRoof" runat="server"></asp:Label>
@@ -854,9 +893,8 @@
                                     <asp:Label ID="lblRoofOSB" AssociatedControlID="radRoofOSB" runat="server" Text="OSB/OSB"></asp:Label>
                                 </li>
                             </ul>            
-                        </div> <%-- end 'roof' options --%>
-                    </li> <%-- end 'roof' --%>
-                    <%-- SHOWROOM --%>                    
+                        </div> <%-- end 'components' --%>
+                    </li> <%-- end .toggleOptions --%>                    <%-- end #slide3 --%>                    
                     <li>
                         <asp:RadioButton ID="radSunroomModelShowroom" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblSunroomModelShowroomRadio" AssociatedControlID="radSunroomModelShowroom" runat="server"></asp:Label>
@@ -885,25 +923,26 @@
                                     <asp:Label ID="lblShowroomModel400Radio" AssociatedControlID="radShowroomModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
                             </ul>            
-                        </div> <%-- end 'showroom' options --%>
+                        </div> <%-- QUESTION 4 - Styling Options
+            ======================================== --%>
                     </li>
 
-                    <%-- COMPONENTS --%>
+                    <%-- Option 1 - Kneewall 
+                    ======================================== --%>
                     <li>
                         <asp:RadioButton ID="radProjectComponents" GroupName="projectType" runat="server"  OnClick="goComponents()"/>
                         <asp:Label ID="lblProjectComponentsRadio" AssociatedControlID="radProjectComponents" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectComponents" AssociatedControlID="radProjectComponents" runat="server" Text="Components"></asp:Label>
-                    </li> <%-- end 'components' --%>
+                    </li> <%-- end .toggleContent --%>
 
-                </ul> <%-- end .toggleOptions --%>
+                </ul> <%-- end Q4 option 1 --%>
 
                 <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
             </div> 
-            <%-- end #slide3 --%>
-
+            <%-- Option 2 - Transom
+                    ======================================== --%>
             
-            <%-- QUESTION 4 - Styling Options
-            ======================================== --%>
+            <%-- end .toggleContent --%>
             <div id="slide4" class="slide">
                 
                 <h1>
@@ -911,8 +950,7 @@
                 </h1>  
 
                 <ul class="toggleOptions">
-                    <%-- Option 1 - Kneewall 
-                    ======================================== --%>
+                    <%-- end Q4 option 2 --%>
                     <li>
                                     
                         <asp:RadioButton ID="radKneewallOptions" GroupName="styling" runat="server" />
@@ -929,12 +967,11 @@
                                     <asp:Label ID="lblKneewallType" AssociatedControlID="txtKneewallHeight" runat="server" Text="Type" />
                                 </li>
                             </ul>   
-                        </div> <%-- end .toggleContent --%>
-
-                    </li> <%-- end Q4 option 1 --%>
-
-                    <%-- Option 2 - Transom
+                        </div> <%-- Option 3 - Framing
                     ======================================== --%>
+
+                    </li> <%-- end .toggleContent --%>
+                    <%-- end Q2 option 2 --%>
                     <li>
                 
                         <asp:RadioButton ID="radTransomOptions" GroupName="styling" runat="server" />
@@ -951,12 +988,11 @@
                                     <asp:Label ID="lblTransomType" AssociatedControlID="txtTransomHeight" runat="server" Text="Type" />
                                 </li>
                             </ul>
-                        </div> <%-- end .toggleContent --%>
+                        </div> <%-- end .toggleOptions --%>
 
-                    </li> <%-- end Q4 option 2 --%>  
-              
-                    <%-- Option 3 - Framing
-                    ======================================== --%>
+                    </li> <%-- end #slide4 --%>              
+                    <%-- QUESTION 5 - Foam Protection
+            ======================================== --%>
                     <li>
                 
                         <asp:RadioButton ID="radFramingOptions" GroupName="styling" runat="server" />
@@ -982,20 +1018,19 @@
                                     <asp:Label ID="lblExteriorSkin" AssociatedControlID="ddlExteriorSkin" runat="server" Text="Exterior Skin" />
                                 </li>
                             </ul>
-                        </div> <%-- end .toggleContent --%>
+                        </div> <%-- end .toggleOptions --%>
 
-                    </li> <%-- end Q2 option 2 --%>
-                </ul> <%-- end .toggleOptions --%>
+                    </li> <%-- end #slide5 --%>
+                </ul> <%-- QUESTION 6 - Prefab Floor
+            ======================================== --%>
 
                 <asp:Button ID="btnQuestion4" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" />
                 <asp:Button ID="btnQuestion4Walls" Enabled="false" CssClass="btnSubmit float-right slidePanel" OnClick="btnQuestion4Walls_Click" runat="server" Text="Next Question" />
 
             </div> 
-            <%-- end #slide4 --%>
+            <%-- end .toggleOptions --%>
 
-
-            <%-- QUESTION 5 - Foam Protection
-            ======================================== --%>
+            <%-- end #slide6 --%>
             <div id="slide5" class="slide">
                 
                 <h1>
@@ -1016,15 +1051,14 @@
                         <asp:Label ID="lblFoamProtectedNo" AssociatedControlID="radFoamProtectedNo" runat="server" Text="No"></asp:Label>
                     </li>
 
-                </ul> <%-- end .toggleOptions --%>
+                </ul> <%-- QUESTION 7 - Roof
+            ======================================== --%>
 
                 <asp:Button ID="btnQuestion5" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide6" runat="server" Text="Next Question" />
 
             </div> 
-            <%-- end #slide5 --%>
-
-            <%-- QUESTION 6 - Prefab Floor
-            ======================================== --%>
+            <%-- end 'yes' option --%>
+            <%-- end .toggleOptions --%>
             <div id="slide6" class="slide">
                 
                 <h1>
@@ -1045,15 +1079,14 @@
                         <asp:Label ID="lblPrefabFloorNo" AssociatedControlID="radPrefabFloorNo" runat="server" Text="No"></asp:Label>
                     </li>
 
-                </ul> <%-- end .toggleOptions --%>
+                </ul> <%-- end #slide7 --%>
 
                 <asp:Button ID="btnQuestion6" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide7" runat="server" Text="Next Question" />
 
             </div> 
-            <%-- end #slide6 --%>
-
-            <%-- QUESTION 7 - Roof
+            <%-- QUESTION 8 - Layout
             ======================================== --%>
+            <%-- end .toggleOptions --%>
             <div id="slide7" class="slide">
                 
                 <h1>
@@ -1085,7 +1118,7 @@
                                     <asp:Label ID="lblSunspaceGable" AssociatedControlID="radSunspaceGable" runat="server" Text="Sunspace gable"></asp:Label>
                                 </li>
                             </ul>
-                        </div> <%-- end 'yes' option --%>
+                        </div> <%-- end #slide8 --%>
                     </li>
 
                     <li>
@@ -1094,15 +1127,14 @@
                         <asp:Label ID="lblRoofNo" AssociatedControlID="radRoofNo" runat="server" Text="No"></asp:Label>
                     </li>
 
-                </ul> <%-- end .toggleOptions --%>
+                </ul> <%-- end .slide-wrapper --%>
 
                 <asp:Button ID="btnQuestion7" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide8" runat="server" Text="Next Question" />
 
             </div> 
-            <%-- end #slide7 --%>
-
-            <%-- QUESTION 8 - Layout
-            ======================================== --%>
+            <%-- end .slide-window --%>
+            <%-- SLIDE PAGING (QUESTION NAVIGATION)
+    ======================================== --%>
             <div id="slide8" class="slide">
                 
                 <h1>
@@ -1169,14 +1201,16 @@
 
                     <asp:Button ID="btnQuestion8" Enabled="false" CssClass="btnSubmit float-right slidePanel" Text="Confirm all selections" runat="server" OnClientClick="newProjectCheckQuestion8()" OnClick="btnLayout_Click"/>
 
-                </ul> <%-- end .toggleOptions --%>
+                </ul> <%-- end #paging --%>
 
             </div> 
-            <%-- end #slide8 --%>
+            <%-- Hidden input tags 
+    ======================= --%>
+            <asp:SqlDataSource ID="sdsCustomers" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [customers]"></asp:SqlDataSource>
 
             
 
-        </div> <%-- end .slide-wrapper --%>
+        </div> <%-- end hidden divs --%>
 
     </div> 
     <%-- end .slide-window --%>
@@ -1266,6 +1300,7 @@
 
     <%-- Hidden input tags 
     ======================= --%>
+    <input id="hidCountry" type="hidden" runat="server" />
     <input id="hidExisting" type="hidden" runat="server" />
     <input id="hidFirstName" type="hidden" runat="server" />
     <input id="hidLastName" type="hidden" runat="server" />
@@ -1273,6 +1308,8 @@
     <input id="hidCity" type="hidden" runat="server" />
     <input id="hidZip" type="hidden" runat="server" />
     <input id="hidPhone" type="hidden" runat="server" />
+    <input id="hidCell" type="hidden" runat="server" />
+    <input id="hidEmail" type="hidden" runat="server" />
    
     <input id="hidProjectName" type="hidden" runat="server" />
        
