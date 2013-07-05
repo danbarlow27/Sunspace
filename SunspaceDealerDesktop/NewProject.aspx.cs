@@ -39,7 +39,7 @@ namespace SunspaceDealerDesktop
                 ddlCustomerCountry.Items.Add(Constants.COUNTRY_LIST[i]);
             }
 
-            if (ddlCustomerCountry.SelectedValue = "Canada")
+            if (ddlCustomerCountry.SelectedValue == "Canada")
             {
                 //Add provinces to the province/state ddl
                 for (int i = 0; i < Constants.PROVINCE_LIST.Count; i++)
