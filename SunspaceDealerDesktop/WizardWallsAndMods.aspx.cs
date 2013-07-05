@@ -107,65 +107,76 @@ namespace SunspaceDealerDesktop
             for (int currentWall = 1; currentWall <= walls.Count(); currentWall++) 
             {
                 #region Wall #:Radio button section
+                //li tags created for every wall
                 wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
 
+                //RadioButton created for every wall and its options
                 RadioButton wallRadio = new RadioButton();
-                wallRadio.ID = "radWall" + currentWall;
-                wallRadio.GroupName = "doorWallRadios";
+                wallRadio.ID = "radWall" + currentWall;     //Giving an appropriate id to radio buttons based on current wall
+                wallRadio.GroupName = "doorWallRadios";     //Giving an appropriate group name to all wall radio buttons
 
+                //Label to create clickable area for radio button
                 Label wallLabelRadio = new Label();
-                wallLabelRadio.AssociatedControlID = "radWall" + currentWall;
+                wallLabelRadio.AssociatedControlID = "radWall" + currentWall;   //Tying this label to the radio button
 
                 Label wallLabel = new Label();
-                wallLabel.AssociatedControlID = "radWall" + currentWall;
-                wallLabel.Text = "Wall " + currentWall + " Door Options";
+                wallLabel.AssociatedControlID = "radWall" + currentWall;        //Tying this label to the radio button
+                wallLabel.Text = "Wall " + currentWall + " Door Options";       //Adding text to the radio button
 
-                wallDoorOptions.Controls.Add(wallRadio);
-                wallDoorOptions.Controls.Add(wallLabelRadio);
-                wallDoorOptions.Controls.Add(wallLabel);
+                wallDoorOptions.Controls.Add(wallRadio);        //Adding radio button control to placeholder wallDoorOptions
+                wallDoorOptions.Controls.Add(wallLabelRadio);   //Adding label control to placeholder wallDoorOptions
+                wallDoorOptions.Controls.Add(wallLabel);        //Adding label control to placeholder wallDoorOptions
 
+                //Creating div tag to hold all the current walls information (i.e. Cabana, French, Patio, Opening Only (No Door))
                 wallDoorOptions.Controls.Add(new LiteralControl("<div id='doorDetails' class='toggleContent'>"));
 
-                //wallDoorOptions.Controls.Add(new LiteralControl("<button type='button' class='btnSubmit' onclick='onClickAddDoor(" + currentWall + ")'>Add Door To This Wall:</button>"));
-
+                //Creating one ul tag to hold multiple li tags contain Cabana, French, Patio, Opening Only (No Door) options
                 wallDoorOptions.Controls.Add(new LiteralControl("<ul><li><ul id='doorDetailsList' class='toggleOptions'>"));
 
                 #endregion
 
                 #region Loop to display door types as radio buttons
 
+                //For loop to get through all the possible door types: Cabana, French, Patio, Opening Only (No Door)
                 for (int typeCount = 1; typeCount <= 4; typeCount++)
                 {
+                    //Conditional operator to set the current door type with the right label
                     string title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "Opening Only (No Door)";
 
+                    //If logic to handle model 400's which don't have french doors
                     if (currentModel == 400 && title == "French")
                     {
                         //Do nothing
                     }
                     else{
+                        //li tag to hold door type radio button and all its content
                         wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
 
+                        //Door type radio button
                         RadioButton typeRadio = new RadioButton();
-                        typeRadio.ID = "radType" + currentWall + title;
-                        typeRadio.GroupName = "doorTypeRadios";
-                        typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()");
+                        typeRadio.ID = "radType" + currentWall + title; //Adding appropriate id to door type radio button
+                        typeRadio.GroupName = "doorTypeRadios";         //Adding group name for all door types
+                        typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
 
-                        Label typeLabelRadio = new Label();
-                        typeLabelRadio.AssociatedControlID = "radType" + currentWall + title;
+                        //Door type radio button label for clickable area
+                        Label typeLabelRadio = new Label(); 
+                        typeLabelRadio.AssociatedControlID = "radType" + currentWall + title;   //Tying this label to the radio button
 
+                        //Door type radio button label text
                         Label typeLabel = new Label();
-                        typeLabel.AssociatedControlID = "radType" + currentWall + title;
-                        typeLabel.Text = title;
+                        typeLabel.AssociatedControlID = "radType" + currentWall + title;    //Tying this label to the radio button
+                        typeLabel.Text = title;     //Displaying the proper texted based on current title variable
 
-                        wallDoorOptions.Controls.Add(typeRadio);
-                        wallDoorOptions.Controls.Add(typeLabelRadio);
-                        wallDoorOptions.Controls.Add(typeLabel);
+                        wallDoorOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallDoorOptions
+                        wallDoorOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallDoorOptions
+                        wallDoorOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallDoorOptions
 
+                        //New instance of a table for every door type
                         Table tblDoorDetails = new Table();
 
-                        tblDoorDetails.ID = "tblDoorDetails";
-                        tblDoorDetails.CssClass = "tblTextFields";
-                        tblDoorDetails.Attributes.Add("runat", "server");
+                        tblDoorDetails.ID = "tblDoorDetails" + currentWall + title; //Adding appropriate id to the table
+                        tblDoorDetails.CssClass = "tblTextFields";                  //Adding CssClass to the table for styling
+                        tblDoorDetails.Attributes.Add("runat", "server");           //Adding runat='server' for functionality
 
                         //Creating cells and controls for rows
 
@@ -1070,20 +1081,22 @@ namespace SunspaceDealerDesktop
 
                         #endregion
 
+                        //Adding literal control div tag to hold the table, add to wallDoorOptions placeholder
                         wallDoorOptions.Controls.Add(new LiteralControl("<div class='toggleContent' id='div_" + currentWall + title + "'><ul>"));
 
+                        //Adding literal control li to keep proper page look and format
                         wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
 
-                        tblDoorDetails.ID = "tblDoorDetails" + currentWall + title;
-
+                        //Adding table to placeholder wallDoorOptions
                         wallDoorOptions.Controls.Add(tblDoorDetails);
 
+                        //Closing necessary tags
                         wallDoorOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
                     }
                 }
 
                 #endregion            
-
+                //Closing more necessary tags
                 wallDoorOptions.Controls.Add(new LiteralControl("</ul></li></li></ul></div>"));
 
             }
