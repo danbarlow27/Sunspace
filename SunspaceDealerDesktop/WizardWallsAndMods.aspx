@@ -532,7 +532,7 @@
 
                     if (custom === true) {
 
-                        controlToUse = parseFloat(document.getElementById('MainContent_txtDoorCustom' + dimension + wallCount + type).value);
+                        controlToUse = parseFloat(document.getElementById('MainContent_txtDoorCustom' + dimension + wallCount + type).value);                        
 
                     }
                     else {
@@ -560,13 +560,16 @@
             return newDimension;
         }
 
+        //To be moved, used to store remain spaces on a wall
+        var remainSpaces = new Array();
+
         function addDoor(type) {
             for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
 
                 if (document.getElementById('MainContent_radWall' + wallCount).checked) {
 
                     var positionDDL = document.getElementById('MainContent_ddlDoorPositionDDL' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPositionDDL' + wallCount + type).selectedIndex].value;
-                    var remainSpaces = new Array();
+                    
                     var remainSpace;
                     var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'Length').value);
                     var doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false));
@@ -577,11 +580,16 @@
 
                     if (positionDDL === "left" || positionDDL === "right") {
 
-                        remainSpaces[remainSpaces.length] = wallLength - doorWidth;
+                        if (remainSpaces.length === 0) {
+                            remainSpaces[remainSpaces.length] = wallLength - doorWidth;
+                        }
+                        else {
+                            remainSpaces[remainSpaces.length] = remainSpaces[remainSpaces.length-1] - doorWidth;
+                        }
 
                         alert(remainSpaces[remainSpaces.length-1]);
 
-                        $('#lblQuestion3PagerAnswer').text(remainSpaces[remainSpaces.length - 1]);
+                        $('#MainContent_lblQuestion3PagerAnswer').text(remainSpaces[remainSpaces.length-1]);
                         document.getElementById('pagerThree').style.display = "inline";
                         //document.getElementById('MainContent_btnQuestion3').disabled = false;
 
