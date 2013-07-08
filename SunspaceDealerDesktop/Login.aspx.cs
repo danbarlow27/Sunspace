@@ -50,7 +50,6 @@ namespace SunspaceDealerDesktop
                         //-1 is not a valid dealer ID, so on later checks, if -1, that means don't restrict searches by dealer_id
                         Session.Add("dealer_id", "-1");
                         Session.Add("loggedIn", dvUsers[0][0].ToString());
-                        Response.Redirect("Home.aspx");
                     }
                     //If dealer
                     else if (dvUsers[0][2].ToString() == "D")
@@ -71,8 +70,13 @@ namespace SunspaceDealerDesktop
 
                         Session.Add("dealer_id", dvDealer[0][0].ToString());
                         Session.Add("loggedIn", dvUsers[0][0].ToString());
-                        Response.Redirect("Home.aspx");
                     }
+
+                    DateTime aDate = DateTime.Now;
+                    sdsLogin.UpdateCommand = "UPDATE users SET last_access='" + aDate.ToString("yyyy/MM/dd") + "' "
+                                            + "WHERE login='" + userName + "'";
+                    sdsLogin.Update();
+                    Response.Redirect("Home.aspx");
                 }                    
             }
         }

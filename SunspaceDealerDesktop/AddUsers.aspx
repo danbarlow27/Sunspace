@@ -4,6 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Label ID="lblError" runat="server"></asp:Label>
     <div id="UserTypeDiv" runat="server">
         <asp:Label ID="lblUserType" runat="server" Text="User type:"></asp:Label>
         <asp:DropDownList ID="ddlUserType" runat="server"></asp:DropDownList>
@@ -29,5 +30,6 @@
     <asp:Label ID="lblLastName" runat="server" Text="Last Name:"></asp:Label>
     <asp:TextBox ID="txtLastName" runat="server"></asp:TextBox>
     <br /><br />
-    <asp:Button id="btnSubmit" runat="server" Text="Submit" />
+    <asp:Button id="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
+    <asp:SqlDataSource ID="sdsUsers" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [users]"></asp:SqlDataSource>
 </asp:Content>
