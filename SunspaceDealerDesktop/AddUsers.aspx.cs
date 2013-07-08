@@ -57,8 +57,8 @@ namespace SunspaceDealerDesktop
                                             + "VALUES('"
                                             + txtLogin.Text + "', '"
                                             + txtPassword.Text + "', '"
-                                            + txtEmail.Text + "', "
-                                            + aDate.ToString("yyyy/MM/dd") + ", "
+                                            + txtEmail.Text + "', '"
+                                            + aDate.ToString("yyyy/MM/dd") + "', "
                                             + null + ", '" //They havn't accessed as they havn't logged in before
                                             + "D" + "', '" //Must be D-S because a dealer can only add users of his dealership
                                             + "S" + "', "
