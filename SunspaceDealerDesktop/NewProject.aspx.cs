@@ -34,25 +34,30 @@ namespace SunspaceDealerDesktop
             //slide1
             #region Slide 1 pageload
             //Add countries to country ddl
-            for (int i = 0; i < Constants.COUNTRY_LIST.Count; i++)
+            if (!IsPostBack)
             {
-                ddlCustomerCountry.Items.Add(Constants.COUNTRY_LIST[i]);
+                for (int i = 0; i < Constants.COUNTRY_LIST.Count; i++)
+                {
+                    ddlCustomerCountry.Items.Add(Constants.COUNTRY_LIST[i]);
+                }
             }
 
             if (ddlCustomerCountry.SelectedValue == "Canada")
             {
+                ddlCustomerProvState.Items.Clear();
                 //Add provinces to the province/state ddl
                 for (int i = 0; i < Constants.PROVINCE_LIST.Count; i++)
                 {
-                    ddlCustomerProvState.Items.Add(Constants.COUNTRY_LIST[i]);
+                    ddlCustomerProvState.Items.Add(Constants.PROVINCE_LIST[i]);
                 }
             }
             else
             {
+                ddlCustomerProvState.Items.Clear();
                 //Add states to the province/state ddl
-                for (int i = 0; i < Constants.COUNTRY_LIST.Count; i++)
+                for (int i = 0; i < Constants.STATE_LIST.Count; i++)
                 {
-                    ddlCustomerCountry.Items.Add(Constants.COUNTRY_LIST[i]);
+                    ddlCustomerProvState.Items.Add(Constants.STATE_LIST[i]);
                 }
             }
 
@@ -64,10 +69,18 @@ namespace SunspaceDealerDesktop
 
             ddlExistingCustomer.Items.Clear();
 
-            for (int i = 0; i < dvExistingCustomers.Count; i++)
+            if (Session["ddlExistingCustomer"] != null)
             {
-                ddlExistingCustomer.Items.Add(dvExistingCustomers[i][0].ToString() + " " + dvExistingCustomers[i][1].ToString());
+                for (int i = 0; i < dvExistingCustomers.Count; i++)
+                {
+                    ddlExistingCustomer.Items.Add(dvExistingCustomers[i][0].ToString() + " " + dvExistingCustomers[i][1].ToString());
+                }
             }
+            else
+            {
+                Session.Add("ddlExistingCustomer", ddlExistingCustomer);
+            }
+
             #region Old Preset Customers
             //Customer aCustomer = new Customer();
             //aCustomer.FirstName = "Kyle";
