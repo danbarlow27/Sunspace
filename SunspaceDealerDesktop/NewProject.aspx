@@ -628,7 +628,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlCustomerCountry" OnChange="newProjectCheckQuestion1()" runat="server" ></asp:DropDownList>
+                                                <asp:DropDownList ID="ddlCustomerCountry" OnChange="newProjectCheckQuestion1()" runat="server" AutoPostBack="True"></asp:DropDownList>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
