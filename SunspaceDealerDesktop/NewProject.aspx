@@ -75,12 +75,17 @@
                         //invalid phone
                         isValid = false;
                     }
-
+                    
                     //only fully valid if no error message was returned
                     if (validCell == "") {
                     }
                     else {
                         //invalid phone
+                        isValid = false;
+                    }
+
+                    if (emailValidation() == false)
+                    {
                         isValid = false;
                     }
 
@@ -592,6 +597,16 @@
                     break;
             }
             return true;
+        }
+
+        function emailValidation(){
+            var anEmail = document.getElementById("<%=hidEmail.ClientID%>").value;
+            //Regex for RFC 2822 email address validation.
+            //var re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            //Simpler, but less accurate string@string.string
+            var re = /[^\s@]+@[^\s@]+\.[^\s@]+/;
+            console.log(re.test(anEmail).toString());
+            return re.test(anEmail);
         }
     </script>
 
