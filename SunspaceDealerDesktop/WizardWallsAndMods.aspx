@@ -491,7 +491,7 @@
             for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
 
                 if (document.getElementById('MainContent_radWall' + wallCount).checked) {
-                    var positionDDL = document.getElementById('MainContent_ddlDoorPositionDDL' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPositionDDL' + wallCount + type).selectedIndex].value;
+                    var positionDDL = document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).selectedIndex].value;
 
                     if (document.getElementById('MainContent_radType' + wallCount + type).checked && positionDDL === 'cPosition') {
                         document.getElementById('MainContent_rowDoorPosition' + wallCount + type).style.display = 'inherit';
@@ -560,10 +560,27 @@
 
             return newDimension;
         }
+        
+        function checkDoorPlacement(){
+            for (var m = 0; m < doors.length; m++) {                        
+                for (var q = 0; q < doors.length; q++) {
+                    if (doors[m].distanceFromLeft + doors[m].doorWidth > doors[q].distanceFromLeft || doors[m].distanceFromLeft > doors[q].distanceFromLeft + doors[q].doorWidth){
+                        alert("Doors are overlapping");
+                    }
+                }
+            }
+        }
 
         //To be moved, used to store remain spaces on a wall
+        var doors = new Array();
         var remainSpaces = new Array();
+        var finalText;
         //var doorCount = 1;
+
+        //Used to insert items to specific array indices
+        Array.prototype.insert = function (index, item) {
+            this.splice(index, 0, item);
+        };
 
         function addDoor(type) {
 
@@ -593,44 +610,47 @@
                         doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false));
                     }                    
 
-                    alert(usuableSpace + " and door width " + doorWidth);                    
+                    //alert(usuableSpace + " and door width " + doorWidth);       
 
-                    if (positionDropDown === "left" || positionDropDown === "right") {
-
-                        if (remainSpaces.length === 0) {
-                            remainSpaces[remainSpaces.length] = usuableSpace - doorWidth;                            
-                        }
-                        else {
-                            remainSpaces[remainSpaces.length] = remainSpaces[remainSpaces.length-1] - doorWidth;
-                        }
-
-                        alert(remainSpaces[remainSpaces.length-1]);
-
-                        $('#MainContent_lblQuestion3PagerAnswer').text(remainSpaces[remainSpaces.length-1]);
-                        document.getElementById('pagerThree').style.display = "inline";
-                        //document.getElementById('MainContent_btnQuestion3').disabled = false;
-
+                    if (positionDropDown === "left") {
+                        doors.insert(0, { "doorWidth": doorWidth, "distanceFromLeft": 0 });
+                    }
+                    else if (positionDropDown === "right") {
+                        doors.insert(doors.length, { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace - doorWidth });
                     }
                     else if (positionDropDown === "center") {
-                        
-                        remainSpaces[remainSpaces.length] = (usuableSpace / 2) - (doorWidth / 2);
-                        remainSpaces[remainSpaces.length] = (usuableSpace / 2) + (doorWidth / 2);
-
+                        doors.insert(parseInt(doors.length/2), { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace/2 - doorWidth/2 });
                     }
-                    else {
+                    else if (positionDropDown === "cPosition") {
+                        //Custom length
+                    }
 
-                        if (doorCustomPosition === 0) {
-                            //Zero from left
-                        }
-                        else if (doorCustomPosition + doorWidth > usuableSpace) {
-                            //Error outside of right side of wall
-                            alert("Your door is outside of the wall limits");
+                    for (var h = 0; h < doors.length; h++) {
+                        if (doors.length === 1) {
+                            finalText = "Door " + (h + 1) + " Left Hand Space " + doors[h].distanceFromLeft;
+                            finalText += "Door " + (h + 1) + " Right Hand Space " + parseFloat(wallLength - doors[h].doorWidth);
                         }
                         else {
-
+                            if (h === doors.length - 1) {
+                                finalText += "Door " + (h + 1) + " Left Hand Space " + doors[h].distanceFromLeft;
+                                finalText += "Door " + (h + 1) + " Right Hand Space " + parseFloat(usuableSpace - doors[h].distanceFromLeft + doors[h].doorWidth);
+                            }
+                            else {
+                                if (h === 0)
+                                    finalText += "Door " + (h + 1) + " Left Hand Space " + doors[h].distanceFromLeft;
+                                else
+                                    finalText += "Door " + (h + 1) + " Left Hand Space " + parseFloat(doors[h].distanceFromLeft - (doors[h - 1].distanceFromLeft + doors[h - 1].doorWidth));
+                            }
                         }
-
                     }
+
+                    $('#MainContent_lblQuestion3PagerAnswer').text(finalText);
+                    document.getElementById('pagerThree').style.display = "inline";
+                    //document.getElementById('MainContent_btnQuestion3').disabled = false;
+
+                    //This line below is causing errors
+
+                    
 
                     /*This section handles storing individual door data and keeping count of
                     the amount of doors in each wall*/
