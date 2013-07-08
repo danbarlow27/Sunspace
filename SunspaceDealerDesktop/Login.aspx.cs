@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
 
 namespace SunspaceDealerDesktop
 {
@@ -20,30 +21,60 @@ namespace SunspaceDealerDesktop
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
-        {
-            
-                //something like so
-                //Session.Add("loggedIn", aUser.UserId);
-                if (txtUsername.Text == "" || txtPassword.Text == "")
+        {            
+            if (txtUsername.Text == "" || txtPassword.Text == "")
+            {
+                Session["loginErrorMessage"] = "Please enter your information into the text boxes.";
+                lblError.Text = Session["loginErrorMessage"].ToString();
+            }
+            else
+            {
+                string userName = txtUsername.Text;
+                string userHash = GlobalFunctions.CalculateMD5Hash(txtPassword.Text);
+
+                //Get the customers assosciated with this dealer
+                sdsLogin.SelectCommand = "SELECT login, password, user_type FROM users WHERE login='" + userName + "' AND password='" + userHash + "'";
+
+                //assign the table names to the dataview object
+                DataView dvUsers = (DataView)sdsLogin.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+                if (dvUsers.Count == 0)
                 {
-                    Session["loginErrorMessage"] = "Please enter your information into the text boxes.";
-                    lblError.Text = Session["loginErrorMessage"].ToString();
+                    Session["loginErrorMessage"] = "Username or password invalid.";
                 }
                 else
                 {
-                    string userHash = GlobalFunctions.CalculateMD5Hash(txtPassword.Text);
-                    Response.Write(userHash);
-                    //queries here
-                    //WHERE username = txtusername.text
-                    //AND password = userHash
-                    //if results=0, error
+                    //user_type of first (only) user in dvUsers, if Superuser
+                    if (dvUsers[0][2].ToString() == "S")
+                    {
+                        //-1 is not a valid dealer ID, so on later checks, if -1, that means don't restrict searches by dealer_id
+                        Session.Add("dealer_id", "-1");
+                        Session.Add("loggedIn", dvUsers[0][0].ToString());
+                        Response.Redirect("Home.aspx");
+                    }
+                    //If dealer
+                    else if (dvUsers[0][2].ToString() == "D")
+                    {
+                        sdsLogin.SelectCommand = "SELECT dealer_id FROM dealers WHERE dealer_name='" + userName + "'";
 
-                    //else login                
-                    Session["loginErrorMessage"] = "";
+                        //assign the table names to the dataview object
+                        DataView dvDealer = (DataView)sdsLogin.Select(System.Web.UI.DataSourceSelectArguments.Empty);
 
-                    Session.Add("loggedIn", "userA");
-                    Response.Redirect("Home.aspx");
-                }
+                        string test = dvDealer[0][0].ToString();
+                        //queries here
+                        //WHERE username = txtusername.text
+                        //AND password = userHash
+                        //if results=0, error
+
+                        //else login                
+                        Session["loginErrorMessage"] = "";
+
+                        Session.Add("dealer_id", dvDealer[0][0].ToString());
+                        Session.Add("loggedIn", dvUsers[0][0].ToString());
+                        Response.Redirect("Home.aspx");
+                    }
+                }                    
+            }
         }
     }
 }

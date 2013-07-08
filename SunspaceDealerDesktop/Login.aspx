@@ -12,4 +12,5 @@
         <br />
         <asp:Button runat="server" ID="btnLogin" CssClass="btnSubmit" Text="Login" OnClick="btnLogin_Click"/>
     </div>
+    <asp:SqlDataSource ID="sdsLogin" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [customers]"></asp:SqlDataSource>
 </asp:Content>

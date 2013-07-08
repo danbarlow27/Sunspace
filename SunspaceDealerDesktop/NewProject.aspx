@@ -19,6 +19,7 @@
 
                 //move textbox data into hidden fields
                 document.getElementById("<%=hidCountry.ClientID%>").value = $('#<%=ddlCustomerCountry.ClientID%>').val();
+                document.getElementById("<%=hidProvState.ClientID%>").value = $('#<%=ddlCustomerProvState.ClientID%>').val();
                 document.getElementById("<%=hidFirstName.ClientID%>").value = $('#<%=txtCustomerFirstName.ClientID%>').val();
                 document.getElementById("<%=hidLastName.ClientID%>").value = $('#<%=txtCustomerLastName.ClientID%>').val();
                 document.getElementById("<%=hidAddress.ClientID%>").value = $('#<%=txtCustomerAddress.ClientID%>').val();
