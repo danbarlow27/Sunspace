@@ -746,7 +746,7 @@ namespace SunspaceDealerDesktop
                         doorPositionDDLLBL.Text = "PositionDDL:";
 
                         DropDownList doorPositionDDLDDL = new DropDownList();
-                        doorPositionDDLDDL.ID = "ddlDoorPositionDDL" + currentWall + title;
+                        doorPositionDDLDDL.ID = "ddlDoorPosition" + currentWall + title;
                         doorPositionDDLDDL.Attributes.Add("onchange", "customPosition('" + title + "')");
                         ListItem PositionLeft = new ListItem("Left", "left");
                         ListItem PositionCenter = new ListItem("Center", "center");
@@ -794,6 +794,7 @@ namespace SunspaceDealerDesktop
                         #region Table:# Row Add This Door (tblDoorDetails)
 
                         TableRow doorAddButtonRow = new TableRow();
+                        doorAddButtonRow.ID = "rowAddDoor" + currentWall + title;
                         doorAddButtonRow.Attributes.Add("style", "display:inherit;");
                         TableCell doorAddButtonBlankCell = new TableCell();
                         TableCell doorAddButtonCell = new TableCell();

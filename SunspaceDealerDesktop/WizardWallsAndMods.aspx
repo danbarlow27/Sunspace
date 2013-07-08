@@ -532,7 +532,8 @@
 
                     if (custom === true) {
 
-                        controlToUse = parseFloat(document.getElementById('MainContent_txtDoorCustom' + dimension + wallCount + type).value);                        
+                        controlToUse = parseFloat(document.getElementById('MainContent_txtDoorCustom' + dimension + wallCount + type).value)
+                            + parseFloat(document.getElementById('MainContent_ddlInchCustom' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlInchCustom' + dimension + wallCount + type).selectedIndex].value);
 
                     }
                     else {
@@ -562,26 +563,61 @@
 
         //To be moved, used to store remain spaces on a wall
         var remainSpaces = new Array();
+        var doorCount = 1;
 
         function addDoor(type) {
+
+            var hiddenFieldsDiv = document.getElementById('MainContent_hiddenFieldsDiv');
+
             for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
 
+                //Find if a door exist to set doorCount to the appropriate value
                 if (document.getElementById('MainContent_radWall' + wallCount).checked) {
 
-                    var positionDDL = document.getElementById('MainContent_ddlDoorPositionDDL' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPositionDDL' + wallCount + type).selectedIndex].value;
+                    if (document.getElementById('door1OfWall' + wallCount + type + 'Style')) {
+
+                        for (var g = 1; g < 100; g++) { //100 is an abitrary number to find highest door, to be made a constant
+                            //Find highest existing door
+                            if (document.getElementById('door' + g + 'OfWall' + wallCount + type + 'Style')) {
+                                doorCount = g;
+                            }
+                            else {
+                                break;
+                            }
+                        }
+                    }
+                        //No door exist, reset doorCount to 1;
+                    else {
+                        doorCount = 1;
+                    }
+
                     
-                    var remainSpace;
+                    
                     var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'Length').value);
-                    var doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false));
+                    var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'LeftFiller').value);
+                    var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'RightFiller').value);
+                    var usuableSpace = wallLength - leftFiller - rightFiller;                    
                     var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorPosition' + wallCount + type) 
                         + document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).selectedIndex].value);
 
-                    alert(wallLength + " and door width" + doorWidth);
+                    var positionDropDown = document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).selectedIndex].value;
+                    var widthDropDown = document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).selectedIndex].value;
+                    var heightDropDown = document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).options[document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).selectedIndex].value;                    
+                    var doorWidth;
 
-                    if (positionDDL === "left" || positionDDL === "right") {
+                    if (widthDropDown === "cWidth") {
+                        doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', true));
+                    }
+                    else {
+                        doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false));
+                    }                    
+
+                    alert(usuableSpace + " and door width" + doorWidth);                    
+
+                    if (positionDropDown === "left" || positionDropDown === "right") {
 
                         if (remainSpaces.length === 0) {
-                            remainSpaces[remainSpaces.length] = wallLength - doorWidth;
+                            remainSpaces[remainSpaces.length] = usuableSpace - doorWidth;                            
                         }
                         else {
                             remainSpaces[remainSpaces.length] = remainSpaces[remainSpaces.length-1] - doorWidth;
@@ -594,10 +630,10 @@
                         //document.getElementById('MainContent_btnQuestion3').disabled = false;
 
                     }
-                    else if (positionDDL === "center") {
+                    else if (positionDropDown === "center") {
                         
-                        remainSpaces[remainSpaces.length] = (wallLength / 2) - (doorWidth / 2);
-                        remainSpaces[remainSpaces.length] = (wallLength / 2) + (doorWidth / 2);
+                        remainSpaces[remainSpaces.length] = (usuableSpace / 2) - (doorWidth / 2);
+                        remainSpaces[remainSpaces.length] = (usuableSpace / 2) + (doorWidth / 2);
 
                     }
                     else {
@@ -605,7 +641,7 @@
                         if (doorCustomPosition === 0) {
                             //Zero from left
                         }
-                        else if (doorCustomPosition + doorWidth > wallLength) {
+                        else if (doorCustomPosition + doorWidth > usuableSpace) {
                             //Error outside of right side of wall
                             alert("Your door is outside of the wall limits");
                         }
@@ -613,7 +649,126 @@
 
                         }
 
-                    }
+                    }                    
+
+                    //Door Style
+                    var hidDoorStyle = document.createElement("input");
+                    hidDoorStyle.setAttribute("type", "hidden");
+                    hidDoorStyle.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "Style");
+                    hidDoorStyle.value = document.getElementById('MainContent_ddlDoorStyle' + wallCount + type).options[document.getElementById('MainContent_ddlDoorStyle' + wallCount + type).selectedIndex].value;
+                    
+                    //Door Vinyl Tint
+                    var hidDoorVinylTint = document.createElement("input");
+                    hidDoorVinylTint.setAttribute("type", "hidden");
+                    hidDoorVinylTint.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "VinylTint");
+                    hidDoorVinylTint.value = document.getElementById('MainContent_ddlVinylTint' + wallCount + type).options[document.getElementById('MainContent_ddlVinylTint' + wallCount + type).selectedIndex].value;
+
+                    //Door Color
+                    var hidDoorColor = document.createElement("input");
+                    hidDoorColor.setAttribute("type", "hidden");
+                    hidDoorColor.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "Color");
+                    hidDoorColor.value = document.getElementById('MainContent_ddlDoorColor' + wallCount + type).options[document.getElementById('MainContent_ddlDoorColor' + wallCount + type).selectedIndex].value;
+                   
+                    //Door Height
+                    var hidDoorHeight = document.createElement("input");
+                    hidDoorHeight.setAttribute("type", "hidden");
+                    hidDoorHeight.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "Height");
+
+                    if (heightDropDown === 'cHeight')
+                        hidDoorHeight.value = parseFloat(calculateActualDoorDimension(type, 'Height', true));
+                    else
+                        hidDoorHeight.value = parseFloat(calculateActualDoorDimension(type, 'Height', false));
+
+                    //Door Width
+                    var hidDoorWidth = document.createElement("input");
+                    hidDoorWidth.setAttribute("type", "hidden");
+                    hidDoorWidth.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "Width");
+                    hidDoorWidth.value = doorWidth;
+
+                    //Primary Operator
+                    var hidDoorPrimaryOperator = document.createElement("input");
+                    hidDoorPrimaryOperator.setAttribute("type", "hidden");
+                    hidDoorPrimaryOperator.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "PrimaryOperator");
+
+                    if (document.getElementById('MainContent_radDoorOperatorLHH' + wallCount + type).checked) 
+                        hidDoorPrimaryOperator.value = "left";
+                    else 
+                        hidDoorPrimaryOperator.value = "right";
+
+                    //Door Box Header Positiion
+                    var hidDoorBoxHeaderPosition = document.createElement("input");
+                    hidDoorBoxHeaderPosition.setAttribute("type", "hidden");
+                    hidDoorBoxHeaderPosition.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "BoxHeaderPosition");
+                    hidDoorBoxHeaderPosition.value = document.getElementById('MainContent_ddlDoorBoxHeader' + wallCount + type).options[document.getElementById('MainContent_ddlDoorBoxHeader' + wallCount + type).selectedIndex].value;
+
+                    //Number Of Vents
+                    var hidDoorNumberOfVents = document.createElement("input");
+                    hidDoorNumberOfVents.setAttribute("type", "hidden");
+                    hidDoorNumberOfVents.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "NumberOfVents");
+                    hidDoorNumberOfVents.value = document.getElementById('MainContent_ddlNumberOfVents' + wallCount + type).options[document.getElementById('MainContent_ddlNumberOfVents' + wallCount + type).selectedIndex].value;
+
+                    //Glass Tint
+                    var hidDoorGlassTint = document.createElement("input");
+                    hidDoorGlassTint.setAttribute("type", "hidden");
+                    hidDoorGlassTint.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "GlassTint");
+                    hidDoorGlassTint.value = document.getElementById('MainContent_ddlDoorGlassTint' + wallCount + type).options[document.getElementById('MainContent_ddlDoorGlassTint' + wallCount + type).selectedIndex].value;
+
+                    //Hinge Placement
+                    var hidDoorHingePlacement = document.createElement("input");
+                    hidDoorHingePlacement.setAttribute("type", "hidden");
+                    hidDoorHingePlacement.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "HingePlacement");
+                    if (document.getElementById('MainContent_radDoorLHH' + wallCount + type).checked)
+                        hidDoorHingePlacement.value = "left";
+                    else
+                        hidDoorHingePlacement.value = "right";
+
+                    //Screen Options
+                    var hidDoorScreenOptions = document.createElement("input");
+                    hidDoorScreenOptions.setAttribute("type", "hidden");
+                    hidDoorScreenOptions.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "ScreenOptions");
+                    hidDoorScreenOptions.value = document.getElementById('MainContent_ddlDoorScreenOptions' + wallCount + type).options[document.getElementById('MainContent_ddlDoorScreenOptions' + wallCount + type).selectedIndex].value;
+
+                    //Hardware
+                    var hidDoorHardware = document.createElement("input");
+                    hidDoorHardware.setAttribute("type", "hidden");
+                    hidDoorHardware.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "Hardware");
+                    hidDoorHardware.value = document.getElementById('MainContent_ddlDoorHardware' + wallCount + type).options[document.getElementById('MainContent_ddlDoorHardware' + wallCount + type).selectedIndex].value;
+
+                    //Swing
+                    var hidDoorSwing = document.createElement("input");
+                    hidDoorSwing.setAttribute("type", "hidden");
+                    hidDoorSwing.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "Swing");
+                    if (document.getElementById('MainContent_radDoorSwingIn' + wallCount + type).checked)
+                        hidDoorSwing.value = "in";
+                    else
+                        hidDoorSwing.value = "out";
+
+                    //Position
+                    var hidDoorPosition = document.createElement("input");
+                    hidDoorHeight.setAttribute("type", "hidden");
+                    hidDoorHeight.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "Position");
+                    if (positionDropDown === 'cPosition')
+                        hidDoorHeight.value = doorCustomPosition;
+                            //document.getElementById('MainContent_txtDoorPosition').value + document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).selectedIndex].value;
+                    else
+                        hidDoorHeight.value = positionDropDown;
+
+                    //Appending all created fields to hiddenFieldsDiv div tag
+                    hiddenFieldsDiv.appendChild(hidDoorStyle);
+                    hiddenFieldsDiv.appendChild(hidDoorVinylTint);
+                    hiddenFieldsDiv.appendChild(hidDoorColor);
+                    hiddenFieldsDiv.appendChild(hidDoorHeight);
+                    hiddenFieldsDiv.appendChild(hidDoorWidth);
+                    hiddenFieldsDiv.appendChild(hidDoorPrimaryOperator);
+                    hiddenFieldsDiv.appendChild(hidDoorBoxHeaderPosition);
+                    hiddenFieldsDiv.appendChild(hidDoorNumberOfVents);
+                    hiddenFieldsDiv.appendChild(hidDoorGlassTint);
+                    hiddenFieldsDiv.appendChild(hidDoorHingePlacement);
+                    hiddenFieldsDiv.appendChild(hidDoorScreenOptions);
+                    hiddenFieldsDiv.appendChild(hidDoorHardware);
+                    hiddenFieldsDiv.appendChild(hidDoorSwing);
+                    hiddenFieldsDiv.appendChild(hidDoorPosition);
+
                 }
             }
             return remainSpaces;
@@ -876,7 +1031,7 @@
                 <div style="display: none" id="pagerThree">
                     <li>
                             <a href="#" data-slide="#slide3" class="slidePanel">
-                                <asp:Label ID="lblQuestion3Pager" runat="server" Text="Door"></asp:Label>
+                                <asp:Label ID="lblQuestion3Pager" runat="server" Text="Wall Length Left"></asp:Label>
                                 <asp:Label ID="lblQuestion3PagerAnswer" runat="server" Text="Question 3 Answer"></asp:Label>
                             </a>
                     </li>
@@ -1099,12 +1254,6 @@
     <input id="hidFrontWallHeight" type="hidden" runat="server" />
     <input id="hidBackWallHeight" type="hidden" runat="server" />
     <input id="hidRoofSlope" type="hidden" runat="server" />
-    <input id="hidDoorType" type="hidden" runat="server" />
-    <input id="hidDoorColour" type="hidden" runat="server" />
-    <input id="hidDoorHeight" type="hidden" runat="server" />
-    <input id="hidSwingingDoor" type="hidden" runat="server" />
-    <input id="hidWallDoorPlacement" type="hidden" runat="server" />
-    <input id="hidWallDoorPosition" type="hidden" runat="server" />
 
     <%-- end hidden fields --%>
 
