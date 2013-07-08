@@ -563,35 +563,16 @@
 
         //To be moved, used to store remain spaces on a wall
         var remainSpaces = new Array();
-        var doorCount = 1;
+        //var doorCount = 1;
 
         function addDoor(type) {
 
             var hiddenFieldsDiv = document.getElementById('MainContent_hiddenFieldsDiv');
 
-            for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
+            for (var wallCount = 1; wallCount < coordList.length; wallCount++) {                
 
                 //Find if a door exist to set doorCount to the appropriate value
                 if (document.getElementById('MainContent_radWall' + wallCount).checked) {
-
-                    if (document.getElementById('door1OfWall' + wallCount + type + 'Style')) {
-
-                        for (var g = 1; g < 100; g++) { //100 is an abitrary number to find highest door, to be made a constant
-                            //Find highest existing door
-                            if (document.getElementById('door' + g + 'OfWall' + wallCount + type + 'Style')) {
-                                doorCount = g;
-                            }
-                            else {
-                                break;
-                            }
-                        }
-                    }
-                        //No door exist, reset doorCount to 1;
-                    else {
-                        doorCount = 1;
-                    }
-
-                    
                     
                     var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'Length').value);
                     var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'LeftFiller').value);
@@ -612,7 +593,7 @@
                         doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false));
                     }                    
 
-                    alert(usuableSpace + " and door width" + doorWidth);                    
+                    alert(usuableSpace + " and door width " + doorWidth);                    
 
                     if (positionDropDown === "left" || positionDropDown === "right") {
 
@@ -649,6 +630,34 @@
 
                         }
 
+                    }
+
+                    /*This section handles storing individual door data and keeping count of
+                    the amount of doors in each wall*/
+                    /**********DATA STORING**********/
+                    if (!document.getElementById("wall" + wallCount + "Doors")) {
+                        
+                        var hidDiv = document.createElement("div");
+                        hidDiv.setAttribute("id", "wall" + wallCount + "Doors");
+                        hidDiv.setAttribute("runat", "server");
+
+                        var hidDoorCount = document.createElement("input");
+                        hidDoorCount.setAttribute("type", "hidden");
+                        hidDoorCount.setAttribute("id", "wall" + wallCount);
+                        hidDoorCount.value = 1;
+
+                        var doorCount = hidDoorCount.value;
+
+                        hidDiv.appendChild(hidDoorCount);
+                    }
+                    else {
+                        var hidDiv = document.getElementById("wall" + wallCount + "Doors");
+
+                        var counterHold = parseInt(document.getElementById("wall" + wallCount).value);
+                        counterHold += 1;
+                        document.getElementById("wall" + wallCount).value = counterHold;
+
+                        var doorCount = document.getElementById("wall" + wallCount).value;
                     }                    
 
                     //Door Style
@@ -745,29 +754,31 @@
 
                     //Position
                     var hidDoorPosition = document.createElement("input");
-                    hidDoorHeight.setAttribute("type", "hidden");
-                    hidDoorHeight.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "Position");
-                    if (positionDropDown === 'cPosition')
-                        hidDoorHeight.value = doorCustomPosition;
+                    hidDoorPosition.setAttribute("type", "hidden");
+                    hidDoorPosition.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "Position");
+                    if (positionDropDown === "cPosition")
+                        hidDoorPosition.value = doorCustomPosition;
                             //document.getElementById('MainContent_txtDoorPosition').value + document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).selectedIndex].value;
                     else
-                        hidDoorHeight.value = positionDropDown;
+                        hidDoorPosition.value = positionDropDown;                    
 
-                    //Appending all created fields to hiddenFieldsDiv div tag
-                    hiddenFieldsDiv.appendChild(hidDoorStyle);
-                    hiddenFieldsDiv.appendChild(hidDoorVinylTint);
-                    hiddenFieldsDiv.appendChild(hidDoorColor);
-                    hiddenFieldsDiv.appendChild(hidDoorHeight);
-                    hiddenFieldsDiv.appendChild(hidDoorWidth);
-                    hiddenFieldsDiv.appendChild(hidDoorPrimaryOperator);
-                    hiddenFieldsDiv.appendChild(hidDoorBoxHeaderPosition);
-                    hiddenFieldsDiv.appendChild(hidDoorNumberOfVents);
-                    hiddenFieldsDiv.appendChild(hidDoorGlassTint);
-                    hiddenFieldsDiv.appendChild(hidDoorHingePlacement);
-                    hiddenFieldsDiv.appendChild(hidDoorScreenOptions);
-                    hiddenFieldsDiv.appendChild(hidDoorHardware);
-                    hiddenFieldsDiv.appendChild(hidDoorSwing);
-                    hiddenFieldsDiv.appendChild(hidDoorPosition);
+                    //Appending all created fields to hiddenFieldsDiv div tag                    
+                    hidDiv.appendChild(hidDoorStyle);
+                    hidDiv.appendChild(hidDoorVinylTint);
+                    hidDiv.appendChild(hidDoorColor);
+                    hidDiv.appendChild(hidDoorHeight);
+                    hidDiv.appendChild(hidDoorWidth);
+                    hidDiv.appendChild(hidDoorPrimaryOperator);
+                    hidDiv.appendChild(hidDoorBoxHeaderPosition);
+                    hidDiv.appendChild(hidDoorNumberOfVents);
+                    hidDiv.appendChild(hidDoorGlassTint);
+                    hidDiv.appendChild(hidDoorHingePlacement);
+                    hidDiv.appendChild(hidDoorScreenOptions);
+                    hidDiv.appendChild(hidDoorHardware);
+                    hidDiv.appendChild(hidDoorSwing);
+                    hidDiv.appendChild(hidDoorPosition);
+
+                    hiddenFieldsDiv.appendChild(hidDiv);
 
                 }
             }

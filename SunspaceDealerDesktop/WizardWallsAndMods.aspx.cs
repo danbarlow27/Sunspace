@@ -1124,51 +1124,6 @@ namespace SunspaceDealerDesktop
                     populateTblProposed(i, proposedWallCount); //populate the proposed walls table on slide 1
                 }
                 #endregion
-
-                #region Slide3/Question3 Quantity of Doors
-
-                /*TableRow wallRow = new TableRow();
-                TableCell wallLBLCell = new TableCell();
-                TableCell wallDDLTypeCell = new TableCell();
-                TableCell wallDDLQuantityCell = new TableCell();
-
-                Label wallLBL = new Label();
-                wallLBL.ID = "lblWallDoorId" + i;
-                wallLBL.Text = "Amount of Doors In Wall " + i;
-
-                DropDownList wallDDLType = new DropDownList();
-                wallDDLType.ID = "ddlWallDoorType" + i;
-                wallDDLType.Attributes.Add("OnChange", "checkQuestion3("+ i +")");
-                ListItem zero = new ListItem("None", "0");
-                ListItem cabana = new ListItem("Cabana", "cabana");
-                ListItem french = new ListItem("French", "french");
-                ListItem patio = new ListItem("Patio", "patio");
-                ListItem noDoor = new ListItem("Opening Only (No Door)", "noDoor");
-                wallDDLType.Items.Add(zero);
-                wallDDLType.Items.Add(cabana);
-                wallDDLType.Items.Add(french);
-                wallDDLType.Items.Add(patio);
-                wallDDLType.Items.Add(noDoor); 
-
-                DropDownList wallDDLQuantity = new DropDownList();
-                wallDDLQuantity.ID = "ddlWallDoorAmount" + i;
-                wallDDLQuantity.Enabled = false;
-
-                //for (int j = 0; j < calculatedMaxDoors; j++) { 
-
-                //}
-
-                wallLBLCell.Controls.Add(wallLBL);
-                wallDDLTypeCell.Controls.Add(wallDDLType);
-                wallDDLQuantityCell.Controls.Add(wallDDLQuantity);
-
-                tblDoorQuantity.Rows.Add(wallRow);
-
-                wallRow.Cells.Add(wallLBLCell);
-                wallRow.Cells.Add(wallDDLTypeCell);
-                wallRow.Cells.Add(wallDDLQuantityCell);*/
-
-                #endregion
             }
             #endregion
         }
