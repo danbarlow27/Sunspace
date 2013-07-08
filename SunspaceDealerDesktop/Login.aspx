@@ -8,8 +8,9 @@
         <asp:TextBox runat="server" ID="txtUsername" CssClass="txtField txtInput"></asp:TextBox>
         <br />
         <asp:Label runat="server" ID="lblPassword" Text="Password: "></asp:Label>
-        <asp:TextBox runat="server" ID="txtPassword" CssClass="txtField txtInput"></asp:TextBox>
+        <asp:TextBox runat="server" ID="txtPassword" CssClass="txtField txtInput" TextMode="Password"></asp:TextBox>
         <br />
         <asp:Button runat="server" ID="btnLogin" CssClass="btnSubmit" Text="Login" OnClick="btnLogin_Click"/>
     </div>
+    <asp:SqlDataSource ID="sdsLogin" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [customers]"></asp:SqlDataSource>
 </asp:Content>

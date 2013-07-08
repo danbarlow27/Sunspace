@@ -27,8 +27,8 @@ namespace SunspaceDealerDesktop
             if (Session["loggedIn"] == null)
             {
                 //uncomment me when login functionality is working
-                //Response.Redirect("Login.aspx");
-                Session.Add("loggedIn", "1");
+                Response.Redirect("Login.aspx");
+                //Session.Add("loggedIn", "1");
             }           
 
             //slide1
@@ -61,25 +61,36 @@ namespace SunspaceDealerDesktop
                 }
             }
 
-            //Get the customers assosciated with this dealer
-            sdsCustomers.SelectCommand = "SELECT first_name, last_name FROM customers WHERE dealer_id=" + Session["loggedIn"] + "ORDER BY last_name, first_name";
-                
-            //assign the table names to the dataview object
-            DataView dvExistingCustomers = (DataView)sdsCustomers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
-
-            ddlExistingCustomer.Items.Clear();
-
-            if (Session["ddlExistingCustomer"] != null)
+            if (!IsPostBack)
             {
+                if (Session["dealer_id"].ToString() == "-1")
+                {
+                    //Get the customers assosciated with this dealer
+                    sdsCustomers.SelectCommand = "SELECT first_name, last_name FROM customers ORDER BY last_name, first_name";
+                }
+                else
+                {
+                    //Get the customers assosciated with this dealer
+                    sdsCustomers.SelectCommand = "SELECT first_name, last_name FROM customers WHERE dealer_id=" + Session["dealer_id"] + "ORDER BY last_name, first_name";
+                }
+
+                //assign the table names to the dataview object
+                DataView dvExistingCustomers = (DataView)sdsCustomers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+                ddlExistingCustomer.Items.Clear();
+
                 for (int i = 0; i < dvExistingCustomers.Count; i++)
                 {
                     ddlExistingCustomer.Items.Add(dvExistingCustomers[i][0].ToString() + " " + dvExistingCustomers[i][1].ToString());
                 }
+
+                Session.Add("ddlExistingCustomer", ddlExistingCustomer);
             }
             else
             {
-                Session.Add("ddlExistingCustomer", ddlExistingCustomer);
+                ddlExistingCustomer = (DropDownList)Session["ddlExistingCustomer"];
             }
+            
 
             #region Old Preset Customers
             //Customer aCustomer = new Customer();
@@ -244,8 +255,8 @@ namespace SunspaceDealerDesktop
 
             string sqlInsert = "INSERT INTO customers (dealer_id,first_name,last_name,address,city,prov_city,country,zip_postal,main_phone,cell_phone,email,accept_email)"
             + "VALUES("
-            + Convert.ToInt32(Session["loggedIn"].ToString()) + ",'" + hidFirstName.Value + "','" + hidLastName.Value + "','" + hidAddress.Value + "','" + hidCity.Value + "','"
-            + "Ontario" + "','" + hidCountry.Value + "','" + hidZip.Value + "','" + hidPhone.Value + "','" + hidCell.Value + "','" + hidEmail.Value + "',"
+            + Convert.ToInt32(Session["dealer_id"].ToString()) + ",'" + hidFirstName.Value + "','" + hidLastName.Value + "','" + hidAddress.Value + "','" + hidCity.Value + "','"
+            + hidProvState.Value + "','" + hidCountry.Value + "','" + hidZip.Value + "','" + hidPhone.Value + "','" + hidCell.Value + "','" + hidEmail.Value + "',"
             + 1 + ")";
 
             sdsCustomers.InsertCommand = sqlInsert;

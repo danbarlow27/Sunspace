@@ -648,7 +648,7 @@
                     document.getElementById('pagerThree').style.display = "inline";
                     //document.getElementById('MainContent_btnQuestion3').disabled = false;
 
-                    //This line below is causing errors
+                    //This line below is causing errors, or is it?!
 
                     //else if (doorCustomPosition + doorWidth > usuabl
 
