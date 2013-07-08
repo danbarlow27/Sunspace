@@ -61,25 +61,28 @@ namespace SunspaceDealerDesktop
                 }
             }
 
-            //Get the customers assosciated with this dealer
-            sdsCustomers.SelectCommand = "SELECT first_name, last_name FROM customers WHERE dealer_id=" + Session["loggedIn"] + "ORDER BY last_name, first_name";
-                
-            //assign the table names to the dataview object
-            DataView dvExistingCustomers = (DataView)sdsCustomers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
-
-            ddlExistingCustomer.Items.Clear();
-
-            if (Session["ddlExistingCustomer"] != null)
+            if (!IsPostBack)
             {
+                //Get the customers assosciated with this dealer
+                sdsCustomers.SelectCommand = "SELECT first_name, last_name FROM customers WHERE dealer_id=" + Session["loggedIn"] + "ORDER BY last_name, first_name";
+
+                //assign the table names to the dataview object
+                DataView dvExistingCustomers = (DataView)sdsCustomers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+                ddlExistingCustomer.Items.Clear();
+
                 for (int i = 0; i < dvExistingCustomers.Count; i++)
                 {
                     ddlExistingCustomer.Items.Add(dvExistingCustomers[i][0].ToString() + " " + dvExistingCustomers[i][1].ToString());
                 }
+
+                Session.Add("ddlExistingCustomer", ddlExistingCustomer);
             }
             else
             {
-                Session.Add("ddlExistingCustomer", ddlExistingCustomer);
+                ddlExistingCustomer = (DropDownList)Session["ddlExistingCustomer"];
             }
+            
 
             #region Old Preset Customers
             //Customer aCustomer = new Customer();
