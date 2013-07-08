@@ -650,7 +650,7 @@
 
                     //This line below is causing errors
 
-                    
+                    //else if (doorCustomPosition + doorWidth > usuabl
 
                     /*This section handles storing individual door data and keeping count of
                     the amount of doors in each wall*/
