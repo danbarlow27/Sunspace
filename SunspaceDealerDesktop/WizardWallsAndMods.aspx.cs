@@ -139,7 +139,7 @@ namespace SunspaceDealerDesktop
                     wallDoorOptions.Controls.Add(new LiteralControl("<div id=\"doorDetails\" class=\"toggleContent\">"));
 
                     //Creating one ul tag to hold multiple li tags contain Cabana, French, Patio, Opening Only (No Door) options
-                    wallDoorOptions.Controls.Add(new LiteralControl("<ul><li><ul id='doorDetailsList' class='toggleOptions'>"));
+                    wallDoorOptions.Controls.Add(new LiteralControl("<ul><li><ul id=\"doorDetailsList\" class=\"toggleOptions\">"));
 
                     #endregion
 
@@ -1082,7 +1082,7 @@ namespace SunspaceDealerDesktop
 
                             #region Table:# Row Add This Door (tblDoorDetails)
 
-                            doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + currentWall + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' runat='server' value='Add This " + title + " Door'></input>"));
+                            doorAddButtonCell.Controls.Add(new LiteralControl("<input id=\"btnAddthisDoor" + currentWall + title + "\" type=\"button\" onclick=\"addDoor(\"" + title + "\")\" class=\"btnSubmit\" style=\"display:inherit;\" runat=\"server\" value=\"Add This " + title + " Door\"></input>"));
 
                             tblDoorDetails.Rows.Add(doorAddButtonRow);
 
@@ -1092,7 +1092,7 @@ namespace SunspaceDealerDesktop
                             #endregion
 
                             //Adding literal control div tag to hold the table, add to wallDoorOptions placeholder
-                            wallDoorOptions.Controls.Add(new LiteralControl("<div class='toggleContent' id='div_" + currentWall + title + "'><ul>"));
+                            wallDoorOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\" id=\"div_" + currentWall + title + "\"><ul>"));
 
                             //Adding literal control li to keep proper page look and format
                             wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
