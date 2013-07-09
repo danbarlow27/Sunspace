@@ -181,7 +181,8 @@
                         <asp:Label ID="lblInvoiceData" AssociatedControlID="radInvoiceData" runat="server" Text="Invoice Data (Sunspace CSR Only)"></asp:Label>
                     </li>
                 </ul>
-
+                
+                <asp:Button ID="btnAddUsers" runat="server" Text="Add users" CssClass="btnSubmit" OnClick="btnAddUsers_Click" />
                 <asp:Button ID="btnUpdate" runat="server" Text="Update Preferences" CssClass="btnSubmit float-right" OnClick="btnUpdate_Click"/>
 
             </div> <%-- end #slide1 --%>
