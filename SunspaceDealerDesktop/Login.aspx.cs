@@ -33,7 +33,7 @@ namespace SunspaceDealerDesktop
                 string userHash = GlobalFunctions.CalculateMD5Hash(txtPassword.Text);
 
                 //Get the customers assosciated with this dealer
-                sdsLogin.SelectCommand = "SELECT login, password, user_type FROM users WHERE login='" + userName + "' AND password='" + userHash + "'";
+                sdsLogin.SelectCommand = "SELECT login, password, user_type, user_group FROM users WHERE login='" + userName + "' AND password='" + userHash + "'";
 
                 //assign the table names to the dataview object
                 DataView dvUsers = (DataView)sdsLogin.Select(System.Web.UI.DataSourceSelectArguments.Empty);
@@ -44,11 +44,12 @@ namespace SunspaceDealerDesktop
                 }
                 else
                 {
-                    //user_type of first (only) user in dvUsers, if Superuser
+                    //Sunspace
                     if (dvUsers[0][2].ToString() == "S")
                     {
                         //-1 is not a valid dealer ID, so on later checks, if -1, that means don't restrict searches by dealer_id
                         Session.Add("dealer_id", "-1");
+                        Session.Add("user_group", dvUsers[0][3].ToString());
                         Session.Add("loggedIn", dvUsers[0][0].ToString());
                     }
                     //If dealer
@@ -69,6 +70,7 @@ namespace SunspaceDealerDesktop
                         Session["loginErrorMessage"] = "";
 
                         Session.Add("dealer_id", dvDealer[0][0].ToString());
+                        Session.Add("user_group", dvUsers[0][3].ToString());
                         Session.Add("loggedIn", dvUsers[0][0].ToString());
                     }
 
