@@ -595,7 +595,7 @@
                     var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'LeftFiller').value);
                     var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'RightFiller').value);
                     var usuableSpace = wallLength - leftFiller - rightFiller;                    
-                    var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorPosition' + wallCount + type) 
+                    var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorPosition' + wallCount + type)
                         + document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).selectedIndex].value);
 
                     var positionDropDown = document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).selectedIndex].value;
@@ -649,7 +649,7 @@
                     //document.getElementById('MainContent_btnQuestion3').disabled = false;
 
                     //This line below is causing errors, or is it?!
-
+                    //this line stinks
                     
 
                     /*This section handles storing individual door data and keeping count of
@@ -803,7 +803,7 @@
                 }
             }
             return remainSpaces;
-        }
+        };
 
         //function onClickAddDoor(currentDoor) {
         //    var $doorDetails = $('#doorDetails');
