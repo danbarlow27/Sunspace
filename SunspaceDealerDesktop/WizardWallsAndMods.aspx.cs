@@ -1107,7 +1107,7 @@ namespace SunspaceDealerDesktop
 
                     #endregion
                     //Closing more necessary tags
-                    wallDoorOptions.Controls.Add(new LiteralControl("</ul></li></li></ul></div>"));
+                    wallDoorOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>"));
 
                 //}
             }
