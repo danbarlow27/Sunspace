@@ -594,7 +594,7 @@
                     var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'LeftFiller').value);
                     var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'RightFiller').value);
                     var usuableSpace = wallLength - leftFiller - rightFiller;                    
-                    var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorPosition' + wallCount + type) 
+                    var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorPosition' + wallCount + type)
                         + document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).selectedIndex].value);
 
                     var positionDropDown = document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).selectedIndex].value;
@@ -814,7 +814,12 @@
 
                 }
             }
+<<<<<<< HEAD
         }
+=======
+            return remainSpaces;
+        };
+>>>>>>> 12fef5d4572cd13be0b71da3acec1456380344a1
 
         //function onClickAddDoor(currentDoor) {
         //    var $doorDetails = $('#doorDetails');
