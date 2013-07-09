@@ -14,8 +14,8 @@ namespace SunspaceDealerDesktop
             if (Session["loggedIn"] == null)
             {
                 //uncomment me when login functionality is working
-                //Response.Redirect("Login.aspx");
-                Session.Add("loggedIn", "userA");
+                Response.Redirect("Login.aspx");
+                //Session.Add("loggedIn", "userA");
             }
 
             #region Dropdown population
@@ -45,6 +45,11 @@ namespace SunspaceDealerDesktop
         {
             //save all preferences
             //additional comment here
+        }
+
+        protected void btnAddUsers_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AddUsers.aspx");
         }
     }
 }

@@ -53,19 +53,20 @@ namespace SunspaceDealerDesktop
                 if (Convert.ToInt32(Session["dealer_id"].ToString()) > -1)
                 {
                     DateTime aDate = DateTime.Now;
-                    sdsUsers.InsertCommand = "INSERT INTO users (login, password, email, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
+                    sdsUsers.InsertCommand = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
                                             + "VALUES('"
                                             + txtLogin.Text + "', '"
-                                            + txtPassword.Text + "', '"
+                                            + GlobalFunctions.CalculateMD5Hash(txtPassword.Text) + "', '"
                                             + txtEmail.Text + "', '"
-                                            + aDate.ToString("yyyy/MM/dd") + "', "
-                                            + null + ", '" //They havn't accessed as they havn't logged in before
+                                            + aDate.ToString("yyyy/MM/dd") + "', '"
+                                            + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
                                             + "D" + "', '" //Must be D-S because a dealer can only add users of his dealership
                                             + "S" + "', "
                                             + Convert.ToInt32(Session["dealer_id"].ToString()) + ", '" //reference ID is the dealer id in the dealer table they belong to
                                             + txtFirstName.Text + "', '"
                                             + txtLastName.Text + "', "
-                                            + 1;
+                                            + 1 + ")";
+                    sdsUsers.Insert();
                 }
                 
                 
