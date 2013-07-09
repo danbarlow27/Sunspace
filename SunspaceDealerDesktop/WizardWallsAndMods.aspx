@@ -814,12 +814,7 @@
 
                 }
             }
-<<<<<<< HEAD
         }
-=======
-            return remainSpaces;
-        };
->>>>>>> 12fef5d4572cd13be0b71da3acec1456380344a1
 
         //function onClickAddDoor(currentDoor) {
         //    var $doorDetails = $('#doorDetails');
