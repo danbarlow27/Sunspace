@@ -668,6 +668,7 @@
                         //Custom length index to be 3
                     }
 
+                    //>
                     
 
                     $("#MainContent_lblQuestion3PagerAnswer").text(finalText);
@@ -1059,10 +1060,7 @@
                     <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion3" OnClick="createWallObjects" Enabled="true" CssClass="btnSubmit float-right slidePanel"  runat="server" Text="Next Page" />
-                
-                
-
+                <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" />
 
             </div>
             <%-- end #slide3 --%>
