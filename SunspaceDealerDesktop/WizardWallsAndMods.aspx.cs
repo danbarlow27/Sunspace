@@ -29,7 +29,7 @@ namespace SunspaceDealerDesktop
         protected ListItem lst78 = new ListItem("7/8", ".875");
 
 
-        protected int currentModel = 200;
+        protected string currentModel = "M200";
         protected float sofftLength = 0;
 
         /***hard coded variables***/
@@ -152,7 +152,7 @@ namespace SunspaceDealerDesktop
                         string title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "Opening Only (No Door)";
 
                         //If logic to handle model 400's which don't have french doors
-                        if (currentModel == 400 && title == "French")
+                        if (currentModel == "M400" && title == "French")
                         {
                             //Do nothing
                         }
@@ -227,18 +227,18 @@ namespace SunspaceDealerDesktop
                             ListItem fullLite = new ListItem("Full Lite", "fullLite");
                             ListItem halfLiteWithMiniBlinds = new ListItem("Half Lite With Mini Blinds", "halfLiteWithMiniBlinds");
                             ListItem fullViewWithMiniBlinds = new ListItem("Full View With Mini Blinds", "fullViewWithMiniBlinds");
-                            if (currentModel == 100)
+                            if (currentModel == "M100")
                             {
                                 doorStyleDDL.Items.Add(fullScreen);
                                 doorStyleDDL.Items.Add(v4TCabana);
                             }
-                            else if (currentModel == 200)
+                            else if (currentModel == "M200")
                             {
                                 doorStyleDDL.Items.Add(fullScreen);
                                 doorStyleDDL.Items.Add(v4TCabana);
                                 doorStyleDDL.Items.Add(fullView);
                             }
-                            else if (currentModel == 300)
+                            else if (currentModel == "M300")
                             {
                                 doorStyleDDL.Items.Add(fullScreen);
                                 doorStyleDDL.Items.Add(fullView);
@@ -1337,12 +1337,19 @@ namespace SunspaceDealerDesktop
             return html; //return the hidden field tags
         }
 
+        /// <summary>
+        /// This is an event, that is used to dynamically create wall objects with the appropriate details
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void createWallObjects(object sender, EventArgs e)
         {   
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < strWalls.Count(); i++)
             {
+                //find and store the dynamically created hidden field
                 HiddenField wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField;
-                walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), 0F, "", Convert.ToSingle(hidRoofSlope.Value)));
+                //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
+                walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), 0F, currentModel, Convert.ToSingle(hidRoofSlope.Value)));
             }
         }
     }
