@@ -72,9 +72,10 @@ namespace SunspaceWizard
 
         protected void btnMainNavLogout_Click(object sender, EventArgs e)
         {
-            //Remove user from session
-            //Session.Remove("loggedIn");
-
+            //remove session variabels
+            Session.Remove("loggedIn");
+            Session.Remove("user_group");
+            Session.Remove("dealer_id");
             //Redirect to Login.aspx
             Response.Redirect("Login.aspx");
         }
