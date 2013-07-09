@@ -131,7 +131,7 @@ namespace SunspaceDealerDesktop
                     wallDoorOptions.Controls.Add(wallLabel);        //Adding label control to placeholder wallDoorOptions
 
                     //Creating div tag to hold all the current walls information (i.e. Cabana, French, Patio, Opening Only (No Door))
-                    wallDoorOptions.Controls.Add(new LiteralControl("<div id='doorDetails' class='toggleContent'>"));
+                    wallDoorOptions.Controls.Add(new LiteralControl("<div id=\"doorDetails\" class=\"toggleContent\">"));
 
                     //Creating one ul tag to hold multiple li tags contain Cabana, French, Patio, Opening Only (No Door) options
                     wallDoorOptions.Controls.Add(new LiteralControl("<ul><li><ul id='doorDetailsList' class='toggleOptions'>"));

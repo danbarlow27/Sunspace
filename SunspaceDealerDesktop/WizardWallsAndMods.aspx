@@ -581,6 +581,44 @@
             this.splice(index, 0, item);
         };
 
+        //function availableSpaceOutput(doorsArray, usuableLength, position) {
+
+        //    var pagerText = document.getElementById("MainContent_lblQuestion3PagerAnswer");
+        //    var remainSpaces = new Array();
+        //    var textToAdd = "";
+
+        //    if (position === "left") {
+        //        if (doorsArray.length == 1) {
+        //            textToAdd = "Left Door Right Hand Space " + parseFloat(usuableLength - doorsArray[0].doorWidth);
+        //        }
+        //        else {
+        //            var closestDoor = doorsArray.sort();
+        //            textToAdd = "Left Door Right Hand Space " + parseFloat(closestDoor[1].distanceFromLeft - doorsArray[0].doorWidth);
+        //        }
+        //    }
+        //    else if (position === "right") {
+        //        if (doorsArray.length == 1) {
+        //            textToAdd = "Right Door Right Hand Space " + parseFloat(usuableLength - doorsArray[2].doorWidth);
+        //        }
+        //        else {
+        //            var closestDoor = doorsArray.sort();
+        //            textToAdd = "Right Door Right Hand Space " + parseFloat(doorsArray[2].distanceFromLeft - (closestDoor[1].distanceFromLeft - +closestDoor[1].doorWidth));
+        //        }
+        //    }
+        //    else if (position === "center") {
+        //        if (doorsArray.length == 1) {
+        //            textToAdd = "Center Door Left Hand Space " + parseFloat(doorsArray[1].distanceFromLeft - doorsArray[1].doorWidth);
+        //            textToAdd += "Center Door Right Hand Space " + parseFloat(doorsArray[1].distanceFromLeft - doorsArray[1].doorWidth);
+        //        }
+        //        else {
+        //            textToAdd = "Center Door Left Hand Space " + parseFloat(doorsArray[1].distanceFromLeft - doorsArray[0].doorWidth);
+        //            textToAdd += "Center Door Right Hand Space " + parseFloat(doorsArray[2].distanceFromLeft - (doorsArray[1].distanceFromLeft + doorsArray[1].doorWidth));
+        //        }
+        //    }
+
+        //    pagerText.innerHTML = textToAdd;
+        //}
+
         function addDoor(type) {
 
             var hiddenFieldsDiv = document.getElementById('MainContent_hiddenFieldsDiv');
@@ -613,43 +651,30 @@
 
                     if (positionDropDown === "left") {
                         doors.insert(0, { "doorWidth": doorWidth, "distanceFromLeft": 0 });
+                        positionDDLRemoval.remove(0);
+                        availableSpaceOutput(doors, usuableSpace, positionDropDown);
                     }
                     else if (positionDropDown === "right") {
-                        doors.insert(doors.length, { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace - doorWidth });
+                        doors.insert(2, { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace - doorWidth });
+                        positionDDLRemoval.remove(2);
+                        availableSpaceOutput(doors, usuableSpace, positionDropDown);
                     }
                     else if (positionDropDown === "center") {
-                        doors.insert(doors.length/2, { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace/2 - doorWidth/2 });
+                        doors.insert(1, { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace / 2 - doorWidth / 2 });
+                        positionDDLRemoval.remove(1);
+                        availableSpaceOutput(doors, usuableSpace, positionDropDown);
                     }
                     else if (positionDropDown === "cPosition") {
-                        //Custom length
+                        //Custom length index to be 3
                     }
 
-                    var pagerText = document.getElementById("MainContent_lblQuestion3PagerAnswer");
+                    
 
-                    for (var doorCount = 0; doorCount < doors.length; doorCount++) {
-                        if (doors.length == 1) {
-                            pagerText.innerHTML = "Door " + (doorCount + 1) + " Left Hand Space " + doors[doorCount].distanceFromLeft + "<br/>";
-                            pagerText.innerHTML += "Door " + (doorCount + 1) + " Right Hand Space " + parseFloat(wallLength - doors[doorCount].doorWidth) + "<br/>";
-                        }
-                        else {
-                            if (doorCount == doors.length - 1) {
-                                pagerText.innerHTML = "Door " + (doorCount + 1) + " Left Hand Space " + doors[doorCount].distanceFromLeft + "<br/>";
-                                pagerText.innerHTML += "Door " + (doorCount + 1) + " Right Hand Space " + parseFloat(usuableSpace - doors[doorCount].distanceFromLeft + doors[doorCount].doorWidth) + "<br/>";
-                            }
-                            else {
-                                if (doorCount == 0)
-                                    pagerText.innerHTML += "Door " + (doorCount + 1) + " Left Hand Space " + doors[doorCount].distanceFromLeft + "<br/>";
-                                else
-                                    pagerText.innerHTML += "Door " + (doorCount + 1) + " Left Hand Space " + parseFloat(doors[doorCount].distanceFromLeft - (doors[doorCount - 1].distanceFromLeft + doors[doorCount - 1].doorWidth)) + "<br/>";
-                            }
-                        }
-                    }
-
-                    $('#MainContent_lblQuestion3PagerAnswer').text(finalText);
-                    document.getElementById('pagerThree').style.display = "inline";
+                    $("#MainContent_lblQuestion3PagerAnswer").text(finalText);
+                    document.getElementById("pagerThree").style.display = "inline";
                     //document.getElementById('MainContent_btnQuestion3').disabled = false;
 
-                    /*This section handles storing individual door data and keeping count of
+                    /**This section handles storing individual door data and keeping count of
                     the amount of doors in each wall*/
                     /**********DATA STORING**********/
                     if (!document.getElementById("wall" + wallCount + "Doors")) {
@@ -705,10 +730,12 @@
                     hidDoorHeight.setAttribute("type", "hidden");
                     hidDoorHeight.setAttribute("runat", "server");                    
 
-                    if (heightDropDown === 'cHeight')
+                    if (heightDropDown === 'cHeight') {
                         hidDoorHeight.value = parseFloat(calculateActualDoorDimension(type, 'Height', true));
-                    else
+                    }
+                    else {
                         hidDoorHeight.value = parseFloat(calculateActualDoorDimension(type, 'Height', false));
+                    }
 
                     //Door Width
                     var hidDoorWidth = document.createElement("input");
@@ -723,10 +750,12 @@
                     hidDoorPrimaryOperator.setAttribute("type", "hidden");
                     hidDoorPrimaryOperator.setAttribute("runat", "server");
 
-                    if (document.getElementById('MainContent_radDoorOperatorLHH' + wallCount + type).checked)
+                    if (document.getElementById('MainContent_radDoorOperatorLHH' + wallCount + type).checked) {
                         hidDoorPrimaryOperator.value = "left";
-                    else
+                    }
+                    else {
                         hidDoorPrimaryOperator.value = "right";
+                    }
 
                     //Door Box Header Positiion
                     var hidDoorBoxHeaderPosition = document.createElement("input");
@@ -754,10 +783,12 @@
                     hidDoorHingePlacement.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "HingePlacement");
                     hidDoorHingePlacement.setAttribute("type", "hidden");
                     hidDoorHingePlacement.setAttribute("runat", "server");
-                    if (document.getElementById('MainContent_radDoorLHH' + wallCount + type).checked)
+                    if (document.getElementById('MainContent_radDoorLHH' + wallCount + type).checked) {
                         hidDoorHingePlacement.value = "left";
-                    else
+                    }
+                    else {
                         hidDoorHingePlacement.value = "right";
+                    }
 
                     //Screen Options
                     var hidDoorScreenOptions = document.createElement("input");
@@ -778,21 +809,24 @@
                     hidDoorSwing.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "Swing");
                     hidDoorSwing.setAttribute("type", "hidden");
                     hidDoorSwing.setAttribute("runat", "server");
-                    if (document.getElementById('MainContent_radDoorSwingIn' + wallCount + type).checked)
+                    if (document.getElementById('MainContent_radDoorSwingIn' + wallCount + type).checked) {
                         hidDoorSwing.value = "in";
-                    else
+                    }
+                    else {
                         hidDoorSwing.value = "out";
+                    }
 
                     //Position
                     var hidDoorPosition = document.createElement("input");
                     hidDoorPosition.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "Position");
                     hidDoorPosition.setAttribute("type", "hidden");
                     hidDoorPosition.setAttribute("runat", "server");
-                    if (positionDropDown === "cPosition")
+                    if (positionDropDown === "cPosition") {
                         hidDoorPosition.value = doorCustomPosition;
-                        //document.getElementById('MainContent_txtDoorPosition').value + document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).selectedIndex].value;
-                    else
+                    }
+                    else {
                         hidDoorPosition.value = positionDropDown;
+                    }
 
                     //Appending all created fields to hiddenFieldsDiv div tag                    
                     hidDiv.appendChild(hidDoorStyle);
