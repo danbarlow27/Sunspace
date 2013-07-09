@@ -814,12 +814,7 @@
 
                 }
             }
-<<<<<<< HEAD
         }
-=======
-            return remainSpaces;
-        };
->>>>>>> 12fef5d4572cd13be0b71da3acec1456380344a1
 
         //function onClickAddDoor(currentDoor) {
         //    var $doorDetails = $('#doorDetails');
@@ -1030,7 +1025,10 @@
                     <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3" OnClick="createWallObjects" Enabled="true" CssClass="btnSubmit float-right slidePanel"  runat="server" Text="Next Page" />
+                
+                
+
 
             </div>
             <%-- end #slide3 --%>

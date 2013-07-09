@@ -9,20 +9,20 @@ namespace SunspaceDealerDesktop
     {
         #region Attributes
 
-        private float length;
+        private float length; //length of the wall in inches
         private int firstItemIndex; //Index of First Item in Wall
         private int lastItemIndex; //Index of Last Item in Wall
-        private String orientation; //N, NE, E, S, SE, NW, SW, W
-        private String name; //Name of the wall – For project editor referencing
-        private String wallType;
-        private String modelType; 
+        private string orientation; //N, NE, E, S, SE, NW, SW, W
+        private string name; //Name of the wall – For project editor referencing
+        private string wallType; //type of wall - existing, proposed, full gable wall, partial gable wall, gable post
+        private string modelType; 
         private float startHeight; //Start height of the wall
         private float endHeight; //End height of the wall
         private float soffitLength; //Soffit length (only for fascia install)
         private float gablePeak;
         private float totalCornerLength;
         private float totalReceiverLength;
-        private float slope;
+        private float slope; //slope of the roof that is sitting on this wall
         List<Object> linearItems = new List<Object>();
         List<Object> obstructions = new List<Object>();
         //colours?
@@ -37,15 +37,31 @@ namespace SunspaceDealerDesktop
             LastItemIndex = -1;
             Orientation = "";
             Name = "";
+            WallType = "";
             StartHeight = 0.0F;
             EndHeight = 0.0F;
             SoffitLength = 0.0F;
-            TotalCornerLength = 0.0f;
-            TotalReceiverLength = 0.0f;
+            TotalCornerLength = 0.0F;
+            TotalReceiverLength = 0.0F;
             ModelType = "";
-            GablePeak = 0f;
-            Slope = 0f;
+            GablePeak = 0.0F;
+            Slope = 0.0F;
         }
+
+        //parameterized constructor to create wall objects after we have lengths, heights and doors.
+        public Wall(float length, string orientation, string name, string wallType, float startHeight, float endHeight, float soffitLength, string modelType, float slope)
+        {
+            Length = length;
+            Orientation = orientation;
+            Name = name;
+            WallType = wallType;
+            StartHeight = startHeight;
+            EndHeight = endHeight;
+            SoffitLength = soffitLength;
+            ModelType = modelType;
+            Slope = slope;
+        }
+
         #endregion
 
         #region Class Functions
@@ -240,7 +256,7 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public String Orientation
+        public string Orientation
         {
             get
             {
@@ -253,7 +269,7 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public String Name
+        public string Name
         {
             get
             {
@@ -263,6 +279,19 @@ namespace SunspaceDealerDesktop
             set
             {
                 name = value;
+            }
+        }
+
+        public string WallType
+        {
+            get
+            {
+                return wallType;
+            }
+
+            set
+            {
+                wallType = value;
             }
         }
 
@@ -330,6 +359,7 @@ namespace SunspaceDealerDesktop
                 totalReceiverLength = value;
             }
         }
+
         public float Slope
         {
             get
@@ -369,7 +399,7 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public String ModelType
+        public string ModelType
         {
             get
             {

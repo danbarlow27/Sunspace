@@ -10,6 +10,8 @@ namespace SunspaceDealerDesktop
 {
     public partial class WizardWallsAndMods : System.Web.UI.Page
     {
+        protected List<Wall> walls = new List<Wall>();
+
         protected const float DOOR_MAX_WIDTH = Constants.CUSTOM_DOOR_MAX_WIDTH;
         protected const float DOOR_MIN_WIDTH = Constants.CUSTOM_DOOR_MIN_WIDTH;
         protected const float DOOR_FRENCH_MIN_WIDTH = Constants.CUSTOM_FRENCH_DOOR_MIN_WIDTH;
@@ -28,27 +30,31 @@ namespace SunspaceDealerDesktop
 
 
         protected int currentModel = 200;
+        protected float sofftLength = 0;
+
+        /***hard coded variables***/
+        string coordList; //to store the string from the session and store it in a local variable for further use                                    
+        char[] lineDelimiter = { '/' }; //character(s) that seperate lines in a session string variable
+        char[] detailsDelimiter = { ',' }; //character(s) that seperate details of each line                                 
+        string[] strWalls; //to split the string received from session and store it into an array of strings with individual line details
+        string[,] wallDetails; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            /***hard coded session variables***/
-            
-            //Session["numberOfWalls"] = 4;
+            /***hard coded variables***/
             Session["coordList"] = "100,412.5,137.5,137.5,E,S/150,150,137.5,287.5,P,W/150,225,287.5,362.5,P,SW/225,312.5,362.5,362.5,P,S/312,387.5,362.5,287.5,P,SE/387.5,387.5,287.5,137.5,P,E/";
             //Session["coordList"] = "112.5,350,112.5,112.5,E,S/350,350,112.5,337.5,E,W/175,175,112.5,262.5,P,W/175,350,262.5,262.5,P,S/";
-            string coordList = (string)Session["coordList"]; //get the string from the session and store it in a local variable for further use                                    
-            char[] lineDelimiter = { '/' }; //character(s) that seperate lines in a session string variable
-            char[] detailsDelimiter = { ',' }; //character(s) that seperate details of each line                                 
-            string[] walls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
-            string[,] wallDetails = new string[walls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
+            coordList = (string)Session["coordList"]; //get the string from the session and store it in a local variable for further use                                    
+            strWalls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
+            wallDetails = new string[strWalls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
             
             int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
             int proposedWallCount = 0; //used to determine how many proposed walls are in a drawing
 
             //populate the array with all the wall details for each wall
-            for (int i = 0; i < walls.Count(); i++) //run through all the walls in the array
+            for (int i = 0; i < strWalls.Count(); i++) //run through all the walls in the array
             {
-                string[] tempDetails = walls[i].Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the given wall string into its individual detail items and store it in temporary array
+                string[] tempDetails = strWalls[i].Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the given wall string into its individual detail items and store it in temporary array
 
                 for (int j = 0; j < tempDetails.Count(); j++) //for each item in the tempDetails array
                 {
@@ -56,8 +62,7 @@ namespace SunspaceDealerDesktop
                 }
             }
             
-    
-            hiddenFieldsDiv.InnerHtml = createHiddenFields(walls.Count()); //create hidden fields on page load dynamically, pass it number of walls
+            hiddenFieldsDiv.InnerHtml = createHiddenFields(strWalls.Count()); //create hidden fields on page load dynamically, pass it number of walls
 
             #region DropDownList Section
             DropDownList ddlInFrac = new DropDownList(); //a dropdown list for length inch fractions
@@ -104,7 +109,7 @@ namespace SunspaceDealerDesktop
             //SLIDE 3 DOOR DETAILS PER WALL
             #region Slide 3: Onload dynamic loop to insert wall door options            
 
-            for (int currentWall = 1; currentWall <= walls.Count(); currentWall++) 
+            for (int currentWall = 1; currentWall <= strWalls.Count(); currentWall++) 
             {
                 //if (wallDetails[currentWall-1, 4] == "P")
                 //{
@@ -1114,7 +1119,7 @@ namespace SunspaceDealerDesktop
 
             #region For Loop for slide 1 and slide3            
 
-            for (int i = 1; i <= walls.Count(); i++) //for each wall in walls 
+            for (int i = 1; i <= strWalls.Count(); i++) //for each wall in walls 
             {
                 #region Slide1/Question1 Table
                 
@@ -1327,8 +1332,18 @@ namespace SunspaceDealerDesktop
                 html += "<input id=\"hidWall" + i + "LeftFiller\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall left filler
                 html += "<input id=\"hidWall" + i + "Length\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall length
                 html += "<input id=\"hidWall" + i + "RightFiller\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall right filler
+                html += "<input id=\"hidWall" + i + "SoffitLength\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall soffit length
             }
             return html; //return the hidden field tags
+        }
+
+        protected void createWallObjects(object sender, EventArgs e)
+        {   
+            for (int i = 0; i < 6; i++)
+            {
+                HiddenField wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField;
+                walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), 0F, "", Convert.ToSingle(hidRoofSlope.Value)));
+            }
         }
     }
 }
