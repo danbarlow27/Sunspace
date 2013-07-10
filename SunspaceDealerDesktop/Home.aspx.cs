@@ -28,5 +28,10 @@ namespace SunspaceDealerDesktop
         {
             Response.Redirect("AddUsers.aspx");
         }
+
+        protected void btnSpoof_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Spoof.aspx");
+        }
     }
 }

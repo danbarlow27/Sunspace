@@ -29,7 +29,7 @@ namespace SunspaceDealerDesktop
                 Response.Redirect("Home.aspx");
             }
 
-            if (Session["user_type"].ToString() == "S" || Session["dealer_id"].ToString() == "-1")
+            if (Session["user_type"].ToString() == "S" && Session["dealer_id"].ToString() == "-1")
             {
                 //if a sunspace user hasn't spoofed, send them there, that is step one
                 Response.Redirect("Spoof.aspx");
