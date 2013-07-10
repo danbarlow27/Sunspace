@@ -19,8 +19,8 @@
         var DOOR_FRENCH_MAX_WIDTH = '<%= DOOR_FRENCH_MAX_WIDTH %>';
         var projection = 120; //hard coded for testing, will come from the previous pages in the wizard
         var soffitLength = 0; //hard coded for testing, will come from the previous pages in the wizard
-        var soffit = document.getElementById("MainContent_hidSoffitLength").value = soffitLength;
-        alert(soffit);
+        //var soffit = document.getElementById("MainContent_hidSoffitLength").value = soffitLength;
+        //alert(soffit);
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
         var model = '<%= currentModel %>';
 
@@ -1215,10 +1215,10 @@
     </div>
 
 
-    
+    <%-- %>/*********************CANVAS FUNCTIONS*********************************/ --%>
     <script>
 
-        /*********************CANVAS FUNCTIONS*********************************/
+        
 
         /* CREATE CANVAS */
         var canvas = d3.select("#mySunroom")            //Select the div tag with id "mySunroom"
@@ -1377,7 +1377,7 @@
 
     <%-- hiddenFieldsDiv is used to store dynamically generated hidden fields from codebehind --%>
     <div id="hiddenFieldsDiv" runat="server"></div>
-    <input id="hidSoffitLength" type="hidden" runat="server" />
+    <%-- <input id="hidSoffitLength" type="hidden" runat="server" /> --%>
     <input id="hidProjection" type="hidden" runat="server" />
     <input id="hidFrontWallHeight" type="hidden" runat="server" />
     <input id="hidBackWallHeight" type="hidden" runat="server" />
