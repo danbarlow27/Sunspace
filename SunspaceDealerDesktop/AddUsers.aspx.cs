@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace SunspaceDealerDesktop
 {
@@ -110,8 +111,8 @@ namespace SunspaceDealerDesktop
             }
             else
             {
-                //dealer can only enter users that belong to his dealership
-                if (Convert.ToInt32(Session["dealer_id"].ToString()) > -1)
+                //adding a dealer sales rep
+                if (ddlUserType.SelectedValue == "Dealer" && ddlUserGroup.SelectedValue == "Sales Rep")
                 {
                     DateTime aDate = DateTime.Now;
                     sdsUsers.InsertCommand = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
@@ -130,19 +131,84 @@ namespace SunspaceDealerDesktop
                     sdsUsers.Insert();
                     lblError.Text = "Successfully Added";
                 }
-                //sunspace csr
-                else if (Convert.ToInt32(Session["dealer_id"].ToString()) == -1 && userGroup == "C")
+                //adding a head dealer
+                else if (ddlUserType.SelectedValue == "Dealer" && ddlUserGroup.SelectedValue == "Admin")
                 {
-                    if (ddlUserGroup.SelectedValue == "Admin")
+                    using (SqlConnection aConnection = new SqlConnection(sdsUsers.ConnectionString))
                     {
-                        //create new dealer in dealer table
-                        //select new dealer
-                        //add user with reference to dealer table
-                    }
-                    //sales rep
+                        aConnection.Open();
+                        SqlCommand aCommand = aConnection.CreateCommand();
+                        SqlTransaction aTransaction;
+
+                        // Start a local transaction.
+                        aTransaction = aConnection.BeginTransaction("SampleTransaction");
+
+                        // Must assign both transaction object and connection 
+                        // to Command object for a pending local transaction
+                        aCommand.Connection = aConnection;
+                        aCommand.Transaction = aTransaction;
+
+                        try
+                        {
+                            ////Add to dealer table
+                            //aCommand.CommandText = "INSERT INTO dealers (dealer_name, first_name, last_name, country, multiplier)"
+                            //                        + "VALUES('"
+                            //                        + txtLogin.Text + "', '"
+                            //                        + txtFirstName.Text + "', '"
+                            //                        + txtLastName.Text + "', '"
+                            //                        + ddlCountry.SelectedValue + "', "
+                            //                        + Convert.ToInt32(txtMultiplier.Text) + ")";
+                            //aCommand.ExecuteNonQuery();
+
+                            ////Now add user
+                            //DateTime aDate = DateTime.Now;
+                            //sdsUsers.InsertCommand = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
+                            //                        + "VALUES('"
+                            //                        + txtLogin.Text + "', '"
+                            //                        + GlobalFunctions.CalculateMD5Hash(txtPassword.Text) + "', '"
+                            //                        + txtEmail.Text + "', '"
+                            //                        + aDate.ToString("yyyy/MM/dd") + "', '"
+                            //                        + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
+                            //                        + "D" + "', '" //Must be D-S because a dealer can only add users of his dealership
+                            //                        + "S" + "', "
+                            //                        + Convert.ToInt32(Session["dealer_id"].ToString()) + ", '" //reference ID is the dealer id in the dealer table they belong to
+                            //                        + txtFirstName.Text + "', '"
+                            //                        + txtLastName.Text + "', "
+                            //                        + 1 + ")";
+                            //sdsUsers.Insert();
+                            //lblError.Text = "Successfully Added";
+
+                            // Attempt to commit the transaction.
+                            //aTransaction.Commit();
+                            //Console.WriteLine("Both records are written to database.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Commit Exception Type: {0}", ex.GetType());
+                            Console.WriteLine("  Message: {0}", ex.Message);
+
+                            // Attempt to roll back the transaction. 
+                            try
+                            {
+                                aTransaction.Rollback();
+                            }
+                            catch (Exception ex2)
+                            {
+                                // This catch block will handle any errors that may have occurred 
+                                // on the server that would cause the rollback to fail, such as 
+                                // a closed connection.
+                                Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
+                                Console.WriteLine("  Message: {0}", ex2.Message);
+                            }
+                        }
+                    }                    
+                }
+                //Sunspace CSR
+                else if (ddlUserType.SelectedValue == "Sunspace" && ddlUserGroup.SelectedValue == "Customer Service Rep")
+                {
 
                 }
-                //sunspace admin
+                //Sunspace Admin
                 else
                 {
 
