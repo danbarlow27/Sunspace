@@ -264,7 +264,7 @@
 
                     //select the decimal value of the new front wall height in the dropdown list
                     for (var i = 0; i < document.getElementById("MainContent_ddlFrontInchFractions").length - 1 ; i++) { //run through each element of the dropdown
-                        if ((newFrontHeight[1] += '') === ("0" + document.getElementById("MainContent_ddlFrontInchFractions").options[i].value)) //if the value in the dropdown list matches the decimal value
+                        if ((newFrontHeight[1] += '') == ("0" + document.getElementById("MainContent_ddlFrontInchFractions").options[i].value)) //if the value in the dropdown list matches the decimal value
                             document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex = i; //select the index of that value
                     }
 
@@ -302,7 +302,7 @@
 
                     //select the decimal value of the new back wall height in the dropdown list
                     for (var i = 0; i < document.getElementById("MainContent_ddlBackInchFractions").length - 1 ; i++) { //run through each element of the dropdown
-                        if ((newBackHeight[1] += '') === ("0" + document.getElementById("MainContent_ddlBacktInchFractions").options[i].value)) //if the value in the dropdown list matches the decimal value
+                        if ((newBackHeight[1] += '') == ("0" + document.getElementById("MainContent_ddlBacktInchFractions").options[i].value)) //if the value in the dropdown list matches the decimal value
                             document.getElementById("MainContent_ddlBackInchFractions").selectedIndex = i; //select the index of that value
                     }
 
@@ -477,7 +477,7 @@
 
                     var dimensionDDL = document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).selectedIndex].value;
 
-                    if (document.getElementById('MainContent_radType' + wallCount + type).checked && dimensionDDL === 'c' + dimension) {
+                    if (document.getElementById('MainContent_radType' + wallCount + type).checked && dimensionDDL == 'c' + dimension) {
                         document.getElementById('MainContent_rowDoorCustom' + dimension + wallCount + type).style.display = 'inherit';                        
                     }
                     else {
@@ -494,7 +494,7 @@
                 if (document.getElementById('MainContent_radWall' + wallCount).checked) {
                     var positionDDL = document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).selectedIndex].value;
 
-                    if (document.getElementById('MainContent_radType' + wallCount + type).checked && positionDDL === 'cPosition') {
+                    if (document.getElementById('MainContent_radType' + wallCount + type).checked && positionDDL == 'cPosition') {
                         document.getElementById('MainContent_rowDoorPosition' + wallCount + type).style.display = 'inherit';
                     }
                     else {
@@ -511,7 +511,7 @@
 
                     var HeightDDL = document.getElementById('MainContent_ddlDoorStyle' + wallCount + type).options[document.getElementById('MainContent_ddlDoorStyle' + wallCount + type).selectedIndex].value;
 
-                    if (document.getElementById('MainContent_radType' + wallCount + type).checked && HeightDDL === 'v4TCabana') {
+                    if (document.getElementById('MainContent_radType' + wallCount + type).checked && HeightDDL == 'v4TCabana') {
                         document.getElementById('MainContent_rowDoorVinylTint' + wallCount + type).style.display = 'inherit';
                     }
                     else {
@@ -531,7 +531,7 @@
 
                     var controlToUse;
 
-                    if (custom === true) {
+                    if (custom == true) {
 
                         controlToUse = parseFloat(document.getElementById('MainContent_txtDoorCustom' + dimension + wallCount + type).value)
                             + parseFloat(document.getElementById('MainContent_ddlInchCustom' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlInchCustom' + dimension + wallCount + type).selectedIndex].value);
@@ -543,17 +543,17 @@
 
                     }
 
-                    if (type === 'Cabana') {
+                    if (type == 'Cabana') {
 
-                        newDimension = (model === 400) ? controlToUse + 3.625 : controlToUse + 2.125;
+                        newDimension = (model == 400) ? controlToUse + 3.625 : controlToUse + 2.125;
 
                     }
-                    else if (type === 'French') {
+                    else if (type == 'French') {
 
-                        newDimension = (model === 400) ? ((controlToUse + 3.625) - 1.625) * 2 + 2 : ((controlToUse + 2.125) - 1.625) * 2 + 2;
+                        newDimension = (model == 400) ? ((controlToUse + 3.625) - 1.625) * 2 + 2 : ((controlToUse + 2.125) - 1.625) * 2 + 2;
                         
                     }
-                    else if (type === 'Patio') {
+                    else if (type == 'Patio') {
                         //Need more information
                     }
                 }
@@ -585,7 +585,34 @@
             var remainSpaces = new Array();
             var textToAdd = "";
             var realArrayLength = 0;
-
+        //    if (position == "left") {
+        //        if (doorsArray.length == 1) {
+        //            textToAdd = "Left Door Right Hand Space " + parseFloat(usuableLength - doorsArray[0].doorWidth);
+        //        }
+        //        else {
+        //            var closestDoor = doorsArray.sort();
+        //            textToAdd = "Left Door Right Hand Space " + parseFloat(closestDoor[1].distanceFromLeft - doorsArray[0].doorWidth);
+        //        }
+        //    }
+        //    else if (position == "right") {
+        //        if (doorsArray.length == 1) {
+        //            textToAdd = "Right Door Right Hand Space " + parseFloat(usuableLength - doorsArray[2].doorWidth);
+        //        }
+        //        else {
+        //            var closestDoor = doorsArray.sort();
+        //            textToAdd = "Right Door Right Hand Space " + parseFloat(doorsArray[2].distanceFromLeft - (closestDoor[1].distanceFromLeft - +closestDoor[1].doorWidth));
+        //        }
+        //    }
+        //    else if (position == "center") {
+        //        if (doorsArray.length == 1) {
+        //            textToAdd = "Center Door Left Hand Space " + parseFloat(doorsArray[1].distanceFromLeft - doorsArray[1].doorWidth);
+        //            textToAdd += "Center Door Right Hand Space " + parseFloat(doorsArray[1].distanceFromLeft - doorsArray[1].doorWidth);
+        //        }
+        //        else {
+        //            textToAdd = "Center Door Left Hand Space " + parseFloat(doorsArray[1].distanceFromLeft - doorsArray[0].doorWidth);
+        //            textToAdd += "Center Door Right Hand Space " + parseFloat(doorsArray[2].distanceFromLeft - (doorsArray[1].distanceFromLeft + doorsArray[1].doorWidth));
+        //        }
+        //    }
             for (var notNullsCount = 0; notNullsCount < doorsArray.length; notNullsCount++) {
                 if (doorsArray[notNullsCount] != null) {
                     realArrayLength++;
@@ -669,14 +696,14 @@
                     var heightDropDown = document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).options[document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).selectedIndex].value;                    
                     var doorWidth;
 
-                    if (widthDropDown === "cWidth") {
+                    if (widthDropDown == "cWidth") {
                         doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', true));
                     }
                     else {
                         doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false));
                     }
 
-                    if (positionDropDown === "left") {
+                    if (positionDropDown == "left") {
                         doors.insert(0, { "doorWidth": doorWidth, "distanceFromLeft": 0 });
                         positionDDLRemoval.options[0].disabled = true;
                         positionDDLRemoval.setAttribute("disabled", "true");
@@ -690,18 +717,22 @@
                         }
                         availableSpaceOutput(doors, usuableSpace, positionDropDown);
                     }
-                    else if (positionDropDown === "right") {
+                    else if (positionDropDown == "right") {
                         doors.insert(2, { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace - doorWidth });
                         positionDDLRemoval.options[2].disabled = true;
                         $(positionDDLRemoval + "Option[value='right']").remove();
                         availableSpaceOutput(doors, usuableSpace, positionDropDown);
                     }
-                    else if (positionDropDown === "center") {
+                    else if (positionDropDown == "center") {
                         doors.insert(1, { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace / 2 - doorWidth / 2 });
                         positionDDLRemoval.options[1].disabled = true;
                         $(positionDDLRemoval + "Option[value='center']").remove();
                         availableSpaceOutput(doors, usuableSpace, positionDropDown);
                     }
+                    else if (positionDropDown == "cPosition") {
+                        //Custom length index to be 3
+                    }
+                    //>
                     else if (positionDropDown === "cPosition") {
                     }                   
 
@@ -759,7 +790,7 @@
                     hidDoorHeight.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "Height");
                     hidDoorHeight.setAttribute("type", "hidden");              
 
-                    if (heightDropDown === 'cHeight') {
+                    if (heightDropDown == 'cHeight') {
                         hidDoorHeight.value = parseFloat(calculateActualDoorDimension(type, 'Height', true));
                     }
                     else {
@@ -840,6 +871,7 @@
                     var hidDoorPosition = document.createElement("input");
                     hidDoorPosition.setAttribute("id", "door" + doorCount + "OfWall" + wallCount + type + "Position");
                     hidDoorPosition.setAttribute("type", "hidden");
+                    hidDoorPosition.setAttribute("runat", "server");
                     if (positionDropDown === "cPosition") {
                         hidDoorPosition.value = doorCustomPosition;
                     }
@@ -876,7 +908,7 @@
 
         //    alert($doorDetailsList.size());
 
-        //    if (tblDoor.style.display === "block") {
+        //    if (tblDoor.style.display == "block") {
         //        var newClonedLi = $doorDetails.find('li:first').clone(true);
         //        newClonedLi.appendTo($doorDetails.find('ul'));
         //    }
@@ -1211,7 +1243,7 @@
                     .attr("y2", (coordList[i][3] / 5) * 2) //3 = y2
                     .attr("stroke-width", "2"); 
             
-            if(coordList[i][4] === "E") //4 = wall facing
+            if(coordList[i][4] == "E") //4 = wall facing
                 lineArray[i].attr("stroke", "red"); //if existing wall, make line red
             else
                 lineArray[i].attr("stroke", "black"); //if proposed wall, make line black
@@ -1234,7 +1266,7 @@
         function resetWalls() {
             for (var i = 0; i < lineList.length; i++) { //run through all the lines
                 lineArray[i].attr("stroke-width", "2"); //make them default thickness
-                if (coordList[i][4] === "E") //4 = wall facing
+                if (coordList[i][4] == "E") //4 = wall facing
                     lineArray[i].attr("stroke", "red"); //if existing wall, make red
                 else
                     lineArray[i].attr("stroke", "black"); //if proposed wall, make black
@@ -1262,9 +1294,9 @@
                     southWalls.push({ "y2": lineArray[i].attr("y2"), "number": i, "type": coordList[i][4] }); //populate south walls array.. 4 = wall type
             }
 
-            if (wall === "B") //if the textbox in focus is backwall textbox
+            if (wall == "B") //if the textbox in focus is backwall textbox
                 index = getBackWall(southWalls); //get the index of the backwall
-            else { //if (wall === "F") //if the textbox in focus is frontwall textbox
+            else { //if (wall == "F") //if the textbox in focus is frontwall textbox
                 if (southWalls[southWalls.length - 1].type == "P") //check if the front wall is a proposed walls
                     index = getFrontWall(southWalls); //if its a proposed wall, get its index
             } //if its not a proposed wall that means there is no front wall 
