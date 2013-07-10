@@ -19,7 +19,8 @@
         var DOOR_FRENCH_MAX_WIDTH = '<%= DOOR_FRENCH_MAX_WIDTH %>';
         var projection = 120; //hard coded for testing, will come from the previous pages in the wizard
         var soffitLength = 0; //hard coded for testing, will come from the previous pages in the wizard
-        document.getElementById("MainContent_hidSoffitLength").value = soffitLength;
+        var soffit = document.getElementById("MainContent_hidSoffitLength").value = soffitLength;
+        alert(soffit);
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
         var model = '<%= currentModel %>';
 

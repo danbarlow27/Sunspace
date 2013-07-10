@@ -1354,7 +1354,7 @@ namespace SunspaceDealerDesktop
                 html += "<input id=\"hidWall" + i + "LeftFiller\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall left filler
                 html += "<input id=\"hidWall" + i + "Length\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall length
                 html += "<input id=\"hidWall" + i + "RightFiller\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall right filler
-                html += "<input id=\"hidWall" + i + "SoffitLength\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall soffit length
+                //html += "<input id=\"hidWall" + i + "SoffitLength\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall soffit length
             }
             return html; //return the hidden field tags
         }
@@ -1366,6 +1366,7 @@ namespace SunspaceDealerDesktop
         /// <param name="e"></param>
         protected void createWallObjects(object sender, EventArgs e)
         {
+            string var = hidSoffitLength.Value;
             for (int i = 0; i < strWalls.Count(); i++)
             {
                 //find and store the dynamically created hidden fields
@@ -1373,7 +1374,7 @@ namespace SunspaceDealerDesktop
                 //HiddenField wallSoffit = hiddenFieldsDiv.FindControl("hidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
                 //string sof = wallSoffit.Value;
                 //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
-                walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidSoffitLength.Value), currentModel, Convert.ToSingle(hidRoofSlope.Value)));
+                walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), 0F, currentModel, Convert.ToSingle(hidRoofSlope.Value)));
             }
         }
     }
