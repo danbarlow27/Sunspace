@@ -19,6 +19,7 @@
         var DOOR_FRENCH_MAX_WIDTH = '<%= DOOR_FRENCH_MAX_WIDTH %>';
         var projection = 120; //hard coded for testing, will come from the previous pages in the wizard
         var soffitLength = 0; //hard coded for testing, will come from the previous pages in the wizard
+        document.getElementById("MainContent_hidSoffitLength").value = soffitLength;
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
         var model = '<%= currentModel %>';
 
@@ -1077,7 +1078,7 @@
                     <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion3"  Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3" OnClick="createWallObjects" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Next Question" />
 
             </div>
             <%-- end #slide3 --%>
@@ -1343,7 +1344,7 @@
 
     <%-- hiddenFieldsDiv is used to store dynamically generated hidden fields from codebehind --%>
     <div id="hiddenFieldsDiv" runat="server"></div>
-
+    <input id="hidSoffitLength" type="hidden" runat="server" />
     <input id="hidProjection" type="hidden" runat="server" />
     <input id="hidFrontWallHeight" type="hidden" runat="server" />
     <input id="hidBackWallHeight" type="hidden" runat="server" />

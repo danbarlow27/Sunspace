@@ -1362,13 +1362,15 @@ namespace SunspaceDealerDesktop
         /// <param name="sender"></param>
         /// <param name="e"></param>
         protected void createWallObjects(object sender, EventArgs e)
-        {   
+        {
             for (int i = 0; i < strWalls.Count(); i++)
             {
-                //find and store the dynamically created hidden field
-                HiddenField wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField;
+                //find and store the dynamically created hidden fields
+                HiddenField wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField; //wall length
+                //HiddenField wallSoffit = hiddenFieldsDiv.FindControl("hidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
+                //string sof = wallSoffit.Value;
                 //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
-                //walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), 0F, currentModel, Convert.ToSingle(hidRoofSlope.Value)));
+                walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidSoffitLength.Value), currentModel, Convert.ToSingle(hidRoofSlope.Value)));
             }
         }
     }
