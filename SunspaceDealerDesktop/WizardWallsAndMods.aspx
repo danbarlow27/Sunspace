@@ -13,6 +13,7 @@
             coordList[i] = lineList[i].split(","); //populate the 2d array
         }
         var wallSetBackArray = new Array(); //array to store the setback for each wall
+        var wallSlopeArray = new Array(); //arrat to store slope of each wall
         var DOOR_MAX_WIDTH = '<%= DOOR_MAX_WIDTH %>';
         var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
         var DOOR_FRENCH_MIN_WIDTH = '<%= DOOR_FRENCH_MIN_WIDTH %>';
@@ -138,6 +139,41 @@
                 + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value)); //dropdown listitem value
 
             return (((rise * RUN) / (projection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
+        }
+
+        function determineSlopeOfEachWall() {
+
+            var m = document.getElementById("MainContent_hidRoofSlope").value;
+
+            for (var index = 0; index < coordList.length; index++) {
+                if (coordList[index][4] === "E") //if existing wall  
+                    wallSlopeArray[index] = 0; //slope is unimportant
+                else { //if proposed wall
+                    //get the orientation of the proposed wall
+                    switch (coordList[index][5]) { //5 = orientation
+                        case "S": //if south
+                        case "N": //or north
+                            wallSlopeArray[index] = 0;
+                            break;
+                        case "W": //if west
+                            wallSlopeArray[index] = m;
+                        case "E": //if east
+                            wallSlopeArray[index] = -m;
+                            break;
+                        case "SW": //if southwest
+                        case "NW": //or northwest
+                            wallSetBackArray[index] = Math.sqrt((Math.pow(L, 2)) / 2); //line is diagonal, use the given formula to calculate setback
+                            break;
+                        case "SE": //if southeast
+                        case "NE": //or northeast
+                            wallSetBackArray[index] = -(Math.sqrt((Math.pow(L, 2)) / 2)); //similar to SW and NW, use the given formula, but the value is negative
+                            break;
+                    }
+                }
+            }
+        }
+
+        function determineSoffitLengthOfEachWall(i) {
 
         }
 
