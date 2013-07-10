@@ -667,9 +667,7 @@
                     else if (positionDropDown == "cPosition") {
                         //Custom length index to be 3
                     }
-
                     //>
-                    
 
                     $("#MainContent_lblQuestion3PagerAnswer").text(finalText);
                     document.getElementById("pagerThree").style.display = "inline";

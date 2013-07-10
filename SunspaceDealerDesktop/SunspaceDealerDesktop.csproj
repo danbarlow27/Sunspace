@@ -214,6 +214,7 @@
     <Content Include="packages.config" />
     <Content Include="Content\fonts\Shanti-Regular.ttf" />
     <Content Include="ProjectPreview.aspx" />
+    <Content Include="WebForm1.aspx" />
     <Content Include="WizardWallsAndMods.aspx" />
     <Content Include="NoIcons.Master" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -423,6 +424,13 @@
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
     <Compile Include="Wall.cs" />
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Window.cs" />
     <Compile Include="WizardWallsAndMods.aspx.cs">
       <DependentUpon>WizardWallsAndMods.aspx</DependentUpon>

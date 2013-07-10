@@ -139,7 +139,7 @@ namespace SunspaceDealerDesktop
                     wallDoorOptions.Controls.Add(new LiteralControl("<div id=\"doorDetails\" class=\"toggleContent\">"));
 
                     //Creating one ul tag to hold multiple li tags contain Cabana, French, Patio, Opening Only (No Door) options
-                    wallDoorOptions.Controls.Add(new LiteralControl("<ul><li><ul id='doorDetailsList' class='toggleOptions'>"));
+                    wallDoorOptions.Controls.Add(new LiteralControl("<ul><li><ul id=\"doorDetailsList\" class=\"toggleOptions\">"));
 
                     #endregion
 
