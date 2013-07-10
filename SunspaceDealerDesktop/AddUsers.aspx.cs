@@ -22,17 +22,23 @@ namespace SunspaceDealerDesktop
                 Response.Redirect("Login.aspx");
                 //Session.Add("loggedIn", "1");
             }
-
+            
             if (Convert.ToInt32(Session["dealer_id"].ToString()) > -1 && Session["user_group"].ToString() == "S")
             {
                 //don't allow sales reps to this page
                 Response.Redirect("Home.aspx");
             }
 
+            if (Session["user_type"].ToString() == "S" || Session["dealer_id"].ToString() == "-1")
+            {
+                //if a sunspace user hasn't spoofed, send them there, that is step one
+                Response.Redirect("Spoof.aspx");
+            }
+
             if (!IsPostBack)
             {
-                //if >-1 it cannot be a sunspace user, so we hide controls accordingly
-                if (Convert.ToInt32(Session["dealer_id"].ToString()) > -1)
+                //if dealer we hide controls accordingly
+                if (Session["user_type"].ToString() == "D")
                 {
                     UserTypeDiv.Visible = false;
                     UserGroupDiv.Visible = false;
@@ -42,7 +48,7 @@ namespace SunspaceDealerDesktop
                 else
                 {
                     //sunspace CSR
-                    if (Convert.ToInt32(Session["dealer_id"].ToString()) == -1 && Session["user_group"].ToString() == "C")
+                    if (Session["user_type"].ToString() == "S" && Session["user_group"].ToString() == "C")
                     {
                         UserTypeDiv.Visible = false;
                         ddlUserGroup.Items.Add("Admin");
