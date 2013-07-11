@@ -194,6 +194,7 @@ namespace SunspaceDealerDesktop
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White',"
+                                                    //door
                                                     + "'Cabana',"
                                                     + "'Full Screen',"
                                                     + "'Out',"
@@ -203,30 +204,37 @@ namespace SunspaceDealerDesktop
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
+                                                    //window
                                                     + "'Vertical 4 Track',"
                                                     + "'Cranberry',"
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
+                                                    //sunshade
                                                     + "'White',"
                                                     + "'Chalk',"
                                                     + "'3%',"
+                                                    //roof
                                                     + "'Studio',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'3',"
+                                                    //floor
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
+                                                    + "'4.5',"
                                                     + "0,"
-                                                    + "20,"
+                                                    //kneewall
+                                                    + 20d + ","
                                                     + "'Glass',"
                                                     + "'Clear',"
-                                                    + "20,"
+                                                    //transom
+                                                    + 20d + ","
                                                     + "'Glass',"
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
-                                                    + "25"
+                                                    + 0.25d
                                                     + ")";
                             aCommand.ExecuteNonQuery();
                             #endregion
@@ -235,10 +243,11 @@ namespace SunspaceDealerDesktop
                             aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_interior_skin, floor_exterior_skin, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
                                                     + "VALUES("
                                                     + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
-                                                    + "'100',"
+                                                    + "'200',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White',"
+                                //door
                                                     + "'Cabana',"
                                                     + "'Full Screen',"
                                                     + "'Out',"
@@ -248,30 +257,37 @@ namespace SunspaceDealerDesktop
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
+                                //window
                                                     + "'Vertical 4 Track',"
                                                     + "'Cranberry',"
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
+                                //sunshade
                                                     + "'White',"
                                                     + "'Chalk',"
                                                     + "'3%',"
+                                //roof
                                                     + "'Studio',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'3',"
+                                //floor
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
+                                                    + "'4.5',"
                                                     + "0,"
-                                                    + "20,"
+                                //kneewall
+                                                    + 20d + ","
                                                     + "'Glass',"
                                                     + "'Clear',"
-                                                    + "20,"
+                                //transom
+                                                    + 20d + ","
                                                     + "'Glass',"
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
-                                                    + "25"
+                                                    + 0.25d
                                                     + ")";
                             aCommand.ExecuteNonQuery();
                             #endregion
@@ -280,10 +296,11 @@ namespace SunspaceDealerDesktop
                             aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_interior_skin, floor_exterior_skin, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
                                                     + "VALUES("
                                                     + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
-                                                    + "'100',"
+                                                    + "'300',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White',"
+                                //door
                                                     + "'Cabana',"
                                                     + "'Full Screen',"
                                                     + "'Out',"
@@ -293,30 +310,37 @@ namespace SunspaceDealerDesktop
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
+                                //window
                                                     + "'Vertical 4 Track',"
                                                     + "'Cranberry',"
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
+                                //sunshade
                                                     + "'White',"
                                                     + "'Chalk',"
                                                     + "'3%',"
+                                //roof
                                                     + "'Studio',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'3',"
+                                //floor
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
+                                                    + "'4.5',"
                                                     + "0,"
-                                                    + "20,"
+                                //kneewall
+                                                    + 20d + ","
                                                     + "'Glass',"
                                                     + "'Clear',"
-                                                    + "20,"
+                                //transom
+                                                    + 20d + ","
                                                     + "'Glass',"
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
-                                                    + "25"
+                                                    + 0.25d
                                                     + ")";
                             aCommand.ExecuteNonQuery();
                             #endregion
@@ -325,10 +349,11 @@ namespace SunspaceDealerDesktop
                             aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_interior_skin, floor_exterior_skin, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
                                                     + "VALUES("
                                                     + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
-                                                    + "'100',"
+                                                    + "'400',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White',"
+                                //door
                                                     + "'Cabana',"
                                                     + "'Full Screen',"
                                                     + "'Out',"
@@ -338,30 +363,37 @@ namespace SunspaceDealerDesktop
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
+                                //window
                                                     + "'Vertical 4 Track',"
                                                     + "'Cranberry',"
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
+                                //sunshade
                                                     + "'White',"
                                                     + "'Chalk',"
                                                     + "'3%',"
+                                //roof
                                                     + "'Studio',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'3',"
+                                //floor
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
+                                                    + "'4.5',"
                                                     + "0,"
-                                                    + "20,"
+                                //kneewall
+                                                    + 20d + ","
                                                     + "'Glass',"
                                                     + "'Clear',"
-                                                    + "20,"
+                                //transom
+                                                    + 20d + ","
                                                     + "'Glass',"
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
-                                                    + "25"
+                                                    + 0.25d
                                                     + ")";
                             aCommand.ExecuteNonQuery();
                             #endregion
