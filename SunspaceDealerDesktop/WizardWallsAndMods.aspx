@@ -612,6 +612,7 @@
 
                 return newDimension;
             }
+        }
 
             function checkDoorPlacement() {
                 for (var m = 0; m < doors.length; m++) {
@@ -973,7 +974,6 @@
                     }
                 }
             }
-        }
     </script>
     <%-- End hidden div populating scripts --%>
 
