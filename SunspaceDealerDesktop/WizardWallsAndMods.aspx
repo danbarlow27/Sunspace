@@ -13,7 +13,8 @@
             coordList[i] = lineList[i].split(","); //populate the 2d array
         }
         var wallSetBackArray = new Array(); //array to store the setback for each wall
-        var wallSlopeArray = new Array(); //arrat to store slope of each wall
+        var wallSlopeArray = new Array(); //array to store slope of each wall
+        var wallSoffitArray = new Array(); //array to store soffit length of each wall
         var DOOR_MAX_WIDTH = '<%= DOOR_MAX_WIDTH %>';
         var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
         var DOOR_FRENCH_MIN_WIDTH = '<%= DOOR_FRENCH_MIN_WIDTH %>';
@@ -141,6 +142,8 @@
             return (((rise * RUN) / (projection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
         }
 
+
+        
         function determineSlopeOfEachWall() {
 
             var m = document.getElementById("MainContent_hidRoofSlope").value;
@@ -157,24 +160,62 @@
                             break;
                         case "W": //if west
                             wallSlopeArray[index] = m;
+                            break;
                         case "E": //if east
                             wallSlopeArray[index] = -m;
                             break;
                         case "SW": //if southwest
                         case "NW": //or northwest
-                            wallSetBackArray[index] = Math.sqrt((Math.pow(L, 2)) / 2); //line is diagonal, use the given formula to calculate setback
+                                ///determine diagonal slope
                             break;
                         case "SE": //if southeast
                         case "NE": //or northeast
-                            wallSetBackArray[index] = -(Math.sqrt((Math.pow(L, 2)) / 2)); //similar to SW and NW, use the given formula, but the value is negative
+                                ///determine diagonal slope
                             break;
                     }
                 }
             }
         }
 
-        function determineSoffitLengthOfEachWall(i) {
-
+        function determineSoffitLengthOfEachWall() {
+            
+            for (var index = 0; index < coordList.length; index++) {
+                if (coordList[index][4] === "E") //if existing wall  
+                    wallSoffitArray[index] = 0; //slope is unimportant
+                else { //if proposed wall
+                    //get the orientation of the proposed wall
+                    switch (coordList[index][5]) { //5 = orientation
+                        case "S": //if south
+                        case "N": //or north
+                        case "SW": //or southwest
+                        case "NW": //or northwest
+                        case "SE": //or southeast
+                        case "NE": //or northeast
+                            wallSoffitArray[index] = 0; //soffit length is unimportant thus zero
+                            break;
+                        case "W": //if west
+                            for (var i = 0; i < coordList.length; i++) { //run through all the walls
+                                if (coordList[i][4] === "E") { //if there's an existing wall
+                                    if (coordList[i][2] === coordList[index][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
+                                        wallSlopeArray[index] = soffitLength; //set the soffit length
+                                        break; //break out of the loop
+                                    }
+                                }
+                            }
+                            break; //break out of the switch
+                        case "E": //if east
+                            for (var i = 0; i < coordList.length; i++) { //run through all the walls
+                                if (coordList[i][4] === "E") { //if there's an existing wall
+                                    if (coordList[i][2] === coordList[index][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
+                                        wallSlopeArray[index] = -soffitLength; //should probably be positive soffit length, but just to differentiate between beginning soffit and ending soffit
+                                        break; //break out of the loop
+                                    }
+                                }
+                            }
+                            break; //break out of the switch
+                    }
+                }
+            }
         }
 
         /**
