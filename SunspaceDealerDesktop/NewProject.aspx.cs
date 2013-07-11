@@ -42,7 +42,7 @@ namespace SunspaceDealerDesktop
                 }
             }
 
-            if (ddlCustomerCountry.SelectedValue == "Canada")
+            if (ddlCustomerCountry.SelectedValue == "CAN")
             {
                 ddlCustomerProvState.Items.Clear();
                 //Add provinces to the province/state ddl

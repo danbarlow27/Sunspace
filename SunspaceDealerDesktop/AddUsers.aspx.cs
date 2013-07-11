@@ -165,7 +165,7 @@ namespace SunspaceDealerDesktop
                                                     + txtFirstName.Text + "', '"
                                                     + txtLastName.Text + "', '"
                                                     + ddlCountry.SelectedValue + "', "
-                                                    + Convert.ToInt32(txtMultiplier.Text) + ")";
+                                                    + Convert.ToDecimal(txtMultiplier.Text)/10 + ")"; //divide by 10 to change the '8' entered into '0.8' multiplier
                             aCommand.ExecuteNonQuery();
 
                             //Now add user
@@ -378,13 +378,13 @@ namespace SunspaceDealerDesktop
                             lblError.Text = "Successfully Added";
 
                             // Attempt to commit the transaction.
-                            //aTransaction.Commit();
-                            //Console.WriteLine("Both records are written to database.");
+                            aTransaction.Commit();
+                            Console.WriteLine("Both records are written to database.");
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine("Commit Exception Type: {0}", ex.GetType());
-                            Console.WriteLine("  Message: {0}", ex.Message);
+                            lblError.Text = "Commit Exception Type: " + ex.GetType();
+                            lblError.Text += "  Message: " + ex.Message;
 
                             // Attempt to roll back the transaction. 
                             try

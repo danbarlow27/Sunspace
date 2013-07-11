@@ -65,8 +65,8 @@
         <asp:Label ID="lblCountry" runat="server" Text="Country:"></asp:Label>
         <asp:DropDownList ID="ddlCountry" runat="server" ></asp:DropDownList>
         <br /><br />
-        <asp:Label ID="lblMultiplier" runat="server" Text="Multiplier:"></asp:Label>
-        <asp:TextBox ID="txtMultiplier" runat="server" ></asp:TextBox>
+        <asp:Label ID="lblMultiplier" runat="server" Text="Multiplier: 0."></asp:Label>
+        <asp:TextBox ID="txtMultiplier" runat="server" MaxLength="3"></asp:TextBox>
         <br /><br />
     </div>
     <asp:Label ID="lblLogin" runat="server" Text="Login:"></asp:Label>
