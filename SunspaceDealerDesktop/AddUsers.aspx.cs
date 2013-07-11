@@ -38,12 +38,19 @@ namespace SunspaceDealerDesktop
 
             if (!IsPostBack)
             {
+                //Add countries to country dropdown
+                for (int i = 0; i < Constants.COUNTRY_LIST.Count; i++)
+                {
+                    ddlCountry.Items.Add(Constants.COUNTRY_LIST[i]);
+                }
+
                 //if dealer we hide controls accordingly
                 if (Session["user_type"].ToString() == "D")
                 {
                     UserTypeDiv.Visible = false;
                     UserGroupDiv.Visible = false;
                     DealerListDiv.Visible = false;
+                    DealerAdminDiv.Visible = false;
                     userType = "D";
                 }
                 else
@@ -60,6 +67,7 @@ namespace SunspaceDealerDesktop
                     else
                     {
                         DealerListDiv.Attributes.Add("style", "display: none;");
+                        DealerAdminDiv.Attributes.Add("style", "display: none;");
                         ddlUserType.Items.Add("Sunspace");
                         ddlUserType.Items.Add("Dealer");
 
@@ -150,33 +158,224 @@ namespace SunspaceDealerDesktop
 
                         try
                         {
-                            ////Add to dealer table
-                            //aCommand.CommandText = "INSERT INTO dealers (dealer_name, first_name, last_name, country, multiplier)"
-                            //                        + "VALUES('"
-                            //                        + txtLogin.Text + "', '"
-                            //                        + txtFirstName.Text + "', '"
-                            //                        + txtLastName.Text + "', '"
-                            //                        + ddlCountry.SelectedValue + "', "
-                            //                        + Convert.ToInt32(txtMultiplier.Text) + ")";
-                            //aCommand.ExecuteNonQuery();
+                            //Add to dealer table
+                            aCommand.CommandText = "INSERT INTO dealers (dealer_name, first_name, last_name, country, multiplier)"
+                                                    + "VALUES('"
+                                                    + txtLogin.Text + "', '"
+                                                    + txtFirstName.Text + "', '"
+                                                    + txtLastName.Text + "', '"
+                                                    + ddlCountry.SelectedValue + "', "
+                                                    + Convert.ToInt32(txtMultiplier.Text) + ")";
+                            aCommand.ExecuteNonQuery();
 
-                            ////Now add user
-                            //DateTime aDate = DateTime.Now;
-                            //sdsUsers.InsertCommand = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
-                            //                        + "VALUES('"
-                            //                        + txtLogin.Text + "', '"
-                            //                        + GlobalFunctions.CalculateMD5Hash(txtPassword.Text) + "', '"
-                            //                        + txtEmail.Text + "', '"
-                            //                        + aDate.ToString("yyyy/MM/dd") + "', '"
-                            //                        + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
-                            //                        + "D" + "', '" //Must be D-S because a dealer can only add users of his dealership
-                            //                        + "S" + "', "
-                            //                        + Convert.ToInt32(Session["dealer_id"].ToString()) + ", '" //reference ID is the dealer id in the dealer table they belong to
-                            //                        + txtFirstName.Text + "', '"
-                            //                        + txtLastName.Text + "', "
-                            //                        + 1 + ")";
-                            //sdsUsers.Insert();
-                            //lblError.Text = "Successfully Added";
+                            //Now add user
+                            DateTime aDate = DateTime.Now;
+                            aCommand.CommandText = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
+                                                    + "VALUES('"
+                                                    + txtLogin.Text + "', '"
+                                                    + GlobalFunctions.CalculateMD5Hash(txtPassword.Text) + "', '"
+                                                    + txtEmail.Text + "', '"
+                                                    + aDate.ToString("yyyy/MM/dd") + "', '"
+                                                    + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
+                                                    + "D" + "', '" //Must be D-A within this block of logic
+                                                    + "A" + "', "
+                                                    + Convert.ToInt32(Session["dealer_id"].ToString()) + ", '" //reference ID is the dealer id in the dealer table they belong to
+                                                    + txtFirstName.Text + "', '"
+                                                    + txtLastName.Text + "', "
+                                                    + 1 + ")";
+                            aCommand.ExecuteNonQuery();
+
+                            //An entrance into the model preferences table, one entry for each model type
+                            #region Model 100 preferences entry
+                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_interior_skin, floor_exterior_skin, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
+                                                    + "VALUES("
+                                                    + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
+                                                    + "'100',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White',"
+                                                    + "'Cabana',"
+                                                    + "'Full Screen',"
+                                                    + "'Out',"
+                                                    + "'R',"
+                                                    + "'Satin Silver',"
+                                                    + "'White',"
+                                                    + "'Clear',"
+                                                    + "'Clear',"
+                                                    + "'No Screen',"
+                                                    + "'Vertical 4 Track',"
+                                                    + "'Cranberry',"
+                                                    + "'Clear',"
+                                                    + "'Clear',"
+                                                    + "'No Screen',"
+                                                    + "'White',"
+                                                    + "'Chalk',"
+                                                    + "'3%',"
+                                                    + "'Studio',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'3',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "0,"
+                                                    + "20,"
+                                                    + "'Glass',"
+                                                    + "'Clear',"
+                                                    + "20,"
+                                                    + "'Glass',"
+                                                    + "'Clear',"
+                                                    + "'Clear',"
+                                                    + "'No Screen',"
+                                                    + "25"
+                                                    + ")";
+                            aCommand.ExecuteNonQuery();
+                            #endregion
+
+                            #region Model 200 preferences entry
+                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_interior_skin, floor_exterior_skin, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
+                                                    + "VALUES("
+                                                    + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
+                                                    + "'100',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White',"
+                                                    + "'Cabana',"
+                                                    + "'Full Screen',"
+                                                    + "'Out',"
+                                                    + "'R',"
+                                                    + "'Satin Silver',"
+                                                    + "'White',"
+                                                    + "'Clear',"
+                                                    + "'Clear',"
+                                                    + "'No Screen',"
+                                                    + "'Vertical 4 Track',"
+                                                    + "'Cranberry',"
+                                                    + "'Clear',"
+                                                    + "'Clear',"
+                                                    + "'No Screen',"
+                                                    + "'White',"
+                                                    + "'Chalk',"
+                                                    + "'3%',"
+                                                    + "'Studio',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'3',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "0,"
+                                                    + "20,"
+                                                    + "'Glass',"
+                                                    + "'Clear',"
+                                                    + "20,"
+                                                    + "'Glass',"
+                                                    + "'Clear',"
+                                                    + "'Clear',"
+                                                    + "'No Screen',"
+                                                    + "25"
+                                                    + ")";
+                            aCommand.ExecuteNonQuery();
+                            #endregion
+
+                            #region Model 300 preferences entry
+                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_interior_skin, floor_exterior_skin, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
+                                                    + "VALUES("
+                                                    + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
+                                                    + "'100',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White',"
+                                                    + "'Cabana',"
+                                                    + "'Full Screen',"
+                                                    + "'Out',"
+                                                    + "'R',"
+                                                    + "'Satin Silver',"
+                                                    + "'White',"
+                                                    + "'Clear',"
+                                                    + "'Clear',"
+                                                    + "'No Screen',"
+                                                    + "'Vertical 4 Track',"
+                                                    + "'Cranberry',"
+                                                    + "'Clear',"
+                                                    + "'Clear',"
+                                                    + "'No Screen',"
+                                                    + "'White',"
+                                                    + "'Chalk',"
+                                                    + "'3%',"
+                                                    + "'Studio',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'3',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "0,"
+                                                    + "20,"
+                                                    + "'Glass',"
+                                                    + "'Clear',"
+                                                    + "20,"
+                                                    + "'Glass',"
+                                                    + "'Clear',"
+                                                    + "'Clear',"
+                                                    + "'No Screen',"
+                                                    + "25"
+                                                    + ")";
+                            aCommand.ExecuteNonQuery();
+                            #endregion
+
+                            #region Model 400 preferences entry
+                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_interior_skin, floor_exterior_skin, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
+                                                    + "VALUES("
+                                                    + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
+                                                    + "'100',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White',"
+                                                    + "'Cabana',"
+                                                    + "'Full Screen',"
+                                                    + "'Out',"
+                                                    + "'R',"
+                                                    + "'Satin Silver',"
+                                                    + "'White',"
+                                                    + "'Clear',"
+                                                    + "'Clear',"
+                                                    + "'No Screen',"
+                                                    + "'Vertical 4 Track',"
+                                                    + "'Cranberry',"
+                                                    + "'Clear',"
+                                                    + "'Clear',"
+                                                    + "'No Screen',"
+                                                    + "'White',"
+                                                    + "'Chalk',"
+                                                    + "'3%',"
+                                                    + "'Studio',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'3',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "'White Aluminum Stucco',"
+                                                    + "0,"
+                                                    + "20,"
+                                                    + "'Glass',"
+                                                    + "'Clear',"
+                                                    + "20,"
+                                                    + "'Glass',"
+                                                    + "'Clear',"
+                                                    + "'Clear',"
+                                                    + "'No Screen',"
+                                                    + "25"
+                                                    + ")";
+                            aCommand.ExecuteNonQuery();
+                            #endregion
+
+                            //Lastly, a preferences table entry, with defaults
+                            aCommand.CommandText = "INSERT INTO preferences (dealer_id, installation_type, model_type, layout)"
+                                                    + "VALUES("
+                                                    + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
+                                                    + "'House',"
+                                                    + "'200',"
+                                                    + "'preset 1')";
+                            aCommand.ExecuteNonQuery();
+
+                            lblError.Text = "Successfully Added";
 
                             // Attempt to commit the transaction.
                             //aTransaction.Commit();
