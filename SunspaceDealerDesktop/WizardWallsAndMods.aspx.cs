@@ -32,6 +32,9 @@ namespace SunspaceDealerDesktop
         protected string currentModel = "M200";
         protected float sofftLength = 0;
 
+        protected const int SUGGESTED_DEFAULT_FILLER = 2;
+        protected const int PREFERRED_DEFAULT_FILLER = 0;
+
         /***hard coded variables***/
         string coordList; //to store the string from the session and store it in a local variable for further use                                    
         char[] lineDelimiter = { '/' }; //character(s) that seperate lines in a session string variable
@@ -276,6 +279,7 @@ namespace SunspaceDealerDesktop
             txtLeftFiller.ID = "txtWall" + i + "LeftFiller"; //give an appropriate id to the left filler textbox
             txtLeftFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
             txtLeftFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
+            txtLeftFiller.Text = SUGGESTED_DEFAULT_FILLER.ToString();
             txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
             txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
             txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
@@ -284,10 +288,11 @@ namespace SunspaceDealerDesktop
             txtRightFiller.ID = "txtWall" + i + "RightFiller";//give an appropriate id to the right filler textbox
             txtRightFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
             txtRightFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
+            txtRightFiller.Text = SUGGESTED_DEFAULT_FILLER.ToString();
             txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");//set its attribute to check question 1 on key up
             txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
             txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
-            txtRightFiller.Attributes.Add("onblur", "resetWalls()");//set its attribute to check reset walls on blur
+            txtRightFiller.Attributes.Add("onblur", "resetWalls()");//set its attribute to check reset walls on blur            
 
             cell1.Controls.Add(lblWallNumber); //append the wall number/name label to cell 1
             cell2.Controls.Add(txtLeftFiller); //append the left filler textbox in cell 2
@@ -339,8 +344,6 @@ namespace SunspaceDealerDesktop
             //Creating one ul tag to hold multiple li tags contain Cabana, French, Patio, Opening Only (No Door) options
 
             wallDoorOptions.Controls.Add(new LiteralControl("<ul><li><ul id='doorDetailsList" + i + "' class='toggleOptions'>"));
-
-            wallDoorOptions.Controls.Add(new LiteralControl("<ul><li><ul id=\"doorDetailsList\" class=\"toggleOptions\">"));
 
 
             #endregion
@@ -394,7 +397,8 @@ namespace SunspaceDealerDesktop
 
                     tblDoorDetails.ID = "tblDoorDetails" + i + title; //Adding appropriate id to the table
                     tblDoorDetails.CssClass = "tblTextFields";                  //Adding CssClass to the table for styling
-
+                    
+                    
                     //Creating cells and controls for rows
 
                     #region Table:Default Row Title Current Door (tblDoorDetails)
@@ -1282,6 +1286,7 @@ namespace SunspaceDealerDesktop
 
                     tblDoorDetails.Rows.Add(doorPositionDDLRow);
 
+
                     doorPositionDDLRow.Cells.Add(doorPositionDDLLBLCell);
                     doorPositionDDLRow.Cells.Add(doorPositionDDLDDLCell);
 
@@ -1354,6 +1359,7 @@ namespace SunspaceDealerDesktop
                 html += "<input id=\"hidWall" + i + "Length\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall length
                 html += "<input id=\"hidWall" + i + "RightFiller\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall right filler
                 html += "<input id=\"hidWall" + i + "SoffitLength\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall soffit length
+                //add slope hidden field
             }
             return html; //return the hidden field tags
         }
@@ -1364,13 +1370,37 @@ namespace SunspaceDealerDesktop
         /// <param name="sender"></param>
         /// <param name="e"></param>
         protected void createWallObjects(object sender, EventArgs e)
-        {   
+        {
+
+            //there are issues with getting values from dynamically generated hidden fields
+            //hard coded hidden fields work fine...
+            //need to dynamically determine slope, and soffit length of each wall and store it in hidden fields
+
+
+
+            float length, startHeight, endHeight, soffit, slope;
+            string orientation, name, type, model;
+            HiddenField wallLength, wallSoffit;
             for (int i = 0; i < strWalls.Count(); i++)
             {
-                //find and store the dynamically created hidden field
-                HiddenField wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField;
+                //find and store the dynamically created hidden fields
+                wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField; //wall length
+                wallSoffit = hiddenFieldsDiv.FindControl("hidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
+
+                //length = wallLength.Value;
+                //startHeight = Convert.ToSingle(hidBackWallHeight.Value);
+                //endHeight = Convert.ToSingle(hidFrontWallHeight.Value);
+                //soffit = Convert.ToSingle(wallSoffit.Value);
+                slope = Convert.ToSingle(hidRoofSlope.Value);
+
+                orientation = wallDetails[i, 5];
+                name = "wall " + i;
+                type = wallDetails[i, 4];
+                model = currentModel;
+
+                //string sof = wallSoffit.Value;
                 //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
-                //walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), 0F, currentModel, Convert.ToSingle(hidRoofSlope.Value)));
+                walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel, Convert.ToSingle(hidRoofSlope.Value)));
             }
         }
     }

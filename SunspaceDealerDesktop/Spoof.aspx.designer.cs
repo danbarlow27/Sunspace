@@ -10,33 +10,42 @@
 namespace SunspaceDealerDesktop {
     
     
-    public partial class Home1 {
+    public partial class Spoof {
         
         /// <summary>
-        /// btnAddUsers control.
+        /// lblDealers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddUsers;
+        protected global::System.Web.UI.WebControls.Label lblDealers;
         
         /// <summary>
-        /// btnPreferences control.
+        /// ddlDealers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPreferences;
+        protected global::System.Web.UI.WebControls.DropDownList ddlDealers;
         
         /// <summary>
-        /// btnSpoof control.
+        /// btnDealers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSpoof;
+        protected global::System.Web.UI.WebControls.Button btnDealers;
+        
+        /// <summary>
+        /// sdsDealers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsDealers;
     }
 }
