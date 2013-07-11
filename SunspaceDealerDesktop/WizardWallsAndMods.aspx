@@ -656,17 +656,6 @@
             return newDimension;
         }
 
-            function checkDoorPlacement() {
-                for (var m = 0; m < doors.length; m++) {
-                    for (var q = 0; q < doors.length; q++) {
-                        if (doors[m].distanceFromLeft + doors[m].doorWidth > doors[q].distanceFromLeft || doors[m].distanceFromLeft > doors[q].distanceFromLeft + doors[q].doorWidth) {
-                            alert("Doors are overlapping");
-                        }
-                    }
-                }
-            }
-
-
             //Used to insert items to specific array indices
             Array.prototype.insert = function (index, item) {
                 this.splice(index, 0, item);
