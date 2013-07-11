@@ -76,6 +76,7 @@ namespace SunspaceWizard
             Session.Remove("loggedIn");
             Session.Remove("user_group");
             Session.Remove("dealer_id");
+            Session.Remove("ddlDealers");
             //Redirect to Login.aspx
             Response.Redirect("Login.aspx");
         }
