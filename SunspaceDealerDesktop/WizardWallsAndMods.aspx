@@ -706,10 +706,6 @@
                         sortedDoors[sortedDoors.length] = { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft };
                     }
                 }
-                //alert(sortedDoors[0].index + " / " + sortedDoors[0].doorWidth + " / " + sortedDoors[0].distanceFromLeft);
-                //for (var n = 0; n < sortedDoors.length; n++) {
-                //    alert(sortedDoors[n].doorWidth);
-                //}
 
                 // Check overlap
                 for (var i = 0; i < sortedDoors.length - 1; i++) {
@@ -744,6 +740,7 @@
                 for (var notNullsCount = 0; notNullsCount < sortedDoors.length; notNullsCount++)
                     space -= sortedDoors[notNullsCount].doorWidth;
 
+                //Block to store remaining spaces between various door(s)
                 if (sortedDoors[0].distanceFromLeft > 0 && sortedDoors.length > 1) {
                     spacesRemaining[spacesRemaining.length] = sortedDoors[0].distanceFromLeft;
                 }
@@ -791,7 +788,7 @@
                             var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'LeftFiller').value);
                             var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'RightFiller').value);
                             var usuableSpace = wallLength - leftFiller - rightFiller;
-                            var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorPosition' + wallCount + type)
+                            var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorPosition' + wallCount + type).value
                                 + document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).selectedIndex].value);
                             var positionDropDown = document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).selectedIndex].value;
                             var widthDropDown = document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).selectedIndex].value;
