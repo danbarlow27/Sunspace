@@ -12,17 +12,19 @@
         for (var i = 0; i < lineList.length; i++) { 
             coordList[i] = lineList[i].split(","); //populate the 2d array
         }
+
         var wallSetBackArray = new Array(); //array to store the setback for each wall
         var wallSlopeArray = new Array(); //array to store slope of each wall
         var wallSoffitArray = new Array(); //array to store soffit length of each wall
+        var wallStartHeightArray = new Array(); //array to store start height of each wall
+        var wallEndHeightArray = new Array(); //array to store end height of each wall
+
         var DOOR_MAX_WIDTH = '<%= DOOR_MAX_WIDTH %>';
         var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
         var DOOR_FRENCH_MIN_WIDTH = '<%= DOOR_FRENCH_MIN_WIDTH %>';
         var DOOR_FRENCH_MAX_WIDTH = '<%= DOOR_FRENCH_MAX_WIDTH %>';
         var projection = 120; //hard coded for testing, will come from the previous pages in the wizard
         var soffitLength = 0; //hard coded for testing, will come from the previous pages in the wizard
-        //var soffit = document.getElementById("MainContent_hidSoffitLength").value = soffitLength;
-        //alert(soffit);
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
         var model = '<%= currentModel %>';
 
@@ -143,7 +145,48 @@
         }
 
 
-        
+        ///what to do when there are multiple back and/or front walls
+
+        function determineStartAndEndHeightOfEachWall() {
+
+            var existingWallCount = 0;
+            var proposedWallCount = 0;
+
+            for (var i = 0; i < coordList.length; i++) {
+                if (coordList[i][4] === "E") { //existing wall
+                    if (coordList[i][5] === "S") {
+                        wallStartHeightArray[i] = hidBackWallHeight.value;
+                        wallEndHeightArray[i] = hidBackWallHeight.value;
+                    }
+
+                }
+                else { //proposed wall
+                    switch(coordList[i][5]) {    
+                        case "S": //if south
+                            break;
+                        case "N": //or north
+                            break;
+                        case "SW": //or southwest
+                            break;
+                        case "NW": //or northwest
+                            break;
+                        case "SE": //or southeast
+                            break;
+                        case "NE": //or northeast
+                            break;
+                        case "W": //if west
+                            break;
+                        case "E": //if east
+                            break;
+                    }
+
+                }
+                
+            }
+            
+        }
+
+        /*
         function determineSlopeOfEachWall() {
 
             var m = document.getElementById("MainContent_hidRoofSlope").value;
@@ -176,7 +219,10 @@
                 }
             }
         }
+        */
 
+
+        ///will there ever be a case when 2 walls may have different soffit length
         function determineSoffitLengthOfEachWall() {
             
             for (var index = 0; index < coordList.length; index++) {
@@ -197,7 +243,7 @@
                             for (var i = 0; i < coordList.length; i++) { //run through all the walls
                                 if (coordList[i][4] === "E") { //if there's an existing wall
                                     if (coordList[i][2] === coordList[index][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
-                                        wallSlopeArray[index] = soffitLength; //set the soffit length
+                                        wallSoffitArray[index] = soffitLength; //set the soffit length
                                         break; //break out of the loop
                                     }
                                 }
@@ -207,7 +253,7 @@
                             for (var i = 0; i < coordList.length; i++) { //run through all the walls
                                 if (coordList[i][4] === "E") { //if there's an existing wall
                                     if (coordList[i][2] === coordList[index][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
-                                        wallSlopeArray[index] = -soffitLength; //should probably be positive soffit length, but just to differentiate between beginning soffit and ending soffit
+                                        wallSoffitArray[index] = -soffitLength; //should probably be positive soffit length, but just to differentiate between beginning soffit and ending soffit
                                         break; //break out of the loop
                                     }
                                 }
