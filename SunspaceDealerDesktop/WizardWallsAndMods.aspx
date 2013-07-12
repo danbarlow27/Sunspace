@@ -12,17 +12,19 @@
         for (var i = 0; i < lineList.length; i++) { 
             coordList[i] = lineList[i].split(","); //populate the 2d array
         }
+
         var wallSetBackArray = new Array(); //array to store the setback for each wall
         var wallSlopeArray = new Array(); //array to store slope of each wall
         var wallSoffitArray = new Array(); //array to store soffit length of each wall
+        var wallStartHeightArray = new Array(); //array to store start height of each wall
+        var wallEndHeightArray = new Array(); //array to store end height of each wall
+
         var DOOR_MAX_WIDTH = '<%= DOOR_MAX_WIDTH %>';
         var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
         var DOOR_FRENCH_MIN_WIDTH = '<%= DOOR_FRENCH_MIN_WIDTH %>';
         var DOOR_FRENCH_MAX_WIDTH = '<%= DOOR_FRENCH_MAX_WIDTH %>';
         var projection = 120; //hard coded for testing, will come from the previous pages in the wizard
         var soffitLength = 0; //hard coded for testing, will come from the previous pages in the wizard
-        //var soffit = document.getElementById("MainContent_hidSoffitLength").value = soffitLength;
-        //alert(soffit);
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
         var model = '<%= currentModel %>';
 
@@ -143,7 +145,48 @@
         }
 
 
-        
+        ///what to do when there are multiple back and/or front walls
+
+        function determineStartAndEndHeightOfEachWall() {
+
+            var existingWallCount = 0;
+            var proposedWallCount = 0;
+
+            for (var i = 0; i < coordList.length; i++) {
+                if (coordList[i][4] === "E") { //existing wall
+                    if (coordList[i][5] === "S") {
+                        wallStartHeightArray[i] = hidBackWallHeight.value;
+                        wallEndHeightArray[i] = hidBackWallHeight.value;
+                    }
+
+                }
+                else { //proposed wall
+                    switch(coordList[i][5]) {    
+                        case "S": //if south
+                            break;
+                        case "N": //or north
+                            break;
+                        case "SW": //or southwest
+                            break;
+                        case "NW": //or northwest
+                            break;
+                        case "SE": //or southeast
+                            break;
+                        case "NE": //or northeast
+                            break;
+                        case "W": //if west
+                            break;
+                        case "E": //if east
+                            break;
+                    }
+
+                }
+                
+            }
+            
+        }
+
+        /*
         function determineSlopeOfEachWall() {
 
             var m = document.getElementById("MainContent_hidRoofSlope").value;
@@ -176,7 +219,10 @@
                 }
             }
         }
+        */
 
+
+        ///will there ever be a case when 2 walls may have different soffit length
         function determineSoffitLengthOfEachWall() {
             
             for (var index = 0; index < coordList.length; index++) {
@@ -197,7 +243,7 @@
                             for (var i = 0; i < coordList.length; i++) { //run through all the walls
                                 if (coordList[i][4] === "E") { //if there's an existing wall
                                     if (coordList[i][2] === coordList[index][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
-                                        wallSlopeArray[index] = soffitLength; //set the soffit length
+                                        wallSoffitArray[index] = soffitLength; //set the soffit length
                                         break; //break out of the loop
                                     }
                                 }
@@ -207,7 +253,7 @@
                             for (var i = 0; i < coordList.length; i++) { //run through all the walls
                                 if (coordList[i][4] === "E") { //if there's an existing wall
                                     if (coordList[i][2] === coordList[index][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
-                                        wallSlopeArray[index] = -soffitLength; //should probably be positive soffit length, but just to differentiate between beginning soffit and ending soffit
+                                        wallSoffitArray[index] = -soffitLength; //should probably be positive soffit length, but just to differentiate between beginning soffit and ending soffit
                                         break; //break out of the loop
                                     }
                                 }
@@ -550,15 +596,18 @@
         function customDimension(type, dimension) {
             for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
 
-                if (document.getElementById('MainContent_radWall' + wallCount).checked) {
+                if (coordList[wallCount - 1][4] === "P") {
 
-                    var dimensionDDL = document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).selectedIndex].value;
+                    if (document.getElementById('MainContent_radWall' + wallCount).checked) {
 
-                    if (document.getElementById('MainContent_radType' + wallCount + type).checked && dimensionDDL == 'c' + dimension) {
-                        document.getElementById('MainContent_rowDoorCustom' + dimension + wallCount + type).style.display = 'inherit';                        
-                    }
-                    else {
-                        document.getElementById('MainContent_rowDoorCustom' + dimension + wallCount + type).style.display = 'none';
+                        var dimensionDDL = document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).selectedIndex].value;
+
+                        if (document.getElementById('MainContent_radType' + wallCount + type).checked && dimensionDDL == 'c' + dimension) {
+                            document.getElementById('MainContent_rowDoorCustom' + dimension + wallCount + type).style.display = 'inherit';
+                        }
+                        else {
+                            document.getElementById('MainContent_rowDoorCustom' + dimension + wallCount + type).style.display = 'none';
+                        }
                     }
                 }
             }
@@ -619,52 +668,39 @@
 
             }
             else {
-                if (custom == true) {
 
-                    controlToUse = parseFloat(document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).selectedIndex].value);
+                controlToUse = parseFloat(document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).selectedIndex].value);
+            }
+
+
+            if (type === 'Cabana') {
+                newDimension = (model === 400) ? controlToUse + 3.625 : controlToUse + 2.125;
+            }
+            else if (type === 'French') {
+
+                newDimension = (model === 400) ? ((controlToUse + 3.625) - 1.625) * 2 + 2 : ((controlToUse + 2.125) - 1.625) * 2 + 2;
+
+                if (type == 'Cabana') {
+
+                    newDimension = (model == 400) ? controlToUse + 3.625 : controlToUse + 2.125;
 
                 }
+                else if (type == 'French') {
 
-                if (type === 'Cabana') {
-                    newDimension = (model === 400) ? controlToUse + 3.625 : controlToUse + 2.125;
+                    newDimension = (model == 400) ? ((controlToUse + 3.625) - 1.625) * 2 + 2 : ((controlToUse + 2.125) - 1.625) * 2 + 2;
 
                 }
-                else if (type === 'French') {
-
-                    newDimension = (model === 400) ? ((controlToUse + 3.625) - 1.625) * 2 + 2 : ((controlToUse + 2.125) - 1.625) * 2 + 2;
-
-                    if (type == 'Cabana') {
-
-                        newDimension = (model == 400) ? controlToUse + 3.625 : controlToUse + 2.125;
-
-                    }
-                    else if (type == 'French') {
-
-                        newDimension = (model == 400) ? ((controlToUse + 3.625) - 1.625) * 2 + 2 : ((controlToUse + 2.125) - 1.625) * 2 + 2;
-
-                    }
-                    else if (type == 'Patio') {
-                        //Need more information
-                    }
-                }
-                else if (type === 'Patio') {
+                else if (type == 'Patio') {
                     //Need more information
                 }
-
-                return newDimension;
             }
+            else if (type === 'Patio') {
+                //Need more information
+            }                
+                
+
+            return newDimension;
         }
-
-            function checkDoorPlacement() {
-                for (var m = 0; m < doors.length; m++) {
-                    for (var q = 0; q < doors.length; q++) {
-                        if (doors[m].distanceFromLeft + doors[m].doorWidth > doors[q].distanceFromLeft || doors[m].distanceFromLeft > doors[q].distanceFromLeft + doors[q].doorWidth) {
-                            alert("Doors are overlapping");
-                        }
-                    }
-                }
-            }
-
 
             //Used to insert items to specific array indices
             Array.prototype.insert = function (index, item) {
@@ -674,7 +710,7 @@
             //To be moved, used to store remain spaces on a wall
             var doors = new Array();
             var sortedDoors = new Array();
-            var spacesRemaining = new Array();
+            var spacesRemaining;
             var finalText;
 
             function checkDoors(usuableLength, dropDownName, dropDownValue) {
@@ -685,37 +721,46 @@
 
                 var isValid = true;
 
+                sortedDoors = new Array();
+
+                //alert("pre-for loop");
+
                 // Sort left to right
                 if (doors.length > 0) {
-                    sortedDoors[sortedDoors.length] = doors[doors.length - 1];
+                    sortedDoors[0] = { "index": 0, "doorWidth" : doors[0].doorWidth, "distanceFromLeft": doors[0].distanceFromLeft };
                 }
                 for (var i = 1; i < doors.length; i++) {
-                    for (var x = 0; x < sortedDoors.length; x) {
+                    var x;
+                    for (x = 0; x < sortedDoors.length; x++) {
                         if (sortedDoors[x].distanceFromLeft > doors[i].distanceFromLeft) {
-                            sortedDoors.insert(x, { i: i, door: doors[i] });
+                            sortedDoors.insert(x, { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft });
                             break;
                         }
+                    }
+                    if (x == sortedDoors.length) {
+                        sortedDoors[sortedDoors.length] = { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft };
                     }
                 }
 
                 // Check overlap
                 for (var i = 0; i < sortedDoors.length - 1; i++) {
-                    if (sortedDoors[i].door.distanceFromLeft + sortedDoors[i].door.doorWidth > sortedDoors[i + 1].door.distanceFromLeft) {
-                        alert("Doors " + sortedDoors[i].i + " and " + sortedDoors[i].i + 1 + " overlap");
+                    if (sortedDoors[i].distanceFromLeft + sortedDoors[i].doorWidth > sortedDoors[i + 1].distanceFromLeft) {
+                        alert("Doors " + sortedDoors[i].index + " and " + (sortedDoors[i].index + 1) + " overlap");
+                        doors.splice(sortedDoors[i].index, 1);
+                        sortedDoors.splice(sortedDoors[i].index, 1);
                         isValid = false;
                     }
                 }
 
-                //alert(sortedDoors.length + " / " + doors.length + " / " + isValid);
-
+                //Is valid disable appropriate dropdown item and change selected index
                 if (isValid) {
                     $('#' + dropDownName + ' option[value=' + dropDownValue + ']').attr('disabled', true);
-                    //for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + ' option').size() ; dropDownLoop++) {
-                    //    if ($('#' + dropDownName + ' option')[dropDownLoop].disabled == false) {
-                    //        $('#' + dropDownName + 'option')[dropDownLoop].selectedIndex = true;
-                    //        break;
-                    //    }
-                    //}
+                    for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + ' option').size() ; dropDownLoop++) {
+                        if ($('#' + dropDownName + ' option')[dropDownLoop].disabled == false) {
+                            $('#' + dropDownName).prop("selectedIndex", dropDownLoop);
+                            break;
+                        }
+                    }
                     availableSpaceOutput(usuableLength);
                 }
             }
@@ -725,12 +770,37 @@
                 var pagerText = document.getElementById("MainContent_lblQuestion3PagerAnswer");
                 var textToAdd = "";
                 var space = usuableLength;
-
-                for (var doorsLoop = 0; doorsLoop < sortedDoors.length - 1; doorsLoop++)
-                    spacesRemaining[spacesRemaining.length] = sortedDoors[notNullsCount].doorWidth + sortedDoors[doorsLoop].distanceFromLeft - sortedDoors[doorsLoop + 1].distanceFromLeft;
+                spacesRemaining = new Array();
 
                 for (var notNullsCount = 0; notNullsCount < sortedDoors.length; notNullsCount++)
                     space -= sortedDoors[notNullsCount].doorWidth;
+
+                //Block to store remaining spaces between various door(s)
+                if (sortedDoors[0].distanceFromLeft > 0 && sortedDoors.length > 1) {
+                    spacesRemaining[spacesRemaining.length] = sortedDoors[0].distanceFromLeft;
+                }
+                else if (sortedDoors.length == 1) {
+                    if (sortedDoors[0].distanceFromLeft == 0 || sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth == 0) {
+                        spacesRemaining[spacesRemaining.length] = usuableLength - sortedDoors[0].doorWidth;
+                    }
+                    else if (sortedDoors[0].distanceFromLeft > 0) {
+                        spacesRemaining[spacesRemaining.length] = sortedDoors[0].distanceFromLeft;
+                        spacesRemaining[spacesRemaining.length] = usuableLength - (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth);
+                    }
+                }
+                else {
+                    var doorsLoop;
+                    for (doorsLoop = 0; doorsLoop < sortedDoors.length - 1; doorsLoop++) {
+                        spacesRemaining[spacesRemaining.length] = sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft);
+                    }
+                    if (sortedDoors[doorsLoop].distanceFromLeft + sortedDoors[doorsLoop].doorWidth < usuableLength) {
+                        spacesRemaining[spacesRemaining.length] = space - sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft;
+                    }
+                }
+
+                for (var random = 0; random < spacesRemaining.length; random++) {
+                    alert(spacesRemaining[random] + " space");
+                }
 
                 textToAdd = "The Remaining Space Is: " + space;
 
@@ -749,11 +819,11 @@
                         //Find if a door exist to set doorCount to the appropriate value
                         if (document.getElementById('MainContent_radWall' + wallCount).checked) {
 
-                            var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'Length').value);
+                            var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'Length').value);                            
                             var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'LeftFiller').value);
                             var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'RightFiller').value);
                             var usuableSpace = wallLength - leftFiller - rightFiller;
-                            var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorPosition' + wallCount + type)
+                            var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorPosition' + wallCount + type).value
                                 + document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).selectedIndex].value);
                             var positionDropDown = document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).selectedIndex].value;
                             var widthDropDown = document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).selectedIndex].value;
@@ -835,10 +905,10 @@
                             hidDoorHeight.setAttribute("type", "hidden");
 
                             if (heightDropDown == 'cHeight') {
-                                hidDoorHeight.value = parseFloat(calculateActualDoorDimension(type, 'Height', true));
+                                hidDoorHeight.value = parseFloat(calculateActualDoorDimension(type, 'Height', true, wallCount));
                             }
                             else {
-                                hidDoorHeight.value = parseFloat(calculateActualDoorDimension(type, 'Height', false));
+                                hidDoorHeight.value = parseFloat(calculateActualDoorDimension(type, 'Height', false, wallCount));
                             }
 
                             $("#MainContent_lblQuestion3PagerAnswer").text(finalText);
