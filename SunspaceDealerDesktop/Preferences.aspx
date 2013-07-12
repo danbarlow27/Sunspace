@@ -28,29 +28,82 @@
                             <ul>
                                 <li>
                                     <ul class="toggleOptions">
-                                        
+                                        <%-- General Preferences --%>
+                                        <li>                                            
+                                            <asp:RadioButton ID="radGeneralPref" GroupName="sunroomModels" runat="server" />
+                                            <asp:Label ID="lblGeneralPrefRadio" AssociatedControlID="radGeneralPref" runat="server"></asp:Label>
+                                            <asp:Label ID="lblGeneralPref" AssociatedControlID="radGeneralPref" runat="server" Text="General"></asp:Label>
+
+                                            <%-- General Pref Inputs --%>
+                                            <div class="toggleContent">
+                                                <ul>
+                                                    <li>
+                                                        <%-- Installation Type --%>
+                                                        <asp:Label ID="lblInstallationType" runat="server" Text="Installation Type:"></asp:Label>
+                                                        <asp:DropDownList ID="ddlInstallationType" runat="server"></asp:DropDownList>
+                                                    </li>
+                                                    <li>
+                                                        <%-- Model Type --%>
+                                                        <asp:Label ID="lblModelType" runat="server" Text="Model Type:"></asp:Label>
+                                                        <asp:DropDownList ID="ddlModelType" runat="server"></asp:DropDownList>
+                                                    </li>
+                                                    <li>
+                                                        <%-- Layout --%>
+                                                        <asp:Label ID="lblLayoutDefault" runat="server" Text="Layout Default:"></asp:Label>
+                                                        <asp:DropDownList ID="ddlLayoutDefault" runat="server"></asp:DropDownList>
+                                                    </li>
+                                                    <li>
+                                                        <%-- Markup --%>
+                                                        <asp:Label ID="lblMarkup" runat="server" Text="Installation Type:"></asp:Label>
+                                                        <asp:TextBox ID="txtMarkup" runat="server"></asp:TextBox>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+
                                         <%-- Model 100 Preferences --%>
                                         <li>
                                             <asp:RadioButton ID="radSunroom100" GroupName="sunroomModels" runat="server" />
                                             <asp:Label ID="lblSunroom100Radio" AssociatedControlID="radSunroom100" runat="server"></asp:Label>
-                                            <asp:Label ID="lblSunroom100" AssociatedControlID="radSunroom100" runat="server" Text="Model 100"></asp:Label>
-                                    
+                                            <asp:Label ID="lblSunroom100" AssociatedControlID="radSunroom100" runat="server" Text="Model 100"></asp:Label>                                    
                                             
                                             <%-- Model 100 Inputs --%>
                                             <div class="toggleContent">
                                                 <ul>
                                                     <li>
-                                                        <%-- Cut Pitch Option --%>
-                                                        <asp:CheckBox ID="chk100Cut" runat="server" />
-                                                        <asp:Label ID="lbl100CutCheck" AssociatedControlID="chk100Cut" runat="server"></asp:Label>
-                                                        <asp:Label ID="lbl100Cut" AssociatedControlID="chk100Cut" runat="server" Text="Cut Pitch"></asp:Label>
-
-                                                        <%-- Default Filler Option --%>
-                                                        <asp:Label ID="lbl100DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
-                                                        <asp:TextBox ID="txt100DefaultFiller" runat="server" CssClass="txtLengthInput"></asp:TextBox>
-                                                        <asp:DropDownList ID="ddl100DefaultFiller" runat="server"></asp:DropDownList>
-
-
+                                                        <ul class="toggleOptions">
+                                                            <li>
+                                                                <%-- Cut Pitch Option --%>
+                                                                <asp:CheckBox ID="chk100Cut" runat="server" />
+                                                                <asp:Label ID="lbl100CutCheck" AssociatedControlID="chk100Cut" runat="server"></asp:Label>
+                                                                <asp:Label ID="lbl100Cut" AssociatedControlID="chk100Cut" runat="server" Text="Cut Pitch"></asp:Label>                                                                
+                                                            </li>
+                                                            <li>
+                                                                <%-- Default Filler Option --%>
+                                                                <asp:Label ID="lbl100DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
+                                                                <asp:TextBox ID="txt100DefaultFiller" runat="server" CssClass="txtLengthInput"></asp:TextBox>
+                                                                <asp:DropDownList ID="ddl100DefaultFiller" runat="server"></asp:DropDownList>
+                                                            </li>
+                                                            <li>
+                                                                <%-- Door options --%>
+                                                                <asp:RadioButton ID="radDoorOptions" GroupName="sunroomModel100" runat="server"></asp:RadioButton>
+                                                                <asp:Label ID="lblDoorOptionsRadio" AssociatedControlID="radDoorOptions" runat="server"></asp:Label>
+                                                                <asp:Label ID="lblDoorOptions" AssociatedControlID="radDoorOptions" runat="server" Text="isitworking?"></asp:Label>
+                                                                <div class="toggleContent">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <ul class="toggleOptions">
+                                                                                <li>
+                                                                                   <asp:Label ID="lblDoorOption1" runat="server" Text="testest"></asp:Label>
+                                                                                    <asp:TextBox ID="txtDoorOption1" runat="server"></asp:TextBox>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                        
 
                                                         <%--InteriorSkin
 	                                                    ExteriorSkin

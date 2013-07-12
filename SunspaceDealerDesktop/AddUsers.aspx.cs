@@ -119,6 +119,7 @@ namespace SunspaceDealerDesktop
             }
             else
             {
+                #region Dealer Sales Rep
                 //adding a dealer sales rep
                 if (ddlUserType.SelectedValue == "Dealer" && ddlUserGroup.SelectedValue == "Sales Rep")
                 {
@@ -139,6 +140,9 @@ namespace SunspaceDealerDesktop
                     sdsUsers.Insert();
                     lblError.Text = "Successfully Added";
                 }
+                #endregion
+
+                #region Dealer Admin
                 //adding a head dealer
                 else if (ddlUserType.SelectedValue == "Dealer" && ddlUserGroup.SelectedValue == "Admin")
                 {
@@ -165,7 +169,7 @@ namespace SunspaceDealerDesktop
                                                     + txtFirstName.Text + "', '"
                                                     + txtLastName.Text + "', '"
                                                     + ddlCountry.SelectedValue + "', "
-                                                    + Convert.ToDecimal(txtMultiplier.Text)/10 + ")"; //divide by 10 to change the '8' entered into '0.8' multiplier
+                                                    + Convert.ToDecimal(txtMultiplier.Text)/10 + ")"; //need to change based on question to anthony
                             aCommand.ExecuteNonQuery();
 
                             //Now add user
@@ -411,7 +415,6 @@ namespace SunspaceDealerDesktop
 
                             // Attempt to commit the transaction.
                             aTransaction.Commit();
-                            Console.WriteLine("Both records are written to database.");
                         }
                         catch (Exception ex)
                         {
@@ -432,45 +435,93 @@ namespace SunspaceDealerDesktop
                                 Console.WriteLine("  Message: {0}", ex2.Message);
                             }
                         }
-                    }                    
+                    }
                 }
+                #endregion
+
+                #region Sunspace CSR
                 //Sunspace CSR
                 else if (ddlUserType.SelectedValue == "Sunspace" && ddlUserGroup.SelectedValue == "Customer Service Rep")
                 {
+                    //using (SqlConnection aConnection = new SqlConnection(sdsUsers.ConnectionString))
+                    //{
+                    //    aConnection.Open();
+                    //    SqlCommand aCommand = aConnection.CreateCommand();
+                    //    SqlTransaction aTransaction;
 
+                    //    // Start a local transaction.
+                    //    aTransaction = aConnection.BeginTransaction("SampleTransaction");
+
+                    //    // Must assign both transaction object and connection 
+                    //    // to Command object for a pending local transaction
+                    //    aCommand.Connection = aConnection;
+                    //    aCommand.Transaction = aTransaction;
+
+                    //    try
+                    //    {
+                    //        //Add to dealer table
+                    //        aCommand.CommandText = "INSERT INTO sunspace (dealer_name, first_name, last_name, country, multiplier)"
+                    //                                + "VALUES('"
+                    //                                + txtLogin.Text + "', '"
+                    //                                + txtFirstName.Text + "', '"
+                    //                                + txtLastName.Text + "', '"
+                    //                                + ddlCountry.SelectedValue + "', "
+                    //                                + Convert.ToDecimal(txtMultiplier.Text) / 10 + ")"; //need to change based on question to anthony
+                    //        aCommand.ExecuteNonQuery();
+
+                    //        //Now add user
+                    //        DateTime aDate = DateTime.Now;
+                    //        aCommand.CommandText = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
+                    //                                + "VALUES('"
+                    //                                + txtLogin.Text + "', '"
+                    //                                + GlobalFunctions.CalculateMD5Hash(txtPassword.Text) + "', '"
+                    //                                + txtEmail.Text + "', '"
+                    //                                + aDate.ToString("yyyy/MM/dd") + "', '"
+                    //                                + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
+                    //                                + "D" + "', '" //Must be D-A within this block of logic
+                    //                                + "A" + "', "
+                    //                                + Convert.ToInt32(Session["dealer_id"].ToString()) + ", '" //reference ID is the dealer id in the dealer table they belong to
+                    //                                + txtFirstName.Text + "', '"
+                    //                                + txtLastName.Text + "', "
+                    //                                + 1 + ")";
+                    //        aCommand.ExecuteNonQuery();
+
+                    //        lblError.Text = "Successfully Added";
+
+                    //        // Attempt to commit the transaction.
+                    //        aTransaction.Commit();
+                    //    }
+                    //    catch (Exception ex)
+                    //    {
+                    //        lblError.Text = "Commit Exception Type: " + ex.GetType();
+                    //        lblError.Text += "  Message: " + ex.Message;
+
+                    //        // Attempt to roll back the transaction. 
+                    //        try
+                    //        {
+                    //            aTransaction.Rollback();
+                    //        }
+                    //        catch (Exception ex2)
+                    //        {
+                    //            // This catch block will handle any errors that may have occurred 
+                    //            // on the server that would cause the rollback to fail, such as 
+                    //            // a closed connection.
+                    //            Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
+                    //            Console.WriteLine("  Message: {0}", ex2.Message);
+                    //        }
+                    //    }
+                    //} 
                 }
+                #endregion
+
+                #region Sunspace Admin
                 //Sunspace Admin
                 else
                 {
 
                 }
+                #endregion
             }
-    //        div id="UserTypeDiv" runat="server">
-    //    <asp:Label ID="lblUserType" runat="server" Text="User type:"></asp:Label>
-    //    <asp:DropDownList ID="ddlUserType" runat="server"></asp:DropDownList>
-    //    <br /><br />
-    //</div>
-    //<div id="UserGroupDiv" runat="server">
-    //    <asp:Label ID="lblUserGroup" runat="server" Text="User group:"></asp:Label>
-    //    <asp:DropDownList ID="ddlUserGroup" runat="server"></asp:DropDownList>
-    //    <br /><br />
-    //</div>
-    //<asp:Label ID="lblLogin" runat="server" Text="Login:"></asp:Label>
-    //<asp:TextBox ID="txtLogin" runat="server"></asp:TextBox>
-    //<br /><br />
-    //<asp:Label ID="lblPassword" runat="server" Text="Password:"></asp:Label>
-    //<asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
-    //<br /><br />
-    //<asp:Label ID="lblEmail" runat="server" Text="Email:"></asp:Label>
-    //<asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
-    //<br /><br />
-    //<asp:Label ID="lblFirstName" runat="server" Text="First Name:"></asp:Label>
-    //<asp:TextBox ID="txtFirstName" runat="server"></asp:TextBox>
-    //<br /><br />
-    //<asp:Label ID="lblLastName" runat="server" Text="Last Name:"></asp:Label>
-    //<asp:TextBox ID="txtLastName" runat="server"></asp:TextBox>
-    //<br /><br />
-    //<asp:Button id="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
         }
     }
 }
