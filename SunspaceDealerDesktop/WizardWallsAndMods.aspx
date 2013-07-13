@@ -691,7 +691,7 @@
         var spacesRemaining;
         var finalText;
 
-        function checkDoors(usuableLength, dropDownName, dropDownValue) {
+        function checkDoor(usuableLength, dropDownName, dropDownValue) {
 
             var remainSpaces = new Array();
             var textToAdd = "";
@@ -765,13 +765,14 @@
                         break;                        
                     }
                 }
-                availableSpaceOutput(usuableLength);
+                availableSpaceOutput(usuableLength);                
             }
+            return isValid;
         }
 
         function availableSpaceOutput(usuableLength) {
 
-            var pagerText = document.getElementById("MainContent_lblQuestion3PagerAnswer");            
+            var pagerText = document.getElementById("MainContent_lblQuestion3PagerAnswer");
             var space = usuableLength;
             spacesRemaining = new Array();
 
@@ -854,7 +855,17 @@
                             doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": doorCustomPosition };
                         }
 
-                        checkDoors(usuableSpace, dropDownName, positionDropDown);
+                        if (checkDoor(usuableSpace, dropDownName, positionDropDown)) {
+                            var pagerText = document.getElementById("MainContent_lblQuestion3PagerAnswer");
+                            var deleteButton = document.createElement("input");
+                            deleteButton.id = "btnDeleteDoor" + (sortedDoors[sortedDoors.length - 1].index + 1) + type;
+                            deleteButton.setAttribute("type", "button");
+                            deleteButton.setAttribute("value", "X");
+                            deleteButton.setAttribute("class", "btnSubmit");
+                            deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
+                            pagerText.innerHTML += "<br/>Door " + (sortedDoors[sortedDoors.length - 1].index + 1) + " " + type + " added"
+                            pagerText.appendChild(deleteButton);
+                        }
 
                         /********SECTION BELOW TO BE RETHOUGHT*********/
 
@@ -1340,7 +1351,7 @@
                 <div style="display: none" id="pagerThree">
                     <li>
                             <a href="#" data-slide="#slide3" class="slidePanel">
-                                <asp:Label ID="lblQuestion3Pager" runat="server" Text="Wall Length Left"></asp:Label>
+                                <asp:Label ID="lblQuestion3Pager" runat="server" Text="Wall and Door Details"></asp:Label>
                                 <asp:Label ID="lblQuestion3PagerAnswer" runat="server" Text="Question 3 Answer"></asp:Label>
                             </a>
                     </li>
