@@ -751,15 +751,23 @@
 
             //Check for possible door width in spaces, only if spacesRemaining is not null
             if (spacesRemaining != null) {
+                var goodSpace = 0;
                 //Loop through all spaces in spacesRemaining and check it against the door width
                 for (var j = 0; j < spacesRemaining.length; j++) {
+                    alert(spacesRemaining[j]);
                     //Check all spaces in wall
-                    if (spacesRemaining[j] < doors[doors.length-1].doorWidth) {
-                        isValid = false;
-                        alert("This door is too small to fit in any available spaces");
+                    if (spacesRemaining[j] > doors[doors.length - 1].doorWidth) {                        
+                        goodSpace++;
                     }
                 }
+                //If no good spaces exist, display error message
+                if (goodSpace == 0) {
+                    isValid = false;
+                    alert("This door is too small to fit in any available spaces");
+                }
             }
+
+            
 
             //Is valid disable appropriate dropdown item and change selected index
             if (isValid) {
