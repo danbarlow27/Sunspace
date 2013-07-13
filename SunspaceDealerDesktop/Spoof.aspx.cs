@@ -25,27 +25,17 @@ namespace SunspaceDealerDesktop
                 Response.Redirect("Home.aspx");
             }
 
-            if (Session["ddlDealers"] == null)
+            //Get the customers assosciated with this dealer
+            sdsDealers.SelectCommand = "SELECT first_name, last_name, dealer_id FROM dealers";
+
+            //assign the table names to the dataview object
+            DataView dvDealers = (DataView)sdsDealers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+            ddlDealers.Items.Clear();
+
+            for (int i = 0; i < dvDealers.Count; i++)
             {
-                //Get the customers assosciated with this dealer
-                sdsDealers.SelectCommand = "SELECT first_name, last_name, dealer_id FROM dealers";
-
-                //assign the table names to the dataview object
-                DataView dvDealers = (DataView)sdsDealers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
-
-                ddlDealers.Items.Clear();
-
-                for (int i = 0; i < dvDealers.Count; i++)
-                {
-                    ddlDealers.Items.Add(new ListItem(dvDealers[i][0].ToString() + dvDealers[i][1].ToString(), dvDealers[i][2].ToString()));
-                }
-
-                Session.Add("ddlDealers", ddlDealers);
-            }
-            //if it exists, just populate from session
-            else
-            {
-                ddlDealers = (DropDownList)Session["ddlDealers"];
+                ddlDealers.Items.Add(new ListItem(dvDealers[i][0].ToString() + dvDealers[i][1].ToString(), dvDealers[i][2].ToString()));
             }
         }
 

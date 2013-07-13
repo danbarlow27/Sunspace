@@ -8,5 +8,5 @@
     <br />
     <asp:Button ID="btnPreferences" runat="server" Text="Preferences" CssClass="btnSubmit" OnClick="btnPreferences_Click" />
     <br />
-    <asp:Button ID="btnSpoof" runat="server" Text="Spoofed Login" CssClass="btnSubmit" OnClick="btnPreferences_Click" />
+    <asp:Button ID="btnSpoof" runat="server" Text="Spoofed Login" CssClass="btnSubmit" OnClick="btnSpoof_Click" />
 </asp:Content>

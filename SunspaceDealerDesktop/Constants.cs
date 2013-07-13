@@ -78,7 +78,7 @@ namespace SunspaceDealerDesktop
         #region Countries, States, Provinces
         public static List<ListItem> COUNTRY_LIST = new List<ListItem>()
             {
-                new ListItem("Canada", "Canada"), 
+                new ListItem("Canada", "CAN"), 
                 new ListItem("United States", "USA")
             };
 

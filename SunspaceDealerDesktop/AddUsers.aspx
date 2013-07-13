@@ -17,15 +17,29 @@
                 //if sunspace admin with sunspace selected
                 if (ddlUserType.options[ddlUserType.selectedIndex].value == "Sunspace") {
                     document.getElementById("<%=DealerListDiv.ClientID%>").style.display = "none";
+                    document.getElementById("<%=DealerAdminDiv.ClientID%>").style.display = "none";
                     ddlUserGroup.options.add(new Option("Admin", "Admin"));
                     ddlUserGroup.options.add(new Option("Customer Service Rep", "Customer Service Rep"));
                 }
                     //--with dealer selected
                 else {
-                    document.getElementById("<%=DealerListDiv.ClientID%>").style.display = "inline";
+                    document.getElementById("<%=DealerAdminDiv.ClientID%>").style.display = "inline";
                     ddlUserGroup.options.add(new Option("Admin", "Admin"));
                     ddlUserGroup.options.add(new Option("Sales Rep", "Sales Rep"));
                 }
+            }
+        }
+
+        function toggleDealerDropdown() {
+            var ddlUserType = document.getElementById("<%=ddlUserType.ClientID%>");
+            var ddlUserGroup = document.getElementById("<%=ddlUserGroup.ClientID%>");
+            var ddlDealers = document.getElementById("<%=ddlDealers.ClientID%>");
+
+            if (ddlUserType.value == "Dealer" && ddlUserGroup.value == "Admin") {
+                document.getElementById("<%=DealerListDiv.ClientID%>").style.display = "none";
+            }
+            else if (ddlUserType.value == "Dealer" && ddlUserGroup.value == "Sales Rep") {
+                document.getElementById("<%=DealerListDiv.ClientID%>").style.display = "inline";
             }
         }
     </script>
@@ -39,12 +53,20 @@
     </div>
     <div id="UserGroupDiv" runat="server">
         <asp:Label ID="lblUserGroup" runat="server" Text="User group:"></asp:Label>
-        <asp:DropDownList ID="ddlUserGroup" runat="server"></asp:DropDownList>
+        <asp:DropDownList ID="ddlUserGroup" runat="server" OnChange="toggleDealerDropdown()"></asp:DropDownList>
         <br /><br />
     </div>
     <div id="DealerListDiv" runat="server">
         <asp:Label ID="lblDealers" runat="server" Text="Dealer:"></asp:Label>
         <asp:DropDownList ID="ddlDealers" runat="server"></asp:DropDownList>
+        <br /><br />
+    </div>
+    <div id="DealerAdminDiv" runat="server">
+        <asp:Label ID="lblCountry" runat="server" Text="Country:"></asp:Label>
+        <asp:DropDownList ID="ddlCountry" runat="server" ></asp:DropDownList>
+        <br /><br />
+        <asp:Label ID="lblMultiplier" runat="server" Text="Multiplier: "></asp:Label>
+        <asp:TextBox ID="txtMultiplier" runat="server" MaxLength="3"></asp:TextBox>
         <br /><br />
     </div>
     <asp:Label ID="lblLogin" runat="server" Text="Login:"></asp:Label>

@@ -43,6 +43,14 @@ namespace SunspaceDealerDesktop
 
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
+                //colours
+                //door
+                //window
+                //sunshade
+                //roof
+                //floor
+                //kneewall
+                //transom
             //save all preferences
             //additional comment here
         }
