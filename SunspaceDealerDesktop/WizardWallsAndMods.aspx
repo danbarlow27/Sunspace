@@ -18,6 +18,7 @@
         var wallSoffitArray = new Array(); //array to store soffit length of each wall
         var wallStartHeightArray = new Array(); //array to store start height of each wall
         var wallEndHeightArray = new Array(); //array to store end height of each wall
+        var wallLengthArray = new Array(); //array to store the length of each wall
 
         var DOOR_MAX_WIDTH = '<%= DOOR_MAX_WIDTH %>';
         var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
@@ -145,8 +146,15 @@
         }
 
 
-        ///what to do when there are multiple back and/or front walls
 
+        /*
+        This function determines start and end height of each wall based on roof slope and length.
+        
+
+        needs a bit of tune up...
+
+
+        */
         function determineStartAndEndHeightOfEachWall() {
 
             var existingWallCount = 0;
@@ -154,72 +162,42 @@
 
             for (var i = 0; i < coordList.length; i++) {
                 if (coordList[i][4] === "E") { //existing wall
-                    if (coordList[i][5] === "S") {
+                    //if (coordList[i][5] === "S") {
+
+                    ///this is assuming that back wall is an existing wall...
+
                         wallStartHeightArray[i] = hidBackWallHeight.value;
                         wallEndHeightArray[i] = hidBackWallHeight.value;
-                    }
+                    //}
 
                 }
                 else { //proposed wall
+
+                    wallStartHeightArray[i] = wallEndHeightArray[i - 1];
+
                     switch(coordList[i][5]) {    
                         case "S": //if south
-                            break;
                         case "N": //or north
-                            break;
-                        case "SW": //or southwest
-                            break;
-                        case "NW": //or northwest
-                            break;
-                        case "SE": //or southeast
-                            break;
-                        case "NE": //or northeast
+                            wallEndHeightArray[i] = wallStartHeightArray[i];
                             break;
                         case "W": //if west
+                            wallEndHeightArray[i] = wallStartHeightArray[i] - ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
                             break;
                         case "E": //if east
-                            break;
-                    }
-
-                }
-                
-            }
-            
-        }
-
-        /*
-        function determineSlopeOfEachWall() {
-
-            var m = document.getElementById("MainContent_hidRoofSlope").value;
-
-            for (var index = 0; index < coordList.length; index++) {
-                if (coordList[index][4] === "E") //if existing wall  
-                    wallSlopeArray[index] = 0; //slope is unimportant
-                else { //if proposed wall
-                    //get the orientation of the proposed wall
-                    switch (coordList[index][5]) { //5 = orientation
-                        case "S": //if south
-                        case "N": //or north
-                            wallSlopeArray[index] = 0;
-                            break;
-                        case "W": //if west
-                            wallSlopeArray[index] = m;
-                            break;
-                        case "E": //if east
-                            wallSlopeArray[index] = -m;
+                            wallEndHeightArray[i] = wallStartHeightArray[i] + ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
                             break;
                         case "SW": //if southwest
-                        case "NW": //or northwest
-                                ///determine diagonal slope
+                        case "SE": //or northwest
+                            wallEndHeightArray[i] = wallStartHeightArray[i] - ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
                             break;
-                        case "SE": //if southeast
+                        case "NW": //if southeast
                         case "NE": //or northeast
-                                ///determine diagonal slope
+                            wallEndHeightArray[i] = wallStartHeightArray[i] + ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
                             break;
                     }
-                }
-            }
+                }   
+            }    
         }
-        */
 
 
         ///will there ever be a case when 2 walls may have different soffit length
@@ -305,7 +283,7 @@
 
                     document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i]; //store wall setback 
                     document.getElementById("hidWall" + i + "LeftFiller").value = document.getElementById("MainContent_txtWall" + i + "LeftFiller").value + document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").selectedIndex].value; //store left filler
-                    document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value + document.getElementById("MainContent_ddlWall" + i + "InchFractions").options[document.getElementById("MainContent_ddlWall" + i + "InchFractions").selectedIndex].value; //store length
+                    wallLengthArray[i] = document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value + document.getElementById("MainContent_ddlWall" + i + "InchFractions").options[document.getElementById("MainContent_ddlWall" + i + "InchFractions").selectedIndex].value; //store length
                     document.getElementById("hidWall" + i + "RightFiller").value = document.getElementById("MainContent_txtWall" + i + "RightFiller").value + document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").selectedIndex].value; //store right filler
 
                     answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value; //store the values in the answer variable to be displayed
