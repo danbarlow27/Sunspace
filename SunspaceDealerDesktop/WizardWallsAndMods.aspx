@@ -715,7 +715,6 @@
 
         function checkDoors(usuableLength, dropDownName, dropDownValue) {
 
-            var pagerText = document.getElementById("MainContent_lblQuestion3PagerAnswer");
             var remainSpaces = new Array();
             var textToAdd = "";
 
@@ -750,6 +749,18 @@
                 }
             }
 
+            //Check for possible door width in spaces, only if spacesRemaining is not null
+            if (spacesRemaining != null) {
+                //Loop through all spaces in spacesRemaining and check it against the door width
+                for (var j = 0; j < spacesRemaining.length; j++) {
+                    //Check all spaces in wall
+                    if (spacesRemaining[j] < doors[doors.length-1].doorWidth) {
+                        isValid = false;
+                        alert("This door is too small to fit in any available spaces");
+                    }
+                }
+            }
+
             //Is valid disable appropriate dropdown item and change selected index
             if (isValid) {
                 if ($('#' + dropDownName).prop("selectedIndex") != "cPosition" ) {
@@ -759,6 +770,7 @@
                 else {
                     alert("Something");
                     alert(dropDownName.substring(28));
+                    //customPosition(dropDownName.substring(28));
                 }
 
                 for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + ' option').size() ; dropDownLoop++) {
@@ -773,7 +785,7 @@
 
         function availableSpaceOutput(usuableLength) {
 
-            var pagerText = document.getElementById("MainContent_lblQuestion3PagerAnswer");
+            var pagerText = document.getElementById("MainContent_lblQuestion3PagerAnswer");            
             var space = usuableLength;
             spacesRemaining = new Array();
 
@@ -807,6 +819,7 @@
             //    alert(spacesRemaining[random] + " space");
             //}
 
+            document.getElementById('pagerThree').style.display = "inline";
             pagerText.innerHTML = "The Remaining Space Is: " + space;
 
         }
