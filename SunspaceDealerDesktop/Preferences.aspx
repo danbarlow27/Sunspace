@@ -1,6 +1,93 @@
 ﻿<%@ Page Title="Home" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Preferences.aspx.cs" Inherits="SunspaceDealerDesktop.Home" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <script>
+        function preferencesCascadeColours(modelNumber) {
+            console.log("Cascading Colours");
+
+            if (modelNumber == 100) {
+                ddlFramingColour = document.getElementById("<%= ddl100FrameColour.ClientID %>");
+                if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "White") {
+                    $("#<%=ddl100InteriorPanelColour.ClientID%>").val('White');
+                    $("#<%=ddl100InteriorPanelSkin.ClientID%>").val('White Aluminum Stucco');
+                    $("#<%=ddl100ExteriorPanelColour.ClientID%>").val('White');
+                    $("#<%=ddl100ExteriorPanelSkin.ClientID%>").val('White Aluminum Stucco');
+                }
+                else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Driftwood") {
+                    $("#<%=ddl100InteriorPanelColour.ClientID%>").val('Driftwood');
+                    $("#<%=ddl100InteriorPanelSkin.ClientID%>").val('Driftwood Aluminum Stucco');
+                    $("#<%=ddl100ExteriorPanelColour.ClientID%>").val('Driftwood');
+                    $("#<%=ddl100ExteriorPanelSkin.ClientID%>").val('Driftwood Aluminum Stucco');
+                }
+                else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Bronze") {
+                    $("#<%=ddl100InteriorPanelColour.ClientID%>").val('Bronze');
+                    $("#<%=ddl100InteriorPanelSkin.ClientID%>").val('Bronze Aluminum Stucco');
+                    $("#<%=ddl100ExteriorPanelColour.ClientID%>").val('Bronze');
+                    $("#<%=ddl100ExteriorPanelSkin.ClientID%>").val('Bronze Aluminum Stucco');
+                }
+            }
+            else if (modelNumber == 200) {
+                ddlFramingColour = document.getElementById("<%= ddl200FrameColour.ClientID %>");
+                if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "White") {
+                    $("#<%=ddl200InteriorPanelColour.ClientID%>").val('White');
+                    $("#<%=ddl200InteriorPanelSkin.ClientID%>").val('White Aluminum Stucco');
+                    $("#<%=ddl200ExteriorPanelColour.ClientID%>").val('White');
+                    $("#<%=ddl200ExteriorPanelSkin.ClientID%>").val('White Aluminum Stucco');
+                }
+                else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Driftwood") {
+                    $("#<%=ddl200InteriorPanelColour.ClientID%>").val('Driftwood');
+                    $("#<%=ddl200InteriorPanelSkin.ClientID%>").val('Driftwood Aluminum Stucco');
+                    $("#<%=ddl200ExteriorPanelColour.ClientID%>").val('Driftwood');
+                    $("#<%=ddl200ExteriorPanelSkin.ClientID%>").val('Driftwood Aluminum Stucco');
+                }
+                else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Bronze") {
+                    $("#<%=ddl200InteriorPanelColour.ClientID%>").val('Bronze');
+                    $("#<%=ddl200InteriorPanelSkin.ClientID%>").val('Bronze Aluminum Stucco');
+                    $("#<%=ddl200ExteriorPanelColour.ClientID%>").val('Bronze');
+                    $("#<%=ddl200ExteriorPanelSkin.ClientID%>").val('Bronze Aluminum Stucco');
+                }
+            }
+            else if (modelNumber == 300) {
+                ddlFramingColour = document.getElementById("<%= ddl300FrameColour.ClientID %>");
+                if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "White") {
+                    $("#<%=ddl300InteriorPanelColour.ClientID%>").val('White');
+                    $("#<%=ddl300InteriorPanelSkin.ClientID%>").val('White Aluminum Stucco');
+                    $("#<%=ddl300ExteriorPanelColour.ClientID%>").val('White');
+                    $("#<%=ddl300ExteriorPanelSkin.ClientID%>").val('White Aluminum Stucco');
+                }
+                else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Driftwood") {
+                    $("#<%=ddl300InteriorPanelColour.ClientID%>").val('Driftwood');
+                    $("#<%=ddl300InteriorPanelSkin.ClientID%>").val('Driftwood Aluminum Stucco');
+                    $("#<%=ddl300ExteriorPanelColour.ClientID%>").val('Driftwood');
+                    $("#<%=ddl300ExteriorPanelSkin.ClientID%>").val('Driftwood Aluminum Stucco');
+                }
+                else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Bronze") {
+                    $("#<%=ddl300InteriorPanelColour.ClientID%>").val('Bronze');
+                    $("#<%=ddl300InteriorPanelSkin.ClientID%>").val('Bronze Aluminum Stucco');
+                    $("#<%=ddl300ExteriorPanelColour.ClientID%>").val('Bronze');
+                    $("#<%=ddl300ExteriorPanelSkin.ClientID%>").val('Bronze Aluminum Stucco');
+                }
+            }
+            else if (modelNumber == 400) {
+                ddlFramingColour = document.getElementById("<%= ddl400FrameColour.ClientID %>");
+                if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "White") {
+                    $("#<%=ddl400InteriorPanelColour.ClientID%>").val('White');
+                    $("#<%=ddl400InteriorPanelSkin.ClientID%>").val('White Aluminum Stucco');
+                    $("#<%=ddl400ExteriorPanelColour.ClientID%>").val('White');
+                    $("#<%=ddl400ExteriorPanelSkin.ClientID%>").val('White Aluminum Stucco');
+                }
+                else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Driftwood") {
+                    $("#<%=ddl400InteriorPanelColour.ClientID%>").val('Driftwood');
+                    $("#<%=ddl400InteriorPanelSkin.ClientID%>").val('Driftwood Aluminum Stucco');
+                    $("#<%=ddl400ExteriorPanelColour.ClientID%>").val('Driftwood');
+                    $("#<%=ddl400ExteriorPanelSkin.ClientID%>").val('Driftwood Aluminum Stucco');
+                }
+            }       
+
+             //now that colours have cascading we still need to validate the slide
+            //newProjectCheckQuestion4();
+}
+    </script>
     <div>
         <asp:Label Text ="Welcome " ID="lblWelcome" runat="server"></asp:Label>
         <asp:Label Text ="*Insert User Name*" ID="lblUser" runat="server"></asp:Label>
@@ -94,6 +181,11 @@
                                                                         <li>
                                                                             <ul class="toggleOptions">
                                                                                 <li>
+                                                                                    <%-- Frame Colour --%>
+                                                                                    <asp:Label ID="lbl100FrameColour" runat="server" Text="Frame Colour:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl100FrameColour" runat="server" OnChange="preferencesCascadeColours(100)"></asp:DropDownList>
+                                                                                </li>
+                                                                                <li>
                                                                                     <%-- Interior Panel Colour --%>
                                                                                     <asp:Label ID="lbl100InteriorPanelColour" runat="server" Text="Interior Panel Colour:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl100InteriorPanelColour" runat="server"></asp:DropDownList>
@@ -112,11 +204,6 @@
                                                                                     <%-- Exterior Panel Skin --%>
                                                                                     <asp:Label ID="lbl100ExteriorPanelSkin" runat="server" Text="Exterior Panel Skin:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl100ExteriorPanelSkin" runat="server"></asp:DropDownList>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <%-- Frame Colour --%>
-                                                                                    <asp:Label ID="lbl100FrameColour" runat="server" Text="Frame Colour:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl100FrameColour" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                             </ul>
                                                                         </li>
@@ -441,6 +528,11 @@
                                                                         <li>
                                                                             <ul class="toggleOptions">
                                                                                 <li>
+                                                                                    <%-- Frame Colour --%>
+                                                                                    <asp:Label ID="lbl200FrameColour" runat="server" Text="Frame Colour:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl200FrameColour" runat="server" OnChange="preferencesCascadeColours(200)"></asp:DropDownList>
+                                                                                </li>
+                                                                                <li>
                                                                                     <%-- Interior Panel Colour --%>
                                                                                     <asp:Label ID="lbl200InteriorPanelColour" runat="server" Text="Interior Panel Colour:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl200InteriorPanelColour" runat="server"></asp:DropDownList>
@@ -459,11 +551,6 @@
                                                                                     <%-- Exterior Panel Skin --%>
                                                                                     <asp:Label ID="lbl200ExteriorPanelSkin" runat="server" Text="Exterior Panel Skin:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl200ExteriorPanelSkin" runat="server"></asp:DropDownList>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <%-- Frame Colour --%>
-                                                                                    <asp:Label ID="lbl200FrameColour" runat="server" Text="Frame Colour:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl200FrameColour" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                             </ul>
                                                                         </li>
@@ -789,6 +876,11 @@
                                                                         <li>
                                                                             <ul class="toggleOptions">
                                                                                 <li>
+                                                                                    <%-- Frame Colour --%>
+                                                                                    <asp:Label ID="lbl300FrameColour" runat="server" Text="Frame Colour:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl300FrameColour" runat="server" OnChange="preferencesCasecadeColours(300)"></asp:DropDownList>
+                                                                                </li>
+                                                                                <li>
                                                                                     <%-- Interior Panel Colour --%>
                                                                                     <asp:Label ID="lbl300InteriorPanelColour" runat="server" Text="Interior Panel Colour:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl300InteriorPanelColour" runat="server"></asp:DropDownList>
@@ -807,11 +899,6 @@
                                                                                     <%-- Exterior Panel Skin --%>
                                                                                     <asp:Label ID="lbl300ExteriorPanelSkin" runat="server" Text="Exterior Panel Skin:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl300ExteriorPanelSkin" runat="server"></asp:DropDownList>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <%-- Frame Colour --%>
-                                                                                    <asp:Label ID="lbl300FrameColour" runat="server" Text="Frame Colour:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl300FrameColour" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                             </ul>
                                                                         </li>
@@ -1137,6 +1224,11 @@
                                                                         <li>
                                                                             <ul class="toggleOptions">
                                                                                 <li>
+                                                                                    <%-- Frame Colour --%>
+                                                                                    <asp:Label ID="lbl400FrameColour" runat="server" Text="Frame Colour:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl400FrameColour" runat="server" OnChange="preferencesCascadeColours(400)"></asp:DropDownList>
+                                                                                </li>
+                                                                                <li>
                                                                                     <%-- Interior Panel Colour --%>
                                                                                     <asp:Label ID="lbl400InteriorPanelColour" runat="server" Text="Interior Panel Colour:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl400InteriorPanelColour" runat="server"></asp:DropDownList>
@@ -1155,11 +1247,6 @@
                                                                                     <%-- Exterior Panel Skin --%>
                                                                                     <asp:Label ID="lbl400ExteriorPanelSkin" runat="server" Text="Exterior Panel Skin:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl400ExteriorPanelSkin" runat="server"></asp:DropDownList>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <%-- Frame Colour --%>
-                                                                                    <asp:Label ID="lbl400FrameColour" runat="server" Text="Frame Colour:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl400FrameColour" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                             </ul>
                                                                         </li>

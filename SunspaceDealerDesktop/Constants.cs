@@ -19,16 +19,12 @@ namespace SunspaceDealerDesktop
 
         #region Colours, Types and Tints
         public static string[] MODEL_100_FRAMING_COLOURS = { "White", "Driftwood", "Bronze" };
-        //public const static string[] MODEL_100_WINDOW_COLOURS = { "White", "Driftwood", "Bronze" };//CURRENTLY NO COLOURS, ONLY VINYL
 
         public static string[] MODEL_200_FRAMING_COLOURS = { "White", "Driftwood", "Bronze" };
-        public static string[] MODEL_200_WINDOW_COLOURS = { "White", "Driftwood", "Bronze", "Green", "Black", "Ivory", "Cherrywood", "Grey" };
 
         public static string[] MODEL_300_FRAMING_COLOURS = { "White", "Driftwood", "Bronze" };
-        public static string[] MODEL_300_WINDOW_COLOURS = { "White", "Driftwood", "Bronze" };
 
         public static string[] MODEL_400_FRAMING_COLOURS = { "White", "Driftwood" };
-        public static string[] MODEL_400_WINDOW_COLOURS = { "White", "Driftwood" };
 
         public static string[] INTERIOR_WALL_COLOURS = { "White", "Driftwood", "Bronze" };
         public static string[] EXTERIOR_WALL_COLOURS = { "White", "Driftwood", "Bronze" };
@@ -43,13 +39,8 @@ namespace SunspaceDealerDesktop
                                                "White FRP (Interior Only)", "Driftwood FRP (Interior Only)", "Bronze FRP (Interior Only)"};
 
         public static string[] GLASS_WINDOW_TINTS = { "Grey", "Bronze", "Clear" };
-        public static string[] GLASS_KNEEWALL_TINTS = { "Grey", "Bronze" };
-        public static string[] GLASS_TRANSOM_TINTS = { "Grey", "Bronze" };
 
         public static string[] VINYL_TINTS = { "Clear", "Smoke Grey", "Dark Grey", "Bronze" };
-
-        public static string[] SUNSHADE_COLOURS = { "Chalk", "Alabaster", "Pebblestone", "Tobacco", "Ebony", "Greystone" };
-        public static string[] SUNSHADE_VALANCE_COLOURS = { "White", "Driftwood", "Bronze" };
 
         //Glass, Vinyl, Screen, Panel, Open?
         public static string[] KNEEWALL_TYPES = { "Solid Wall", "Tempered Glass" };
@@ -161,21 +152,22 @@ namespace SunspaceDealerDesktop
         #endregion Doors
 
         #region Windows
-            //Window types by model
-            //Window colours by model
-            //Window glass tint by model
-            //Window vinyl tint by model
-            //Window screen type by model
+        //public const static string[] MODEL_100_WINDOW_COLOURS = { "White", "Driftwood", "Bronze" };//CURRENTLY NO COLOURS, ONLY VINYL
+        public static string[] MODEL_200_WINDOW_COLOURS = { "White", "Driftwood", "Bronze", "Green", "Black", "Ivory", "Cherrywood", "Grey" };
+        public static string[] MODEL_300_WINDOW_COLOURS = { "White", "Driftwood", "Bronze" };
+        public static string[] MODEL_400_WINDOW_COLOURS = { "White", "Driftwood" };
+
+        public static string[] WINDOW_TYPES = { "Vertical 4 Track", "Horizontal 4 Track", "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
+        public static string[] SCREEN_TYPES = { "No Screen", "Better Vue Insect Screen (Default)", "No See Ums 20 x 20 Mesh", "Solar Insect Screening", "Tuff Screen" };
         #endregion
 
         #region Sunshades
-            //Sunshade valance colour by model
-            //Sunshade fabrics by model
-            //Sunshade openness by model
+        public static string[] SUNSHADE_VALANCE_COLOURS = { "White", "Driftwood", "Bronze" };
+        public static string[] SUNSHADE_FABRIC_COLOURS = { "Chalk", "Alabaster", "Pebblestone", "Tobacco", "Ebony", "Greystone" };
+        public static string[] OPENNESS = { "3%", "5%", "15%" };
         #endregion
 
         #region Roofs
-            //Roof Types by model (All studio gable, NYI)
             //Roof interior skins by model
             //roof exterior skins by model
             //roof thickness by model
@@ -188,12 +180,13 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Kneewalls
-            //Kneewall Types by model
-            //Kneewall glass tints by model
+        public static string[] KNEEWALL_TYPES = { "Panel", "Glass" };
+        public static string[] KNEEWALL_GLASS_TINTS = { "Grey", "Bronze" };
         #endregion
 
         #region Transom
-            //Transoms tyles by model
+        public static string[] TRANSOM_TYPES = { "Panel", "Glass", "Vinyl" };
+        public static string[] TRANSOM_GLASS_TINTS = { "Grey", "Bronze" };
             //Transom glass tints by model
             //transom vinyl tints by model
             //frame colours by model, is it the same as above?

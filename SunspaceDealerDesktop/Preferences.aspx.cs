@@ -160,14 +160,59 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region Window Options
-                #region 100
-                #endregion
-                #region 200
-                #endregion
-                #region 300
-                #endregion
-                #region 400
-                #endregion
+            #region 100
+            //No window colours, only vinyl
+            for (int i = 0; i < Constants.GLASS_WINDOW_TINTS.Count(); i++)
+            {
+                ddl100WindowGlassTint.Items.Add(new ListItem(Constants.GLASS_WINDOW_TINTS[i], Constants.GLASS_WINDOW_TINTS[i]));
+            }
+            for (int i = 0; i < Constants.VINYL_TINTS.Count(); i++)
+            {
+                ddl100WindowVinylTint.Items.Add(new ListItem(Constants.VINYL_TINTS[i], Constants.VINYL_TINTS[i]));
+            }
+            #endregion
+            #region 200
+            for (int i = 0; i < Constants.MODEL_200_WINDOW_COLOURS.Count(); i++)
+            {
+                ddl200WindowColour.Items.Add(new ListItem(Constants.MODEL_200_WINDOW_COLOURS[i], Constants.MODEL_200_WINDOW_COLOURS[i]));
+            }
+            for (int i = 0; i < Constants.GLASS_WINDOW_TINTS.Count(); i++)
+            {
+                ddl200WindowGlassTint.Items.Add(new ListItem(Constants.GLASS_WINDOW_TINTS[i], Constants.GLASS_WINDOW_TINTS[i]));
+            }
+            for (int i = 0; i < Constants.VINYL_TINTS.Count(); i++)
+            {
+                ddl200WindowVinylTint.Items.Add(new ListItem(Constants.VINYL_TINTS[i], Constants.VINYL_TINTS[i]));
+            }
+            #endregion
+            #region 300
+            for (int i = 0; i < Constants.MODEL_300_WINDOW_COLOURS.Count(); i++)
+            {
+                ddl300WindowColour.Items.Add(new ListItem(Constants.MODEL_300_WINDOW_COLOURS[i], Constants.MODEL_300_WINDOW_COLOURS[i]));
+            }
+            for (int i = 0; i < Constants.GLASS_WINDOW_TINTS.Count(); i++)
+            {
+                ddl300WindowGlassTint.Items.Add(new ListItem(Constants.GLASS_WINDOW_TINTS[i], Constants.GLASS_WINDOW_TINTS[i]));
+            }
+            for (int i = 0; i < Constants.VINYL_TINTS.Count(); i++)
+            {
+                ddl300WindowVinylTint.Items.Add(new ListItem(Constants.VINYL_TINTS[i], Constants.VINYL_TINTS[i]));
+            }
+            #endregion
+            #region 400
+            for (int i = 0; i < Constants.MODEL_400_WINDOW_COLOURS.Count(); i++)
+            {
+                ddl400WindowColour.Items.Add(new ListItem(Constants.MODEL_400_WINDOW_COLOURS[i], Constants.MODEL_400_WINDOW_COLOURS[i]));
+            }
+            for (int i = 0; i < Constants.GLASS_WINDOW_TINTS.Count(); i++)
+            {
+                ddl400WindowGlassTint.Items.Add(new ListItem(Constants.GLASS_WINDOW_TINTS[i], Constants.GLASS_WINDOW_TINTS[i]));
+            }
+            for (int i = 0; i < Constants.VINYL_TINTS.Count(); i++)
+            {
+                ddl400WindowVinylTint.Items.Add(new ListItem(Constants.VINYL_TINTS[i], Constants.VINYL_TINTS[i]));
+            }
+            #endregion
             #endregion
 
             #region Sunshade Options
