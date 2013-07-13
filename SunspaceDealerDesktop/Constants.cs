@@ -149,5 +149,54 @@ namespace SunspaceDealerDesktop
                 new ListItem("Wyoming", "WY")
             };
         #endregion
+
+        #region Doors
+            //Door types by model
+            //Door styles by model
+            //Door hardware by model
+            //Door colour by model
+            //Door glass tint by model
+            //Door vinyl tint by model
+            //Door screen tint by model
+        #endregion Doors
+
+        #region Windows
+            //Window types by model
+            //Window colours by model
+            //Window glass tint by model
+            //Window vinyl tint by model
+            //Window screen type by model
+        #endregion
+
+        #region Sunshades
+            //Sunshade valance colour by model
+            //Sunshade fabrics by model
+            //Sunshade openness by model
+        #endregion
+
+        #region Roofs
+            //Roof Types by model (All studio gable, NYI)
+            //Roof interior skins by model
+            //roof exterior skins by model
+            //roof thickness by model
+        #endregion
+
+        #region Floors
+            //Floor interior skins by model
+            //floor exterior skins by model
+            //floor thickness by model            
+        #endregion
+
+        #region Kneewalls
+            //Kneewall Types by model
+            //Kneewall glass tints by model
+        #endregion
+
+        #region Transom
+            //Transoms tyles by model
+            //Transom glass tints by model
+            //transom vinyl tints by model
+            //frame colours by model, is it the same as above?
+        #endregion
     }
 }
