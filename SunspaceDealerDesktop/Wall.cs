@@ -360,18 +360,18 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public float Slope
-        {
-            get
-            {
-                return slope;
-            }
+        //public float Slope
+        //{
+        //    get
+        //    {
+        //        return slope;
+        //    }
 
-            set
-            {
-                slope = value;
-            }
-        }
+        //    set
+        //    {
+        //        slope = value;
+        //    }
+        //}
 
         public List<Object> LinearItems
         {

@@ -29,8 +29,8 @@ namespace SunspaceDealerDesktop
         protected ListItem lst78 = new ListItem("7/8", ".875");
 
 
-        protected string currentModel = "M200";
-        protected float sofftLength = 0;
+        protected string currentModel;
+        protected float sofftLength;
 
         protected const int SUGGESTED_DEFAULT_FILLER = 2;
         protected const int PREFERRED_DEFAULT_FILLER = 2;
@@ -45,6 +45,8 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             /***hard coded variables***/
+            Session["model"] = "M200";
+            Session["soffitLength"] = 0F;
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
             //Session["coordList"] = "75,425,150,150,E,S/150,150,150,250,P,W/150,350,250,250,P,S/350,350,250,150,P,E/";
             //Session["coordList"] = "62.5,362.5,162.5,162.5,E,S/362.5,175,162.5,350,E,NW/175,175,350,162.5,E,E/175,262.5,287.5,287.5,P,S/262.5,262.5,287.5,237.5,P,E/262.5,125,237.5,237.5,P,N/125,125,237.5,162.5,P,E/";
@@ -55,7 +57,8 @@ namespace SunspaceDealerDesktop
             coordList = (string)Session["coordList"]; //get the string from the session and store it in a local variable for further use                                    
             strWalls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
             wallDetails = new string[strWalls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
-            
+            currentModel = (string)Session["model"];
+            sofftLength = (float)Session["soffitLength"];
             int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
             int proposedWallCount = 0; //used to determine how many proposed walls are in a drawing
 
@@ -1347,6 +1350,11 @@ namespace SunspaceDealerDesktop
             #endregion
         }
 
+        protected void windowOptions()
+        {
+
+        }
+
         protected void txtWallLengths_TextChanged(object sender, EventArgs e)
         { 
             
@@ -1410,7 +1418,7 @@ namespace SunspaceDealerDesktop
 
                 //string sof = wallSoffit.Value;
                 //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
-                walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel)));
+                walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel));
             }
         }
     }
