@@ -1290,7 +1290,7 @@
                         </div> <%-- end .toggleContent --%>
 
                 <%-- button to go to the next question --%>
-                <asp:Button ID="Button1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion2" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide2 --%>
@@ -1307,10 +1307,31 @@
                     <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion3" OnClick="createWallObjects" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
             </div>
             <%-- end #slide3 --%>
+
+
+             <%-- QUESTION 4 - WINDOW OPTIONS/DETAILS
+            ======================================== --%>
+
+            <div id="slide4" class="slide">
+                <h1>
+                    <asp:Label ID="lblWindowDetails" runat="server" Text="Window Details"></asp:Label>
+                </h1>        
+                              
+                <ul class="toggleOptions">
+                    <asp:PlaceHolder ID="wallWindowOptions" runat="server"></asp:PlaceHolder>                    
+                </ul>            
+
+                <asp:Button ID="btnQuestion4" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Submit" />
+
+            </div>
+            <%-- end #slide4 --%>
+
+
+
         </div> <%-- end .slide-wrapper --%>
 
     </div> 
