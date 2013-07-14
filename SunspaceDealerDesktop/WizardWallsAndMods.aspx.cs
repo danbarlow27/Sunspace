@@ -1368,7 +1368,7 @@ namespace SunspaceDealerDesktop
                 html += "<input id=\"hidWall" + i + "Length\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall length
                 html += "<input id=\"hidWall" + i + "RightFiller\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall right filler
                 html += "<input id=\"hidWall" + i + "SoffitLength\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall soffit length
-                html += "<input id=\"hidWall" + i + "Slope\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall slope
+                //html += "<input id=\"hidWall" + i + "Slope\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall slope
                 
             }
             return html; //return the hidden field tags
@@ -1388,20 +1388,20 @@ namespace SunspaceDealerDesktop
 
 
 
-            float length, startHeight, endHeight, soffit, slope;
+            float length, startHeight, endHeight, soffit;//, slope;
             string orientation, name, type, model;
             HiddenField wallLength, wallSoffit;
             for (int i = 0; i < strWalls.Count(); i++)
             {
                 //find and store the dynamically created hidden fields
                 wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField; //wall length
-                wallSoffit = hiddenFieldsDiv.FindControl("hidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
+                wallSoffit = hiddenFieldsDiv.FindControl("hzidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
 
                 //length = wallLength.Value;
                 //startHeight = Convert.ToSingle(hidBackWallHeight.Value);
                 //endHeight = Convert.ToSingle(hidFrontWallHeight.Value);
                 //soffit = Convert.ToSingle(wallSoffit.Value);
-                slope = Convert.ToSingle(hidRoofSlope.Value);
+               // slope = Convert.ToSingle(hidRoofSlope.Value);
 
                 orientation = wallDetails[i, 5];
                 name = "wall " + i;
@@ -1410,7 +1410,7 @@ namespace SunspaceDealerDesktop
 
                 //string sof = wallSoffit.Value;
                 //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
-                walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel, Convert.ToSingle(hidRoofSlope.Value)));
+                walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel)));
             }
         }
     }

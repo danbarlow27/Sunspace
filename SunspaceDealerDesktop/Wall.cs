@@ -22,7 +22,7 @@ namespace SunspaceDealerDesktop
         private float gablePeak;
         private float totalCornerLength;
         private float totalReceiverLength;
-        private float slope; //slope of the roof that is sitting on this wall
+        //private float slope; //slope of the roof that is sitting on this wall
         List<Object> linearItems = new List<Object>();
         List<Object> obstructions = new List<Object>();
         //colours?
@@ -45,11 +45,11 @@ namespace SunspaceDealerDesktop
             TotalReceiverLength = 0.0F;
             ModelType = "";
             GablePeak = 0.0F;
-            Slope = 0.0F;
+            //Slope = 0.0F;
         }
 
         //parameterized constructor to create wall objects after we have lengths, heights and doors.
-        public Wall(float length, string orientation, string name, string wallType, float startHeight, float endHeight, float soffitLength, string modelType, float slope)
+        public Wall(float length, string orientation, string name, string wallType, float startHeight, float endHeight, float soffitLength, string modelType)//, float slope)
         {
             Length = length;
             Orientation = orientation;
@@ -59,7 +59,7 @@ namespace SunspaceDealerDesktop
             EndHeight = endHeight;
             SoffitLength = soffitLength;
             ModelType = modelType;
-            Slope = slope;
+            //Slope = slope;
         }
 
         #endregion
