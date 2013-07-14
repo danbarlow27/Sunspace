@@ -9,10 +9,8 @@
         var detailsOfAllLines = '<%= (string)Session["coordList"] %>'; //all the coordinates and details of all the lines, coming from the session
         var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/"); //a list of individual lines and their coordinates and details 
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
-        for (var i = 0; i < lineList.length; i++) { 
+        for (var i = 0; i < lineList.length; i++) 
             coordList[i] = lineList[i].split(","); //populate the 2d array
-        }
-
         var wallSetBackArray = new Array(); //array to store the setback for each wall
         var wallSlopeArray = new Array(); //array to store slope of each wall
         var wallSoffitArray = new Array(); //array to store soffit length of each wall
@@ -130,20 +128,7 @@
             return decimal; //return the corrected decimal value as an array of two elements, 0: value before the decimal, 1: value after the decimal
         }
 
-        /**
-        This function calculates the slope (over 12), based on the given heights
-        @return slope over 12
-        */
-        function calculateSlope() {
-            var rise; //m = ((rise * run)/(projection - soffitLength)) slope over 12
-           
-            rise = ((document.getElementById("MainContent_txtBackWallHeight").value //textbox value
-                + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) //dropdown listitem value
-                - (document.getElementById("MainContent_txtFrontWallHeight").value //textbox value
-                + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value)); //dropdown listitem value
-
-            return (((rise * RUN) / (projection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
-        }
+        
 
 
 
@@ -200,7 +185,10 @@
         }
 
 
-        ///will there ever be a case when 2 walls may have different soffit length
+        /*
+        This function populates the wall soffit array by determining the orientation of each wall 
+            and checking to see if the soffit length would affect it or not 
+        */
         function determineSoffitLengthOfEachWall() {
             
             for (var index = 0; index < coordList.length; index++) {
@@ -241,6 +229,22 @@
                 }
             }
         }
+
+        /**
+        This function calculates the slope (over 12), based on the given heights
+        @return slope over 12
+        */
+        function calculateSlope() {
+            var rise; //m = ((rise * run)/(projection - soffitLength)) slope over 12
+
+            rise = ((document.getElementById("MainContent_txtBackWallHeight").value //textbox value
+                + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) //dropdown listitem value
+                - (document.getElementById("MainContent_txtFrontWallHeight").value //textbox value
+                + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value)); //dropdown listitem value
+
+            return (((rise * RUN) / (projection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
+        }
+
 
         /**
         This function calculates the rise based on the slope (over 12) and one of the heights
