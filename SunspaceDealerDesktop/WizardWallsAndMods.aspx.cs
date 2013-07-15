@@ -365,7 +365,7 @@ namespace SunspaceDealerDesktop
             for (int typeCount = 1; typeCount <= 4; typeCount++)
             {
                 //Conditional operator to set the current door type with the right label
-                string title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "OpeningOnly(NoDoor)";
+                string title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
 
                 //If logic to handle model 400's which don't have french doors
                 if (currentModel == "M400" && title == "French")
@@ -390,7 +390,7 @@ namespace SunspaceDealerDesktop
                     //Door type radio button label text
                     Label typeLabel = new Label();
                     typeLabel.AssociatedControlID = "radType" + i + title;    //Tying this label to the radio button
-                    if (title == "OpeningOnly(NoDoor)")
+                    if (title == "NoDoor")
                     {
                         typeLabel.Text = "Opening Only (No Door)";
                     }
@@ -623,10 +623,10 @@ namespace SunspaceDealerDesktop
                     ListItem thirtySix = new ListItem("36\"", "36");
                     ListItem sixty = new ListItem("60\"", "30");
                     ListItem seventyTwo = new ListItem("72\"", "36");
-                    ListItem fiveFeet = new ListItem("5'", "5");
-                    ListItem sixFeet = new ListItem("6'", "6");
-                    ListItem sevenFeet = new ListItem("7'", "7");
-                    ListItem eightFeet = new ListItem("8'", "8");
+                    ListItem fiveFeet = new ListItem("5'", "60");
+                    ListItem sixFeet = new ListItem("6'", "72");
+                    ListItem sevenFeet = new ListItem("7'", "84");
+                    ListItem eightFeet = new ListItem("8'", "96");
                     ListItem customWidth = new ListItem("Custom", "cWidth");
 
                     if (title == "Patio")
@@ -1321,7 +1321,7 @@ namespace SunspaceDealerDesktop
 
                     #region Table:# Row Add This Door (tblDoorDetails)
 
-                    if (title == "OpeningOnly(NoDoor)")
+                    if (title == "NoDoor")
                     {
                         doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This Opening Only (No Door)'/>"));
                         doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With Opening Only (No Doors)'/>"));
@@ -1362,14 +1362,6 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region Slide 3: Create pager divs for each wall, one for space remaining and one for doors added
-            //<div style="display: none" id="pagerThree">
-            //        <li>
-            //                <a href="#" data-slide="#slide3" class="slidePanel">
-            //                    <asp:Label ID="lblQuestion3Pager" runat="server" Text="Wall and Door Details"></asp:Label>
-            //                    <asp:Label ID="lblQuestion3PagerAnswer" runat="server" Text=""></asp:Label>
-            //                </a>
-            //        </li>
-            //    </div>
 
             #region Space Remaining LI Tag
 
