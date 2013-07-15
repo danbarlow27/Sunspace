@@ -112,22 +112,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddlInstallationType;
         
         /// <summary>
-        /// lblModelType control.
+        /// lblModelNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblModelType;
+        protected global::System.Web.UI.WebControls.Label lblModelNumber;
         
         /// <summary>
-        /// ddlModelType control.
+        /// ddlModelNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlModelType;
+        protected global::System.Web.UI.WebControls.DropDownList ddlModelNumber;
         
         /// <summary>
         /// lblLayoutDefault control.
@@ -715,22 +715,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl100SunshadeValanceColour;
         
         /// <summary>
-        /// lbl100SunshadeFabric control.
+        /// lbl100SunshadeFabricColour control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl100SunshadeFabric;
+        protected global::System.Web.UI.WebControls.Label lbl100SunshadeFabricColour;
         
         /// <summary>
-        /// ddl100SunshadeFabic control.
+        /// ddl100SunshadeFabricColour control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl100SunshadeFabic;
+        protected global::System.Web.UI.WebControls.DropDownList ddl100SunshadeFabricColour;
         
         /// <summary>
         /// lbl100SunshadeOpenness control.
@@ -1696,22 +1696,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl200SunshadeValanceColour;
         
         /// <summary>
-        /// lbl200SunshadeFabric control.
+        /// lbl200SunshadeFabricColour control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl200SunshadeFabric;
+        protected global::System.Web.UI.WebControls.Label lbl200SunshadeFabricColour;
         
         /// <summary>
-        /// ddl200SunshadeFabic control.
+        /// ddl200SunshadeFabricColour control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl200SunshadeFabic;
+        protected global::System.Web.UI.WebControls.DropDownList ddl200SunshadeFabricColour;
         
         /// <summary>
         /// lbl200SunshadeOpenness control.
@@ -2677,22 +2677,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl300SunshadeValanceColour;
         
         /// <summary>
-        /// lbl300SunshadeFabric control.
+        /// lbl300SunshadeFabricColour control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl300SunshadeFabric;
+        protected global::System.Web.UI.WebControls.Label lbl300SunshadeFabricColour;
         
         /// <summary>
-        /// ddl300SunshadeFabic control.
+        /// ddl300SunshadeFabricColour control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl300SunshadeFabic;
+        protected global::System.Web.UI.WebControls.DropDownList ddl300SunshadeFabricColour;
         
         /// <summary>
         /// lbl300SunshadeOpenness control.
@@ -3658,22 +3658,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl400SunshadeValanceColour;
         
         /// <summary>
-        /// lbl400SunshadeFabric control.
+        /// lbl400SunshadeFabricColour control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl400SunshadeFabric;
+        protected global::System.Web.UI.WebControls.Label lbl400SunshadeFabricColour;
         
         /// <summary>
-        /// ddl400SunshadeFabic control.
+        /// ddl400SunshadeFabricColour control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl400SunshadeFabic;
+        protected global::System.Web.UI.WebControls.DropDownList ddl400SunshadeFabricColour;
         
         /// <summary>
         /// lbl400SunshadeOpenness control.

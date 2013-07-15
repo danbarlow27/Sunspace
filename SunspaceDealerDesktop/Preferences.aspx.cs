@@ -38,9 +38,20 @@ namespace SunspaceDealerDesktop
             ddl100DefaultFiller.Items.Add(lst34);
             ddl100DefaultFiller.Items.Add(lst78);
 
+            #region General Preferences
+            for (int i = 0; i < Constants.INSTALLATION_TYPES.Count(); i++)
+            {
+                ddlInstallationType.Items.Add(new ListItem(Constants.INSTALLATION_TYPES[i], Constants.INSTALLATION_TYPES[i]));
+            }
+            for (int i = 0; i < Constants.MODEL_NUMBERS.Count(); i++)
+            {
+                ddlModelNumber.Items.Add(new ListItem(Constants.MODEL_NUMBERS[i], Constants.MODEL_NUMBERS[i]));
+            }
+            #endregion
+
             #region Wall Colours
-                #region 100
-                for (int i = 0; i < Constants.INTERIOR_WALL_COLOURS.Count(); i++)
+            #region 100
+            for (int i = 0; i < Constants.INTERIOR_WALL_COLOURS.Count(); i++)
                 {
                     ddl100InteriorPanelColour.Items.Add(new ListItem(Constants.INTERIOR_WALL_COLOURS[i], Constants.INTERIOR_WALL_COLOURS[i]));
                 }
@@ -216,14 +227,46 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region Sunshade Options
-                #region 100
-                #endregion
-                #region 200
-                #endregion
-                #region 300
-                #endregion
-                #region 400
-                #endregion
+            #region 100
+            for (int i = 0; i < Constants.SUNSHADE_VALANCE_COLOURS.Count(); i++)
+            {
+                ddl100SunshadeValanceColour.Items.Add(new ListItem(Constants.SUNSHADE_VALANCE_COLOURS[i], Constants.SUNSHADE_VALANCE_COLOURS[i]));
+            }
+            for (int i = 0; i < Constants.SUNSHADE_FABRIC_COLOURS.Count(); i++)
+            {
+                ddl100SunshadeFabricColour.Items.Add(new ListItem(Constants.SUNSHADE_FABRIC_COLOURS[i], Constants.SUNSHADE_FABRIC_COLOURS[i]));
+            }
+            #endregion
+            #region 200
+            for (int i = 0; i < Constants.SUNSHADE_VALANCE_COLOURS.Count(); i++)
+            {
+                ddl200SunshadeValanceColour.Items.Add(new ListItem(Constants.SUNSHADE_VALANCE_COLOURS[i], Constants.SUNSHADE_VALANCE_COLOURS[i]));
+            }
+            for (int i = 0; i < Constants.SUNSHADE_FABRIC_COLOURS.Count(); i++)
+            {
+                ddl200SunshadeFabricColour.Items.Add(new ListItem(Constants.SUNSHADE_FABRIC_COLOURS[i], Constants.SUNSHADE_FABRIC_COLOURS[i]));
+            }
+            #endregion
+            #region 300
+            for (int i = 0; i < Constants.SUNSHADE_VALANCE_COLOURS.Count(); i++)
+            {
+                ddl300SunshadeValanceColour.Items.Add(new ListItem(Constants.SUNSHADE_VALANCE_COLOURS[i], Constants.SUNSHADE_VALANCE_COLOURS[i]));
+            }
+            for (int i = 0; i < Constants.SUNSHADE_FABRIC_COLOURS.Count(); i++)
+            {
+                ddl300SunshadeFabricColour.Items.Add(new ListItem(Constants.SUNSHADE_FABRIC_COLOURS[i], Constants.SUNSHADE_FABRIC_COLOURS[i]));
+            }
+            #endregion
+            #region 400
+            for (int i = 0; i < Constants.SUNSHADE_VALANCE_COLOURS.Count(); i++)
+            {
+                ddl400SunshadeValanceColour.Items.Add(new ListItem(Constants.SUNSHADE_VALANCE_COLOURS[i], Constants.SUNSHADE_VALANCE_COLOURS[i]));
+            }
+            for (int i = 0; i < Constants.SUNSHADE_FABRIC_COLOURS.Count(); i++)
+            {
+                ddl400SunshadeFabricColour.Items.Add(new ListItem(Constants.SUNSHADE_FABRIC_COLOURS[i], Constants.SUNSHADE_FABRIC_COLOURS[i]));
+            }
+            #endregion
             #endregion
 
             #region Roof Options

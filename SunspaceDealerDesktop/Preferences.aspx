@@ -131,8 +131,8 @@
                                                     </li>
                                                     <li>
                                                         <%-- Model Type --%>
-                                                        <asp:Label ID="lblModelType" runat="server" Text="Model Type:"></asp:Label>
-                                                        <asp:DropDownList ID="ddlModelType" runat="server"></asp:DropDownList>
+                                                        <asp:Label ID="lblModelNumber" runat="server" Text="Model Type:"></asp:Label>
+                                                        <asp:DropDownList ID="ddlModelNumber" runat="server"></asp:DropDownList>
                                                     </li>
                                                     <li>
                                                         <%-- Layout --%>
@@ -324,8 +324,8 @@
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- Sunshade Fabric --%>
-                                                                                    <asp:Label ID="lbl100SunshadeFabric" runat="server" Text="Sunshade Fabric:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl100SunshadeFabic" runat="server"></asp:DropDownList>
+                                                                                    <asp:Label ID="lbl100SunshadeFabricColour" runat="server" Text="Sunshade Fabric:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl100SunshadeFabricColour" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- Sunshade Openness --%>
@@ -671,8 +671,8 @@
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- Sunshade Fabric --%>
-                                                                                    <asp:Label ID="lbl200SunshadeFabric" runat="server" Text="Sunshade Fabric:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl200SunshadeFabic" runat="server"></asp:DropDownList>
+                                                                                    <asp:Label ID="lbl200SunshadeFabricColour" runat="server" Text="Sunshade Fabric:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl200SunshadeFabricColour" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- Sunshade Openness --%>
@@ -1019,8 +1019,8 @@
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- Sunshade Fabric --%>
-                                                                                    <asp:Label ID="lbl300SunshadeFabric" runat="server" Text="Sunshade Fabric:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl300SunshadeFabic" runat="server"></asp:DropDownList>
+                                                                                    <asp:Label ID="lbl300SunshadeFabricColour" runat="server" Text="Sunshade Fabric:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl300SunshadeFabricColour" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- Sunshade Openness --%>
@@ -1367,8 +1367,8 @@
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- Sunshade Fabric --%>
-                                                                                    <asp:Label ID="lbl400SunshadeFabric" runat="server" Text="Sunshade Fabric:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl400SunshadeFabic" runat="server"></asp:DropDownList>
+                                                                                    <asp:Label ID="lbl400SunshadeFabricColour" runat="server" Text="Sunshade Fabric:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl400SunshadeFabricColour" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- Sunshade Openness --%>

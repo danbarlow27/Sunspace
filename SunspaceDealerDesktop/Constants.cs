@@ -9,6 +9,7 @@ namespace SunspaceDealerDesktop
 {
     public static class Constants
     {
+        public static string[] MODEL_NUMBERS = { "100", "200", "300", "400" };
         #region Default Preferences
         public const float DEFAULT_FILLER = 2.0F; //the default amount of filler to be placed on each side of a wall after a starter or post
         public const float MODEL_100_KNEEWALL_HEIGHT = 20;
@@ -42,8 +43,8 @@ namespace SunspaceDealerDesktop
 
         public static string[] VINYL_TINTS = { "Clear", "Smoke Grey", "Dark Grey", "Bronze" };
 
+        public static string[] INSTALLATION_TYPES = { "House", "Trailer", "Standalone" };
         //Glass, Vinyl, Screen, Panel, Open?
-        public static string[] KNEEWALL_TYPES = { "Solid Wall", "Tempered Glass" };
         public static string[] MODEL_100_TRANSOM_TYPES = { "Vinyl", "Screen", "Solid Wall" };
         public static string[] MODEL_200_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
         public static string[] MODEL_300_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
@@ -164,7 +165,7 @@ namespace SunspaceDealerDesktop
         #region Sunshades
         public static string[] SUNSHADE_VALANCE_COLOURS = { "White", "Driftwood", "Bronze" };
         public static string[] SUNSHADE_FABRIC_COLOURS = { "Chalk", "Alabaster", "Pebblestone", "Tobacco", "Ebony", "Greystone" };
-        public static string[] OPENNESS = { "3%", "5%", "15%" };
+        public static string[] SUNSHADE_OPENNESS = { "3%", "5%", "15%" };
         #endregion
 
         #region Roofs
