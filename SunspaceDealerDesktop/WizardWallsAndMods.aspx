@@ -9,15 +9,14 @@
         var detailsOfAllLines = '<%= (string)Session["coordList"] %>'; //all the coordinates and details of all the lines, coming from the session
         var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/"); //a list of individual lines and their coordinates and details 
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
-        for (var i = 0; i < lineList.length; i++) { 
+        for (var i = 0; i < lineList.length; i++) 
             coordList[i] = lineList[i].split(","); //populate the 2d array
-        }
-
         var wallSetBackArray = new Array(); //array to store the setback for each wall
         var wallSlopeArray = new Array(); //array to store slope of each wall
         var wallSoffitArray = new Array(); //array to store soffit length of each wall
         var wallStartHeightArray = new Array(); //array to store start height of each wall
         var wallEndHeightArray = new Array(); //array to store end height of each wall
+        var wallLengthArray = new Array(); //array to store the length of each wall
 
         var DOOR_MAX_WIDTH = '<%= DOOR_MAX_WIDTH %>';
         var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
@@ -129,24 +128,18 @@
             return decimal; //return the corrected decimal value as an array of two elements, 0: value before the decimal, 1: value after the decimal
         }
 
-        /**
-        This function calculates the slope (over 12), based on the given heights
-        @return slope over 12
+        
+
+
+
+        /*
+        This function determines start and end height of each wall based on roof slope and length.
+        
+
+        needs a bit of tune up...
+
+
         */
-        function calculateSlope() {
-            var rise; //m = ((rise * run)/(projection - soffitLength)) slope over 12
-           
-            rise = ((document.getElementById("MainContent_txtBackWallHeight").value //textbox value
-                + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) //dropdown listitem value
-                - (document.getElementById("MainContent_txtFrontWallHeight").value //textbox value
-                + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value)); //dropdown listitem value
-
-            return (((rise * RUN) / (projection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
-        }
-
-
-        ///what to do when there are multiple back and/or front walls
-
         function determineStartAndEndHeightOfEachWall() {
 
             var existingWallCount = 0;
@@ -154,75 +147,48 @@
 
             for (var i = 0; i < coordList.length; i++) {
                 if (coordList[i][4] === "E") { //existing wall
-                    if (coordList[i][5] === "S") {
+                    //if (coordList[i][5] === "S") {
+
+                    ///this is assuming that back wall is an existing wall...
+
                         wallStartHeightArray[i] = hidBackWallHeight.value;
                         wallEndHeightArray[i] = hidBackWallHeight.value;
-                    }
+                    //}
 
                 }
                 else { //proposed wall
+
+                    wallStartHeightArray[i] = wallEndHeightArray[i - 1];
+
                     switch(coordList[i][5]) {    
                         case "S": //if south
-                            break;
                         case "N": //or north
-                            break;
-                        case "SW": //or southwest
-                            break;
-                        case "NW": //or northwest
-                            break;
-                        case "SE": //or southeast
-                            break;
-                        case "NE": //or northeast
+                            wallEndHeightArray[i] = wallStartHeightArray[i];
                             break;
                         case "W": //if west
+                            wallEndHeightArray[i] = wallStartHeightArray[i] - ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
                             break;
                         case "E": //if east
-                            break;
-                    }
-
-                }
-                
-            }
-            
-        }
-
-        /*
-        function determineSlopeOfEachWall() {
-
-            var m = document.getElementById("MainContent_hidRoofSlope").value;
-
-            for (var index = 0; index < coordList.length; index++) {
-                if (coordList[index][4] === "E") //if existing wall  
-                    wallSlopeArray[index] = 0; //slope is unimportant
-                else { //if proposed wall
-                    //get the orientation of the proposed wall
-                    switch (coordList[index][5]) { //5 = orientation
-                        case "S": //if south
-                        case "N": //or north
-                            wallSlopeArray[index] = 0;
-                            break;
-                        case "W": //if west
-                            wallSlopeArray[index] = m;
-                            break;
-                        case "E": //if east
-                            wallSlopeArray[index] = -m;
+                            wallEndHeightArray[i] = wallStartHeightArray[i] + ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
                             break;
                         case "SW": //if southwest
-                        case "NW": //or northwest
-                                ///determine diagonal slope
+                        case "SE": //or northwest
+                            wallEndHeightArray[i] = wallStartHeightArray[i] - ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
                             break;
-                        case "SE": //if southeast
+                        case "NW": //if southeast
                         case "NE": //or northeast
-                                ///determine diagonal slope
+                            wallEndHeightArray[i] = wallStartHeightArray[i] + ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
                             break;
                     }
-                }
-            }
+                }   
+            }    
         }
+
+
+        /*
+        This function populates the wall soffit array by determining the orientation of each wall 
+            and checking to see if the soffit length would affect it or not 
         */
-
-
-        ///will there ever be a case when 2 walls may have different soffit length
         function determineSoffitLengthOfEachWall() {
             
             for (var index = 0; index < coordList.length; index++) {
@@ -265,6 +231,22 @@
         }
 
         /**
+        This function calculates the slope (over 12), based on the given heights
+        @return slope over 12
+        */
+        function calculateSlope() {
+            var rise; //m = ((rise * run)/(projection - soffitLength)) slope over 12
+
+            rise = ((document.getElementById("MainContent_txtBackWallHeight").value //textbox value
+                + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) //dropdown listitem value
+                - (document.getElementById("MainContent_txtFrontWallHeight").value //textbox value
+                + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value)); //dropdown listitem value
+
+            return (((rise * RUN) / (projection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
+        }
+
+
+        /**
         This function calculates the rise based on the slope (over 12) and one of the heights
         @return rise (from the slope equation)
         */
@@ -305,7 +287,7 @@
 
                     document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i]; //store wall setback 
                     document.getElementById("hidWall" + i + "LeftFiller").value = document.getElementById("MainContent_txtWall" + i + "LeftFiller").value + document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").selectedIndex].value; //store left filler
-                    document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value + document.getElementById("MainContent_ddlWall" + i + "InchFractions").options[document.getElementById("MainContent_ddlWall" + i + "InchFractions").selectedIndex].value; //store length
+                    wallLengthArray[i] = document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value + document.getElementById("MainContent_ddlWall" + i + "InchFractions").options[document.getElementById("MainContent_ddlWall" + i + "InchFractions").selectedIndex].value; //store length
                     document.getElementById("hidWall" + i + "RightFiller").value = document.getElementById("MainContent_txtWall" + i + "RightFiller").value + document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").selectedIndex].value; //store right filler
 
                     answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value; //store the values in the answer variable to be displayed
@@ -552,7 +534,6 @@
                         else if (document.getElementById('MainContent_radType' + wallCount + 'Patio').checked) {
 
                             var doorTitle = document.getElementById("MainContent_rowDoorTitle" + wallCount + "Patio");
-                            var doorStyle = document.getElementById("MainContent_rowDoorStyle" + wallCount + "Patio");
                             var doorColor = document.getElementById("MainContent_rowDoorColor" + wallCount + "Patio");
                             var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "Patio");
                             var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "Patio");
@@ -567,7 +548,6 @@
 
                             //General
                             doorTitle.style.display = "inherit";
-                            doorStyle.style.display = "inherit";
                             doorColor.style.display = "inherit";
                             doorHeight.style.display = "inherit";
                             doorWidth.style.display = "inherit";
@@ -579,6 +559,7 @@
                             doorOperatorRHH.style.display = "inherit";
                             doorNumberOfVents.style.display = "inherit";
                             doorPositionDDL.style.display = "inherit";
+                            doorScreenOptions.style.display = "inherit";
                         }
                         else if (document.getElementById('MainContent_radType' + wallCount + 'OpeningOnly(NoDoor)').checked) {
 
@@ -702,6 +683,8 @@
             return newDimension;
         }
 
+        
+
         //Used to insert items to specific array indices
         Array.prototype.insert = function (index, item) {
             this.splice(index, 0, item);
@@ -710,10 +693,11 @@
         //To be moved, used to store remain spaces on a wall
         var doors = new Array();
         var sortedDoors = new Array();
+        var wallDoors = new Array();
         var spacesRemaining;
         var finalText;
 
-        function checkDoors(usuableLength, dropDownName, dropDownValue) {
+        function checkDoor(usuableLength, dropDownName, dropDownValue) {
 
             var remainSpaces = new Array();
             var textToAdd = "";
@@ -771,7 +755,8 @@
 
             //Is valid disable appropriate dropdown item and change selected index
             if (isValid) {
-                if ($('#' + dropDownName).prop("selectedIndex") != "cPosition" ) {
+                if ($('#' + dropDownName).prop("selectedIndex") != "cPosition") {
+                    alert("Not custom position");
                     $('#' + dropDownName + ' option[value=' + dropDownValue + ']').attr('disabled', true);
                 }
                     //Not Working**************************************
@@ -787,13 +772,14 @@
                         break;                        
                     }
                 }
-                availableSpaceOutput(usuableLength);
+                availableSpaceOutput(usuableLength);                
             }
+            return isValid;
         }
 
         function availableSpaceOutput(usuableLength) {
 
-            var pagerText = document.getElementById("MainContent_lblQuestion3PagerAnswer");            
+            var pagerText = document.getElementById("MainContent_lblQuestion3PagerAnswer");
             var space = usuableLength;
             spacesRemaining = new Array();
 
@@ -876,7 +862,18 @@
                             doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": doorCustomPosition };
                         }
 
-                        checkDoors(usuableSpace, dropDownName, positionDropDown);
+                        if (checkDoor(usuableSpace, dropDownName, positionDropDown)) {
+                            var pagerText = document.getElementById("MainContent_lblQuestion3PagerAnswer");
+                            var deleteButton = document.createElement("input");
+                            deleteButton.id = "btnDeleteDoor" + (sortedDoors[sortedDoors.length - 1].index + 1) + type;
+                            deleteButton.setAttribute("type", "button");
+                            deleteButton.setAttribute("value", "X");
+                            deleteButton.setAttribute("onclick", "deleteDoor()");
+                            deleteButton.setAttribute("class", "btnSubmit");
+                            deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
+                            pagerText.innerHTML += "<br/>Door " + (sortedDoors[sortedDoors.length - 1].index + 1) + " " + type + " added"
+                            pagerText.appendChild(deleteButton);
+                        }
 
                         /********SECTION BELOW TO BE RETHOUGHT*********/
 
@@ -1112,14 +1109,23 @@
             }
         }
 
-        function onWallRadioChange() {
+        //TO BE COMPLETED
+        function onWallRadioChange(wallId) {
             //Store doors and sortedDoors arrays
             //Reset their values
+            alert("On blur/lost focus")
+            wallDoors[wallDoors.length] = {"wallId": wallId, "doors": sortedDoors };
         }
 
+        //TO BE COMPLETED
         function onTypeRadioChange() {
             //Check previously disabled items in dropdown
             //Disable the same ones in all door types? Or perform this as their disabled in checkDoor()?
+        }
+
+        //TO BE COMPLETED
+        function deleteDoor() {
+            //Delete the text and door from respective door
         }
 
     </script>
@@ -1297,7 +1303,7 @@
                         </div> <%-- end .toggleContent --%>
 
                 <%-- button to go to the next question --%>
-                <asp:Button ID="Button1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion2" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide2 --%>
@@ -1314,10 +1320,31 @@
                     <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion3" OnClick="createWallObjects" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
 
             </div>
             <%-- end #slide3 --%>
+
+
+             <%-- QUESTION 4 - WINDOW OPTIONS/DETAILS
+            ======================================== --%>
+
+            <div id="slide4" class="slide">
+                <h1>
+                    <asp:Label ID="lblWindowDetails" runat="server" Text="Window Details"></asp:Label>
+                </h1>        
+                              
+                <ul class="toggleOptions">
+                    <asp:PlaceHolder ID="wallWindowOptions" runat="server"></asp:PlaceHolder>                    
+                </ul>            
+
+                <asp:Button ID="btnQuestion4" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Submit" />
+
+            </div>
+            <%-- end #slide4 --%>
+
+
+
         </div> <%-- end .slide-wrapper --%>
 
     </div> 
@@ -1362,7 +1389,7 @@
                 <div style="display: none" id="pagerThree">
                     <li>
                             <a href="#" data-slide="#slide3" class="slidePanel">
-                                <asp:Label ID="lblQuestion3Pager" runat="server" Text="Wall Length Left"></asp:Label>
+                                <asp:Label ID="lblQuestion3Pager" runat="server" Text="Wall and Door Details"></asp:Label>
                                 <asp:Label ID="lblQuestion3PagerAnswer" runat="server" Text="Question 3 Answer"></asp:Label>
                             </a>
                     </li>

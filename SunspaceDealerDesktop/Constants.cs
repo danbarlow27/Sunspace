@@ -142,8 +142,34 @@ namespace SunspaceDealerDesktop
             };
         #endregion
 
+        #region Walls
+        //public enum WALL_TYPE
+        //{
+        //    EXISTING = "E",
+        //    PROPOSED = "P",
+        //    //others...
+        //};
+
+        //public enum WALL_FACING
+        //{
+        //    SOUTH = "S",
+        //    NORTH = "N",
+        //    SOUTH_WEST = "SW",
+        //    SOUTH_EAST = "SE",
+        //    NORTH_WEST = "NW",
+        //    NORTH_EAST = "NE",
+        //    WEST = "W",
+        //    EAST = "E"
+        //};
+
+        public const float MINIMUM_WALL_HEIGHT = 0F;
+        public const float MINIMUM_WALL_LENGTH = 0F;
+        //more constants
+
+        #endregion
+
         #region Doors
-            //Door types by model
+        //Door types by model
             //Door styles by model
             //Door hardware by model
             //Door colour by model

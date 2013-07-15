@@ -238,13 +238,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblAutoRoofSlope;
         
         /// <summary>
-        /// Button1 control.
+        /// btnQuestion2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btnQuestion2;
         
         /// <summary>
         /// lblDoorDetails control.
@@ -272,6 +272,33 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnQuestion3;
+        
+        /// <summary>
+        /// lblWindowDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblWindowDetails;
+        
+        /// <summary>
+        /// wallWindowOptions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder wallWindowOptions;
+        
+        /// <summary>
+        /// btnQuestion4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnQuestion4;
         
         /// <summary>
         /// lblWallLengthsSlidePanel control.

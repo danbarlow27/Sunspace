@@ -29,28 +29,38 @@ namespace SunspaceDealerDesktop
         protected ListItem lst78 = new ListItem("7/8", ".875");
 
 
-        protected string currentModel = "M200";
-        protected float sofftLength = 0;
+        protected string currentModel;
+        protected float sofftLength;
 
         protected const int SUGGESTED_DEFAULT_FILLER = 2;
-        protected const int PREFERRED_DEFAULT_FILLER = 0;
+        protected const int PREFERRED_DEFAULT_FILLER = 2;
 
         /***hard coded variables***/
-        string coordList; //to store the string from the session and store it in a local variable for further use                                    
-        char[] lineDelimiter = { '/' }; //character(s) that seperate lines in a session string variable
-        char[] detailsDelimiter = { ',' }; //character(s) that seperate details of each line                                 
-        string[] strWalls; //to split the string received from session and store it into an array of strings with individual line details
-        string[,] wallDetails; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
+        protected string coordList; //to store the string from the session and store it in a local variable for further use                                    
+        protected char[] lineDelimiter = { '/' }; //character(s) that seperate lines in a session string variable
+        protected char[] detailsDelimiter = { ',' }; //character(s) that seperate details of each line                                 
+        protected string[] strWalls; //to split the string received from session and store it into an array of strings with individual line details
+        protected string[,] wallDetails; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
 
         protected void Page_Load(object sender, EventArgs e)
         {
             /***hard coded variables***/
-            Session["coordList"] = "100,412.5,137.5,137.5,E,S/150,150,137.5,287.5,P,W/150,225,287.5,362.5,P,SW/225,312.5,362.5,362.5,P,S/312,387.5,362.5,287.5,P,SE/387.5,387.5,287.5,137.5,P,E/";
+            Session["model"] = "M200";
+            Session["soffitLength"] = 0F;
+            /****************diffrent sunroom layouts******************/
+            //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
+            //Session["coordList"] = "75,425,150,150,E,S/150,150,150,250,P,W/150,350,250,250,P,S/350,350,250,150,P,E/";
+            //Session["coordList"] = "62.5,362.5,162.5,162.5,E,S/362.5,175,162.5,350,E,NW/175,175,350,162.5,E,E/175,262.5,287.5,287.5,P,S/262.5,262.5,287.5,237.5,P,E/262.5,125,237.5,237.5,P,N/125,125,237.5,162.5,P,E/";
+            Session["coordList"] = "50,300,250,250,E,S/300,300,250,25,E,E/175,175,250,375,P,W/175,425,375,375,P,S/425,425,375,125,P,E/425,300,125,125,P,N/";
+            //Session["coordList"] = "75,262.5,175,175,E,S/262.5,262.5,175,200,E,W/262.5,425,200,200,E,S/150,150,175,300,P,W/150,350,300,300,P,S/350,350,300,200,P,E/";
+            //Session["coordList"] = "100,412.5,137.5,137.5,E,S/150,150,137.5,287.5,P,W/150,225,287.5,362.5,P,SW/225,312.5,362.5,362.5,P,S/312,387.5,362.5,287.5,P,SE/387.5,387.5,287.5,137.5,P,E/";
             //Session["coordList"] = "112.5,350,112.5,112.5,E,S/350,350,112.5,337.5,E,W/175,175,112.5,262.5,P,W/175,350,262.5,262.5,P,S/";
+            /**********************************************************/
             coordList = (string)Session["coordList"]; //get the string from the session and store it in a local variable for further use                                    
             strWalls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
             wallDetails = new string[strWalls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
-            
+            currentModel = (string)Session["model"];
+            sofftLength = (float)Session["soffitLength"];
             int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
             int proposedWallCount = 0; //used to determine how many proposed walls are in a drawing
 
@@ -325,6 +335,7 @@ namespace SunspaceDealerDesktop
             RadioButton wallRadio = new RadioButton();
             wallRadio.ID = "radWall" + i;     //Giving an appropriate id to radio buttons based on current wall
             wallRadio.GroupName = "doorWallRadios";     //Giving an appropriate group name to all wall radio buttons
+            wallRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
 
             //Label to create clickable area for radio button
             Label wallLabelRadio = new Label();
@@ -446,13 +457,14 @@ namespace SunspaceDealerDesktop
                     }
                     else if (currentModel == "M200")
                     {
-                        doorStyleDDL.Items.Add(fullScreen);
+                        //doorStyleDDL.Items.Add(fullScreen);
                         doorStyleDDL.Items.Add(v4TCabana);
                         doorStyleDDL.Items.Add(fullView);
+                        doorStyleDDL.Items.Add(fullViewColonial);
                     }
                     else if (currentModel == "M300")
                     {
-                        doorStyleDDL.Items.Add(fullScreen);
+                        //doorStyleDDL.Items.Add(fullScreen);
                         doorStyleDDL.Items.Add(fullView);
                         doorStyleDDL.Items.Add(fullViewColonial);
                     }
@@ -1342,6 +1354,53 @@ namespace SunspaceDealerDesktop
             #endregion
         }
 
+        protected void windowOptions()
+        {
+            switch (currentModel)
+            {
+                case "M100":
+                    /*
+                     * 		- screen (Default)
+			                    - screen type (better vue insect screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen)
+                     */
+                    break;
+                case "M200":
+                    /*
+                     * 		- V4T (Default)
+			                    - V4T tints (clear, smoke grey, dark grey, bronze, Mixed)
+		                    - Horizontal 2 Track[XX]
+			                    - H2T (vinyl) tints (clear, smoke grey, dark grey, bronze)
+		                    - fixed vinyl windows
+			                    - fixed window tints (clear, smoke grey, dark grey, bronze)
+		                    - open wall
+		                    - solid wall
+		                    - screen type (better vue insect screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen)
+                     */
+                    break;
+                case "M300":
+                    /*
+                     * 		- Single Pane Horizontal Rollers [XX] (Default)
+			                    - glass tint (grey, bronze, clear)
+		                    - fixed windows
+			                    - fixed window tints (grey, bronze, clear)
+		                    - open wall
+		                    - solid wall
+		                    - screen type (better vue insect screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen)
+                     */
+                    break;
+                case "M400":
+                    /*
+                     * 		- Double Pane Single Sliders[XO, OX] (Default): is there a default on XO or OX?
+			                    - glass tint (grey, bronze, clear)
+		                    - fixed windows
+			                    - fixed window tints (grey, bronze, clear)
+		                    - open wall
+		                    - solid wall
+                     */
+                    break;
+            }
+        }
+
         protected void txtWallLengths_TextChanged(object sender, EventArgs e)
         { 
             
@@ -1363,7 +1422,7 @@ namespace SunspaceDealerDesktop
                 html += "<input id=\"hidWall" + i + "Length\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall length
                 html += "<input id=\"hidWall" + i + "RightFiller\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall right filler
                 html += "<input id=\"hidWall" + i + "SoffitLength\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall soffit length
-                html += "<input id=\"hidWall" + i + "Slope\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall slope
+                //html += "<input id=\"hidWall" + i + "Slope\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall slope
                 
             }
             return html; //return the hidden field tags
@@ -1383,20 +1442,20 @@ namespace SunspaceDealerDesktop
 
 
 
-            float length, startHeight, endHeight, soffit, slope;
+            float length, startHeight, endHeight, soffit;//, slope;
             string orientation, name, type, model;
             HiddenField wallLength, wallSoffit;
             for (int i = 0; i < strWalls.Count(); i++)
             {
                 //find and store the dynamically created hidden fields
                 wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField; //wall length
-                wallSoffit = hiddenFieldsDiv.FindControl("hidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
+                wallSoffit = hiddenFieldsDiv.FindControl("hzidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
 
                 //length = wallLength.Value;
                 //startHeight = Convert.ToSingle(hidBackWallHeight.Value);
                 //endHeight = Convert.ToSingle(hidFrontWallHeight.Value);
                 //soffit = Convert.ToSingle(wallSoffit.Value);
-                slope = Convert.ToSingle(hidRoofSlope.Value);
+               // slope = Convert.ToSingle(hidRoofSlope.Value);
 
                 orientation = wallDetails[i, 5];
                 name = "wall " + i;
@@ -1405,7 +1464,7 @@ namespace SunspaceDealerDesktop
 
                 //string sof = wallSoffit.Value;
                 //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
-                walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel, Convert.ToSingle(hidRoofSlope.Value)));
+                walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel));
             }
         }
     }
