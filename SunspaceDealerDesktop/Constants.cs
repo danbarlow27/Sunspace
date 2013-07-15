@@ -172,6 +172,7 @@ namespace SunspaceDealerDesktop
 
         public const float MINIMUM_WALL_HEIGHT = 0F;
         public const float MINIMUM_WALL_LENGTH = 0F;
+        //more constants
 
         #endregion
 
