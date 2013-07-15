@@ -446,13 +446,14 @@ namespace SunspaceDealerDesktop
                     }
                     else if (currentModel == "M200")
                     {
-                        doorStyleDDL.Items.Add(fullScreen);
+                        //doorStyleDDL.Items.Add(fullScreen);
                         doorStyleDDL.Items.Add(v4TCabana);
                         doorStyleDDL.Items.Add(fullView);
+                        doorStyleDDL.Items.Add(fullViewColonial);
                     }
                     else if (currentModel == "M300")
                     {
-                        doorStyleDDL.Items.Add(fullScreen);
+                        //doorStyleDDL.Items.Add(fullScreen);
                         doorStyleDDL.Items.Add(fullView);
                         doorStyleDDL.Items.Add(fullViewColonial);
                     }

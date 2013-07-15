@@ -552,7 +552,6 @@
                         else if (document.getElementById('MainContent_radType' + wallCount + 'Patio').checked) {
 
                             var doorTitle = document.getElementById("MainContent_rowDoorTitle" + wallCount + "Patio");
-                            var doorStyle = document.getElementById("MainContent_rowDoorStyle" + wallCount + "Patio");
                             var doorColor = document.getElementById("MainContent_rowDoorColor" + wallCount + "Patio");
                             var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "Patio");
                             var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "Patio");
@@ -567,7 +566,6 @@
 
                             //General
                             doorTitle.style.display = "inherit";
-                            doorStyle.style.display = "inherit";
                             doorColor.style.display = "inherit";
                             doorHeight.style.display = "inherit";
                             doorWidth.style.display = "inherit";
@@ -579,6 +577,7 @@
                             doorOperatorRHH.style.display = "inherit";
                             doorNumberOfVents.style.display = "inherit";
                             doorPositionDDL.style.display = "inherit";
+                            doorScreenOptions.style.display = "inherit";
                         }
                         else if (document.getElementById('MainContent_radType' + wallCount + 'OpeningOnly(NoDoor)').checked) {
 
@@ -701,6 +700,8 @@
 
             return newDimension;
         }
+
+        
 
         //Used to insert items to specific array indices
         Array.prototype.insert = function (index, item) {
@@ -883,6 +884,7 @@
                             deleteButton.id = "btnDeleteDoor" + (sortedDoors[sortedDoors.length - 1].index + 1) + type;
                             deleteButton.setAttribute("type", "button");
                             deleteButton.setAttribute("value", "X");
+                            deleteButton.setAttribute("onclick", "deleteDoor()");
                             deleteButton.setAttribute("class", "btnSubmit");
                             deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
                             pagerText.innerHTML += "<br/>Door " + (sortedDoors[sortedDoors.length - 1].index + 1) + " " + type + " added"
@@ -1123,14 +1125,21 @@
             }
         }
 
+        //TO BE COMPLETED
         function onWallRadioChange() {
             //Store doors and sortedDoors arrays
             //Reset their values
         }
 
+        //TO BE COMPLETED
         function onTypeRadioChange() {
             //Check previously disabled items in dropdown
             //Disable the same ones in all door types? Or perform this as their disabled in checkDoor()?
+        }
+
+        //TO BE COMPLETED
+        function deleteDoor() {
+            //Delete the text and door from respective door
         }
 
     </script>
