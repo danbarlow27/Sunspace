@@ -693,6 +693,7 @@
         //To be moved, used to store remain spaces on a wall
         var doors = new Array();
         var sortedDoors = new Array();
+        var wallDoors = new Array();
         var spacesRemaining;
         var finalText;
 
@@ -754,7 +755,8 @@
 
             //Is valid disable appropriate dropdown item and change selected index
             if (isValid) {
-                if ($('#' + dropDownName).prop("selectedIndex") != "cPosition" ) {
+                if ($('#' + dropDownName).prop("selectedIndex") != "cPosition") {
+                    alert("Not custom position");
                     $('#' + dropDownName + ' option[value=' + dropDownValue + ']').attr('disabled', true);
                 }
                     //Not Working**************************************
@@ -1108,9 +1110,11 @@
         }
 
         //TO BE COMPLETED
-        function onWallRadioChange() {
+        function onWallRadioChange(wallId) {
             //Store doors and sortedDoors arrays
             //Reset their values
+            alert("On blur/lost focus")
+            wallDoors[wallDoors.length] = {"wallId": wallId, "doors": sortedDoors };
         }
 
         //TO BE COMPLETED
