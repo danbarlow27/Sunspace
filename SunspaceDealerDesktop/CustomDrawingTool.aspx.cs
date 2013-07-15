@@ -26,36 +26,36 @@ namespace SunspaceDealerDesktop
             //Adds the concatenated string from the hidden field to the Session in C#
             Session.Add("testing", hiddenVar.Value);
 
-            //Character array to hold the delimiters to parse the string being passed from Javascript/Client-side
-            char[] charDelimiter = { ',', '/' };
+            ////Character array to hold the delimiters to parse the string being passed from Javascript/Client-side
+            //char[] charDelimiter = { ',', '/' };
 
-            //Array of values from the hidden field string without all the delimiters
-            string[] lineInfo = (hiddenVar.Value).Split(charDelimiter, StringSplitOptions.RemoveEmptyEntries);
+            ////Array of values from the hidden field string without all the delimiters
+            //string[] lineInfo = (hiddenVar.Value).Split(charDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
-            //Number of elements per line
-            int numberOfElements = 6;
+            ////Number of elements per line
+            //int numberOfElements = 6;
 
-            //Calculated amount of lines that are being passed
-            int numberOfWalls = lineInfo.Length / numberOfElements;
+            ////Calculated amount of lines that are being passed
+            //int numberOfWalls = lineInfo.Length / numberOfElements;
 
-            //Rectangular array to hold individual line information (i.e. newArray[0,0] to newArray[0,6] is all the information of the first line)
-            string[,] newArray = new string[numberOfWalls, numberOfElements];
+            ////Rectangular array to hold individual line information (i.e. newArray[0,0] to newArray[0,6] is all the information of the first line)
+            //string[,] newArray = new string[numberOfWalls, numberOfElements];
 
-            //Outer loop to handle the amount of walls/lines being passed
-            for (int i = 0; i < numberOfWalls; i++)
-            {
-                //Inner loop to handle the amount of variables arguments which belong to each line (6 variables to store, constant)
-                for (int j = 0; j < numberOfElements; j++)
-                {
-                    //Storing line information to their respective place in the array
-                    newArray[i, j] = lineInfo[(numberOfElements*i)+j];
-                }
-            }
+            ////Outer loop to handle the amount of walls/lines being passed
+            //for (int i = 0; i < numberOfWalls; i++)
+            //{
+            //    //Inner loop to handle the amount of variables arguments which belong to each line (6 variables to store, constant)
+            //    for (int j = 0; j < numberOfElements; j++)
+            //    {
+            //        //Storing line information to their respective place in the array
+            //        newArray[i, j] = lineInfo[(numberOfElements*i)+j];
+            //    }
+            //}
 
-            Session.Add("numberOfWalls", numberOfWalls);
-            Session.Add("numberOfElements", numberOfElements);
-            //Adding one element to the session for testing purposes
-            Session.Add("testArray", newArray);
+            //Session.Add("numberOfWalls", numberOfWalls);
+            //Session.Add("numberOfElements", numberOfElements);
+            ////Adding one element to the session for testing purposes
+            //Session.Add("testArray", newArray);
 
             //Redirect to test page to see if information is being passed properly
             Response.Redirect("TestingHiddens.aspx");

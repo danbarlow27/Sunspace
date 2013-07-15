@@ -11,7 +11,7 @@ namespace SunspaceDealerDesktop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //testField.InnerText = Session["testing"].ToString();
+            testField.InnerText = (string)Session["testing"];
             //string[] newViewingArray = (string[])Session["viewingArray"];
 
             //for (int i = 0; i < newViewingArray.Length; i++)
@@ -19,19 +19,19 @@ namespace SunspaceDealerDesktop
             //    formattedOutput.InnerHtml += newViewingArray[i].ToString() + "<br />";
             //}
 
-            int numOfWalls = (int)Session["numberOfWalls"];
+            //int numOfWalls = (int)Session["numberOfWalls"];
 
-            int numOfElements = (int)Session["numberOfElements"];
+            //int numOfElements = (int)Session["numberOfElements"];
 
-            string[,] testArray = (string[,])Session["testArray"];
+            //string[,] testArray = (string[,])Session["testArray"];
 
-            for (int i = 0; i < numOfWalls; i++)
-            {
-                for (int j = 0; j < numOfElements; j++)
-                {
-                    formattedOutput.InnerHtml += testArray[i, j].ToString() + "<br />";
-                }
-            }
+            //for (int i = 0; i < numOfWalls; i++)
+            //{
+            //    for (int j = 0; j < numOfElements; j++)
+            //    {
+            //        formattedOutput.InnerHtml += testArray[i, j].ToString() + "<br />";
+            //    }
+            //}
         }
     }
 }
