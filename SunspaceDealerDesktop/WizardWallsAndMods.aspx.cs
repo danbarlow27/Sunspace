@@ -335,7 +335,7 @@ namespace SunspaceDealerDesktop
             RadioButton wallRadio = new RadioButton();
             wallRadio.ID = "radWall" + i;     //Giving an appropriate id to radio buttons based on current wall
             wallRadio.GroupName = "doorWallRadios";     //Giving an appropriate group name to all wall radio buttons
-            wallRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
+            wallRadio.Attributes.Add("onclick", "onWallRadioChange(\"" + i + "\")");
 
             //Label to create clickable area for radio button
             Label wallLabelRadio = new Label();
@@ -1321,15 +1321,23 @@ namespace SunspaceDealerDesktop
 
                     #region Table:# Row Add This Door (tblDoorDetails)
 
-                    doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
-                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
-                    doorUndoButtonCell.Controls.Add(new LiteralControl("<input id='btnUndoLastAddition" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Undo Last Addition Doors'/>"));
+                    if (title == "OpeningOnly(NoDoor)")
+                    {
+                        doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This Opening Only (No Door)'/>"));
+                        doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With Opening Only (No Doors)'/>"));
+                    }
+                    else
+                    {
+                        doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
+                        doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
+                    }
+                    //doorUndoButtonCell.Controls.Add(new LiteralControl("<input id='btnUndoLastAddition" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Undo Last Addition Doors'/>"));
 
                     tblDoorDetails.Rows.Add(doorButtonRow);
 
                     doorButtonRow.Cells.Add(doorAddButtonCell);
                     doorButtonRow.Cells.Add(doorFillButtonCell);
-                    doorButtonRow.Cells.Add(doorUndoButtonCell);
+                    //doorButtonRow.Cells.Add(doorUndoButtonCell);
 
                     #endregion
 
@@ -1350,6 +1358,68 @@ namespace SunspaceDealerDesktop
             #endregion
             //Closing more necessary tags
             wallDoorOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>"));
+
+            #endregion
+
+            #region Slide 3: Create pager divs for each wall, one for space remaining and one for doors added
+            //<div style="display: none" id="pagerThree">
+            //        <li>
+            //                <a href="#" data-slide="#slide3" class="slidePanel">
+            //                    <asp:Label ID="lblQuestion3Pager" runat="server" Text="Wall and Door Details"></asp:Label>
+            //                    <asp:Label ID="lblQuestion3PagerAnswer" runat="server" Text=""></asp:Label>
+            //                </a>
+            //        </li>
+            //    </div>
+
+            #region Space Remaining LI Tag
+
+            pager3Information.Controls.Add(new LiteralControl("<li id=\"wall" + i + "SpaceRemaining\" style='display:none;' >"));
+
+            pager3Information.Controls.Add(new LiteralControl("<a href=\"#\" data-slide=\"#slide3\" class=\"slidePanel\""));
+
+            Label lblQuestion3SpaceInfo = new Label();
+            lblQuestion3SpaceInfo.ID = "lblQuestion3SpaceInfoWall" + i;
+            lblQuestion3SpaceInfo.Attributes.Add("runat", "server");
+            lblQuestion3SpaceInfo.Text = "Wall and Door Details";
+
+            Label lblQuestion3SpaceInfoAnswer = new Label();
+            lblQuestion3SpaceInfoAnswer.ID = "lblQuestion3SpaceInfoWallAnswer" + i;
+            lblQuestion3SpaceInfoAnswer.Attributes.Add("runat", "server");
+            lblQuestion3SpaceInfoAnswer.Text = "";
+
+            pager3Information.Controls.Add(lblQuestion3SpaceInfo);
+            pager3Information.Controls.Add(lblQuestion3SpaceInfoAnswer);
+
+            pager3Information.Controls.Add(new LiteralControl("</a>"));
+
+            pager3Information.Controls.Add(new LiteralControl("</li>"));
+
+            #endregion
+
+            #region Doors Added LI Tag
+
+            pager3Information.Controls.Add(new LiteralControl("<li id=\"wall" + i + "DoorsAdded\" style='display:none;' >"));
+
+            pager3Information.Controls.Add(new LiteralControl("<a href=\"#\" data-slide=\"#slide3\" class=\"slidePanel\""));
+
+            Label lblQuestion3DoorsInfo = new Label();
+            lblQuestion3DoorsInfo.ID = "lblQuestion3DoorsInfoWall" + i;
+            lblQuestion3DoorsInfo.Attributes.Add("runat", "server");
+            lblQuestion3DoorsInfo.Text = "";
+
+            Label lblQuestion3DoorsInfoAnswer = new Label();
+            lblQuestion3DoorsInfoAnswer.ID = "lblQuestion3DoorsInfoWallAnswer" + i;
+            lblQuestion3DoorsInfoAnswer.Attributes.Add("runat", "server");
+            lblQuestion3DoorsInfoAnswer.Text = "";
+
+            pager3Information.Controls.Add(lblQuestion3DoorsInfo);
+            pager3Information.Controls.Add(lblQuestion3DoorsInfoAnswer);
+
+            pager3Information.Controls.Add(new LiteralControl("</a>"));
+
+            pager3Information.Controls.Add(new LiteralControl("</li>"));
+
+            #endregion
 
             #endregion
         }
