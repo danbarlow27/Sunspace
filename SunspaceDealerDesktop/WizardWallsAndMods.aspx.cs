@@ -143,7 +143,11 @@ namespace SunspaceDealerDesktop
             }
             #endregion
 
-            
+
+
+            //do the windows stuff
+            windowOptions();
+
 
         }
 
@@ -1352,6 +1356,8 @@ namespace SunspaceDealerDesktop
             wallDoorOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>"));
 
             #endregion
+
+
         }
 
         protected void windowOptions()
@@ -1363,6 +1369,7 @@ namespace SunspaceDealerDesktop
                      * 		- screen (Default)
 			                    - screen type (better vue insect screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen)
                      */
+                    screenWindowOptions();
                     break;
                 case "M200":
                     /*
@@ -1376,6 +1383,7 @@ namespace SunspaceDealerDesktop
 		                    - solid wall
 		                    - screen type (better vue insect screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen)
                      */
+                    v4tWindowOptions();
                     break;
                 case "M300":
                     /*
@@ -1399,6 +1407,404 @@ namespace SunspaceDealerDesktop
                      */
                     break;
             }
+        }
+
+        protected void screenWindowOptions()
+        {
+            RadioButton screenRadio, typeRadio;
+            Label screenLabelRadio, screenLabel, typeLabelRadio, typeLabel;
+            
+            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+            //RadioButton created for every option
+            screenRadio = new RadioButton();
+            screenRadio.ID = "radScreen";     //Giving an appropriate id to radio buttons based on current type of window
+            screenRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
+            screenRadio.Checked = (currentModel == "M100") ? true : false; //select/check the radio button if current selection is default value
+            //screenRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
+
+            //Label to create clickable area for radio button
+            screenLabelRadio = new Label();
+            screenLabelRadio.AssociatedControlID = "radScreen";   //Tying this label to the radio button
+
+            screenLabel = new Label();
+            screenLabel.AssociatedControlID = "radScreen";        //Tying this label to the radio button
+            screenLabel.Text = "Screen";       //Adding text to the radio button
+
+            wallWindowOptions.Controls.Add(screenRadio);        //Adding radio button control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(screenLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(screenLabel);        //Adding label control to placeholder wallWindowOptions
+
+            //Creating div tag to hold all the current window type information 
+            wallWindowOptions.Controls.Add(new LiteralControl("<div id=\"screenWindowDetails\" class=\"toggleContent\">"));
+
+            //Creating one ul tag to hold multiple li tags containing screen window types
+            wallWindowOptions.Controls.Add(new LiteralControl("<ul><li><ul id='screenDetailsList' class='toggleOptions'>"));
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            #region Better Vue Insect Screen
+
+            //li tag to hold window type radio button and all its content
+            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+            //Window type radio button
+            typeRadio = new RadioButton();
+            typeRadio.ID = "radBetterVueInsectScreen"; //Adding appropriate id to window type radio button
+            typeRadio.GroupName = "ScreenRadios";         //Adding group name for all window types
+            typeRadio.Checked = (currentModel == "M100") ? true : false; //select/check the radio button if current select is defualt value
+            //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+            //Window type radio button label for clickable area
+            typeLabelRadio = new Label();
+            typeLabelRadio.AssociatedControlID = "radBetterVueInsectScreen";  //Tying this label to the radio button
+
+            //Window type radio button label text
+            typeLabel = new Label();
+            typeLabel.AssociatedControlID = "radBetterVueInsectScreen";    //Tying this label to the radio button
+            typeLabel.Text = "Better Vue Insect Screen";
+
+            wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+            #endregion
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            #region No See Ums 20x20 Mesh
+
+            //li tag to hold window type radio button and all its content
+            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+            //window type radio button
+            typeRadio = new RadioButton();
+            typeRadio.ID = "radNoSeeUms20x20Mesh"; //Adding appropriate id to window type radio button
+            typeRadio.GroupName = "ScreenRadios";         //Adding group name for all window types
+            //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+            //window type radio button label for clickable area
+            typeLabelRadio = new Label();
+            typeLabelRadio.AssociatedControlID = "radNoSeeUms20x20Mesh";  //Tying this label to the radio button
+
+            //window type radio button label text
+            typeLabel = new Label();
+            typeLabel.AssociatedControlID = "radNoSeeUms20x20Mesh";    //Tying this label to the radio button
+            typeLabel.Text = "No See Ums 20x20 Mesh";
+
+
+            wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+            #endregion
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            #region Solar Insect Screening
+
+            //li tag to hold Window type radio button and all its content
+            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+            //Window type radio button
+            typeRadio = new RadioButton();
+            typeRadio.ID = "radSolarInsectScreening"; //Adding appropriate id to Window type radio button
+            typeRadio.GroupName = "ScreenRadios";         //Adding group name for all Window types
+            //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+            //Window type radio button label for clickable area
+            typeLabelRadio = new Label();
+            typeLabelRadio.AssociatedControlID = "radSolarInsectScreening";  //Tying this label to the radio button
+
+            //Window type radio button label text
+            typeLabel = new Label();
+            typeLabel.AssociatedControlID = "radSolarInsectScreening";    //Tying this label to the radio button
+            typeLabel.Text = "Solar Insect Screening";
+
+
+            wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+            #endregion
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            #region Tough Screen
+
+            //li tag to hold Window type radio button and all its content
+            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+            //Window type radio button
+            typeRadio = new RadioButton();
+            typeRadio.ID = "radToughScreen"; //Adding appropriate id to Window type radio button
+            typeRadio.GroupName = "ScreenRadios";         //Adding group name for all Window types
+            //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+            //Window type radio button label for clickable area
+            typeLabelRadio = new Label();
+            typeLabelRadio.AssociatedControlID = "radToughScreen";  //Tying this label to the radio button
+
+            //Window type radio button label text
+            typeLabel = new Label();
+            typeLabel.AssociatedControlID = "radToughScreen";    //Tying this label to the radio button
+            typeLabel.Text = "Tough Screen";
+
+
+            wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+            #endregion
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            #region No Screen
+
+            //li tag to hold Window type radio button and all its content
+            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+            //Window type radio button
+            typeRadio = new RadioButton();
+            typeRadio.ID = "radNoScreen"; //Adding appropriate id to Window type radio button
+            typeRadio.GroupName = "ScreenRadios";         //Adding group name for all Window types
+            //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+            //Window type radio button label for clickable area
+            typeLabelRadio = new Label();
+            typeLabelRadio.AssociatedControlID = "radNoScreen";  //Tying this label to the radio button
+
+            //Window type radio button label text
+            typeLabel = new Label();
+            typeLabel.AssociatedControlID = "radNoScreen";    //Tying this label to the radio button
+            typeLabel.Text = "No Screen";
+
+
+            wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+            #endregion
+
+            ////////////////////////////////////////////////
+
+            wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>"));
+
+        }
+
+
+        protected void v4tWindowOptions()
+        {
+            RadioButton v4tRadio, tintRadio;
+            Label v4tLabelRadio, v4tLabel, tintLabelRadio, tintLabel;
+
+            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+            //RadioButton created for every option
+            v4tRadio = new RadioButton();
+            v4tRadio.ID = "radV4T";     //Giving an appropriate id to radio buttons based on current type of window
+            v4tRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
+            v4tRadio.Checked = (currentModel == "M200") ? true : false; //select/check the radio button if current selection is default value
+            //screenRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
+
+            //Label to create clickable area for radio button
+            v4tLabelRadio = new Label();
+            v4tLabelRadio.AssociatedControlID = "radV4T";   //Tying this label to the radio button
+
+            v4tLabel = new Label();
+            v4tLabel.AssociatedControlID = "radV4T";        //Tying this label to the radio button
+            v4tLabel.Text = "Vertical 4 Track";       //Adding text to the radio button
+
+            wallWindowOptions.Controls.Add(v4tRadio);        //Adding radio button control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(v4tLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(v4tLabel);        //Adding label control to placeholder wallWindowOptions
+
+            //Creating div tag to hold all the current window type information 
+            wallWindowOptions.Controls.Add(new LiteralControl("<div id=\"v4tWindowDetails\" class=\"toggleContent\">"));
+
+            //Creating one ul tag to hold multiple li tags containing vinyl tints
+            wallWindowOptions.Controls.Add(new LiteralControl("<ul><li><ul id='v4tDetailsList' class='toggleOptions'>"));
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            #region Clear
+
+            //li tag to hold window type radio button and all its content
+            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+            //Vinyl tint radio button
+            tintRadio = new RadioButton();
+            tintRadio.ID = "radClear"; //Adding appropriate id to window type radio button
+            tintRadio.GroupName = "TintRadios";         //Adding group name for all tint colours
+            tintRadio.Checked = (currentModel == "M200") ? true : false; //select/check the radio button if current select is defualt value
+            //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+            //Vinyl tint radio button label for clickable area
+            tintLabelRadio = new Label();
+            tintLabelRadio.AssociatedControlID = "radClear";  //Tying this label to the radio button
+
+            //Vinyl tint radio button label text
+            tintLabel = new Label();
+            tintLabel.AssociatedControlID = "radClear";    //Tying this label to the radio button
+            tintLabel.Text = "Clear";
+
+            wallWindowOptions.Controls.Add(tintRadio);        //Adding radio button control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(tintLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(tintLabel);        //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+            #endregion
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            #region Smoke Grey
+
+            //li tag to hold window type radio button and all its content
+            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+            //Vinyl tint radio button
+            tintRadio = new RadioButton();
+            tintRadio.ID = "radSmokeGrey"; //Adding appropriate id to window type radio button
+            tintRadio.GroupName = "TintRadios";         //Adding group name for all tint colours
+             //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+            //Vinyl tint radio button label for clickable area
+            tintLabelRadio = new Label();
+            tintLabelRadio.AssociatedControlID = "radSmokeGrey";  //Tying this label to the radio button
+
+            //Vinyl tint radio button label text
+            tintLabel = new Label();
+            tintLabel.AssociatedControlID = "radSmokeGrey";    //Tying this label to the radio button
+            tintLabel.Text = "Smoke Grey";
+
+            wallWindowOptions.Controls.Add(tintRadio);        //Adding radio button control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(tintLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(tintLabel);        //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+            #endregion
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            #region Dark Grey
+
+            //li tag to hold window type radio button and all its content
+            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+            //Vinyl tint radio button
+            tintRadio = new RadioButton();
+            tintRadio.ID = "radDarkGrey"; //Adding appropriate id to window type radio button
+            tintRadio.GroupName = "TintRadios";         //Adding group name for all tint colours
+            //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+            //Vinyl tint radio button label for clickable area
+            tintLabelRadio = new Label();
+            tintLabelRadio.AssociatedControlID = "radDarkGrey";  //Tying this label to the radio button
+
+            //Vinyl tint radio button label text
+            tintLabel = new Label();
+            tintLabel.AssociatedControlID = "radDarkGrey";    //Tying this label to the radio button
+            tintLabel.Text = "Dark Grey";
+
+            wallWindowOptions.Controls.Add(tintRadio);        //Adding radio button control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(tintLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(tintLabel);        //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+            #endregion
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            #region Bronze
+
+            //li tag to hold window type radio button and all its content
+            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+            //Vinyl tint radio button
+            tintRadio = new RadioButton();
+            tintRadio.ID = "radBronze"; //Adding appropriate id to window type radio button
+            tintRadio.GroupName = "TintRadios";         //Adding group name for all tint colours
+            //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+            //Vinyl tint radio button label for clickable area
+            tintLabelRadio = new Label();
+            tintLabelRadio.AssociatedControlID = "radBronze";  //Tying this label to the radio button
+
+            //Vinyl tint radio button label text
+            tintLabel = new Label();
+            tintLabel.AssociatedControlID = "radBronze";    //Tying this label to the radio button
+            tintLabel.Text = "Bronze";
+
+            wallWindowOptions.Controls.Add(tintRadio);        //Adding radio button control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(tintLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(tintLabel);        //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+            #endregion
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            #region Mixed
+
+            //li tag to hold window type radio button and all its content
+            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+            //Vinyl tint radio button
+            tintRadio = new RadioButton();
+            tintRadio.ID = "radMixed"; //Adding appropriate id to window type radio button
+            tintRadio.GroupName = "TintRadios";         //Adding group name for all tint colours
+            //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+            //Vinyl tint radio button label for clickable area
+            tintLabelRadio = new Label();
+            tintLabelRadio.AssociatedControlID = "radMixed";  //Tying this label to the radio button
+
+            //Vinyl tint radio button label text
+            tintLabel = new Label();
+            tintLabel.AssociatedControlID = "radMixed";    //Tying this label to the radio button
+            tintLabel.Text = "Mixed";
+
+            wallWindowOptions.Controls.Add(tintRadio);        //Adding radio button control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(tintLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            wallWindowOptions.Controls.Add(tintLabel);        //Adding label control to placeholder wallWindowOptions
+
+
+            /****************************************************************************************/
+            /****************************************************************************************/
+            /****************************************************************************************/
+            
+            
+            
+            //Creating div tag to hold all the current window type information 
+            wallWindowOptions.Controls.Add(new LiteralControl("<div id=\"mixedTintDetails\" class=\"toggleContent\">"));
+
+            //Creating one ul tag to hold multiple li tags containing vinyl tints
+            wallWindowOptions.Controls.Add(new LiteralControl("<ul><li><ul id='mixedTintList' class='toggleOptions'>"));
+
+
+
+            /****************************************************************************************/
+
+
+
+            wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div>"));
+            /****************************************************************************************/
+            /****************************************************************************************/
+            /****************************************************************************************/
+
+            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+            #endregion
+
+            ////////////////////////////////////////////////
+
+            wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>"));
+
         }
 
         protected void txtWallLengths_TextChanged(object sender, EventArgs e)
