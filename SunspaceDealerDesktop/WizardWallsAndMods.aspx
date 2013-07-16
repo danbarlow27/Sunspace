@@ -690,22 +690,22 @@
 
             var isValid = true;
 
-            //sortedDoors = new Array();
+            sortedDoors = new Array();
 
             // Sort left to right
             if (doors.length > 0) {
-                sortedDoors[0] = { "index": 0, "doorWidth" : doors[0].doorWidth, "distanceFromLeft": doors[0].distanceFromLeft, "position": doors[0].position };
+                sortedDoors[0] = { "index": 0, "doorWidth" : doors[0].doorWidth, "distanceFromLeft": doors[0].distanceFromLeft };
             }
             for (var i = 1; i < doors.length; i++) {
                 var x;
                 for (x = 0; x < sortedDoors.length; x++) {
                     if (sortedDoors[x].distanceFromLeft > doors[i].distanceFromLeft) {
-                        sortedDoors.insert(x, { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft, "position": doors[i].position });
+                        sortedDoors.insert(x, { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft });
                         break;
                     }
                 }
                 if (x == sortedDoors.length) {
-                    sortedDoors[sortedDoors.length] = { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft, "position": doors[i].position };
+                    sortedDoors[sortedDoors.length] = { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft };
                 }
             }
 
@@ -768,14 +768,25 @@
             return isValid;
         }
 
-        function availableSpaceOutput(usuableLength, wallNumber) {
+        /**
+        *Used to find space left within the wall for display purposes
+        */
+        function totalSpaceLeftInWall(usuableLength) {
 
-            var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wallNumber);
-            var space = usuableLength;
-            spacesRemaining = new Array();
+            var totalSpace = usuableLength;
 
-            for (var notNullsCount = 0; notNullsCount < sortedDoors.length; notNullsCount++)
-                space -= sortedDoors[notNullsCount].doorWidth;
+            for (var wallSpace = 0; wallSpace < sortedDoors.length; wallSpace++)
+                totalSpace -= sortedDoors[wallSpace].doorWidth;
+
+            return totalSpace;
+        }
+
+        /**
+        *Needs sortedDoors array to work, may become local variable/argument
+        */
+        function availableSpacesArrayUpdate(usuableLength) {            
+            
+            spacesRemaining = new Array();            
 
             //Block to store remaining spaces between various door(s)
             if (sortedDoors[0].distanceFromLeft > 0 && sortedDoors.length > 1) {
@@ -799,20 +810,9 @@
                     spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft, "space": sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft) };
                 }
                 if (sortedDoors[doorsLoop].distanceFromLeft + sortedDoors[doorsLoop].doorWidth < usuableLength) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].distanceFromLeft + sortedDoors[doorsLoop].doorWidth, "space": space - sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft };
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].distanceFromLeft + sortedDoors[doorsLoop].doorWidth, "space": usuableLength - sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft };
                 }
             }
-
-            for (var i = 0; i < spacesRemaining.length; i++) {
-                alert(spacesRemaining[i].distanceFromLeft + " Distance from left");
-            }
-
-            $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
-            document.getElementById("pagerThree").style.display = "inline";
-            document.getElementById("wall" + wallNumber + 'SpaceRemaining').style.display = "inline";
-            //var proposedWall = document.getElementById("MainContent_lblTextArea" + wallNumber);
-            pagerText.setAttribute("style", "display:block;");
-            //pagerText.innerHTML = "The Remaining Space In Wall " + (proposedWall.innerText).substr(14,2) + ": " + space;
 
         }
 
@@ -827,7 +827,17 @@
                     //Find if a door exist to set doorCount to the appropriate value
                     if (document.getElementById('MainContent_radWall' + wallCount).checked) {
 
+                        /****PAGER VARIABLES****/
+                        var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wallCount);
+                        var pagerTextAnswer = document.getElementById("wall" + wallCount + "DoorsAdded");
+                        var pagerTextDoor = document.getElementById("MainContent_lblQuestion3DoorsInfoWall" + wallCount);
+                        var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallCount);
+                        
+                        /****LOGICAL AND FUNCTIONALITY VARIABLES****/
                         var proposedWall = document.getElementById("MainContent_lblTextArea" + wallCount);
+                        var dropDownName = 'MainContent_ddlDoorPosition' + wallCount;
+
+                        /****CALCULATION VARIABLES****/
                         var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'Length').value);                            
                         var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'LeftFiller').value);
                         var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'RightFiller').value);
@@ -838,8 +848,8 @@
                         var widthDropDown = document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).selectedIndex].value;
                         var heightDropDown = document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).options[document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).selectedIndex].value;
                         var doorWidth;
-                        var dropDownName = 'MainContent_ddlDoorPosition' + wallCount;
-
+                        
+                        /*Set the variable to the appropriate value to be used for calculations*/
                         if (widthDropDown === "cWidth") {
                             doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', true, wallCount));
                         }
@@ -847,27 +857,35 @@
                             doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false, wallCount));
                         }
 
+                        /*Insert the door with the appropriate variables based on drop down selected index*/
                         if (positionDropDown === "left") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": 0, "position": "left" };
+                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": 0 };
                         }
                         else if (positionDropDown === "right") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace - doorWidth, "position": "right" };
+                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace - doorWidth };
                         }
                         else if (positionDropDown === "center") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace / 2 - doorWidth / 2, "position": "center" };
+                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace / 2 - doorWidth / 2 };
                         }
                         else if (positionDropDown === "cPosition") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": doorCustomPosition, "position": "custom" };
+                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": doorCustomPosition };
                         }
 
                         if (checkDoor(usuableSpace, dropDownName, positionDropDown)) {
-                            availableSpaceOutput(usuableSpace, wallCount);
+                            //Calling functions get space left in the wall, and other to update individual spaces within a wall
+                            var space = totalSpaceLeftInWall(usuableSpace);
+                            availableSpacesArrayUpdate(usuableSpace);
 
-                            var pagerTextAnswer = document.getElementById("wall" + wallCount + "DoorsAdded");
+                            $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallCount).text(space);
+                            document.getElementById("pagerThree").style.display = "inline";
+                            document.getElementById("wall" + wallCount + 'SpaceRemaining').style.display = "inline";
+
+                            pagerText.setAttribute("style", "display:block;");
+                            
                             pagerTextAnswer.setAttribute("style", "display:block");
-                            var pagerTextDoor = document.getElementById("MainContent_lblQuestion3DoorsInfoWall" + wallCount);
+                            
                             pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerText).substr(14, 2) + " Doors";
-                            var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallCount);
+                            
                             var deleteButton = document.createElement("input");
                             deleteButton.id = "btnDeleteDoor" + (sortedDoors[sortedDoors.length - 1].index + 1) + type + "Wall" + wallCount;
                             deleteButton.setAttribute("type", "button");
