@@ -673,9 +673,7 @@
 
             return newDimension;
         }
-
         
-
         /**
         *Prototype used to create an "insert" function for arrays. This function can insert elements at specific indices
         *@param index - is which index to insert the item at
@@ -925,6 +923,8 @@
                             pagerTextDoorAnswer.appendChild(deleteButton);
                             pagerTextDoorAnswer.innerHTML += "<br/>";
 
+                            alert(spacesRemaining.length);
+
                             if (wallDoors.length == 0) {
                                 wallDoors[wallDoors.length] = { "wallId": wallCount, "doorsSorted": sortedDoors };
                                 //alert(wallDoors[wallDoors.length - 1].doorsSorted[0].doorWidth);
@@ -936,6 +936,7 @@
                                 //}
                             }
                         }
+                        alert(spacesRemaining.length);
                     }
                 }
             }
