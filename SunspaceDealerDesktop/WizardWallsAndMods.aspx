@@ -561,13 +561,15 @@
                             doorPositionDDL.style.display = "inherit";
                             doorScreenOptions.style.display = "inherit";
                         }
-                        else if (document.getElementById('MainContent_radType' + wallCount + 'OpeningOnly(NoDoor)').checked) {
+                        else if (document.getElementById('MainContent_radType' + wallCount + 'NoDoor').checked) {
 
-                            var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "OpeningOnly(NoDoor)");
-                            var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "OpeningOnly(NoDoor)");
+                            var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "NoDoor");
+                            var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "NoDoor");
+                            var doorPositionDDL = document.getElementById("MainContent_rowDoorPositionDDL" + wallCount + "NoDoor");
 
                             doorHeight.style.display = "inherit";
                             doorWidth.style.display = "inherit";
+                            doorPositionDDL.style.display = "inherit";
                         }
                     }
                 }
@@ -575,11 +577,14 @@
         }
 
         function customDimension(type, dimension) {
+
+            alert("Type: " + type + " / " + "Dimension: " + dimension);
+
             for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
 
                 if (coordList[wallCount - 1][4] === "P") {
 
-                    if (document.getElementById('MainContent_radWall' + wallCount).checked) {
+                    if (document.getElementById('MainContent_radWall' + wallCount).checked) {                        
 
                         var dimensionDDL = document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).selectedIndex].value;
 
@@ -638,6 +643,8 @@
 
         function calculateActualDoorDimension(type, dimension, custom, wallCount) {
 
+            alert("In calculate actual");
+
             var newDimension;
 
             var controlToUse;
@@ -658,27 +665,15 @@
                 newDimension = (model === 400) ? controlToUse + 3.625 : controlToUse + 2.125;
             }
             else if (type === 'French') {
-
                 newDimension = (model === 400) ? ((controlToUse + 3.625) - 1.625) * 2 + 2 : ((controlToUse + 2.125) - 1.625) * 2 + 2;
-
-                if (type == 'Cabana') {
-
-                    newDimension = (model == 400) ? controlToUse + 3.625 : controlToUse + 2.125;
-
-                }
-                else if (type == 'French') {
-
-                    newDimension = (model == 400) ? ((controlToUse + 3.625) - 1.625) * 2 + 2 : ((controlToUse + 2.125) - 1.625) * 2 + 2;
-
-                }
-                else if (type == 'Patio') {
-                    //Need more information
-                }
             }
-            else if (type === 'Patio') {
-                //Need more information
-            }                
-                
+            else if (type == 'Patio') {
+                newDimension = (model === 400) ? controlToUse + 1.165 : controlToUse + 1.125;
+                alert(newDimension);
+            }
+            else {
+                newDimension = controlToUse;
+            }   
 
             return newDimension;
         }
@@ -755,31 +750,36 @@
 
             //Is valid disable appropriate dropdown item and change selected index
             if (isValid) {
-                if ($('#' + dropDownName).prop("selectedIndex") != "cPosition") {
-                    alert("Not custom position");
-                    $('#' + dropDownName + ' option[value=' + dropDownValue + ']').attr('disabled', true);
-                }
-                    //Not Working**************************************
-                else {
-                    alert("Something");
-                    alert(dropDownName.substring(28));
-                    //customPosition(dropDownName.substring(28));
-                }
+                
+                for (var typeCount = 1; typeCount <= 4; typeCount++) {
 
-                for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + ' option').size() ; dropDownLoop++) {
-                    if ($('#' + dropDownName + ' option')[dropDownLoop].disabled == false) {                  
-                        $('#' + dropDownName).prop("selectedIndex", dropDownLoop);
-                        break;                        
+                    var title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
+
+                    if ($('#' + dropDownName + title).prop("selectedIndex") != "cPosition") {
+                        $('#' + dropDownName + title + ' option[value=' + dropDownValue + ']').attr('disabled', true);
+                    }
+                        //Not Working**************************************
+                    else {
+                        alert("Something");
+                        //alert(dropDownName.substring(28));
+                        //customPosition(dropDownName.substring(28));
+                    }
+
+                    for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + title + ' option').size() ; dropDownLoop++) {
+                        if ($('#' + dropDownName + title + ' option')[dropDownLoop].disabled == false) {
+                            $('#' + dropDownName + title).prop("selectedIndex", dropDownLoop);
+                            break;
+                        }
                     }
                 }
-                availableSpaceOutput(usuableLength);                
+                                
             }
             return isValid;
         }
 
-        function availableSpaceOutput(usuableLength) {
+        function availableSpaceOutput(usuableLength, wallNumber) {
 
-            var pagerText = document.getElementById("MainContent_lblQuestion3PagerAnswer");
+            var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wallNumber);
             var space = usuableLength;
             spacesRemaining = new Array();
 
@@ -814,6 +814,8 @@
             //}
 
             document.getElementById('pagerThree').style.display = "inline";
+            document.getElementById('wall' + wallNumber + 'SpaceRemaining').style.display = "inline";
+            pagerText.setAttribute("style", "display:block;");
             pagerText.innerHTML = "The Remaining Space Is: " + space;
 
         }
@@ -839,7 +841,7 @@
                         var widthDropDown = document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).selectedIndex].value;
                         var heightDropDown = document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).options[document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).selectedIndex].value;
                         var doorWidth;
-                        var dropDownName = 'MainContent_ddlDoorPosition' + wallCount + type;
+                        var dropDownName = 'MainContent_ddlDoorPosition' + wallCount;
 
 
                         if (widthDropDown === "cWidth") {
@@ -863,7 +865,11 @@
                         }
 
                         if (checkDoor(usuableSpace, dropDownName, positionDropDown)) {
-                            var pagerText = document.getElementById("MainContent_lblQuestion3PagerAnswer");
+                            availableSpaceOutput(usuableSpace, wallCount);
+
+                            var pagerTextAnswer = document.getElementById("wall" + wallCount + "DoorsAdded");
+                            pagerTextAnswer.setAttribute("style", "display:block");
+                            var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallCount);
                             var deleteButton = document.createElement("input");
                             deleteButton.id = "btnDeleteDoor" + (sortedDoors[sortedDoors.length - 1].index + 1) + type;
                             deleteButton.setAttribute("type", "button");
@@ -871,8 +877,9 @@
                             deleteButton.setAttribute("onclick", "deleteDoor()");
                             deleteButton.setAttribute("class", "btnSubmit");
                             deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
-                            pagerText.innerHTML += "<br/>Door " + (sortedDoors[sortedDoors.length - 1].index + 1) + " " + type + " added"
-                            pagerText.appendChild(deleteButton);
+                            pagerTextDoorAnswer.innerHTML += "Door " + (sortedDoors[sortedDoors.length - 1].index + 1) + " " + type + " added";
+                            pagerTextDoorAnswer.appendChild(deleteButton);
+                            pagerTextDoorAnswer.innerHTML += "<br/>";
                         }
 
                         /********SECTION BELOW TO BE RETHOUGHT*********/
@@ -1109,12 +1116,23 @@
             }
         }
 
+        var previousRadio = null;
+        var currentRadio = null;
+
         //TO BE COMPLETED
         function onWallRadioChange(wallId) {
             //Store doors and sortedDoors arrays
             //Reset their values
-            alert("On blur/lost focus")
-            wallDoors[wallDoors.length] = {"wallId": wallId, "doors": sortedDoors };
+            if (previousRadio == null && currentRadio == null) {
+                previousRadio = wallId;
+                //alert("Previous " + previousRadio);
+            }
+            else if (previousRadio != currentRadio) {
+                wallDoors[wallDoors.length] = { "wallId": previousRadio, "doors": sortedDoors };
+                previousRadio = currentRadio;
+                currentRadio = wallId;
+                alert("Previous: " + previousRadio + " / " + "Current: " + currentRadio);
+            }
         }
 
         //TO BE COMPLETED
@@ -1388,11 +1406,15 @@
                 <%-- div to display the answers for question 3 --%>
                 <div style="display: none" id="pagerThree">
                     <li>
+                        <asp:Label runat="server" Text="Wall and Door Details"></asp:Label>
+                    </li>
+                    <asp:PlaceHolder ID="pager3Information" runat="server"></asp:PlaceHolder>
+                    <%--<li>
                             <a href="#" data-slide="#slide3" class="slidePanel">
                                 <asp:Label ID="lblQuestion3Pager" runat="server" Text="Wall and Door Details"></asp:Label>
-                                <asp:Label ID="lblQuestion3PagerAnswer" runat="server" Text="Question 3 Answer"></asp:Label>
+                                <asp:Label ID="lblQuestion3PagerAnswer" runat="server" Text=""></asp:Label>
                             </a>
-                    </li>
+                    </li>--%>
                 </div>
 
                 <%-- div to display the answers for question 4 --%>

@@ -337,22 +337,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblWallHeightsAnswer;
         
         /// <summary>
-        /// lblQuestion3Pager control.
+        /// pager3Information control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblQuestion3Pager;
-        
-        /// <summary>
-        /// lblQuestion3PagerAnswer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblQuestion3PagerAnswer;
+        protected global::System.Web.UI.WebControls.PlaceHolder pager3Information;
         
         /// <summary>
         /// Label27 control.
