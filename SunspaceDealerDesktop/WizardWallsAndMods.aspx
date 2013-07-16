@@ -807,11 +807,12 @@
                 alert(spacesRemaining[i].distanceFromLeft + " Distance from left");
             }
 
+            $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
             document.getElementById("pagerThree").style.display = "inline";
             document.getElementById("wall" + wallNumber + 'SpaceRemaining').style.display = "inline";
-            var proposedWall = document.getElementById("MainContent_lblTextArea" + wallNumber);
+            //var proposedWall = document.getElementById("MainContent_lblTextArea" + wallNumber);
             pagerText.setAttribute("style", "display:block;");
-            pagerText.innerHTML = "The Remaining Space In Wall " + (proposedWall.innerText).substr(14,2) + ": " + space;
+            //pagerText.innerHTML = "The Remaining Space In Wall " + (proposedWall.innerText).substr(14,2) + ": " + space;
 
         }
 
@@ -826,6 +827,7 @@
                     //Find if a door exist to set doorCount to the appropriate value
                     if (document.getElementById('MainContent_radWall' + wallCount).checked) {
 
+                        var proposedWall = document.getElementById("MainContent_lblTextArea" + wallCount);
                         var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'Length').value);                            
                         var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'LeftFiller').value);
                         var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'RightFiller').value);
@@ -863,6 +865,8 @@
 
                             var pagerTextAnswer = document.getElementById("wall" + wallCount + "DoorsAdded");
                             pagerTextAnswer.setAttribute("style", "display:block");
+                            var pagerTextDoor = document.getElementById("MainContent_lblQuestion3DoorsInfoWall" + wallCount);
+                            pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerText).substr(14, 2) + " Doors";
                             var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallCount);
                             var deleteButton = document.createElement("input");
                             deleteButton.id = "btnDeleteDoor" + (sortedDoors[sortedDoors.length - 1].index + 1) + type + "Wall" + wallCount;
@@ -871,7 +875,7 @@
                             deleteButton.setAttribute("onclick", "deleteDoor()");
                             deleteButton.setAttribute("class", "btnSubmit");
                             deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
-                            pagerTextDoorAnswer.innerHTML += "Door " + (sortedDoors.length) + " " + type + " added";
+                            pagerTextDoorAnswer.innerHTML += "Door " + sortedDoors.length + " " + type + " added";
                             pagerTextDoorAnswer.appendChild(deleteButton);
                             pagerTextDoorAnswer.innerHTML += "<br/>";
 
@@ -899,7 +903,7 @@
             var idToLoad = 0;
             sortedDoors = new Array();
             doors = new Array();
-            alert(sortedDoors[0] + " In On Change " + doors[0]);
+            //alert(sortedDoors[0] + " In On Change " + doors[0]);
             //Store doors and sortedDoors arrays
             //Reset their values
             if (wallDoors.length == 0) {
@@ -912,7 +916,7 @@
                     sortedDoors = wallDoors[idToLoad].sortedDoors;
                 }
             }
-            alert(sortedDoors[0] + " In On Change " + doors[0]);
+            //alert(sortedDoors[0] + " In On Change " + doors[0]);
         }
 
         //TO BE COMPLETED

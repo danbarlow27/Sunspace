@@ -1371,12 +1371,12 @@ namespace SunspaceDealerDesktop
 
             pager3Information.Controls.Add(new LiteralControl("<li id=\"wall" + i + "SpaceRemaining\" style='display:none;' >"));
 
-            pager3Information.Controls.Add(new LiteralControl("<a href=\"#\" data-slide=\"#slide3\" class=\"slidePanel\""));
+            pager3Information.Controls.Add(new LiteralControl("<a href=\"#\" data-slide=\"#slide3\" class=\"slidePanel\">"));
 
             Label lblQuestion3SpaceInfo = new Label();
             lblQuestion3SpaceInfo.ID = "lblQuestion3SpaceInfoWall" + i;
             lblQuestion3SpaceInfo.Attributes.Add("runat", "server");
-            lblQuestion3SpaceInfo.Text = "Wall and Door Details";
+            lblQuestion3SpaceInfo.Text = "The Remaining Space In Wall " + proposedWallCount;
 
             Label lblQuestion3SpaceInfoAnswer = new Label();
             lblQuestion3SpaceInfoAnswer.ID = "lblQuestion3SpaceInfoWallAnswer" + i;
@@ -1396,7 +1396,7 @@ namespace SunspaceDealerDesktop
 
             pager3Information.Controls.Add(new LiteralControl("<li id=\"wall" + i + "DoorsAdded\" style='display:none;' >"));
 
-            pager3Information.Controls.Add(new LiteralControl("<a href=\"#\" data-slide=\"#slide3\" class=\"slidePanel\""));
+            pager3Information.Controls.Add(new LiteralControl("<a href=\"#\" data-slide=\"#slide3\" class=\"slidePanel\">"));
 
             Label lblQuestion3DoorsInfo = new Label();
             lblQuestion3DoorsInfo.ID = "lblQuestion3DoorsInfoWall" + i;
