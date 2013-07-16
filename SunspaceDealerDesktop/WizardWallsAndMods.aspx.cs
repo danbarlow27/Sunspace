@@ -979,7 +979,7 @@ namespace SunspaceDealerDesktop
                     #region Table:# Row Door Position DDL (tblDoorDetails)
 
                     TableRow doorPositionDDLRow = new TableRow();
-                    doorPositionDDLRow.ID = "rowDoorPositionDDL" + i + title;
+                    doorPositionDDLRow.ID = "rowDoorPosition" + i + title;
                     doorPositionDDLRow.Attributes.Add("style", "display:none;");
                     TableCell doorPositionDDLLBLCell = new TableCell();
                     TableCell doorPositionDDLDDLCell = new TableCell();
@@ -990,7 +990,7 @@ namespace SunspaceDealerDesktop
 
                     DropDownList doorPositionDDLDDL = new DropDownList();
                     doorPositionDDLDDL.ID = "ddlDoorPosition" + i + title;
-                    doorPositionDDLDDL.Attributes.Add("onchange", "customPosition('" + title + "')");
+                    doorPositionDDLDDL.Attributes.Add("onchange", "customDimension('" + title + "','Position')");
                     ListItem PositionLeft = new ListItem("Left", "left");
                     ListItem PositionCenter = new ListItem("Center", "center");
                     ListItem PositionRight = new ListItem("Right", "right");
@@ -1007,18 +1007,18 @@ namespace SunspaceDealerDesktop
                     #region Table:# Row Door Position (tblDoorDetails)
 
                     TableRow doorPositionRow = new TableRow();
-                    doorPositionRow.ID = "rowDoorPosition" + i + title;
+                    doorPositionRow.ID = "rowDoorCustomPosition" + i + title;
                     doorPositionRow.Attributes.Add("style", "display:none;");
                     TableCell doorPositionLBLCell = new TableCell();
                     TableCell doorPositionTXTCell = new TableCell();
                     TableCell doorPositionDDLCell = new TableCell();
 
                     Label doorPositionLBL = new Label();
-                    doorPositionLBL.ID = "lblDoorPosition" + i + title;
+                    doorPositionLBL.ID = "lblDoorCustomPosition" + i + title;
                     doorPositionLBL.Text = "Door position from left side (inches):";
 
                     TextBox doorPositionTXT = new TextBox();
-                    doorPositionTXT.ID = "txtDoorPosition" + i + title;
+                    doorPositionTXT.ID = "txtDoorCustomPosition" + i + title;
                     doorPositionTXT.CssClass = "txtField txtDoorInput";
 
                     DropDownList inchSpecificLeft = new DropDownList();
@@ -1032,7 +1032,7 @@ namespace SunspaceDealerDesktop
                     inchSpecificLeft.Items.Add(lst34);
                     inchSpecificLeft.Items.Add(lst78);
 
-                    doorPositionLBL.AssociatedControlID = "txtDoorPosition" + i + title;
+                    doorPositionLBL.AssociatedControlID = "txtDoorCustomPosition" + i + title;
 
                     #endregion
 

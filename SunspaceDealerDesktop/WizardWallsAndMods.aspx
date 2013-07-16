@@ -465,6 +465,11 @@
             return false;
         }
         
+        /**
+        *typeOfRowsDisplayed
+        *This function finds which type of door is selected and displays the appropriate fields
+        *from a table hidden to the user
+        */
         function typeRowsDisplayed() {
 
             for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
@@ -489,7 +494,7 @@
                             var doorHardware = document.getElementById("MainContent_rowDoorHardware" + wallCount + "Cabana");
                             var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + wallCount + "Cabana");
                             var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallCount + "Cabana");
-                            var doorPositionDDL = document.getElementById("MainContent_rowDoorPositionDDL" + wallCount + "Cabana");
+                            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Cabana");
 
                             //General
                             doorTitle.style.display = "inherit";
@@ -507,7 +512,7 @@
                             doorSwingOut.style.display = "inherit";
                             doorHardware.style.display = "inherit";
                             doorNumberOfVents.style.display = "inherit";
-                            doorPositionDDL.style.display = "inherit";
+                            doorPosition.style.display = "inherit";
                         }
                         else if (document.getElementById('MainContent_radType' + wallCount + 'French').checked) {
 
@@ -525,7 +530,7 @@
                             var doorHardware = document.getElementById("MainContent_rowDoorHardware" + wallCount + "French");
                             var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + wallCount + "French");
                             var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallCount + "French");
-                            var doorPositionDDL = document.getElementById("MainContent_rowDoorPositionDDL" + wallCount + "French");
+                            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "French");
 
                             //General
                             doorTitle.style.display = "inherit";
@@ -542,7 +547,7 @@
                             doorSwingOut.style.display = "inherit";
                             doorHardware.style.display = "inherit";
                             doorNumberOfVents.style.display = "inherit";
-                            doorPositionDDL.style.display = "inherit";
+                            doorPosition.style.display = "inherit";
                         }
                         else if (document.getElementById('MainContent_radType' + wallCount + 'Patio').checked) {
 
@@ -557,7 +562,7 @@
                             var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallCount + "Patio");
                             var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallCount + "Patio");
                             var doorScreenOptions = document.getElementById("MainContent_rowDoorScreenOptions" + wallCount + "Patio");
-                            var doorPositionDDL = document.getElementById("MainContent_rowDoorPositionDDL" + wallCount + "Patio");
+                            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Patio");
 
                             //General
                             doorTitle.style.display = "inherit";
@@ -571,27 +576,32 @@
                             doorOperatorLHH.style.display = "inherit";
                             doorOperatorRHH.style.display = "inherit";
                             doorNumberOfVents.style.display = "inherit";
-                            doorPositionDDL.style.display = "inherit";
+                            doorPosition.style.display = "inherit";
                             doorScreenOptions.style.display = "inherit";
                         }
                         else if (document.getElementById('MainContent_radType' + wallCount + 'NoDoor').checked) {
 
                             var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "NoDoor");
                             var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "NoDoor");
-                            var doorPositionDDL = document.getElementById("MainContent_rowDoorPositionDDL" + wallCount + "NoDoor");
+                            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "NoDoor");
 
                             doorHeight.style.display = "inherit";
                             doorWidth.style.display = "inherit";
-                            doorPositionDDL.style.display = "inherit";
+                            doorPosition.style.display = "inherit";
                         }
                     }
                 }
             }
         }
 
+        /**
+        *customDimension
+        *Checks the drop down selection on change, if the selection is custom, displays additional fields,
+        *else custom field is hidden (i.e. css style.display = none)
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        *@param dimension - gets the dimension currently being called (i.e Width, Height)
+        */
         function customDimension(type, dimension) {
-
-            alert("Type: " + type + " / " + "Dimension: " + dimension);
 
             for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
 
@@ -612,31 +622,13 @@
             }
         }
 
-        function customPosition(type) {
-            for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
-
-                if (coordList[wallCount - 1][4] === "P") {
-
-                    if (document.getElementById('MainContent_radWall' + wallCount).checked) {
-                        var positionDDL = document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).selectedIndex].value;
-
-                        if (document.getElementById('MainContent_radType' + wallCount + type).checked && positionDDL === 'cPosition') {
-                            document.getElementById('MainContent_rowDoorPosition' + wallCount + type).style.display = 'inherit';
-                        }
-                        else {
-                            document.getElementById('MainContent_rowDoorPosition' + wallCount + type).style.display = 'none';
-                        }
-                        if (document.getElementById('MainContent_radType' + wallCount + type).checked && positionDDL == 'cPosition') {
-                            document.getElementById('MainContent_rowDoorPosition' + wallCount + type).style.display = 'inherit';
-                        }
-                        else {
-                            document.getElementById('MainContent_rowDoorPosition' + wallCount + type).style.display = 'none';
-                        }
-                    }
-                }
-            }
-        }
-
+        /**
+        *doorStyle
+        *Door style function is triggered when the user selects Vertical Four Track, 
+        *vinyl tint becomes displayed, since Vertical Four Track is the only door style
+        *that has vinyl tint options
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        */
         function doorStyle(type) {
             for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
 
@@ -654,6 +646,16 @@
             }
         }
 
+        /**
+        *calculateActualDoorDimension
+        *This function calculates a doors actual dimension based on model number, dimension, custom dimension, and
+        *the current wall selected. This is needed because there is frame added to doors anywhere from 1.125 
+        *to 3.625 depending on the type of door and the sunroom model.
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        *@param dimension - gets the dimension currently being called (i.e. Width, Height)
+        *@param custom - this argument is used to determine if a custom dimension is being entered and which controls to use
+        *@param wallCount - is used to determine which wall's control to use
+        */
         function calculateActualDoorDimension(type, dimension, custom, wallCount) {
 
             var newDimension;
@@ -687,7 +689,11 @@
 
         
 
-        //Used to insert items to specific array indices
+        /**
+        *Prototype used to create an "insert" function for arrays. This function can insert elements at specific indices
+        *@param index - is which index to insert the item at
+        *@param item - which item is to be inserted
+        */
         Array.prototype.insert = function (index, item) {
             this.splice(index, 0, item);
         };
@@ -699,26 +705,34 @@
         var spacesRemaining;
         var finalText;
 
+        /**
+        *checkDoor
+        *This function is used to perform validation and array reordering
+        *@param usuableLength - holds the length of the wall which mods can be put into
+        *@param dropDownName - holds the name of the dropDown and remove the appropriate item based on inserted items
+        *@param dropDownValue - holds the preset positions to place a door in a wall (i.e. Left, Center, Right, and Custom)
+        *@return isValid - return boolean based on validation; no overlaps, no doors in too small place, etc...
+        */
         function checkDoor(usuableLength, dropDownName, dropDownValue) {
 
             var isValid = true;
 
-            //sortedDoors = new Array();
+            sortedDoors = new Array();
 
             // Sort left to right
             if (doors.length > 0) {
-                sortedDoors[0] = { "index": 0, "doorWidth" : doors[0].doorWidth, "distanceFromLeft": doors[0].distanceFromLeft, "position": doors[0].position };
+                sortedDoors[0] = { "index": 0, "doorWidth" : doors[0].doorWidth, "distanceFromLeft": doors[0].distanceFromLeft };
             }
             for (var i = 1; i < doors.length; i++) {
                 var x;
                 for (x = 0; x < sortedDoors.length; x++) {
                     if (sortedDoors[x].distanceFromLeft > doors[i].distanceFromLeft) {
-                        sortedDoors.insert(x, { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft, "position": doors[i].position });
+                        sortedDoors.insert(x, { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft });
                         break;
                     }
                 }
                 if (x == sortedDoors.length) {
-                    sortedDoors[sortedDoors.length] = { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft, "position": doors[i].position };
+                    sortedDoors[sortedDoors.length] = { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft };
                 }
             }
 
@@ -781,14 +795,34 @@
             return isValid;
         }
 
-        function availableSpaceOutput(usuableLength, wallNumber) {
+        /**
+        *totalSpaceLeftInWall
+        *This function performs calculations to find the total space left in a wall
+        *@param usuableLength - holds the length of the wall which mods can be put into
+        *@return totalSpace - returns the total space left on a specific wall
+        *
+        *MAY NEED TO PASS sortedDoors ARRAY ONCE SLIDE 3 COMPLETE
+        */
+        function totalSpaceLeftInWall(usuableLength) {
 
-            var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wallNumber);
-            var space = usuableLength;
-            spacesRemaining = new Array();
+            var totalSpace = usuableLength;
 
-            for (var notNullsCount = 0; notNullsCount < sortedDoors.length; notNullsCount++)
-                space -= sortedDoors[notNullsCount].doorWidth;
+            for (var wallSpace = 0; wallSpace < sortedDoors.length; wallSpace++)
+                totalSpace -= sortedDoors[wallSpace].doorWidth;
+
+            return totalSpace;
+        }
+
+        /**
+        *availableSpacesArrayUpdate
+        *This function is used to update remainingSpaces array
+        *@param usuableLength - holds the length of the wall which mods can be put into
+        *
+        ********MAY MAKE IT RETURN spacesRemaining ONCE SLIDE 3 COMPLETE
+        */
+        function availableSpacesArrayUpdate(usuableLength) {            
+            
+            spacesRemaining = new Array();            
 
             //Block to store remaining spaces between various door(s)
             if (sortedDoors[0].distanceFromLeft > 0 && sortedDoors.length > 1) {
@@ -812,23 +846,17 @@
                     spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft, "space": sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft) };
                 }
                 if (sortedDoors[doorsLoop].distanceFromLeft + sortedDoors[doorsLoop].doorWidth < usuableLength) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].distanceFromLeft + sortedDoors[doorsLoop].doorWidth, "space": space - sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft };
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].distanceFromLeft + sortedDoors[doorsLoop].doorWidth, "space": usuableLength - sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft };
                 }
             }
 
-            for (var i = 0; i < spacesRemaining.length; i++) {
-                alert(spacesRemaining[i].distanceFromLeft + " Distance from left");
-            }
-
-            $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
-            document.getElementById("pagerThree").style.display = "inline";
-            document.getElementById("wall" + wallNumber + 'SpaceRemaining').style.display = "inline";
-            //var proposedWall = document.getElementById("MainContent_lblTextArea" + wallNumber);
-            pagerText.setAttribute("style", "display:block;");
-            //pagerText.innerHTML = "The Remaining Space In Wall " + (proposedWall.innerText).substr(14,2) + ": " + space;
-
         }
 
+        /**
+        *addDoor
+        *This function is used to add doors to an array of wall objects
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        */
         function addDoor(type) {
 
             var hiddenFieldsDiv = document.getElementById('MainContent_hiddenFieldsDiv');
@@ -840,19 +868,29 @@
                     //Find if a door exist to set doorCount to the appropriate value
                     if (document.getElementById('MainContent_radWall' + wallCount).checked) {
 
+                        /****PAGER VARIABLES****/
+                        var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wallCount);
+                        var pagerTextAnswer = document.getElementById("wall" + wallCount + "DoorsAdded");
+                        var pagerTextDoor = document.getElementById("MainContent_lblQuestion3DoorsInfoWall" + wallCount);
+                        var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallCount);
+                        
+                        /****LOGICAL AND FUNCTIONALITY VARIABLES****/
                         var proposedWall = document.getElementById("MainContent_lblTextArea" + wallCount);
+                        var dropDownName = 'MainContent_ddlDoorPosition' + wallCount;
+
+                        /****CALCULATION VARIABLES****/
                         var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'Length').value);                            
                         var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'LeftFiller').value);
                         var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'RightFiller').value);
                         var usuableSpace = wallLength - leftFiller - rightFiller;
-                        var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorPosition' + wallCount + type).value
+                        var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorCustomPosition' + wallCount + type).value
                             + document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).selectedIndex].value);
                         var positionDropDown = document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).selectedIndex].value;
                         var widthDropDown = document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).selectedIndex].value;
                         var heightDropDown = document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).options[document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).selectedIndex].value;
                         var doorWidth;
-                        var dropDownName = 'MainContent_ddlDoorPosition' + wallCount;
-
+                        
+                        /*Set the variable to the appropriate value to be used for calculations*/
                         if (widthDropDown === "cWidth") {
                             doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', true, wallCount));
                         }
@@ -860,27 +898,35 @@
                             doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false, wallCount));
                         }
 
+                        /*Insert the door with the appropriate variables based on drop down selected index*/
                         if (positionDropDown === "left") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": 0, "position": "left" };
+                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": 0 };
                         }
                         else if (positionDropDown === "right") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace - doorWidth, "position": "right" };
+                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace - doorWidth };
                         }
                         else if (positionDropDown === "center") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace / 2 - doorWidth / 2, "position": "center" };
+                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace / 2 - doorWidth / 2 };
                         }
                         else if (positionDropDown === "cPosition") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": doorCustomPosition, "position": "custom" };
+                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": doorCustomPosition };
                         }
 
                         if (checkDoor(usuableSpace, dropDownName, positionDropDown)) {
-                            availableSpaceOutput(usuableSpace, wallCount);
+                            //Calling functions get space left in the wall, and other to update individual spaces within a wall
+                            var space = totalSpaceLeftInWall(usuableSpace);
+                            availableSpacesArrayUpdate(usuableSpace);
 
-                            var pagerTextAnswer = document.getElementById("wall" + wallCount + "DoorsAdded");
+                            $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallCount).text(space);
+                            document.getElementById("pagerThree").style.display = "inline";
+                            document.getElementById("wall" + wallCount + 'SpaceRemaining').style.display = "inline";
+
+                            pagerText.setAttribute("style", "display:block;");
+                            
                             pagerTextAnswer.setAttribute("style", "display:block");
-                            var pagerTextDoor = document.getElementById("MainContent_lblQuestion3DoorsInfoWall" + wallCount);
+                            
                             pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerText).substr(14, 2) + " Doors";
-                            var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallCount);
+                            
                             var deleteButton = document.createElement("input");
                             deleteButton.id = "btnDeleteDoor" + (sortedDoors[sortedDoors.length - 1].index + 1) + type + "Wall" + wallCount;
                             deleteButton.setAttribute("type", "button");
@@ -907,10 +953,7 @@
                 }
             }
         }
-
-        var previousRadio = null;
-        var currentRadio = null;
-
+        
         //TO BE COMPLETED
         function onWallRadioChange(wallId) {
             var idToLoad = 0;
