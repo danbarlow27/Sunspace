@@ -45,7 +45,7 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             /***hard coded variables***/
-            Session["model"] = "M200";
+            Session["model"] = "M300";
             Session["soffitLength"] = 0F;
             /****************diffrent sunroom layouts******************/
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
@@ -1434,17 +1434,10 @@ namespace SunspaceDealerDesktop
             typeRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
 
 
-            /********************************************************************************************************************************/
-            /********************************************************************************************************************************/
-            /********************************************************************************************************************************/
-            /********************************************************************************************************************************/
-            typeRadio.Checked = (currentModel == "M200") ? true : false; //select/check the radio button if current selection is default value
-            /********************************************************************************************************************************/
-            /********************************************************************************************************************************/
-            /********************************************************************************************************************************/
-            /********************************************************************************************************************************/
-
-
+            typeRadio.Checked = (windowTypeId == "V4T" && currentModel == "M200") ? true : //select/check the radio button if current selection is default value
+                (windowTypeId == "SinglePaneHorizontalRollers" && currentModel == "M300") ? true : //select/check the radio button if current selection is default value
+                (windowTypeId == "DoublePaneSingleSlider" && currentModel == "M400") ? true : false; //select/check the radio button if current selection is default value
+            
             //screenRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
 
             //Label to create clickable area for radio button
