@@ -9,6 +9,8 @@ namespace SunspaceDealerDesktop
 {
     public static class Constants
     {
+        public static string[] MODEL_NUMBERS = { "100", "200", "300", "400" };
+
         #region Default Preferences
         public const float DEFAULT_FILLER = 2.0F; //the default amount of filler to be placed on each side of a wall after a starter or post
         public const float MODEL_100_KNEEWALL_HEIGHT = 20;
@@ -19,16 +21,12 @@ namespace SunspaceDealerDesktop
 
         #region Colours, Types and Tints
         public static string[] MODEL_100_FRAMING_COLOURS = { "White", "Driftwood", "Bronze" };
-        //public const static string[] MODEL_100_WINDOW_COLOURS = { "White", "Driftwood", "Bronze" };//CURRENTLY NO COLOURS, ONLY VINYL
 
         public static string[] MODEL_200_FRAMING_COLOURS = { "White", "Driftwood", "Bronze" };
-        public static string[] MODEL_200_WINDOW_COLOURS = { "White", "Driftwood", "Bronze", "Green", "Black", "Ivory", "Cherrywood", "Grey" };
 
         public static string[] MODEL_300_FRAMING_COLOURS = { "White", "Driftwood", "Bronze" };
-        public static string[] MODEL_300_WINDOW_COLOURS = { "White", "Driftwood", "Bronze" };
 
         public static string[] MODEL_400_FRAMING_COLOURS = { "White", "Driftwood" };
-        public static string[] MODEL_400_WINDOW_COLOURS = { "White", "Driftwood" };
 
         public static string[] INTERIOR_WALL_COLOURS = { "White", "Driftwood", "Bronze" };
         public static string[] EXTERIOR_WALL_COLOURS = { "White", "Driftwood", "Bronze" };
@@ -42,17 +40,11 @@ namespace SunspaceDealerDesktop
                                                "Driftwood Rigiwall Pebble", "White Rigiwall Stucco", "Driftwood Rigiwall Stucco",
                                                "White FRP (Interior Only)", "Driftwood FRP (Interior Only)", "Bronze FRP (Interior Only)"};
 
-        public static string[] GLASS_WINDOW_TINTS = { "Grey", "Bronze", "Clear" };
-        public static string[] GLASS_KNEEWALL_TINTS = { "Grey", "Bronze" };
-        public static string[] GLASS_TRANSOM_TINTS = { "Grey", "Bronze" };
 
         public static string[] VINYL_TINTS = { "Clear", "Smoke Grey", "Dark Grey", "Bronze" };
 
-        public static string[] SUNSHADE_COLOURS = { "Chalk", "Alabaster", "Pebblestone", "Tobacco", "Ebony", "Greystone" };
-        public static string[] SUNSHADE_VALANCE_COLOURS = { "White", "Driftwood", "Bronze" };
-
+        public static string[] INSTALLATION_TYPES = { "House", "Trailer", "Standalone" };
         //Glass, Vinyl, Screen, Panel, Open?
-        public static string[] KNEEWALL_TYPES = { "Solid Wall", "Tempered Glass" };
         public static string[] MODEL_100_TRANSOM_TYPES = { "Vinyl", "Screen", "Solid Wall" };
         public static string[] MODEL_200_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
         public static string[] MODEL_300_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
@@ -177,34 +169,43 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Doors
-        //Door types by model
-            //Door styles by model
-            //Door hardware by model
-            //Door colour by model
-            //Door glass tint by model
-            //Door vinyl tint by model
+        public static string[] DOOR_TYPES = { "Cabana Door", "French Door", "Patio Door", "No Door" };
+        public static string[] DOOR_STYLES = { "Full Screen", "Vertical Four Track", "Full View", "Full View Colonial", "Half Lite", "Half Lite Venting", "Half Lite with Mini Blinds", "Full View with Mini Blinds" };
+        public static string[] DOOR_HARDWARE = { "Satin Silver", "Bright Brass", "Antique Brass" };
+        public static string[] DOOR_COLOURS = { "White", "Driftwood", "Bronze", "Green", "Black", "Ivory", "Cherrywood", "Grey" };
+        public static string[] GLASS_DOOR_TINTS = { "Grey", "Bronze", "Clear" };
             //Door screen tint by model
         #endregion Doors
 
         #region Windows
-            //Window types by model
-            //Window colours by model
-            //Window glass tint by model
-            //Window vinyl tint by model
-            //Window screen type by model
+        //public const static string[] MODEL_100_WINDOW_COLOURS = { "White", "Driftwood", "Bronze" };//CURRENTLY NO COLOURS, ONLY VINYL
+        public static string[] MODEL_200_WINDOW_COLOURS = { "White", "Driftwood", "Bronze", "Green", "Black", "Ivory", "Cherrywood", "Grey" };
+        public static string[] MODEL_300_WINDOW_COLOURS = { "White", "Driftwood", "Bronze" };
+        public static string[] MODEL_400_WINDOW_COLOURS = { "White", "Driftwood" };
+
+        public static string[] GLASS_WINDOW_TINTS = { "Grey", "Bronze", "Clear" };
+
+        public static string[] WINDOW_TYPES = { "Vertical 4 Track", "Horizontal 4 Track", "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
+        public static string[] SCREEN_TYPES = { "No Screen", "Better Vue Insect Screen (Default)", "No See Ums 20 x 20 Mesh", "Solar Insect Screening", "Tuff Screen" };
         #endregion
 
         #region Sunshades
-            //Sunshade valance colour by model
-            //Sunshade fabrics by model
-            //Sunshade openness by model
+        public static string[] SUNSHADE_VALANCE_COLOURS = { "White", "Driftwood", "Bronze" };
+        public static string[] SUNSHADE_FABRIC_COLOURS = { "Chalk", "Alabaster", "Pebblestone", "Tobacco", "Ebony", "Greystone" };
+        public static string[] SUNSHADE_OPENNESS = { "3%", "5%", "15%" };
         #endregion
 
         #region Roofs
-            //Roof Types by model (All studio gable, NYI)
-            //Roof interior skins by model
-            //roof exterior skins by model
-            //roof thickness by model
+        public static string[] ROOF_TYPES = { "Studio", "Gable" };
+        public static string[] ROOF_EXTERIOR_SKIN_TYPES = { "White Aluminum Stucco", "Driftwood Aluminum Stucco", "Bronze Aluminum Stucco",
+                                               "White Cedar Aluminum Woodgrain", "White Cedar Forestex", "White Rigiwall Pebble",
+                                               "Driftwood Rigiwall Pebble", "White Rigiwall Stucco", "Driftwood Rigiwall Stucco", "OSB"};
+
+        public static string[] ROOF_INTERIOR_SKIN_TYPES = { "White Aluminum Stucco", "Driftwood Aluminum Stucco", "Bronze Aluminum Stucco",
+                                               "White Cedar Aluminum Woodgrain", "White Cedar Forestex", "White Rigiwall Pebble",
+                                               "Driftwood Rigiwall Pebble", "White Rigiwall Stucco", "Driftwood Rigiwall Stucco", "OSB",
+                                               "White FRP (Interior Only)", "Driftwood FRP (Interior Only)", "Bronze FRP (Interior Only)"};
+        public static string[] ROOF_THICKNESSES = { "3", "4", "6" };
         #endregion
 
         #region Floors
@@ -214,12 +215,13 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Kneewalls
-            //Kneewall Types by model
-            //Kneewall glass tints by model
+        public static string[] KNEEWALL_TYPES = { "Panel", "Glass" };
+        public static string[] KNEEWALL_GLASS_TINTS = { "Grey", "Bronze" };
         #endregion
 
         #region Transom
-            //Transoms tyles by model
+        public static string[] TRANSOM_TYPES = { "Panel", "Glass", "Vinyl" };
+        public static string[] TRANSOM_GLASS_TINTS = { "Grey", "Bronze" };
             //Transom glass tints by model
             //transom vinyl tints by model
             //frame colours by model, is it the same as above?
