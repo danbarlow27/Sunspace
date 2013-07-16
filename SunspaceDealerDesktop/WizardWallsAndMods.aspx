@@ -680,7 +680,7 @@
         };
 
         //To be moved, used to store remain spaces on a wall
-        var doors = new Array();
+        var doors;
         var sortedDoors;
         var wallDoors = new Array();
         var spacesRemaining;
@@ -690,7 +690,7 @@
 
             var isValid = true;
 
-            sortedDoors = new Array();
+            //sortedDoors = new Array();
 
             // Sort left to right
             if (doors.length > 0) {
@@ -724,9 +724,9 @@
                 var goodSpace = 0;
                 //Loop through all spaces in spacesRemaining and check it against the door width
                 for (var j = 0; j < spacesRemaining.length; j++) {
-                    alert(spacesRemaining[j]);
+                    //alert(spacesRemaining[j]);
                     //Check all spaces in wall
-                    if (spacesRemaining[j] > doors[doors.length - 1].doorWidth) {                        
+                    if (spacesRemaining[j].space > doors[doors.length - 1].doorWidth) {                        
                         goodSpace++;
                     }
                 }
@@ -779,35 +779,39 @@
 
             //Block to store remaining spaces between various door(s)
             if (sortedDoors[0].distanceFromLeft > 0 && sortedDoors.length > 1) {
-                spacesRemaining[spacesRemaining.length] = sortedDoors[0].distanceFromLeft;
+                spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
             }
             else if (sortedDoors.length == 1) {
-                if (sortedDoors[0].distanceFromLeft == 0 || sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth == 0) {
-                    spacesRemaining[spacesRemaining.length] = usuableLength - sortedDoors[0].doorWidth;
+                if (sortedDoors[0].distanceFromLeft == 0) {
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].doorWidth, "space": usuableLength - sortedDoors[0].doorWidth };
+                }
+                else if (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth == usuableLength) {
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": usuableLength - sortedDoors[0].doorWidth };
                 }
                 else if (sortedDoors[0].distanceFromLeft > 0) {
-                    spacesRemaining[spacesRemaining.length] = sortedDoors[0].distanceFromLeft;
-                    spacesRemaining[spacesRemaining.length] = usuableLength - (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth);
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth, "space": usuableLength - (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth) };
                 }
             }
             else {
                 var doorsLoop;
                 for (doorsLoop = 0; doorsLoop < sortedDoors.length - 1; doorsLoop++) {
-                    spacesRemaining[spacesRemaining.length] = sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft);
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft, "space": sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft) };
                 }
                 if (sortedDoors[doorsLoop].distanceFromLeft + sortedDoors[doorsLoop].doorWidth < usuableLength) {
-                    spacesRemaining[spacesRemaining.length] = space - sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft;
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].distanceFromLeft + sortedDoors[doorsLoop].doorWidth, "space": space - sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft };
                 }
             }
 
-            //for (var random = 0; random < spacesRemaining.length; random++) {
-            //    alert(spacesRemaining[random] + " space");
-            //}
+            for (var i = 0; i < spacesRemaining.length; i++) {
+                alert(spacesRemaining[i].distanceFromLeft + " Distance from left");
+            }
 
-            document.getElementById('pagerThree').style.display = "inline";
-            document.getElementById('wall' + wallNumber + 'SpaceRemaining').style.display = "inline";
+            document.getElementById("pagerThree").style.display = "inline";
+            document.getElementById("wall" + wallNumber + 'SpaceRemaining').style.display = "inline";
+            var proposedWall = document.getElementById("MainContent_lblTextArea" + wallNumber);
             pagerText.setAttribute("style", "display:block;");
-            pagerText.innerHTML = "The Remaining Space Is: " + space;
+            pagerText.innerHTML = "The Remaining Space In Wall " + (proposedWall.innerText).substr(14,2) + ": " + space;
 
         }
 
@@ -833,7 +837,6 @@
                         var heightDropDown = document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).options[document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).selectedIndex].value;
                         var doorWidth;
                         var dropDownName = 'MainContent_ddlDoorPosition' + wallCount;
-
 
                         if (widthDropDown === "cWidth") {
                             doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', true, wallCount));
@@ -868,11 +871,20 @@
                             deleteButton.setAttribute("onclick", "deleteDoor()");
                             deleteButton.setAttribute("class", "btnSubmit");
                             deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
-                            pagerTextDoorAnswer.innerHTML += "Door " + (sortedDoors[sortedDoors.length - 1].index + 1) + " " + type + " added";
+                            pagerTextDoorAnswer.innerHTML += "Door " + (sortedDoors.length) + " " + type + " added";
                             pagerTextDoorAnswer.appendChild(deleteButton);
                             pagerTextDoorAnswer.innerHTML += "<br/>";
 
-                            //Wall Array
+                            if (wallDoors.length == 0) {
+                                wallDoors[wallDoors.length] = { "wallId": wallCount, "doorsSorted": sortedDoors };
+                                //alert(wallDoors[wallDoors.length - 1].doorsSorted[0].doorWidth);
+                            }
+                            else {
+                                wallDoors.sort();
+                                //for (var i = 0; i < wallDoors.length; i++) {
+                                //    alert(wallDoors[i].doorsSorted[0].doorWidth);
+                                //}
+                            }
                         }
                     }
                 }
@@ -884,18 +896,23 @@
 
         //TO BE COMPLETED
         function onWallRadioChange(wallId) {
+            var idToLoad = 0;
+            sortedDoors = new Array();
+            doors = new Array();
+            alert(sortedDoors[0] + " In On Change " + doors[0]);
             //Store doors and sortedDoors arrays
             //Reset their values
-            if (previousRadio == null && currentRadio == null && sortedDoors == null) {
-                previousRadio = wallId;
-                //alert("Previous " + previousRadio);
+            if (wallDoors.length == 0) {
+                for (var findDoors = 0; findDoors < wallDoors.length; findDoors++) {
+                    if (wallDoors[findDoors].wallId == wallId) {
+                        idToLoad = findDoors;
+                    }
+                }
+                if (idToLoad != 0) {                    
+                    sortedDoors = wallDoors[idToLoad].sortedDoors;
+                }
             }
-            else if (previousRadio != currentRadio) {
-                wallDoors[wallDoors.length] = { "wallId": previousRadio, "doorsSorted": sortedDoors };
-                //alert("Changing Wall " + wallDoors[wallDoors.length - 1].doorsSorted[sortedDoors.length - 1].position);
-                previousRadio = currentRadio;
-                currentRadio = wallId;
-            }
+            alert(sortedDoors[0] + " In On Change " + doors[0]);
         }
 
         //TO BE COMPLETED

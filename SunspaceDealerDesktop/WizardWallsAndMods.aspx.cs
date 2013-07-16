@@ -341,11 +341,13 @@ namespace SunspaceDealerDesktop
 
             //Label to create clickable area for radio button
             Label wallLabelRadio = new Label();
+            wallLabelRadio.ID = "lblRadioClickable" + i;
             wallLabelRadio.AssociatedControlID = "radWall" + i;   //Tying this label to the radio button
 
             Label wallLabel = new Label();
+            wallLabel.ID = "lblTextArea" + i;
             wallLabel.AssociatedControlID = "radWall" + i;        //Tying this label to the radio button
-            wallLabel.Text = "Proposed Wall " + proposedWallCount + " Door Options";       //Adding text to the radio button
+            wallLabel.Text = "Proposed Wall " + proposedWallCount;       //Adding text to the radio button
 
             wallDoorOptions.Controls.Add(wallRadio);        //Adding radio button control to placeholder wallDoorOptions
             wallDoorOptions.Controls.Add(wallLabelRadio);   //Adding label control to placeholder wallDoorOptions
