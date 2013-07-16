@@ -45,7 +45,7 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             /***hard coded variables***/
-            Session["model"] = "M300";
+            Session["model"] = "M200";
             Session["soffitLength"] = 0F;
             /****************diffrent sunroom layouts******************/
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
@@ -120,9 +120,6 @@ namespace SunspaceDealerDesktop
             #endregion
 
             
-           
-            
-
             #region For Loop for slide 1 and slide3            
 
             for (int i = 1; i <= strWalls.Count(); i++) //for each wall in walls 
@@ -132,7 +129,7 @@ namespace SunspaceDealerDesktop
                 if (wallDetails[i - 1, 4] == "E") //wall type is existing
                 {
                     existingWallCount++; //increment the existing wall counter
-                    populateTblExisting(i, existingWallCount); //populate the existing walls table on slide 1
+                    //populateTblExisting(i, existingWallCount); //populate the existing walls table on slide 1
                 }
                 else //wall type is proposed
                 {
@@ -199,7 +196,7 @@ namespace SunspaceDealerDesktop
             cell2.Controls.Add(txtWallLength); //append the textbox to cell 2
             cell3.Controls.Add(ddlInchFractions); //append the dropdown to cell 3
             
-            tblExistingWalls.Rows.Add(row); //append the row to the existing walls table
+            //tblExistingWalls.Rows.Add(row); //append the row to the existing walls table
 
             //append all the cells to the row
             row.Cells.Add(cell1); 
@@ -1420,6 +1417,390 @@ namespace SunspaceDealerDesktop
 
         #region window stuff
 
+        /// <summary>
+        /// This method creates radio buttons/dropdowns for window frame colour options for all models 
+        /// </summary>
+        /// <param name="bronze">true or false, if bronze is an option</param>
+        /// <param name="white">true or false, if white is an option, true by default</param>
+        /// <param name="driftwood">true or false, if driftwood is an option, true by default</param>
+        /// <param name="green">true or false, if green is an option, false by default</param>
+        /// <param name="black">true or false, if black is an option, false by default</param>
+        /// <param name="ivory">true or false, if ivory is an option, false by default</param>
+        /// <param name="cherrywood">true or false, if cherrywood is an option, false by default</param>
+        /// <param name="grey">true or false, if grey is an option, false by default</param>
+        protected void windowFramingColourOptions(bool bronze, bool white = true, bool driftwood = true, bool green = false, bool black = false, bool ivory = false, bool cherrywood = false, bool grey = false)
+        {
+
+            wallWindowOptions.Controls.Add(new LiteralControl("<br/><h2>Framing Colour: </h2>"));
+
+            #region framing colour dropdown
+
+            /*
+
+            ////Creating div tag to hold all the current window type information 
+            //wallWindowOptions.Controls.Add(new LiteralControl("<li><div id='framingWindowDetails' class='toggleContent'>"));
+
+            //RadioButton frameRadio = new RadioButton();
+            //frameRadio.ID = "radFrameColour";     //Giving an appropriate id to radio buttons based on current type of window
+            //frameRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
+
+            ////Label to create clickable area for radio button
+            //Label frameLabelRadio = new Label();
+            //frameLabelRadio.AssociatedControlID = "radFrameColour";   //Tying this label to the radio button
+
+            //Label frameLabel = new Label();
+            //frameLabel.AssociatedControlID = "radFrameColour";        //Tying this label to the radio button
+            //frameLabel.Text = "radio";       //Adding text to the radio button
+
+            //Creating one ul tag to hold multiple li tags containing vinyl tints
+            //wallWindowOptions.Controls.Add(new LiteralControl("<ul><li><ul id='framingDetailsList' class='toggleOptions'>"));
+
+            Table tblFrameColours = new Table(); //table to hold vinyl number labels and dropdown options
+
+            //tblFrameColours.AssociatedControlID = "radFrameColour";
+            tblFrameColours.ID = "tblWindowFramingColour"; //Adding appropriate id to the table
+            tblFrameColours.CssClass = "tblTextFields";   //Adding CssClass to the table for styling
+
+            TableRow mixedVinylTintRow = new TableRow();
+            mixedVinylTintRow.ID = "rowWindowFramingColour";
+            //mixedVinylTintRow.Attributes.Add("style", "display:none;");
+            TableCell mixedVinylTintLabelCell = new TableCell();
+            TableCell mixedVinylTintDropDownCell = new TableCell();
+
+            Label mixedVinylTintLabel = new Label();
+            mixedVinylTintLabel.ID = "lblWindowFramingColour";
+            mixedVinylTintLabel.Text = "Window Framing Colour: ";
+            DropDownList ddlVinylTintOptions = new DropDownList();
+            ddlVinylTintOptions.ID = "ddlWindowFramingColour";
+
+            if (bronze)
+            {
+                ListItem bronzeFrame = new ListItem("Bronze", "bronze");
+                ddlVinylTintOptions.Items.Add(bronzeFrame);
+
+            }
+            if (white)
+            {
+                ListItem whiteFrame = new ListItem("White", "white");
+                ddlVinylTintOptions.Items.Add(whiteFrame);
+            }
+            if (driftwood)
+            {
+                ListItem driftwoodFrame = new ListItem("Driftwood", "driftwood");
+                ddlVinylTintOptions.Items.Add(driftwoodFrame);
+            }
+            if (green)
+            {
+                ListItem greenFrame = new ListItem("Green", "green");
+                ddlVinylTintOptions.Items.Add(greenFrame);
+            }
+            if (black)
+            {
+                ListItem blackFrame = new ListItem("Black", "black");
+                ddlVinylTintOptions.Items.Add(blackFrame);
+            }
+            if (ivory)
+            {
+                ListItem ivoryFrame = new ListItem("Ivory", "ivory");
+                ddlVinylTintOptions.Items.Add(ivoryFrame);
+            }
+            if (cherrywood)
+            {
+                ListItem cherrywoodFrame = new ListItem("Cherrywood", "cherrywood");
+                ddlVinylTintOptions.Items.Add(cherrywoodFrame);
+            }
+            if (grey)
+            {
+                ListItem greyFrame = new ListItem("Grey", "grey");
+                ddlVinylTintOptions.Items.Add(greyFrame);
+            }
+
+            mixedVinylTintLabel.AssociatedControlID = "ddlWindowFramingColour";
+
+            mixedVinylTintLabelCell.Controls.Add(mixedVinylTintLabel);
+            mixedVinylTintDropDownCell.Controls.Add(ddlVinylTintOptions);
+
+            tblFrameColours.Rows.Add(mixedVinylTintRow);
+
+            mixedVinylTintRow.Cells.Add(mixedVinylTintLabelCell);
+            mixedVinylTintRow.Cells.Add(mixedVinylTintDropDownCell);
+
+            wallWindowOptions.Controls.Add(tblFrameColours);
+
+            //wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>")); //close the previously opened tags
+
+             * 
+             */ 
+            #endregion
+
+
+            #region framing colour radios
+
+            RadioButton frameRadio;
+            Label frameLabelRadio, frameLabel;
+
+            if (bronze)
+            {
+                #region Bronze
+
+                //li tag to hold window type radio button and all its content
+                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+                //Vinyl tint radio button
+                frameRadio = new RadioButton();
+                frameRadio.ID = "radFrameBronze"; //Adding appropriate id to window type radio button
+                frameRadio.GroupName = "FrameColourRadios";         //Adding group name for all tint colours
+                //frameRadio.Checked = (currentModel == "M200") ? true : false; //select/check the radio button if current select is defualt value
+                //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+                //Vinyl tint radio button label for clickable area
+                frameLabelRadio = new Label();
+                frameLabelRadio.AssociatedControlID = "radFrameBronze";  //Tying this label to the radio button
+
+                //Vinyl tint radio button label text
+                frameLabel = new Label();
+                frameLabel.AssociatedControlID = "radFrameBronze";    //Tying this label to the radio button
+                frameLabel.Text = "Bronze";
+
+                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+                #endregion
+            }
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            if (white)
+            {
+                #region White
+
+                //li tag to hold window type radio button and all its content
+                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+                //Vinyl tint radio button
+                frameRadio = new RadioButton();
+                frameRadio.ID = "radFrameWhite"; //Adding appropriate id to window type radio button
+                frameRadio.GroupName = "FrameColourRadios";         //Adding group name for all tint colours
+                //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+                //Vinyl tint radio button label for clickable area
+                frameLabelRadio = new Label();
+                frameLabelRadio.AssociatedControlID = "radFrameWhite";  //Tying this label to the radio button
+
+                //Vinyl tint radio button label text
+                frameLabel = new Label();
+                frameLabel.AssociatedControlID = "radFrameWhite";    //Tying this label to the radio button
+                frameLabel.Text = "White";
+
+                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+                #endregion
+            }
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            if (driftwood)
+            {
+                #region Driftwood
+
+                //li tag to hold window type radio button and all its content
+                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+                //Vinyl tint radio button
+                frameRadio = new RadioButton();
+                frameRadio.ID = "radFrameDriftwood"; //Adding appropriate id to window type radio button
+                frameRadio.GroupName = "FrameColourRadios";         //Adding group name for all tint colours
+                //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+                //Vinyl tint radio button label for clickable area
+                frameLabelRadio = new Label();
+                frameLabelRadio.AssociatedControlID = "radFrameDriftwood";  //Tying this label to the radio button
+
+                //Vinyl tint radio button label text
+                frameLabel = new Label();
+                frameLabel.AssociatedControlID = "radFrameDriftwood";    //Tying this label to the radio button
+                frameLabel.Text = "Driftwood";
+
+                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+                #endregion
+            }
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            if (grey)
+            {
+                #region Grey
+
+                //li tag to hold window type radio button and all its content
+                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+                //Vinyl tint radio button
+                frameRadio = new RadioButton();
+                frameRadio.ID = "radFrameGrey"; //Adding appropriate id to window type radio button
+                frameRadio.GroupName = "FrameColourRadios";         //Adding group name for all tint colours
+                //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+                //Vinyl tint radio button label for clickable area
+                frameLabelRadio = new Label();
+                frameLabelRadio.AssociatedControlID = "radFrameGrey";  //Tying this label to the radio button
+
+                //Vinyl tint radio button label text
+                frameLabel = new Label();
+                frameLabel.AssociatedControlID = "radFrameGrey";    //Tying this label to the radio button
+                frameLabel.Text = "Grey";
+
+                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+                #endregion
+            }
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            if (green)
+            {
+                #region Green
+
+                //li tag to hold window type radio button and all its content
+                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+                //Vinyl tint radio button
+                frameRadio = new RadioButton();
+                frameRadio.ID = "radFrameGreen"; //Adding appropriate id to window type radio button
+                frameRadio.GroupName = "FrameColourRadios";         //Adding group name for all tint colours
+                //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+                //Vinyl tint radio button label for clickable area
+                frameLabelRadio = new Label();
+                frameLabelRadio.AssociatedControlID = "radFrameGreen";  //Tying this label to the radio button
+
+                //Vinyl tint radio button label text
+                frameLabel = new Label();
+                frameLabel.AssociatedControlID = "radFrameGreen";    //Tying this label to the radio button
+                frameLabel.Text = "Green";
+
+                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+                #endregion
+            }
+
+            if (ivory)
+            {
+                #region Ivory
+
+                //li tag to hold window type radio button and all its content
+                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+                //Vinyl tint radio button
+                frameRadio = new RadioButton();
+                frameRadio.ID = "radFrameIvory"; //Adding appropriate id to window type radio button
+                frameRadio.GroupName = "FrameColourRadios";         //Adding group name for all tint colours
+                //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+                //Vinyl tint radio button label for clickable area
+                frameLabelRadio = new Label();
+                frameLabelRadio.AssociatedControlID = "radFrameIvory";  //Tying this label to the radio button
+
+                //Vinyl tint radio button label text
+                frameLabel = new Label();
+                frameLabel.AssociatedControlID = "radFrameIvory";    //Tying this label to the radio button
+                frameLabel.Text = "Ivory";
+
+                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+                #endregion
+            }
+            if (cherrywood)
+            {
+                #region Cherrywood
+
+                //li tag to hold window type radio button and all its content
+                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+                //Vinyl tint radio button
+                frameRadio = new RadioButton();
+                frameRadio.ID = "radFrameCherrywood"; //Adding appropriate id to window type radio button
+                frameRadio.GroupName = "FrameColourRadios";         //Adding group name for all tint colours
+                //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+                //Vinyl tint radio button label for clickable area
+                frameLabelRadio = new Label();
+                frameLabelRadio.AssociatedControlID = "radFrameCherrywood";  //Tying this label to the radio button
+
+                //Vinyl tint radio button label text
+                frameLabel = new Label();
+                frameLabel.AssociatedControlID = "radFrameCherrywood";    //Tying this label to the radio button
+                frameLabel.Text = "Cherrywood";
+
+                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+                #endregion
+            }
+            if (black)
+            {
+                #region Black
+
+                //li tag to hold window type radio button and all its content
+                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+                //Vinyl tint radio button
+                frameRadio = new RadioButton();
+                frameRadio.ID = "radFrameBlack"; //Adding appropriate id to window type radio button
+                frameRadio.GroupName = "FrameColourRadios";         //Adding group name for all tint colours
+                //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+                //Vinyl tint radio button label for clickable area
+                frameLabelRadio = new Label();
+                frameLabelRadio.AssociatedControlID = "radFrameBlack";  //Tying this label to the radio button
+
+                //Vinyl tint radio button label text
+                frameLabel = new Label();
+                frameLabel.AssociatedControlID = "radFrameBlack";    //Tying this label to the radio button
+                frameLabel.Text = "Black";
+
+                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+
+                #endregion
+            }
+
+            #endregion
+
+        }
+
+        /// <summary>
+        /// This method creates radio buttons for tint options for all different types of windows 
+        /// </summary>
+        /// <param name="windowTypeId">id of radio button, must be unique</param>
+        /// <param name="windowTypeText">text of the label for the radio button</param>
+        /// <param name="grey">true or false, if grey is an option</param>
+        /// <param name="smokeGrey">true or false, if smokeGrey is an option</param>
+        /// <param name="darkGrey">true or false, if darkGrey is an option</param>
+        /// <param name="bronze">true or false, if bronze is an option</param>
+        /// <param name="mixed">true or false, if mixed is an option, false by default</param>
+        /// <param name="clear">true or false, if clear is an option, true by default</param>
         protected void tintOptions(string windowTypeId, string windowTypeText, bool grey, bool smokeGrey, bool darkGrey, bool bronze, bool mixed = false, bool clear = true)
         {
 
@@ -1740,68 +2121,101 @@ namespace SunspaceDealerDesktop
             #endregion
         }
 
+        /// <summary>
+        /// This method is used to call model specific method for window layouts
+        /// </summary>
         protected void windowOptions()
         {
+            wallWindowOptions.Controls.Add(new LiteralControl("<br/><h2>Window Type: </h2>"));
+
             switch (currentModel)
             {
                 case "M100":
-                    /*
-                     * 		- screen (Default)
-			                    - screen type (better vue insect screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen)
-                     */
-                    screenWindowOptions();
+                    model100WindowOptions();
                     break;
                 case "M200":
-                    /*
-                     * 		- V4T (Default)
-			                    - V4T tints (clear, smoke grey, dark grey, bronze, Mixed)
-		                    - Horizontal 2 Track[XX]
-			                    - H2T (vinyl) tints (clear, smoke grey, dark grey, bronze)
-		                    - fixed vinyl windows
-			                    - fixed window tints (clear, smoke grey, dark grey, bronze)
-		                    - open wall
-		                    - solid wall
-		                    - screen type (better vue insect screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen)
-                     */
-                    v4tWindowOptions();
-                    h2tWindowOptions();
-                    fixedVinylWindowOptions();
-                    openWall();
-                    solidWall();
-                    screenWindowOptions();
-
+                    model200WindowOptions();
                     break;
                 case "M300":
-                    /*
-                     * 		- Single Pane Horizontal Rollers [XX] (Default)
-			                    - glass tint (grey, bronze, clear)
-		                    - fixed windows
-			                    - fixed window tints (grey, bronze, clear)
-		                    - open wall
-		                    - solid wall
-		                    - screen type (better vue insect screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen)
-                     */
-                    singlePageHorizontalRollersWindowOptions();
-                    fixedGlassWindowOptions();
-                    openWall();
-                    solidWall();
-                    screenWindowOptions();
+                    model300WindowOptions();
                     break;
                 case "M400":
-                    /*
-                     * 		- Double Pane Single Sliders[XO, OX] (Default): is there a default on XO or OX?
-			                    - glass tint (grey, bronze, clear)
-		                    - fixed windows
-			                    - fixed window tints (grey, bronze, clear)
-		                    - open wall
-		                    - solid wall
-                     */
-                    doublePaneSingleSliderWindowOptions();
-                    fixedGlassWindowOptions();
-                    openWall();
-                    solidWall();
+                    model400WindowOptions();
                     break;
             }
+        }
+
+        /// <summary>
+        /// - screen (Default)
+		///     - screen type (better vue insect screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen)
+        /// </summary>
+        protected void model100WindowOptions()
+        {
+            screenWindowOptions();
+        }
+        
+        /// <summary>
+        ///	- V4T (Default)
+		///    - V4T tints (clear, smoke grey, dark grey, bronze, Mixed)
+		/// - Horizontal 2 Track[XX]
+		///    - H2T (vinyl) tints (clear, smoke grey, dark grey, bronze)
+		/// - fixed vinyl windows
+		///	    - fixed window tints (clear, smoke grey, dark grey, bronze)
+		/// - open wall
+		/// - solid wall
+		/// - screen type (better vue insect screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen)
+        /// •	Model 200 has the standard frame colors (white, bronze, driftwood) and also Custom Colors: Green, Black,  Ivory, Cherrywood and Grey
+        /// </summary>
+        protected void model200WindowOptions()
+        {
+            v4tWindowOptions();
+            h2tWindowOptions();
+            fixedVinylWindowOptions();
+            openWall();
+            solidWall();
+            screenWindowOptions();
+
+            windowFramingColourOptions(true, true, true, true, true, true, true, true);
+        }
+
+        /// <summary>
+        /// - Single Pane Horizontal Rollers [XX] (Default)
+		///	    - glass tint (grey, bronze, clear)
+		/// - fixed windows
+		///	    - fixed window tints (grey, bronze, clear)
+		/// - open wall
+		/// - solid wall
+		/// - screen type (better vue insect screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen) 
+        /// •	Model 300 frame colours are White, Driftwood and Bronze.
+        /// </summary>
+        protected void model300WindowOptions()
+        {            
+            singlePageHorizontalRollersWindowOptions();
+            fixedGlassWindowOptions();
+            openWall();
+            solidWall();
+            screenWindowOptions();
+
+            windowFramingColourOptions(true);
+        }
+
+        /// <summary>
+        /// - Double Pane Single Sliders[XO, OX] (Default): is there a default on XO or OX?
+		///    - glass tint (grey, bronze, clear)
+		/// - fixed windows
+		///	   - fixed window tints (grey, bronze, clear)
+		/// - open wall
+		/// - solid wall
+        /// •	Model 400 Windows frames come in White and Driftwood.
+        /// </summary>
+        protected void model400WindowOptions()
+        {
+            doublePaneSingleSliderWindowOptions();
+            fixedGlassWindowOptions();
+            openWall();
+            solidWall();
+
+            windowFramingColourOptions(false);
         }
 
         /// <summary>

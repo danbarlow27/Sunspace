@@ -927,31 +927,31 @@
                     number of rows in the 2 tables below are added dynamically in the codebehind--%>
                 <div id="tableWallLengths" class="tblWallLengths" runat="server" style="padding-right:15%; padding-left:15%; padding-top:5%;">
                     <%-- first table for existing walls, only contains input fields for lengths --%>
-                    <asp:Table ID="tblExistingWalls" runat="server">
-                        <asp:TableRow>
+                    <%--<asp:Table ID="tblExistingWalls" runat="server">
+                        <asp:TableRow>--%>
                             <%-- table headings --%>
-                            <asp:TableHeaderCell >
+                           <%-- <asp:TableHeaderCell >
                                 Existing Walls
                             </asp:TableHeaderCell>
                         </asp:TableRow>
                         <asp:TableRow>
-                            <asp:TableCell></asp:TableCell>
+                            <asp:TableCell></asp:TableCell>--%>
                             <%-- column headings --%>
-                            <asp:TableCell ColumnSpan="6" >
+                            <%--<asp:TableCell ColumnSpan="6" >
                                 Length
                             </asp:TableCell>
                         </asp:TableRow>
-                    </asp:Table>
+                    </asp:Table>--%>
                     <%-- end of existing walls table --%>
                     <br />
                     <%-- second table for proposed walls, contains input fields for lengths, as well as left and right fillers --%>
                     <asp:Table ID="tblProposedWalls" runat="server">
-                        <asp:TableRow>
+                        <%--<asp:TableRow>--%>
                             <%-- table headings --%>
-                            <asp:TableHeaderCell >
+                            <%--<asp:TableHeaderCell >
                                 Proposed Walls
                             </asp:TableHeaderCell>
-                        </asp:TableRow>
+                        </asp:TableRow>--%>
                         
                         <asp:TableRow>
                             <asp:TableCell></asp:TableCell>
