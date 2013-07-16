@@ -143,8 +143,6 @@ namespace SunspaceDealerDesktop
             }
             #endregion
 
-            
-
             //do the windows stuff
             windowOptions();
 
@@ -1420,6 +1418,7 @@ namespace SunspaceDealerDesktop
             #endregion
         }
 
+        #region window stuff
 
         protected void tintOptions(string windowTypeId, string windowTypeText, bool grey, bool smokeGrey, bool darkGrey, bool bronze, bool mixed = false, bool clear = true)
         {
@@ -2067,7 +2066,7 @@ namespace SunspaceDealerDesktop
             tintOptions("SolidWall", "Solid Wall", false, false, false, false, false, false);
         }
 
-        
+        #endregion
 
         protected void txtWallLengths_TextChanged(object sender, EventArgs e)
         { 
