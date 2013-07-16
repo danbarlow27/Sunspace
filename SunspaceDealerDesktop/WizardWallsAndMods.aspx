@@ -101,7 +101,6 @@
             var decimal = number.split("."); //split the number at the decimal point
             decimal[1] = "0." + decimal[1]; //add "0." to the decimal values to make a valid decimal number
 
-
             /******************************/
             //these constants below will have to be 
             //moved to a constants file, or at least
@@ -129,8 +128,6 @@
         }
 
         
-
-
 
         /*
         This function determines start and end height of each wall based on roof slope and length.
@@ -199,12 +196,23 @@
                     switch (coordList[index][5]) { //5 = orientation
                         case "S": //if south
                         case "N": //or north
+                            wallSoffitArray[index] = 0; //soffit length is unimportant thus zero
+                            break;
+
+                            /**********************************************************************************************/
+                            /**********************************************************************************************/
+                            /**********************************************************************************************/
+                            /**********************************************************************************************/
+                            /**********************************************************************************************/
                         case "SW": //or southwest
                         case "NW": //or northwest
                         case "SE": //or southeast
                         case "NE": //or northeast
-                            wallSoffitArray[index] = 0; //soffit length is unimportant thus zero
-                            break;
+                            /**********************************************************************************************/
+                            /**********************************************************************************************/
+                            /**********************************************************************************************/
+                            /**********************************************************************************************/
+                            /**********************************************************************************************/
                         case "W": //if west
                             for (var i = 0; i < coordList.length; i++) { //run through all the walls
                                 if (coordList[i][4] === "E") { //if there's an existing wall
@@ -225,6 +233,11 @@
                                 }
                             }
                             break; //break out of the switch
+                            /**********************************************************************************************/
+                            /**********************************************************************************************/
+                            /**********************************************************************************************/
+                            /**********************************************************************************************/
+                            /**********************************************************************************************/
                     }
                 }
             }
@@ -1003,7 +1016,7 @@
             <div id="slide2" class="slide">
 
                 <h1>
-                                        <%-- Label for question 2 (wall heights and roof slope) --%>
+                                    <%-- Label for question 2 (wall heights and roof slope) --%>
                     <asp:Label ID="lblQuestion2" runat="server" Text="Please enter the wall heights"></asp:Label>
                 </h1>
            
