@@ -338,11 +338,13 @@ namespace SunspaceDealerDesktop
 
             //Label to create clickable area for radio button
             Label wallLabelRadio = new Label();
+            wallLabelRadio.ID = "lblRadioClickable" + i;
             wallLabelRadio.AssociatedControlID = "radWall" + i;   //Tying this label to the radio button
 
             Label wallLabel = new Label();
+            wallLabel.ID = "lblTextArea" + i;
             wallLabel.AssociatedControlID = "radWall" + i;        //Tying this label to the radio button
-            wallLabel.Text = "Proposed Wall " + proposedWallCount + " Door Options";       //Adding text to the radio button
+            wallLabel.Text = "Proposed Wall " + proposedWallCount;       //Adding text to the radio button
 
             wallDoorOptions.Controls.Add(wallRadio);        //Adding radio button control to placeholder wallDoorOptions
             wallDoorOptions.Controls.Add(wallLabelRadio);   //Adding label control to placeholder wallDoorOptions
@@ -1366,12 +1368,12 @@ namespace SunspaceDealerDesktop
 
             pager3Information.Controls.Add(new LiteralControl("<li id=\"wall" + i + "SpaceRemaining\" style='display:none;' >"));
 
-            pager3Information.Controls.Add(new LiteralControl("<a href=\"#\" data-slide=\"#slide3\" class=\"slidePanel\""));
+            pager3Information.Controls.Add(new LiteralControl("<a href=\"#\" data-slide=\"#slide3\" class=\"slidePanel\">"));
 
             Label lblQuestion3SpaceInfo = new Label();
             lblQuestion3SpaceInfo.ID = "lblQuestion3SpaceInfoWall" + i;
             lblQuestion3SpaceInfo.Attributes.Add("runat", "server");
-            lblQuestion3SpaceInfo.Text = "Wall and Door Details";
+            lblQuestion3SpaceInfo.Text = "The Remaining Space In Wall " + proposedWallCount;
 
             Label lblQuestion3SpaceInfoAnswer = new Label();
             lblQuestion3SpaceInfoAnswer.ID = "lblQuestion3SpaceInfoWallAnswer" + i;
@@ -1391,7 +1393,7 @@ namespace SunspaceDealerDesktop
 
             pager3Information.Controls.Add(new LiteralControl("<li id=\"wall" + i + "DoorsAdded\" style='display:none;' >"));
 
-            pager3Information.Controls.Add(new LiteralControl("<a href=\"#\" data-slide=\"#slide3\" class=\"slidePanel\""));
+            pager3Information.Controls.Add(new LiteralControl("<a href=\"#\" data-slide=\"#slide3\" class=\"slidePanel\">"));
 
             Label lblQuestion3DoorsInfo = new Label();
             lblQuestion3DoorsInfo.ID = "lblQuestion3DoorsInfoWall" + i;
