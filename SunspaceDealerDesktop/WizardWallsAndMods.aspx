@@ -561,13 +561,15 @@
                             doorPositionDDL.style.display = "inherit";
                             doorScreenOptions.style.display = "inherit";
                         }
-                        else if (document.getElementById('MainContent_radType' + wallCount + 'OpeningOnly(NoDoor)').checked) {
+                        else if (document.getElementById('MainContent_radType' + wallCount + 'NoDoor').checked) {
 
-                            var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "OpeningOnly(NoDoor)");
-                            var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "OpeningOnly(NoDoor)");
+                            var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "NoDoor");
+                            var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "NoDoor");
+                            var doorPositionDDL = document.getElementById("MainContent_rowDoorPositionDDL" + wallCount + "NoDoor");
 
                             doorHeight.style.display = "inherit";
                             doorWidth.style.display = "inherit";
+                            doorPositionDDL.style.display = "inherit";
                         }
                     }
                 }
@@ -575,11 +577,14 @@
         }
 
         function customDimension(type, dimension) {
+
+            alert("Type: " + type + " / " + "Dimension: " + dimension);
+
             for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
 
                 if (coordList[wallCount - 1][4] === "P") {
 
-                    if (document.getElementById('MainContent_radWall' + wallCount).checked) {
+                    if (document.getElementById('MainContent_radWall' + wallCount).checked) {                        
 
                         var dimensionDDL = document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).selectedIndex].value;
 
@@ -638,6 +643,8 @@
 
         function calculateActualDoorDimension(type, dimension, custom, wallCount) {
 
+            alert("In calculate actual");
+
             var newDimension;
 
             var controlToUse;
@@ -658,27 +665,15 @@
                 newDimension = (model === 400) ? controlToUse + 3.625 : controlToUse + 2.125;
             }
             else if (type === 'French') {
-
                 newDimension = (model === 400) ? ((controlToUse + 3.625) - 1.625) * 2 + 2 : ((controlToUse + 2.125) - 1.625) * 2 + 2;
-
-                if (type == 'Cabana') {
-
-                    newDimension = (model == 400) ? controlToUse + 3.625 : controlToUse + 2.125;
-
-                }
-                else if (type == 'French') {
-
-                    newDimension = (model == 400) ? ((controlToUse + 3.625) - 1.625) * 2 + 2 : ((controlToUse + 2.125) - 1.625) * 2 + 2;
-
-                }
-                else if (type == 'Patio') {
-                    //Need more information
-                }
             }
-            else if (type === 'Patio') {
-                //Need more information
-            }                
-                
+            else if (type == 'Patio') {
+                newDimension = (model === 400) ? controlToUse + 1.165 : controlToUse + 1.125;
+                alert(newDimension);
+            }
+            else {
+                newDimension = controlToUse;
+            }   
 
             return newDimension;
         }
@@ -755,21 +750,26 @@
 
             //Is valid disable appropriate dropdown item and change selected index
             if (isValid) {
-                if ($('#' + dropDownName).prop("selectedIndex") != "cPosition") {
-                    alert("Not custom position");
-                    $('#' + dropDownName + ' option[value=' + dropDownValue + ']').attr('disabled', true);
-                }
-                    //Not Working**************************************
-                else {
-                    alert("Something");
-                    alert(dropDownName.substring(28));
-                    //customPosition(dropDownName.substring(28));
-                }
+                
+                for (var typeCount = 1; typeCount <= 4; typeCount++) {
 
-                for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + ' option').size() ; dropDownLoop++) {
-                    if ($('#' + dropDownName + ' option')[dropDownLoop].disabled == false) {                  
-                        $('#' + dropDownName).prop("selectedIndex", dropDownLoop);
-                        break;                        
+                    var title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
+
+                    if ($('#' + dropDownName + title).prop("selectedIndex") != "cPosition") {
+                        $('#' + dropDownName + title + ' option[value=' + dropDownValue + ']').attr('disabled', true);
+                    }
+                        //Not Working**************************************
+                    else {
+                        alert("Something");
+                        //alert(dropDownName.substring(28));
+                        //customPosition(dropDownName.substring(28));
+                    }
+
+                    for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + title + ' option').size() ; dropDownLoop++) {
+                        if ($('#' + dropDownName + title + ' option')[dropDownLoop].disabled == false) {
+                            $('#' + dropDownName + title).prop("selectedIndex", dropDownLoop);
+                            break;
+                        }
                     }
                 }
                                 
@@ -841,7 +841,7 @@
                         var widthDropDown = document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).selectedIndex].value;
                         var heightDropDown = document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).options[document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).selectedIndex].value;
                         var doorWidth;
-                        var dropDownName = 'MainContent_ddlDoorPosition' + wallCount + type;
+                        var dropDownName = 'MainContent_ddlDoorPosition' + wallCount;
 
 
                         if (widthDropDown === "cWidth") {
