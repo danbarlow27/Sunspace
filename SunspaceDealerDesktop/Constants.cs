@@ -10,6 +10,7 @@ namespace SunspaceDealerDesktop
     public static class Constants
     {
         public static string[] MODEL_NUMBERS = { "100", "200", "300", "400" };
+
         #region Default Preferences
         public const float DEFAULT_FILLER = 2.0F; //the default amount of filler to be placed on each side of a wall after a starter or post
         public const float MODEL_100_KNEEWALL_HEIGHT = 20;
@@ -39,7 +40,6 @@ namespace SunspaceDealerDesktop
                                                "Driftwood Rigiwall Pebble", "White Rigiwall Stucco", "Driftwood Rigiwall Stucco",
                                                "White FRP (Interior Only)", "Driftwood FRP (Interior Only)", "Bronze FRP (Interior Only)"};
 
-        public static string[] GLASS_WINDOW_TINTS = { "Grey", "Bronze", "Clear" };
 
         public static string[] VINYL_TINTS = { "Clear", "Smoke Grey", "Dark Grey", "Bronze" };
 
@@ -169,12 +169,11 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Doors
-        //Door types by model
-            //Door styles by model
-            //Door hardware by model
-            //Door colour by model
-            //Door glass tint by model
-            //Door vinyl tint by model
+        public static string[] DOOR_TYPES = { "Cabana Door", "French Door", "Patio Door", "No Door" };
+        public static string[] DOOR_STYLES = { "Full Screen", "Vertical Four Track", "Full View", "Full View Colonial", "Half Lite", "Half Lite Venting", "Half Lite with Mini Blinds", "Full View with Mini Blinds" };
+        public static string[] DOOR_HARDWARE = { "Satin Silver", "Bright Brass", "Antique Brass" };
+        public static string[] DOOR_COLOURS = { "White", "Driftwood", "Bronze", "Green", "Black", "Ivory", "Cherrywood", "Grey" };
+        public static string[] GLASS_DOOR_TINTS = { "Grey", "Bronze", "Clear" };
             //Door screen tint by model
         #endregion Doors
 
@@ -183,6 +182,8 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_200_WINDOW_COLOURS = { "White", "Driftwood", "Bronze", "Green", "Black", "Ivory", "Cherrywood", "Grey" };
         public static string[] MODEL_300_WINDOW_COLOURS = { "White", "Driftwood", "Bronze" };
         public static string[] MODEL_400_WINDOW_COLOURS = { "White", "Driftwood" };
+
+        public static string[] GLASS_WINDOW_TINTS = { "Grey", "Bronze", "Clear" };
 
         public static string[] WINDOW_TYPES = { "Vertical 4 Track", "Horizontal 4 Track", "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
         public static string[] SCREEN_TYPES = { "No Screen", "Better Vue Insect Screen (Default)", "No See Ums 20 x 20 Mesh", "Solar Insect Screening", "Tuff Screen" };
@@ -195,9 +196,16 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Roofs
-            //Roof interior skins by model
-            //roof exterior skins by model
-            //roof thickness by model
+        public static string[] ROOF_TYPES = { "Studio", "Gable" };
+        public static string[] ROOF_EXTERIOR_SKIN_TYPES = { "White Aluminum Stucco", "Driftwood Aluminum Stucco", "Bronze Aluminum Stucco",
+                                               "White Cedar Aluminum Woodgrain", "White Cedar Forestex", "White Rigiwall Pebble",
+                                               "Driftwood Rigiwall Pebble", "White Rigiwall Stucco", "Driftwood Rigiwall Stucco", "OSB"};
+
+        public static string[] ROOF_INTERIOR_SKIN_TYPES = { "White Aluminum Stucco", "Driftwood Aluminum Stucco", "Bronze Aluminum Stucco",
+                                               "White Cedar Aluminum Woodgrain", "White Cedar Forestex", "White Rigiwall Pebble",
+                                               "Driftwood Rigiwall Pebble", "White Rigiwall Stucco", "Driftwood Rigiwall Stucco", "OSB",
+                                               "White FRP (Interior Only)", "Driftwood FRP (Interior Only)", "Bronze FRP (Interior Only)"};
+        public static string[] ROOF_THICKNESSES = { "3", "4", "6" };
         #endregion
 
         #region Floors

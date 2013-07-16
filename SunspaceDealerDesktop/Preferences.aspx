@@ -450,8 +450,8 @@
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- style --%>
-                                                                                    <asp:Label ID="lbl100TransomStyle" runat="server" Text="Transom Style:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl100TransomStyle" runat="server"></asp:DropDownList>
+                                                                                    <asp:Label ID="lbl100TransomType" runat="server" Text="Transom Type:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl100TransomType" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- glass tint --%>
@@ -797,8 +797,8 @@
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- style --%>
-                                                                                    <asp:Label ID="lbl200TransomStyle" runat="server" Text="Transom Style:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl200TransomStyle" runat="server"></asp:DropDownList>
+                                                                                    <asp:Label ID="lbl200TransomType" runat="server" Text="Transom Style:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl200TransomType" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- glass tint --%>
@@ -1145,8 +1145,8 @@
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- style --%>
-                                                                                    <asp:Label ID="lbl300TransomStyle" runat="server" Text="Transom Style:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl300TransomStyle" runat="server"></asp:DropDownList>
+                                                                                    <asp:Label ID="lbl300TransomType" runat="server" Text="Transom Style:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl300TransomType" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- glass tint --%>
@@ -1493,8 +1493,8 @@
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- style --%>
-                                                                                    <asp:Label ID="lbl400TransomStyle" runat="server" Text="Transom Style:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl400TransomStyle" runat="server"></asp:DropDownList>
+                                                                                    <asp:Label ID="lbl400TransomType" runat="server" Text="Transom Type:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl400TransomType" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- glass tint --%>

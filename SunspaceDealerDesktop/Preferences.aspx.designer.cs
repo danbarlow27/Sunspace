@@ -1075,22 +1075,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txt100TransomHeight;
         
         /// <summary>
-        /// lbl100TransomStyle control.
+        /// lbl100TransomType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl100TransomStyle;
+        protected global::System.Web.UI.WebControls.Label lbl100TransomType;
         
         /// <summary>
-        /// ddl100TransomStyle control.
+        /// ddl100TransomType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl100TransomStyle;
+        protected global::System.Web.UI.WebControls.DropDownList ddl100TransomType;
         
         /// <summary>
         /// lbl100TransomGlassTint control.
@@ -2056,22 +2056,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txt200TransomHeight;
         
         /// <summary>
-        /// lbl200TransomStyle control.
+        /// lbl200TransomType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl200TransomStyle;
+        protected global::System.Web.UI.WebControls.Label lbl200TransomType;
         
         /// <summary>
-        /// ddl200TransomStyle control.
+        /// ddl200TransomType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl200TransomStyle;
+        protected global::System.Web.UI.WebControls.DropDownList ddl200TransomType;
         
         /// <summary>
         /// lbl200TransomGlassTint control.
@@ -3037,22 +3037,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txt300TransomHeight;
         
         /// <summary>
-        /// lbl300TransomStyle control.
+        /// lbl300TransomType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl300TransomStyle;
+        protected global::System.Web.UI.WebControls.Label lbl300TransomType;
         
         /// <summary>
-        /// ddl300TransomStyle control.
+        /// ddl300TransomType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl300TransomStyle;
+        protected global::System.Web.UI.WebControls.DropDownList ddl300TransomType;
         
         /// <summary>
         /// lbl300TransomGlassTint control.
@@ -4018,22 +4018,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txt400TransomHeight;
         
         /// <summary>
-        /// lbl400TransomStyle control.
+        /// lbl400TransomType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl400TransomStyle;
+        protected global::System.Web.UI.WebControls.Label lbl400TransomType;
         
         /// <summary>
-        /// ddl400TransomStyle control.
+        /// ddl400TransomType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl400TransomStyle;
+        protected global::System.Web.UI.WebControls.DropDownList ddl400TransomType;
         
         /// <summary>
         /// lbl400TransomGlassTint control.
