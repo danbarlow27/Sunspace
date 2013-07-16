@@ -120,25 +120,20 @@ namespace SunspaceDealerDesktop
             #endregion
 
             
-            #region For Loop for slide 1 and slide3            
-
             for (int i = 1; i <= strWalls.Count(); i++) //for each wall in walls 
             {
-                #region Slide1/Question1 Table
-                
-                if (wallDetails[i - 1, 4] == "E") //wall type is existing
-                {
-                    existingWallCount++; //increment the existing wall counter
-                    //populateTblExisting(i, existingWallCount); //populate the existing walls table on slide 1
-                }
-                else //wall type is proposed
+                //if (wallDetails[i - 1, 4] == "E") //wall type is existing
+                //{
+                //    existingWallCount++; //increment the existing wall counter
+                //    //populateTblExisting(i, existingWallCount); //populate the existing walls table on slide 1
+                //}
+                //else //wall type is proposed
+                if (wallDetails[i - 1, 4] == "P")
                 {
                     proposedWallCount++; //increment the proposed wall counter
                     populateTblProposed(i, proposedWallCount); //populate the proposed walls table on slide 1
                 }
-                #endregion
             }
-            #endregion
 
             //do the windows stuff
             windowOptions();
@@ -146,6 +141,7 @@ namespace SunspaceDealerDesktop
 
         }
 
+        /*
         /// <summary>
         /// This method is used to dynamically populate the table for existing walls on slide/question 1.
         /// It creates table a table row and cells and appends appropriate input fields to each cell for user input,
@@ -203,6 +199,8 @@ namespace SunspaceDealerDesktop
             row.Cells.Add(cell2);
             row.Cells.Add(cell3);
         }
+         */ 
+
 
         /// <summary>
         /// This method is used to dynamically populate the table for proposed walls on slide/question 1.
