@@ -138,7 +138,6 @@ namespace SunspaceDealerDesktop
             //do the windows stuff
             windowOptions();
 
-
         }
 
         /*
