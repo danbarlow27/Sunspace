@@ -320,7 +320,6 @@
                         answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value; //store the values in the answer variable to be displayed
                         calculateSetBack((i - 1)); //calculate setback of the given wall 
                     }
-
                 }
                 //store projection in the projection variable and hidden field
                 document.getElementById("MainContent_hidProjection").value = projection = calculateProjection(); 
