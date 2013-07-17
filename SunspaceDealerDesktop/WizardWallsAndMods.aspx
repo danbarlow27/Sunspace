@@ -133,7 +133,7 @@
         This function determines start and end height of each wall based on roof slope and length.
         
 
-        needs a bit of tune up...
+        needs a bit of tune up... to account for back walls which are not existing walls
 
 
         */
@@ -141,6 +141,10 @@
 
             var existingWallCount = 0;
             var proposedWallCount = 0;
+
+
+
+
 
             for (var i = 0; i < coordList.length; i++) {
                 if (coordList[i][4] === "E") { //existing wall
@@ -185,6 +189,12 @@
         /*
         This function populates the wall soffit array by determining the orientation of each wall 
             and checking to see if the soffit length would affect it or not 
+
+
+            ////this function needs more functionality to account for soffit length on diagonal walls 
+                and different soffit lengths on different walls
+
+
         */
         function determineSoffitLengthOfEachWall() {
             
@@ -281,32 +291,37 @@
             //document.getElementById('MainContent_btnQuestion3').disabled = false;
 
             //var lengthList = new Array();
-            var isValid = true; //to do valid input or invalid input logic
+            var isValid;// = true; //to do valid input or invalid input logic
             var answer = ""; //answer, to be displayed on the side panel
 
             //run through all the textboxes and check if the values in there are valid numbers
             for (var i = 1; i <= lineList.length; i++) {
-                if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) //if invalid numbers
-                    || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0 //zero should be changed to MIN_WALL_LENGTH
-                    || isNaN(document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value)
-                    || document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value < 0
-                    || isNaN(document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value)
-                    || document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value < 0)
-                    isValid = false; //set isvalid to false
+                if (coordList[i - 1][4] === "P") {
+                    if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) //if invalid numbers
+                        || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0 //zero should be changed to MIN_WALL_LENGTH
+                        || isNaN(document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value)
+                        || document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value < 0
+                        || isNaN(document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value)
+                        || document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value < 0)
+                        isValid = false; //set isvalid to false
+                    else
+                        isValid = true;
+                }
             }
 
             if (isValid) { //if everything is valid
                 for (var i = 1; i <= lineList.length; i++) { //populate the hidden fields for each wall
+                    if (coordList[i - 1][4] === "P") {
+                        document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i]; //store wall setback 
+                        document.getElementById("hidWall" + i + "LeftFiller").value = document.getElementById("MainContent_txtWall" + i + "LeftFiller").value + document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").selectedIndex].value; //store left filler
+                        wallLengthArray[i] = document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value + document.getElementById("MainContent_ddlWall" + i + "InchFractions").options[document.getElementById("MainContent_ddlWall" + i + "InchFractions").selectedIndex].value; //store length
+                        document.getElementById("hidWall" + i + "RightFiller").value = document.getElementById("MainContent_txtWall" + i + "RightFiller").value + document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").selectedIndex].value; //store right filler
 
-                    document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i]; //store wall setback 
-                    document.getElementById("hidWall" + i + "LeftFiller").value = document.getElementById("MainContent_txtWall" + i + "LeftFiller").value + document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").selectedIndex].value; //store left filler
-                    wallLengthArray[i] = document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value + document.getElementById("MainContent_ddlWall" + i + "InchFractions").options[document.getElementById("MainContent_ddlWall" + i + "InchFractions").selectedIndex].value; //store length
-                    document.getElementById("hidWall" + i + "RightFiller").value = document.getElementById("MainContent_txtWall" + i + "RightFiller").value + document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").selectedIndex].value; //store right filler
+                        answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value; //store the values in the answer variable to be displayed
+                        calculateSetBack((i - 1)); //calculate setback of the given wall 
+                    }
 
-                    answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value; //store the values in the answer variable to be displayed
-                    calculateSetBack((i - 1)); //calculate setback of the given wall 
                 }
-
                 //store projection in the projection variable and hidden field
                 document.getElementById("MainContent_hidProjection").value = projection = calculateProjection(); 
 
@@ -1370,24 +1385,43 @@
         function highlightWallsHeight() {
             var wall = (document.activeElement.id.substr(15, 1)); //parse out B or F (for back wall or front wall) from the id
             var southWalls = new Array(); //array to store all the south facing walls 
+            var northWalls = new Array(); //array to store all the north facing walls
             var lowestWall = 0; //arbitrary number to determine the most south wall (i.e. the front wall) on the canvas
             var lowestIndex; //index of the most south wall
             var highestWall = 200; //arbitrary number to determine to least south wall (i.e. the back wall) on the canvas
             var highestIndex; //index of the least south wall
             var index = -1; //invalid to determine if there is a wall or not
-            
+            var southIsHigher = true;
 
             for (var i = 0; i < lineList.length; i++) { //run through the list of walls
                 if (coordList[i][5] == "S") //5 = orientation... if the orientation is south
                     southWalls.push({ "y2": lineArray[i].attr("y2"), "number": i, "type": coordList[i][4] }); //populate south walls array.. 4 = wall type
+                else if (coordList[i][5] == "N") //5 = orientation... if the orientation is north
+                    northWalls.push({ "y2": lineArray[i].attr("y2"), "number": i, "type": coordList[i][4] }); //populate north walls array.. 4 = wall type
+
             }
 
-            if (wall == "B") //if the textbox in focus is backwall textbox
-                index = getBackWall(southWalls); //get the index of the backwall
+            for (var i = 0; i < southWalls.length; i++) {
+                for (var j = 0; j < northWalls.length; j++) {
+                    if (southWalls[i].y2 < northWalls[j].y2)
+                        southIsHigher = false; //north is higher
+                }
+            }
+
+            if (wall == "B") { //if the textbox in focus is backwall textbox
+                if (southIsHigher) {
+                    index = getBackWall(southWalls, northWalls, southIsHigher); //get the index of the backwall
+                }
+                else { //northwall is higher
+                    index = getBackWall(southIsHigher, northWalls, southIsHigher);
+                }
+            }
             else { //if (wall == "F") //if the textbox in focus is frontwall textbox
-                if (southWalls[southWalls.length - 1].type == "P") //check if the front wall is a proposed walls
+                if (southWalls[southWalls.length - 1].type === "P") { //check if the front wall is a proposed walls
                     index = getFrontWall(southWalls); //if its a proposed wall, get its index
-            } //if its not a proposed wall that means there is no front wall 
+                }
+            } //if its not a proposed wall that means there is no front wall
+
 
             if (index >= 0) { //if valid index, i.e. there is a front wall
                 lineArray[index].attr("stroke", "cyan"); //highlight the front wall cyan
@@ -1396,22 +1430,37 @@
             else { //index, invalid ..there is no front wall
                 highlightFrontPoint(); //highlight front point
             }
+
         }
 
         /**
         This function is used to determine the back wall index
         @param southWalls - the array of all south facing walls
+        @param northWalls - the array of all north facing walls
+        @param southIsHigher - used to determine which wall array to use
         @return lowestIndex - index of the top most south facing wall on the canvas, i.e. the back wall
         */
-        function getBackWall(southWalls) {
+        function getBackWall(southWalls, northWalls, southIsHigher) {
             var lowestWall = 0; //arbitrary number to determine back wall (number represents value of coordinate, low number means top of canvas)
             var lowestIndex; //to store the index of the back wall
-            for (var i = 0; i < southWalls.length; i++) { //run through all south facing walls
-                if (southWalls[i].y2 > lowestWall) { //if the y2 coordinate of the current wall is higher than the value of lowest wall
-                    lowestWall = southWalls[i].y2; //that means we have a new lowest coordinate
-                    lowestIndex = southWalls[i].number; //store the index of the wall
+
+            if (southIsHigher) {
+                for (var i = 0; i < southWalls.length; i++) { //run through all south facing walls
+                    if (southWalls[i].y2 > lowestWall) { //if the y2 coordinate of the current wall is higher than the value of lowest wall
+                        lowestWall = southWalls[i].y2; //that means we have a new lowest coordinate
+                        lowestIndex = southWalls[i].number; //store the index of the wall
+                    }
                 }
             }
+            else { //northishigher
+                for (var i = 0; i < northWalls.length; i++) { //run through all south facing walls
+                    if (northWalls[i].y2 > lowestWall) { //if the y2 coordinate of the current wall is higher than the value of lowest wall
+                        lowestWall = northWalls[i].y2; //that means we have a new lowest coordinate
+                        lowestIndex = northWalls[i].number; //store the index of the wall
+                    }
+                }
+            }
+
             return lowestIndex; //return the index of the lowest wall found, i.e. wall that's nearest to the top of canvas
         }
 
@@ -1421,13 +1470,17 @@
         @return highestIndex - index of the bottom most south facing wall on the canvas, i.e. the front wall
         */
         function getFrontWall(southWalls) {
-            var highestWall = 501; //arbitrary number to determine back wall (number represents value of coordinate, low number means top of canvas)
+            var highestWall = 500; //arbitrary number to determine back wall (number represents value of coordinate, low number means top of canvas)
             var highestIndex; //to store the index of the back wall
+
             for (var i = 0; i < southWalls.length; i++) { //run through all south facing walls
-                if (southWalls[i].y2 < highestWall) { //if the y2 coordinate of the current wall is lower than the value of highest wall
-                    highestWall = southWalls[i].y2; //that means we have a new highest coordinate
-                    highestIndex = southWalls[i].number; //store the index of the wall
+                if (coordList[southWalls[i].number][4] == "P") {
+                    if (southWalls[i].y2 < highestWall) { //if the y2 coordinate of the current wall is lower than the value of highest wall
+                        highestWall = southWalls[i].y2; //that means we have a new highest coordinate
+                        highestIndex = southWalls[i].number; //store the index of the wall
+                    }
                 }
+
             }
             return highestIndex; //return the index of the highest wall found, i.e. wall that's nearest to the bottom of canvas
         }
