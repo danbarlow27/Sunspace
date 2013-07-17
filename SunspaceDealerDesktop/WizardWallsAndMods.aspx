@@ -496,6 +496,8 @@
                             var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallCount + "Cabana");
                             var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Cabana");
 
+                            var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Cabana").options[document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Cabana").selectedIndex].value;
+
                             //General
                             doorTitle.style.display = "inherit";
                             doorStyle.style.display = "inherit";
@@ -513,6 +515,10 @@
                             doorHardware.style.display = "inherit";
                             doorNumberOfVents.style.display = "inherit";
                             doorPosition.style.display = "inherit";
+
+                            if (doorPositionCustom == "cPosition") {
+                                customDimension("Cabana", "Position");
+                            }
                         }
                         else if (document.getElementById('MainContent_radType' + wallCount + 'French').checked) {
 
@@ -532,6 +538,8 @@
                             var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallCount + "French");
                             var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "French");
 
+                            var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallCount + "French").options[document.getElementById("MainContent_ddlDoorPosition" + wallCount + "French").selectedIndex].value;
+
                             //General
                             doorTitle.style.display = "inherit";
                             doorStyle.style.display = "inherit";
@@ -548,6 +556,10 @@
                             doorHardware.style.display = "inherit";
                             doorNumberOfVents.style.display = "inherit";
                             doorPosition.style.display = "inherit";
+
+                            if (doorPositionCustom == "cPosition") {
+                                customDimension("French", "Position");
+                            }
                         }
                         else if (document.getElementById('MainContent_radType' + wallCount + 'Patio').checked) {
 
@@ -564,6 +576,8 @@
                             var doorScreenOptions = document.getElementById("MainContent_rowDoorScreenOptions" + wallCount + "Patio");
                             var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Patio");
 
+                            var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Patio").options[document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Patio").selectedIndex].value;
+
                             //General
                             doorTitle.style.display = "inherit";
                             doorColor.style.display = "inherit";
@@ -578,6 +592,10 @@
                             doorNumberOfVents.style.display = "inherit";
                             doorPosition.style.display = "inherit";
                             doorScreenOptions.style.display = "inherit";
+
+                            if (doorPositionCustom == "cPosition") {
+                                customDimension("Patio", "Position");
+                            }
                         }
                         else if (document.getElementById('MainContent_radType' + wallCount + 'NoDoor').checked) {
 
@@ -585,9 +603,15 @@
                             var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "NoDoor");
                             var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "NoDoor");
 
+                            var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallCount + "NoDoor").options[document.getElementById("MainContent_ddlDoorPosition" + wallCount + "NoDoor").selectedIndex].value;
+
                             doorHeight.style.display = "inherit";
                             doorWidth.style.display = "inherit";
                             doorPosition.style.display = "inherit";
+
+                            if (doorPositionCustom == "cPosition") {
+                                customDimension("NoDoor", "Position");
+                            }
                         }
                     }
                 }
@@ -697,10 +721,9 @@
         };
 
         //To be moved, used to store remain spaces on a wall
-        var doors;
-        var sortedDoors;
+        
         var wallDoors = new Array();
-        var spacesRemaining;
+        var sortedDoors;
         var finalText;
 
         /**
@@ -711,7 +734,7 @@
         *@param dropDownValue - holds the preset positions to place a door in a wall (i.e. Left, Center, Right, and Custom)
         *@return isValid - return boolean based on validation; no overlaps, no doors in too small place, etc...
         */
-        function checkDoor(usuableLength, dropDownName, dropDownValue) {
+        function checkDoor(usuableLength, dropDownName, dropDownValue, doors, spacesRemaining) {
 
             var isValid = true;
 
@@ -760,9 +783,7 @@
                     isValid = false;
                     alert("This door is too small to fit in any available spaces");
                 }
-            }
-
-            
+            }            
 
             //Is valid disable appropriate dropdown item and change selected index
             if (isValid) {
@@ -771,21 +792,19 @@
 
                     var title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
 
-                    if ($('#' + dropDownName + title).prop("selectedIndex") != "cPosition") {
+                    if ($('#' + dropDownName + title).val() != "cPosition") {
                         $('#' + dropDownName + title + ' option[value=' + dropDownValue + ']').attr('disabled', true);
-                    }
-                        //Not Working**************************************
-                    else {
-                        alert("Something");
-                        //alert(dropDownName.substring(28));
-                        //customPosition(dropDownName.substring(28));
-                    }
+                    }                    
 
                     for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + title + ' option').size() ; dropDownLoop++) {
                         if ($('#' + dropDownName + title + ' option')[dropDownLoop].disabled == false) {
                             $('#' + dropDownName + title).prop("selectedIndex", dropDownLoop);
                             break;
                         }
+                    }
+
+                    if ($('#' + dropDownName + title).val() == "cPosition") {
+                        customDimension(title, "Position");
                     }
                 }
                                 
@@ -820,7 +839,7 @@
         */
         function availableSpacesArrayUpdate(usuableLength) {            
             
-            spacesRemaining = new Array();            
+            var spacesRemaining = new Array();            
 
             //Block to store remaining spaces between various door(s)
             if (sortedDoors[0].distanceFromLeft > 0 && sortedDoors.length > 1) {
@@ -839,15 +858,16 @@
                 }
             }
             else {
-                var doorsLoop;
-                for (doorsLoop = 0; doorsLoop < sortedDoors.length - 1; doorsLoop++) {
+                //var doorsLoop;
+                for (var doorsLoop = 0; doorsLoop < sortedDoors.length - 1; doorsLoop++) {
                     spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft, "space": sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft) };
                 }
-                if (sortedDoors[doorsLoop].distanceFromLeft + sortedDoors[doorsLoop].doorWidth < usuableLength) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].distanceFromLeft + sortedDoors[doorsLoop].doorWidth, "space": usuableLength - sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft };
+                if (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth < usuableLength) {
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth, "space": usuableLength - (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth) };
                 }
             }
 
+            return spacesRemaining;
         }
 
         /**
@@ -856,8 +876,6 @@
         *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
         */
         function addDoor(type) {
-
-            var hiddenFieldsDiv = document.getElementById('MainContent_hiddenFieldsDiv');
 
             for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
 
@@ -875,6 +893,10 @@
                         /****LOGICAL AND FUNCTIONALITY VARIABLES****/
                         var proposedWall = document.getElementById("MainContent_lblTextArea" + wallCount);
                         var dropDownName = 'MainContent_ddlDoorPosition' + wallCount;
+                        var isValid = true;
+                        var indexToStoreAt = null;
+                        var spacesRemaining;
+                        var doors;
 
                         /****CALCULATION VARIABLES****/
                         var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'Length').value);                            
@@ -889,12 +911,14 @@
                         var doorWidth;
                         
                         /*Set the variable to the appropriate value to be used for calculations*/
-                        if (widthDropDown === "cWidth") {
+                        if (widthDropDown === "cWidth") {                            
                             doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', true, wallCount));
                         }
                         else {
                             doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false, wallCount));
                         }
+
+                        doors = new Array();
 
                         /*Insert the door with the appropriate variables based on drop down selected index*/
                         if (positionDropDown === "left") {
@@ -907,78 +931,149 @@
                             doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace / 2 - doorWidth / 2 };
                         }
                         else if (positionDropDown === "cPosition") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": doorCustomPosition };
-                        }
-
-                        if (checkDoor(usuableSpace, dropDownName, positionDropDown)) {
-                            //Calling functions get space left in the wall, and other to update individual spaces within a wall
-                            var space = totalSpaceLeftInWall(usuableSpace);
-                            availableSpacesArrayUpdate(usuableSpace);
-
-                            $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallCount).text(space);
-                            document.getElementById("pagerThree").style.display = "inline";
-                            document.getElementById("wall" + wallCount + 'SpaceRemaining').style.display = "inline";
-
-                            pagerText.setAttribute("style", "display:block;");
-                            
-                            pagerTextAnswer.setAttribute("style", "display:block");
-                            
-                            pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerText).substr(14, 2) + " Doors";
-                            
-                            var deleteButton = document.createElement("input");
-                            deleteButton.id = "btnDeleteDoor" + (sortedDoors[sortedDoors.length - 1].index + 1) + type + "Wall" + wallCount;
-                            deleteButton.setAttribute("type", "button");
-                            deleteButton.setAttribute("value", "X");
-                            deleteButton.setAttribute("onclick", "deleteDoor()");
-                            deleteButton.setAttribute("class", "btnSubmit");
-                            deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
-                            pagerTextDoorAnswer.innerHTML += "Door " + sortedDoors.length + " " + type + " added";
-                            pagerTextDoorAnswer.appendChild(deleteButton);
-                            pagerTextDoorAnswer.innerHTML += "<br/>";
-
-                            alert(spacesRemaining.length);
-
-                            if (wallDoors.length == 0) {
-                                wallDoors[wallDoors.length] = { "wallId": wallCount, "doorsSorted": sortedDoors };
-                                //alert(wallDoors[wallDoors.length - 1].doorsSorted[0].doorWidth);
+                            if (!isNaN(doorCustomPosition)) {
+                                doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": doorCustomPosition };
                             }
                             else {
-                                wallDoors.sort();
-                                //for (var i = 0; i < wallDoors.length; i++) {
-                                //    alert(wallDoors[i].doorsSorted[0].doorWidth);
-                                //}
+                                isValid = false;
+                                alert("Please enter a valid number into the custom distance text box");
+                            }
+                        }                        
+
+                        if (isValid) {
+                            //LOAD ARRAYS INFO FROM wallDoors
+                            if (wallDoors.length > 0) {
+                                for (var i = 0; i < wallDoors.length; i++) {
+                                    //Store the index if wallId and wallCount are equal
+                                    if (wallDoors[i].wallId == wallCount) {
+                                        for (var h = 0; h < wallDoors[i].doorsSorted.length; h++) {
+                                            doors[doors.length] = { "doorWidth": wallDoors[i].doorsSorted[h].doorWidth, "distanceFromLeft": wallDoors[i].doorsSorted[h].distanceFromLeft };
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (checkDoor(usuableSpace, dropDownName, positionDropDown, doors, spacesRemaining)) {
+                                //Calling functions get space left in the wall, and other to update individual spaces within a wall
+                                var space = totalSpaceLeftInWall(usuableSpace);
+                                spacesRemaining = availableSpacesArrayUpdate(usuableSpace);
+
+                                $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallCount).text(space);
+                                document.getElementById("pagerThree").style.display = "inline";
+                                document.getElementById("wall" + wallCount + 'SpaceRemaining').style.display = "inline";
+
+                                pagerText.setAttribute("style", "display:block;");
+
+                                pagerTextAnswer.setAttribute("style", "display:block");
+
+                                pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerText).substr(14, 2) + " Doors";
+
+                                doorPagerUpdate(sortedDoors, pagerTextDoorAnswer, type, wallCount);
+
+                                
+
+                                //Loop to find if a wallDoors object exist for the current wall count
+                                for (var i = 0; i < wallDoors.length; i++) {
+                                    //Store the index if wallId and wallCount are equal
+                                    if (wallDoors[i].wallId == wallCount) {
+                                        indexToStoreAt = i;
+                                        break;
+                                        //alert(wallDoors[i].doorsSorted[0].doorWidth);
+                                    }
+                                }
+                                //If no matches exist, create a new wallDoors object within the array
+                                if (indexToStoreAt == null) {
+                                    wallDoors[wallDoors.length] = { "wallId": wallCount, "doorsSorted": sortedDoors, "spaces": spacesRemaining };
+                                }
+                                else {
+                                    wallDoors[indexToStoreAt] = { "wallId": wallCount, "doorsSorted": sortedDoors, "spaces": spacesRemaining };
+                                }
+
                             }
                         }
-                        alert(spacesRemaining.length);
                     }
                 }
+            }
+        }
+
+        function doorPagerUpdate(wallSortedDoors, pagerSection, type, wallCount) {
+
+            $("#MainContent_lblQuestion3DoorsInfoWallAnswer" + wallCount).empty();
+
+            if (wallSortedDoors.length > 0) {
+
+                for (var childControls = 1; childControls <= wallSortedDoors.length ; childControls++) {
+                    //Rename controls and their attributes
+                    /****DELETE BUTTON CREATION ADDITION****/
+                    var deleteButton = document.createElement("input");
+                    deleteButton.id = "btnDeleteDoor" + childControls + type + "Wall" + wallCount;
+                    deleteButton.setAttribute("type", "button");
+                    deleteButton.setAttribute("value", "X");
+                    deleteButton.setAttribute("onclick", "deleteDoor(\"" + childControls + "\", \"" + type + "\")");
+                    deleteButton.setAttribute("class", "btnSubmit");
+                    deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
+
+                    var labelForButton = document.createElement("label");
+                    labelForButton.id = "lblDeleteDoor" + childControls + type + "Wall" + wallCount;
+                    labelForButton.setAttribute("for", "btnDeleteDoor" + childControls + type + "Wall" + wallCount);
+                    labelForButton.innerHTML = "Door " + childControls + " " + type + " added";
+
+                    var labelBreakLineForButton = document.createElement("label");
+                    labelBreakLineForButton.id = "lblDeleteDoorBR" + childControls + type + "Wall" + wallCount;
+                    labelForButton.setAttribute("for", "btnDeleteDoor" + childControls + type + "Wall" + wallCount);
+                    labelBreakLineForButton.innerHTML = "<br/>";
+                    pagerSection.appendChild(labelForButton);
+                    pagerSection.appendChild(deleteButton);
+                    pagerSection.appendChild(labelBreakLineForButton);
+                }
+
+            }
+            else {
+                document.getElementById("wall" + wallCount + "SpaceRemaining").style.display = "none";
+                document.getElementById("wall" + wallCount + "DoorsAdded").style.display = "none";
             }
         }
         
         //TO BE COMPLETED
-        function onWallRadioChange(wallId) {
-            var idToLoad = 0;
-            sortedDoors = new Array();
-            doors = new Array();
-            //alert(sortedDoors[0] + " In On Change " + doors[0]);
-            //Store doors and sortedDoors arrays
-            //Reset their values
-            if (wallDoors.length == 0) {
-                for (var findDoors = 0; findDoors < wallDoors.length; findDoors++) {
-                    if (wallDoors[findDoors].wallId == wallId) {
-                        idToLoad = findDoors;
-                    }
-                }
-                if (idToLoad != 0) {                    
-                    sortedDoors = wallDoors[idToLoad].sortedDoors;
-                }
-            }
-            //alert(sortedDoors[0] + " In On Change " + doors[0]);
-        }
+        function deleteDoor(doorToDelete, type) {
 
-        //TO BE COMPLETED
-        function deleteDoor() {
+            //alert(doorToDelete + " \ " + type);
             //Delete the text and door from respective wall
+            for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
+
+                if (coordList[wallCount - 1][4] === "P") {
+
+                    for (var wallDoorsCount = 0; wallDoorsCount < wallDoors.length; wallDoorsCount++) {
+
+                        if (wallDoors[wallDoorsCount].wallId == wallCount) {
+
+                            //Controls used to rename undeleted controls
+                            var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallCount);
+
+                            //Controls to Delete
+                            var deleteButtonToRemove = document.getElementById("btnDeleteDoor" + doorToDelete + type + "Wall" + wallCount);
+                            var deleteLabelToRemove = document.getElementById("lblDeleteDoor" + doorToDelete + type + "Wall" + wallCount);
+                            var deleteBreakLineLabelToRemove = document.getElementById("lblDeleteDoorBR" + doorToDelete + type + "Wall" + wallCount);
+
+                            //Removes object at specified index
+                            wallDoors[wallDoorsCount].doorsSorted.splice(doorToDelete - 1, 1);
+                            
+                            //Removes controls displayed in the pager
+                            deleteButtonToRemove.remove();
+                            deleteLabelToRemove.remove();
+                            deleteBreakLineLabelToRemove.remove();
+
+                            //Need to reset pager titles
+                            doorPagerUpdate(wallDoors[wallDoorsCount].doorsSorted, pagerTextDoorAnswer, type, wallCount);
+                        }
+
+                    }
+
+                }
+
+            }
+
         }
 
     </script>
@@ -1470,9 +1565,7 @@
     <input id="hidBackWallHeight" type="hidden" runat="server" />
     <input id="hidRoofSlope" type="hidden" runat="server" />
 
-    <%-- end hidden fields --%>
-
-    
+    <%-- end hidden fields --%>    
 
     <script>
         $(function () {
