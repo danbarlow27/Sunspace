@@ -847,11 +847,11 @@
         /**
         *availableSpacesArrayUpdate
         *This function is used to update remainingSpaces array
-        *@param usuableLength - holds the length of the wall which mods can be put into
+        *@param usableLength - holds the length of the wall which mods can be put into
         *
         ********MAY MAKE IT RETURN spacesRemaining ONCE SLIDE 3 COMPLETE
         */
-        function availableSpacesArrayUpdate(usuableLength) {            
+        function availableSpacesArrayUpdate(usableLength) {            
             
             var spacesRemaining = new Array();            
 
@@ -861,14 +861,14 @@
             }
             else if (sortedDoors.length == 1) {
                 if (sortedDoors[0].distanceFromLeft == 0) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].doorWidth, "space": usuableLength - sortedDoors[0].doorWidth };
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].doorWidth, "space": usableLength - sortedDoors[0].doorWidth };
                 }
-                else if (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth == usuableLength) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": usuableLength - sortedDoors[0].doorWidth };
+                else if (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth == usableLength) {
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": usableLength - sortedDoors[0].doorWidth };
                 }
                 else if (sortedDoors[0].distanceFromLeft > 0) {
                     spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth, "space": usuableLength - (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth) };
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth, "space": usableLength - (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth) };
                 }
             }
             else {
@@ -876,11 +876,10 @@
                 for (var doorsLoop = 0; doorsLoop < sortedDoors.length - 1; doorsLoop++) {
                     spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft, "space": sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft) };
                 }
-                if (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth < usuableLength) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth, "space": usuableLength - (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth) };
+                if (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth < usableLength) {
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth, "space": usableLength - (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth) };
                 }
             }
-
             return spacesRemaining;
         }
 
