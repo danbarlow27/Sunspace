@@ -377,7 +377,7 @@ namespace SunspaceDealerDesktop
                     //Door type radio button
                     RadioButton typeRadio = new RadioButton();
                     typeRadio.ID = "radType" + i + title; //Adding appropriate id to door type radio button
-                    typeRadio.GroupName = "doorTypeRadios";         //Adding group name for all door types
+                    typeRadio.GroupName = "doorTypeRadios" + i;         //Adding group name for all door types
                     typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
 
                     //Door type radio button label for clickable area
@@ -919,8 +919,6 @@ namespace SunspaceDealerDesktop
                     doorHardwareLBL.AssociatedControlID = "ddlDoorHardware" + i + title;
 
                     #endregion
-
-
 
                     #region Table:Eight Row Door Swing In (tblDoorDetails)
 
