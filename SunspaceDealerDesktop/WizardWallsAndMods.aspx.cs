@@ -331,7 +331,6 @@ namespace SunspaceDealerDesktop
             RadioButton wallRadio = new RadioButton();
             wallRadio.ID = "radWall" + i;     //Giving an appropriate id to radio buttons based on current wall
             wallRadio.GroupName = "doorWallRadios";     //Giving an appropriate group name to all wall radio buttons
-            wallRadio.Attributes.Add("onclick", "onWallRadioChange(\"" + i + "\")");
 
             //Label to create clickable area for radio button
             Label wallLabelRadio = new Label();
