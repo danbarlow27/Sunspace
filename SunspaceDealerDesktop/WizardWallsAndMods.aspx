@@ -502,6 +502,7 @@
                             var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "Cabana");
                             var doorBoxHeader = document.getElementById("MainContent_rowDoorBoxHeader" + wallCount + "Cabana");
 
+                            var doorV4TVinylTint = document.getElementById("MainContent_rowDoorVinylTint" + wallCount + "Cabana")
                             var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallCount + "Cabana");
                             var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallCount + "Cabana");
                             var doorLHH = document.getElementById("MainContent_rowDoorLHH" + wallCount + "Cabana");
@@ -522,6 +523,7 @@
                             doorBoxHeader.style.display = "inherit";
 
                             //Cabana Specific
+                            doorV4TVinylTint.style.display = "inherit";
                             doorGlassTint.style.display = "inherit";
                             doorLHH.style.display = "inherit";
                             doorRHH.style.display = "inherit";
@@ -544,6 +546,7 @@
                             var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "French");
                             var doorBoxHeader = document.getElementById("MainContent_rowDoorBoxHeader" + wallCount + "French");
 
+                            var doorV4TVinylTint = document.getElementById("MainContent_rowDoorVinylTint" + wallCount + "French")
                             var doorOperatorLHH = document.getElementById("MainContent_rowDoorOperatorLHH" + wallCount + "French");
                             var doorOperatorRHH = document.getElementById("MainContent_rowDoorOperatorRHH" + wallCount + "French");
                             var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallCount + "French");
@@ -564,6 +567,7 @@
                             doorBoxHeader.style.display = "inherit";
 
                             //French specific
+                            doorV4TVinylTint.style.display = "inherit";
                             doorOperatorLHH.style.display = "inherit";
                             doorOperatorRHH.style.display = "inherit";
                             doorSwingIn.style.display = "inherit";
@@ -671,15 +675,18 @@
         function doorStyle(type) {
             for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
 
-                if (document.getElementById('MainContent_radWall' + wallCount).checked) {
+                if (coordList[wallCount - 1][4] === "P") {
 
-                    var HeightDDL = document.getElementById('MainContent_ddlDoorStyle' + wallCount + type).options[document.getElementById('MainContent_ddlDoorStyle' + wallCount + type).selectedIndex].value;
+                    if (document.getElementById('MainContent_radWall' + wallCount).checked) {
 
-                    if (document.getElementById('MainContent_radType' + wallCount + type).checked && HeightDDL == 'v4TCabana') {
-                        document.getElementById('MainContent_rowDoorVinylTint' + wallCount + type).style.display = 'inherit';
-                    }
-                    else {
-                        document.getElementById('MainContent_rowDoorVinylTint' + wallCount + type).style.display = 'none';
+                        var HeightDDL = document.getElementById('MainContent_ddlDoorStyle' + wallCount + type).options[document.getElementById('MainContent_ddlDoorStyle' + wallCount + type).selectedIndex].value;
+
+                        if (document.getElementById('MainContent_radType' + wallCount + type).checked && HeightDDL == 'v4TCabana') {
+                            document.getElementById('MainContent_rowDoorVinylTint' + wallCount + type).style.display = 'inherit';
+                        }
+                        else {
+                            document.getElementById('MainContent_rowDoorVinylTint' + wallCount + type).style.display = 'none';
+                        }
                     }
                 }
             }
@@ -725,9 +732,7 @@
 
             return newDimension;
         }
-        
-        
-
+            
         /**
         *addDoor
         *This function is used to add doors to an array of wall objects
@@ -970,7 +975,6 @@
         *@return sortedDoors - return an array of door objects in proper order
         *
         **********NEEDS MORE VALIDATION FOR DOORS CUSTOM DISTANCE (distanceFromLeft > usuableLength) || (distanceFromLeft < 0)
-        **********NEEDS TO ONLY ACCEPT 3 DIGIT NUMBERS FOR CUSTOM DISTANCE
         *
         */
         function checkDoor(usuableLength, dropDownName, dropDownValue, doors, spacesRemaining) {
