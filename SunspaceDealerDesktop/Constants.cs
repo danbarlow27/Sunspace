@@ -168,6 +168,10 @@ namespace SunspaceDealerDesktop
             };
         #endregion
 
+        #region sunspace
+        public static string[] SUNSPACE_POSITIONS = { "Owner", "IT Specialist", "CSR" };
+        #endregion
+
         #region Walls
         //public enum WALL_TYPE
         //{

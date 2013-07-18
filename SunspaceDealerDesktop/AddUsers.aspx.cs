@@ -456,74 +456,76 @@ namespace SunspaceDealerDesktop
                 //Sunspace CSR
                 else if (ddlUserType.SelectedValue == "Sunspace" && ddlUserGroup.SelectedValue == "Customer Service Rep")
                 {
-                    //using (SqlConnection aConnection = new SqlConnection(sdsUsers.ConnectionString))
-                    //{
-                    //    aConnection.Open();
-                    //    SqlCommand aCommand = aConnection.CreateCommand();
-                    //    SqlTransaction aTransaction;
+                    using (SqlConnection aConnection = new SqlConnection(sdsUsers.ConnectionString))
+                    {
+                        aConnection.Open();
+                        SqlCommand aCommand = aConnection.CreateCommand();
+                        SqlTransaction aTransaction;
 
-                    //    // Start a local transaction.
-                    //    aTransaction = aConnection.BeginTransaction("SampleTransaction");
+                        // Start a local transaction.
+                        aTransaction = aConnection.BeginTransaction("SampleTransaction");
 
-                    //    // Must assign both transaction object and connection 
-                    //    // to Command object for a pending local transaction
-                    //    aCommand.Connection = aConnection;
-                    //    aCommand.Transaction = aTransaction;
+                        // Must assign both transaction object and connection 
+                        // to Command object for a pending local transaction
+                        aCommand.Connection = aConnection;
+                        aCommand.Transaction = aTransaction;
 
-                    //    try
-                    //    {
-                    //        //Add to dealer table
-                    //        aCommand.CommandText = "INSERT INTO sunspace (dealer_name, first_name, last_name, country, multiplier)"
-                    //                                + "VALUES('"
-                    //                                + txtLogin.Text + "', '"
-                    //                                + txtFirstName.Text + "', '"
-                    //                                + txtLastName.Text + "', '"
-                    //                                + ddlCountry.SelectedValue + "', "
-                    //                                + Convert.ToDecimal(txtMultiplier.Text) / 10 + ")"; //need to change based on question to anthony
-                    //        aCommand.ExecuteNonQuery();
+                        try
+                        {
+                            //Add to dealer table
+                            aCommand.CommandText = "INSERT INTO sunspace (position, first_name, last_name)"
+                                                    + "VALUES('"
+                                                    + "CSR" + "', '" //can only be CSR at this point, can be changed to a variable later
+                                                    + txtFirstName.Text + "', '"
+                                                    + txtLastName.Text + "'"
+                                                    + ")";
+                            aCommand.ExecuteNonQuery();
 
-                    //        //Now add user
-                    //        DateTime aDate = DateTime.Now;
-                    //        aCommand.CommandText = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
-                    //                                + "VALUES('"
-                    //                                + txtLogin.Text + "', '"
-                    //                                + GlobalFunctions.CalculateMD5Hash(txtPassword.Text) + "', '"
-                    //                                + txtEmail.Text + "', '"
-                    //                                + aDate.ToString("yyyy/MM/dd") + "', '"
-                    //                                + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
-                    //                                + "D" + "', '" //Must be D-A within this block of logic
-                    //                                + "A" + "', "
-                    //                                + Convert.ToInt32(Session["dealer_id"].ToString()) + ", '" //reference ID is the dealer id in the dealer table they belong to
-                    //                                + txtFirstName.Text + "', '"
-                    //                                + txtLastName.Text + "', "
-                    //                                + 1 + ")";
-                    //        aCommand.ExecuteNonQuery();
+                            aCommand.CommandText = "SELECT sunspace_id FROM sunspace WHERE position='" + "CSR" + "' AND first_name='" + txtFirstName.Text + "' AND last_name='" + txtLastName.Text + "'";
+                            int newSunspaceId = Convert.ToInt32(aCommand.ExecuteScalar());
 
-                    //        lblError.Text = "Successfully Added";
+                            //Now add user
+                            DateTime aDate = DateTime.Now;
+                            aCommand.CommandText = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
+                                                    + "VALUES('"
+                                                    + txtLogin.Text + "', '"
+                                                    + GlobalFunctions.CalculateMD5Hash(txtPassword.Text) + "', '"
+                                                    + txtEmail.Text + "', '"
+                                                    + aDate.ToString("yyyy/MM/dd") + "', '"
+                                                    + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
+                                                    + "S" + "', '" //Must be S-C within this block of logic
+                                                    + "C" + "', "
+                                                    + newSunspaceId + ", '" //reference ID is the dealer id in the dealer table they belong to
+                                                    + txtFirstName.Text + "', '"
+                                                    + txtLastName.Text + "', "
+                                                    + 1 + ")";
+                            aCommand.ExecuteNonQuery();
 
-                    //        // Attempt to commit the transaction.
-                    //        aTransaction.Commit();
-                    //    }
-                    //    catch (Exception ex)
-                    //    {
-                    //        lblError.Text = "Commit Exception Type: " + ex.GetType();
-                    //        lblError.Text += "  Message: " + ex.Message;
+                            lblError.Text = "Successfully Added";
 
-                    //        // Attempt to roll back the transaction. 
-                    //        try
-                    //        {
-                    //            aTransaction.Rollback();
-                    //        }
-                    //        catch (Exception ex2)
-                    //        {
-                    //            // This catch block will handle any errors that may have occurred 
-                    //            // on the server that would cause the rollback to fail, such as 
-                    //            // a closed connection.
-                    //            Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
-                    //            Console.WriteLine("  Message: {0}", ex2.Message);
-                    //        }
-                    //    }
-                    //} 
+                            // Attempt to commit the transaction.
+                            aTransaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            lblError.Text = "Commit Exception Type: " + ex.GetType();
+                            lblError.Text += "  Message: " + ex.Message;
+
+                            // Attempt to roll back the transaction. 
+                            try
+                            {
+                                aTransaction.Rollback();
+                            }
+                            catch (Exception ex2)
+                            {
+                                // This catch block will handle any errors that may have occurred 
+                                // on the server that would cause the rollback to fail, such as 
+                                // a closed connection.
+                                Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
+                                Console.WriteLine("  Message: {0}", ex2.Message);
+                            }
+                        }
+                    } 
                 }
                 #endregion
 
