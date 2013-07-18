@@ -11,12 +11,18 @@
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
         for (var i = 0; i < lineList.length; i++) 
             coordList[i] = lineList[i].split(","); //populate the 2d array
+        
+        //var wallSlopeArray = new Array(); //array to store slope of each wall
+        var wallLengthArray = new Array(); //array to store the length of each wall
+        var wallLeftFillerArray = new Array(); //array to store left filler of each wall
+        var wallRightFillerArray = new Array(); //array to store right filler of each wall
         var wallSetBackArray = new Array(); //array to store the setback for each wall
-        var wallSlopeArray = new Array(); //array to store slope of each wall
         var wallSoffitArray = new Array(); //array to store soffit length of each wall
         var wallStartHeightArray = new Array(); //array to store start height of each wall
         var wallEndHeightArray = new Array(); //array to store end height of each wall
-        var wallLengthArray = new Array(); //array to store the length of each wall
+        var backWall = "south" ; //index of the back wall to determine wall heights
+        var backWallIndex = 0;
+
         var wallDoors = new Array(); //array to store the walls and their respective door objects
 
         var DOOR_MAX_WIDTH = '<%= DOOR_MAX_WIDTH %>';
@@ -132,7 +138,9 @@
 
         /*
         This function determines start and end height of each wall based on roof slope and length.
-        
+        Depending on which wall is considered the back wall for the purposes of roof slope, this function
+            goes from wall 1 to the end setting start and end heights of each wall, or goes from the last
+            wall to the first, setting end and start height of each wall (going backwards).
 
         needs a bit of tune up... to account for back walls which are not existing walls
 
@@ -140,50 +148,91 @@
         */
         function determineStartAndEndHeightOfEachWall() {
 
-            var existingWallCount = 0;
-            var proposedWallCount = 0;
+            if (backWall === "north") { //if back wall is a north facing wall, i.e. is not existing wall 
+                wallStartHeightArray[backWallIndex] = hidBackWallHeight.value;
+                wallEndHeightArray[backWallIndex] = hidBackWallHeight.value;
+                
+                for (var i = (backWallIndex - 1); i >= 0; i--) { //0 = index of first wall
 
 
+                    if (coordList[i][4] === "E") { //existing wall
+                        //if (coordList[i][5] === "S") {
+
+                        ///this is assuming that back wall is an existing wall...
+                        wallStartHeightArray[i] = hidBackWallHeight.value;
+                        wallEndHeightArray[i] = hidBackWallHeight.value;
+                        //}
+
+                    }
+                    else { //proposed wall
+
+                        wallEndHeightArray[i] = wallStartHeightArray[i + 1];
+
+                        switch (coordList[i][5]) {
+                            case "S": //if south
+                            case "N": //or north
+                                wallStartHeightArray[i] = wallEndtHeightArray[i];
+                                break;
+                            case "W": //if west
+                                wallStartHeightArray[i] = wallEndHeightArray[i] - ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
+                                break;
+                            case "E": //if east
+                                wallStartHeightArray[i] = wallEndHeightArray[i] + ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
+                                break;
+                            case "SW": //if southwest
+                            case "SE": //or northwest
+                                wallStartHeightArray[i] = wallEndHeightArray[i] - ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
+                                break;
+                            case "NW": //if southeast
+                            case "NE": //or northeast
+                                wallStartHeightArray[i] = wallEndHeightArray[i] + ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
+                                break;
+                        }
+                    }
 
 
+                }
 
-            for (var i = 0; i < coordList.length; i++) {
-                if (coordList[i][4] === "E") { //existing wall
+            }
+            else if (backWall === "south") { //if backwall is a south facing wall.. i.e. is existing
+                for (var i = 0; i < coordList.length; i++) {
+                    if (coordList[i][4] === "E") { //existing wall
                     //if (coordList[i][5] === "S") {
 
                     ///this is assuming that back wall is an existing wall...
-
-                        wallStartHeightArray[i] = hidBackWallHeight.value;
-                        wallEndHeightArray[i] = hidBackWallHeight.value;
+                            wallStartHeightArray[i] = hidBackWallHeight.value;
+                            wallEndHeightArray[i] = hidBackWallHeight.value;
                     //}
 
-                }
-                else { //proposed wall
-
-                    wallStartHeightArray[i] = wallEndHeightArray[i - 1];
-
-                    switch(coordList[i][5]) {    
-                        case "S": //if south
-                        case "N": //or north
-                            wallEndHeightArray[i] = wallStartHeightArray[i];
-                            break;
-                        case "W": //if west
-                            wallEndHeightArray[i] = wallStartHeightArray[i] - ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
-                            break;
-                        case "E": //if east
-                            wallEndHeightArray[i] = wallStartHeightArray[i] + ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
-                            break;
-                        case "SW": //if southwest
-                        case "SE": //or northwest
-                            wallEndHeightArray[i] = wallStartHeightArray[i] - ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
-                            break;
-                        case "NW": //if southeast
-                        case "NE": //or northeast
-                            wallEndHeightArray[i] = wallStartHeightArray[i] + ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
-                            break;
                     }
-                }   
-            }    
+                    else { //proposed wall
+                    //if (coordList[i][4] === "P") {
+
+                        wallStartHeightArray[i] = wallEndHeightArray[i - 1];
+
+                        switch (coordList[i][5]) {
+                            case "S": //if south
+                            case "N": //or north
+                                wallEndHeightArray[i] = wallStartHeightArray[i];
+                                break;
+                            case "W": //if west
+                                wallEndHeightArray[i] = wallStartHeightArray[i] - ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
+                                break;
+                            case "E": //if east
+                                wallEndHeightArray[i] = wallStartHeightArray[i] + ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
+                                break;
+                            case "SW": //if southwest
+                            case "SE": //or northwest
+                                wallEndHeightArray[i] = wallStartHeightArray[i] - ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
+                                break;
+                            case "NW": //if southeast
+                            case "NE": //or northeast
+                                wallEndHeightArray[i] = wallStartHeightArray[i] + ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
+                                break;
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -195,19 +244,20 @@
             ////this function needs more functionality to account for soffit length on diagonal walls 
                 and different soffit lengths on different walls
 
-
+        @param i - index of a given wall 
         */
-        function determineSoffitLengthOfEachWall() {
+        function determineSoffitLengthOfEachWall(i) {
             
-            for (var index = 0; index < coordList.length; index++) {
-                if (coordList[index][4] === "E") //if existing wall  
-                    wallSoffitArray[index] = 0; //slope is unimportant
+
+                if (coordList[i][4] === "E") { //if existing wall  
+                    //wallSoffitArray[index] = 0; //slope is unimportant
+                }
                 else { //if proposed wall
                     //get the orientation of the proposed wall
-                    switch (coordList[index][5]) { //5 = orientation
+                    switch (coordList[i][5]) { //5 = orientation
                         case "S": //if south
                         case "N": //or north
-                            wallSoffitArray[index] = 0; //soffit length is unimportant thus zero
+                            wallSoffitArray[i] = 0; //soffit length is unimportant thus zero
                             break;
 
                             /**********************************************************************************************/
@@ -225,20 +275,20 @@
                             /**********************************************************************************************/
                             /**********************************************************************************************/
                         case "W": //if west
-                            for (var i = 0; i < coordList.length; i++) { //run through all the walls
-                                if (coordList[i][4] === "E") { //if there's an existing wall
-                                    if (coordList[i][2] === coordList[index][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
-                                        wallSoffitArray[index] = soffitLength; //set the soffit length
+                            for (var j = 0; j < coordList.length; j++) { //run through all the walls
+                                if (coordList[j][4] === "E") { //if there's an existing wall
+                                    if (coordList[j][2] === coordList[i][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
+                                        wallSoffitArray[i] = soffitLength; //set the soffit length
                                         break; //break out of the loop
                                     }
                                 }
                             }
                             break; //break out of the switch
                         case "E": //if east
-                            for (var i = 0; i < coordList.length; i++) { //run through all the walls
-                                if (coordList[i][4] === "E") { //if there's an existing wall
-                                    if (coordList[i][2] === coordList[index][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
-                                        wallSoffitArray[index] = -soffitLength; //should probably be positive soffit length, but just to differentiate between beginning soffit and ending soffit
+                            for (var j = 0; j < coordList.length; j++) { //run through all the walls
+                                if (coordList[j][4] === "E") { //if there's an existing wall
+                                    if (coordList[j][2] === coordList[i][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
+                                        wallSoffitArray[i] = -soffitLength; //should probably be positive soffit length, but just to differentiate between beginning soffit and ending soffit
                                         break; //break out of the loop
                                     }
                                 }
@@ -249,7 +299,7 @@
                             /**********************************************************************************************/
                             /**********************************************************************************************/
                             /**********************************************************************************************/
-                    }
+                    
                 }
             }
         }
@@ -313,13 +363,15 @@
             if (isValid) { //if everything is valid
                 for (var i = 1; i <= lineList.length; i++) { //populate the hidden fields for each wall
                     if (coordList[i - 1][4] === "P") {
-                        document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i]; //store wall setback 
-                        document.getElementById("hidWall" + i + "LeftFiller").value = document.getElementById("MainContent_txtWall" + i + "LeftFiller").value + document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").selectedIndex].value; //store left filler
-                        wallLengthArray[i] = document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value + document.getElementById("MainContent_ddlWall" + i + "InchFractions").options[document.getElementById("MainContent_ddlWall" + i + "InchFractions").selectedIndex].value; //store length
-                        document.getElementById("hidWall" + i + "RightFiller").value = document.getElementById("MainContent_txtWall" + i + "RightFiller").value + document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").selectedIndex].value; //store right filler
-
+                        calculateSetBack((i - 1)); //calculate setback of the given wall
+                        determineSoffitLengthOfEachWall(i-1); //calculate and store soffitlength of each wall
+                        document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i - 1]; //store wall setback 
+                        wallLeftFillerArray[i-1] = document.getElementById("hidWall" + i + "LeftFiller").value = document.getElementById("MainContent_txtWall" + i + "LeftFiller").value + document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").selectedIndex].value; //store left filler
+                        wallLengthArray[i-1] = document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value + document.getElementById("MainContent_ddlWall" + i + "InchFractions").options[document.getElementById("MainContent_ddlWall" + i + "InchFractions").selectedIndex].value; //store length
+                        wallRightFillerArray[i-1] = document.getElementById("hidWall" + i + "RightFiller").value = document.getElementById("MainContent_txtWall" + i + "RightFiller").value + document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").selectedIndex].value; //store right filler
+                        document.getElementById("hidWall" + i + "SoffitLength").value = wallSoffitArray[i - 1];//store wall soffitlength
                         answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value; //store the values in the answer variable to be displayed
-                        calculateSetBack((i - 1)); //calculate setback of the given wall 
+                  
                     }
                 }
                 //store projection in the projection variable and hidden field
@@ -1113,6 +1165,21 @@
             return spacesRemaining;
         }
 
+
+
+        /************************************************************************************************************************************/
+        /************************************************************************************************************************************/
+        /************************************************************************************************************************************/
+        function fillWindows() {
+
+        }
+        /************************************************************************************************************************************/
+        /************************************************************************************************************************************/
+        /************************************************************************************************************************************/
+
+
+
+
     </script>
     <%-- End hidden div populating scripts --%>
 
@@ -1568,6 +1635,7 @@
                         lowestIndex = southWalls[i].number; //store the index of the wall
                     }
                 }
+                backWall = "south";
             }
             else { //northishigher
                 for (var i = 0; i < northWalls.length; i++) { //run through all south facing walls
@@ -1576,9 +1644,10 @@
                         lowestIndex = northWalls[i].number; //store the index of the wall
                     }
                 }
+                backWall = "north"
             }
 
-            return lowestIndex; //return the index of the lowest wall found, i.e. wall that's nearest to the top of canvas
+            return backWallIndex = lowestIndex; //return the index of the lowest wall found, i.e. wall that's nearest to the top of canvas
         }
 
         /**
