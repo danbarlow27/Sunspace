@@ -244,6 +244,10 @@
             ////this function needs more functionality to account for soffit length on diagonal walls 
                 and different soffit lengths on different walls
 
+            ////note: soffit only affects the first wall and the last wall... 
+                        if they are vertical and perpendicular to the existing walls
+
+
         @param i - index of a given wall 
         */
         function determineSoffitLengthOfEachWall(i) {
