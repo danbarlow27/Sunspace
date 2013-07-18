@@ -560,8 +560,6 @@
                             var doorTransom = document.getElementById("MainContent_rowDoorTransom" + wallCount + "Cabana");
                             var doorTransomVinyl = document.getElementById("MainContent_rowDoorTransomVinylTypes" + wallCount + "Cabana");
 
-                            var doorV4TVinylTint = document.getElementById("MainContent_rowDoorVinylTint" + wallCount + "Cabana")
-                            var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallCount + "Cabana");
                             var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallCount + "Cabana");
                             var doorLHH = document.getElementById("MainContent_rowDoorLHH" + wallCount + "Cabana");
                             var doorRHH = document.getElementById("MainContent_rowDoorRHH" + wallCount + "Cabana");
@@ -570,6 +568,11 @@
                             var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallCount + "Cabana");
                             var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Cabana");
 
+                            //Model Specific
+                            var doorInternalGrillsYes = document.getElementById("MainContent_rowDoorInternalGrillsYes" + wallCount + "Cabana");
+                            var doorInternalGrillsNo = document.getElementById("MainContent_rowDoorInternalGrillsNo" + wallCount + "Cabana");
+
+                            var doorInternalGrillYesChecked = document.getElementById("MainContent_radDoorInternalGrillsYes" + wallCount + "Cabana");
                             var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Cabana").options[document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Cabana").selectedIndex].value;
                             var doorLHHChecked = document.getElementById("MainContent_radDoorLHH" + wallCount + "Cabana");
                             var doorSwingInChecked = document.getElementById("MainContent_radDoorSwingIn" + wallCount + "Cabana");
@@ -577,7 +580,6 @@
                             //General
                             doorTitle.style.display = "inherit";
                             doorStyle.style.display = "inherit";
-                            doorV4TVinylTint.style.display = "inherit";
                             doorColor.style.display = "inherit";
                             doorHeight.style.display = "inherit";
                             doorWidth.style.display = "inherit";
@@ -592,11 +594,17 @@
                             doorSwingIn.style.display = "inherit";
                             doorSwingOut.style.display = "inherit";
                             doorHardware.style.display = "inherit";
-                            doorNumberOfVents.style.display = "inherit";
                             doorPosition.style.display = "inherit";
                             
                             if (doorPositionCustom == "cPosition") {
                                 customDimension("Cabana", "Position");
+                            }
+
+                            //Model Specifics
+                            if (model === "M400") {                                
+                                doorInternalGrillsYes.style.display = "inherit";
+                                doorInternalGrillsNo.style.display = "inherit";
+                                doorInternalGrillYesChecked.setAttribute("checked", "checked");
                             }
 
                             //Radio button defaults
@@ -615,13 +623,17 @@
                             var doorV4TVinylTint = document.getElementById("MainContent_rowDoorVinylTint" + wallCount + "French")
                             var doorOperatorLHH = document.getElementById("MainContent_rowDoorOperatorLHH" + wallCount + "French");
                             var doorOperatorRHH = document.getElementById("MainContent_rowDoorOperatorRHH" + wallCount + "French");
-                            var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallCount + "French");
                             var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallCount + "French");
                             var doorHardware = document.getElementById("MainContent_rowDoorHardware" + wallCount + "French");
                             var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + wallCount + "French");
                             var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallCount + "French");
                             var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "French");
 
+                            //Model Specific
+                            var doorInternalGrillsYes = document.getElementById("MainContent_rowDoorInternalGrillsYes" + wallCount + "French");
+                            var doorInternalGrillsNo = document.getElementById("MainContent_rowDoorInternalGrillsNo" + wallCount + "French");
+
+                            var doorInternalGrillYesChecked = document.getElementById("MainContent_radDoorInternalGrillsYes" + wallCount + "French");
                             var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallCount + "French").options[document.getElementById("MainContent_ddlDoorPosition" + wallCount + "French").selectedIndex].value;
                             var doorOperatorLHHChecked = document.getElementById("MainContent_radDoorOperatorLHH" + wallCount + "French");
                             var doorSwingInChecked = document.getElementById("MainContent_radDoorSwingIn" + wallCount + "French");
@@ -641,11 +653,17 @@
                             doorSwingIn.style.display = "inherit";
                             doorSwingOut.style.display = "inherit";
                             doorHardware.style.display = "inherit";
-                            doorNumberOfVents.style.display = "inherit";
                             doorPosition.style.display = "inherit";
 
                             if (doorPositionCustom == "cPosition") {
                                 customDimension("French", "Position");
+                            }
+
+                            //Model Specifics
+                            if (model === "M400") {
+                                doorInternalGrillsYes.style.display = "inherit";
+                                doorInternalGrillsNo.style.display = "inherit";
+                                doorInternalGrillYesChecked.setAttribute("checked", "checked");
                             }
 
                             //Radio button defaults
@@ -655,6 +673,7 @@
                         else if (document.getElementById('MainContent_radType' + wallCount + 'Patio').checked) {
 
                             var doorTitle = document.getElementById("MainContent_rowDoorTitle" + wallCount + "Patio");
+                            var doorStyle = document.getElementById("MainContent_rowDoorStyle" + wallCount + "Patio");
                             var doorColor = document.getElementById("MainContent_rowDoorColor" + wallCount + "Patio");
                             var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "Patio");
                             var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "Patio");
@@ -662,16 +681,21 @@
 
                             var doorOperatorLHH = document.getElementById("MainContent_rowDoorOperatorLHH" + wallCount + "Patio");
                             var doorOperatorRHH = document.getElementById("MainContent_rowDoorOperatorRHH" + wallCount + "Patio");
-                            var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallCount + "Patio");
                             var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallCount + "Patio");
                             var doorScreenOptions = document.getElementById("MainContent_rowDoorScreenOptions" + wallCount + "Patio");
                             var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Patio");
 
+                            //Model Specific
+                            var doorInternalGrillsYes = document.getElementById("MainContent_rowDoorInternalGrillsYes" + wallCount + "Patio");
+                            var doorInternalGrillsNo = document.getElementById("MainContent_rowDoorInternalGrillsNo" + wallCount + "Patio");
+
+                            var doorInternalGrillYesChecked = document.getElementById("MainContent_radDoorInternalGrillsYes" + wallCount + "Patio");
                             var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Patio").options[document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Patio").selectedIndex].value;
                             var doorOperatorLHHChecked = document.getElementById("MainContent_radDoorOperatorLHH" + wallCount + "Patio");
 
                             //General
                             doorTitle.style.display = "inherit";
+                            doorStyle.style.display = "inherit";
                             doorColor.style.display = "inherit";
                             doorHeight.style.display = "inherit";
                             doorWidth.style.display = "inherit";
@@ -681,12 +705,18 @@
                             doorGlassTint.style.display = "inherit";
                             doorOperatorLHH.style.display = "inherit";
                             doorOperatorRHH.style.display = "inherit";
-                            doorNumberOfVents.style.display = "inherit";
                             doorPosition.style.display = "inherit";
                             doorScreenOptions.style.display = "inherit";
 
                             if (doorPositionCustom == "cPosition") {
                                 customDimension("Patio", "Position");
+                            }
+
+                            //Model Specifics
+                            if (model === "M400") {
+                                doorInternalGrillsYes.style.display = "inherit";
+                                doorInternalGrillsNo.style.display = "inherit";
+                                doorInternalGrillYesChecked.setAttribute("checked", "checked");
                             }
 
                             //Radio button defaults
@@ -883,7 +913,6 @@
                         else {
                             doorHeight = parseFloat(calculateActualDoorDimension(type, 'Height', false, wallCount));
                         }
-
                         
 
                         /*Insert the door with the appropriate variables based on drop down selected index*/
