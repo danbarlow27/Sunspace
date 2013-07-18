@@ -256,6 +256,15 @@
             var firstWallLength = document.getElementById("hidWall" + (existingWallCount + 1) + "Length").value;
             var lastWallLength = document.getElementById("hidWall" + (coordList.length - 1) + "Length").value;
 
+            /*************************************************************************************/
+            /*************************************************************************************/
+            /*************************************************************************************/
+            var firstWallStartPoint = coordList[existingWallCount + 1][2]; 
+            var lastWallEndPoint = coordList[coordList.length - 1][3];
+            /*************************************************************************************/
+            /*************************************************************************************/
+            /*************************************************************************************/
+
             for (var i = 0; i < coordList.length; i++) {
                 if (i === (existingWallCount + 1) || i === (coordList.length - 1)) { //first proposed wall or last proposed wall
                     if (coordList[i][5] === "W" || coordList[i][5] === "E") { //if its vertical and perpendicular to existing wall 
