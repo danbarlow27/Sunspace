@@ -11,6 +11,26 @@ namespace SunspaceDealerDesktop
     {
         public static string[] MODEL_NUMBERS = { "100", "200", "300", "400" };
 
+        #region Database Field Length Constants
+        //Patterns:
+        //MAX_LENGTH_
+        
+        //Generic to many tables first:
+        public const int MAX_LENGTH_FIRST_NAME = 35;
+        public const int MAX_LENGTH_LAST_NAME = 50;
+        public const int MAX_LENGTH_EMAIL = 50;
+        
+        //By table:
+        #region dealers
+        public const int MAX_LENGTH_DEALERSHIP_NAME = 35;
+        public const int MAX_LENGTH_DEALER_MULTIPLIER = 3;
+        #endregion
+
+        #region sunspace
+        public const int MAX_LENGTH_SUNSPACE_POSITION = 35;
+        #endregion
+        #endregion
+
         #region Default Preferences
         public const float DEFAULT_FILLER = 2.0F; //the default amount of filler to be placed on each side of a wall after a starter or post
         public const float MODEL_100_KNEEWALL_HEIGHT = 20;
@@ -49,6 +69,8 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_200_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
         public static string[] MODEL_300_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
         public static string[] MODEL_400_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
+
+        public static string[] SCREEN_TYPES = { "No Screen", "Better Vue Insect Screen (Default)", "No See Ums 20 x 20 Mesh", "Solar Insect Screening", "Tuff Screen" };
         #endregion
 
         #region Size Limits
@@ -174,7 +196,6 @@ namespace SunspaceDealerDesktop
         public static string[] DOOR_HARDWARE = { "Satin Silver", "Bright Brass", "Antique Brass" };
         public static string[] DOOR_COLOURS = { "White", "Driftwood", "Bronze", "Green", "Black", "Ivory", "Cherrywood", "Grey" };
         public static string[] GLASS_DOOR_TINTS = { "Grey", "Bronze", "Clear" };
-            //Door screen tint by model
         #endregion Doors
 
         #region Windows
@@ -185,8 +206,10 @@ namespace SunspaceDealerDesktop
 
         public static string[] GLASS_WINDOW_TINTS = { "Grey", "Bronze", "Clear" };
 
-        public static string[] WINDOW_TYPES = { "Vertical 4 Track", "Horizontal 4 Track", "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
-        public static string[] SCREEN_TYPES = { "No Screen", "Better Vue Insect Screen (Default)", "No See Ums 20 x 20 Mesh", "Solar Insect Screening", "Tuff Screen" };
+        public static string[] MODEL_100_WINDOW_TYPES = { "Fixed Vinyl" };
+        public static string[] MODEL_200_WINDOW_TYPES = { "Vertical 4 Track (ISM)", "Vertical 4 Track (OSM)", "Horizontal 4 Track" };
+        public static string[] MODEL_300_WINDOW_TYPES = { "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
+        public static string[] MODEL_400_WINDOW_TYPES = { "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
         #endregion
 
         #region Sunshades
@@ -209,9 +232,7 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Floors
-            //Floor interior skins by model
-            //floor exterior skins by model
-            //floor thickness by model            
+        public static string[] FLOOR_THICKNESSES = { "4.5", "6.5", "8.25" };            
         #endregion
 
         #region Kneewalls

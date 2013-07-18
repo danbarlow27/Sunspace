@@ -141,8 +141,14 @@
                                                     </li>
                                                     <li>
                                                         <%-- Markup --%>
-                                                        <asp:Label ID="lblMarkup" runat="server" Text="Installation Type:"></asp:Label>
+                                                        <asp:Label ID="lblMarkup" runat="server" Text="Markup:"></asp:Label>
                                                         <asp:TextBox ID="txtMarkup" runat="server"></asp:TextBox>
+                                                    </li>                                                    
+                                                    <li>
+                                                        <%-- Cut Pitch Option --%>
+                                                        <asp:CheckBox ID="chk100Cut" runat="server" />
+                                                        <asp:Label ID="lbl100CutCheck" AssociatedControlID="chk100Cut" runat="server"></asp:Label>
+                                                        <asp:Label ID="lbl100Cut" AssociatedControlID="chk100Cut" runat="server" Text="Cut Pitch"></asp:Label>                                                                
                                                     </li>
                                                 </ul>
                                             </div>
@@ -159,12 +165,6 @@
                                                 <ul>
                                                     <li>
                                                         <ul class="toggleOptions">
-                                                            <li>
-                                                                <%-- Cut Pitch Option --%>
-                                                                <asp:CheckBox ID="chk100Cut" runat="server" />
-                                                                <asp:Label ID="lbl100CutCheck" AssociatedControlID="chk100Cut" runat="server"></asp:Label>
-                                                                <asp:Label ID="lbl100Cut" AssociatedControlID="chk100Cut" runat="server" Text="Cut Pitch"></asp:Label>                                                                
-                                                            </li>
                                                             <li>
                                                                 <%-- Default Filler Option --%>
                                                                 <asp:Label ID="lbl100DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
@@ -260,9 +260,9 @@
                                                                                     <asp:DropDownList ID="ddl100DoorVinylTint" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
-                                                                                    <%-- Door Screen Tint --%>
-                                                                                    <asp:Label ID="lbl100DoorScreenTint" runat="server" Text="Door Screen Tint:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl100DoorScreenTint" runat="server"></asp:DropDownList>
+                                                                                    <%-- Door Screen Type --%>
+                                                                                    <asp:Label ID="lbl100DoorScreenType" runat="server" Text="Door Screen Type:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl100DoorScreenType" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                             </ul>
                                                                         </li>
@@ -283,11 +283,7 @@
                                                                                     <asp:Label ID="lbl100WindowType" runat="server" Text="Window Type:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl100WindowType" runat="server"></asp:DropDownList>
                                                                                 </li>
-                                                                                <li>
-                                                                                    <%-- Window Colour --%>
-                                                                                    <asp:Label ID="lbl100WindowColour" runat="server" Text="Window Colour:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl100WindowColour" runat="server"></asp:DropDownList>
-                                                                                </li>
+                                                                                <%-- No Window colour for model 100, vinyl only --%>
                                                                                 <li>
                                                                                     <%-- Window Glass Tint --%>
                                                                                     <asp:Label ID="lbl100WindowGlassTint" runat="server" Text="Window Glass Tint:"></asp:Label>
@@ -381,24 +377,15 @@
                                                                         <li>
                                                                             <ul class="toggleOptions">
                                                                                 <li>
-                                                                                    <%-- Interior skin --%>
-                                                                                    <asp:Label ID="lbl100FloorInteriorSkin" runat="server" Text="Floor Interior Skin:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl100FloorInteriorSkin" runat="server"></asp:DropDownList>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <%-- Exterior Skin --%>
-                                                                                    <asp:Label ID="lbl100FloorExteriorSkin" runat="server" Text="Floor Exterior Skin:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl100FloorExteriorSkin" runat="server"></asp:DropDownList>
-                                                                                </li>
-                                                                                <li>
                                                                                     <%-- Thickness --%>
                                                                                     <asp:Label ID="lbl100FloorThickness" runat="server" Text="Floor Thickness:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl100FloorThickness" runat="server"></asp:DropDownList>
                                                                                 </li>
-                                                                                <li>
+                                                                                <li>                                                                                    
                                                                                     <%-- Metal Barrier --%>
-                                                                                    <asp:Label ID="lbl100FloorMetalBarrier" runat="server" Text="Floor Metal Barrier:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl100FloorMetalBarrier" runat="server"></asp:DropDownList> <%--checkbox? --%>
+                                                                                    <asp:CheckBox ID="chk100FloorMetalBarrier" runat="server" />
+                                                                                    <asp:Label ID="lbl100FloorMetalBarrierCheck" AssociatedControlID="chk100FloorMetalBarrier" runat="server" ></asp:Label>
+                                                                                    <asp:Label ID="lbl100FloorMetalBarrier" AssociatedControlID="chk100FloorMetalBarrier" runat="server" Text="Floor Metal Barrier:"></asp:Label>
                                                                                 </li>
                                                                             </ul>
                                                                         </li>
@@ -465,7 +452,7 @@
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- screen type --%>
-                                                                                    <asp:Label ID="lbl100TransomScreenType" runat="server" Text="Frame Colour:"></asp:Label>
+                                                                                    <asp:Label ID="lbl100TransomScreenType" runat="server" Text="Transom Screen Type:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl100TransomScreenType" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                             </ul>
@@ -506,12 +493,6 @@
                                                 <ul>
                                                     <li>
                                                         <ul class="toggleOptions">
-                                                            <li>
-                                                                <%-- Cut Pitch Option --%>
-                                                                <asp:CheckBox ID="chk200Cut" runat="server" />
-                                                                <asp:Label ID="lbl200CutCheck" AssociatedControlID="chk200Cut" runat="server"></asp:Label>
-                                                                <asp:Label ID="lbl200Cut" AssociatedControlID="chk200Cut" runat="server" Text="Cut Pitch"></asp:Label>                                                                
-                                                            </li>
                                                             <li>
                                                                 <%-- Default Filler Option --%>
                                                                 <asp:Label ID="lbl200DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
@@ -607,9 +588,9 @@
                                                                                     <asp:DropDownList ID="ddl200DoorVinylTint" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
-                                                                                    <%-- Door Screen Tint --%>
-                                                                                    <asp:Label ID="lbl200DoorScreenTint" runat="server" Text="Door Screen Tint:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl200DoorScreenTint" runat="server"></asp:DropDownList>
+                                                                                    <%-- Door Screen Type --%>
+                                                                                    <asp:Label ID="lbl200DoorScreenType" runat="server" Text="Door Screen Type:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl200DoorScreenType" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                             </ul>
                                                                         </li>
@@ -728,24 +709,15 @@
                                                                         <li>
                                                                             <ul class="toggleOptions">
                                                                                 <li>
-                                                                                    <%-- Interior skin --%>
-                                                                                    <asp:Label ID="lbl200FloorInteriorSkin" runat="server" Text="Floor Interior Skin:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl200FloorInteriorSkin" runat="server"></asp:DropDownList>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <%-- Exterior Skin --%>
-                                                                                    <asp:Label ID="lbl200FloorExteriorSkin" runat="server" Text="Floor Exterior Skin:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl200FloorExteriorSkin" runat="server"></asp:DropDownList>
-                                                                                </li>
-                                                                                <li>
                                                                                     <%-- Thickness --%>
                                                                                     <asp:Label ID="lbl200FloorThickness" runat="server" Text="Floor Thickness:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl200FloorThickness" runat="server"></asp:DropDownList>
                                                                                 </li>
-                                                                                <li>
+                                                                                <li>                                                                                    
                                                                                     <%-- Metal Barrier --%>
-                                                                                    <asp:Label ID="lbl200FloorMetalBarrier" runat="server" Text="Floor Metal Barrier:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl200FloorMetalBarrier" runat="server"></asp:DropDownList> <%--checkbox? --%>
+                                                                                    <asp:CheckBox ID="chk200FloorMetalBarrier" runat="server" />
+                                                                                    <asp:Label ID="lbl200FloorMetalBarrierCheck" AssociatedControlID="chk200FloorMetalBarrier" runat="server" ></asp:Label>
+                                                                                    <asp:Label ID="lbl200FloorMetalBarrier" AssociatedControlID="chk200FloorMetalBarrier" runat="server" Text="Floor Metal Barrier:"></asp:Label>
                                                                                 </li>
                                                                             </ul>
                                                                         </li>
@@ -812,7 +784,7 @@
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- screen type --%>
-                                                                                    <asp:Label ID="lbl200TransomScreenType" runat="server" Text="Frame Colour:"></asp:Label>
+                                                                                    <asp:Label ID="lbl200TransomScreenType" runat="server" Text="Transom Screen Type:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl200TransomScreenType" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                             </ul>
@@ -854,12 +826,6 @@
                                                 <ul>
                                                     <li>
                                                         <ul class="toggleOptions">
-                                                            <li>
-                                                                <%-- Cut Pitch Option --%>
-                                                                <asp:CheckBox ID="chk300Cut" runat="server" />
-                                                                <asp:Label ID="lbl300CutCheck" AssociatedControlID="chk300Cut" runat="server"></asp:Label>
-                                                                <asp:Label ID="lbl300Cut" AssociatedControlID="chk300Cut" runat="server" Text="Cut Pitch"></asp:Label>                                                                
-                                                            </li>
                                                             <li>
                                                                 <%-- Default Filler Option --%>
                                                                 <asp:Label ID="lbl300DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
@@ -955,9 +921,9 @@
                                                                                     <asp:DropDownList ID="ddl300DoorVinylTint" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
-                                                                                    <%-- Door Screen Tint --%>
-                                                                                    <asp:Label ID="lbl300DoorScreenTint" runat="server" Text="Door Screen Tint:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl300DoorScreenTint" runat="server"></asp:DropDownList>
+                                                                                    <%-- Door Screen Type --%>
+                                                                                    <asp:Label ID="lbl300DoorScreenType" runat="server" Text="Door Screen Type:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl300DoorScreenType" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                             </ul>
                                                                         </li>
@@ -1076,24 +1042,15 @@
                                                                         <li>
                                                                             <ul class="toggleOptions">
                                                                                 <li>
-                                                                                    <%-- Interior skin --%>
-                                                                                    <asp:Label ID="lbl300FloorInteriorSkin" runat="server" Text="Floor Interior Skin:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl300FloorInteriorSkin" runat="server"></asp:DropDownList>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <%-- Exterior Skin --%>
-                                                                                    <asp:Label ID="lbl300FloorExteriorSkin" runat="server" Text="Floor Exterior Skin:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl300FloorExteriorSkin" runat="server"></asp:DropDownList>
-                                                                                </li>
-                                                                                <li>
                                                                                     <%-- Thickness --%>
                                                                                     <asp:Label ID="lbl300FloorThickness" runat="server" Text="Floor Thickness:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl300FloorThickness" runat="server"></asp:DropDownList>
                                                                                 </li>
-                                                                                <li>
+                                                                                <li>                                                                                    
                                                                                     <%-- Metal Barrier --%>
-                                                                                    <asp:Label ID="lbl300FloorMetalBarrier" runat="server" Text="Floor Metal Barrier:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl300FloorMetalBarrier" runat="server"></asp:DropDownList> <%--checkbox? --%>
+                                                                                    <asp:CheckBox ID="chk300FloorMetalBarrier" runat="server" />
+                                                                                    <asp:Label ID="lbl300FloorMetalBarrierCheck" AssociatedControlID="chk300FloorMetalBarrier" runat="server" ></asp:Label>
+                                                                                    <asp:Label ID="lbl300FloorMetalBarrier" AssociatedControlID="chk300FloorMetalBarrier" runat="server" Text="Floor Metal Barrier:"></asp:Label>
                                                                                 </li>
                                                                             </ul>
                                                                         </li>
@@ -1160,7 +1117,7 @@
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- screen type --%>
-                                                                                    <asp:Label ID="lbl300TransomScreenType" runat="server" Text="Frame Colour:"></asp:Label>
+                                                                                    <asp:Label ID="lbl300TransomScreenType" runat="server" Text="Transom Screen Type:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl300TransomScreenType" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                             </ul>
@@ -1202,12 +1159,6 @@
                                                 <ul>
                                                     <li>
                                                         <ul class="toggleOptions">
-                                                            <li>
-                                                                <%-- Cut Pitch Option --%>
-                                                                <asp:CheckBox ID="chk400Cut" runat="server" />
-                                                                <asp:Label ID="lbl400CutCheck" AssociatedControlID="chk400Cut" runat="server"></asp:Label>
-                                                                <asp:Label ID="lbl400Cut" AssociatedControlID="chk400Cut" runat="server" Text="Cut Pitch"></asp:Label>                                                                
-                                                            </li>
                                                             <li>
                                                                 <%-- Default Filler Option --%>
                                                                 <asp:Label ID="lbl400DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
@@ -1303,9 +1254,9 @@
                                                                                     <asp:DropDownList ID="ddl400DoorVinylTint" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
-                                                                                    <%-- Door Screen Tint --%>
-                                                                                    <asp:Label ID="lbl400DoorScreenTint" runat="server" Text="Door Screen Tint:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl400DoorScreenTint" runat="server"></asp:DropDownList>
+                                                                                    <%-- Door Screen Type --%>
+                                                                                    <asp:Label ID="lbl400DoorScreenType" runat="server" Text="Door Screen Type:"></asp:Label>
+                                                                                    <asp:DropDownList ID="ddl400DoorScreenType" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                             </ul>
                                                                         </li>
@@ -1424,24 +1375,15 @@
                                                                         <li>
                                                                             <ul class="toggleOptions">
                                                                                 <li>
-                                                                                    <%-- Interior skin --%>
-                                                                                    <asp:Label ID="lbl400FloorInteriorSkin" runat="server" Text="Floor Interior Skin:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl400FloorInteriorSkin" runat="server"></asp:DropDownList>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <%-- Exterior Skin --%>
-                                                                                    <asp:Label ID="lbl400FloorExteriorSkin" runat="server" Text="Floor Exterior Skin:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl400FloorExteriorSkin" runat="server"></asp:DropDownList>
-                                                                                </li>
-                                                                                <li>
                                                                                     <%-- Thickness --%>
                                                                                     <asp:Label ID="lbl400FloorThickness" runat="server" Text="Floor Thickness:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl400FloorThickness" runat="server"></asp:DropDownList>
                                                                                 </li>
-                                                                                <li>
+                                                                                <li>                                                                                    
                                                                                     <%-- Metal Barrier --%>
-                                                                                    <asp:Label ID="lbl400FloorMetalBarrier" runat="server" Text="Floor Metal Barrier:"></asp:Label>
-                                                                                    <asp:DropDownList ID="ddl400FloorMetalBarrier" runat="server"></asp:DropDownList> <%--checkbox? --%>
+                                                                                    <asp:CheckBox ID="chk400FloorMetalBarrier" runat="server" />
+                                                                                    <asp:Label ID="lbl400FloorMetalBarrierCheck" AssociatedControlID="chk400FloorMetalBarrier" runat="server" ></asp:Label>
+                                                                                    <asp:Label ID="lbl400FloorMetalBarrier" AssociatedControlID="chk400FloorMetalBarrier" runat="server" Text="Floor Metal Barrier:"></asp:Label>
                                                                                 </li>
                                                                             </ul>
                                                                         </li>
@@ -1508,7 +1450,7 @@
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- screen type --%>
-                                                                                    <asp:Label ID="lbl400TransomScreenType" runat="server" Text="Frame Colour:"></asp:Label>
+                                                                                    <asp:Label ID="lbl400TransomScreenType" runat="server" Text="Transom Screen Type:"></asp:Label>
                                                                                     <asp:DropDownList ID="ddl400TransomScreenType" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                             </ul>

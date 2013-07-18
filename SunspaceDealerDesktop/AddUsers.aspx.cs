@@ -23,8 +23,8 @@ namespace SunspaceDealerDesktop
                 Response.Redirect("Login.aspx");
                 //Session.Add("loggedIn", "1");
             }
-            
-            if (Convert.ToInt32(Session["dealer_id"].ToString()) > -1 && Session["user_group"].ToString() == "S")
+
+            if (Session["user_type"].ToString() == "D" && Session["user_group"].ToString() == "S")
             {
                 //don't allow sales reps to this page
                 Response.Redirect("Home.aspx");
@@ -82,7 +82,7 @@ namespace SunspaceDealerDesktop
                     if (Session["ddlDealers"] == null)
                     {
                         //Get the customers assosciated with this dealer
-                        sdsUsers.SelectCommand = "SELECT dealer_name FROM dealers ORDER BY dealer_name";
+                        sdsUsers.SelectCommand = "SELECT dealer_name, dealer_id FROM dealers ORDER BY dealer_name";
 
                         //assign the table names to the dataview object
                         DataView dvDealers = (DataView)sdsUsers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
@@ -91,19 +91,23 @@ namespace SunspaceDealerDesktop
 
                         for (int i = 0; i < dvDealers.Count; i++)
                         {
-                            ddlDealers.Items.Add(dvDealers[i][0].ToString());
+                            ddlDealers.Items.Add(new ListItem(dvDealers[i][0].ToString(), dvDealers[i][1].ToString()));
                         }
 
+                        ddlDealers.SelectedValue = Session["dealer_id"].ToString(); //pick your spoofed user by default
                         Session.Add("ddlDealers", ddlDealers);
                     }
                     //if it exists, just populate from session
                     else
                     {
                         ddlDealers = (DropDownList)Session["ddlDealers"];
+                        ddlDealers.SelectedValue = Session["dealer_id"].ToString(); //pick your spoofed user by default
                     }
                 }
                 // set usergroup for jscript access
                 userGroup = Session["user_group"].ToString();
+
+                //Set maxlength of textboxes based off constants
             }
         }
 
@@ -121,7 +125,8 @@ namespace SunspaceDealerDesktop
             {
                 #region Dealer Sales Rep
                 //adding a dealer sales rep
-                if (ddlUserType.SelectedValue == "Dealer" && ddlUserGroup.SelectedValue == "Sales Rep")
+                //Need to check hidden for usergroup as the ddl is built/cleared client side on change of ddlusertype
+                if (ddlUserType.SelectedValue == "Dealer" && hidUserGroup.Value == "Sales Rep")
                 {
                     DateTime aDate = DateTime.Now;
                     sdsUsers.InsertCommand = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
@@ -144,7 +149,7 @@ namespace SunspaceDealerDesktop
 
                 #region Dealer Admin
                 //adding a head dealer
-                else if (ddlUserType.SelectedValue == "Dealer" && ddlUserGroup.SelectedValue == "Admin")
+                else if (ddlUserType.SelectedValue == "Dealer" && hidUserGroup.Value == "Admin")
                 {
                     using (SqlConnection aConnection = new SqlConnection(sdsUsers.ConnectionString))
                     {
@@ -165,11 +170,11 @@ namespace SunspaceDealerDesktop
                             //Add to dealer table
                             aCommand.CommandText = "INSERT INTO dealers (dealer_name, first_name, last_name, country, multiplier)"
                                                     + "VALUES('"
-                                                    + txtLogin.Text + "', '"
+                                                    + txtDealershipName.Text + "', '"
                                                     + txtFirstName.Text + "', '"
                                                     + txtLastName.Text + "', '"
                                                     + ddlCountry.SelectedValue + "', "
-                                                    + Convert.ToDecimal(txtMultiplier.Text)/10 + ")"; //need to change based on question to anthony
+                                                    + Convert.ToDecimal(txtMultiplier.Text)/100 + ")"; //user enters %, so 80% will become 0.8
                             aCommand.ExecuteNonQuery();
 
                             //Now add user
@@ -191,10 +196,11 @@ namespace SunspaceDealerDesktop
 
                             //An entrance into the model preferences table, one entry for each model type
                             #region Model 100 preferences entry
-                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_interior_skin, floor_exterior_skin, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
+                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
                                                     + "VALUES("
                                                     + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
                                                     + "'100',"
+                                                    + "10,"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White',"
@@ -209,8 +215,8 @@ namespace SunspaceDealerDesktop
                                                     + "'Clear',"
                                                     + "'No Screen',"
                                                     //window
-                                                    + "'Vertical 4 Track',"
-                                                    + "'Cranberry',"
+                                                    + "'Fixed Vinyl',"
+                                                    + "'White',"
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
@@ -224,8 +230,6 @@ namespace SunspaceDealerDesktop
                                                     + "'White Aluminum Stucco',"
                                                     + "'3',"
                                                     //floor
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White Aluminum Stucco',"
                                                     + "'4.5',"
                                                     + "0,"
                                                     //kneewall
@@ -244,10 +248,11 @@ namespace SunspaceDealerDesktop
                             #endregion
 
                             #region Model 200 preferences entry
-                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_interior_skin, floor_exterior_skin, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
+                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
                                                     + "VALUES("
                                                     + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
                                                     + "'200',"
+                                                    + "10,"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White',"
@@ -263,7 +268,7 @@ namespace SunspaceDealerDesktop
                                                     + "'No Screen',"
                                 //window
                                                     + "'Vertical 4 Track',"
-                                                    + "'Cranberry',"
+                                                    + "'White',"
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
@@ -277,8 +282,6 @@ namespace SunspaceDealerDesktop
                                                     + "'White Aluminum Stucco',"
                                                     + "'3',"
                                 //floor
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White Aluminum Stucco',"
                                                     + "'4.5',"
                                                     + "0,"
                                 //kneewall
@@ -297,10 +300,11 @@ namespace SunspaceDealerDesktop
                             #endregion
 
                             #region Model 300 preferences entry
-                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_interior_skin, floor_exterior_skin, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
+                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
                                                     + "VALUES("
                                                     + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
                                                     + "'300',"
+                                                    + "10,"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White',"
@@ -315,8 +319,8 @@ namespace SunspaceDealerDesktop
                                                     + "'Clear',"
                                                     + "'No Screen',"
                                 //window
-                                                    + "'Vertical 4 Track',"
-                                                    + "'Cranberry',"
+                                                    + "'Horizontal Roller',"
+                                                    + "'White',"
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
@@ -330,8 +334,6 @@ namespace SunspaceDealerDesktop
                                                     + "'White Aluminum Stucco',"
                                                     + "'3',"
                                 //floor
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White Aluminum Stucco',"
                                                     + "'4.5',"
                                                     + "0,"
                                 //kneewall
@@ -350,10 +352,11 @@ namespace SunspaceDealerDesktop
                             #endregion
 
                             #region Model 400 preferences entry
-                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_interior_skin, floor_exterior_skin, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
+                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
                                                     + "VALUES("
                                                     + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
                                                     + "'400',"
+                                                    + "10,"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White Aluminum Stucco',"
                                                     + "'White',"
@@ -368,8 +371,8 @@ namespace SunspaceDealerDesktop
                                                     + "'Clear',"
                                                     + "'No Screen',"
                                 //window
-                                                    + "'Vertical 4 Track',"
-                                                    + "'Cranberry',"
+                                                    + "'Horizontal Roller',"
+                                                    + "'White',"
                                                     + "'Clear',"
                                                     + "'Clear',"
                                                     + "'No Screen',"
@@ -383,8 +386,6 @@ namespace SunspaceDealerDesktop
                                                     + "'White Aluminum Stucco',"
                                                     + "'3',"
                                 //floor
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White Aluminum Stucco',"
                                                     + "'4.5',"
                                                     + "0,"
                                 //kneewall
@@ -403,12 +404,14 @@ namespace SunspaceDealerDesktop
                             #endregion
 
                             //Lastly, a preferences table entry, with defaults
-                            aCommand.CommandText = "INSERT INTO preferences (dealer_id, installation_type, model_type, layout)"
+                            aCommand.CommandText = "INSERT INTO preferences (dealer_id, installation_type, model_type, layout, cut_pitch)"
                                                     + "VALUES("
                                                     + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
                                                     + "'House',"
                                                     + "'200',"
-                                                    + "'preset 1')";
+                                                    + "'preset 1',"
+                                                    + "1"
+                                                    +")";
                             aCommand.ExecuteNonQuery();
 
                             lblError.Text = "Successfully Added";

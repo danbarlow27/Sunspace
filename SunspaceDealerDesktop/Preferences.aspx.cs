@@ -38,6 +38,33 @@ namespace SunspaceDealerDesktop
             ddl100DefaultFiller.Items.Add(lst34);
             ddl100DefaultFiller.Items.Add(lst78);
 
+            ddl200DefaultFiller.Items.Add(lst0);
+            ddl200DefaultFiller.Items.Add(lst18);
+            ddl200DefaultFiller.Items.Add(lst14);
+            ddl200DefaultFiller.Items.Add(lst38);
+            ddl200DefaultFiller.Items.Add(lst12);
+            ddl200DefaultFiller.Items.Add(lst58);
+            ddl200DefaultFiller.Items.Add(lst34);
+            ddl200DefaultFiller.Items.Add(lst78);
+
+            ddl300DefaultFiller.Items.Add(lst0);
+            ddl300DefaultFiller.Items.Add(lst18);
+            ddl300DefaultFiller.Items.Add(lst14);
+            ddl300DefaultFiller.Items.Add(lst38);
+            ddl300DefaultFiller.Items.Add(lst12);
+            ddl300DefaultFiller.Items.Add(lst58);
+            ddl300DefaultFiller.Items.Add(lst34);
+            ddl300DefaultFiller.Items.Add(lst78);
+
+            ddl400DefaultFiller.Items.Add(lst0);
+            ddl400DefaultFiller.Items.Add(lst18);
+            ddl400DefaultFiller.Items.Add(lst14);
+            ddl400DefaultFiller.Items.Add(lst38);
+            ddl400DefaultFiller.Items.Add(lst12);
+            ddl400DefaultFiller.Items.Add(lst58);
+            ddl400DefaultFiller.Items.Add(lst34);
+            ddl400DefaultFiller.Items.Add(lst78);
+
             #region General Preferences
             for (int i = 0; i < Constants.INSTALLATION_TYPES.Count(); i++)
             {
@@ -185,6 +212,10 @@ namespace SunspaceDealerDesktop
             {
                 ddl100DoorVinylTint.Items.Add(new ListItem(Constants.VINYL_TINTS[i], Constants.VINYL_TINTS[i]));
             }
+            for (int i = 0; i < Constants.SCREEN_TYPES.Count(); i++)
+            {
+                ddl100DoorScreenType.Items.Add(new ListItem(Constants.SCREEN_TYPES[i], Constants.SCREEN_TYPES[i]));
+            }
             //screen tints
             ddl100DoorSwing.Items.Add(new ListItem("In", "In"));
             ddl100DoorSwing.Items.Add(new ListItem("Out", "Out"));
@@ -217,6 +248,11 @@ namespace SunspaceDealerDesktop
             {
                 ddl200DoorVinylTint.Items.Add(new ListItem(Constants.VINYL_TINTS[i], Constants.VINYL_TINTS[i]));
             }
+            for (int i = 0; i < Constants.SCREEN_TYPES.Count(); i++)
+            {
+                ddl200DoorScreenType.Items.Add(new ListItem(Constants.SCREEN_TYPES[i], Constants.SCREEN_TYPES[i]));
+            }
+
             ddl200DoorSwing.Items.Add(new ListItem("In", "In"));
             ddl200DoorSwing.Items.Add(new ListItem("Out", "Out"));
             ddl200DoorHinge.Items.Add(new ListItem("Left", "Left"));
@@ -248,6 +284,11 @@ namespace SunspaceDealerDesktop
             {
                 ddl300DoorVinylTint.Items.Add(new ListItem(Constants.VINYL_TINTS[i], Constants.VINYL_TINTS[i]));
             }
+            for (int i = 0; i < Constants.SCREEN_TYPES.Count(); i++)
+            {
+                ddl300DoorScreenType.Items.Add(new ListItem(Constants.SCREEN_TYPES[i], Constants.SCREEN_TYPES[i]));
+            }
+
             ddl300DoorSwing.Items.Add(new ListItem("In", "In"));
             ddl300DoorSwing.Items.Add(new ListItem("Out", "Out"));
             ddl300DoorHinge.Items.Add(new ListItem("Left", "Left"));
@@ -279,6 +320,11 @@ namespace SunspaceDealerDesktop
             {
                 ddl400DoorVinylTint.Items.Add(new ListItem(Constants.VINYL_TINTS[i], Constants.VINYL_TINTS[i]));
             }
+            for (int i = 0; i < Constants.SCREEN_TYPES.Count(); i++)
+            {
+                ddl400DoorScreenType.Items.Add(new ListItem(Constants.SCREEN_TYPES[i], Constants.SCREEN_TYPES[i]));
+            }
+
             ddl400DoorSwing.Items.Add(new ListItem("In", "In"));
             ddl400DoorSwing.Items.Add(new ListItem("Out", "Out"));
             ddl400DoorHinge.Items.Add(new ListItem("Left", "Left"));
@@ -289,9 +335,9 @@ namespace SunspaceDealerDesktop
             #region Window Options
             #region 100
             //No window colours, only vinyl
-            for (int i = 0; i < Constants.WINDOW_TYPES.Count(); i++)
+            for (int i = 0; i < Constants.MODEL_100_WINDOW_TYPES.Count(); i++)
             {
-                ddl100WindowType.Items.Add(new ListItem(Constants.WINDOW_TYPES[i], Constants.WINDOW_TYPES[i]));
+                ddl100WindowType.Items.Add(new ListItem(Constants.MODEL_100_WINDOW_TYPES[i], Constants.MODEL_100_WINDOW_TYPES[i]));
             }
             for (int i = 0; i < Constants.GLASS_WINDOW_TINTS.Count(); i++)
             {
@@ -308,9 +354,9 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region 200
-            for (int i = 0; i < Constants.WINDOW_TYPES.Count(); i++)
+            for (int i = 0; i < Constants.MODEL_200_WINDOW_TYPES.Count(); i++)
             {
-                ddl200WindowType.Items.Add(new ListItem(Constants.WINDOW_TYPES[i], Constants.WINDOW_TYPES[i]));
+                ddl200WindowType.Items.Add(new ListItem(Constants.MODEL_200_WINDOW_TYPES[i], Constants.MODEL_200_WINDOW_TYPES[i]));
             }
             for (int i = 0; i < Constants.MODEL_200_WINDOW_COLOURS.Count(); i++)
             {
@@ -331,9 +377,9 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region 300
-            for (int i = 0; i < Constants.WINDOW_TYPES.Count(); i++)
+            for (int i = 0; i < Constants.MODEL_300_WINDOW_TYPES.Count(); i++)
             {
-                ddl300WindowType.Items.Add(new ListItem(Constants.WINDOW_TYPES[i], Constants.WINDOW_TYPES[i]));
+                ddl300WindowType.Items.Add(new ListItem(Constants.MODEL_300_WINDOW_TYPES[i], Constants.MODEL_300_WINDOW_TYPES[i]));
             }
             for (int i = 0; i < Constants.MODEL_300_WINDOW_COLOURS.Count(); i++)
             {
@@ -354,9 +400,9 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region 400
-            for (int i = 0; i < Constants.WINDOW_TYPES.Count(); i++)
+            for (int i = 0; i < Constants.MODEL_400_WINDOW_TYPES.Count(); i++)
             {
-                ddl400WindowType.Items.Add(new ListItem(Constants.WINDOW_TYPES[i], Constants.WINDOW_TYPES[i]));
+                ddl400WindowType.Items.Add(new ListItem(Constants.MODEL_400_WINDOW_TYPES[i], Constants.MODEL_400_WINDOW_TYPES[i]));
             }
             for (int i = 0; i < Constants.MODEL_400_WINDOW_COLOURS.Count(); i++)
             {
@@ -517,12 +563,28 @@ namespace SunspaceDealerDesktop
             //No floor db yet
             #region Floor Options
             #region 100
+            for (int i = 0; i < Constants.FLOOR_THICKNESSES.Count(); i++)
+            {
+                ddl100FloorThickness.Items.Add(new ListItem(Constants.FLOOR_THICKNESSES[i], Constants.FLOOR_THICKNESSES[i]));
+            }
             #endregion
             #region 200
+            for (int i = 0; i < Constants.FLOOR_THICKNESSES.Count(); i++)
+            {
+                ddl200FloorThickness.Items.Add(new ListItem(Constants.FLOOR_THICKNESSES[i], Constants.FLOOR_THICKNESSES[i]));
+            }
             #endregion
             #region 300
+            for (int i = 0; i < Constants.FLOOR_THICKNESSES.Count(); i++)
+            {
+                ddl300FloorThickness.Items.Add(new ListItem(Constants.FLOOR_THICKNESSES[i], Constants.FLOOR_THICKNESSES[i]));
+            }
             #endregion
             #region 400
+            for (int i = 0; i < Constants.FLOOR_THICKNESSES.Count(); i++)
+            {
+                ddl400FloorThickness.Items.Add(new ListItem(Constants.FLOOR_THICKNESSES[i], Constants.FLOOR_THICKNESSES[i]));
+            }
             #endregion
             #endregion
 
@@ -537,6 +599,7 @@ namespace SunspaceDealerDesktop
                 ddl100KneewallGlassTint.Items.Add(new ListItem(Constants.KNEEWALL_GLASS_TINTS[i], Constants.KNEEWALL_GLASS_TINTS[i]));
             }
             #endregion
+
             #region 200
             for (int i = 0; i < Constants.KNEEWALL_TYPES.Count(); i++)
             {
@@ -547,6 +610,7 @@ namespace SunspaceDealerDesktop
                 ddl200KneewallGlassTint.Items.Add(new ListItem(Constants.KNEEWALL_GLASS_TINTS[i], Constants.KNEEWALL_GLASS_TINTS[i]));
             }
             #endregion
+
             #region 300
             for (int i = 0; i < Constants.KNEEWALL_TYPES.Count(); i++)
             {
@@ -557,6 +621,7 @@ namespace SunspaceDealerDesktop
                 ddl300KneewallGlassTint.Items.Add(new ListItem(Constants.KNEEWALL_GLASS_TINTS[i], Constants.KNEEWALL_GLASS_TINTS[i]));
             }
             #endregion
+
             #region 400
             for (int i = 0; i < Constants.KNEEWALL_TYPES.Count(); i++)
             {
@@ -583,7 +648,12 @@ namespace SunspaceDealerDesktop
             {
                 ddl100TransomVinylTint.Items.Add(new ListItem(Constants.VINYL_TINTS[i], Constants.VINYL_TINTS[i]));
             }
+            for (int i = 0; i < Constants.SCREEN_TYPES.Count(); i++)
+            {
+                ddl100TransomScreenType.Items.Add(new ListItem(Constants.SCREEN_TYPES[i], Constants.SCREEN_TYPES[i]));
+            }
             #endregion
+
             #region 200
             for (int i = 0; i < Constants.TRANSOM_TYPES.Count(); i++)
             {
@@ -597,7 +667,12 @@ namespace SunspaceDealerDesktop
             {
                 ddl200TransomVinylTint.Items.Add(new ListItem(Constants.VINYL_TINTS[i], Constants.VINYL_TINTS[i]));
             }
+            for (int i = 0; i < Constants.SCREEN_TYPES.Count(); i++)
+            {
+                ddl200TransomScreenType.Items.Add(new ListItem(Constants.SCREEN_TYPES[i], Constants.SCREEN_TYPES[i]));
+            }
             #endregion
+
             #region 300
             for (int i = 0; i < Constants.TRANSOM_TYPES.Count(); i++)
             {
@@ -611,7 +686,12 @@ namespace SunspaceDealerDesktop
             {
                 ddl300TransomVinylTint.Items.Add(new ListItem(Constants.VINYL_TINTS[i], Constants.VINYL_TINTS[i]));
             }
+            for (int i = 0; i < Constants.SCREEN_TYPES.Count(); i++)
+            {
+                ddl300TransomScreenType.Items.Add(new ListItem(Constants.SCREEN_TYPES[i], Constants.SCREEN_TYPES[i]));
+            }
             #endregion
+
             #region 400
             for (int i = 0; i < Constants.TRANSOM_TYPES.Count(); i++)
             {
@@ -624,6 +704,10 @@ namespace SunspaceDealerDesktop
             for (int i = 0; i < Constants.VINYL_TINTS.Count(); i++)
             {
                 ddl400TransomVinylTint.Items.Add(new ListItem(Constants.VINYL_TINTS[i], Constants.VINYL_TINTS[i]));
+            }
+            for (int i = 0; i < Constants.SCREEN_TYPES.Count(); i++)
+            {
+                ddl400TransomScreenType.Items.Add(new ListItem(Constants.SCREEN_TYPES[i], Constants.SCREEN_TYPES[i]));
             }
             #endregion
             #endregion
