@@ -583,6 +583,7 @@ namespace SunspaceDealerDesktop
                     TextBox doorCustomHeightTXT = new TextBox();
                     doorCustomHeightTXT.ID = "txtDoorCustomHeight" + i + title;
                     doorCustomHeightTXT.CssClass = "txtField txtDoorInput";
+                    doorCustomHeightTXT.Attributes.Add("maxlength", "3");
 
                     DropDownList inchCustomHeight = new DropDownList();
                     inchCustomHeight.ID = "ddlInchCustomHeight" + i + title;
@@ -669,6 +670,7 @@ namespace SunspaceDealerDesktop
                     TextBox doorCustomWidthTXT = new TextBox();
                     doorCustomWidthTXT.ID = "txtDoorCustomWidth" + i + title;
                     doorCustomWidthTXT.CssClass = "txtField txtDoorInput";
+                    doorCustomWidthTXT.Attributes.Add("maxlength", "3");
 
                     DropDownList inchCustomWidth = new DropDownList();
                     inchCustomWidth.ID = "ddlInchCustomWidth" + i + title;
@@ -1016,6 +1018,7 @@ namespace SunspaceDealerDesktop
                     TextBox doorPositionTXT = new TextBox();
                     doorPositionTXT.ID = "txtDoorCustomPosition" + i + title;
                     doorPositionTXT.CssClass = "txtField txtDoorInput";
+                    doorPositionTXT.Attributes.Add("maxlength", "3");
 
                     DropDownList inchSpecificLeft = new DropDownList();
                     inchSpecificLeft.ID = "ddlInchSpecificLeft" + i + title;

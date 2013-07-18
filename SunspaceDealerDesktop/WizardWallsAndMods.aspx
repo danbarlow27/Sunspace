@@ -726,162 +726,7 @@
             return newDimension;
         }
         
-        /**
-        *Prototype used to create an "insert" function for arrays. This function can insert elements at specific indices
-        *@param index - is which index to insert the item at
-        *@param item - which item is to be inserted
-        */
-        Array.prototype.insert = function (index, item) {
-            this.splice(index, 0, item);
-        };
-                
-        /**
-        *checkDoor
-        *This function is used to perform validation and array reordering
-        *@param usuableLength - holds the length of the wall which mods can be put into
-        *@param dropDownName - holds the name of the dropDown and remove the appropriate item based on inserted items
-        *@param dropDownValue - holds the preset positions to place a door in a wall (i.e. Left, Center, Right, and Custom)
-        *@param spacesRemaining - holds an array of spaces to validate new doors
-        *@return isValid - return boolean based on validation; no overlaps, no doors in too small place, etc...
-        *@return sortedDoors - return an array of door objects in proper order
-        */
-        function checkDoor(usuableLength, dropDownName, dropDownValue, doors, spacesRemaining) {
-
-            var isValid = true;
-
-            var sortedDoors = new Array();
-
-            // Sort left to right
-            if (doors.length > 0) {
-                sortedDoors[0] = { "index": 0, "doorWidth" : doors[0].doorWidth, "distanceFromLeft": doors[0].distanceFromLeft };
-            }
-            for (var i = 1; i < doors.length; i++) {
-                var x;
-                for (x = 0; x < sortedDoors.length; x++) {
-                    if (sortedDoors[x].distanceFromLeft > doors[i].distanceFromLeft) {
-                        sortedDoors.insert(x, { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft });
-                        break;
-                    }
-                }
-                if (x == sortedDoors.length) {
-                    sortedDoors[sortedDoors.length] = { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft };
-                }
-            }
-
-            // Check overlap
-            for (var i = 0; i < sortedDoors.length - 1; i++) {
-                if (sortedDoors[i].distanceFromLeft + sortedDoors[i].doorWidth > sortedDoors[i + 1].distanceFromLeft) {
-                    alert("Doors " + sortedDoors[i].index + " and " + (sortedDoors[i].index + 1) + " overlap");
-                    doors.splice(sortedDoors[i].index, 1);
-                    sortedDoors.splice(sortedDoors[i].index, 1);
-                    isValid = false;
-                }
-            }
-
-            //Check for possible door width in spaces, only if spacesRemaining is not null
-            if (spacesRemaining != null) {
-                var goodSpace = 0;
-                //Loop through all spaces in spacesRemaining and check it against the door width
-                for (var j = 0; j < spacesRemaining.length; j++) {
-                    //alert(spacesRemaining[j]);
-                    //Check all spaces in wall
-                    if (spacesRemaining[j].space > doors[doors.length - 1].doorWidth) {                        
-                        goodSpace++;
-                    }
-                }
-                //If no good spaces exist, display error message
-                if (goodSpace == 0) {
-                    isValid = false;
-                    alert("This door is too small to fit in any available spaces");
-                }
-            }            
-
-            //Is valid disable appropriate dropdown item and change selected index
-            if (isValid) {
-                
-                for (var typeCount = 1; typeCount <= 4; typeCount++) {
-
-                    var title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
-
-                    if ($('#' + dropDownName + title).val() != "cPosition") {
-                        $('#' + dropDownName + title + ' option[value=' + dropDownValue + ']').attr('disabled', true);
-                    }                    
-
-                    for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + title + ' option').size() ; dropDownLoop++) {
-                        if ($('#' + dropDownName + title + ' option')[dropDownLoop].disabled == false) {
-                            $('#' + dropDownName + title).prop("selectedIndex", dropDownLoop);
-                            break;
-                        }
-                    }
-
-                    if ($('#' + dropDownName + title).val() == "cPosition") {
-                        customDimension(title, "Position");
-                    }
-                }
-                                
-            }
-            return {
-                "isValid": isValid,
-                "sortedDoors": sortedDoors
-            };
-        }
-
-        /**
-        *totalSpaceLeftInWall
-        *This function performs calculations to find the total space left in a wall
-        *@param usuableLength - holds the length of the wall which mods can be put into
-        *@param sortedDoors - holds a door array which are in proper order
-        *@return totalSpace - returns the total space left on a specific wall
-        *
-        *MAY NEED TO PASS sortedDoors ARRAY ONCE SLIDE 3 COMPLETE
-        */
-        function totalSpaceLeftInWall(usuableLength, sortedDoors) {
-
-            var totalSpace = usuableLength;
-
-            for (var wallSpace = 0; wallSpace < sortedDoors.length; wallSpace++)
-                totalSpace -= sortedDoors[wallSpace].doorWidth;
-
-            return totalSpace;
-        }
-
-        /**
-        *availableSpacesArrayUpdate
-        *This function is used to update remainingSpaces array
-        *@param usableLength - holds the length of the wall which mods can be put into
-        *@param sortedDoors - holds a door array which are in proper order
-        */
-        function availableSpacesArrayUpdate(usableLength, sortedDoors) {
-            
-            var spacesRemaining = new Array();            
-
-            //Block to store remaining spaces between various door(s)
-            if (sortedDoors[0].distanceFromLeft > 0 && sortedDoors.length > 1) {
-                spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
-            }
-            else if (sortedDoors.length == 1) {
-                if (sortedDoors[0].distanceFromLeft == 0) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].doorWidth, "space": usableLength - sortedDoors[0].doorWidth };
-                }
-                else if (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth == usableLength) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": usableLength - sortedDoors[0].doorWidth };
-                }
-                else if (sortedDoors[0].distanceFromLeft > 0) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth, "space": usableLength - (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth) };
-                }
-            }
-            else {
-                //var doorsLoop;
-                for (var doorsLoop = 0; doorsLoop < sortedDoors.length - 1; doorsLoop++) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft, "space": sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft) };
-                }
-                if (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth < usableLength) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth, "space": usableLength - (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth) };
-                }
-            }
-            return spacesRemaining;
-        }
+        
 
         /**
         *addDoor
@@ -1103,6 +948,167 @@
 
             }
 
+        }
+
+        /**
+        *Prototype used to create an "insert" function for arrays. This function can insert elements at specific indices
+        *@param index - is which index to insert the item at
+        *@param item - which item is to be inserted
+        */
+        Array.prototype.insert = function (index, item) {
+            this.splice(index, 0, item);
+        };
+
+        /**
+        *checkDoor
+        *This function is used to perform validation and array reordering
+        *@param usuableLength - holds the length of the wall which mods can be put into
+        *@param dropDownName - holds the name of the dropDown and remove the appropriate item based on inserted items
+        *@param dropDownValue - holds the preset positions to place a door in a wall (i.e. Left, Center, Right, and Custom)
+        *@param spacesRemaining - holds an array of spaces to validate new doors
+        *@return isValid - return boolean based on validation; no overlaps, no doors in too small place, etc...
+        *@return sortedDoors - return an array of door objects in proper order
+        *
+        **********NEEDS MORE VALIDATION FOR DOORS CUSTOM DISTANCE (distanceFromLeft > usuableLength) || (distanceFromLeft < 0)
+        **********NEEDS TO ONLY ACCEPT 3 DIGIT NUMBERS FOR CUSTOM DISTANCE
+        *
+        */
+        function checkDoor(usuableLength, dropDownName, dropDownValue, doors, spacesRemaining) {
+
+            var isValid = true;
+
+            var sortedDoors = new Array();
+
+            // Sort left to right
+            if (doors.length > 0) {
+                sortedDoors[0] = { "index": 0, "doorWidth": doors[0].doorWidth, "distanceFromLeft": doors[0].distanceFromLeft };
+            }
+            for (var i = 1; i < doors.length; i++) {
+                var x;
+                for (x = 0; x < sortedDoors.length; x++) {
+                    if (sortedDoors[x].distanceFromLeft > doors[i].distanceFromLeft) {
+                        sortedDoors.insert(x, { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft });
+                        break;
+                    }
+                }
+                if (x == sortedDoors.length) {
+                    sortedDoors[sortedDoors.length] = { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft };
+                }
+            }
+
+            // Check overlap
+            for (var i = 0; i < sortedDoors.length - 1; i++) {
+                if (sortedDoors[i].distanceFromLeft + sortedDoors[i].doorWidth > sortedDoors[i + 1].distanceFromLeft) {
+                    alert("Doors " + sortedDoors[i].index + " and " + (sortedDoors[i].index + 1) + " overlap");
+                    doors.splice(sortedDoors[i].index, 1);
+                    sortedDoors.splice(sortedDoors[i].index, 1);
+                    isValid = false;
+                }
+            }
+
+            //Check for possible door width in spaces, only if spacesRemaining is not null
+            if (spacesRemaining != null) {
+                var goodSpace = 0;
+                //Loop through all spaces in spacesRemaining and check it against the door width
+                for (var j = 0; j < spacesRemaining.length; j++) {
+                    //alert(spacesRemaining[j]);
+                    //Check all spaces in wall
+                    if (spacesRemaining[j].space > doors[doors.length - 1].doorWidth) {
+                        goodSpace++;
+                    }
+                }
+                //If no good spaces exist, display error message
+                if (goodSpace == 0) {
+                    isValid = false;
+                    alert("This door is too small to fit in any available spaces");
+                }
+            }
+
+            //Is valid disable appropriate dropdown item and change selected index
+            if (isValid) {
+
+                for (var typeCount = 1; typeCount <= 4; typeCount++) {
+
+                    var title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
+
+                    if ($('#' + dropDownName + title).val() != "cPosition") {
+                        $('#' + dropDownName + title + ' option[value=' + dropDownValue + ']').attr('disabled', true);
+                    }
+
+                    for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + title + ' option').size() ; dropDownLoop++) {
+                        if ($('#' + dropDownName + title + ' option')[dropDownLoop].disabled == false) {
+                            $('#' + dropDownName + title).prop("selectedIndex", dropDownLoop);
+                            break;
+                        }
+                    }
+
+                    if ($('#' + dropDownName + title).val() == "cPosition") {
+                        customDimension(title, "Position");
+                    }
+                }
+
+            }
+            return {
+                "isValid": isValid,
+                "sortedDoors": sortedDoors
+            };
+        }
+
+        /**
+        *totalSpaceLeftInWall
+        *This function performs calculations to find the total space left in a wall
+        *@param usuableLength - holds the length of the wall which mods can be put into
+        *@param sortedDoors - holds a door array which are in proper order
+        *@return totalSpace - returns the total space left on a specific wall
+        *
+        *MAY NEED TO PASS sortedDoors ARRAY ONCE SLIDE 3 COMPLETE
+        */
+        function totalSpaceLeftInWall(usuableLength, sortedDoors) {
+
+            var totalSpace = usuableLength;
+
+            for (var wallSpace = 0; wallSpace < sortedDoors.length; wallSpace++)
+                totalSpace -= sortedDoors[wallSpace].doorWidth;
+
+            return totalSpace;
+        }
+
+        /**
+        *availableSpacesArrayUpdate
+        *This function is used to update remainingSpaces array
+        *@param usableLength - holds the length of the wall which mods can be put into
+        *@param sortedDoors - holds a door array which are in proper order
+        */
+        function availableSpacesArrayUpdate(usableLength, sortedDoors) {
+
+            var spacesRemaining = new Array();
+
+            //Block to store remaining spaces between various door(s)
+            if (sortedDoors[0].distanceFromLeft > 0 && sortedDoors.length > 1) {
+                spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
+            }
+            else if (sortedDoors.length == 1) {
+                if (sortedDoors[0].distanceFromLeft == 0) {
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].doorWidth, "space": usableLength - sortedDoors[0].doorWidth };
+                }
+                else if (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth == usableLength) {
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": usableLength - sortedDoors[0].doorWidth };
+                }
+                else if (sortedDoors[0].distanceFromLeft > 0) {
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth, "space": usableLength - (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth) };
+                }
+            }
+            else {
+                //var doorsLoop;
+                for (var doorsLoop = 0; doorsLoop < sortedDoors.length - 1; doorsLoop++) {
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft, "space": sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft) };
+                }
+                if (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth < usableLength) {
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth, "space": usableLength - (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth) };
+                }
+            }
+            return spacesRemaining;
         }
 
     </script>
