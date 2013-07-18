@@ -833,11 +833,9 @@
 
                                 pagerTextAnswer.setAttribute("style", "display:block");
 
-                                pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerText).substr(14, 2) + " Doors";
+                                pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerHTML).substr(14, 2) + " Doors";
 
-                                doorPagerUpdate(sortedDoors, pagerTextDoorAnswer, type, wallCount);
-
-                                
+                                doorPagerUpdate(sortedDoors, pagerTextDoorAnswer, type, wallCount);                                
 
                                 //Loop to find if a wallDoors object exist for the current wall count
                                 for (var i = 0; i < wallDoors.length; i++) {
