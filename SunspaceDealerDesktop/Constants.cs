@@ -19,7 +19,6 @@ namespace SunspaceDealerDesktop
         public const int MAX_LENGTH_FIRST_NAME = 35;
         public const int MAX_LENGTH_LAST_NAME = 50;
         public const int MAX_LENGTH_EMAIL = 50;
-        
         //By table:
         #region dealers
         public const int MAX_LENGTH_DEALERSHIP_NAME = 35;
@@ -28,6 +27,11 @@ namespace SunspaceDealerDesktop
 
         #region sunspace
         public const int MAX_LENGTH_SUNSPACE_POSITION = 35;
+        #endregion
+
+        #region users
+        public const int MAX_LENGTH_USER_LOGIN = 15;
+        public const int MAX_LENGTH_USER_PASSWORD = 15;
         #endregion
         #endregion
 

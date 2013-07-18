@@ -108,6 +108,13 @@ namespace SunspaceDealerDesktop
                 userGroup = Session["user_group"].ToString();
 
                 //Set maxlength of textboxes based off constants
+                txtDealershipName.MaxLength = Constants.MAX_LENGTH_DEALERSHIP_NAME;
+                txtEmail.MaxLength = Constants.MAX_LENGTH_EMAIL;
+                txtFirstName.MaxLength = Constants.MAX_LENGTH_FIRST_NAME;
+                txtLastName.MaxLength = Constants.MAX_LENGTH_LAST_NAME;
+                txtLogin.MaxLength = Constants.MAX_LENGTH_USER_LOGIN;
+                txtMultiplier.MaxLength = Constants.MAX_LENGTH_DEALER_MULTIPLIER;
+                txtPassword.MaxLength = Constants.MAX_LENGTH_USER_PASSWORD;
             }
         }
 
@@ -177,6 +184,9 @@ namespace SunspaceDealerDesktop
                                                     + Convert.ToDecimal(txtMultiplier.Text)/100 + ")"; //user enters %, so 80% will become 0.8
                             aCommand.ExecuteNonQuery();
 
+                            aCommand.CommandText = "SELECT dealer_id FROM dealers WHERE dealer_name='" + txtDealershipName.Text + "'";
+                            int newDealerId = Convert.ToInt32(aCommand.ExecuteScalar());
+
                             //Now add user
                             DateTime aDate = DateTime.Now;
                             aCommand.CommandText = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
@@ -188,7 +198,7 @@ namespace SunspaceDealerDesktop
                                                     + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
                                                     + "D" + "', '" //Must be D-A within this block of logic
                                                     + "A" + "', "
-                                                    + Convert.ToInt32(Session["dealer_id"].ToString()) + ", '" //reference ID is the dealer id in the dealer table they belong to
+                                                    + newDealerId + ", '" //reference ID is the dealer id in the dealer table they belong to
                                                     + txtFirstName.Text + "', '"
                                                     + txtLastName.Text + "', "
                                                     + 1 + ")";
@@ -198,7 +208,7 @@ namespace SunspaceDealerDesktop
                             #region Model 100 preferences entry
                             aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
                                                     + "VALUES("
-                                                    + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
+                                                    + newDealerId + ", "
                                                     + "'100',"
                                                     + "10,"
                                                     + "'White Aluminum Stucco',"
@@ -250,7 +260,7 @@ namespace SunspaceDealerDesktop
                             #region Model 200 preferences entry
                             aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
                                                     + "VALUES("
-                                                    + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
+                                                    + newDealerId + ", "
                                                     + "'200',"
                                                     + "10,"
                                                     + "'White Aluminum Stucco',"
@@ -302,7 +312,7 @@ namespace SunspaceDealerDesktop
                             #region Model 300 preferences entry
                             aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
                                                     + "VALUES("
-                                                    + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
+                                                    + newDealerId + ", "
                                                     + "'300',"
                                                     + "10,"
                                                     + "'White Aluminum Stucco',"
@@ -354,7 +364,7 @@ namespace SunspaceDealerDesktop
                             #region Model 400 preferences entry
                             aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
                                                     + "VALUES("
-                                                    + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
+                                                    + newDealerId + ", "
                                                     + "'400',"
                                                     + "10,"
                                                     + "'White Aluminum Stucco',"
@@ -406,7 +416,7 @@ namespace SunspaceDealerDesktop
                             //Lastly, a preferences table entry, with defaults
                             aCommand.CommandText = "INSERT INTO preferences (dealer_id, installation_type, model_type, layout, cut_pitch)"
                                                     + "VALUES("
-                                                    + Convert.ToInt32(Session["dealer_id"].ToString()) + ", "
+                                                    + newDealerId + ", "
                                                     + "'House',"
                                                     + "'200',"
                                                     + "'preset 1',"
