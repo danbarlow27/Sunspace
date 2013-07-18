@@ -243,7 +243,6 @@
 
 
             ////this function needs more functionality to account for soffit length on diagonal walls 
-                and different soffit lengths on different walls
                 and soffit length that's greater than the length of a wall
                     (if there a case when soffit length would be greater than wall length,
                      and span multiple walls???)
@@ -254,11 +253,23 @@
         */
         function determineSoffitLengthOfEachWall() {
             
+            var firstWallLength = document.getElementById("hidWall" + (existingWallCount + 1) + "Length").value;
+            var lastWallLength = document.getElementById("hidWall" + (coordList.length - 1) + "Length").value;
+
             for (var i = 0; i < coordList.length; i++) {
-                if (i === (existingWallCount + 1) || i === (coordList.length - 1)) //first proposed wall or last proposed wall
-                    wallSoffitArray[i] = soffitLength;
-                else
-                    wallSoffitArray[i] = 0;
+                if (i === (existingWallCount + 1) || i === (coordList.length - 1)) { //first proposed wall or last proposed wall
+                    if (coordList[i][5] === "W" || coordList[i][5] === "E") { //if its vertical and perpendicular to existing wall 
+                        wallSoffitArray[i] = soffitLength; //set the soffit length
+                        if (firstWallLength > lastWallLength) //if different lengths
+                            wallSoffitArray[existingWallCount + 1] += (firstWallLength - lastWallLength); //add the difference to the appropriate wall
+                        else if (lastWallLength > firstWallLength) //if different lengths
+                            wallSoffitArray[coordList.length - 1] += (lastWallLength - firstWallLength); //add the difference to the appropriate wall
+                    }
+                    else //if they are not vertical perpendicular
+                        wallSoffitArray[i] = 0; //no soffit
+                }
+                else //if not first or last proposed wall
+                    wallSoffitArray[i] = 0; //no soffit
             }
 
 
