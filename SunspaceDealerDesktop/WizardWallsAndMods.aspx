@@ -501,6 +501,8 @@
                             var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "Cabana");
                             var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "Cabana");
                             var doorBoxHeader = document.getElementById("MainContent_rowDoorBoxHeader" + wallCount + "Cabana");
+                            var doorTransom = document.getElementById("MainContent_rowDoorTransom" + wallCount + "Cabana");
+                            var doorTransomVinyl = document.getElementById("MainContent_rowDoorTransomVinylTypes" + wallCount + "Cabana");
 
                             var doorV4TVinylTint = document.getElementById("MainContent_rowDoorVinylTint" + wallCount + "Cabana")
                             var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallCount + "Cabana");
@@ -513,17 +515,21 @@
                             var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Cabana");
 
                             var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Cabana").options[document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Cabana").selectedIndex].value;
+                            var doorLHHChecked = document.getElementById("MainContent_radDoorLHH" + wallCount + "Cabana");
+                            var doorSwingInChecked = document.getElementById("MainContent_radDoorSwingIn" + wallCount + "Cabana");
 
                             //General
                             doorTitle.style.display = "inherit";
                             doorStyle.style.display = "inherit";
+                            doorV4TVinylTint.style.display = "inherit";
                             doorColor.style.display = "inherit";
                             doorHeight.style.display = "inherit";
                             doorWidth.style.display = "inherit";
                             doorBoxHeader.style.display = "inherit";
+                            doorTransom.style.display = "inherit";
+                            doorTransomVinyl.style.display = "inherit";
 
-                            //Cabana Specific
-                            doorV4TVinylTint.style.display = "inherit";
+                            //Cabana Specific                            
                             doorGlassTint.style.display = "inherit";
                             doorLHH.style.display = "inherit";
                             doorRHH.style.display = "inherit";
@@ -532,10 +538,14 @@
                             doorHardware.style.display = "inherit";
                             doorNumberOfVents.style.display = "inherit";
                             doorPosition.style.display = "inherit";
-
+                            
                             if (doorPositionCustom == "cPosition") {
                                 customDimension("Cabana", "Position");
                             }
+
+                            //Radio button defaults
+                            doorLHHChecked.setAttribute("checked", "checked");
+                            doorSwingInChecked.setAttribute("checked", "checked");
                         }
                         else if (document.getElementById('MainContent_radType' + wallCount + 'French').checked) {
 
@@ -557,6 +567,8 @@
                             var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "French");
 
                             var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallCount + "French").options[document.getElementById("MainContent_ddlDoorPosition" + wallCount + "French").selectedIndex].value;
+                            var doorOperatorLHHChecked = document.getElementById("MainContent_radDoorOperatorLHH" + wallCount + "French");
+                            var doorSwingInChecked = document.getElementById("MainContent_radDoorSwingIn" + wallCount + "French");
 
                             //General
                             doorTitle.style.display = "inherit";
@@ -579,6 +591,10 @@
                             if (doorPositionCustom == "cPosition") {
                                 customDimension("French", "Position");
                             }
+
+                            //Radio button defaults
+                            doorOperatorLHHChecked.setAttribute("checked", "checked");
+                            doorSwingInChecked.setAttribute("checked", "checked");
                         }
                         else if (document.getElementById('MainContent_radType' + wallCount + 'Patio').checked) {
 
@@ -596,6 +612,7 @@
                             var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Patio");
 
                             var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Patio").options[document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Patio").selectedIndex].value;
+                            var doorOperatorLHHChecked = document.getElementById("MainContent_radDoorOperatorLHH" + wallCount + "Patio");
 
                             //General
                             doorTitle.style.display = "inherit";
@@ -615,6 +632,9 @@
                             if (doorPositionCustom == "cPosition") {
                                 customDimension("Patio", "Position");
                             }
+
+                            //Radio button defaults
+                            doorOperatorLHHChecked.setAttribute("checked", "checked");
                         }
                         else if (document.getElementById('MainContent_radType' + wallCount + 'NoDoor').checked) {
 
@@ -670,25 +690,45 @@
         *Door style function is triggered when the user selects Vertical Four Track, 
         *vinyl tint becomes displayed, since Vertical Four Track is the only door style
         *that has vinyl tint options
-        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        *@param type - holds the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        *@param wallNumber - holds the number of the current wall
         */
-        function doorStyle(type) {
-            for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
+        function doorStyle(type, wallNumber) {
+            var heightDDL = document.getElementById('MainContent_ddlDoorStyle' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorStyle' + wallNumber + type).selectedIndex].value;
 
-                if (coordList[wallCount - 1][4] === "P") {
+            if (heightDDL == 'v4TCabana') {
+                document.getElementById('MainContent_rowDoorVinylTint' + wallNumber + type).style.display = 'inherit';
+                document.getElementById('MainContent_rowDoorNumberOfVents' + wallNumber + type).style.display = 'inherit';
+            }
+            else {
+                document.getElementById('MainContent_rowDoorVinylTint' + wallNumber + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorNumberOfVents' + wallNumber + type).style.display = 'none';
+            }
+        }
 
-                    if (document.getElementById('MainContent_radWall' + wallCount).checked) {
+        /**
+        *doorStyle
+        *Door style function is triggered when the user selects Vertical Four Track, 
+        *vinyl tint becomes displayed, since Vertical Four Track is the only door style
+        *that has vinyl tint options
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        *@param wallNumber - holds the number of the current wall
+        */
+        function doorTransomStyle(type, wallNumber) {
 
-                        var HeightDDL = document.getElementById('MainContent_ddlDoorStyle' + wallCount + type).options[document.getElementById('MainContent_ddlDoorStyle' + wallCount + type).selectedIndex].value;
+            var transomType = document.getElementById('MainContent_ddlDoorTransom' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorTransom' + wallNumber + type).selectedIndex].value;
 
-                        if (document.getElementById('MainContent_radType' + wallCount + type).checked && HeightDDL == 'v4TCabana') {
-                            document.getElementById('MainContent_rowDoorVinylTint' + wallCount + type).style.display = 'inherit';
-                        }
-                        else {
-                            document.getElementById('MainContent_rowDoorVinylTint' + wallCount + type).style.display = 'none';
-                        }
-                    }
-                }
+            if (transomType == 'vinyl') {
+                document.getElementById('MainContent_rowDoorTransomVinylTypes' + wallNumber + type).style.display = 'inherit';
+                document.getElementById('MainContent_rowDoorTransomGlassTypes' + wallNumber + type).style.display = 'none';
+            }
+            else if (transomType == 'glass') {
+                document.getElementById('MainContent_rowDoorTransomVinylTypes' + wallNumber + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorTransomGlassTypes' + wallNumber + type).style.display = 'inherit';
+            }
+            else {
+                document.getElementById('MainContent_rowDoorTransomVinylTypes' + wallNumber + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorTransomGlassTypes' + wallNumber + type).style.display = 'none';
             }
         }
 
@@ -779,7 +819,7 @@
                             doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', true, wallCount));
                         }
                         else {
-                            doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false, wallCount));
+                            doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false, wallCount));                            
                         }
 
                         doors = new Array();
@@ -796,7 +836,9 @@
                         }
                         else if (positionDropDown === "cPosition") {
                             if (!isNaN(doorCustomPosition)) {
+                                //alert("Custom " + doorCustomPosition);
                                 doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": doorCustomPosition };
+                                alert("Custom distance " + doors[doors.length-1].distanceFromLeft);
                             }
                             else {
                                 isValid = false;
@@ -819,9 +861,11 @@
                                 }
                             }
 
-                            if (checkDoor(usuableSpace, dropDownName, positionDropDown, doors, spacesRemaining).isValid) {
+                            var doorsChecked = checkDoor(usuableSpace, dropDownName, positionDropDown, doors, spacesRemaining);
+
+                            if (doorsChecked.isValid) {
                                 //Calling functions get space left in the wall, and other to update individual spaces within a wall
-                                sortedDoors = checkDoor(usuableSpace, dropDownName, positionDropDown, doors, spacesRemaining).sortedDoors;
+                                sortedDoors = doorsChecked.sortedDoors;
                                 spacesRemaining = availableSpacesArrayUpdate(usuableSpace, sortedDoors);
                                 var space = totalSpaceLeftInWall(usuableSpace, sortedDoors);
 
@@ -867,11 +911,11 @@
         *@param wallSortedDoors - holds an array of sorted doors left to right
         *@param pagerSection - DOM variable to know where to append the controls
         *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
-        *@param wallCount - holds an integer to know which wall is currently being affected
+        *@param wallNumber - holds an integer to know which wall is currently being affected
         */
-        function doorPagerUpdate(wallSortedDoors, pagerSection, type, wallCount) {
+        function doorPagerUpdate(wallSortedDoors, pagerSection, type, wallNumber) {
 
-            $("#MainContent_lblQuestion3DoorsInfoWallAnswer" + wallCount).empty();
+            $("#MainContent_lblQuestion3DoorsInfoWallAnswer" + wallNumber).empty();
 
             if (wallSortedDoors.length > 0) {
 
@@ -879,7 +923,7 @@
                     //Rename controls and their attributes
                     /****DELETE BUTTON CREATION ADDITION****/
                     var deleteButton = document.createElement("input");
-                    deleteButton.id = "btnDeleteDoor" + childControls + type + "Wall" + wallCount;
+                    deleteButton.id = "btnDeleteDoor" + childControls + type + "Wall" + wallNumber;
                     deleteButton.setAttribute("type", "button");
                     deleteButton.setAttribute("value", "X");
                     deleteButton.setAttribute("onclick", "deleteDoor(\"" + childControls + "\", \"" + type + "\")");
@@ -887,13 +931,13 @@
                     deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
 
                     var labelForButton = document.createElement("label");
-                    labelForButton.id = "lblDeleteDoor" + childControls + type + "Wall" + wallCount;
-                    labelForButton.setAttribute("for", "btnDeleteDoor" + childControls + type + "Wall" + wallCount);
+                    labelForButton.id = "lblDeleteDoor" + childControls + type + "Wall" + wallNumber;
+                    labelForButton.setAttribute("for", "btnDeleteDoor" + childControls + type + "Wall" + wallNumber);
                     labelForButton.innerHTML = "Door " + childControls + " " + type + " added";
 
                     var labelBreakLineForButton = document.createElement("label");
-                    labelBreakLineForButton.id = "lblDeleteDoorBR" + childControls + type + "Wall" + wallCount;
-                    labelForButton.setAttribute("for", "btnDeleteDoor" + childControls + type + "Wall" + wallCount);
+                    labelBreakLineForButton.id = "lblDeleteDoorBR" + childControls + type + "Wall" + wallNumber;
+                    labelForButton.setAttribute("for", "btnDeleteDoor" + childControls + type + "Wall" + wallNumber);
                     labelBreakLineForButton.innerHTML = "<br/>";
                     pagerSection.appendChild(labelForButton);
                     pagerSection.appendChild(deleteButton);
@@ -902,8 +946,8 @@
 
             }
             else {
-                document.getElementById("wall" + wallCount + "SpaceRemaining").style.display = "none";
-                document.getElementById("wall" + wallCount + "DoorsAdded").style.display = "none";
+                document.getElementById("wall" + wallNumber + "SpaceRemaining").style.display = "none";
+                document.getElementById("wall" + wallNumber + "DoorsAdded").style.display = "none";
             }
         }
         
@@ -981,7 +1025,9 @@
 
             var sortedDoors = new Array();
 
-            // Sort left to right
+            //TYPE FUNCTION TO BE MADE: FUNCTONALITY
+            //AREA: SORT LEFT TO RIGHT
+            //NECESSARY VARIABLES: doors[], sortedDoors[]
             if (doors.length > 0) {
                 sortedDoors[0] = { "index": 0, "doorWidth": doors[0].doorWidth, "distanceFromLeft": doors[0].distanceFromLeft };
             }
@@ -997,8 +1043,10 @@
                     sortedDoors[sortedDoors.length] = { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft };
                 }
             }
+            //ENDAREA: SORT LEFT TO RIGHT
 
-            // Check overlap
+            //TYPE FUNCTION TO BE MADE: VALIDATION
+            //AREA: CHECK OVERLAP AND OUT OF WALL BOUNDS
             for (var i = 0; i < sortedDoors.length - 1; i++) {
                 if (sortedDoors[i].distanceFromLeft + sortedDoors[i].doorWidth > sortedDoors[i + 1].distanceFromLeft) {
                     alert("Doors " + sortedDoors[i].index + " and " + (sortedDoors[i].index + 1) + " overlap");
@@ -1006,9 +1054,23 @@
                     sortedDoors.splice(sortedDoors[i].index, 1);
                     isValid = false;
                 }
+                else if (sortedDoors[i + 1].distanceFromLeft >= usuableLength) {
+                    alert("Door " + (sortedDoors[i].index + 1) + " is outside of the wall length");
+                    isValid = false;
+                }
+                else if (sortedDoors[i + 1].distanceFromLeft < 0) {
+                    alert("Door " + (sortedDoors[i].index + 1) + "'s position is smaller than zero");
+                    isValid = false;
+                }
+                //if (sortedDoors.length == 4 && i == 3) {
+                //    alert("Distance check " + sortedDoors[sortedDoors.length - 1].distanceFromLeft);
+                //}
             }
+            //ENDAREA: CHECK OVERLAP AND OUT OF WALL BOUNDS
 
-            //Check for possible door width in spaces, only if spacesRemaining is not null
+            //TYPE FUNCTION TO BE MADE: VALIDATION
+            //AREA: CHECK FOR POSSIBLE DOOR WIDTH IN SPACES, ONLY IF spacesRemaining IS NOT NULL
+            //NECESSARY VARIABLES: spacesRemaining[], doors[]
             if (spacesRemaining != null) {
                 var goodSpace = 0;
                 //Loop through all spaces in spacesRemaining and check it against the door width
@@ -1025,10 +1087,13 @@
                     alert("This door is too small to fit in any available spaces");
                 }
             }
+            //ENDAREA: CHECK FOR POSSIBLE DOOR WIDTH IN SPACES, ONLY IF spacesRemaining IS NOT NULL
 
-            //Is valid disable appropriate dropdown item and change selected index
+            
             if (isValid) {
-
+                //TYPE FUNCTION TO BE MADE: FUNCTIONALITY
+                //AREA: CHANGE DROPDOWNS BASED ON SELECTED INDEX
+                //NECESSARY VARIABLES: dropDownName, dropDownValue
                 for (var typeCount = 1; typeCount <= 4; typeCount++) {
 
                     var title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
@@ -1048,7 +1113,7 @@
                         customDimension(title, "Position");
                     }
                 }
-
+                //ENDAREA: CHANGE DROPDOWNS BASED ON SELECTED INDEX
             }
             return {
                 "isValid": isValid,

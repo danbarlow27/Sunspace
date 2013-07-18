@@ -356,6 +356,8 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
+            //REGIONS WITHIN THIS REGION TO BE RENAMED APPROPRIATELY
+
             #region Loop to display door types as radio buttons
 
             //For loop to get through all the possible door types: Cabana, French, Patio, Opening Only (No Door)
@@ -433,11 +435,11 @@ namespace SunspaceDealerDesktop
 
                     Label doorStyleLBL = new Label();
                     doorStyleLBL.ID = "lblDoorStyle" + i + title;
-                    doorStyleLBL.Text = "Door Style";
+                    doorStyleLBL.Text = "Style";
 
                     DropDownList doorStyleDDL = new DropDownList();
                     doorStyleDDL.ID = "ddlDoorStyle" + i + title;
-                    doorStyleDDL.Attributes.Add("onchange", "doorStyle('" + title + "')");
+                    doorStyleDDL.Attributes.Add("onchange", "doorStyle('" + title + "','" + i + "')");
                     ListItem fullScreen = new ListItem("Full Screen", "fullScreen");
                     ListItem v4TCabana = new ListItem("Vertical Four Track", "v4TCabana");
                     ListItem fullView = new ListItem("Full View", "fullView");
@@ -489,7 +491,7 @@ namespace SunspaceDealerDesktop
 
                     Label doorVinylTintLBL = new Label();
                     doorVinylTintLBL.ID = "lblDoorVinylTint" + i + title;
-                    doorVinylTintLBL.Text = "Door Vinyl Tint:";
+                    doorVinylTintLBL.Text = "V4T Vinyl Tint:";
 
                     DropDownList doorVinylTintDDL = new DropDownList();
                     doorVinylTintDDL.ID = "ddlVinylTint" + i + title;
@@ -508,6 +510,110 @@ namespace SunspaceDealerDesktop
 
                     #endregion
 
+                    #region Table:Twelfth Row Door V4T Number Of Vents (tblDoorDetails)
+
+                    TableRow doorNumberOfVentsRow = new TableRow();
+                    doorNumberOfVentsRow.ID = "rowDoorNumberOfVents" + i + title;
+                    doorNumberOfVentsRow.Attributes.Add("style", "display:none;");
+                    TableCell doorNumberOfVentsLBLCell = new TableCell();
+                    TableCell doorNumberOfVentsDDLCell = new TableCell();
+
+                    Label doorNumberOfVentsLBL = new Label();
+                    doorNumberOfVentsLBL.ID = "lblNumberOfVents" + i + title;
+                    doorNumberOfVentsLBL.Text = "V4T Number Of Vents:";
+
+                    DropDownList doorNumberOfVentsDDL = new DropDownList();
+                    doorNumberOfVentsDDL.ID = "ddlNumberOfVents" + i + title;
+                    ListItem two = new ListItem("2", "2");
+                    ListItem three = new ListItem("3", "3");
+                    ListItem four = new ListItem("4", "4");
+                    doorNumberOfVentsDDL.Items.Add(two);
+                    doorNumberOfVentsDDL.Items.Add(three);
+                    doorNumberOfVentsDDL.Items.Add(four);
+
+                    doorNumberOfVentsLBL.AssociatedControlID = "ddlNumberOfVents" + i + title;
+
+                    #endregion
+
+                    #region Table:# Row Door Transom (tblDoorDetails)
+                    
+                    TableRow doorTransomRow = new TableRow();
+                    doorTransomRow.ID = "rowDoorTransom" + i + title;
+                    doorTransomRow.Attributes.Add("style", "display:none;");
+                    TableCell doorTransomLBLCell = new TableCell();
+                    TableCell doorTransomDDLCell = new TableCell();
+
+                    Label doorTransomLBL = new Label();
+                    doorTransomLBL.ID = "lblDoorTransom" + i + title;
+                    doorTransomLBL.Text = "Transom Type:";
+
+                    DropDownList doorTransomDDL = new DropDownList();
+                    doorTransomDDL.ID = "ddlDoorTransom" + i + title;
+                    doorTransomDDL.Attributes.Add("onchange", "doorTransomStyle('" + title + "','" + i +"')");
+                    ListItem transomVinyl = new ListItem("Vinyl", "vinyl");
+                    ListItem transomGlass = new ListItem("Glass", "glass");
+                    ListItem transomScreen = new ListItem("Screen", "screen");
+                    ListItem transomSolidWall = new ListItem("Solid Wall", "solidWall");
+
+                    doorTransomDDL.Items.Add(transomVinyl);
+                    
+                    if (currentModel == "M100")
+                        doorTransomDDL.Items.Add(transomScreen);
+                    else
+                        doorTransomDDL.Items.Add(transomGlass);
+
+                    doorTransomDDL.Items.Add(transomSolidWall);
+
+                    #endregion
+
+                    #region Table:# Row Door Transom Vinyl Types (tblDoorDetails)
+
+                    TableRow doorTransomVinylTypesRow = new TableRow();
+                    doorTransomVinylTypesRow.ID = "rowDoorTransomVinylTypes" + i + title;
+                    doorTransomVinylTypesRow.Attributes.Add("style", "display:none;");
+                    TableCell doorTransomVinylTypesLBLCell = new TableCell();
+                    TableCell doorTransomVinylTypesDDLCell = new TableCell();
+
+                    Label doorTransomVinylTypesLBL = new Label();
+                    doorTransomVinylTypesLBL.ID = "lblDoorTransomVinylTypes" + i + title;
+                    doorTransomVinylTypesLBL.Text = "Transom Vinyl Types:";
+
+                    DropDownList doorTransomVinylTypesDDL = new DropDownList();
+                    doorTransomVinylTypesDDL.ID = "ddlDoorTransomVinylTypes" + i + title;
+                    ListItem transomClearVinyl = new ListItem("Clear", "clear");
+                    ListItem transomSmokeGreyVinyl = new ListItem("Smoke Grey", "smokeGrey");
+                    ListItem transomDarkGreyVinyl = new ListItem("Dark Grey", "darkGrey");
+                    ListItem transomBronzeVinyl = new ListItem("Bronze", "bronze");
+                    ListItem transomMixedVinyl = new ListItem("Mixed", "mixed");
+                    doorTransomVinylTypesDDL.Items.Add(transomClearVinyl);
+                    doorTransomVinylTypesDDL.Items.Add(transomSmokeGreyVinyl);
+                    doorTransomVinylTypesDDL.Items.Add(transomDarkGreyVinyl);
+                    doorTransomVinylTypesDDL.Items.Add(transomBronzeVinyl);
+                    doorTransomVinylTypesDDL.Items.Add(transomMixedVinyl);
+
+                    #endregion
+
+                    #region Table:# Row Door Transom Glass Types (tblDoorDetails)
+
+                    TableRow doorTransomGlassTypesRow = new TableRow();
+                    doorTransomGlassTypesRow.ID = "rowDoorTransomGlassTypes" + i + title;
+                    doorTransomGlassTypesRow.Attributes.Add("style", "display:none;");
+                    TableCell doorTransomGlassTypesLBLCell = new TableCell();
+                    TableCell doorTransomGlassTypesDDLCell = new TableCell();
+
+                    Label doorTransomGlassTypesLBL = new Label();
+                    doorTransomGlassTypesLBL.ID = "lblDoorTransomGlassTypes" + i + title;
+                    doorTransomGlassTypesLBL.Text = "Transom Glass Types:";
+
+                    DropDownList doorTransomGlassTypesDDL = new DropDownList();
+                    doorTransomGlassTypesDDL.ID = "ddlDoorTransomGlassTypes" + i + title;
+                    ListItem transomGrey = new ListItem("Grey", "grey");
+                    ListItem transomBronze = new ListItem("Bronze", "bronze");
+                    doorTransomGlassTypesDDL.Items.Add(transomGrey);
+                    doorTransomGlassTypesDDL.Items.Add(transomBronze);
+
+                    #endregion
+
                     #region Table:Third Row Color of Door (tblDoorDetails)
 
                     TableRow colorOfDoorRow = new TableRow();
@@ -518,7 +624,7 @@ namespace SunspaceDealerDesktop
 
                     Label colorOfDoorLBL = new Label();
                     colorOfDoorLBL.ID = "lblDoorColor" + i + title;
-                    colorOfDoorLBL.Text = "Door Color:";
+                    colorOfDoorLBL.Text = "Color:";
 
                     DropDownList colorOfDoorDDL = new DropDownList();
                     colorOfDoorDDL.ID = "ddlDoorColor" + i + title;
@@ -708,7 +814,7 @@ namespace SunspaceDealerDesktop
 
                     RadioButton doorOperatorLHHRad = new RadioButton();
                     doorOperatorLHHRad.ID = "radDoorOperatorLHH" + i + title;
-                    doorOperatorLHHRad.GroupName = "PrimaryOperator";
+                    doorOperatorLHHRad.GroupName = "PrimaryOperator" + i + title;
 
                     doorOperatorLHHLBLRad.AssociatedControlID = "radDoorOperatorLHH" + i + title;
                     doorOperatorLHHLBL.AssociatedControlID = "radDoorOperatorLHH" + i + title;
@@ -732,7 +838,7 @@ namespace SunspaceDealerDesktop
 
                     RadioButton doorOperatorRHHRad = new RadioButton();
                     doorOperatorRHHRad.ID = "radDoorOperatorRHH" + i + title;
-                    doorOperatorRHHRad.GroupName = "PrimaryOperator";
+                    doorOperatorRHHRad.GroupName = "PrimaryOperator" + i + title;
 
                     doorOperatorRHHLBLRad.AssociatedControlID = "radDoorOperatorRHH" + i + title;
                     doorOperatorRHHLBL.AssociatedControlID = "radDoorOperatorRHH" + i + title;
@@ -765,32 +871,7 @@ namespace SunspaceDealerDesktop
                     doorBoxHeaderLBL.AssociatedControlID = "ddlDoorBoxHeader" + i + title;
 
                     #endregion
-
-                    #region Table:Twelfth Row Door Number Of Vents (tblDoorDetails)
-
-                    TableRow doorNumberOfVentsRow = new TableRow();
-                    doorNumberOfVentsRow.ID = "rowDoorNumberOfVents" + i + title;
-                    doorNumberOfVentsRow.Attributes.Add("style", "display:none;");
-                    TableCell doorNumberOfVentsLBLCell = new TableCell();
-                    TableCell doorNumberOfVentsDDLCell = new TableCell();
-
-                    Label doorNumberOfVentsLBL = new Label();
-                    doorNumberOfVentsLBL.ID = "lblNumberOfVents" + i + title;
-                    doorNumberOfVentsLBL.Text = "Number Of Vents:";
-
-                    DropDownList doorNumberOfVentsDDL = new DropDownList();
-                    doorNumberOfVentsDDL.ID = "ddlNumberOfVents" + i + title;
-                    ListItem two = new ListItem("2", "2");
-                    ListItem three = new ListItem("3", "3");
-                    ListItem four = new ListItem("4", "4");
-                    doorNumberOfVentsDDL.Items.Add(two);
-                    doorNumberOfVentsDDL.Items.Add(three);
-                    doorNumberOfVentsDDL.Items.Add(four);
-
-                    doorNumberOfVentsLBL.AssociatedControlID = "ddlNumberOfVents" + i + title;
-
-                    #endregion
-
+                    
                     #region Table:Thirteenth Row Door Glass Tint (tblDoorDetails)
 
                     TableRow doorGlassTintRow = new TableRow();
@@ -837,7 +918,7 @@ namespace SunspaceDealerDesktop
 
                     RadioButton doorLHHRad = new RadioButton();
                     doorLHHRad.ID = "radDoorLHH" + i + title;
-                    doorLHHRad.GroupName = "DoorHinge";
+                    doorLHHRad.GroupName = "DoorHinge" + i + title;
 
                     doorLHHLBLRad.AssociatedControlID = "radDoorLHH" + i + title;
                     doorLHHLBL.AssociatedControlID = "radDoorLHH" + i + title;
@@ -861,7 +942,7 @@ namespace SunspaceDealerDesktop
 
                     RadioButton doorRHHRad = new RadioButton();
                     doorRHHRad.ID = "radDoorRHH" + i + title;
-                    doorRHHRad.GroupName = "DoorHinge";
+                    doorRHHRad.GroupName = "DoorHinge" + i + title;
 
                     doorRHHLBLRad.AssociatedControlID = "radDoorRHH" + i + title;
                     doorRHHLBL.AssociatedControlID = "radDoorRHH" + i + title;
@@ -943,7 +1024,7 @@ namespace SunspaceDealerDesktop
 
                     RadioButton doorSwingInRAD = new RadioButton();
                     doorSwingInRAD.ID = "radDoorSwingIn" + i + title;
-                    doorSwingInRAD.GroupName = "SwingInOut";
+                    doorSwingInRAD.GroupName = "SwingInOut" + i + title;
 
                     doorSwingInLBLRad.AssociatedControlID = "radDoorSwingIn" + i + title;
                     doorSwingInLBL.AssociatedControlID = "radDoorSwingIn" + i + title;
@@ -967,7 +1048,7 @@ namespace SunspaceDealerDesktop
 
                     RadioButton doorSwingOutRAD = new RadioButton();
                     doorSwingOutRAD.ID = "radDoorSwingOut" + i + title;
-                    doorSwingOutRAD.GroupName = "SwingInOut";
+                    doorSwingOutRAD.GroupName = "SwingInOut" + i + title;
 
                     doorSwingOutLBLRad.AssociatedControlID = "radDoorSwingOut" + i + title;
                     doorSwingOutLBL.AssociatedControlID = "radDoorSwingOut" + i + title;
@@ -1082,6 +1163,54 @@ namespace SunspaceDealerDesktop
 
                     #endregion
 
+                    #region Table:Twelfth Row Door V4T Number Of Vents Added To Table (tblDoorDetails)
+
+                    doorNumberOfVentsLBLCell.Controls.Add(doorNumberOfVentsLBL);
+                    doorNumberOfVentsDDLCell.Controls.Add(doorNumberOfVentsDDL);
+
+                    tblDoorDetails.Rows.Add(doorNumberOfVentsRow);
+
+                    doorNumberOfVentsRow.Cells.Add(doorNumberOfVentsLBLCell);
+                    doorNumberOfVentsRow.Cells.Add(doorNumberOfVentsDDLCell);
+
+                    #endregion
+
+                    #region Table:# Row Door Transom
+
+                    doorTransomLBLCell.Controls.Add(doorTransomLBL);
+                    doorTransomDDLCell.Controls.Add(doorTransomDDL);
+
+                    tblDoorDetails.Rows.Add(doorTransomRow);
+
+                    doorTransomRow.Cells.Add(doorTransomLBLCell);
+                    doorTransomRow.Cells.Add(doorTransomDDLCell);
+
+                    #endregion
+
+                    #region Table:# Row Door Transom Vinyl Types
+
+                    doorTransomVinylTypesLBLCell.Controls.Add(doorTransomVinylTypesLBL);
+                    doorTransomVinylTypesDDLCell.Controls.Add(doorTransomVinylTypesDDL);
+
+                    tblDoorDetails.Rows.Add(doorTransomVinylTypesRow);
+
+                    doorTransomVinylTypesRow.Cells.Add(doorTransomVinylTypesLBLCell);
+                    doorTransomVinylTypesRow.Cells.Add(doorTransomVinylTypesDDLCell);
+
+                    #endregion
+
+                    #region Table:# Row Door Transom Glass Types
+
+                    doorTransomGlassTypesLBLCell.Controls.Add(doorTransomGlassTypesLBL);
+                    doorTransomGlassTypesDDLCell.Controls.Add(doorTransomGlassTypesDDL);
+
+                    tblDoorDetails.Rows.Add(doorTransomGlassTypesRow);
+
+                    doorTransomGlassTypesRow.Cells.Add(doorTransomGlassTypesLBLCell);
+                    doorTransomGlassTypesRow.Cells.Add(doorTransomGlassTypesDDLCell);
+
+                    #endregion
+
                     #region Table:Third Row Color of Door Added to Table (tblDoorDetails)
 
                     colorOfDoorLBLCell.Controls.Add(colorOfDoorLBL);
@@ -1183,18 +1312,6 @@ namespace SunspaceDealerDesktop
 
                     doorBoxHeaderRow.Cells.Add(doorBoxHeaderLBLCell);
                     doorBoxHeaderRow.Cells.Add(doorBoxHeaderDDLCell);
-
-                    #endregion
-
-                    #region Table:Twelfth Row Door Number Of Vents Added To Table (tblDoorDetails)
-
-                    doorNumberOfVentsLBLCell.Controls.Add(doorNumberOfVentsLBL);
-                    doorNumberOfVentsDDLCell.Controls.Add(doorNumberOfVentsDDL);
-
-                    tblDoorDetails.Rows.Add(doorNumberOfVentsRow);
-
-                    doorNumberOfVentsRow.Cells.Add(doorNumberOfVentsLBLCell);
-                    doorNumberOfVentsRow.Cells.Add(doorNumberOfVentsDDLCell);
 
                     #endregion
 
