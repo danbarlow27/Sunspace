@@ -766,7 +766,7 @@
                         var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'Length').value);                            
                         var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'LeftFiller').value);
                         var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'RightFiller').value);
-                        var usuableSpace = wallLength - leftFiller - rightFiller;
+                        var usableSpace = wallLength - leftFiller - rightFiller;
                         var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorCustomPosition' + wallCount + type).value
                             + document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).selectedIndex].value);
                         var positionDropDown = document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).selectedIndex].value;
@@ -789,10 +789,10 @@
                             doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": 0 };
                         }
                         else if (positionDropDown === "right") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace - doorWidth };
+                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usableSpace - doorWidth };
                         }
                         else if (positionDropDown === "center") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace / 2 - doorWidth / 2 };
+                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usableSpace / 2 - doorWidth / 2 };
                         }
                         else if (positionDropDown === "cPosition") {
                             if (!isNaN(doorCustomPosition)) {
@@ -819,11 +819,11 @@
                                 }
                             }
 
-                            if (checkDoor(usuableSpace, dropDownName, positionDropDown, doors, spacesRemaining).isValid) {
+                            if (checkDoor(usableSpace, dropDownName, positionDropDown, doors, spacesRemaining).isValid) {
                                 //Calling functions get space left in the wall, and other to update individual spaces within a wall
-                                sortedDoors = checkDoor(usuableSpace, dropDownName, positionDropDown, doors, spacesRemaining).sortedDoors;
-                                spacesRemaining = availableSpacesArrayUpdate(usuableSpace, sortedDoors);
-                                var space = totalSpaceLeftInWall(usuableSpace, sortedDoors);
+                                sortedDoors = checkDoor(usableSpace, dropDownName, positionDropDown, doors, spacesRemaining).sortedDoors;
+                                spacesRemaining = availableSpacesArrayUpdate(usableSpace, sortedDoors);
+                                var space = totalSpaceLeftInWall(usableSpace, sortedDoors);
 
                                 $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallCount).text(space);
                                 document.getElementById("pagerThree").style.display = "inline";
@@ -965,17 +965,17 @@
         /**
         *checkDoor
         *This function is used to perform validation and array reordering
-        *@param usuableLength - holds the length of the wall which mods can be put into
+        *@param usableLength - holds the length of the wall which mods can be put into
         *@param dropDownName - holds the name of the dropDown and remove the appropriate item based on inserted items
         *@param dropDownValue - holds the preset positions to place a door in a wall (i.e. Left, Center, Right, and Custom)
         *@param spacesRemaining - holds an array of spaces to validate new doors
         *@return isValid - return boolean based on validation; no overlaps, no doors in too small place, etc...
         *@return sortedDoors - return an array of door objects in proper order
         *
-        **********NEEDS MORE VALIDATION FOR DOORS CUSTOM DISTANCE (distanceFromLeft > usuableLength) || (distanceFromLeft < 0)
+        **********NEEDS MORE VALIDATION FOR DOORS CUSTOM DISTANCE (distanceFromLeft > usableLength) || (distanceFromLeft < 0)
         *
         */
-        function checkDoor(usuableLength, dropDownName, dropDownValue, doors, spacesRemaining) {
+        function checkDoor(usableLength, dropDownName, dropDownValue, doors, spacesRemaining) {
 
             var isValid = true;
 
@@ -1059,15 +1059,15 @@
         /**
         *totalSpaceLeftInWall
         *This function performs calculations to find the total space left in a wall
-        *@param usuableLength - holds the length of the wall which mods can be put into
+        *@param usableLength - holds the length of the wall which mods can be put into
         *@param sortedDoors - holds a door array which are in proper order
         *@return totalSpace - returns the total space left on a specific wall
         *
         *MAY NEED TO PASS sortedDoors ARRAY ONCE SLIDE 3 COMPLETE
         */
-        function totalSpaceLeftInWall(usuableLength, sortedDoors) {
+        function totalSpaceLeftInWall(usableLength, sortedDoors) {
 
-            var totalSpace = usuableLength;
+            var totalSpace = usableLength;
 
             for (var wallSpace = 0; wallSpace < sortedDoors.length; wallSpace++)
                 totalSpace -= sortedDoors[wallSpace].doorWidth;
