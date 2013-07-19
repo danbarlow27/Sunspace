@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace SunspaceDealerDesktop
 {
@@ -219,8 +221,8 @@ namespace SunspaceDealerDesktop
             //screen tints
             ddl100DoorSwing.Items.Add(new ListItem("In", "In"));
             ddl100DoorSwing.Items.Add(new ListItem("Out", "Out"));
-            ddl100DoorHinge.Items.Add(new ListItem("Left", "Left"));
-            ddl100DoorHinge.Items.Add(new ListItem("Right", "Right"));
+            ddl100DoorHinge.Items.Add(new ListItem("L", "L"));
+            ddl100DoorHinge.Items.Add(new ListItem("R", "R"));
             #endregion
 
             #region 200
@@ -255,8 +257,8 @@ namespace SunspaceDealerDesktop
 
             ddl200DoorSwing.Items.Add(new ListItem("In", "In"));
             ddl200DoorSwing.Items.Add(new ListItem("Out", "Out"));
-            ddl200DoorHinge.Items.Add(new ListItem("Left", "Left"));
-            ddl200DoorHinge.Items.Add(new ListItem("Right", "Right"));
+            ddl100DoorHinge.Items.Add(new ListItem("L", "L"));
+            ddl100DoorHinge.Items.Add(new ListItem("R", "R"));
             #endregion
 
             #region 300
@@ -291,8 +293,8 @@ namespace SunspaceDealerDesktop
 
             ddl300DoorSwing.Items.Add(new ListItem("In", "In"));
             ddl300DoorSwing.Items.Add(new ListItem("Out", "Out"));
-            ddl300DoorHinge.Items.Add(new ListItem("Left", "Left"));
-            ddl300DoorHinge.Items.Add(new ListItem("Right", "Right"));
+            ddl100DoorHinge.Items.Add(new ListItem("L", "L"));
+            ddl100DoorHinge.Items.Add(new ListItem("R", "R"));
             #endregion
 
             #region 400
@@ -327,8 +329,8 @@ namespace SunspaceDealerDesktop
 
             ddl400DoorSwing.Items.Add(new ListItem("In", "In"));
             ddl400DoorSwing.Items.Add(new ListItem("Out", "Out"));
-            ddl400DoorHinge.Items.Add(new ListItem("Left", "Left"));
-            ddl400DoorHinge.Items.Add(new ListItem("Right", "Right"));
+            ddl100DoorHinge.Items.Add(new ListItem("L", "L"));
+            ddl100DoorHinge.Items.Add(new ListItem("R", "R"));
             #endregion
             #endregion
 
@@ -560,7 +562,6 @@ namespace SunspaceDealerDesktop
             #endregion
             #endregion
 
-            //No floor db yet
             #region Floor Options
             #region 100
             for (int i = 0; i < Constants.FLOOR_THICKNESSES.Count(); i++)
@@ -713,10 +714,142 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #endregion
+
+            #region Temp Textbox Fills
+            txt100DefaultFiller.Text = "20";
+            txt100KneewallHeight.Text = "20";
+            txt100Markup.Text = "20";
+            txt100TransomHeight.Text = "20";
+            txt200DefaultFiller.Text = "20";
+            txt200KneewallHeight.Text = "20";
+            txt200Markup.Text = "20";
+            txt200TransomHeight.Text = "20";
+            txt300DefaultFiller.Text = "20";
+            txt300KneewallHeight.Text = "20";
+            txt300Markup.Text = "20";
+            txt300TransomHeight.Text = "20";
+            txt400DefaultFiller.Text = "20";
+            txt400KneewallHeight.Text = "20";
+            txt400Markup.Text = "20";
+            txt400TransomHeight.Text = "20";
+            txtCompanyNameInput.Text = "20";
+            #endregion
         }
 
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
+            using (SqlConnection aConnection = new SqlConnection(sdsUsers.ConnectionString))
+            {
+                aConnection.Open();
+                SqlCommand aCommand = aConnection.CreateCommand();
+                SqlTransaction aTransaction;
+
+                // Start a local transaction.
+                aTransaction = aConnection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection 
+                // to Command object for a pending local transaction
+                aCommand.Connection = aConnection;
+                aCommand.Transaction = aTransaction;
+
+                try
+                {                    
+                    //Now add user
+                    DateTime aDate = DateTime.Now;
+                    char isChecked= '0';
+                    if (chkCutPitch.Checked==true)
+                    {
+                        isChecked= '1';
+                    }
+                    aCommand.CommandText = "UPDATE preferences SET "
+                                            + "installation_type='" + ddlInstallationType.SelectedValue + "', "
+                                            + "model_type='" + ddlModelNumber.SelectedValue + "', "
+                                            + "layout='" + "Preset 1" + "', "
+                                            + "cut_pitch=" + isChecked + " "
+                                            + "WHERE dealer_id=" + Convert.ToInt32(Session["dealer_id"]);
+                    aCommand.ExecuteNonQuery();
+
+                    
+                    isChecked= '0';
+                    if (chk100FloorMetalBarrier.Checked==true)
+                    {
+                        isChecked= '1';
+                    }
+                    //An entrance into the model preferences table, one entry for each model type
+                    #region Model 100 preferences entry
+                    aCommand.CommandText = "UPDATE model_preferences SET "
+                                            + "default_filler=" + txt100DefaultFiller.Text + ", "
+                                            + "interior_panel_skin='" + ddl100InteriorPanelSkin.SelectedValue + "', "
+                                            + "exterior_panel_skin='" + ddl100ExteriorPanelSkin.SelectedValue + "', "
+                                            + "frame_colour='" + ddl100FrameColour.SelectedValue + "', "
+                                            + "door_type='" + ddl100DoorType.SelectedValue + "', "
+                                            + "door_style='" + ddl100DoorStyle.SelectedValue + "', "
+                                            + "door_swing='" + ddl100DoorSwing.SelectedValue + "', "
+                                            + "door_hinge='" + ddl100DoorHinge.SelectedValue + "', "
+                                            + "door_hardware='" + ddl100DoorHardware.SelectedValue + "', "
+                                            + "door_colour='" + ddl100DoorColour.SelectedValue + "', "
+                                            + "door_glass_tint='" + ddl100DoorGlassTint.SelectedValue + "', "
+                                            + "door_vinyl_tint='" + ddl100DoorVinylTint.SelectedValue + "', "
+                                            + "door_screen_type='" + ddl100DoorScreenType.SelectedValue + "', "
+                        //window
+                                            + "window_type='" + ddl100WindowType.SelectedValue + "', "
+                                            + "window_colour='" + "None" + "', "
+                                            + "window_glass_tint='" + ddl100WindowGlassTint.SelectedValue + "', "
+                                            + "window_vinyl_tint='" + ddl100WindowVinylTint.SelectedValue + "', "
+                                            + "window_screen_type='" + ddl100WindowScreenType.SelectedValue + "', "
+                        //sunshade
+                                            + "sunshade_valance_colour='" + ddl100SunshadeValanceColour.SelectedValue + "', "
+                                            + "sunshade_fabric_colour='" + ddl100SunshadeFabricColour.SelectedValue + "', "
+                                            + "sunshade_openness='" + ddl100SunshadeOpenness.SelectedValue + "', "
+                        //roof
+                                            + "roof_type='" + ddl100RoofType.SelectedValue + "', "
+                                            + "roof_interior_skin='" + ddl100RoofInteriorSkin.SelectedValue + "', "
+                                            + "roof_exterior_skin='" + ddl100ExteriorPanelSkin.SelectedValue + "', "
+                                            + "roof_thickness='" + ddl100RoofThickness.SelectedValue + "', "
+                        //floor
+                                            + "floor_thickness='" + ddl100FloorThickness.SelectedValue + "', "
+                                            + "floor_metal_barrier=" + isChecked + ", "
+                        //kneewall
+                                            + "kneewall_height=" + txt100KneewallHeight.Text + ", "
+                                            + "kneewall_type='" + ddl100KneewallType.SelectedValue + "', "
+                                            + "kneewall_glass_tint='" + ddl100KneewallGlassTint.SelectedValue + "', "
+                        //transom
+                                            + "transom_height=" + txt100TransomHeight.Text + ", "
+                                            + "transom_style='" + ddl100TransomType.SelectedValue + "', "
+                                            + "transom_glass_tint='" + ddl100TransomGlassTint.SelectedValue + "', "
+                                            + "transom_vinyl_tint='" + ddl100TransomVinylTint.SelectedValue + "', "
+                                            + "transom_screen_type='" + ddl100TransomScreenType.SelectedValue + "', "
+                                            + "markup=" + Convert.ToDecimal(txt100Markup.Text) / 100
+                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='100'";
+                    aCommand.ExecuteNonQuery();
+                    #endregion
+
+                   
+                    lblError.Text = "Successfully Added";
+
+                    // Attempt to commit the transaction.
+                    aTransaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    lblError.Text = "Commit Exception Type: " + ex.GetType();
+                    lblError.Text += "  Message: " + ex.Message;
+
+                    // Attempt to roll back the transaction. 
+                    try
+                    {
+                        aTransaction.Rollback();
+                    }
+                    catch (Exception ex2)
+                    {
+                        // This catch block will handle any errors that may have occurred 
+                        // on the server that would cause the rollback to fail, such as 
+                        // a closed connection.
+                        lblError.Text="Rollback Exception Type: " + ex2.GetType();
+                        lblError.Text += "  Message: " + ex2.Message;
+                    }
+                }
+            }
                 //colours
                 //door
                 //window

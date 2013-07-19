@@ -96,6 +96,7 @@
     <div class="slide-window no-sidebar">
 
         <div class="slide-wrapper">
+            <asp:Label ID="lblError" runat="server"></asp:Label>
 
             <div id="slide1" class="slide">
                 <%-- fancy --%>
@@ -138,17 +139,12 @@
                                                         <%-- Layout --%>
                                                         <asp:Label ID="lblLayoutDefault" runat="server" Text="Layout Default:"></asp:Label>
                                                         <asp:DropDownList ID="ddlLayoutDefault" runat="server"></asp:DropDownList>
-                                                    </li>
-                                                    <li>
-                                                        <%-- Markup --%>
-                                                        <asp:Label ID="lblMarkup" runat="server" Text="Markup:"></asp:Label>
-                                                        <asp:TextBox ID="txtMarkup" runat="server"></asp:TextBox>
-                                                    </li>                                                    
+                                                    </li>                                                  
                                                     <li>
                                                         <%-- Cut Pitch Option --%>
-                                                        <asp:CheckBox ID="chk100Cut" runat="server" />
-                                                        <asp:Label ID="lbl100CutCheck" AssociatedControlID="chk100Cut" runat="server"></asp:Label>
-                                                        <asp:Label ID="lbl100Cut" AssociatedControlID="chk100Cut" runat="server" Text="Cut Pitch"></asp:Label>                                                                
+                                                        <asp:CheckBox ID="chkCutPitch" runat="server" />
+                                                        <asp:Label ID="lblCutPitchCheck" AssociatedControlID="chkCutPitch" runat="server"></asp:Label>
+                                                        <asp:Label ID="lblCutPitch" AssociatedControlID="chkCutPitch" runat="server" Text="Cut Pitch"></asp:Label>                                                                
                                                     </li>
                                                 </ul>
                                             </div>
@@ -170,7 +166,12 @@
                                                                 <asp:Label ID="lbl100DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
                                                                 <asp:TextBox ID="txt100DefaultFiller" runat="server" CssClass="txtLengthInput"></asp:TextBox>
                                                                 <asp:DropDownList ID="ddl100DefaultFiller" runat="server"></asp:DropDownList>
-                                                            </li>
+                                                            </li>                                                            
+                                                            <li>
+                                                                <%-- Markup --%>
+                                                                <asp:Label ID="lbl100Markup" runat="server" Text="Markup:"></asp:Label>
+                                                                <asp:TextBox ID="txt100Markup" runat="server"></asp:TextBox>
+                                                            </li>  
                                                             <li>
                                                                 <%-- Wall Colours --%>
                                                                 <asp:RadioButton ID="rad100WallColours" GroupName="sunroomModel100" runat="server"></asp:RadioButton>
@@ -498,7 +499,12 @@
                                                                 <asp:Label ID="lbl200DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
                                                                 <asp:TextBox ID="txt200DefaultFiller" runat="server" CssClass="txtLengthInput"></asp:TextBox>
                                                                 <asp:DropDownList ID="ddl200DefaultFiller" runat="server"></asp:DropDownList>
-                                                            </li>
+                                                            </li>                                                            
+                                                            <li>
+                                                                <%-- Markup --%>
+                                                                <asp:Label ID="lbl200Markup" runat="server" Text="Markup:"></asp:Label>
+                                                                <asp:TextBox ID="txt200Markup" runat="server"></asp:TextBox>
+                                                            </li> 
                                                             <li>
                                                                 <%-- Wall Colours --%>
                                                                 <asp:RadioButton ID="rad200WallColours" GroupName="sunroomModel200" runat="server"></asp:RadioButton>
@@ -831,7 +837,12 @@
                                                                 <asp:Label ID="lbl300DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
                                                                 <asp:TextBox ID="txt300DefaultFiller" runat="server" CssClass="txtLengthInput"></asp:TextBox>
                                                                 <asp:DropDownList ID="ddl300DefaultFiller" runat="server"></asp:DropDownList>
-                                                            </li>
+                                                            </li>                                                            
+                                                            <li>
+                                                                <%-- Markup --%>
+                                                                <asp:Label ID="lbl300Markup" runat="server" Text="Markup:"></asp:Label>
+                                                                <asp:TextBox ID="txt300Markup" runat="server"></asp:TextBox>
+                                                            </li> 
                                                             <li>
                                                                 <%-- Wall Colours --%>
                                                                 <asp:RadioButton ID="rad300WallColours" GroupName="sunroomModel300" runat="server"></asp:RadioButton>
@@ -1164,7 +1175,12 @@
                                                                 <asp:Label ID="lbl400DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
                                                                 <asp:TextBox ID="txt400DefaultFiller" runat="server" CssClass="txtLengthInput"></asp:TextBox>
                                                                 <asp:DropDownList ID="ddl400DefaultFiller" runat="server"></asp:DropDownList>
-                                                            </li>
+                                                            </li>                                                            
+                                                            <li>
+                                                                <%-- Markup --%>
+                                                                <asp:Label ID="lbl400Markup" runat="server" Text="Markup:"></asp:Label>
+                                                                <asp:TextBox ID="txt400Markup" runat="server"></asp:TextBox>
+                                                            </li> 
                                                             <li>
                                                                 <%-- Wall Colours --%>
                                                                 <asp:RadioButton ID="rad400WallColours" GroupName="sunroomModel400" runat="server"></asp:RadioButton>
@@ -1534,6 +1550,7 @@
                 </ul>
                 
                 <asp:Button ID="btnUpdate" runat="server" Text="Update Preferences" CssClass="btnSubmit float-right" OnClick="btnUpdate_Click"/>
+                <asp:SqlDataSource ID="sdsUsers" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [users]"></asp:SqlDataSource>
 
             </div> <%-- end #slide1 --%>
 

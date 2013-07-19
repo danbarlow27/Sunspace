@@ -199,7 +199,7 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Doors
-        public static string[] DOOR_TYPES = { "Cabana Door", "French Door", "Patio Door", "No Door" };
+        public static string[] DOOR_TYPES = { "Cabana", "French", "Patio", "No Door" };
         public static string[] DOOR_STYLES = { "Full Screen", "Vertical Four Track", "Full View", "Full View Colonial", "Half Lite", "Half Lite Venting", "Half Lite with Mini Blinds", "Full View with Mini Blinds" };
         public static string[] DOOR_HARDWARE = { "Satin Silver", "Bright Brass", "Antique Brass" };
         public static string[] DOOR_COLOURS = { "White", "Driftwood", "Bronze", "Green", "Black", "Ivory", "Cherrywood", "Grey" };
