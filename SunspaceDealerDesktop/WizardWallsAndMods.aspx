@@ -250,6 +250,12 @@
             ////note: soffit only affects the first wall and the last wall... 
                         if they are vertical and perpendicular to the existing walls
 
+
+Dan H:
+"There is no default size and yes a soffit can span multiple walls. When that occurs the first wall is considered no slope and the second wall is slope with soffit.
+Soffit is not limited to first and last wall. The value saved is probably best though of as slopestart... the soffit of the house is, of course, used to determine that slopestart position."
+
+
         */
         function determineSoffitLengthOfEachWall() {
             
