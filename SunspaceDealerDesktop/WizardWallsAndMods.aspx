@@ -256,6 +256,10 @@ Dan H:
 Soffit is not limited to first and last wall. The value saved is probably best though of as slopestart... the soffit of the house is, of course, used to determine that slopestart position."
 
 
+
+see "new soffit conundrum" image on desktop for new soffit conundrum... 
+
+
         */
         function determineSoffitLengthOfEachWall() {
             
@@ -265,8 +269,8 @@ Soffit is not limited to first and last wall. The value saved is probably best t
             /*************************************************************************************/
             /*************************************************************************************/
             /*************************************************************************************/
-            var firstWallStartPoint = coordList[existingWallCount + 1][2]; 
-            var lastWallEndPoint = coordList[coordList.length - 1][3];
+            var firstWallStartPoint = coordList[existingWallCount + 1][2]; // 2 = y1
+            var lastWallEndPoint = coordList[coordList.length - 1][3]; // 3 = y2
             /*************************************************************************************/
             /*************************************************************************************/
             /*************************************************************************************/
@@ -1376,7 +1380,7 @@ Soffit is not limited to first and last wall. The value saved is probably best t
 
 
         /************************************************************************************************************************************/
-        /************************************************************************************************************************************/
+                    /****************                 new function to be written                *******************************/
         /************************************************************************************************************************************/
         function fillWindows() {
 
