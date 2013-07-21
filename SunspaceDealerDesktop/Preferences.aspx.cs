@@ -734,10 +734,8 @@ namespace SunspaceDealerDesktop
             txt400TransomHeight.Text = "20";
             txtCompanyNameInput.Text = "20";
             #endregion
-        }
 
-        protected void btnUpdate_Click(object sender, EventArgs e)
-        {
+            #region Select User's Fields
             using (SqlConnection aConnection = new SqlConnection(sdsUsers.ConnectionString))
             {
                 aConnection.Open();
@@ -753,79 +751,255 @@ namespace SunspaceDealerDesktop
                 aCommand.Transaction = aTransaction;
 
                 try
-                {                    
-                    //Now add user
-                    DateTime aDate = DateTime.Now;
-                    char isChecked= '0';
-                    if (chkCutPitch.Checked==true)
-                    {
-                        isChecked= '1';
-                    }
-                    aCommand.CommandText = "UPDATE preferences SET "
-                                            + "installation_type='" + ddlInstallationType.SelectedValue + "', "
-                                            + "model_type='" + ddlModelNumber.SelectedValue + "', "
-                                            + "layout='" + "Preset 1" + "', "
-                                            + "cut_pitch=" + isChecked + " "
-                                            + "WHERE dealer_id=" + Convert.ToInt32(Session["dealer_id"]);
-                    aCommand.ExecuteNonQuery();
+                {
+                    //get general preferences
+                    aCommand.CommandText = "SELECT installation_type, model_type, layout, cut_pitch FROM preferences WHERE dealer_id=" + Session["dealer_id"].ToString();
+                    SqlDataReader aReader = aCommand.ExecuteReader();
+                    aReader.Read();
+                    //set general preferences
+                    ddlInstallationType.SelectedValue = aReader[0].ToString();
+                    ddlModelNumber.SelectedValue = aReader[1].ToString();
+                    ddlLayoutDefault.SelectedValue = aReader[2].ToString();
 
-                    
-                    isChecked= '0';
-                    if (chk100FloorMetalBarrier.Checked==true)
+                    //if cutpitch is true, check the checkbox
+                    if (aReader[3].ToString() == "1")
                     {
-                        isChecked= '1';
+                        chkCutPitch.Checked = true;
                     }
-                    //An entrance into the model preferences table, one entry for each model type
-                    #region Model 100 preferences entry
-                    aCommand.CommandText = "UPDATE model_preferences SET "
-                                            + "default_filler=" + txt100DefaultFiller.Text + ", "
-                                            + "interior_panel_skin='" + ddl100InteriorPanelSkin.SelectedValue + "', "
-                                            + "exterior_panel_skin='" + ddl100ExteriorPanelSkin.SelectedValue + "', "
-                                            + "frame_colour='" + ddl100FrameColour.SelectedValue + "', "
-                                            + "door_type='" + ddl100DoorType.SelectedValue + "', "
-                                            + "door_style='" + ddl100DoorStyle.SelectedValue + "', "
-                                            + "door_swing='" + ddl100DoorSwing.SelectedValue + "', "
-                                            + "door_hinge='" + ddl100DoorHinge.SelectedValue + "', "
-                                            + "door_hardware='" + ddl100DoorHardware.SelectedValue + "', "
-                                            + "door_colour='" + ddl100DoorColour.SelectedValue + "', "
-                                            + "door_glass_tint='" + ddl100DoorGlassTint.SelectedValue + "', "
-                                            + "door_vinyl_tint='" + ddl100DoorVinylTint.SelectedValue + "', "
-                                            + "door_screen_type='" + ddl100DoorScreenType.SelectedValue + "', "
-                        //window
-                                            + "window_type='" + ddl100WindowType.SelectedValue + "', "
-                                            + "window_colour='" + "None" + "', "
-                                            + "window_glass_tint='" + ddl100WindowGlassTint.SelectedValue + "', "
-                                            + "window_vinyl_tint='" + ddl100WindowVinylTint.SelectedValue + "', "
-                                            + "window_screen_type='" + ddl100WindowScreenType.SelectedValue + "', "
-                        //sunshade
-                                            + "sunshade_valance_colour='" + ddl100SunshadeValanceColour.SelectedValue + "', "
-                                            + "sunshade_fabric_colour='" + ddl100SunshadeFabricColour.SelectedValue + "', "
-                                            + "sunshade_openness='" + ddl100SunshadeOpenness.SelectedValue + "', "
-                        //roof
-                                            + "roof_type='" + ddl100RoofType.SelectedValue + "', "
-                                            + "roof_interior_skin='" + ddl100RoofInteriorSkin.SelectedValue + "', "
-                                            + "roof_exterior_skin='" + ddl100ExteriorPanelSkin.SelectedValue + "', "
-                                            + "roof_thickness='" + ddl100RoofThickness.SelectedValue + "', "
-                        //floor
-                                            + "floor_thickness='" + ddl100FloorThickness.SelectedValue + "', "
-                                            + "floor_metal_barrier=" + isChecked + ", "
-                        //kneewall
-                                            + "kneewall_height=" + txt100KneewallHeight.Text + ", "
-                                            + "kneewall_type='" + ddl100KneewallType.SelectedValue + "', "
-                                            + "kneewall_glass_tint='" + ddl100KneewallGlassTint.SelectedValue + "', "
-                        //transom
-                                            + "transom_height=" + txt100TransomHeight.Text + ", "
-                                            + "transom_style='" + ddl100TransomType.SelectedValue + "', "
-                                            + "transom_glass_tint='" + ddl100TransomGlassTint.SelectedValue + "', "
-                                            + "transom_vinyl_tint='" + ddl100TransomVinylTint.SelectedValue + "', "
-                                            + "transom_screen_type='" + ddl100TransomScreenType.SelectedValue + "', "
-                                            + "markup=" + Convert.ToDecimal(txt100Markup.Text) / 100
-                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='100'";
-                    aCommand.ExecuteNonQuery();
+
+                    aReader.Close();
+
+                    #region 100
+                    aCommand.CommandText = "SELECT default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup FROM model_preferences WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='100'";
+                    aReader = aCommand.ExecuteReader();
+                    aReader.Read();
+
+                    txt100DefaultFiller.Text = aReader[0].ToString();
+                    ddl100InteriorPanelSkin.SelectedValue = aReader[1].ToString();
+                    ddl100ExteriorPanelSkin.SelectedValue = aReader[2].ToString();
+                    ddl100FrameColour.SelectedValue = aReader[3].ToString();
+                    //door
+                    ddl100DoorType.SelectedValue = aReader[4].ToString();
+                    ddl100DoorStyle.SelectedValue = aReader[5].ToString();
+                    ddl100DoorSwing.SelectedValue = aReader[6].ToString();
+                    ddl100DoorHinge.SelectedValue = aReader[7].ToString();
+                    ddl100DoorHardware.SelectedValue = aReader[8].ToString();
+                    ddl100DoorColour.SelectedValue = aReader[9].ToString();
+                    ddl100DoorGlassTint.SelectedValue = aReader[10].ToString();
+                    ddl100DoorVinylTint.SelectedValue = aReader[11].ToString();
+                    ddl100DoorScreenType.SelectedValue = aReader[12].ToString();
+                    //window
+                    ddl100WindowType.SelectedValue = aReader[13].ToString();
+                    //no window colour for model100, skip #14
+                    ddl100WindowGlassTint.SelectedValue = aReader[15].ToString();
+                    ddl100WindowVinylTint.SelectedValue = aReader[16].ToString();
+                    ddl100WindowScreenType.SelectedValue = aReader[17].ToString();
+                    //sunshade
+                    ddl100SunshadeValanceColour.SelectedValue = aReader[18].ToString();
+                    ddl100SunshadeFabricColour.SelectedValue = aReader[19].ToString();
+                    ddl100SunshadeOpenness.SelectedValue = aReader[20].ToString();
+                    //roof
+                    ddl100RoofType.SelectedValue = aReader[21].ToString();
+                    ddl100RoofInteriorSkin.SelectedValue = aReader[22].ToString();
+                    ddl100RoofExteriorSkin.SelectedValue = aReader[23].ToString();
+                    ddl100RoofThickness.SelectedValue = aReader[24].ToString();
+                    //floor
+                    ddl100FloorThickness.SelectedValue = aReader[25].ToString();
+
+                    //if barrier is true, check the checkbox
+                    if (aReader[26].ToString() == "1")
+                    {
+                        chk100FloorMetalBarrier.Checked = true;
+                    }
+
+                    //kneewall
+                    txt100KneewallHeight.Text = aReader[27].ToString();
+                    ddl100KneewallType.SelectedValue = aReader[28].ToString();
+                    ddl100KneewallGlassTint.SelectedValue = aReader[29].ToString();
+                    //transom
+                    txt100TransomHeight.Text = aReader[30].ToString();
+                    ddl100TransomType.SelectedValue = aReader[31].ToString();
+                    ddl100TransomGlassTint.SelectedValue = aReader[32].ToString();
+                    ddl100TransomVinylTint.SelectedValue = aReader[33].ToString();
+                    ddl100TransomScreenType.SelectedValue = aReader[34].ToString();
+
+                    txt100Markup.Text = aReader[35].ToString();
+                    aReader.Close();
                     #endregion
 
-                   
-                    lblError.Text = "Successfully Added";
+                    #region 200
+                    aCommand.CommandText = "SELECT default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup FROM model_preferences WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='200'";
+                    aReader = aCommand.ExecuteReader();
+                    aReader.Read();
+
+                    txt200DefaultFiller.Text = aReader[0].ToString();
+                    ddl200InteriorPanelSkin.SelectedValue = aReader[1].ToString();
+                    ddl200ExteriorPanelSkin.SelectedValue = aReader[2].ToString();
+                    ddl200FrameColour.SelectedValue = aReader[3].ToString();
+                    //door
+                    ddl200DoorType.SelectedValue = aReader[4].ToString();
+                    ddl200DoorStyle.SelectedValue = aReader[5].ToString();
+                    ddl200DoorSwing.SelectedValue = aReader[6].ToString();
+                    ddl200DoorHinge.SelectedValue = aReader[7].ToString();
+                    ddl200DoorHardware.SelectedValue = aReader[8].ToString();
+                    ddl200DoorColour.SelectedValue = aReader[9].ToString();
+                    ddl200DoorGlassTint.SelectedValue = aReader[10].ToString();
+                    ddl200DoorVinylTint.SelectedValue = aReader[11].ToString();
+                    ddl200DoorScreenType.SelectedValue = aReader[12].ToString();
+                    //window
+                    ddl200WindowType.SelectedValue = aReader[13].ToString();
+                    //no window colour for model100, skip #14
+                    ddl200WindowGlassTint.SelectedValue = aReader[15].ToString();
+                    ddl200WindowVinylTint.SelectedValue = aReader[16].ToString();
+                    ddl200WindowScreenType.SelectedValue = aReader[17].ToString();
+                    //sunshade
+                    ddl200SunshadeValanceColour.SelectedValue = aReader[18].ToString();
+                    ddl200SunshadeFabricColour.SelectedValue = aReader[19].ToString();
+                    ddl200SunshadeOpenness.SelectedValue = aReader[20].ToString();
+                    //roof
+                    ddl200RoofType.SelectedValue = aReader[21].ToString();
+                    ddl200RoofInteriorSkin.SelectedValue = aReader[22].ToString();
+                    ddl200RoofExteriorSkin.SelectedValue = aReader[23].ToString();
+                    ddl200RoofThickness.SelectedValue = aReader[24].ToString();
+                    //floor
+                    ddl200FloorThickness.SelectedValue = aReader[25].ToString();
+
+                    //if barrier is true, check the checkbox
+                    if (aReader[26].ToString() == "1")
+                    {
+                        chk200FloorMetalBarrier.Checked = true;
+                    }
+
+                    //kneewall
+                    txt200KneewallHeight.Text = aReader[27].ToString();
+                    ddl200KneewallType.SelectedValue = aReader[28].ToString();
+                    ddl200KneewallGlassTint.SelectedValue = aReader[29].ToString();
+                    //transom
+                    txt200TransomHeight.Text = aReader[30].ToString();
+                    ddl200TransomType.SelectedValue = aReader[31].ToString();
+                    ddl200TransomGlassTint.SelectedValue = aReader[32].ToString();
+                    ddl200TransomVinylTint.SelectedValue = aReader[33].ToString();
+                    ddl200TransomScreenType.SelectedValue = aReader[34].ToString();
+
+                    txt200Markup.Text = aReader[35].ToString();
+                    aReader.Close();
+                    #endregion
+
+                    #region 300
+                    aCommand.CommandText = "SELECT default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup FROM model_preferences WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='300'";
+                    aReader = aCommand.ExecuteReader();
+                    aReader.Read();
+
+                    txt300DefaultFiller.Text = aReader[0].ToString();
+                    ddl300InteriorPanelSkin.SelectedValue = aReader[1].ToString();
+                    ddl300ExteriorPanelSkin.SelectedValue = aReader[2].ToString();
+                    ddl300FrameColour.SelectedValue = aReader[3].ToString();
+                    //door
+                    ddl300DoorType.SelectedValue = aReader[4].ToString();
+                    ddl300DoorStyle.SelectedValue = aReader[5].ToString();
+                    ddl300DoorSwing.SelectedValue = aReader[6].ToString();
+                    ddl300DoorHinge.SelectedValue = aReader[7].ToString();
+                    ddl300DoorHardware.SelectedValue = aReader[8].ToString();
+                    ddl300DoorColour.SelectedValue = aReader[9].ToString();
+                    ddl300DoorGlassTint.SelectedValue = aReader[10].ToString();
+                    ddl300DoorVinylTint.SelectedValue = aReader[11].ToString();
+                    ddl300DoorScreenType.SelectedValue = aReader[12].ToString();
+                    //window
+                    ddl300WindowType.SelectedValue = aReader[13].ToString();
+                    //no window colour for model100, skip #14
+                    ddl300WindowGlassTint.SelectedValue = aReader[15].ToString();
+                    ddl300WindowVinylTint.SelectedValue = aReader[16].ToString();
+                    ddl300WindowScreenType.SelectedValue = aReader[17].ToString();
+                    //sunshade
+                    ddl300SunshadeValanceColour.SelectedValue = aReader[18].ToString();
+                    ddl300SunshadeFabricColour.SelectedValue = aReader[19].ToString();
+                    ddl300SunshadeOpenness.SelectedValue = aReader[20].ToString();
+                    //roof
+                    ddl300RoofType.SelectedValue = aReader[21].ToString();
+                    ddl300RoofInteriorSkin.SelectedValue = aReader[22].ToString();
+                    ddl300RoofExteriorSkin.SelectedValue = aReader[23].ToString();
+                    ddl300RoofThickness.SelectedValue = aReader[24].ToString();
+                    //floor
+                    ddl300FloorThickness.SelectedValue = aReader[25].ToString();
+
+                    //if barrier is true, check the checkbox
+                    if (aReader[26].ToString() == "1")
+                    {
+                        chk300FloorMetalBarrier.Checked = true;
+                    }
+
+                    //kneewall
+                    txt300KneewallHeight.Text = aReader[27].ToString();
+                    ddl300KneewallType.SelectedValue = aReader[28].ToString();
+                    ddl300KneewallGlassTint.SelectedValue = aReader[29].ToString();
+                    //transom
+                    txt300TransomHeight.Text = aReader[30].ToString();
+                    ddl300TransomType.SelectedValue = aReader[31].ToString();
+                    ddl300TransomGlassTint.SelectedValue = aReader[32].ToString();
+                    ddl300TransomVinylTint.SelectedValue = aReader[33].ToString();
+                    ddl300TransomScreenType.SelectedValue = aReader[34].ToString();
+
+                    txt300Markup.Text = aReader[35].ToString();
+                    aReader.Close();
+                    #endregion
+
+                    #region 400
+                    aCommand.CommandText = "SELECT default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup FROM model_preferences WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='400'";
+                    aReader = aCommand.ExecuteReader();
+                    aReader.Read();
+
+                    txt400DefaultFiller.Text = aReader[0].ToString();
+                    ddl400InteriorPanelSkin.SelectedValue = aReader[1].ToString();
+                    ddl400ExteriorPanelSkin.SelectedValue = aReader[2].ToString();
+                    ddl400FrameColour.SelectedValue = aReader[3].ToString();
+                    //door
+                    ddl400DoorType.SelectedValue = aReader[4].ToString();
+                    ddl400DoorStyle.SelectedValue = aReader[5].ToString();
+                    ddl400DoorSwing.SelectedValue = aReader[6].ToString();
+                    ddl400DoorHinge.SelectedValue = aReader[7].ToString();
+                    ddl400DoorHardware.SelectedValue = aReader[8].ToString();
+                    ddl400DoorColour.SelectedValue = aReader[9].ToString();
+                    ddl400DoorGlassTint.SelectedValue = aReader[10].ToString();
+                    ddl400DoorVinylTint.SelectedValue = aReader[11].ToString();
+                    ddl400DoorScreenType.SelectedValue = aReader[12].ToString();
+                    //window
+                    ddl400WindowType.SelectedValue = aReader[13].ToString();
+                    //no window colour for model100, skip #14
+                    ddl400WindowGlassTint.SelectedValue = aReader[15].ToString();
+                    ddl400WindowVinylTint.SelectedValue = aReader[16].ToString();
+                    ddl400WindowScreenType.SelectedValue = aReader[17].ToString();
+                    //sunshade
+                    ddl400SunshadeValanceColour.SelectedValue = aReader[18].ToString();
+                    ddl400SunshadeFabricColour.SelectedValue = aReader[19].ToString();
+                    ddl400SunshadeOpenness.SelectedValue = aReader[20].ToString();
+                    //roof
+                    ddl400RoofType.SelectedValue = aReader[21].ToString();
+                    ddl400RoofInteriorSkin.SelectedValue = aReader[22].ToString();
+                    ddl400RoofExteriorSkin.SelectedValue = aReader[23].ToString();
+                    ddl400RoofThickness.SelectedValue = aReader[24].ToString();
+                    //floor
+                    ddl400FloorThickness.SelectedValue = aReader[25].ToString();
+
+                    //if barrier is true, check the checkbox
+                    if (aReader[26].ToString() == "1")
+                    {
+                        chk400FloorMetalBarrier.Checked = true;
+                    }
+
+                    //kneewall
+                    txt400KneewallHeight.Text = aReader[27].ToString();
+                    ddl400KneewallType.SelectedValue = aReader[28].ToString();
+                    ddl400KneewallGlassTint.SelectedValue = aReader[29].ToString();
+                    //transom
+                    txt400TransomHeight.Text = aReader[30].ToString();
+                    ddl400TransomType.SelectedValue = aReader[31].ToString();
+                    ddl400TransomGlassTint.SelectedValue = aReader[32].ToString();
+                    ddl400TransomVinylTint.SelectedValue = aReader[33].ToString();
+                    ddl400TransomScreenType.SelectedValue = aReader[34].ToString();
+
+                    txt400Markup.Text = aReader[35].ToString();
+                    aReader.Close();
+                    #endregion
 
                     // Attempt to commit the transaction.
                     aTransaction.Commit();
@@ -845,10 +1019,31 @@ namespace SunspaceDealerDesktop
                         // This catch block will handle any errors that may have occurred 
                         // on the server that would cause the rollback to fail, such as 
                         // a closed connection.
-                        lblError.Text="Rollback Exception Type: " + ex2.GetType();
+                        lblError.Text = "Rollback Exception Type: " + ex2.GetType();
                         lblError.Text += "  Message: " + ex2.Message;
                     }
                 }
+            }
+            #endregion
+        }
+
+        protected void btnUpdate_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection aConnection = new SqlConnection(sdsUsers.ConnectionString))
+            {
+                aConnection.Open();
+                SqlCommand aCommand = aConnection.CreateCommand();
+                SqlTransaction aTransaction;
+
+                // Start a local transaction.
+                aTransaction = aConnection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection 
+                // to Command object for a pending local transaction
+                aCommand.Connection = aConnection;
+                aCommand.Transaction = aTransaction;
+
+               
             }
                 //colours
                 //door
