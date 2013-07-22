@@ -1731,6 +1731,13 @@ namespace SunspaceDealerDesktop
 
         #region window stuff
 
+        /*
+         * fill all the usable space with largest size windows
+         * if extra usable space left over, divide the window size in 2 and add a window
+         * if some weird size of extra space left over, add filler 
+         */
+
+
         /// <summary>
         /// This method creates radio buttons/dropdowns for window frame colour options for all models 
         /// </summary>
