@@ -42,10 +42,7 @@
         var projection = 120; //hard coded for testing, will come from the previous pages in the wizard
         var soffitLength = 0; //hard coded for testing, will come from the previous pages in the wizard
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
-        var model = '<%= currentModel %>';
-
-
-        
+        var model = '<%= currentModel %>';        
         
         /**
         This function calculates the "setback" of each wall, i.e. the number the current wall adds to the projection.
@@ -573,207 +570,178 @@
         *typeOfRowsDisplayed
         *This function finds which type of door is selected and displays the appropriate fields
         *from a table hidden to the user
+        *@param wallNumber - holds the number of the current wall
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
         */
-        function typeRowsDisplayed() {
+        function typeRowsDisplayed(wallNumber, type) {
 
-            for (var wallCount = 1; wallCount <= coordList.length; wallCount++) {
+            /****START:TABLE ROWS BY ID****/
+            var doorTitle = document.getElementById("MainContent_rowDoorTitle" + wallNumber + type);
+            var doorStyleTable = document.getElementById("MainContent_rowDoorStyle" + wallNumber + type);
+            var doorVinylTint = document.getElementById("MainContent_rowDoorVinylTint" + wallNumber + type);
+            var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallNumber + type);
+            var doorTransom = document.getElementById("MainContent_rowDoorTransom" + wallNumber + type);
+            var doorTransomVinyl = document.getElementById("MainContent_rowDoorTransomVinylTypes" + wallNumber + type);
+            var doorTransomGlass = document.getElementById("MainContent_rowDoorTransomGlassTypes" + wallNumber + type);
+            var doorKickplate = document.getElementById("MainContent_rowDoorKickplate" + wallNumber + type);
+            var doorKicplateCustom = document.getElementById("MainContent_rowDoorCustomKickplate" + wallNumber + type);
+            var doorColor = document.getElementById("MainContent_rowDoorColor" + wallNumber + type);
+            var doorInternalGrillsYes = document.getElementById("MainContent_rowDoorInternalGrillsYes" + wallNumber + type);
+            var doorInternalGrillsNo = document.getElementById("MainContent_rowDoorInternalGrillsNo" + wallNumber + type);
+            var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallNumber + type);
+            var doorHeightCustom = document.getElementById("MainContent_rowDoorCustomHeight" + wallNumber + type);
+            var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallNumber + type);
+            var doorWidthCustom = document.getElementById("MainContent_rowDoorCustomWidth" + wallNumber + type);
+            var doorOperatorLHH = document.getElementById("MainContent_rowDoorOperatorLHH" + wallNumber + type);
+            var doorOperatorRHH = document.getElementById("MainContent_rowDoorOperatorRHH" + wallNumber + type);
+            var doorBoxHeader = document.getElementById("MainContent_rowDoorBoxHeader" + wallNumber + type);
+            var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallNumber + type);
+            var doorLHH = document.getElementById("MainContent_rowDoorLHH" + wallNumber + type);
+            var doorRHH = document.getElementById("MainContent_rowDoorRHH" + wallNumber + type);
+            var doorScreenOptions = document.getElementById("MainContent_rowDoorScreenOptions" + wallNumber + type);            
+            var doorHardware = document.getElementById("MainContent_rowDoorHardware" + wallNumber + type);
+            var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + wallNumber + type);
+            var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallNumber + type);
+            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallNumber + type);
+            var doorPositionCustom = document.getElementById("MainContent_rowDoorCustomPosition" + wallNumber + type);
+            /****END:TABLE ROWS BY ID****/
 
-                if (coordList[wallCount-1][4] === "P") {
+            /****START:RADIO BUTTONS TO BE CHECKED INITIALLY****/
+            var doorInternalGrillYesChecked = document.getElementById("MainContent_radDoorInternalGrillsYes" + wallNumber + type);
+            var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallNumber + type).options[document.getElementById("MainContent_ddlDoorPosition" + wallNumber + type).selectedIndex].value;
+            var doorLHHChecked = document.getElementById("MainContent_radDoorLHH" + wallNumber + type);
+            var doorSwingInChecked = document.getElementById("MainContent_radDoorSwingIn" + wallNumber + type);
 
-                    if (document.getElementById('MainContent_radWall' + wallCount).checked) {
+            //FRENCH/PATIO DOOR ONLY
+            var doorOperatorLHHChecked = document.getElementById("MainContent_radDoorOperatorLHH" + wallNumber + type);
+            /****END:RADIO BUTTONS TO BE CHECKED INITIALLY****/
 
-                        if (document.getElementById('MainContent_radType' + wallCount + 'Cabana').checked) {
+            //If type is Cabana, display the appropriate fields
+            if (type == "Cabana") {               
 
-                            var doorTitle = document.getElementById("MainContent_rowDoorTitle" + wallCount + "Cabana");
-                            var doorStyle = document.getElementById("MainContent_rowDoorStyle" + wallCount + "Cabana");
-                            var doorColor = document.getElementById("MainContent_rowDoorColor" + wallCount + "Cabana");
-                            var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "Cabana");
-                            var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "Cabana");
-                            var doorBoxHeader = document.getElementById("MainContent_rowDoorBoxHeader" + wallCount + "Cabana");
-                            var doorTransom = document.getElementById("MainContent_rowDoorTransom" + wallCount + "Cabana");
-                            var doorTransomVinyl = document.getElementById("MainContent_rowDoorTransomVinylTypes" + wallCount + "Cabana");
+                //General
+                doorTitle.style.display = "inherit";
+                doorStyleTable.style.display = "inherit";
+                doorColor.style.display = "inherit";
+                doorHeight.style.display = "inherit";
+                doorWidth.style.display = "inherit";
+                doorBoxHeader.style.display = "inherit";
+                doorTransom.style.display = "inherit";
+                doorKickplate.style.display = "inherit";
 
-                            var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallCount + "Cabana");
-                            var doorLHH = document.getElementById("MainContent_rowDoorLHH" + wallCount + "Cabana");
-                            var doorRHH = document.getElementById("MainContent_rowDoorRHH" + wallCount + "Cabana");
-                            var doorHardware = document.getElementById("MainContent_rowDoorHardware" + wallCount + "Cabana");
-                            var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + wallCount + "Cabana");
-                            var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallCount + "Cabana");
-                            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Cabana");
-
-                            //Model Specific
-                            var doorInternalGrillsYes = document.getElementById("MainContent_rowDoorInternalGrillsYes" + wallCount + "Cabana");
-                            var doorInternalGrillsNo = document.getElementById("MainContent_rowDoorInternalGrillsNo" + wallCount + "Cabana");
-
-                            var doorInternalGrillYesChecked = document.getElementById("MainContent_radDoorInternalGrillsYes" + wallCount + "Cabana");
-                            var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Cabana").options[document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Cabana").selectedIndex].value;
-                            var doorLHHChecked = document.getElementById("MainContent_radDoorLHH" + wallCount + "Cabana");
-                            var doorSwingInChecked = document.getElementById("MainContent_radDoorSwingIn" + wallCount + "Cabana");
-
-                            //General
-                            doorTitle.style.display = "inherit";
-                            doorStyle.style.display = "inherit";
-                            doorColor.style.display = "inherit";
-                            doorHeight.style.display = "inherit";
-                            doorWidth.style.display = "inherit";
-                            doorBoxHeader.style.display = "inherit";
-                            doorTransom.style.display = "inherit";
-                            doorTransomVinyl.style.display = "inherit";
-
-                            //Cabana Specific                            
-                            doorGlassTint.style.display = "inherit";
-                            doorLHH.style.display = "inherit";
-                            doorRHH.style.display = "inherit";
-                            doorSwingIn.style.display = "inherit";
-                            doorSwingOut.style.display = "inherit";
-                            doorHardware.style.display = "inherit";
-                            doorPosition.style.display = "inherit";
+                //Cabana Specific                            
+                doorGlassTint.style.display = "inherit";
+                doorLHH.style.display = "inherit";
+                doorRHH.style.display = "inherit";
+                doorSwingIn.style.display = "inherit";
+                doorSwingOut.style.display = "inherit";
+                doorHardware.style.display = "inherit";
+                doorPosition.style.display = "inherit";
                             
-                            if (doorPositionCustom == "cPosition") {
-                                customDimension("Cabana", "Position");
-                            }
-
-                            //Model Specifics
-                            if (model === "M400") {                                
-                                doorInternalGrillsYes.style.display = "inherit";
-                                doorInternalGrillsNo.style.display = "inherit";
-                                doorInternalGrillYesChecked.setAttribute("checked", "checked");
-                            }
-
-                            //Radio button defaults
-                            doorLHHChecked.setAttribute("checked", "checked");
-                            doorSwingInChecked.setAttribute("checked", "checked");
-                        }
-                        else if (document.getElementById('MainContent_radType' + wallCount + 'French').checked) {
-
-                            var doorTitle = document.getElementById("MainContent_rowDoorTitle" + wallCount + "French");
-                            var doorStyle = document.getElementById("MainContent_rowDoorStyle" + wallCount + "French");
-                            var doorColor = document.getElementById("MainContent_rowDoorColor" + wallCount + "French");
-                            var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "French");
-                            var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "French");
-                            var doorBoxHeader = document.getElementById("MainContent_rowDoorBoxHeader" + wallCount + "French");
-
-                            var doorV4TVinylTint = document.getElementById("MainContent_rowDoorVinylTint" + wallCount + "French")
-                            var doorOperatorLHH = document.getElementById("MainContent_rowDoorOperatorLHH" + wallCount + "French");
-                            var doorOperatorRHH = document.getElementById("MainContent_rowDoorOperatorRHH" + wallCount + "French");
-                            var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallCount + "French");
-                            var doorHardware = document.getElementById("MainContent_rowDoorHardware" + wallCount + "French");
-                            var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + wallCount + "French");
-                            var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallCount + "French");
-                            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "French");
-
-                            //Model Specific
-                            var doorInternalGrillsYes = document.getElementById("MainContent_rowDoorInternalGrillsYes" + wallCount + "French");
-                            var doorInternalGrillsNo = document.getElementById("MainContent_rowDoorInternalGrillsNo" + wallCount + "French");
-
-                            var doorInternalGrillYesChecked = document.getElementById("MainContent_radDoorInternalGrillsYes" + wallCount + "French");
-                            var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallCount + "French").options[document.getElementById("MainContent_ddlDoorPosition" + wallCount + "French").selectedIndex].value;
-                            var doorOperatorLHHChecked = document.getElementById("MainContent_radDoorOperatorLHH" + wallCount + "French");
-                            var doorSwingInChecked = document.getElementById("MainContent_radDoorSwingIn" + wallCount + "French");
-
-                            //General
-                            doorTitle.style.display = "inherit";
-                            doorStyle.style.display = "inherit";
-                            doorColor.style.display = "inherit";
-                            doorHeight.style.display = "inherit";
-                            doorWidth.style.display = "inherit";
-                            doorBoxHeader.style.display = "inherit";
-
-                            //French specific
-                            doorV4TVinylTint.style.display = "inherit";
-                            doorOperatorLHH.style.display = "inherit";
-                            doorOperatorRHH.style.display = "inherit";
-                            doorSwingIn.style.display = "inherit";
-                            doorSwingOut.style.display = "inherit";
-                            doorHardware.style.display = "inherit";
-                            doorPosition.style.display = "inherit";
-
-                            if (doorPositionCustom == "cPosition") {
-                                customDimension("French", "Position");
-                            }
-
-                            //Model Specifics
-                            if (model === "M400") {
-                                doorInternalGrillsYes.style.display = "inherit";
-                                doorInternalGrillsNo.style.display = "inherit";
-                                doorInternalGrillYesChecked.setAttribute("checked", "checked");
-                            }
-
-                            //Radio button defaults
-                            doorOperatorLHHChecked.setAttribute("checked", "checked");
-                            doorSwingInChecked.setAttribute("checked", "checked");
-                        }
-                        else if (document.getElementById('MainContent_radType' + wallCount + 'Patio').checked) {
-
-                            var doorTitle = document.getElementById("MainContent_rowDoorTitle" + wallCount + "Patio");
-                            var doorStyle = document.getElementById("MainContent_rowDoorStyle" + wallCount + "Patio");
-                            var doorColor = document.getElementById("MainContent_rowDoorColor" + wallCount + "Patio");
-                            var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "Patio");
-                            var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "Patio");
-                            var doorBoxHeader = document.getElementById("MainContent_rowDoorBoxHeader" + wallCount + "Patio");
-
-                            var doorOperatorLHH = document.getElementById("MainContent_rowDoorOperatorLHH" + wallCount + "Patio");
-                            var doorOperatorRHH = document.getElementById("MainContent_rowDoorOperatorRHH" + wallCount + "Patio");
-                            var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallCount + "Patio");
-                            var doorScreenOptions = document.getElementById("MainContent_rowDoorScreenOptions" + wallCount + "Patio");
-                            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Patio");
-
-                            //Model Specific
-                            var doorInternalGrillsYes = document.getElementById("MainContent_rowDoorInternalGrillsYes" + wallCount + "Patio");
-                            var doorInternalGrillsNo = document.getElementById("MainContent_rowDoorInternalGrillsNo" + wallCount + "Patio");
-
-                            var doorInternalGrillYesChecked = document.getElementById("MainContent_radDoorInternalGrillsYes" + wallCount + "Patio");
-                            var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Patio").options[document.getElementById("MainContent_ddlDoorPosition" + wallCount + "Patio").selectedIndex].value;
-                            var doorOperatorLHHChecked = document.getElementById("MainContent_radDoorOperatorLHH" + wallCount + "Patio");
-
-                            //General
-                            doorTitle.style.display = "inherit";
-                            doorStyle.style.display = "inherit";
-                            doorColor.style.display = "inherit";
-                            doorHeight.style.display = "inherit";
-                            doorWidth.style.display = "inherit";
-                            doorBoxHeader.style.display = "inherit";
-
-                            //Patio Specifics
-                            doorGlassTint.style.display = "inherit";
-                            doorOperatorLHH.style.display = "inherit";
-                            doorOperatorRHH.style.display = "inherit";
-                            doorPosition.style.display = "inherit";
-                            doorScreenOptions.style.display = "inherit";
-
-                            if (doorPositionCustom == "cPosition") {
-                                customDimension("Patio", "Position");
-                            }
-
-                            //Model Specifics
-                            if (model === "M400") {
-                                doorInternalGrillsYes.style.display = "inherit";
-                                doorInternalGrillsNo.style.display = "inherit";
-                                doorInternalGrillYesChecked.setAttribute("checked", "checked");
-                            }
-
-                            //Radio button defaults
-                            doorOperatorLHHChecked.setAttribute("checked", "checked");
-                        }
-                        else if (document.getElementById('MainContent_radType' + wallCount + 'NoDoor').checked) {
-
-                            var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "NoDoor");
-                            var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "NoDoor");
-                            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "NoDoor");
-
-                            var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallCount + "NoDoor").options[document.getElementById("MainContent_ddlDoorPosition" + wallCount + "NoDoor").selectedIndex].value;
-
-                            doorHeight.style.display = "inherit";
-                            doorWidth.style.display = "inherit";
-                            doorPosition.style.display = "inherit";
-
-                            if (doorPositionCustom == "cPosition") {
-                                customDimension("NoDoor", "Position");
-                            }
-                        }
-                    }
+                if (doorPositionCustom == "cPosition") {
+                    customDimension("Cabana", "Position");
                 }
+
+                //Model Specifics
+                if (model === "M400") {                                
+                    doorInternalGrillsYes.style.display = "inherit";
+                    doorInternalGrillsNo.style.display = "inherit";
+                    doorInternalGrillYesChecked.setAttribute("checked", "checked");
+                }
+
+                //Radio button defaults
+                doorLHHChecked.setAttribute("checked", "checked");
+                doorSwingInChecked.setAttribute("checked", "checked");
+
+                doorStyle("Cabana", wallNumber);
+                doorTransomStyle("Cabana", wallNumber);
             }
+                //If type is French, display the appropriate fields
+            else if (type == "French") {                
+
+                //General
+                doorTitle.style.display = "inherit";
+                doorStyleTable.style.display = "inherit";
+                doorColor.style.display = "inherit";
+                doorHeight.style.display = "inherit";
+                doorWidth.style.display = "inherit";
+                doorBoxHeader.style.display = "inherit";
+                doorTransom.style.display = "inherit";
+                doorKickplate.style.display = "inherit";
+
+                //French specific
+                doorOperatorLHH.style.display = "inherit";
+                doorOperatorRHH.style.display = "inherit";
+                doorSwingIn.style.display = "inherit";
+                doorSwingOut.style.display = "inherit";
+                doorHardware.style.display = "inherit";
+                doorPosition.style.display = "inherit";
+
+                if (doorPositionCustom == "cPosition") {
+                    customDimension(type, "Position");
+                }
+
+                //Model Specifics
+                if (model === "M400") {
+                    doorInternalGrillsYes.style.display = "inherit";
+                    doorInternalGrillsNo.style.display = "inherit";
+                    doorInternalGrillYesChecked.setAttribute("checked", "checked");
+                }
+
+                //Radio button defaults
+                doorOperatorLHHChecked.setAttribute("checked", "checked");
+                doorSwingInChecked.setAttribute("checked", "checked");
+
+                doorStyle(type, wallNumber);
+                doorTransomStyle(type, wallNumber);
+            }
+                //If type is Patio, display the appropriate fields
+            else if (type == "Patio") {
+
+                //General
+                doorTitle.style.display = "inherit";
+                doorStyleTable.style.display = "inherit";
+                doorColor.style.display = "inherit";
+                doorHeight.style.display = "inherit";
+                doorWidth.style.display = "inherit";
+                doorTransom.style.display = "inherit";
+                doorBoxHeader.style.display = "inherit";
+
+                //Patio Specifics
+                doorGlassTint.style.display = "inherit";
+                doorOperatorLHH.style.display = "inherit";
+                doorOperatorRHH.style.display = "inherit";
+                doorPosition.style.display = "inherit";
+                doorScreenOptions.style.display = "inherit";
+
+                if (doorPositionCustom == "cPosition") {
+                    customDimension(type, "Position");
+                }
+
+                //Model Specifics
+                if (model === "M400") {
+                    doorInternalGrillsYes.style.display = "inherit";
+                    doorInternalGrillsNo.style.display = "inherit";
+                    doorInternalGrillYesChecked.setAttribute("checked", "checked");
+                }
+
+                //Radio button defaults
+                doorOperatorLHHChecked.setAttribute("checked", "checked");
+
+                doorStyle(type, wallNumber);
+                doorTransomStyle(type, wallNumber);
+            }
+                //If type is NoDoor, display the appropriate fields
+            else if (type == "NoDoor") {
+
+                doorHeight.style.display = "inherit";
+                doorWidth.style.display = "inherit";
+                doorPosition.style.display = "inherit";
+
+                if (doorPositionCustom == "cPosition") {
+                    customDimension(type, "Position");
+                }
+            }                    
         }
 
         /**
@@ -826,10 +794,9 @@
         }
 
         /**
-        *doorStyle
-        *Door style function is triggered when the user selects Vertical Four Track, 
-        *vinyl tint becomes displayed, since Vertical Four Track is the only door style
-        *that has vinyl tint options
+        *doorTransomStyle
+        *Door transom style function is triggered when the user selects Vinyl or Glass, 
+        *vinyl or glass tint becomes displayed.
         *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
         *@param wallNumber - holds the number of the current wall
         */
@@ -852,6 +819,24 @@
         }
 
         /**
+        *doorKickplateStyle
+        *Door kickplate style function changes the fields being displayed based on the selected index.
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        *@param wallNumber - holds the number of the current wall
+        */
+        function doorKickplateStyle(type, wallNumber) {
+
+            var KickplateType = document.getElementById('MainContent_ddlDoorKickplate' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorKickplate' + wallNumber + type).selectedIndex].value;
+
+            if (KickplateType == 'cKickplate') {
+                document.getElementById('MainContent_rowDoorCustomKickplate' + wallNumber + type).style.display = 'inherit';
+            }
+            else {
+                document.getElementById('MainContent_rowDoorCustomKickplate' + wallNumber + type).style.display = 'none';
+            }
+        }
+
+        /**
         *calculateActualDoorDimension
         *This function calculates a doors actual dimension based on model number, dimension, custom dimension, and
         *the current wall selected. This is needed because there is frame added to doors anywhere from 1.125 
@@ -861,19 +846,19 @@
         *@param custom - this argument is used to determine if a custom dimension is being entered and which controls to use
         *@param wallCount - is used to determine which wall's control to use
         */
-        function calculateActualDoorDimension(type, dimension, custom, wallCount) {
+        function calculateActualDoorDimension(type, dimension, custom, wallNumber) {
 
             var newDimension;
 
             var controlToUse;
 
             if (custom === true) {
-                controlToUse = parseFloat(document.getElementById('MainContent_txtDoorCustom' + dimension + wallCount + type).value)
-                    + parseFloat(document.getElementById('MainContent_ddlInchCustom' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlInchCustom' + dimension + wallCount + type).selectedIndex].value);
+                controlToUse = parseFloat(document.getElementById('MainContent_txtDoorCustom' + dimension + wallNumber + type).value)
+                    + parseFloat(document.getElementById('MainContent_ddlInchCustom' + dimension + wallNumber + type).options[document.getElementById('MainContent_ddlInchCustom' + dimension + wallNumber + type).selectedIndex].value);
             }
             else {
 
-                controlToUse = parseFloat(document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).selectedIndex].value);
+                controlToUse = parseFloat(document.getElementById('MainContent_ddlDoor' + dimension + wallNumber + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallNumber + type).selectedIndex].value);
             }
 
             if (type === 'Cabana') {
@@ -897,117 +882,107 @@
         *This function is used to add doors to an array of wall objects
         *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
         */
-        function addDoor(type) {
-
-            for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
-
-                if (coordList[wallCount - 1][4] === "P") {
-
-                    //Find if a door exist to set doorCount to the appropriate value
-                    if (document.getElementById('MainContent_radWall' + wallCount).checked) {
+        function addDoor(wallNumber, type) {
                         
-                        /****PAGER VARIABLES****/
-                        var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wallCount);
-                        var pagerTextAnswer = document.getElementById("wall" + wallCount + "DoorsAdded");
-                        var pagerTextDoor = document.getElementById("MainContent_lblQuestion3DoorsInfoWall" + wallCount);
-                        var proposedWall = document.getElementById("MainContent_lblTextArea" + wallCount);
+            /****PAGER VARIABLES****/
+            var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wallNumber);
+            var pagerTextAnswer = document.getElementById("wall" + wallNumber + "DoorsAdded");
+            var pagerTextDoor = document.getElementById("MainContent_lblQuestion3DoorsInfoWall" + wallNumber);
+            var proposedWall = document.getElementById("MainContent_lblTextArea" + wallNumber);
                         
-                        /****LOGICAL AND FUNCTIONALITY VARIABLES****/                    
-                        var isValid = true;
-                        var spacesRemaining = null;
-                        var doors = new Array();;
-                        var sortedDoors;
+            /****LOGICAL AND FUNCTIONALITY VARIABLES****/                    
+            var isValid = true;
+            var spacesRemaining = null;
+            var doors = new Array();
+            var sortedDoors;
 
-                        /****CALCULATION VARIABLES****/
-                        var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'Length').value);                            
-                        var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'LeftFiller').value);
-                        var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'RightFiller').value);
-                        var usableSpace = wallLength - leftFiller - rightFiller;
-                        var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorCustomPosition' + wallCount + type).value
-                            + document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).selectedIndex].value);
-                        var positionDropDown = document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).selectedIndex].value;
-                        var widthDropDown = document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).selectedIndex].value;
-                        var heightDropDown = document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).options[document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).selectedIndex].value;
-                        var doorWidth;
-                        var doorHeight;
+            /****CALCULATION VARIABLES****/
+            var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'Length').value);                            
+            var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'LeftFiller').value);
+            var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'RightFiller').value);
+            var usableSpace = wallLength - leftFiller - rightFiller;
+            var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorCustomPosition' + wallNumber + type).value
+                + document.getElementById('MainContent_ddlInchSpecificLeft' + wallNumber + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallNumber + type).selectedIndex].value);
+            var positionDropDown = document.getElementById('MainContent_ddlDoorPosition' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallNumber + type).selectedIndex].value;
+            var widthDropDown = document.getElementById('MainContent_ddlDoorWidth' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallNumber + type).selectedIndex].value;
+            var heightDropDown = document.getElementById('MainContent_ddlDoorHeight' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorHeight' + wallNumber + type).selectedIndex].value;
+            var doorWidth;
+            var doorHeight;
                         
-                        /*Set the variable to the appropriate value to be used for calculations*/
-                        if (widthDropDown === "cWidth") {                            
-                            doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', true, wallCount));
-                        }
-                        else {
-                            doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false, wallCount));                            
-                        }
+            /*Set the variable to the appropriate value to be used for calculations*/
+            if (widthDropDown === "cWidth") {                            
+                doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', true, wallNumber));
+            }
+            else {
+                doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false, wallNumber));                            
+            }
 
-                        /*Set the variable to the appropriate value to be used for calculations*/
-                        if (widthDropDown === "cHeight") {
-                            doorHeight = parseFloat(calculateActualDoorDimension(type, 'Height', true, wallCount));
-                        }
-                        else {
-                            doorHeight = parseFloat(calculateActualDoorDimension(type, 'Height', false, wallCount));
-                        }
+            /*Set the variable to the appropriate value to be used for calculations*/
+            if (widthDropDown === "cHeight") {
+                doorHeight = parseFloat(calculateActualDoorDimension(type, 'Height', true, wallNumber));
+            }
+            else {
+                doorHeight = parseFloat(calculateActualDoorDimension(type, 'Height', false, wallNumber));
+            }
                         
 
-                        /*Insert the door with the appropriate variables based on drop down selected index*/
-                        if (positionDropDown === "left") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": 0 };
-                        }
-                        else if (positionDropDown === "right") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usableSpace - doorWidth };
-                        }
-                        else if (positionDropDown === "center") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usableSpace / 2 - doorWidth / 2 };
-                        }
-                        else if (positionDropDown === "cPosition") {
-                            if (!isNaN(doorCustomPosition)) {
-                                //alert("Custom " + doorCustomPosition);
-                                doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": doorCustomPosition };
-                            }
-                            else {
-                                isValid = false;
-                                alert("Please enter a valid number into the custom distance text box");
-                            }
-                        }                        
-
-                        //Validation of blank non-custom field passed
-                        if (isValid) {
-
-                            //Updates doors array from the appropriate index in wallDoors array
-                            updateDoorsArray(doors, wallCount);
-
-                            //Update sortedDoors by sorting most recent addition into previous array
-                            sortedDoors = sortDoorsLeftToRight(doors);
-
-                            //Valid door was entered, perform various functions
-                            if (checkQuestion3(sortedDoors, spacesRemaining, usableSpace)) {
-
-                                //Update spacesRemaining array
-                                spacesRemaining = availableSpacesArrayUpdate(usableSpace, sortedDoors);
-
-                                //Update total space left in the wall
-                                var space = totalSpaceLeftInWall(usableSpace, sortedDoors);
-
-                                //Block to add content to the pager
-                                $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallCount).text(space);
-                                document.getElementById("pagerThree").style.display = "inline";
-                                document.getElementById("wall" + wallCount + "SpaceRemaining").style.display = "inline";
-                                pagerText.setAttribute("style", "display:block;");
-                                pagerTextAnswer.setAttribute("style", "display:block");
-                                pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerHTML).substr(14, 2) + " Doors";
-
-                                //Display appropriate message and controls within the pager
-                                updateDoorPager(sortedDoors, type, wallCount, space);
-
-                                //Update drop downs based on selected value
-                                updateDoorDropDowns(positionDropDown, wallCount);
-
-                                //Update wallDoors array with most current addition
-                                updateWallsArray(wallCount, sortedDoors, spacesRemaining)
-
-                            }
-                        }
-                    }
+            /*Insert the door with the appropriate variables based on drop down selected index*/
+            if (positionDropDown === "left") {
+                doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": 0 };
+            }
+            else if (positionDropDown === "right") {
+                doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usableSpace - doorWidth };
+            }
+            else if (positionDropDown === "center") {
+                doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usableSpace / 2 - doorWidth / 2 };
+            }
+            else if (positionDropDown === "cPosition") {
+                if (!isNaN(doorCustomPosition)) {
+                    //alert("Custom " + doorCustomPosition);
+                    doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": doorCustomPosition };
                 }
+                else {
+                    isValid = false;
+                    alert("Please enter a valid number into the custom distance text box");
+                }
+            }                        
+
+            //Validation of blank non-custom field passed
+            if (isValid) {
+
+                //Updates doors array from the appropriate index in wallDoors array
+                updateDoorsArray(doors, wallNumber);
+
+                //Update sortedDoors by sorting most recent addition into previous array
+                sortedDoors = sortDoorsLeftToRight(doors);
+
+                //Valid door was entered, perform various functions
+                if (checkQuestion3(sortedDoors, spacesRemaining, usableSpace)) {
+
+                    //Update spacesRemaining array
+                    spacesRemaining = availableSpacesArrayUpdate(usableSpace, sortedDoors);
+
+                    //Update total space left in the wall
+                    var space = totalSpaceLeftInWall(usableSpace, sortedDoors);
+
+                    //Block to add content to the pager
+                    $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
+                    document.getElementById("pagerThree").style.display = "inline";
+                    document.getElementById("wall" + wallNumber + "SpaceRemaining").style.display = "inline";
+                    pagerText.setAttribute("style", "display:block;");
+                    pagerTextAnswer.setAttribute("style", "display:block");
+                    pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerHTML).substr(14, 2) + " Doors";
+
+                    //Display appropriate message and controls within the pager
+                    updateDoorPager(sortedDoors, type, wallNumber, space);
+
+                    //Update drop downs based on selected value
+                    updateDoorDropDowns(positionDropDown, wallNumber, true);
+
+                    //Update wallDoors array with most current addition
+                    updateWallsArray(wallNumber, usableSpace, sortedDoors, spacesRemaining)
+
+                }                      
             }
         }
 
@@ -1039,7 +1014,8 @@
         *@param sortedDoors - holds an array of sorted doors left to right
         *@param spacesRemaining - holds an array of remaining spaces within the wall
         */
-        function updateWallsArray(wallNumber, sortedDoors, spacesRemaining) {
+        function updateWallsArray(wallNumber, wallLength, sortedDoors, spacesRemaining) {
+
             //Variable to hold wall index to update
             var indexToStoreAt = null;
 
@@ -1049,15 +1025,14 @@
                 if (wallDoors[i].wallId == wallNumber) {
                     indexToStoreAt = i;
                     break;
-                    //alert(wallDoors[i].doorsSorted[0].doorWidth);
                 }
             }
             //If no matches exist, create a new wallDoors object within the array
             if (indexToStoreAt == null) {
-                wallDoors[wallDoors.length] = { "wallId": wallNumber, "doorsSorted": sortedDoors, "spaces": spacesRemaining };
+                wallDoors[wallDoors.length] = { "wallId": wallNumber, "wallLength": wallLength, "doorsSorted": sortedDoors, "spaces": spacesRemaining };
             }
             else {
-                wallDoors[indexToStoreAt] = { "wallId": wallNumber, "doorsSorted": sortedDoors, "spaces": spacesRemaining };
+                wallDoors[indexToStoreAt] = { "wallId": wallNumber, "wallLength": wallLength, "doorsSorted": sortedDoors, "spaces": spacesRemaining };
             }
         }
 
@@ -1083,7 +1058,7 @@
                     deleteButton.id = "btnDeleteDoor" + childControls + type + "Wall" + wallNumber;
                     deleteButton.setAttribute("type", "button");
                     deleteButton.setAttribute("value", "X");
-                    deleteButton.setAttribute("onclick", "deleteDoor(\"" + childControls + "\", \"" + type + "\")");
+                    deleteButton.setAttribute("onclick", "deleteDoor(\"" + childControls + "\", \"" + type + "\", \"" + wallNumber + "\")");
                     deleteButton.setAttribute("class", "btnSubmit");
                     deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
 
@@ -1114,44 +1089,61 @@
         *@param doorToDelete - holds the index of the door to be deleted
         *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
         */
-        function deleteDoor(doorToDelete, type) {
+        function deleteDoor(doorToDelete, type, wallNumber) {
 
-            //alert(doorToDelete + " \ " + type);
-            //Delete the text and door from respective wall
-            for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
+            for (var wallDoorsCount = 0; wallDoorsCount < wallDoors.length; wallDoorsCount++) {
 
-                if (coordList[wallCount - 1][4] === "P") {
+                if (wallDoors[wallDoorsCount].wallId == wallNumber) {
 
-                    for (var wallDoorsCount = 0; wallDoorsCount < wallDoors.length; wallDoorsCount++) {
+                    //Controls used to rename undeleted controls
+                    var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallNumber);
 
-                        if (wallDoors[wallDoorsCount].wallId == wallCount) {
+                    //Controls to Delete
+                    var deleteButtonToRemove = document.getElementById("btnDeleteDoor" + doorToDelete + type + "Wall" + wallNumber);
+                    var deleteLabelToRemove = document.getElementById("lblDeleteDoor" + doorToDelete + type + "Wall" + wallNumber);
+                    var deleteBreakLineLabelToRemove = document.getElementById("lblDeleteDoorBR" + doorToDelete + type + "Wall" + wallNumber);
+                    
+                    var positionInWall = findPosition(wallDoors[wallDoorsCount].wallLength, wallDoors[wallDoorsCount].doorsSorted, (doorToDelete - 1));
 
-                            //Controls used to rename undeleted controls
-                            var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallCount);
+                    //Removes object at specified index
+                    wallDoors[wallDoorsCount].doorsSorted.splice(doorToDelete - 1, 1);
 
-                            //Controls to Delete
-                            var deleteButtonToRemove = document.getElementById("btnDeleteDoor" + doorToDelete + type + "Wall" + wallCount);
-                            var deleteLabelToRemove = document.getElementById("lblDeleteDoor" + doorToDelete + type + "Wall" + wallCount);
-                            var deleteBreakLineLabelToRemove = document.getElementById("lblDeleteDoorBR" + doorToDelete + type + "Wall" + wallCount);
+                    //Resetting spaces property in the wallDoors array
+                    var spacesRemaining = availableSpacesArrayUpdate(wallDoors[wallDoorsCount].wallLength, wallDoors[wallDoorsCount].doorsSorted);
+                    wallDoors[wallDoorsCount].spaces = spacesRemaining;
 
-                            //Removes object at specified index
-                            wallDoors[wallDoorsCount].doorsSorted.splice(doorToDelete - 1, 1);
-                            
-                            //Removes controls displayed in the pager
-                            deleteButtonToRemove.remove();
-                            deleteLabelToRemove.remove();
-                            deleteBreakLineLabelToRemove.remove();
+                    //Used to redisplay the appropriate space left in the wall
+                    var space = totalSpaceLeftInWall(wallDoors[wallDoorsCount].wallLength, wallDoors[wallDoorsCount].doorsSorted)                    
 
-                            //Need to reset pager titles
-                            updateDoorPager(wallDoors[wallDoorsCount].doorsSorted, type, wallCount);
-                        }
+                    //Removes controls displayed in the pager
+                    deleteButtonToRemove.remove();
+                    deleteLabelToRemove.remove();
+                    deleteBreakLineLabelToRemove.remove();
 
-                    }
-
+                    //Need to reset pager titles
+                    $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
+                    updateDoorPager(wallDoors[wallDoorsCount].doorsSorted, type, wallNumber);
+                    updateDoorDropDowns(positionInWall, wallNumber, false);
                 }
 
             }
 
+        }
+
+
+        function findPosition(usuableLength, sortedDoor, indexToCheck) {
+            var position = "";
+
+            if (sortedDoor[indexToCheck].distanceFromLeft == 0)
+                position = "left";
+            else if (sortedDoor[indexToCheck].distanceFromLeft == (usuableLength / 2 - sortedDoor[indexToCheck].doorWidth / 2))
+                position = "center";
+            else if (sortedDoor[indexToCheck].distanceFromLeft == (usuableLength - sortedDoor[indexToCheck].doorWidth))
+                position = "right";
+            else
+                position = "custom";
+
+            return position;
         }
 
         /**
@@ -1264,7 +1256,7 @@
         *@param dropDownValue - holds the value of the currently selected index
         *@param wallNumber - holds the number of the current wall
         */
-        function updateDoorDropDowns(dropDownValue, wallNumber) {
+        function updateDoorDropDowns(dropDownValue, wallNumber, toBeRemove) {
 
             var dropDownName = 'MainContent_ddlDoorPosition' + wallNumber;
             //TYPE FUNCTION TO BE MADE: FUNCTIONALITY
@@ -1274,19 +1266,31 @@
 
                 var title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
 
-                if ($('#' + dropDownName + title).val() != "cPosition") {
-                    $('#' + dropDownName + title + ' option[value=' + dropDownValue + ']').attr('disabled', true);
-                }
+                if (toBeRemove) {
+                    if ($('#' + dropDownName + title).val() != "cPosition") {
+                        $('#' + dropDownName + title + ' option[value=' + dropDownValue + ']').attr('disabled', true);
+                    }
 
-                for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + title + ' option').size() ; dropDownLoop++) {
-                    if ($('#' + dropDownName + title + ' option')[dropDownLoop].disabled == false) {
-                        $('#' + dropDownName + title).prop("selectedIndex", dropDownLoop);
-                        break;
+                    for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + title + ' option').size() ; dropDownLoop++) {
+                        if ($('#' + dropDownName + title + ' option')[dropDownLoop].disabled == false) {
+                            $('#' + dropDownName + title).prop("selectedIndex", dropDownLoop);
+                            break;
+                        }
+                    }
+
+                    if ($('#' + dropDownName + title).val() == "cPosition") {
+                        customDimension(title, "Position");
                     }
                 }
+                else {
+                    $('#' + dropDownName + title + ' option[value=' + dropDownValue + ']').attr('disabled', false);
 
-                if ($('#' + dropDownName + title).val() == "cPosition") {
-                    customDimension(title, "Position");
+                    for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + title + ' option').size() ; dropDownLoop++) {
+                        if ($('#' + dropDownName + title + ' option')[dropDownLoop].disabled == false) {
+                            $('#' + dropDownName + title).prop("selectedIndex", dropDownLoop);
+                            break;
+                        }
+                    }
                 }
             }
             //ENDAREA: CHANGE DROPDOWNS BASED ON SELECTED INDEX
@@ -1319,29 +1323,37 @@
 
             var spacesRemaining = new Array();
 
-            //Block to store remaining spaces between various door(s)
-            if (sortedDoors[0].distanceFromLeft > 0 && sortedDoors.length > 1) {
-                spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
-            }
-            else if (sortedDoors.length == 1) {
-                if (sortedDoors[0].distanceFromLeft == 0) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].doorWidth, "space": usableLength - sortedDoors[0].doorWidth };
-                }
-                else if (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth == usableLength) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": usableLength - sortedDoors[0].doorWidth };
-                }
-                else if (sortedDoors[0].distanceFromLeft > 0) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth, "space": usableLength - (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth) };
-                }
+            if (sortedDoors.length == 0) {
+                spacesRemaining[spacesRemaining.length] = null;
             }
             else {
-                //var doorsLoop;
-                for (var doorsLoop = 0; doorsLoop < sortedDoors.length - 1; doorsLoop++) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft, "space": sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft) };
+                //Block to store remaining spaces between various door(s)
+                if (sortedDoors[0].distanceFromLeft > 0 && sortedDoors.length > 1) {
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
+                    for (var doorsLoop = 0; doorsLoop < sortedDoors.length - 1; doorsLoop++) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft, "space": sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft) };
+                    }
                 }
-                if (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth < usableLength) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth, "space": usableLength - (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth) };
+                else if (sortedDoors.length == 1) {
+                    if (sortedDoors[0].distanceFromLeft == 0) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].doorWidth, "space": usableLength - sortedDoors[0].doorWidth };
+                    }
+                    else if (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth == usableLength) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": usableLength - sortedDoors[0].doorWidth };
+                    }
+                    else if (sortedDoors[0].distanceFromLeft > 0) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth, "space": usableLength - (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth) };
+                    }
+                }
+                else {
+                    //var doorsLoop;
+                    for (var doorsLoop = 0; doorsLoop < sortedDoors.length - 1; doorsLoop++) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft, "space": sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft) };
+                    }
+                    if (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth < usableLength) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth, "space": usableLength - (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth) };
+                    }
                 }
             }
             return spacesRemaining;

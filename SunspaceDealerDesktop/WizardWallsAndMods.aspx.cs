@@ -380,7 +380,7 @@ namespace SunspaceDealerDesktop
                 RadioButton typeRadio = new RadioButton();
                 typeRadio.ID = "radType" + i + title; //Adding appropriate id to door type radio button
                 typeRadio.GroupName = "doorTypeRadios" + i;         //Adding group name for all door types
-                typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+                typeRadio.Attributes.Add("onclick", "typeRowsDisplayed('" + i + "', '" + title + "')"); //On click event to display the proper fields/rows
                     
 
                 //Door type radio button label for clickable area
@@ -612,6 +612,97 @@ namespace SunspaceDealerDesktop
                 ListItem transomBronze = new ListItem("Bronze", "bronze");
                 doorTransomGlassTypesDDL.Items.Add(transomGrey);
                 doorTransomGlassTypesDDL.Items.Add(transomBronze);
+
+                #endregion
+
+                #region Table:# Row Door Kickplate (tblDoorDetails)
+
+                TableRow doorKickplateRow = new TableRow();
+                doorKickplateRow.ID = "rowDoorKickplate" + i + title;
+                doorKickplateRow.Attributes.Add("style", "display:none;");
+                TableCell doorKickplateLBLCell = new TableCell();
+                TableCell doorKickplateDDLCell = new TableCell();
+
+                Label doorKickplateLBL = new Label();
+                doorKickplateLBL.ID = "lblDoorKickplate" + i + title;
+                doorKickplateLBL.Text = "Kickplate Type:";
+
+                DropDownList doorKickplateDDL = new DropDownList();
+                doorKickplateDDL.ID = "ddlDoorKickplate" + i + title;
+                doorKickplateDDL.Attributes.Add("onchange", "doorKickplateStyle('" + title + "','" + i + "')");
+                ListItem KickplateSix = new ListItem("6\"", "6");
+                ListItem KickplateSeven = new ListItem("7\"", "7");
+                ListItem KickplateEight = new ListItem("8\"", "8");
+                ListItem KickplateNine = new ListItem("9\"", "9");
+                ListItem KickplateTen = new ListItem("10\"", "10");
+                ListItem KickplateEleven = new ListItem("11\"", "11");
+                ListItem KickplateTwelve = new ListItem("12\"", "12");
+                ListItem KickplateThirteen = new ListItem("13\"", "13");
+                ListItem KickplateFourteen = new ListItem("14\"", "14");
+                ListItem KickplateFifteen = new ListItem("15\"", "15");
+                ListItem KickplateSixteen = new ListItem("16\"", "16");
+                ListItem KickplateSeventeen = new ListItem("17\"", "17");
+                ListItem KickplateEighteen = new ListItem("18\"", "18");
+                ListItem KickplateNineteen = new ListItem("19\"", "19");
+                ListItem KickplateTwenty = new ListItem("20\"", "20");
+                ListItem KickplateTwentyOne = new ListItem("21\"", "21");
+                ListItem KickplateTwentyTwo = new ListItem("22\"", "22");
+                ListItem KickplateTwentyThree = new ListItem("23\"", "23");
+                ListItem KickplateTwentyFour = new ListItem("24\"", "24");
+                ListItem KickplateCustom = new ListItem("Custom", "cKickplate");
+                doorKickplateDDL.Items.Add(KickplateSix);
+                doorKickplateDDL.Items.Add(KickplateSeven);
+                doorKickplateDDL.Items.Add(KickplateEight);
+                doorKickplateDDL.Items.Add(KickplateNine);
+                doorKickplateDDL.Items.Add(KickplateTen);
+                doorKickplateDDL.Items.Add(KickplateEleven);
+                doorKickplateDDL.Items.Add(KickplateTwelve);
+                doorKickplateDDL.Items.Add(KickplateThirteen);
+                doorKickplateDDL.Items.Add(KickplateFourteen);
+                doorKickplateDDL.Items.Add(KickplateFifteen);
+                doorKickplateDDL.Items.Add(KickplateSixteen);
+                doorKickplateDDL.Items.Add(KickplateSeventeen);
+                doorKickplateDDL.Items.Add(KickplateEighteen);
+                doorKickplateDDL.Items.Add(KickplateNineteen);
+                doorKickplateDDL.Items.Add(KickplateTwenty);
+                doorKickplateDDL.Items.Add(KickplateTwentyOne);
+                doorKickplateDDL.Items.Add(KickplateTwentyTwo);
+                doorKickplateDDL.Items.Add(KickplateTwentyThree);
+                doorKickplateDDL.Items.Add(KickplateTwentyFour);
+                doorKickplateDDL.Items.Add(KickplateCustom);
+
+                #endregion
+
+                #region Table:# Row Door Kickplate Custom (tblDoorDetails)
+
+                TableRow doorCustomKickplateRow = new TableRow();
+                doorCustomKickplateRow.ID = "rowDoorCustomKickplate" + i + title;
+                doorCustomKickplateRow.Attributes.Add("style", "display:none;");
+                TableCell doorCustomKickplateLBLCell = new TableCell();
+                TableCell doorCustomKickplateTXTCell = new TableCell();
+                TableCell doorCustomKickplateDDLCell = new TableCell();
+
+                Label doorCustomKickplateLBL = new Label();
+                doorCustomKickplateLBL.ID = "lblDoorCustomKickplate" + i + title;
+                doorCustomKickplateLBL.Text = "Custom Kickplate (inches):";
+
+                TextBox doorCustomKickplateTXT = new TextBox();
+                doorCustomKickplateTXT.ID = "txtDoorCustomKickplate" + i + title;
+                doorCustomKickplateTXT.CssClass = "txtField txtDoorInput";
+                doorCustomKickplateTXT.Attributes.Add("maxlength", "3");
+
+                DropDownList inchCustomKickplate = new DropDownList();
+                inchCustomKickplate.ID = "ddlInchCustomKickplate" + i + title;
+                inchCustomKickplate.Items.Add(lst0);
+                inchCustomKickplate.Items.Add(lst18);
+                inchCustomKickplate.Items.Add(lst14);
+                inchCustomKickplate.Items.Add(lst38);
+                inchCustomKickplate.Items.Add(lst12);
+                inchCustomKickplate.Items.Add(lst58);
+                inchCustomKickplate.Items.Add(lst34);
+                inchCustomKickplate.Items.Add(lst78);
+
+                doorCustomKickplateLBL.AssociatedControlID = "txtDoorCustomKickplate" + i + title;
 
                 #endregion
 
@@ -1118,7 +1209,7 @@ namespace SunspaceDealerDesktop
 
                 Label doorPositionDDLLBL = new Label();
                 doorPositionDDLLBL.ID = "lblDoorPositionDDL" + i + title;
-                doorPositionDDLLBL.Text = "PositionDDL:";
+                doorPositionDDLLBL.Text = "Position In Wall:";
 
                 DropDownList doorPositionDDLDDL = new DropDownList();
                 doorPositionDDLDDL.ID = "ddlDoorPosition" + i + title;
@@ -1261,6 +1352,32 @@ namespace SunspaceDealerDesktop
 
                 doorTransomGlassTypesRow.Cells.Add(doorTransomGlassTypesLBLCell);
                 doorTransomGlassTypesRow.Cells.Add(doorTransomGlassTypesDDLCell);
+
+                #endregion
+
+                #region Table:# Row Door Kickplate (tblDoorDetails)
+
+                doorKickplateLBLCell.Controls.Add(doorKickplateLBL);
+                doorKickplateDDLCell.Controls.Add(doorKickplateDDL);
+
+                tblDoorDetails.Rows.Add(doorKickplateRow);
+
+                doorKickplateRow.Cells.Add(doorKickplateLBLCell);
+                doorKickplateRow.Cells.Add(doorKickplateDDLCell);
+
+                #endregion
+
+                #region Table:# Row Door Kickplate Custom (tblDoorDetails)
+
+                doorCustomKickplateLBLCell.Controls.Add(doorCustomKickplateLBL);
+                doorCustomKickplateTXTCell.Controls.Add(doorCustomKickplateTXT);
+                doorCustomKickplateDDLCell.Controls.Add(inchCustomKickplate);
+
+                tblDoorDetails.Rows.Add(doorCustomKickplateRow);
+
+                doorCustomKickplateRow.Cells.Add(doorCustomKickplateLBLCell);
+                doorCustomKickplateRow.Cells.Add(doorCustomKickplateTXTCell);
+                doorCustomKickplateRow.Cells.Add(doorCustomKickplateDDLCell);
 
                 #endregion
 
@@ -1519,13 +1636,13 @@ namespace SunspaceDealerDesktop
 
                 if (title == "NoDoor")
                 {
-                    doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This Opening Only (No Door)'/>"));
-                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With Opening Only (No Doors)'/>"));
+                    doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This Opening Only (No Door)'/>"));
+                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With Opening Only (No Doors)'/>"));
                 }
                 else
                 {
-                doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
-                doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
+                    doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
+                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
                 }
                 //doorUndoButtonCell.Controls.Add(new LiteralControl("<input id='btnUndoLastAddition" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Undo Last Addition Doors'/>"));
 
