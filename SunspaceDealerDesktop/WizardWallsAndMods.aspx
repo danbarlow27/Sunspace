@@ -21,6 +21,38 @@
         var wallStartHeightArray = new Array(); //array to store start height of each wall
         var wallEndHeightArray = new Array(); //array to store end height of each wall
 
+        var wallProperties = [
+            "wallId",
+            "length",
+            "height",
+            "doors",
+            "windows"
+        ]
+        var doorModProperties = [
+            "index",
+            "distanceFromLeft",
+            "type",
+            "style",
+            "vinylTint",
+            "numberOfVents",
+            "transom",
+            "transomVinyl",
+            "transomGlass",
+            "kickplate",
+            "color",
+            "internalGrills",
+            "height",
+            "width",
+            "operator",
+            "boxHeader",
+            "glassTint",
+            "hinge",
+            "screenOptions",
+            "hardware",
+            "swing",
+            "position"
+        ]
+
         var backWall = "south"; //index of the back wall to determine wall heights
         var backWallIndex = 0;
 
@@ -920,8 +952,7 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
             /****LOGICAL AND FUNCTIONALITY VARIABLES****/                    
             var isValid = true;
             var spacesRemaining = null;
-            var doors = new Array();
-            var sortedDoors;
+            var doorMods = new Array();
 
             /****CALCULATION VARIABLES****/
             var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'Length').value);                            
@@ -958,21 +989,34 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
 
             /*Insert the door with the appropriate variables based on drop down selected index*/
             if (positionDropDown === "left") {
-                doors[doors.length] = {
-                    "doorWidth": doorWidth,
+                doorMods[doorMods.length] = {
+                    "index": doorMods.length + 1,
+                    "width": doorWidth,
                     "distanceFromLeft": 0
                 };
             }
             else if (positionDropDown === "right") {
-                doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usableSpace - doorWidth };
+                doorMods[doorMods.length] = {
+                    "index": doorMods.length + 1,
+                    "width": doorWidth,
+                    "distanceFromLeft": usableSpace - doorWidth
+                };
             }
             else if (positionDropDown === "center") {
-                doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usableSpace / 2 - doorWidth / 2 };
+                doorMods[doorMods.length] = {
+                    "index": doorMods.length + 1,
+                    "width": doorWidth,
+                    "distanceFromLeft": usableSpace / 2 - doorWidth / 2
+                };
             }
             else if (positionDropDown === "cPosition") {
                 if (!isNaN(doorCustomPosition)) {
                     //alert("Custom " + doorCustomPosition);
-                    doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": doorCustomPosition };
+                    doorMods[doorMods.length] = {
+                        "index": doorMods.length + 1,
+                        "width": doorWidth,
+                        "distanceFromLeft": doorCustomPosition
+                    };
                 }
                 else {
                     isValid = false;
@@ -983,20 +1027,20 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
             //Validation of blank non-custom field passed
             if (isValid) {
 
-                //Updates doors array from the appropriate index in wallDoors array                
-                updateDoorsArray(doors, wallNumber);
+                //Updates doorMods array from the appropriate index in walldoorMods array                
+                updateDoorModsArray(doorMods, wallNumber);
 
-                //Update sortedDoors by sorting most recent addition into previous array
-                sortedDoors = sortDoorsLeftToRight(doors);
+                //Update doorMods by sorting most recent addition into previous array
+                doorMods = sortDoorModsLeftToRight(doorMods);
 
                 //Valid door was entered, perform various functions
-                if (checkQuestion3(sortedDoors, spacesRemaining, usableSpace)) {
+                if (checkQuestion3(doorMods, spacesRemaining, usableSpace)) {
 
                     //Update spacesRemaining array
-                    spacesRemaining = availableSpacesArrayUpdate(usableSpace, sortedDoors);
+                    spacesRemaining = availableSpacesArrayUpdate(usableSpace, doorMods);
 
                     //Update total space left in the wall
-                    var space = totalSpaceLeftInWall(usableSpace, sortedDoors);
+                    var space = totalSpaceLeftInWall(usableSpace, doorMods);
 
                     //Block to add content to the pager
                     $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
@@ -1007,44 +1051,43 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                     pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerHTML).substr(14, 2) + " Doors";
 
                     //Display appropriate message and controls within the pager
-                    updateDoorPager(sortedDoors, type, wallNumber);
+                    updateDoorPager(doorMods, type, wallNumber);
 
                     //Update drop downs based on selected value
                     updateDoorDropDowns(positionDropDown, wallNumber, true);
 
-                    //Update wallDoors array with most current addition
-                    updateWallsArray(wallNumber, usableSpace, sortedDoors, spacesRemaining)
+                    //Update walldoorMods array with most current addition
+                    updateWallsArray(wallNumber, usableSpace, doorMods, spacesRemaining)
 
                 }                      
             }
         }
         
         /**
-        *fillWallWithDoors
-        *This function is used to fill the wall with as may doors as possible, they'll be centered and
+        *fillWallWithdoorMods
+        *This function is used to fill the wall with as may doorMods as possible, they'll be centered and
         *the ends will be filler
         *@param wallNumber - holds an integer to know which wall is currently being affected
         *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
         */
-        function fillWallWithDoors(wallNumber, type) {    
+        function fillWallWithDoorMods(wallNumber, type) {    
             
             var isValid = true;
 
-            for (var wallDoorsCount = 0; wallDoorsCount < wallDoors.length; wallDoorsCount++) {
+            for (var wallDoorModsCount = 0; wallDoorModsCount < wallDoors.length; wallDoorModsCount++) {
 
-                if (wallDoors[wallDoorsCount].wallId == wallNumber) {
+                if (wallDoors[wallDoorModsCount].wallId == wallNumber) {
 
-                    if (wallDoors[wallDoorsCount].doorsSorted.length > 0) {
+                    if (wallDoors[wallDoorModsCount].doorsSorted.length > 0) {
                         isValid = false;
-                        alert("To fill the wall no doors can exist, please delete all existing doors");
+                        alert("To fill the wall no doorMods can exist, please delete all existing doorMods");
                     }
                 }
             }
             if (isValid) {
-
                 
                 var spacesRemaining = new Array();
-                var doors = new Array();
+                var doorMods = new Array();
 
                 /****PAGER VARIABLES****/
                 var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wallNumber);
@@ -1067,23 +1110,23 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                     doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false, wallNumber));
                 }                
 
-                var numberOfDoors = parseInt(usableSpace / doorWidth);
+                var numberOfdoorMods = parseInt(usableSpace / doorWidth);
 
-                spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": (usableSpace - (doorWidth * numberOfDoors)) / 2 };
-                spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorWidth * numberOfDoors + ((usableSpace - (doorWidth * numberOfDoors)) / 2), "space": (usableSpace - (doorWidth * numberOfDoors)) / 2 };
+                spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": (usableSpace - (doorWidth * numberOfdoorMods)) / 2 };
+                spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorWidth * numberOfdoorMods + ((usableSpace - (doorWidth * numberOfdoorMods)) / 2), "space": (usableSpace - (doorWidth * numberOfdoorMods)) / 2 };
 
-                for (var doorCount = 0; doorCount < numberOfDoors; doorCount++) {
-                    doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": spacesRemaining[0].space + (doorCount * doorWidth) };
+                for (var doorCount = 0; doorCount < numberOfdoorMods; doorCount++) {
+                    doorMods[doorMods.length] = { "width": doorWidth, "distanceFromLeft": spacesRemaining[0].space + (doorCount * doorWidth) };
                 }
 
-                //Updates doors array from the appropriate index in wallDoors array
-                updateDoorsArray(doors, wallNumber);               
+                //Updates doorMods array from the appropriate index in walldoorMods array
+                updateDoorModsArray(doorMods, wallNumber);               
 
-                //Update sortedDoors by sorting most recent addition into previous array
-                sortedDoors = sortDoorsLeftToRight(doors);
+                //Update doorMods by sorting most recent addition into previous array
+                doorMods = sortDoorModsLeftToRight(doorMods);
 
                 //Update total space left in the wall
-                var space = totalSpaceLeftInWall(usableSpace, sortedDoors);
+                var space = totalSpaceLeftInWall(usableSpace, doorMods);
 
                 //Block to add content to the pager
                 $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
@@ -1091,7 +1134,7 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                 document.getElementById("wall" + wallNumber + "SpaceRemaining").style.display = "inline";
                 pagerText.setAttribute("style", "display:block;");
                 pagerTextAnswer.setAttribute("style", "display:block");
-                pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerHTML).substr(14, 2) + " Doors";
+                pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerHTML).substr(14, 2) + " doorMods";
 
                 //Display appropriate message and controls within the pager
                 var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallNumber);
@@ -1109,7 +1152,7 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                 var labelForButton = document.createElement("label");
                 labelForButton.id = "lblDeleteDoorFill" + type + "Wall" + wallNumber;
                 labelForButton.setAttribute("for", "btnDeleteDoorFill" + type + "Wall" + wallNumber);
-                labelForButton.innerHTML = "Wall Filled With " + numberOfDoors + " " + type + " Doors";
+                labelForButton.innerHTML = "Wall Filled With " + numberOfdoorMods + " " + type + " doorMods";
 
                 var labelBreakLineForButton = document.createElement("label");
                 labelBreakLineForButton.id = "lblDeleteDoorFillBR" + type + "Wall" + wallNumber;
@@ -1123,8 +1166,8 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                 //Update drop downs based on selected value
                 updateDoorDropDowns("all", wallNumber, true);
 
-                //Update wallDoors array with most current addition
-                updateWallsArray(wallNumber, usableSpace, sortedDoors, spacesRemaining)
+                //Update walldoorMods array with most current addition
+                updateWallsArray(wallNumber, usableSpace, doorMods, spacesRemaining)
                     
             }            
         }
@@ -1135,14 +1178,14 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
         *@param doors - holds an array of doors 
         *@param wallNumber - holds an integer to know which wall is currently being affected
         */
-        function updateDoorsArray(doors, wallNumber) {
+        function updateDoorModsArray(doors, wallNumber) {
             //Load doors array info from wallDoors array
             if (wallDoors.length > 0) {
                 for (var i = 0; i < wallDoors.length; i++) {
                     //Store the index if wallId and wallCount are equal
                     if (wallDoors[i].wallId == wallNumber) {
                         for (var h = 0; h < wallDoors[i].doorsSorted.length; h++) {
-                            doors[doors.length] = { "doorWidth": wallDoors[i].doorsSorted[h].doorWidth, "distanceFromLeft": wallDoors[i].doorsSorted[h].distanceFromLeft };
+                            doors[doors.length] = { "width": wallDoors[i].doorsSorted[h].width, "distanceFromLeft": wallDoors[i].doorsSorted[h].distanceFromLeft };
                         }
                         break;
                     }
@@ -1154,10 +1197,10 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
         *updateWallsArray
         *This function is used to update the wallDoors array
         *@param wallNumber - holds an integer to know which wall is currently being affected
-        *@param sortedDoors - holds an array of sorted doors left to right
+        *@param doorMods - holds an array of sorted doors left to right
         *@param spacesRemaining - holds an array of remaining spaces within the wall
         */
-        function updateWallsArray(wallNumber, wallLength, sortedDoors, spacesRemaining) {
+        function updateWallsArray(wallNumber, wallLength, doorMods, spacesRemaining) {
 
             //Variable to hold wall index to update
             var indexToStoreAt = null;
@@ -1172,29 +1215,29 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
             }
             //If no matches exist, create a new wallDoors object within the array
             if (indexToStoreAt == null) {
-                wallDoors[wallDoors.length] = { "wallId": wallNumber, "wallLength": wallLength, "doorsSorted": sortedDoors, "spaces": spacesRemaining };
+                wallDoors[wallDoors.length] = { "wallId": wallNumber, "wallLength": wallLength, "doorsSorted": doorMods, "spaces": spacesRemaining };
             }
             else {
-                wallDoors[indexToStoreAt] = { "wallId": wallNumber, "wallLength": wallLength, "doorsSorted": sortedDoors, "spaces": spacesRemaining };
+                wallDoors[indexToStoreAt] = { "wallId": wallNumber, "wallLength": wallLength, "doorsSorted": doorMods, "spaces": spacesRemaining };
             }
         }
 
         /**
         *updateDoorPager
         *This function is used to update the pager details based on added or removed (deleted) doors
-        *@param wallSortedDoors - holds an array of sorted doors left to right
+        *@param walldoorMods - holds an array of sorted doors left to right
         *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
         *@param wallNumber - holds an integer to know which wall is currently being affected
         */
-        function updateDoorPager(sortedDoors, type, wallNumber) {
+        function updateDoorPager(doorMods, type, wallNumber) {
             
             var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallNumber);
 
             $("#MainContent_lblQuestion3DoorsInfoWallAnswer" + wallNumber).empty();
 
-            if (sortedDoors.length > 0) {                
+            if (doorMods.length > 0) {                
 
-                for (var childControls = 1; childControls <= sortedDoors.length ; childControls++) {
+                for (var childControls = 1; childControls <= doorMods.length ; childControls++) {
                     //Rename controls and their attributes
                     /****DELETE BUTTON CREATION ADDITION****/
                     var deleteButton = document.createElement("input");
@@ -1310,19 +1353,19 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
         *This function is used to perform certain task when a door is deleted (called on click), remove
         *controls from pager, reset wallDoors[index].spaces to null and same for wallDoors[index].doorsSorted.
         *@param usable - holds the usable length within a wall
-        *@param sortedDoors - holds an array of doors which are in order from left to right
-        *@param indexToCheck - holds an integer of an index in which to get data from sortedDoors
+        *@param doorMods - holds an array of doors which are in order from left to right
+        *@param indexToCheck - holds an integer of an index in which to get data from doorMods
         *@return position - returns a string of the position in which the deleted door belongs to 
         *for dropdown purposes (i.e. left, center, right);
         */
-        function findPosition(usableLength, sortedDoors, indexToCheck) {
+        function findPosition(usableLength, doorMods, indexToCheck) {
             var position = "";
 
-            if (sortedDoors[indexToCheck].distanceFromLeft == 0)
+            if (doorMods[indexToCheck].distanceFromLeft == 0)
                 position = "left";
-            else if (sortedDoors[indexToCheck].distanceFromLeft == (usableLength / 2 - sortedDoors[indexToCheck].doorWidth / 2))
+            else if (doorMods[indexToCheck].distanceFromLeft == (usableLength / 2 - doorMods[indexToCheck].width / 2))
                 position = "center";
-            else if (sortedDoors[indexToCheck].distanceFromLeft == (usableLength - sortedDoors[indexToCheck].doorWidth))
+            else if (doorMods[indexToCheck].distanceFromLeft == (usableLength - doorMods[indexToCheck].width))
                 position = "right";
             else
                 position = "custom";
@@ -1343,68 +1386,68 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
         *sortDoorsLeftToRight
         *This function orders doors from left to right based on the distance from left
         *@param doors - holds an array of unsorted doors
-        *@return sortedDoors - returns an array of sorted doors from left to right
+        *@return doorMods - returns an array of sorted doors from left to right
         */
-        function sortDoorsLeftToRight(doors) {
+        function sortDoorModsLeftToRight(doors) {
 
-            var sortedDoors = new Array();
+            var doorMods = new Array();
 
             //TYPE FUNCTION TO BE MADE: FUNCTONALITY
             //AREA: SORT LEFT TO RIGHT
-            //NECESSARY VARIABLES: doors[], sortedDoors[]
+            //NECESSARY VARIABLES: doors[], doorMods[]
             if (doors.length > 0) {
-                sortedDoors[0] = { "index": 0, "doorWidth": doors[0].doorWidth, "distanceFromLeft": doors[0].distanceFromLeft };
+                doorMods[0] = doors[0];
             }
             for (var i = 1; i < doors.length; i++) {
                 var x;
-                for (x = 0; x < sortedDoors.length; x++) {
-                    if (sortedDoors[x].distanceFromLeft > doors[i].distanceFromLeft) {
-                        sortedDoors.insert(x, { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft });
+                for (x = 0; x < doorMods.length; x++) {
+                    if (doorMods[x].distanceFromLeft > doors[i].distanceFromLeft) {
+                        doorMods.insert(x, doors[i]);
                         break;
                     }
                 }
-                if (x == sortedDoors.length) {
-                    sortedDoors[sortedDoors.length] = { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft };
+                if (x == doorMods.length) {
+                    doorMods[doorMods.length] = doors[i];
                 }
             }
             //ENDAREA: SORT LEFT TO RIGHT
 
-            return sortedDoors;
+            return doorMods;
         }
 
         /**
         *checkQuestion3
         *This function performs validtion on doors added, such as: enough space to add a door,
         *doors overlapping, doors outside of the wall, etc...
-        *@param sortedDoors - holds an array of sorted doors from left to right
+        *@param doorMods - holds an array of sorted doors from left to right
         *@param spacesRemaining - holds an array of remaining spaces within the wall
         *@param usableLength - holds the usable length on the current wall
         *@return isValid - returns whether the entered door(s) have met the validation
         */
-        function checkQuestion3(sortedDoors, spacesRemaining, usableLength) {
+        function checkQuestion3(doorMods, spacesRemaining, usableLength) {
 
             var isValid = true;
 
             //TYPE FUNCTION TO BE MADE: VALIDATION
             //AREA: CHECK OVERLAP AND OUT OF WALL BOUNDS
-            //NECESSARY VARIABLES: sortedDoors[]
-            for (var i = 0; i < sortedDoors.length - 1; i++) {
-                if (sortedDoors[i].distanceFromLeft + sortedDoors[i].doorWidth > sortedDoors[i + 1].distanceFromLeft) {
-                    alert("Doors " + sortedDoors[i].index + " and " + (sortedDoors[i].index + 1) + " overlap");
-                    doors.splice(sortedDoors[i].index, 1);
-                    sortedDoors.splice(sortedDoors[i].index, 1);
+            //NECESSARY VARIABLES: doorMods[]
+            for (var i = 0; i < doorMods.length - 1; i++) {
+                if (doorMods[i].distanceFromLeft + doorMods[i].width > doorMods[i + 1].distanceFromLeft) {
+                    alert("Doors " + doorMods[i].index + " and " + (doorMods[i].index + 1) + " overlap");
+                    doors.splice(doorMods[i].index, 1);
+                    doorMods.splice(doorMods[i].index, 1);
                     isValid = false;
                 }
-                else if (sortedDoors[i + 1].distanceFromLeft >= usableLength) {
-                    alert("Door " + (sortedDoors[i].index + 1) + " is outside of the wall length");
+                else if (doorMods[i + 1].distanceFromLeft >= usableLength) {
+                    alert("Door " + (doorMods[i].index + 1) + " is outside of the wall length");
                     isValid = false;
                 }
-                else if (sortedDoors[i + 1].distanceFromLeft < 0) {
-                    alert("Door " + (sortedDoors[i].index + 1) + "'s position is smaller than zero");
+                else if (doorMods[i + 1].distanceFromLeft < 0) {
+                    alert("Door " + (doorMods[i].index + 1) + "'s position is smaller than zero");
                     isValid = false;
                 }
-                //if (sortedDoors.length == 4 && i == 3) {
-                //    alert("Distance check " + sortedDoors[sortedDoors.length - 1].distanceFromLeft);
+                //if (doorMods.length == 4 && i == 3) {
+                //    alert("Distance check " + doorMods[doorMods.length - 1].distanceFromLeft);
                 //}
             }
             //ENDAREA: CHECK OVERLAP AND OUT OF WALL BOUNDS
@@ -1417,7 +1460,7 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                 for (var j = 0; j < spacesRemaining.length; j++) {
                     //alert(spacesRemaining[j]);
                     //Check all spaces in wall
-                    if (spacesRemaining[j].space > doors[doors.length - 1].doorWidth) {
+                    if (spacesRemaining[j].space > doors[doors.length - 1].width) {
                         goodSpace++;
                     }
                 }
@@ -1490,15 +1533,15 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
         *totalSpaceLeftInWall
         *This function performs calculations to find the total space left in a wall
         *@param usableLength - holds the length of the wall which mods can be put into
-        *@param sortedDoors - holds a door array which are in proper order
+        *@param doorMods - holds a door array which are in proper order
         *@return totalSpace - returns the total space left on a specific wall
         */
-        function totalSpaceLeftInWall(usableLength, sortedDoors) {
+        function totalSpaceLeftInWall(usableLength, doorMods) {
 
             var totalSpace = usableLength;
 
-            for (var wallSpace = 0; wallSpace < sortedDoors.length; wallSpace++)
-                totalSpace -= sortedDoors[wallSpace].doorWidth;
+            for (var wallSpace = 0; wallSpace < doorMods.length; wallSpace++)
+                totalSpace -= doorMods[wallSpace].width;
 
             return totalSpace;
         }
@@ -1507,42 +1550,42 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
         *availableSpacesArrayUpdate
         *This function is used to update remainingSpaces array
         *@param usableLength - holds the length of the wall which mods can be put into
-        *@param sortedDoors - holds a door array which are in proper order
+        *@param doorMods - holds a door array which are in proper order
         */
-        function availableSpacesArrayUpdate(usableLength, sortedDoors) {
+        function availableSpacesArrayUpdate(usableLength, doorMods) {
 
             var spacesRemaining = new Array();
 
-            if (sortedDoors.length == 0) {
+            if (doorMods.length == 0) {
                 spacesRemaining[spacesRemaining.length] = null;
             }
             else {
                 //Block to store remaining spaces between various door(s)
-                if (sortedDoors[0].distanceFromLeft > 0 && sortedDoors.length > 1) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
-                    for (var doorsLoop = 0; doorsLoop < sortedDoors.length - 1; doorsLoop++) {
-                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft, "space": sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft) };
+                if (doorMods[0].distanceFromLeft > 0 && doorMods.length > 1) {
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": doorMods[0].distanceFromLeft };
+                    for (var doorsLoop = 0; doorsLoop < doorMods.length - 1; doorsLoop++) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[doorsLoop].width + doorMods[doorsLoop].distanceFromLeft, "space": doorMods[doorsLoop + 1].distanceFromLeft - (doorMods[doorsLoop].width + doorMods[doorsLoop].distanceFromLeft) };
                     }
                 }
-                else if (sortedDoors.length == 1) {
-                    if (sortedDoors[0].distanceFromLeft == 0) {
-                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].doorWidth, "space": usableLength - sortedDoors[0].doorWidth };
+                else if (doorMods.length == 1) {
+                    if (doorMods[0].distanceFromLeft == 0) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[0].width, "space": usableLength - doorMods[0].width };
                     }
-                    else if (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth == usableLength) {
-                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": usableLength - sortedDoors[0].doorWidth };
+                    else if (doorMods[0].distanceFromLeft + doorMods[0].width == usableLength) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": usableLength - doorMods[0].width };
                     }
-                    else if (sortedDoors[0].distanceFromLeft > 0) {
-                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
-                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth, "space": usableLength - (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth) };
+                    else if (doorMods[0].distanceFromLeft > 0) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": doorMods[0].distanceFromLeft };
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[0].distanceFromLeft + doorMods[0].width, "space": usableLength - (doorMods[0].distanceFromLeft + doorMods[0].width) };
                     }
                 }
                 else {
                     //var doorsLoop;
-                    for (var doorsLoop = 0; doorsLoop < sortedDoors.length - 1; doorsLoop++) {
-                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft, "space": sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft) };
+                    for (var doorsLoop = 0; doorsLoop < doorMods.length - 1; doorsLoop++) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[doorsLoop].width + doorMods[doorsLoop].distanceFromLeft, "space": doorMods[doorsLoop + 1].distanceFromLeft - (doorMods[doorsLoop].width + doorMods[doorsLoop].distanceFromLeft) };
                     }
-                    if (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth < usableLength) {
-                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth, "space": usableLength - (sortedDoors[sortedDoors.length - 1].distanceFromLeft + sortedDoors[sortedDoors.length - 1].doorWidth) };
+                    if (doorMods[doorMods.length - 1].distanceFromLeft + doorMods[doorMods.length - 1].width < usableLength) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[doorMods.length - 1].distanceFromLeft + doorMods[doorMods.length - 1].width, "space": usableLength - (doorMods[doorMods.length - 1].distanceFromLeft + doorMods[doorMods.length - 1].width) };
                     }
                 }
             }
