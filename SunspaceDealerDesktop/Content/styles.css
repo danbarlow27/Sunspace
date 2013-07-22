@@ -500,12 +500,15 @@ input[type="radio"]:checked + label:active {
     float: left;    
 }
 
-#paging-wrapper {
-    background: #f6f6f6;
-    padding: 10px 10px 0;
+#sidebar {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+#paging-wrapper {
+    background: #f6f6f6;
+    padding: 10px 10px 0;    
     overflow-y: auto;
 }
 
@@ -571,8 +574,8 @@ input[type="radio"]:checked + label:active {
     font-style: italic;
     line-height: 1em;
     color: #fa0000;
-    width: 70%;
-    margin: 10px 0 0 5px;
+    width: 100%;
+    margin-top: 10px;
     display: inline-block;
 }
 
