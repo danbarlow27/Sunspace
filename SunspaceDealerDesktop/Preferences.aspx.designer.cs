@@ -958,6 +958,15 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txt100KneewallHeight;
         
         /// <summary>
+        /// ddl100KneewallHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl100KneewallHeight;
+        
+        /// <summary>
         /// lbl100KneewallType control.
         /// </summary>
         /// <remarks>
@@ -1037,6 +1046,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt100TransomHeight;
+        
+        /// <summary>
+        /// ddl100TransomHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl100TransomHeight;
         
         /// <summary>
         /// lbl100TransomType control.
@@ -1903,6 +1921,15 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txt200KneewallHeight;
         
         /// <summary>
+        /// ddl200KneewallHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl200KneewallHeight;
+        
+        /// <summary>
         /// lbl200KneewallType control.
         /// </summary>
         /// <remarks>
@@ -1982,6 +2009,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt200TransomHeight;
+        
+        /// <summary>
+        /// ddl200TransomHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl200TransomHeight;
         
         /// <summary>
         /// lbl200TransomType control.
@@ -2848,6 +2884,15 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txt300KneewallHeight;
         
         /// <summary>
+        /// ddl300KneewallHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl300KneewallHeight;
+        
+        /// <summary>
         /// lbl300KneewallType control.
         /// </summary>
         /// <remarks>
@@ -2927,6 +2972,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt300TransomHeight;
+        
+        /// <summary>
+        /// ddl300TransomHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl300TransomHeight;
         
         /// <summary>
         /// lbl300TransomType control.
@@ -3793,6 +3847,15 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txt400KneewallHeight;
         
         /// <summary>
+        /// ddl400KneewallHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl400KneewallHeight;
+        
+        /// <summary>
         /// lbl400KneewallType control.
         /// </summary>
         /// <remarks>
@@ -3872,6 +3935,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt400TransomHeight;
+        
+        /// <summary>
+        /// ddl400TransomHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl400TransomHeight;
         
         /// <summary>
         /// lbl400TransomType control.

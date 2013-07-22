@@ -84,12 +84,14 @@
                 }
             }       
 
+            MoveValuesToHiddenDivs();
              //now that colours have cascading we still need to validate the slide
             //newProjectCheckQuestion4();
         }
 
         function MoveValuesToHiddenDivs()
         {
+            console.log("Moving");
             //general
             document.getElementById("<%=hidInstallationType.ClientID%>").value = $('#<%=ddlInstallationType.ClientID%>').val();
             document.getElementById("<%=hidModelNumber.ClientID%>").value = $('#<%=ddlModelNumber.ClientID%>').val();
@@ -294,6 +296,7 @@
 
         function ValidateNumericInput() {
             MoveValuesToHiddenDivs();
+            console.log("Validating");
 
             var errorMessage = "";
             var isValid = true;
@@ -340,7 +343,7 @@
                 isValid = false;
             }
             try {
-                parseInt(defaultFiller300)
+                var defaultFiller300Numeric = parseInt(defaultFiller300);
             }
             catch (err) {
                 isValid = false;
@@ -354,7 +357,7 @@
                 isValid = false;
             }
             try {
-                parseInt(defaultFiller400)
+                var defaultFiller400Numeric = parseInt(defaultFiller400);
             }
             catch (err) {
                 isValid = false;
@@ -364,179 +367,180 @@
             }
 
             //markup
+            //100
             var markup100 = document.getElementById("<%=hid100Markup.ClientID%>").value;
-            //100
-            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
-            if (defaultFiller100 == "") {
+            if (markup100 == "") {
                 isValid = false;
             }
             try {
-                parseInt(defaultFiller100)
+                var markup100Numeric = parseInt(markup100);
             }
             catch (err) {
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Default Filler\n";
+                errorMessage += "Error in Model 100 - Markup\n";
             }
-            //100
-            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
-            if (defaultFiller100 == "") {
+            //200
+            var markup200 = document.getElementById("<%=hid200Markup.ClientID%>").value;
+            if (markup200 == "") {
                 isValid = false;
             }
             try {
-                parseInt(defaultFiller100)
+                var markup200Numeric = parseInt(markup200);
             }
             catch (err) {
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Default Filler\n";
+                errorMessage += "Error in Model 200 - Markup\n";
             }
-            //100
-            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
-            if (defaultFiller100 == "") {
+            //300
+            var markup300 = document.getElementById("<%=hid300Markup.ClientID%>").value;
+            if (markup300 == "") {
                 isValid = false;
             }
             try {
-                parseInt(defaultFiller100)
+                var markup300Numeric = parseInt(markup300);
             }
             catch (err) {
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Default Filler\n";
+                errorMessage += "Error in Model 300 - Markup\n";
             }
-            //100
-            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
-            if (defaultFiller100 == "") {
+            //400
+            var markup400 = document.getElementById("<%=hid400Markup.ClientID%>").value;
+            if (markup400 == "") {
                 isValid = false;
             }
             try {
-                parseInt(defaultFiller100)
+                var markup400Numeric = parseInt(markup400);
             }
             catch (err) {
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Default Filler\n";
+                errorMessage += "Error in Model 400 - Markup\n";
             }
+
             //kneewall height
+            //100
             var kneewallHeight100 = document.getElementById("<%=hid100KneewallHeight.ClientID%>").value;
-            //100
-            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
-            if (defaultFiller100 == "") {
+            if (kneewallHeight100 == "") {
                 isValid = false;
             }
             try {
-                parseInt(defaultFiller100)
+                var kneewallHeight100Numeric = parseInt(kneewallHeight100);
             }
             catch (err) {
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Default Filler\n";
+                errorMessage += "Error in Model 100 - Kneewall Height Filler\n";
             }
-            //100
-            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
-            if (defaultFiller100 == "") {
+            //200
+            var kneewallHeight200 = document.getElementById("<%=hid200KneewallHeight.ClientID%>").value;
+            if (kneewallHeight200 == "") {
                 isValid = false;
             }
             try {
-                parseInt(defaultFiller100)
+                var kneewallHeight200Numeric = parseInt(kneewallHeight200);
             }
             catch (err) {
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Default Filler\n";
+                errorMessage += "Error in Model 200 - Kneewall Height Filler\n";
             }
-            //100
-            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
-            if (defaultFiller100 == "") {
+            //300
+            var kneewallHeight300 = document.getElementById("<%=hid300KneewallHeight.ClientID%>").value;
+            if (kneewallHeight300 == "") {
                 isValid = false;
             }
             try {
-                parseInt(defaultFiller100)
+                var kneewallHeight300Numeric = parseInt(kneewallHeight300);
             }
             catch (err) {
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Default Filler\n";
+                errorMessage += "Error in Model 300 - Kneewall Height Filler\n";
             }
-            //100
-            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
-            if (defaultFiller100 == "") {
+            //400
+            var kneewallHeight400 = document.getElementById("<%=hid400KneewallHeight.ClientID%>").value;
+            if (kneewallHeight400 == "") {
                 isValid = false;
             }
             try {
-                parseInt(defaultFiller100)
+                var kneewallHeight400Numeric = parseInt(kneewallHeight400);
             }
             catch (err) {
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Default Filler\n";
+                errorMessage += "Error in Model 400 - Kneewall Height Filler\n";
             }
+
             //transom height
+            //100
             var transomHeight100 = document.getElementById("<%=hid100TransomHeight.ClientID%>").value;
-            //100
-            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
-            if (defaultFiller100 == "") {
+            if (transomHeight100 == "") {
                 isValid = false;
             }
             try {
-                parseInt(defaultFiller100)
+                var transomHeight100Numeric = parseInt(transomHeight100);
             }
             catch (err) {
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Default Filler\n";
+                errorMessage += "Error in Model 100 - Transom Height\n";
             }
-            //100
-            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
-            if (defaultFiller100 == "") {
+            //200
+            var transomHeight200 = document.getElementById("<%=hid200TransomHeight.ClientID%>").value;
+            if (transomHeight200 == "") {
                 isValid = false;
             }
             try {
-                parseInt(defaultFiller100)
+                var transomHeight200Numeric = parseInt(transomHeight200);
             }
             catch (err) {
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Default Filler\n";
+                errorMessage += "Error in Model 200 - Transom Height\n";
             }
-            //100
-            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
-            if (defaultFiller100 == "") {
+            //300
+            var transomHeight300 = document.getElementById("<%=hid300TransomHeight.ClientID%>").value;
+            if (transomHeight300 == "") {
                 isValid = false;
             }
             try {
-                parseInt(defaultFiller100)
+                var transomHeight300Numeric = parseInt(transomHeight300);
             }
             catch (err) {
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Default Filler\n";
+                errorMessage += "Error in Model 300 - Transom Height\n";
             }
-            //100
-            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
-            if (defaultFiller100 == "") {
+            //400
+            var transomHeight400 = document.getElementById("<%=hid400TransomHeight.ClientID%>").value;
+            if (transomHeight400 == "") {
                 isValid = false;
             }
             try {
-                parseInt(defaultFiller100)
+                var transomHeight400Numeric = parseInt(transomHeight400);
             }
             catch (err) {
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Default Filler\n";
+                errorMessage += "Error in Model 400 - Transom Height\n";
             }
+
+            document.getElementById("<%=lblError.ClientID%>").value = errorMessage;
         }
     </script>
     <div>
@@ -579,7 +583,7 @@
                                                     <li>
                                                         <%-- Installation Type --%>
                                                         <asp:Label ID="lblInstallationType" runat="server" Text="Installation Type:"></asp:Label>
-                                                        <asp:DropDownList ID="ddlInstallationType" OnSelectedIndexChanged="MoveValuesToHiddenDivs()" runat="server"></asp:DropDownList>
+                                                        <asp:DropDownList ID="ddlInstallationType" runat="server"></asp:DropDownList>
                                                     </li>
                                                     <li>
                                                         <%-- Model Type --%>
@@ -857,6 +861,7 @@
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl100KneewallHeight" runat="server" Text="Kneewall Height:"></asp:Label>
                                                                                     <asp:TextBox ID="txt100KneewallHeight" runat="server"></asp:TextBox>
+                                                                                    <asp:DropDownList ID="ddl100KneewallHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- Type --%>
@@ -886,6 +891,7 @@
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl100TransomHeight" runat="server" Text="Transom Height:"></asp:Label>
                                                                                     <asp:TextBox ID="txt100TransomHeight" runat="server"></asp:TextBox>
+                                                                                    <asp:DropDownList ID="ddl100TransomHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- style --%>
@@ -1194,6 +1200,7 @@
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl200KneewallHeight" runat="server" Text="Kneewall Height:"></asp:Label>
                                                                                     <asp:TextBox ID="txt200KneewallHeight" runat="server"></asp:TextBox>
+                                                                                    <asp:DropDownList ID="ddl200KneewallHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- Type --%>
@@ -1223,6 +1230,7 @@
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl200TransomHeight" runat="server" Text="Transom Height:"></asp:Label>
                                                                                     <asp:TextBox ID="txt200TransomHeight" runat="server"></asp:TextBox>
+                                                                                    <asp:DropDownList ID="ddl200TransomHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- style --%>
@@ -1532,6 +1540,7 @@
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl300KneewallHeight" runat="server" Text="Kneewall Height:"></asp:Label>
                                                                                     <asp:TextBox ID="txt300KneewallHeight" runat="server"></asp:TextBox>
+                                                                                    <asp:DropDownList ID="ddl300KneewallHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- Type --%>
@@ -1561,6 +1570,7 @@
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl300TransomHeight" runat="server" Text="Transom Height:"></asp:Label>
                                                                                     <asp:TextBox ID="txt300TransomHeight" runat="server"></asp:TextBox>
+                                                                                    <asp:DropDownList ID="ddl300TransomHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- style --%>
@@ -1870,6 +1880,7 @@
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl400KneewallHeight" runat="server" Text="Kneewall Height:"></asp:Label>
                                                                                     <asp:TextBox ID="txt400KneewallHeight" runat="server"></asp:TextBox>
+                                                                                    <asp:DropDownList ID="ddl400KneewallHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- Type --%>
@@ -1899,6 +1910,7 @@
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl400TransomHeight" runat="server" Text="Transom Height:"></asp:Label>
                                                                                     <asp:TextBox ID="txt400TransomHeight" runat="server"></asp:TextBox>
+                                                                                    <asp:DropDownList ID="ddl400TransomHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
                                                                                     <%-- style --%>

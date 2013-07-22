@@ -31,6 +31,7 @@ namespace SunspaceDealerDesktop
             ListItem lst34 = new ListItem("3/4", ".75");
             ListItem lst78 = new ListItem("7/8", ".875");
 
+            #region Sub-inch DDL Fills
             ddl100DefaultFiller.Items.Add(lst0);
             ddl100DefaultFiller.Items.Add(lst18);
             ddl100DefaultFiller.Items.Add(lst14);
@@ -66,6 +67,79 @@ namespace SunspaceDealerDesktop
             ddl400DefaultFiller.Items.Add(lst58);
             ddl400DefaultFiller.Items.Add(lst34);
             ddl400DefaultFiller.Items.Add(lst78);
+
+            ddl100KneewallHeight.Items.Add(lst0);
+            ddl100KneewallHeight.Items.Add(lst18);
+            ddl100KneewallHeight.Items.Add(lst14);
+            ddl100KneewallHeight.Items.Add(lst38);
+            ddl100KneewallHeight.Items.Add(lst12);
+            ddl100KneewallHeight.Items.Add(lst58);
+            ddl100KneewallHeight.Items.Add(lst34);
+            ddl100KneewallHeight.Items.Add(lst78);
+
+            ddl100TransomHeight.Items.Add(lst0);
+            ddl100TransomHeight.Items.Add(lst18);
+            ddl100TransomHeight.Items.Add(lst14);
+            ddl100TransomHeight.Items.Add(lst38);
+            ddl100TransomHeight.Items.Add(lst12);
+            ddl100TransomHeight.Items.Add(lst58);
+            ddl100TransomHeight.Items.Add(lst34);
+            ddl100TransomHeight.Items.Add(lst78);
+
+            ddl200KneewallHeight.Items.Add(lst0);
+            ddl200KneewallHeight.Items.Add(lst18);
+            ddl200KneewallHeight.Items.Add(lst14);
+            ddl200KneewallHeight.Items.Add(lst38);
+            ddl200KneewallHeight.Items.Add(lst12);
+            ddl200KneewallHeight.Items.Add(lst58);
+            ddl200KneewallHeight.Items.Add(lst34);
+            ddl200KneewallHeight.Items.Add(lst78);
+
+            ddl200TransomHeight.Items.Add(lst0);
+            ddl200TransomHeight.Items.Add(lst18);
+            ddl200TransomHeight.Items.Add(lst14);
+            ddl200TransomHeight.Items.Add(lst38);
+            ddl200TransomHeight.Items.Add(lst12);
+            ddl200TransomHeight.Items.Add(lst58);
+            ddl200TransomHeight.Items.Add(lst34);
+            ddl200TransomHeight.Items.Add(lst78);
+
+            ddl300KneewallHeight.Items.Add(lst0);
+            ddl300KneewallHeight.Items.Add(lst18);
+            ddl300KneewallHeight.Items.Add(lst14);
+            ddl300KneewallHeight.Items.Add(lst38);
+            ddl300KneewallHeight.Items.Add(lst12);
+            ddl300KneewallHeight.Items.Add(lst58);
+            ddl300KneewallHeight.Items.Add(lst34);
+            ddl300KneewallHeight.Items.Add(lst78);
+
+            ddl300TransomHeight.Items.Add(lst0);
+            ddl300TransomHeight.Items.Add(lst18);
+            ddl300TransomHeight.Items.Add(lst14);
+            ddl300TransomHeight.Items.Add(lst38);
+            ddl300TransomHeight.Items.Add(lst12);
+            ddl300TransomHeight.Items.Add(lst58);
+            ddl300TransomHeight.Items.Add(lst34);
+            ddl300TransomHeight.Items.Add(lst78);
+
+            ddl400KneewallHeight.Items.Add(lst0);
+            ddl400KneewallHeight.Items.Add(lst18);
+            ddl400KneewallHeight.Items.Add(lst14);
+            ddl400KneewallHeight.Items.Add(lst38);
+            ddl400KneewallHeight.Items.Add(lst12);
+            ddl400KneewallHeight.Items.Add(lst58);
+            ddl400KneewallHeight.Items.Add(lst34);
+            ddl400KneewallHeight.Items.Add(lst78);
+
+            ddl400TransomHeight.Items.Add(lst0);
+            ddl400TransomHeight.Items.Add(lst18);
+            ddl400TransomHeight.Items.Add(lst14);
+            ddl400TransomHeight.Items.Add(lst38);
+            ddl400TransomHeight.Items.Add(lst12);
+            ddl400TransomHeight.Items.Add(lst58);
+            ddl400TransomHeight.Items.Add(lst34);
+            ddl400TransomHeight.Items.Add(lst78);
+            #endregion
 
             #region General Preferences
             for (int i = 0; i < Constants.INSTALLATION_TYPES.Count(); i++)
@@ -759,7 +833,7 @@ namespace SunspaceDealerDesktop
                     //set general preferences
                     ddlInstallationType.SelectedValue = aReader[0].ToString();
                     ddlModelNumber.SelectedValue = aReader[1].ToString();
-                    ddlLayoutDefault.SelectedValue = aReader[2].ToString();
+                    ddlLayout.SelectedValue = aReader[2].ToString();
 
                     //if cutpitch is true, check the checkbox
                     if (aReader[3].ToString() == "1")
@@ -1024,6 +1098,198 @@ namespace SunspaceDealerDesktop
                     }
                 }
             }
+            #endregion
+
+            #region OnChange Binding
+            #region General
+            ddlInstallationType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddlModelNumber.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddlLayout.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            #endregion          
+
+            #region 100
+            ddl100DefaultFiller.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl100FrameColour.Attributes.Add("onChange", "return preferencesCascadeColours(100);");
+            ddl100InteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100InteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100ExteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100ExteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl100DoorType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100DoorStyle.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100DoorHinge.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100DoorSwing.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100DoorHardware.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100DoorColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100DoorGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100DoorVinylTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100DoorScreenType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl100WindowType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100WindowGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100WindowVinylTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100WindowScreenType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl100SunshadeValanceColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100SunshadeFabricColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100SunshadeOpenness.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl100RoofType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100RoofThickness.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100RoofInteriorSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100RoofExteriorSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl100FloorThickness.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl100KneewallType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100KneewallHeight.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100KneewallGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl100TransomType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100TransomHeight.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100TransomScreenType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100TransomGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl100TransomVinylTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            #endregion
+
+            #region 200
+            ddl200DefaultFiller.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl200FrameColour.Attributes.Add("onChange", "return preferencesCascadeColours(200);");
+            ddl200InteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200InteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200ExteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200ExteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl200DoorType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200DoorStyle.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200DoorHinge.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200DoorSwing.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200DoorHardware.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200DoorColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200DoorGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200DoorVinylTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200DoorScreenType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl200WindowType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200WindowGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200WindowVinylTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200WindowScreenType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl200SunshadeValanceColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200SunshadeFabricColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200SunshadeOpenness.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl200RoofType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200RoofThickness.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200RoofInteriorSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200RoofExteriorSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl200FloorThickness.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl200KneewallType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200KneewallHeight.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200KneewallGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl200TransomType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200TransomHeight.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200TransomScreenType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200TransomGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl200TransomVinylTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            #endregion
+
+            #region 300
+            ddl300DefaultFiller.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl300FrameColour.Attributes.Add("onChange", "return preferencesCascadeColours(300);");
+            ddl300InteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300InteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300ExteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300ExteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl300DoorType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300DoorStyle.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300DoorHinge.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300DoorSwing.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300DoorHardware.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300DoorColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300DoorGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300DoorVinylTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300DoorScreenType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl300WindowType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300WindowGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300WindowVinylTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300WindowScreenType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl300SunshadeValanceColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300SunshadeFabricColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300SunshadeOpenness.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl300RoofType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300RoofThickness.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300RoofInteriorSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300RoofExteriorSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl300FloorThickness.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl300KneewallType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300KneewallHeight.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300KneewallGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl300TransomType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300TransomHeight.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300TransomScreenType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300TransomGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl300TransomVinylTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            #endregion
+
+            #region 400
+            ddl400DefaultFiller.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl400FrameColour.Attributes.Add("onChange", "return preferencesCascadeColours(400);");
+            ddl400InteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400InteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400ExteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400ExteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl400DoorType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400DoorStyle.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400DoorHinge.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400DoorSwing.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400DoorHardware.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400DoorColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400DoorGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400DoorVinylTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400DoorScreenType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl400WindowType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400WindowGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400WindowVinylTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400WindowScreenType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl400SunshadeValanceColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400SunshadeFabricColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400SunshadeOpenness.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl400RoofType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400RoofThickness.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400RoofInteriorSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400RoofExteriorSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl400FloorThickness.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl400KneewallType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400KneewallHeight.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400KneewallGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+
+            ddl400TransomType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400TransomHeight.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400TransomScreenType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400TransomGlassTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            ddl400TransomVinylTint.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
+            #endregion
             #endregion
         }
 
