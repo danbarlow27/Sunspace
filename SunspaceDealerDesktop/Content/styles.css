@@ -563,6 +563,26 @@ input[type="radio"]:checked + label:active {
 
 
 /******************************************
+ * ERROR MESSAGE DISPLAY
+ ******************************************/
+
+.lblErrorMessage {
+    font-size: .9em;
+    font-style: italic;
+    line-height: 1em;
+    color: #fa0000;
+    width: 70%;
+    margin: 10px 0 0 5px;
+    display: inline-block;
+}
+
+.lblErrorMessage:before {
+    content: "* ";
+}
+
+
+
+/******************************************
  * GLOBAL FIXES
  ******************************************/
  

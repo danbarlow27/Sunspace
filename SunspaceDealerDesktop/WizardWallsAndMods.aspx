@@ -1685,6 +1685,8 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                 </div>
                 <%-- end of div for lenghts tables --%>
 
+                <asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label>
+
                 <%-- button to go to the next question --%>
                 <asp:Button ID="btnQuestion1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
 
