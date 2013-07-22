@@ -807,7 +807,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorHeightDDL = new DropDownList();
                 doorHeightDDL.ID = "ddlDoorHeight" + i + title;
-                doorHeightDDL.Attributes.Add("onchange", "customDimension('" + title + "','Height')");
+                doorHeightDDL.Attributes.Add("onchange", "customDimension('" + i + "','" + title + "','Height')");
                 ListItem eighty = new ListItem("80\" (Default)", "80");
                 ListItem customHeight = new ListItem("Custom", "cHeight");
                 doorHeightDDL.Items.Add(eighty);
@@ -864,7 +864,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorWidthDDL = new DropDownList();
                 doorWidthDDL.ID = "ddlDoorWidth" + i + title;
-                doorWidthDDL.Attributes.Add("onchange", "customDimension('" + title + "','Width')");
+                doorWidthDDL.Attributes.Add("onchange", "customDimension('" + i + "', '" + title + "','Width')");
                 ListItem thirty = new ListItem("30\"", "30");
                 ListItem thirtyTwo = new ListItem("32\"", "32");
                 ListItem thirtyFour = new ListItem("34\"", "34");
@@ -1213,7 +1213,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorPositionDDLDDL = new DropDownList();
                 doorPositionDDLDDL.ID = "ddlDoorPosition" + i + title;
-                doorPositionDDLDDL.Attributes.Add("onchange", "customDimension('" + title + "','Position')");
+                doorPositionDDLDDL.Attributes.Add("onchange", "customDimension('" + i + "', '" + title + "','Position')");
                 ListItem PositionLeft = new ListItem("Left", "left");
                 ListItem PositionCenter = new ListItem("Center", "center");
                 ListItem PositionRight = new ListItem("Right", "right");
@@ -1637,12 +1637,12 @@ namespace SunspaceDealerDesktop
                 if (title == "NoDoor")
                 {
                     doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This Opening Only (No Door)'/>"));
-                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With Opening Only (No Doors)'/>"));
+                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoors(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With Opening Only (No Doors)'/>"));
                 }
                 else
                 {
                     doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
-                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
+                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoors(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
                 }
                 //doorUndoButtonCell.Controls.Add(new LiteralControl("<input id='btnUndoLastAddition" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Undo Last Addition Doors'/>"));
 
@@ -2872,6 +2872,13 @@ namespace SunspaceDealerDesktop
                 //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
                 walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel));
             }
+        }
+
+        protected void btnQuestion4_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Blah1");
+            System.Diagnostics.Debug.WriteLine(Request.Form["Blah1"]);
+            //Console.WriteLine(Session["Blah1"].ToString());                
         }
     }
 }
