@@ -51,8 +51,8 @@ namespace SunspaceDealerDesktop
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
             //Session["coordList"] = "75,425,150,150,E,S/150,150,150,250,P,W/150,350,250,250,P,S/350,350,250,150,P,E/";
             //Session["coordList"] = "62.5,362.5,162.5,162.5,E,S/362.5,175,162.5,350,E,NW/175,175,350,162.5,E,E/175,262.5,287.5,287.5,P,S/262.5,262.5,287.5,237.5,P,E/262.5,125,237.5,237.5,P,N/125,125,237.5,162.5,P,E/";
-            Session["coordList"] = "50,300,250,250,E,S/300,300,250,25,E,E/175,175,250,375,P,W/175,425,375,375,P,S/425,425,375,125,P,E/425,300,125,125,P,N/";
-            //Session["coordList"] = "75,262.5,175,175,E,S/262.5,262.5,175,200,E,W/262.5,425,200,200,E,S/150,150,175,300,P,W/150,350,300,300,P,S/350,350,300,200,P,E/";
+            //Session["coordList"] = "50,300,250,250,E,S/300,300,250,25,E,E/175,175,250,375,P,W/175,425,375,375,P,S/425,425,375,125,P,E/425,300,125,125,P,N/";
+            Session["coordList"] = "75,262.5,175,175,E,S/262.5,262.5,175,200,E,W/262.5,425,200,200,E,S/150,150,175,300,P,W/150,350,300,300,P,S/350,350,300,200,P,E/";
             //Session["coordList"] = "100,412.5,137.5,137.5,E,S/150,150,137.5,287.5,P,W/150,225,287.5,362.5,P,SW/225,312.5,362.5,362.5,P,S/312,387.5,362.5,287.5,P,SE/387.5,387.5,287.5,137.5,P,E/";
             //Session["coordList"] = "112.5,350,112.5,112.5,E,S/350,350,112.5,337.5,E,W/175,175,112.5,262.5,P,W/175,350,262.5,262.5,P,S/";
             /**********************************************************/
@@ -137,7 +137,6 @@ namespace SunspaceDealerDesktop
 
             //do the windows stuff
             windowOptions();
-
 
         }
 
@@ -332,7 +331,6 @@ namespace SunspaceDealerDesktop
             RadioButton wallRadio = new RadioButton();
             wallRadio.ID = "radWall" + i;     //Giving an appropriate id to radio buttons based on current wall
             wallRadio.GroupName = "doorWallRadios";     //Giving an appropriate group name to all wall radio buttons
-            wallRadio.Attributes.Add("onclick", "onWallRadioChange(\"" + i + "\")");
 
             //Label to create clickable area for radio button
             Label wallLabelRadio = new Label();
@@ -358,6 +356,8 @@ namespace SunspaceDealerDesktop
 
             #endregion
 
+            //REGIONS WITHIN THIS REGION TO BE RENAMED APPROPRIATELY
+
             #region Loop to display door types as radio buttons
 
             //For loop to get through all the possible door types: Cabana, French, Patio, Opening Only (No Door)
@@ -366,992 +366,1306 @@ namespace SunspaceDealerDesktop
                 //Conditional operator to set the current door type with the right label
                 string title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
 
-                //If logic to handle model 400's which don't have french doors
                 if (currentModel == "M400" && title == "French")
                 {
-                    //Do nothing
+                    wallDoorOptions.Controls.Add(new LiteralControl("<li style=\"display:none;\">"));
                 }
                 else
                 {
                     //li tag to hold door type radio button and all its content
                     wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
-
-                    //Door type radio button
-                    RadioButton typeRadio = new RadioButton();
-                    typeRadio.ID = "radType" + i + title; //Adding appropriate id to door type radio button
-                    typeRadio.GroupName = "doorTypeRadios";         //Adding group name for all door types
-                    typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
-
-                    //Door type radio button label for clickable area
-                    Label typeLabelRadio = new Label();
-                    typeLabelRadio.AssociatedControlID = "radType" + i + title;   //Tying this label to the radio button
-
-                    //Door type radio button label text
-                    Label typeLabel = new Label();
-                    typeLabel.AssociatedControlID = "radType" + i + title;    //Tying this label to the radio button
-                    if (title == "NoDoor")
-                    {
-                        typeLabel.Text = "Opening Only (No Door)";
-                    }
-                    else
-                    {
-                        typeLabel.Text = title;     //Displaying the proper texted based on current title variable
-                    }
-
-                    wallDoorOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallDoorOptions
-                    wallDoorOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallDoorOptions
-                    wallDoorOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallDoorOptions
-
-                    //New instance of a table for every door type
-                    Table tblDoorDetails = new Table();
-
-                    tblDoorDetails.ID = "tblDoorDetails" + i + title; //Adding appropriate id to the table
-                    tblDoorDetails.CssClass = "tblTextFields";                  //Adding CssClass to the table for styling
-                    
-                    
-                    //Creating cells and controls for rows
-
-                    #region Table:Default Row Title Current Door (tblDoorDetails)
-
-                    TableRow doorTitleRow = new TableRow();
-                    doorTitleRow.ID = "rowDoorTitle" + i + title;
-                    doorTitleRow.Attributes.Add("style", "display:none;");
-                    TableCell doorTitleLBLCell = new TableCell();
-
-                    Label doorTitleLBL = new Label();
-                    doorTitleLBL.ID = "lblDoorTitle" + i + title;
-                    doorTitleLBL.Text = "Select door details:";
-                    doorTitleLBL.Attributes.Add("style", "font-weight:bold;");
-
-                    #endregion
-
-                    #region Table:Second Row Door Style (tblDoorDetails)
-
-                    TableRow doorStyleRow = new TableRow();
-                    doorStyleRow.ID = "rowDoorStyle" + i + title;
-                    doorStyleRow.Attributes.Add("style", "display:none;");
-                    TableCell doorStyleLBLCell = new TableCell();
-                    TableCell doorStyleDDLCell = new TableCell();
-
-                    Label doorStyleLBL = new Label();
-                    doorStyleLBL.ID = "lblDoorStyle" + i + title;
-                    doorStyleLBL.Text = "Door Style";
-
-                    DropDownList doorStyleDDL = new DropDownList();
-                    doorStyleDDL.ID = "ddlDoorStyle" + i + title;
-                    doorStyleDDL.Attributes.Add("onchange", "doorStyle('" + title + "')");
-                    ListItem fullScreen = new ListItem("Full Screen", "fullScreen");
-                    ListItem v4TCabana = new ListItem("Vertical Four Track", "v4TCabana");
-                    ListItem fullView = new ListItem("Full View", "fullView");
-                    ListItem fullViewColonial = new ListItem("Full View Colonial", "fullViewColonial");
-                    ListItem halfLite = new ListItem("Half Lite", "halfLite");
-                    ListItem halfLiteVenting = new ListItem("Half Lite Venting", "halfLiteVenting");
-                    ListItem fullLite = new ListItem("Full Lite", "fullLite");
-                    ListItem halfLiteWithMiniBlinds = new ListItem("Half Lite With Mini Blinds", "halfLiteWithMiniBlinds");
-                    ListItem fullViewWithMiniBlinds = new ListItem("Full View With Mini Blinds", "fullViewWithMiniBlinds");
-                    if (currentModel == "M100")
-                    {
-                        doorStyleDDL.Items.Add(fullScreen);
-                        doorStyleDDL.Items.Add(v4TCabana);
-                    }
-                    else if (currentModel == "M200")
-                    {
-                        //doorStyleDDL.Items.Add(fullScreen);
-                        doorStyleDDL.Items.Add(v4TCabana);
-                        doorStyleDDL.Items.Add(fullView);
-                        doorStyleDDL.Items.Add(fullViewColonial);
-                    }
-                    else if (currentModel == "M300")
-                    {
-                        //doorStyleDDL.Items.Add(fullScreen);
-                        doorStyleDDL.Items.Add(fullView);
-                        doorStyleDDL.Items.Add(fullViewColonial);
-                    }
-                    else
-                    {
-
-                        doorStyleDDL.Items.Add(halfLite);
-                        doorStyleDDL.Items.Add(halfLiteVenting);
-                        doorStyleDDL.Items.Add(fullLite);
-                        doorStyleDDL.Items.Add(halfLiteWithMiniBlinds);
-                        doorStyleDDL.Items.Add(fullViewWithMiniBlinds);
-                    }
-
-                    doorStyleLBL.AssociatedControlID = "ddlDoorStyle" + i + title;
-
-                    #endregion
-
-                    #region Table:Sixteenth Row Door V4T Vinyl Tint (tblDoorDetails)
-
-                    TableRow doorVinylTintRow = new TableRow();
-                    doorVinylTintRow.ID = "rowDoorVinylTint" + i + title;
-                    doorVinylTintRow.Attributes.Add("style", "display:none;");
-                    TableCell doorVinylTintLBLCell = new TableCell();
-                    TableCell doorVinylTintDDLCell = new TableCell();
-
-                    Label doorVinylTintLBL = new Label();
-                    doorVinylTintLBL.ID = "lblDoorVinylTint" + i + title;
-                    doorVinylTintLBL.Text = "Door Vinyl Tint:";
-
-                    DropDownList doorVinylTintDDL = new DropDownList();
-                    doorVinylTintDDL.ID = "ddlVinylTint" + i + title;
-                    ListItem clearVinyl = new ListItem("Clear", "clear");
-                    ListItem smokeGreyVinyl = new ListItem("Smoke Grey", "smokeGrey");
-                    ListItem darkGreyVinyl = new ListItem("Dark Grey", "darkGrey");
-                    ListItem bronzeVinyl = new ListItem("Bronze", "bronze");
-                    ListItem mixedVinyl = new ListItem("Mixed", "mixed");
-                    doorVinylTintDDL.Items.Add(clearVinyl);
-                    doorVinylTintDDL.Items.Add(smokeGreyVinyl);
-                    doorVinylTintDDL.Items.Add(darkGreyVinyl);
-                    doorVinylTintDDL.Items.Add(bronzeVinyl);
-                    doorVinylTintDDL.Items.Add(mixedVinyl);
-
-                    doorVinylTintLBL.AssociatedControlID = "ddlVinylTint" + i + title;
-
-                    #endregion
-
-                    #region Table:Third Row Color of Door (tblDoorDetails)
-
-                    TableRow colorOfDoorRow = new TableRow();
-                    colorOfDoorRow.ID = "rowDoorColor" + i + title;
-                    colorOfDoorRow.Attributes.Add("style", "display:none;");
-                    TableCell colorOfDoorLBLCell = new TableCell();
-                    TableCell colorOfDoorDDLCell = new TableCell();
-
-                    Label colorOfDoorLBL = new Label();
-                    colorOfDoorLBL.ID = "lblDoorColor" + i + title;
-                    colorOfDoorLBL.Text = "Door Color:";
-
-                    DropDownList colorOfDoorDDL = new DropDownList();
-                    colorOfDoorDDL.ID = "ddlDoorColor" + i + title;
-                    ListItem white = new ListItem("White", "white");
-                    ListItem driftwood = new ListItem("Driftwood", "driftwood");
-                    ListItem bronze = new ListItem("Bronze", "bronze");
-                    ListItem green = new ListItem("Green", "green");
-                    ListItem black = new ListItem("Black", "black");
-                    ListItem ivory = new ListItem("Ivory", "ivory");
-                    ListItem cherrywood = new ListItem("Cherrywood", "cherrywood");
-                    ListItem grey = new ListItem("Grey", "grey");
-                    colorOfDoorDDL.Items.Add(white);
-                    colorOfDoorDDL.Items.Add(driftwood);
-                    colorOfDoorDDL.Items.Add(bronze);
-                    colorOfDoorDDL.Items.Add(green);
-                    colorOfDoorDDL.Items.Add(black);
-                    colorOfDoorDDL.Items.Add(ivory);
-                    colorOfDoorDDL.Items.Add(cherrywood);
-                    colorOfDoorDDL.Items.Add(grey);
-
-                    colorOfDoorLBL.AssociatedControlID = "ddlDoorColor" + i + title;
-
-                    #endregion
-
-                    #region Table:Fourth Row Door Height (tblDoorDetails)
-
-                    TableRow doorHeightRow = new TableRow();
-                    doorHeightRow.ID = "rowDoorHeight" + i + title;
-                    doorHeightRow.Attributes.Add("style", "display:none;");
-                    TableCell doorHeightLBLCell = new TableCell();
-                    TableCell doorHeightDDLCell = new TableCell();
-
-                    Label doorHeightLBL = new Label();
-                    doorHeightLBL.ID = "lblDoorHeight" + i + title;
-                    doorHeightLBL.Text = "Height:";
-
-                    DropDownList doorHeightDDL = new DropDownList();
-                    doorHeightDDL.ID = "ddlDoorHeight" + i + title;
-                    doorHeightDDL.Attributes.Add("onchange", "customDimension('" + title + "','Height')");
-                    ListItem eighty = new ListItem("80\" (Default)", "80");
-                    ListItem customHeight = new ListItem("Custom", "cHeight");
-                    doorHeightDDL.Items.Add(eighty);
-                    doorHeightDDL.Items.Add(customHeight);
-
-                    doorHeightLBL.AssociatedControlID = "ddlDoorHeight" + i + title;
-
-                    #endregion
-
-                    #region Table:Sixth Row Door Custom Height (tblDoorDetails)
-
-                    TableRow doorCustomHeightRow = new TableRow();
-                    doorCustomHeightRow.ID = "rowDoorCustomHeight" + i + title;
-                    doorCustomHeightRow.Attributes.Add("style", "display:none;");
-                    TableCell doorCustomHeightLBLCell = new TableCell();
-                    TableCell doorCustomHeightTXTCell = new TableCell();
-                    TableCell doorCustomHeightDDLCell = new TableCell();
-
-                    Label doorCustomHeightLBL = new Label();
-                    doorCustomHeightLBL.ID = "lblDoorCustomHeight" + i + title;
-                    doorCustomHeightLBL.Text = "Custom Height (inches):";
-
-                    TextBox doorCustomHeightTXT = new TextBox();
-                    doorCustomHeightTXT.ID = "txtDoorCustomHeight" + i + title;
-                    doorCustomHeightTXT.CssClass = "txtField txtDoorInput";
-
-                    DropDownList inchCustomHeight = new DropDownList();
-                    inchCustomHeight.ID = "ddlInchCustomHeight" + i + title;
-                    inchCustomHeight.Items.Add(lst0);
-                    inchCustomHeight.Items.Add(lst18);
-                    inchCustomHeight.Items.Add(lst14);
-                    inchCustomHeight.Items.Add(lst38);
-                    inchCustomHeight.Items.Add(lst12);
-                    inchCustomHeight.Items.Add(lst58);
-                    inchCustomHeight.Items.Add(lst34);
-                    inchCustomHeight.Items.Add(lst78);
-
-                    doorCustomHeightLBL.AssociatedControlID = "txtDoorCustomHeight" + i + title;
-
-                    #endregion
-
-                    #region Table:Fifth Row Door Width (tblDoorDetails)
-
-                    TableRow doorWidthRow = new TableRow();
-                    doorWidthRow.ID = "rowDoorWidth" + i + title;
-                    doorWidthRow.Attributes.Add("style", "display:none;");
-                    TableCell doorWidthLBLCell = new TableCell();
-                    TableCell doorWidthDDLCell = new TableCell();
-
-                    Label doorWidthLBL = new Label();
-                    doorWidthLBL.ID = "lblDoorWidth" + i + title;
-                    doorWidthLBL.Text = "Width:";
-
-                    DropDownList doorWidthDDL = new DropDownList();
-                    doorWidthDDL.ID = "ddlDoorWidth" + i + title;
-                    doorWidthDDL.Attributes.Add("onchange", "customDimension('" + title + "','Width')");
-                    ListItem thirty = new ListItem("30\"", "30");
-                    ListItem thirtyTwo = new ListItem("32\"", "32");
-                    ListItem thirtyFour = new ListItem("34\"", "34");
-                    ListItem thirtySix = new ListItem("36\"", "36");
-                    ListItem sixty = new ListItem("60\"", "30");
-                    ListItem seventyTwo = new ListItem("72\"", "36");
-                    ListItem fiveFeet = new ListItem("5'", "60");
-                    ListItem sixFeet = new ListItem("6'", "72");
-                    ListItem sevenFeet = new ListItem("7'", "84");
-                    ListItem eightFeet = new ListItem("8'", "96");
-                    ListItem customWidth = new ListItem("Custom", "cWidth");
-
-                    if (title == "Patio")
-                    {
-                        doorWidthDDL.Items.Add(fiveFeet);
-                        doorWidthDDL.Items.Add(sixFeet);
-                        doorWidthDDL.Items.Add(sevenFeet);
-                        doorWidthDDL.Items.Add(eightFeet);
-                        doorWidthDDL.Items.Add(customWidth);
-                    }
-                    else if (title == "French")
-                    {
-                        doorWidthDDL.Items.Add(sixty);
-                        doorWidthDDL.Items.Add(seventyTwo);
-                        doorWidthDDL.Items.Add(customWidth);
-                    }
-                    else
-                    {
-                        doorWidthDDL.Items.Add(thirty);
-                        doorWidthDDL.Items.Add(thirtyTwo);
-                        doorWidthDDL.Items.Add(thirtyFour);
-                        doorWidthDDL.Items.Add(thirtySix);
-                        doorWidthDDL.Items.Add(customWidth);
-                    }
-
-                    doorWidthLBL.AssociatedControlID = "ddlDoorWidth" + i + title;
-
-                    #endregion
-
-                    #region Table:Seventh Row Door Custom Width (tblDoorDetails)
-
-                    TableRow doorCustomWidthRow = new TableRow();
-                    doorCustomWidthRow.ID = "rowDoorCustomWidth" + i + title;
-                    doorCustomWidthRow.Attributes.Add("style", "display:none;");
-                    TableCell doorCustomWidthLBLCell = new TableCell();
-                    TableCell doorCustomWidthTXTCell = new TableCell();
-                    TableCell doorCustomWidthDDLCell = new TableCell();
-
-                    Label doorCustomWidthLBL = new Label();
-                    doorCustomWidthLBL.ID = "lblDoorCustomWidth" + i + title;
-                    doorCustomWidthLBL.Text = "Custom Width (inches):";
-
-                    TextBox doorCustomWidthTXT = new TextBox();
-                    doorCustomWidthTXT.ID = "txtDoorCustomWidth" + i + title;
-                    doorCustomWidthTXT.CssClass = "txtField txtDoorInput";
-
-                    DropDownList inchCustomWidth = new DropDownList();
-                    inchCustomWidth.ID = "ddlInchCustomWidth" + i + title;
-                    inchCustomWidth.Items.Add(lst0);
-                    inchCustomWidth.Items.Add(lst18);
-                    inchCustomWidth.Items.Add(lst14);
-                    inchCustomWidth.Items.Add(lst38);
-                    inchCustomWidth.Items.Add(lst12);
-                    inchCustomWidth.Items.Add(lst58);
-                    inchCustomWidth.Items.Add(lst34);
-                    inchCustomWidth.Items.Add(lst78);
-
-                    doorCustomWidthLBL.AssociatedControlID = "txtDoorCustomWidth" + i + title;
-
-                    #endregion
-
-                    #region Table:Eight Row Door Primary Operator LHH (tblDoorDetails)
-
-                    TableRow doorOperatorLHHRow = new TableRow();
-                    doorOperatorLHHRow.ID = "rowDoorOperatorLHH" + i + title;
-                    doorOperatorLHHRow.Attributes.Add("style", "display:none;");
-                    TableCell doorOperatorLHHLBLCell = new TableCell();
-                    TableCell doorOperatorLHHRADCell = new TableCell();
-
-                    Label doorOperatorLHHLBLMain = new Label();
-                    doorOperatorLHHLBLMain.ID = "lblDoorOperatorLHHMain" + i + title;
-                    doorOperatorLHHLBLMain.Text = "Primary Operator:";
-
-                    Label doorOperatorLHHLBLRad = new Label();
-                    doorOperatorLHHLBLRad.ID = "lblDoorOperatorRadLHH" + i + title;
-
-                    Label doorOperatorLHHLBL = new Label();
-                    doorOperatorLHHLBL.ID = "lblDoorOperatorLHH" + i + title;
-                    doorOperatorLHHLBL.Text = "LHH";
-
-                    RadioButton doorOperatorLHHRad = new RadioButton();
-                    doorOperatorLHHRad.ID = "radDoorOperatorLHH" + i + title;
-                    doorOperatorLHHRad.GroupName = "PrimaryOperator";
-
-                    doorOperatorLHHLBLRad.AssociatedControlID = "radDoorOperatorLHH" + i + title;
-                    doorOperatorLHHLBL.AssociatedControlID = "radDoorOperatorLHH" + i + title;
-
-                    #endregion
-
-                    #region Table:Ninth Row Door Primary Operator RHH (tblDoorDetails)
-
-                    TableRow doorOperatorRHHRow = new TableRow();
-                    doorOperatorRHHRow.ID = "rowDoorOperatorRHH" + i + title;
-                    doorOperatorRHHRow.Attributes.Add("style", "display:none;");
-                    TableCell doorOperatorRHHLBLCell = new TableCell();
-                    TableCell doorOperatorRHHRADCell = new TableCell();
-
-                    Label doorOperatorRHHLBLRad = new Label();
-                    doorOperatorRHHLBLRad.ID = "lblDoorOperatorRadRHH" + i + title;
-
-                    Label doorOperatorRHHLBL = new Label();
-                    doorOperatorRHHLBL.ID = "lblDoorOperatorRHH" + i + title;
-                    doorOperatorRHHLBL.Text = "RHH";
-
-                    RadioButton doorOperatorRHHRad = new RadioButton();
-                    doorOperatorRHHRad.ID = "radDoorOperatorRHH" + i + title;
-                    doorOperatorRHHRad.GroupName = "PrimaryOperator";
-
-                    doorOperatorRHHLBLRad.AssociatedControlID = "radDoorOperatorRHH" + i + title;
-                    doorOperatorRHHLBL.AssociatedControlID = "radDoorOperatorRHH" + i + title;
-
-                    #endregion
-
-                    #region Table:Tenth Row Door Box Header (tblDoorDetails)
-
-                    TableRow doorBoxHeaderRow = new TableRow();
-                    doorBoxHeaderRow.ID = "rowDoorBoxHeader" + i + title;
-                    doorBoxHeaderRow.Attributes.Add("style", "display:none;");
-                    TableCell doorBoxHeaderLBLCell = new TableCell();
-                    TableCell doorBoxHeaderDDLCell = new TableCell();
-
-                    Label doorBoxHeaderLBL = new Label();
-                    doorBoxHeaderLBL.ID = "lblDoorBoxHeader" + i + title;
-                    doorBoxHeaderLBL.Text = "Box Header Position:";
-
-                    DropDownList doorBoxHeaderDDL = new DropDownList();
-                    doorBoxHeaderDDL.ID = "ddlDoorBoxHeader" + i + title;
-                    ListItem Left = new ListItem("Left", "left");
-                    ListItem Right = new ListItem("Right", "right");
-                    ListItem Both = new ListItem("Both", "both");
-                    ListItem None = new ListItem("None", "none");
-                    doorBoxHeaderDDL.Items.Add(Left);
-                    doorBoxHeaderDDL.Items.Add(Right);
-                    doorBoxHeaderDDL.Items.Add(Both);
-                    doorBoxHeaderDDL.Items.Add(None);
-
-                    doorBoxHeaderLBL.AssociatedControlID = "ddlDoorBoxHeader" + i + title;
-
-                    #endregion
-
-                    #region Table:Twelfth Row Door Number Of Vents (tblDoorDetails)
-
-                    TableRow doorNumberOfVentsRow = new TableRow();
-                    doorNumberOfVentsRow.ID = "rowDoorNumberOfVents" + i + title;
-                    doorNumberOfVentsRow.Attributes.Add("style", "display:none;");
-                    TableCell doorNumberOfVentsLBLCell = new TableCell();
-                    TableCell doorNumberOfVentsDDLCell = new TableCell();
-
-                    Label doorNumberOfVentsLBL = new Label();
-                    doorNumberOfVentsLBL.ID = "lblNumberOfVents" + i + title;
-                    doorNumberOfVentsLBL.Text = "Number Of Vents:";
-
-                    DropDownList doorNumberOfVentsDDL = new DropDownList();
-                    doorNumberOfVentsDDL.ID = "ddlNumberOfVents" + i + title;
-                    ListItem two = new ListItem("2", "2");
-                    ListItem three = new ListItem("3", "3");
-                    ListItem four = new ListItem("4", "4");
-                    doorNumberOfVentsDDL.Items.Add(two);
-                    doorNumberOfVentsDDL.Items.Add(three);
-                    doorNumberOfVentsDDL.Items.Add(four);
-
-                    doorNumberOfVentsLBL.AssociatedControlID = "ddlNumberOfVents" + i + title;
-
-                    #endregion
-
-                    #region Table:Thirteenth Row Door Glass Tint (tblDoorDetails)
-
-                    TableRow doorGlassTintRow = new TableRow();
-                    doorGlassTintRow.ID = "rowDoorGlassTint" + i + title;
-                    doorGlassTintRow.Attributes.Add("style", "display:none;");
-                    TableCell doorGlassTintLBLCell = new TableCell();
-                    TableCell doorGlassTintDDLCell = new TableCell();
-
-                    Label doorGlassTintLBL = new Label();
-                    doorGlassTintLBL.ID = "lblDoorGlassTint" + i + title;
-                    doorGlassTintLBL.Text = "Door Glass Tint:";
-
-                    DropDownList doorGlassTintDDL = new DropDownList();
-                    doorGlassTintDDL.ID = "ddlDoorGlassTint" + i + title;
-                    ListItem clear = new ListItem("Clear", "clear");
-                    ListItem greyTint = new ListItem("Grey", "grey");
-                    ListItem bronzeTint = new ListItem("Bronze", "bronze");
-                    doorGlassTintDDL.Items.Add(clear);
-                    doorGlassTintDDL.Items.Add(grey);
-                    doorGlassTintDDL.Items.Add(bronzeTint);
-
-                    doorGlassTintLBL.AssociatedControlID = "ddlDoorGlassTint" + i + title;
-
-                    #endregion
-
-                    #region Table:Tenth Row Door Hinge LHH (tblDoorDetails)
-
-                    TableRow doorLHHRow = new TableRow();
-                    doorLHHRow.ID = "rowDoorLHH" + i + title;
-                    doorLHHRow.Attributes.Add("style", "display:none;");
-                    TableCell doorLHHLBLCell = new TableCell();
-                    TableCell doorLHHRADCell = new TableCell();
-
-                    Label doorLHHLBLMain = new Label();
-                    doorLHHLBLMain.ID = "lblDoorLHHMain" + i + title;
-                    doorLHHLBLMain.Text = "Hinge placement:";
-
-                    Label doorLHHLBLRad = new Label();
-                    doorLHHLBLRad.ID = "lblLHHRad" + i + title;
-
-                    Label doorLHHLBL = new Label();
-                    doorLHHLBL.ID = "lblLHH" + i + title;
-                    doorLHHLBL.Text = "LHH";
-
-                    RadioButton doorLHHRad = new RadioButton();
-                    doorLHHRad.ID = "radDoorLHH" + i + title;
-                    doorLHHRad.GroupName = "DoorHinge";
-
-                    doorLHHLBLRad.AssociatedControlID = "radDoorLHH" + i + title;
-                    doorLHHLBL.AssociatedControlID = "radDoorLHH" + i + title;
-
-                    #endregion
-
-                    #region Table:Eleventh Row Door Hinge RHH (tblDoorDetails)
-
-                    TableRow doorRHHRow = new TableRow();
-                    doorRHHRow.ID = "rowDoorRHH" + i + title;
-                    doorRHHRow.Attributes.Add("style", "display:none;");
-                    TableCell doorRHHLBLCell = new TableCell();
-                    TableCell doorRHHRADCell = new TableCell();
-
-                    Label doorRHHLBLRad = new Label();
-                    doorRHHLBLRad.ID = "lblDoorRHHRad" + i + title;
-
-                    Label doorRHHLBL = new Label();
-                    doorRHHLBL.ID = "lblDoorRHH" + i + title;
-                    doorRHHLBL.Text = "RHH";
-
-                    RadioButton doorRHHRad = new RadioButton();
-                    doorRHHRad.ID = "radDoorRHH" + i + title;
-                    doorRHHRad.GroupName = "DoorHinge";
-
-                    doorRHHLBLRad.AssociatedControlID = "radDoorRHH" + i + title;
-                    doorRHHLBL.AssociatedControlID = "radDoorRHH" + i + title;
-
-                    #endregion
-
-                    #region Table:Fourteenth Row Door Screen Options (tblDoorDetails)
-
-                    TableRow doorScreenOptionsRow = new TableRow();
-                    doorScreenOptionsRow.ID = "rowDoorScreenOptions" + i + title;
-                    doorScreenOptionsRow.Attributes.Add("style", "display:none;");
-                    TableCell doorScreenOptionsLBLCell = new TableCell();
-                    TableCell doorScreenOptionsDDLCell = new TableCell();
-
-                    Label doorScreenOptionsLBL = new Label();
-                    doorScreenOptionsLBL.ID = "lblDoorScreenOptions" + i + title;
-                    doorScreenOptionsLBL.Text = "Door Screen Option:";
-
-                    DropDownList doorScreenOptionsDDL = new DropDownList();
-                    doorScreenOptionsDDL.ID = "ddlDoorScreenOptions" + i + title;
-                    ListItem betterVueInsect = new ListItem("Better Vue Insect Screen (Default)", "betterVueInsectScreen");
-                    ListItem noSeeUms = new ListItem("No See Ums 20x20 Mesh", "noSeeUms");
-                    ListItem solarInsectScreening = new ListItem("Solar Insect Screening", "solarInsectScreening");
-                    ListItem tuffScreen = new ListItem("Tuff Screen", "tuffScreen");
-                    ListItem noScreen = new ListItem("No Screen", "noScreen");
-                    doorScreenOptionsDDL.Items.Add(betterVueInsect);
-                    doorScreenOptionsDDL.Items.Add(noSeeUms);
-                    doorScreenOptionsDDL.Items.Add(solarInsectScreening);
-                    doorScreenOptionsDDL.Items.Add(tuffScreen);
-                    doorScreenOptionsDDL.Items.Add(noScreen);
-
-                    doorScreenOptionsLBL.AssociatedControlID = "ddlDoorScreenOptions" + i + title;
-
-                    #endregion
-
-                    #region Table:Fifteenth Row Door Hardware (tblDoorDetails)
-
-                    TableRow doorHardwareRow = new TableRow();
-                    doorHardwareRow.ID = "rowDoorHardware" + i + title;
-                    doorHardwareRow.Attributes.Add("style", "display:none;");
-                    TableCell doorHardwareLBLCell = new TableCell();
-                    TableCell doorHardwareDDLCell = new TableCell();
-
-                    Label doorHardwareLBL = new Label();
-                    doorHardwareLBL.ID = "lblDoorHardware" + i + title;
-                    doorHardwareLBL.Text = "Door Hardware";
-
-                    DropDownList doorHardwareDDL = new DropDownList();
-                    doorHardwareDDL.ID = "ddlDoorHardware" + i + title;
-                    ListItem satinSilver = new ListItem("Satin Silver", "satinSilver");
-                    ListItem brightBrass = new ListItem("Bright Brass", "brightBrass");
-                    ListItem antiqueBrass = new ListItem("Antique Brass", "antiqueBrass");
-                    doorHardwareDDL.Items.Add(satinSilver);
-                    doorHardwareDDL.Items.Add(brightBrass);
-                    doorHardwareDDL.Items.Add(antiqueBrass);
-
-                    doorHardwareLBL.AssociatedControlID = "ddlDoorHardware" + i + title;
-
-                    #endregion
-
-
-
-                    #region Table:Eight Row Door Swing In (tblDoorDetails)
-
-                    TableRow doorSwingInRow = new TableRow();
-                    doorSwingInRow.ID = "rowDoorSwingIn" + i + title;
-                    doorSwingInRow.Attributes.Add("style", "display:none;");
-                    TableCell doorSwingInLBLCell = new TableCell();
-                    TableCell doorSwingInRADCell = new TableCell();
-
-                    Label doorSwingInLBLMain = new Label();
-                    doorSwingInLBLMain.ID = "lblDoorSwingMain" + i + title;
-                    doorSwingInLBLMain.Text = "Swing:";
-
-                    Label doorSwingInLBLRad = new Label();
-                    doorSwingInLBLRad.ID = "lblDoorSwingIn" + i + title;
-
-                    Label doorSwingInLBL = new Label();
-                    doorSwingInLBL.ID = "lblDoorSwingInRad" + i + title;
-                    doorSwingInLBL.Text = "In";
-
-                    RadioButton doorSwingInRAD = new RadioButton();
-                    doorSwingInRAD.ID = "radDoorSwingIn" + i + title;
-                    doorSwingInRAD.GroupName = "SwingInOut";
-
-                    doorSwingInLBLRad.AssociatedControlID = "radDoorSwingIn" + i + title;
-                    doorSwingInLBL.AssociatedControlID = "radDoorSwingIn" + i + title;
-
-                    #endregion
-
-                    #region Table:Ninth Row Door Swing Out (tblDoorDetails)
-
-                    TableRow doorSwingOutRow = new TableRow();
-                    doorSwingOutRow.ID = "rowDoorSwingOut" + i + title;
-                    doorSwingOutRow.Attributes.Add("style", "display:none;");
-                    TableCell doorSwingOutLBLCell = new TableCell();
-                    TableCell doorSwingOutRADCell = new TableCell();
-
-                    Label doorSwingOutLBLRad = new Label();
-                    doorSwingOutLBLRad.ID = "lblDoorSwingOutRad" + i + title;
-
-                    Label doorSwingOutLBL = new Label();
-                    doorSwingOutLBL.ID = "lblDoorSwingOut" + i + title;
-                    doorSwingOutLBL.Text = "Out";
-
-                    RadioButton doorSwingOutRAD = new RadioButton();
-                    doorSwingOutRAD.ID = "radDoorSwingOut" + i + title;
-                    doorSwingOutRAD.GroupName = "SwingInOut";
-
-                    doorSwingOutLBLRad.AssociatedControlID = "radDoorSwingOut" + i + title;
-                    doorSwingOutLBL.AssociatedControlID = "radDoorSwingOut" + i + title;
-
-                    #endregion
-
-                    #region Table:# Row Door Position DDL (tblDoorDetails)
-
-                    TableRow doorPositionDDLRow = new TableRow();
-                    doorPositionDDLRow.ID = "rowDoorPosition" + i + title;
-                    doorPositionDDLRow.Attributes.Add("style", "display:none;");
-                    TableCell doorPositionDDLLBLCell = new TableCell();
-                    TableCell doorPositionDDLDDLCell = new TableCell();
-
-                    Label doorPositionDDLLBL = new Label();
-                    doorPositionDDLLBL.ID = "lblDoorPositionDDL" + i + title;
-                    doorPositionDDLLBL.Text = "PositionDDL:";
-
-                    DropDownList doorPositionDDLDDL = new DropDownList();
-                    doorPositionDDLDDL.ID = "ddlDoorPosition" + i + title;
-                    doorPositionDDLDDL.Attributes.Add("onchange", "customDimension('" + title + "','Position')");
-                    ListItem PositionLeft = new ListItem("Left", "left");
-                    ListItem PositionCenter = new ListItem("Center", "center");
-                    ListItem PositionRight = new ListItem("Right", "right");
-                    ListItem PositionCustom = new ListItem("Custom", "cPosition");
-                    doorPositionDDLDDL.Items.Add(PositionLeft);
-                    doorPositionDDLDDL.Items.Add(PositionCenter);
-                    doorPositionDDLDDL.Items.Add(PositionRight);
-                    doorPositionDDLDDL.Items.Add(PositionCustom);
-
-                    doorPositionDDLLBL.AssociatedControlID = "ddlDoorPosition" + i + title;
-
-                    #endregion
-
-                    #region Table:# Row Door Position (tblDoorDetails)
-
-                    TableRow doorPositionRow = new TableRow();
-                    doorPositionRow.ID = "rowDoorCustomPosition" + i + title;
-                    doorPositionRow.Attributes.Add("style", "display:none;");
-                    TableCell doorPositionLBLCell = new TableCell();
-                    TableCell doorPositionTXTCell = new TableCell();
-                    TableCell doorPositionDDLCell = new TableCell();
-
-                    Label doorPositionLBL = new Label();
-                    doorPositionLBL.ID = "lblDoorCustomPosition" + i + title;
-                    doorPositionLBL.Text = "Door position from left side (inches):";
-
-                    TextBox doorPositionTXT = new TextBox();
-                    doorPositionTXT.ID = "txtDoorCustomPosition" + i + title;
-                    doorPositionTXT.CssClass = "txtField txtDoorInput";
-
-                    DropDownList inchSpecificLeft = new DropDownList();
-                    inchSpecificLeft.ID = "ddlInchSpecificLeft" + i + title;
-                    inchSpecificLeft.Items.Add(lst0);
-                    inchSpecificLeft.Items.Add(lst18);
-                    inchSpecificLeft.Items.Add(lst14);
-                    inchSpecificLeft.Items.Add(lst38);
-                    inchSpecificLeft.Items.Add(lst12);
-                    inchSpecificLeft.Items.Add(lst58);
-                    inchSpecificLeft.Items.Add(lst34);
-                    inchSpecificLeft.Items.Add(lst78);
-
-                    doorPositionLBL.AssociatedControlID = "txtDoorCustomPosition" + i + title;
-
-                    #endregion
-
-                    #region Table:# Row Add This Door (tblDoorDetails)
-
-                    TableRow doorButtonRow = new TableRow();
-                    doorButtonRow.ID = "rowAddDoor" + i + title;
-                    doorButtonRow.Attributes.Add("style", "display:inherit;");
-                    TableCell doorAddButtonCell = new TableCell();
-                    TableCell doorFillButtonCell = new TableCell();
-                    TableCell doorUndoButtonCell = new TableCell();
-
-                    #endregion
-
-                    //Adding to table
-
-                    #region Table:Default Row Title Current Door Added To Table (tblDoorDetails)
-
-                    doorTitleLBLCell.Controls.Add(doorTitleLBL);
-
-                    tblDoorDetails.Rows.Add(doorTitleRow);
-
-                    doorTitleRow.Cells.Add(doorTitleLBLCell);
-
-                    #endregion
-
-                    #region Table:Second Row Style Of Door Added To Table (tblDoorDetails)
-
-                    doorStyleLBLCell.Controls.Add(doorStyleLBL);
-                    doorStyleDDLCell.Controls.Add(doorStyleDDL);
-
-                    tblDoorDetails.Rows.Add(doorStyleRow);
-
-                    doorStyleRow.Cells.Add(doorStyleLBLCell);
-                    doorStyleRow.Cells.Add(doorStyleDDLCell);
-
-                    #endregion
-
-                    #region Table:Sixteenth Row Door V4T Vinyl Tint (tblDoorDetails)
-
-                    doorVinylTintLBLCell.Controls.Add(doorVinylTintLBL);
-                    doorVinylTintDDLCell.Controls.Add(doorVinylTintDDL);
-
-                    tblDoorDetails.Rows.Add(doorVinylTintRow);
-
-                    doorVinylTintRow.Cells.Add(doorVinylTintLBLCell);
-                    doorVinylTintRow.Cells.Add(doorVinylTintDDLCell);
-
-                    #endregion
-
-                    #region Table:Third Row Color of Door Added to Table (tblDoorDetails)
-
-                    colorOfDoorLBLCell.Controls.Add(colorOfDoorLBL);
-                    colorOfDoorDDLCell.Controls.Add(colorOfDoorDDL);
-
-                    tblDoorDetails.Rows.Add(colorOfDoorRow);
-
-                    colorOfDoorRow.Cells.Add(colorOfDoorLBLCell);
-                    colorOfDoorRow.Cells.Add(colorOfDoorDDLCell);
-
-                    #endregion
-
-                    #region Table:Fourth Row Height Of Door Added To Table (tblDoorDetails)
-
-                    doorHeightLBLCell.Controls.Add(doorHeightLBL);
-                    doorHeightDDLCell.Controls.Add(doorHeightDDL);
-
-                    tblDoorDetails.Rows.Add(doorHeightRow);
-
-                    doorHeightRow.Cells.Add(doorHeightLBLCell);
-                    doorHeightRow.Cells.Add(doorHeightDDLCell);
-
-                    #endregion
-
-                    #region Table:Sixth Row Custom Height Of Door Added To Table (tblDoorDetails)
-
-                    doorCustomHeightLBLCell.Controls.Add(doorCustomHeightLBL);
-                    doorCustomHeightTXTCell.Controls.Add(doorCustomHeightTXT);
-                    doorCustomHeightDDLCell.Controls.Add(inchCustomHeight);
-
-                    tblDoorDetails.Rows.Add(doorCustomHeightRow);
-
-                    doorCustomHeightRow.Cells.Add(doorCustomHeightLBLCell);
-                    doorCustomHeightRow.Cells.Add(doorCustomHeightTXTCell);
-                    doorCustomHeightRow.Cells.Add(doorCustomHeightDDLCell);
-
-                    #endregion
-
-                    #region Table:Fifth Row Width Of Door Added To Table (tblDoorDetails)
-
-                    doorWidthLBLCell.Controls.Add(doorWidthLBL);
-                    doorWidthDDLCell.Controls.Add(doorWidthDDL);
-
-                    tblDoorDetails.Rows.Add(doorWidthRow);
-
-                    doorWidthRow.Cells.Add(doorWidthLBLCell);
-                    doorWidthRow.Cells.Add(doorWidthDDLCell);
-
-                    #endregion
-
-                    #region Table:Seventh Row Custom Width Of Door Added To Table (tblDoorDetails)
-
-                    doorCustomWidthLBLCell.Controls.Add(doorCustomWidthLBL);
-                    doorCustomWidthTXTCell.Controls.Add(doorCustomWidthTXT);
-                    doorCustomWidthDDLCell.Controls.Add(inchCustomWidth);
-
-                    tblDoorDetails.Rows.Add(doorCustomWidthRow);
-
-                    doorCustomWidthRow.Cells.Add(doorCustomWidthLBLCell);
-                    doorCustomWidthRow.Cells.Add(doorCustomWidthTXTCell);
-                    doorCustomWidthRow.Cells.Add(doorCustomWidthDDLCell);
-
-                    #endregion
-
-                    #region Table:Eight Row Door Primary Operator LHH Added To Table (tblDoorDetails)
-
-                    doorOperatorLHHLBLCell.Controls.Add(doorOperatorLHHLBLMain);
-
-                    doorOperatorLHHRADCell.Controls.Add(doorOperatorLHHRad);
-                    doorOperatorLHHRADCell.Controls.Add(doorOperatorLHHLBLRad);
-                    doorOperatorLHHRADCell.Controls.Add(doorOperatorLHHLBL);
-
-                    tblDoorDetails.Rows.Add(doorOperatorLHHRow);
-
-                    doorOperatorLHHRow.Cells.Add(doorOperatorLHHLBLCell);
-                    doorOperatorLHHRow.Cells.Add(doorOperatorLHHRADCell);
-
-                    #endregion
-
-                    #region Table:Ninth Row Door Primary Operator RHH Added To Table (tblDoorDetails)
-
-                    doorOperatorRHHRADCell.Controls.Add(doorOperatorRHHRad);
-                    doorOperatorRHHRADCell.Controls.Add(doorOperatorRHHLBLRad);
-                    doorOperatorRHHRADCell.Controls.Add(doorOperatorRHHLBL);
-
-                    tblDoorDetails.Rows.Add(doorOperatorRHHRow);
-
-                    doorOperatorRHHRow.Cells.Add(doorOperatorRHHLBLCell);
-                    doorOperatorRHHRow.Cells.Add(doorOperatorRHHRADCell);
-
-                    #endregion
-
-                    #region Table:Tenth Row Door Box Header Position (tblDoorDetails)
-
-                    doorBoxHeaderLBLCell.Controls.Add(doorBoxHeaderLBL);
-                    doorBoxHeaderDDLCell.Controls.Add(doorBoxHeaderDDL);
-
-                    tblDoorDetails.Rows.Add(doorBoxHeaderRow);
-
-                    doorBoxHeaderRow.Cells.Add(doorBoxHeaderLBLCell);
-                    doorBoxHeaderRow.Cells.Add(doorBoxHeaderDDLCell);
-
-                    #endregion
-
-                    #region Table:Twelfth Row Door Number Of Vents Added To Table (tblDoorDetails)
-
-                    doorNumberOfVentsLBLCell.Controls.Add(doorNumberOfVentsLBL);
-                    doorNumberOfVentsDDLCell.Controls.Add(doorNumberOfVentsDDL);
-
-                    tblDoorDetails.Rows.Add(doorNumberOfVentsRow);
-
-                    doorNumberOfVentsRow.Cells.Add(doorNumberOfVentsLBLCell);
-                    doorNumberOfVentsRow.Cells.Add(doorNumberOfVentsDDLCell);
-
-                    #endregion
-
-                    #region Table:Thirteenth Row Door Glass Tint Added To Table (tblDoorDetails)
-
-                    doorGlassTintLBLCell.Controls.Add(doorGlassTintLBL);
-                    doorGlassTintDDLCell.Controls.Add(doorGlassTintDDL);
-
-                    tblDoorDetails.Rows.Add(doorGlassTintRow);
-
-                    doorGlassTintRow.Cells.Add(doorGlassTintLBLCell);
-                    doorGlassTintRow.Cells.Add(doorGlassTintDDLCell);
-
-                    #endregion
-
-                    #region Table:Tenth Row Door Hinge LHH Added To Table (tblDoorDetails)
-
-                    doorLHHLBLCell.Controls.Add(doorLHHLBLMain);
-
-                    doorLHHRADCell.Controls.Add(doorLHHRad);
-                    doorLHHRADCell.Controls.Add(doorLHHLBLRad);
-                    doorLHHRADCell.Controls.Add(doorLHHLBL);
-
-                    tblDoorDetails.Rows.Add(doorLHHRow);
-
-                    doorLHHRow.Cells.Add(doorLHHLBLCell);
-                    doorLHHRow.Cells.Add(doorLHHRADCell);
-
-                    #endregion
-
-                    #region Table:Eleventh Row Door Hinge RHH Added To Table (tblDoorDetails)
-
-                    doorRHHRADCell.Controls.Add(doorRHHRad);
-                    doorRHHRADCell.Controls.Add(doorRHHLBLRad);
-                    doorRHHRADCell.Controls.Add(doorRHHLBL);
-
-                    tblDoorDetails.Rows.Add(doorRHHRow);
-
-                    doorRHHRow.Cells.Add(doorRHHLBLCell);
-                    doorRHHRow.Cells.Add(doorRHHRADCell);
-
-                    #endregion
-
-                    #region Table:Fourteenth Row Door Screen Options Added To Table (tblDoorDetails)
-
-                    doorScreenOptionsLBLCell.Controls.Add(doorScreenOptionsLBL);
-                    doorScreenOptionsDDLCell.Controls.Add(doorScreenOptionsDDL);
-
-                    tblDoorDetails.Rows.Add(doorScreenOptionsRow);
-
-                    doorScreenOptionsRow.Cells.Add(doorScreenOptionsLBLCell);
-                    doorScreenOptionsRow.Cells.Add(doorScreenOptionsDDLCell);
-
-                    #endregion
-
-                    #region Table:Fifteenth Row Door Hardware Added To Table (tblDoorDetails)
-
-                    doorHardwareLBLCell.Controls.Add(doorHardwareLBL);
-                    doorHardwareDDLCell.Controls.Add(doorHardwareDDL);
-
-                    tblDoorDetails.Rows.Add(doorHardwareRow);
-
-                    doorHardwareRow.Cells.Add(doorHardwareLBLCell);
-                    doorHardwareRow.Cells.Add(doorHardwareDDLCell);
-
-                    #endregion
-
-                    #region Table:Eight Row Swing In Added To Table (tblDoorDetails)
-
-                    doorSwingInLBLCell.Controls.Add(doorSwingInLBLMain);
-
-                    doorSwingInRADCell.Controls.Add(doorSwingInRAD);
-                    doorSwingInRADCell.Controls.Add(doorSwingInLBLRad);
-                    doorSwingInRADCell.Controls.Add(doorSwingInLBL);
-
-                    tblDoorDetails.Rows.Add(doorSwingInRow);
-
-                    doorSwingInRow.Cells.Add(doorSwingInLBLCell);
-                    doorSwingInRow.Cells.Add(doorSwingInRADCell);
-
-                    #endregion
-
-                    #region Table:Ninth Row Swing Out Added To Table (tblDoorDetails)
-
-                    doorSwingOutRADCell.Controls.Add(doorSwingOutRAD);
-                    doorSwingOutRADCell.Controls.Add(doorSwingOutLBLRad);
-                    doorSwingOutRADCell.Controls.Add(doorSwingOutLBL);
-
-                    tblDoorDetails.Rows.Add(doorSwingOutRow);
-
-                    doorSwingOutRow.Cells.Add(doorSwingOutLBLCell);
-                    doorSwingOutRow.Cells.Add(doorSwingOutRADCell);
-
-                    #endregion
-
-                    #region Table:# Row Door Position DDL Added To Table (tblDoorDetails)
-
-                    doorPositionDDLLBLCell.Controls.Add(doorPositionDDLLBL);
-                    doorPositionDDLDDLCell.Controls.Add(doorPositionDDLDDL);
-
-                    tblDoorDetails.Rows.Add(doorPositionDDLRow);
-
-
-                    doorPositionDDLRow.Cells.Add(doorPositionDDLLBLCell);
-                    doorPositionDDLRow.Cells.Add(doorPositionDDLDDLCell);
-
-                    #endregion
-
-                    #region Table:# Row Door Position Added To Table (tblDoorDetails)
-
-                    doorPositionLBLCell.Controls.Add(doorPositionLBL);
-                    doorPositionTXTCell.Controls.Add(doorPositionTXT);
-                    doorPositionDDLCell.Controls.Add(inchSpecificLeft);
-
-                    tblDoorDetails.Rows.Add(doorPositionRow);
-
-                    doorPositionRow.Cells.Add(doorPositionLBLCell);
-                    doorPositionRow.Cells.Add(doorPositionTXTCell);
-                    doorPositionRow.Cells.Add(doorPositionDDLCell);
-
-                    #endregion
-
-                    #region Table:# Row Add This Door (tblDoorDetails)
-
-                    if (title == "NoDoor")
-                    {
-                        doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This Opening Only (No Door)'/>"));
-                        doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With Opening Only (No Doors)'/>"));
-                    }
-                    else
-                    {
-                    doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
-                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
-                    }
-                    //doorUndoButtonCell.Controls.Add(new LiteralControl("<input id='btnUndoLastAddition" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Undo Last Addition Doors'/>"));
-
-                    tblDoorDetails.Rows.Add(doorButtonRow);
-
-                    doorButtonRow.Cells.Add(doorAddButtonCell);
-                    doorButtonRow.Cells.Add(doorFillButtonCell);
-                    //doorButtonRow.Cells.Add(doorUndoButtonCell);
-
-                    #endregion
-
-                    //Adding literal control div tag to hold the table, add to wallDoorOptions placeholder
-                    wallDoorOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\" id=\"div_" + i + title + "\"><ul>"));
-
-                    //Adding literal control li to keep proper page look and format
-                    wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
-
-                    //Adding table to placeholder wallDoorOptions
-                    wallDoorOptions.Controls.Add(tblDoorDetails);
-
-                    //Closing necessary tags
-                    wallDoorOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
                 }
+                    
+                //Door type radio button
+                RadioButton typeRadio = new RadioButton();
+                typeRadio.ID = "radType" + i + title; //Adding appropriate id to door type radio button
+                typeRadio.GroupName = "doorTypeRadios" + i;         //Adding group name for all door types
+                typeRadio.Attributes.Add("onclick", "typeRowsDisplayed('" + i + "', '" + title + "')"); //On click event to display the proper fields/rows
+                    
+
+                //Door type radio button label for clickable area
+                Label typeLabelRadio = new Label();
+                typeLabelRadio.AssociatedControlID = "radType" + i + title;   //Tying this label to the radio button
+
+                //Door type radio button label text
+                Label typeLabel = new Label();
+                typeLabel.AssociatedControlID = "radType" + i + title;    //Tying this label to the radio button
+                if (title == "NoDoor")
+                {
+                    typeLabel.Text = "Opening Only (No Door)";
+                }
+                else
+                {
+                    typeLabel.Text = title;     //Displaying the proper texted based on current title variable
+                }
+
+                wallDoorOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallDoorOptions
+                wallDoorOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallDoorOptions
+                wallDoorOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallDoorOptions
+
+                //New instance of a table for every door type
+                Table tblDoorDetails = new Table();
+
+                tblDoorDetails.ID = "tblDoorDetails" + i + title; //Adding appropriate id to the table
+                tblDoorDetails.CssClass = "tblTextFields";                  //Adding CssClass to the table for styling
+                    
+                    
+                //Creating cells and controls for rows
+
+                #region Table:Default Row Title Current Door (tblDoorDetails)
+
+                TableRow doorTitleRow = new TableRow();
+                doorTitleRow.ID = "rowDoorTitle" + i + title;
+                doorTitleRow.Attributes.Add("style", "display:none;");
+                TableCell doorTitleLBLCell = new TableCell();
+
+                Label doorTitleLBL = new Label();
+                doorTitleLBL.ID = "lblDoorTitle" + i + title;
+                doorTitleLBL.Text = "Select door details:";
+                doorTitleLBL.Attributes.Add("style", "font-weight:bold;");
+
+                #endregion
+
+                #region Table:Second Row Door Style (tblDoorDetails)
+
+                TableRow doorStyleRow = new TableRow();
+                doorStyleRow.ID = "rowDoorStyle" + i + title;
+                doorStyleRow.Attributes.Add("style", "display:none;");
+                TableCell doorStyleLBLCell = new TableCell();
+                TableCell doorStyleDDLCell = new TableCell();
+
+                Label doorStyleLBL = new Label();
+                doorStyleLBL.ID = "lblDoorStyle" + i + title;
+                doorStyleLBL.Text = "Style";
+
+                DropDownList doorStyleDDL = new DropDownList();
+                doorStyleDDL.ID = "ddlDoorStyle" + i + title;
+                doorStyleDDL.Attributes.Add("onchange", "doorStyle('" + title + "','" + i + "')");
+                ListItem fullScreen = new ListItem("Full Screen", "fullScreen");
+                ListItem v4TCabana = new ListItem("Vertical Four Track", "v4TCabana");
+                ListItem fullView = new ListItem("Full View", "fullView");
+                ListItem fullViewColonial = new ListItem("Full View Colonial", "fullViewColonial");
+                ListItem halfLite = new ListItem("Half Lite", "halfLite");
+                ListItem halfLiteVenting = new ListItem("Half Lite Venting", "halfLiteVenting");
+                ListItem fullLite = new ListItem("Full Lite", "fullLite");
+                ListItem halfLiteWithMiniBlinds = new ListItem("Half Lite With Mini Blinds", "halfLiteWithMiniBlinds");
+                ListItem fullViewWithMiniBlinds = new ListItem("Full View With Mini Blinds", "fullViewWithMiniBlinds");
+                if (currentModel == "M100")
+                {
+                    doorStyleDDL.Items.Add(fullScreen);
+                    doorStyleDDL.Items.Add(v4TCabana);
+                }
+                else if (currentModel == "M200")
+                {
+                    //doorStyleDDL.Items.Add(fullScreen);
+                    doorStyleDDL.Items.Add(v4TCabana);
+                    doorStyleDDL.Items.Add(fullView);
+                    doorStyleDDL.Items.Add(fullViewColonial);
+                }
+                else if (currentModel == "M300")
+                {
+                    //doorStyleDDL.Items.Add(fullScreen);
+                    doorStyleDDL.Items.Add(fullView);
+                    doorStyleDDL.Items.Add(fullViewColonial);
+                }
+                else if (currentModel == "M400")
+                {
+
+                    doorStyleDDL.Items.Add(halfLite);
+                    doorStyleDDL.Items.Add(halfLiteVenting);
+                    doorStyleDDL.Items.Add(fullLite);
+                    doorStyleDDL.Items.Add(halfLiteWithMiniBlinds);
+                    doorStyleDDL.Items.Add(fullViewWithMiniBlinds);
+                }
+
+                doorStyleLBL.AssociatedControlID = "ddlDoorStyle" + i + title;
+
+                #endregion
+
+                #region Table:Sixteenth Row Door V4T Vinyl Tint (tblDoorDetails)
+
+                TableRow doorVinylTintRow = new TableRow();
+                doorVinylTintRow.ID = "rowDoorVinylTint" + i + title;
+                doorVinylTintRow.Attributes.Add("style", "display:none;");
+                TableCell doorVinylTintLBLCell = new TableCell();
+                TableCell doorVinylTintDDLCell = new TableCell();
+
+                Label doorVinylTintLBL = new Label();
+                doorVinylTintLBL.ID = "lblDoorVinylTint" + i + title;
+                doorVinylTintLBL.Text = "V4T Vinyl Tint:";
+
+                DropDownList doorVinylTintDDL = new DropDownList();
+                doorVinylTintDDL.ID = "ddlVinylTint" + i + title;
+                ListItem clearVinyl = new ListItem("Clear", "clear");
+                ListItem smokeGreyVinyl = new ListItem("Smoke Grey", "smokeGrey");
+                ListItem darkGreyVinyl = new ListItem("Dark Grey", "darkGrey");
+                ListItem bronzeVinyl = new ListItem("Bronze", "bronze");
+                ListItem mixedVinyl = new ListItem("Mixed", "mixed");
+                doorVinylTintDDL.Items.Add(clearVinyl);
+                doorVinylTintDDL.Items.Add(smokeGreyVinyl);
+                doorVinylTintDDL.Items.Add(darkGreyVinyl);
+                doorVinylTintDDL.Items.Add(bronzeVinyl);
+                doorVinylTintDDL.Items.Add(mixedVinyl);
+
+                doorVinylTintLBL.AssociatedControlID = "ddlVinylTint" + i + title;
+
+                #endregion
+
+                #region Table:Twelfth Row Door V4T Number Of Vents (tblDoorDetails)
+
+                TableRow doorNumberOfVentsRow = new TableRow();
+                doorNumberOfVentsRow.ID = "rowDoorNumberOfVents" + i + title;
+                doorNumberOfVentsRow.Attributes.Add("style", "display:none;");
+                TableCell doorNumberOfVentsLBLCell = new TableCell();
+                TableCell doorNumberOfVentsDDLCell = new TableCell();
+
+                Label doorNumberOfVentsLBL = new Label();
+                doorNumberOfVentsLBL.ID = "lblNumberOfVents" + i + title;
+                doorNumberOfVentsLBL.Text = "V4T Number Of Vents:";
+
+                DropDownList doorNumberOfVentsDDL = new DropDownList();
+                doorNumberOfVentsDDL.ID = "ddlNumberOfVents" + i + title;
+                ListItem two = new ListItem("2", "2");
+                ListItem three = new ListItem("3", "3");
+                ListItem four = new ListItem("4", "4");
+                doorNumberOfVentsDDL.Items.Add(two);
+                doorNumberOfVentsDDL.Items.Add(three);
+                doorNumberOfVentsDDL.Items.Add(four);
+
+                doorNumberOfVentsLBL.AssociatedControlID = "ddlNumberOfVents" + i + title;
+
+                #endregion
+
+                #region Table:# Row Door Transom (tblDoorDetails)
+                    
+                TableRow doorTransomRow = new TableRow();
+                doorTransomRow.ID = "rowDoorTransom" + i + title;
+                doorTransomRow.Attributes.Add("style", "display:none;");
+                TableCell doorTransomLBLCell = new TableCell();
+                TableCell doorTransomDDLCell = new TableCell();
+
+                Label doorTransomLBL = new Label();
+                doorTransomLBL.ID = "lblDoorTransom" + i + title;
+                doorTransomLBL.Text = "Transom Type:";
+
+                DropDownList doorTransomDDL = new DropDownList();
+                doorTransomDDL.ID = "ddlDoorTransom" + i + title;
+                doorTransomDDL.Attributes.Add("onchange", "doorTransomStyle('" + title + "','" + i +"')");
+                ListItem transomVinyl = new ListItem("Vinyl", "vinyl");
+                ListItem transomGlass = new ListItem("Glass", "glass");
+                ListItem transomScreen = new ListItem("Screen", "screen");
+                ListItem transomSolidWall = new ListItem("Solid Wall", "solidWall");
+
+                doorTransomDDL.Items.Add(transomVinyl);
+                    
+                if (currentModel == "M100")
+                    doorTransomDDL.Items.Add(transomScreen);
+                else
+                    doorTransomDDL.Items.Add(transomGlass);
+
+                doorTransomDDL.Items.Add(transomSolidWall);
+
+                #endregion
+
+                #region Table:# Row Door Transom Vinyl Types (tblDoorDetails)
+
+                TableRow doorTransomVinylTypesRow = new TableRow();
+                doorTransomVinylTypesRow.ID = "rowDoorTransomVinylTypes" + i + title;
+                doorTransomVinylTypesRow.Attributes.Add("style", "display:none;");
+                TableCell doorTransomVinylTypesLBLCell = new TableCell();
+                TableCell doorTransomVinylTypesDDLCell = new TableCell();
+
+                Label doorTransomVinylTypesLBL = new Label();
+                doorTransomVinylTypesLBL.ID = "lblDoorTransomVinylTypes" + i + title;
+                doorTransomVinylTypesLBL.Text = "Transom Vinyl Types:";
+
+                DropDownList doorTransomVinylTypesDDL = new DropDownList();
+                doorTransomVinylTypesDDL.ID = "ddlDoorTransomVinylTypes" + i + title;
+                ListItem transomClearVinyl = new ListItem("Clear", "clear");
+                ListItem transomSmokeGreyVinyl = new ListItem("Smoke Grey", "smokeGrey");
+                ListItem transomDarkGreyVinyl = new ListItem("Dark Grey", "darkGrey");
+                ListItem transomBronzeVinyl = new ListItem("Bronze", "bronze");
+                ListItem transomMixedVinyl = new ListItem("Mixed", "mixed");
+                doorTransomVinylTypesDDL.Items.Add(transomClearVinyl);
+                doorTransomVinylTypesDDL.Items.Add(transomSmokeGreyVinyl);
+                doorTransomVinylTypesDDL.Items.Add(transomDarkGreyVinyl);
+                doorTransomVinylTypesDDL.Items.Add(transomBronzeVinyl);
+                doorTransomVinylTypesDDL.Items.Add(transomMixedVinyl);
+
+                #endregion
+
+                #region Table:# Row Door Transom Glass Types (tblDoorDetails)
+
+                TableRow doorTransomGlassTypesRow = new TableRow();
+                doorTransomGlassTypesRow.ID = "rowDoorTransomGlassTypes" + i + title;
+                doorTransomGlassTypesRow.Attributes.Add("style", "display:none;");
+                TableCell doorTransomGlassTypesLBLCell = new TableCell();
+                TableCell doorTransomGlassTypesDDLCell = new TableCell();
+
+                Label doorTransomGlassTypesLBL = new Label();
+                doorTransomGlassTypesLBL.ID = "lblDoorTransomGlassTypes" + i + title;
+                doorTransomGlassTypesLBL.Text = "Transom Glass Types:";
+
+                DropDownList doorTransomGlassTypesDDL = new DropDownList();
+                doorTransomGlassTypesDDL.ID = "ddlDoorTransomGlassTypes" + i + title;
+                ListItem transomGrey = new ListItem("Grey", "grey");
+                ListItem transomBronze = new ListItem("Bronze", "bronze");
+                doorTransomGlassTypesDDL.Items.Add(transomGrey);
+                doorTransomGlassTypesDDL.Items.Add(transomBronze);
+
+                #endregion
+
+                #region Table:# Row Door Kickplate (tblDoorDetails)
+
+                TableRow doorKickplateRow = new TableRow();
+                doorKickplateRow.ID = "rowDoorKickplate" + i + title;
+                doorKickplateRow.Attributes.Add("style", "display:none;");
+                TableCell doorKickplateLBLCell = new TableCell();
+                TableCell doorKickplateDDLCell = new TableCell();
+
+                Label doorKickplateLBL = new Label();
+                doorKickplateLBL.ID = "lblDoorKickplate" + i + title;
+                doorKickplateLBL.Text = "Kickplate Type:";
+
+                DropDownList doorKickplateDDL = new DropDownList();
+                doorKickplateDDL.ID = "ddlDoorKickplate" + i + title;
+                doorKickplateDDL.Attributes.Add("onchange", "doorKickplateStyle('" + title + "','" + i + "')");
+                ListItem KickplateSix = new ListItem("6\"", "6");
+                ListItem KickplateSeven = new ListItem("7\"", "7");
+                ListItem KickplateEight = new ListItem("8\"", "8");
+                ListItem KickplateNine = new ListItem("9\"", "9");
+                ListItem KickplateTen = new ListItem("10\"", "10");
+                ListItem KickplateEleven = new ListItem("11\"", "11");
+                ListItem KickplateTwelve = new ListItem("12\"", "12");
+                ListItem KickplateThirteen = new ListItem("13\"", "13");
+                ListItem KickplateFourteen = new ListItem("14\"", "14");
+                ListItem KickplateFifteen = new ListItem("15\"", "15");
+                ListItem KickplateSixteen = new ListItem("16\"", "16");
+                ListItem KickplateSeventeen = new ListItem("17\"", "17");
+                ListItem KickplateEighteen = new ListItem("18\"", "18");
+                ListItem KickplateNineteen = new ListItem("19\"", "19");
+                ListItem KickplateTwenty = new ListItem("20\"", "20");
+                ListItem KickplateTwentyOne = new ListItem("21\"", "21");
+                ListItem KickplateTwentyTwo = new ListItem("22\"", "22");
+                ListItem KickplateTwentyThree = new ListItem("23\"", "23");
+                ListItem KickplateTwentyFour = new ListItem("24\"", "24");
+                ListItem KickplateCustom = new ListItem("Custom", "cKickplate");
+                doorKickplateDDL.Items.Add(KickplateSix);
+                doorKickplateDDL.Items.Add(KickplateSeven);
+                doorKickplateDDL.Items.Add(KickplateEight);
+                doorKickplateDDL.Items.Add(KickplateNine);
+                doorKickplateDDL.Items.Add(KickplateTen);
+                doorKickplateDDL.Items.Add(KickplateEleven);
+                doorKickplateDDL.Items.Add(KickplateTwelve);
+                doorKickplateDDL.Items.Add(KickplateThirteen);
+                doorKickplateDDL.Items.Add(KickplateFourteen);
+                doorKickplateDDL.Items.Add(KickplateFifteen);
+                doorKickplateDDL.Items.Add(KickplateSixteen);
+                doorKickplateDDL.Items.Add(KickplateSeventeen);
+                doorKickplateDDL.Items.Add(KickplateEighteen);
+                doorKickplateDDL.Items.Add(KickplateNineteen);
+                doorKickplateDDL.Items.Add(KickplateTwenty);
+                doorKickplateDDL.Items.Add(KickplateTwentyOne);
+                doorKickplateDDL.Items.Add(KickplateTwentyTwo);
+                doorKickplateDDL.Items.Add(KickplateTwentyThree);
+                doorKickplateDDL.Items.Add(KickplateTwentyFour);
+                doorKickplateDDL.Items.Add(KickplateCustom);
+
+                #endregion
+
+                #region Table:# Row Door Kickplate Custom (tblDoorDetails)
+
+                TableRow doorCustomKickplateRow = new TableRow();
+                doorCustomKickplateRow.ID = "rowDoorCustomKickplate" + i + title;
+                doorCustomKickplateRow.Attributes.Add("style", "display:none;");
+                TableCell doorCustomKickplateLBLCell = new TableCell();
+                TableCell doorCustomKickplateTXTCell = new TableCell();
+                TableCell doorCustomKickplateDDLCell = new TableCell();
+
+                Label doorCustomKickplateLBL = new Label();
+                doorCustomKickplateLBL.ID = "lblDoorCustomKickplate" + i + title;
+                doorCustomKickplateLBL.Text = "Custom Kickplate (inches):";
+
+                TextBox doorCustomKickplateTXT = new TextBox();
+                doorCustomKickplateTXT.ID = "txtDoorCustomKickplate" + i + title;
+                doorCustomKickplateTXT.CssClass = "txtField txtDoorInput";
+                doorCustomKickplateTXT.Attributes.Add("maxlength", "3");
+
+                DropDownList inchCustomKickplate = new DropDownList();
+                inchCustomKickplate.ID = "ddlInchCustomKickplate" + i + title;
+                inchCustomKickplate.Items.Add(lst0);
+                inchCustomKickplate.Items.Add(lst18);
+                inchCustomKickplate.Items.Add(lst14);
+                inchCustomKickplate.Items.Add(lst38);
+                inchCustomKickplate.Items.Add(lst12);
+                inchCustomKickplate.Items.Add(lst58);
+                inchCustomKickplate.Items.Add(lst34);
+                inchCustomKickplate.Items.Add(lst78);
+
+                doorCustomKickplateLBL.AssociatedControlID = "txtDoorCustomKickplate" + i + title;
+
+                #endregion
+
+                #region Table:Third Row Color of Door (tblDoorDetails)
+
+                TableRow colorOfDoorRow = new TableRow();
+                colorOfDoorRow.ID = "rowDoorColor" + i + title;
+                colorOfDoorRow.Attributes.Add("style", "display:none;");
+                TableCell colorOfDoorLBLCell = new TableCell();
+                TableCell colorOfDoorDDLCell = new TableCell();
+
+                Label colorOfDoorLBL = new Label();
+                colorOfDoorLBL.ID = "lblDoorColor" + i + title;
+                colorOfDoorLBL.Text = "Color:";
+
+                DropDownList colorOfDoorDDL = new DropDownList();
+                colorOfDoorDDL.ID = "ddlDoorColor" + i + title;
+                ListItem white = new ListItem("White", "white");
+                ListItem driftwood = new ListItem("Driftwood", "driftwood");
+                ListItem bronze = new ListItem("Bronze", "bronze");
+                ListItem green = new ListItem("Green", "green");
+                ListItem black = new ListItem("Black", "black");
+                ListItem ivory = new ListItem("Ivory", "ivory");
+                ListItem cherrywood = new ListItem("Cherrywood", "cherrywood");
+                ListItem grey = new ListItem("Grey", "grey");
+                colorOfDoorDDL.Items.Add(white);
+                colorOfDoorDDL.Items.Add(driftwood);
+                colorOfDoorDDL.Items.Add(bronze);
+                colorOfDoorDDL.Items.Add(green);
+                colorOfDoorDDL.Items.Add(black);
+                colorOfDoorDDL.Items.Add(ivory);
+                colorOfDoorDDL.Items.Add(cherrywood);
+                colorOfDoorDDL.Items.Add(grey);
+
+                colorOfDoorLBL.AssociatedControlID = "ddlDoorColor" + i + title;
+
+                #endregion
+                    
+                #region Table:# Row Door Internal Grills Yes(tblDoorDetails)
+
+                TableRow doorInternalGrillsYesRow = new TableRow();
+                doorInternalGrillsYesRow.ID = "rowDoorInternalGrillsYes" + i + title;
+                doorInternalGrillsYesRow.Attributes.Add("style", "display:none;");
+                TableCell doorInternalGrillsYesLBLCell = new TableCell();
+                TableCell doorInternalGrillsYesRADCell = new TableCell();
+
+                Label doorInternalGrillsYesLBLMain = new Label();
+                doorInternalGrillsYesLBLMain.ID = "lblDoorInternalGrillsMain" + i + title;
+                doorInternalGrillsYesLBLMain.Text = "Internal Grills:";
+
+                Label doorInternalGrillsYesLBLRad = new Label();
+                doorInternalGrillsYesLBLRad.ID = "lblDoorInternalGrillRadYes" + i + title;
+
+                Label doorInternalGrillsYesLBL = new Label();
+                doorInternalGrillsYesLBL.ID = "lblDoorInternalGrillsYes" + i + title;
+                doorInternalGrillsYesLBL.Text = "Yes";
+
+                RadioButton doorInternalGrillsYesRad = new RadioButton();
+                doorInternalGrillsYesRad.ID = "radDoorInternalGrillsYes" + i + title;
+                doorInternalGrillsYesRad.GroupName = "InternalGrills" + i + title;
+
+                doorInternalGrillsYesLBLRad.AssociatedControlID = "radDoorInternalGrillsYes" + i + title;
+                doorInternalGrillsYesLBL.AssociatedControlID = "radDoorInternalGrillsYes" + i + title;
+
+                #endregion
+
+                #region Table:# Row Door Internal Grills No (tblDoorDetails)
+
+                TableRow doorInternalGrillsNoRow = new TableRow();
+                doorInternalGrillsNoRow.ID = "rowDoorInternalGrillsNo" + i + title;
+                doorInternalGrillsNoRow.Attributes.Add("style", "display:none;");
+                TableCell doorInternalGrillsNoLBLCell = new TableCell();
+                TableCell doorInternalGrillsNoRADCell = new TableCell();
+
+                Label doorInternalGrillsNoLBLRad = new Label();
+                doorInternalGrillsNoLBLRad.ID = "lblDoorInternalGrillsRadNo" + i + title;
+
+                Label doorInternalGrillsNoLBL = new Label();
+                doorInternalGrillsNoLBL.ID = "lblDoorInternalGrillsNo" + i + title;
+                doorInternalGrillsNoLBL.Text = "No";
+
+                RadioButton doorInternalGrillsNoRad = new RadioButton();
+                doorInternalGrillsNoRad.ID = "radDoorInternalGrillsNo" + i + title;
+                doorInternalGrillsNoRad.GroupName = "InternalGrills" + i + title;
+
+                doorInternalGrillsNoLBLRad.AssociatedControlID = "radDoorInternalGrillsNo" + i + title;
+                doorInternalGrillsNoLBL.AssociatedControlID = "radDoorInternalGrillsNo" + i + title;
+
+                #endregion
+
+                #region Table:Fourth Row Door Height (tblDoorDetails)
+
+                TableRow doorHeightRow = new TableRow();
+                doorHeightRow.ID = "rowDoorHeight" + i + title;
+                doorHeightRow.Attributes.Add("style", "display:none;");
+                TableCell doorHeightLBLCell = new TableCell();
+                TableCell doorHeightDDLCell = new TableCell();
+
+                Label doorHeightLBL = new Label();
+                doorHeightLBL.ID = "lblDoorHeight" + i + title;
+                doorHeightLBL.Text = "Height:";
+
+                DropDownList doorHeightDDL = new DropDownList();
+                doorHeightDDL.ID = "ddlDoorHeight" + i + title;
+                doorHeightDDL.Attributes.Add("onchange", "customDimension('" + i + "','" + title + "','Height')");
+                ListItem eighty = new ListItem("80\" (Default)", "80");
+                ListItem customHeight = new ListItem("Custom", "cHeight");
+                doorHeightDDL.Items.Add(eighty);
+                doorHeightDDL.Items.Add(customHeight);
+
+                doorHeightLBL.AssociatedControlID = "ddlDoorHeight" + i + title;
+
+                #endregion
+
+                #region Table:Sixth Row Door Custom Height (tblDoorDetails)
+
+                TableRow doorCustomHeightRow = new TableRow();
+                doorCustomHeightRow.ID = "rowDoorCustomHeight" + i + title;
+                doorCustomHeightRow.Attributes.Add("style", "display:none;");
+                TableCell doorCustomHeightLBLCell = new TableCell();
+                TableCell doorCustomHeightTXTCell = new TableCell();
+                TableCell doorCustomHeightDDLCell = new TableCell();
+
+                Label doorCustomHeightLBL = new Label();
+                doorCustomHeightLBL.ID = "lblDoorCustomHeight" + i + title;
+                doorCustomHeightLBL.Text = "Custom Height (inches):";
+
+                TextBox doorCustomHeightTXT = new TextBox();
+                doorCustomHeightTXT.ID = "txtDoorCustomHeight" + i + title;
+                doorCustomHeightTXT.CssClass = "txtField txtDoorInput";
+                doorCustomHeightTXT.Attributes.Add("maxlength", "3");
+
+                DropDownList inchCustomHeight = new DropDownList();
+                inchCustomHeight.ID = "ddlInchCustomHeight" + i + title;
+                inchCustomHeight.Items.Add(lst0);
+                inchCustomHeight.Items.Add(lst18);
+                inchCustomHeight.Items.Add(lst14);
+                inchCustomHeight.Items.Add(lst38);
+                inchCustomHeight.Items.Add(lst12);
+                inchCustomHeight.Items.Add(lst58);
+                inchCustomHeight.Items.Add(lst34);
+                inchCustomHeight.Items.Add(lst78);
+
+                doorCustomHeightLBL.AssociatedControlID = "txtDoorCustomHeight" + i + title;
+
+                #endregion
+
+                #region Table:Fifth Row Door Width (tblDoorDetails)
+
+                TableRow doorWidthRow = new TableRow();
+                doorWidthRow.ID = "rowDoorWidth" + i + title;
+                doorWidthRow.Attributes.Add("style", "display:none;");
+                TableCell doorWidthLBLCell = new TableCell();
+                TableCell doorWidthDDLCell = new TableCell();
+
+                Label doorWidthLBL = new Label();
+                doorWidthLBL.ID = "lblDoorWidth" + i + title;
+                doorWidthLBL.Text = "Width:";
+
+                DropDownList doorWidthDDL = new DropDownList();
+                doorWidthDDL.ID = "ddlDoorWidth" + i + title;
+                doorWidthDDL.Attributes.Add("onchange", "customDimension('" + i + "', '" + title + "','Width')");
+                ListItem thirty = new ListItem("30\"", "30");
+                ListItem thirtyTwo = new ListItem("32\"", "32");
+                ListItem thirtyFour = new ListItem("34\"", "34");
+                ListItem thirtySix = new ListItem("36\"", "36");
+                ListItem sixty = new ListItem("60\"", "30");
+                ListItem seventyTwo = new ListItem("72\"", "36");
+                ListItem fiveFeet = new ListItem("5'", "60");
+                ListItem sixFeet = new ListItem("6'", "72");
+                ListItem sevenFeet = new ListItem("7'", "84");
+                ListItem eightFeet = new ListItem("8'", "96");
+                ListItem customWidth = new ListItem("Custom", "cWidth");
+
+                if (title == "Patio")
+                {
+                    doorWidthDDL.Items.Add(fiveFeet);
+                    doorWidthDDL.Items.Add(sixFeet);
+                    doorWidthDDL.Items.Add(sevenFeet);
+                    doorWidthDDL.Items.Add(eightFeet);
+                    doorWidthDDL.Items.Add(customWidth);
+                }
+                else if (title == "French")
+                {
+                    doorWidthDDL.Items.Add(sixty);
+                    doorWidthDDL.Items.Add(seventyTwo);
+                    doorWidthDDL.Items.Add(customWidth);
+                }
+                else
+                {
+                    doorWidthDDL.Items.Add(thirty);
+                    doorWidthDDL.Items.Add(thirtyTwo);
+                    doorWidthDDL.Items.Add(thirtyFour);
+                    doorWidthDDL.Items.Add(thirtySix);
+                    doorWidthDDL.Items.Add(customWidth);
+                }
+
+                doorWidthLBL.AssociatedControlID = "ddlDoorWidth" + i + title;
+
+                #endregion
+
+                #region Table:Seventh Row Door Custom Width (tblDoorDetails)
+
+                TableRow doorCustomWidthRow = new TableRow();
+                doorCustomWidthRow.ID = "rowDoorCustomWidth" + i + title;
+                doorCustomWidthRow.Attributes.Add("style", "display:none;");
+                TableCell doorCustomWidthLBLCell = new TableCell();
+                TableCell doorCustomWidthTXTCell = new TableCell();
+                TableCell doorCustomWidthDDLCell = new TableCell();
+
+                Label doorCustomWidthLBL = new Label();
+                doorCustomWidthLBL.ID = "lblDoorCustomWidth" + i + title;
+                doorCustomWidthLBL.Text = "Custom Width (inches):";
+
+                TextBox doorCustomWidthTXT = new TextBox();
+                doorCustomWidthTXT.ID = "txtDoorCustomWidth" + i + title;
+                doorCustomWidthTXT.CssClass = "txtField txtDoorInput";
+                doorCustomWidthTXT.Attributes.Add("maxlength", "3");
+
+                DropDownList inchCustomWidth = new DropDownList();
+                inchCustomWidth.ID = "ddlInchCustomWidth" + i + title;
+                inchCustomWidth.Items.Add(lst0);
+                inchCustomWidth.Items.Add(lst18);
+                inchCustomWidth.Items.Add(lst14);
+                inchCustomWidth.Items.Add(lst38);
+                inchCustomWidth.Items.Add(lst12);
+                inchCustomWidth.Items.Add(lst58);
+                inchCustomWidth.Items.Add(lst34);
+                inchCustomWidth.Items.Add(lst78);
+
+                doorCustomWidthLBL.AssociatedControlID = "txtDoorCustomWidth" + i + title;
+
+                #endregion
+
+                #region Table:Eight Row Door Primary Operator LHH (tblDoorDetails)
+
+                TableRow doorOperatorLHHRow = new TableRow();
+                doorOperatorLHHRow.ID = "rowDoorOperatorLHH" + i + title;
+                doorOperatorLHHRow.Attributes.Add("style", "display:none;");
+                TableCell doorOperatorLHHLBLCell = new TableCell();
+                TableCell doorOperatorLHHRADCell = new TableCell();
+
+                Label doorOperatorLHHLBLMain = new Label();
+                doorOperatorLHHLBLMain.ID = "lblDoorOperatorLHHMain" + i + title;
+                doorOperatorLHHLBLMain.Text = "Primary Operator:";
+
+                Label doorOperatorLHHLBLRad = new Label();
+                doorOperatorLHHLBLRad.ID = "lblDoorOperatorRadLHH" + i + title;
+
+                Label doorOperatorLHHLBL = new Label();
+                doorOperatorLHHLBL.ID = "lblDoorOperatorLHH" + i + title;
+                doorOperatorLHHLBL.Text = "LHH";
+
+                RadioButton doorOperatorLHHRad = new RadioButton();
+                doorOperatorLHHRad.ID = "radDoorOperatorLHH" + i + title;
+                doorOperatorLHHRad.GroupName = "PrimaryOperator" + i + title;
+
+                doorOperatorLHHLBLRad.AssociatedControlID = "radDoorOperatorLHH" + i + title;
+                doorOperatorLHHLBL.AssociatedControlID = "radDoorOperatorLHH" + i + title;
+
+                #endregion
+
+                #region Table:Ninth Row Door Primary Operator RHH (tblDoorDetails)
+
+                TableRow doorOperatorRHHRow = new TableRow();
+                doorOperatorRHHRow.ID = "rowDoorOperatorRHH" + i + title;
+                doorOperatorRHHRow.Attributes.Add("style", "display:none;");
+                TableCell doorOperatorRHHLBLCell = new TableCell();
+                TableCell doorOperatorRHHRADCell = new TableCell();
+
+                Label doorOperatorRHHLBLRad = new Label();
+                doorOperatorRHHLBLRad.ID = "lblDoorOperatorRadRHH" + i + title;
+
+                Label doorOperatorRHHLBL = new Label();
+                doorOperatorRHHLBL.ID = "lblDoorOperatorRHH" + i + title;
+                doorOperatorRHHLBL.Text = "RHH";
+
+                RadioButton doorOperatorRHHRad = new RadioButton();
+                doorOperatorRHHRad.ID = "radDoorOperatorRHH" + i + title;
+                doorOperatorRHHRad.GroupName = "PrimaryOperator" + i + title;
+
+                doorOperatorRHHLBLRad.AssociatedControlID = "radDoorOperatorRHH" + i + title;
+                doorOperatorRHHLBL.AssociatedControlID = "radDoorOperatorRHH" + i + title;
+
+                #endregion
+
+                #region Table:Tenth Row Door Box Header (tblDoorDetails)
+
+                TableRow doorBoxHeaderRow = new TableRow();
+                doorBoxHeaderRow.ID = "rowDoorBoxHeader" + i + title;
+                doorBoxHeaderRow.Attributes.Add("style", "display:none;");
+                TableCell doorBoxHeaderLBLCell = new TableCell();
+                TableCell doorBoxHeaderDDLCell = new TableCell();
+
+                Label doorBoxHeaderLBL = new Label();
+                doorBoxHeaderLBL.ID = "lblDoorBoxHeader" + i + title;
+                doorBoxHeaderLBL.Text = "Box Header Position:";
+
+                DropDownList doorBoxHeaderDDL = new DropDownList();
+                doorBoxHeaderDDL.ID = "ddlDoorBoxHeader" + i + title;
+                ListItem Left = new ListItem("Left", "left");
+                ListItem Right = new ListItem("Right", "right");
+                ListItem Both = new ListItem("Both", "both");
+                ListItem None = new ListItem("None", "none");
+                doorBoxHeaderDDL.Items.Add(Left);
+                doorBoxHeaderDDL.Items.Add(Right);
+                doorBoxHeaderDDL.Items.Add(Both);
+                doorBoxHeaderDDL.Items.Add(None);
+
+                doorBoxHeaderLBL.AssociatedControlID = "ddlDoorBoxHeader" + i + title;
+
+                #endregion
+                    
+                #region Table:Thirteenth Row Door Glass Tint (tblDoorDetails)
+
+                TableRow doorGlassTintRow = new TableRow();
+                doorGlassTintRow.ID = "rowDoorGlassTint" + i + title;
+                doorGlassTintRow.Attributes.Add("style", "display:none;");
+                TableCell doorGlassTintLBLCell = new TableCell();
+                TableCell doorGlassTintDDLCell = new TableCell();
+
+                Label doorGlassTintLBL = new Label();
+                doorGlassTintLBL.ID = "lblDoorGlassTint" + i + title;
+                doorGlassTintLBL.Text = "Door Glass Tint:";
+
+                DropDownList doorGlassTintDDL = new DropDownList();
+                doorGlassTintDDL.ID = "ddlDoorGlassTint" + i + title;
+                ListItem clear = new ListItem("Clear", "clear");
+                ListItem greyTint = new ListItem("Grey", "grey");
+                ListItem bronzeTint = new ListItem("Bronze", "bronze");
+                doorGlassTintDDL.Items.Add(clear);
+                doorGlassTintDDL.Items.Add(grey);
+                doorGlassTintDDL.Items.Add(bronzeTint);
+
+                doorGlassTintLBL.AssociatedControlID = "ddlDoorGlassTint" + i + title;
+
+                #endregion
+
+                #region Table:Tenth Row Door Hinge LHH (tblDoorDetails)
+
+                TableRow doorLHHRow = new TableRow();
+                doorLHHRow.ID = "rowDoorLHH" + i + title;
+                doorLHHRow.Attributes.Add("style", "display:none;");
+                TableCell doorLHHLBLCell = new TableCell();
+                TableCell doorLHHRADCell = new TableCell();
+
+                Label doorLHHLBLMain = new Label();
+                doorLHHLBLMain.ID = "lblDoorLHHMain" + i + title;
+                doorLHHLBLMain.Text = "Hinge placement:";
+
+                Label doorLHHLBLRad = new Label();
+                doorLHHLBLRad.ID = "lblLHHRad" + i + title;
+
+                Label doorLHHLBL = new Label();
+                doorLHHLBL.ID = "lblLHH" + i + title;
+                doorLHHLBL.Text = "LHH";
+
+                RadioButton doorLHHRad = new RadioButton();
+                doorLHHRad.ID = "radDoorLHH" + i + title;
+                doorLHHRad.GroupName = "DoorHinge" + i + title;
+
+                doorLHHLBLRad.AssociatedControlID = "radDoorLHH" + i + title;
+                doorLHHLBL.AssociatedControlID = "radDoorLHH" + i + title;
+
+                #endregion
+
+                #region Table:Eleventh Row Door Hinge RHH (tblDoorDetails)
+
+                TableRow doorRHHRow = new TableRow();
+                doorRHHRow.ID = "rowDoorRHH" + i + title;
+                doorRHHRow.Attributes.Add("style", "display:none;");
+                TableCell doorRHHLBLCell = new TableCell();
+                TableCell doorRHHRADCell = new TableCell();
+
+                Label doorRHHLBLRad = new Label();
+                doorRHHLBLRad.ID = "lblDoorRHHRad" + i + title;
+
+                Label doorRHHLBL = new Label();
+                doorRHHLBL.ID = "lblDoorRHH" + i + title;
+                doorRHHLBL.Text = "RHH";
+
+                RadioButton doorRHHRad = new RadioButton();
+                doorRHHRad.ID = "radDoorRHH" + i + title;
+                doorRHHRad.GroupName = "DoorHinge" + i + title;
+
+                doorRHHLBLRad.AssociatedControlID = "radDoorRHH" + i + title;
+                doorRHHLBL.AssociatedControlID = "radDoorRHH" + i + title;
+
+                #endregion
+
+                #region Table:Fourteenth Row Door Screen Options (tblDoorDetails)
+
+                TableRow doorScreenOptionsRow = new TableRow();
+                doorScreenOptionsRow.ID = "rowDoorScreenOptions" + i + title;
+                doorScreenOptionsRow.Attributes.Add("style", "display:none;");
+                TableCell doorScreenOptionsLBLCell = new TableCell();
+                TableCell doorScreenOptionsDDLCell = new TableCell();
+
+                Label doorScreenOptionsLBL = new Label();
+                doorScreenOptionsLBL.ID = "lblDoorScreenOptions" + i + title;
+                doorScreenOptionsLBL.Text = "Door Screen Option:";
+
+                DropDownList doorScreenOptionsDDL = new DropDownList();
+                doorScreenOptionsDDL.ID = "ddlDoorScreenOptions" + i + title;
+                ListItem betterVueInsect = new ListItem("Better Vue Insect Screen (Default)", "betterVueInsectScreen");
+                ListItem noSeeUms = new ListItem("No See Ums 20x20 Mesh", "noSeeUms");
+                ListItem solarInsectScreening = new ListItem("Solar Insect Screening", "solarInsectScreening");
+                ListItem tuffScreen = new ListItem("Tuff Screen", "tuffScreen");
+                ListItem noScreen = new ListItem("No Screen", "noScreen");
+                doorScreenOptionsDDL.Items.Add(betterVueInsect);
+                doorScreenOptionsDDL.Items.Add(noSeeUms);
+                doorScreenOptionsDDL.Items.Add(solarInsectScreening);
+                doorScreenOptionsDDL.Items.Add(tuffScreen);
+                doorScreenOptionsDDL.Items.Add(noScreen);
+
+                doorScreenOptionsLBL.AssociatedControlID = "ddlDoorScreenOptions" + i + title;
+
+                #endregion
+
+                #region Table:Fifteenth Row Door Hardware (tblDoorDetails)
+
+                TableRow doorHardwareRow = new TableRow();
+                doorHardwareRow.ID = "rowDoorHardware" + i + title;
+                doorHardwareRow.Attributes.Add("style", "display:none;");
+                TableCell doorHardwareLBLCell = new TableCell();
+                TableCell doorHardwareDDLCell = new TableCell();
+
+                Label doorHardwareLBL = new Label();
+                doorHardwareLBL.ID = "lblDoorHardware" + i + title;
+                doorHardwareLBL.Text = "Door Hardware";
+
+                DropDownList doorHardwareDDL = new DropDownList();
+                doorHardwareDDL.ID = "ddlDoorHardware" + i + title;
+                ListItem satinSilver = new ListItem("Satin Silver", "satinSilver");
+                ListItem brightBrass = new ListItem("Bright Brass", "brightBrass");
+                ListItem antiqueBrass = new ListItem("Antique Brass", "antiqueBrass");
+                doorHardwareDDL.Items.Add(satinSilver);
+                doorHardwareDDL.Items.Add(brightBrass);
+                doorHardwareDDL.Items.Add(antiqueBrass);
+
+                doorHardwareLBL.AssociatedControlID = "ddlDoorHardware" + i + title;
+
+                #endregion
+
+                #region Table:Eight Row Door Swing In (tblDoorDetails)
+
+                TableRow doorSwingInRow = new TableRow();
+                doorSwingInRow.ID = "rowDoorSwingIn" + i + title;
+                doorSwingInRow.Attributes.Add("style", "display:none;");
+                TableCell doorSwingInLBLCell = new TableCell();
+                TableCell doorSwingInRADCell = new TableCell();
+
+                Label doorSwingInLBLMain = new Label();
+                doorSwingInLBLMain.ID = "lblDoorSwingMain" + i + title;
+                doorSwingInLBLMain.Text = "Swing:";
+
+                Label doorSwingInLBLRad = new Label();
+                doorSwingInLBLRad.ID = "lblDoorSwingIn" + i + title;
+
+                Label doorSwingInLBL = new Label();
+                doorSwingInLBL.ID = "lblDoorSwingInRad" + i + title;
+                doorSwingInLBL.Text = "In";
+
+                RadioButton doorSwingInRAD = new RadioButton();
+                doorSwingInRAD.ID = "radDoorSwingIn" + i + title;
+                doorSwingInRAD.GroupName = "SwingInOut" + i + title;
+
+                doorSwingInLBLRad.AssociatedControlID = "radDoorSwingIn" + i + title;
+                doorSwingInLBL.AssociatedControlID = "radDoorSwingIn" + i + title;
+
+                #endregion
+
+                #region Table:Ninth Row Door Swing Out (tblDoorDetails)
+
+                TableRow doorSwingOutRow = new TableRow();
+                doorSwingOutRow.ID = "rowDoorSwingOut" + i + title;
+                doorSwingOutRow.Attributes.Add("style", "display:none;");
+                TableCell doorSwingOutLBLCell = new TableCell();
+                TableCell doorSwingOutRADCell = new TableCell();
+
+                Label doorSwingOutLBLRad = new Label();
+                doorSwingOutLBLRad.ID = "lblDoorSwingOutRad" + i + title;
+
+                Label doorSwingOutLBL = new Label();
+                doorSwingOutLBL.ID = "lblDoorSwingOut" + i + title;
+                doorSwingOutLBL.Text = "Out";
+
+                RadioButton doorSwingOutRAD = new RadioButton();
+                doorSwingOutRAD.ID = "radDoorSwingOut" + i + title;
+                doorSwingOutRAD.GroupName = "SwingInOut" + i + title;
+
+                doorSwingOutLBLRad.AssociatedControlID = "radDoorSwingOut" + i + title;
+                doorSwingOutLBL.AssociatedControlID = "radDoorSwingOut" + i + title;
+
+                #endregion
+
+                #region Table:# Row Door Position DDL (tblDoorDetails)
+
+                TableRow doorPositionDDLRow = new TableRow();
+                doorPositionDDLRow.ID = "rowDoorPosition" + i + title;
+                doorPositionDDLRow.Attributes.Add("style", "display:none;");
+                TableCell doorPositionDDLLBLCell = new TableCell();
+                TableCell doorPositionDDLDDLCell = new TableCell();
+
+                Label doorPositionDDLLBL = new Label();
+                doorPositionDDLLBL.ID = "lblDoorPositionDDL" + i + title;
+                doorPositionDDLLBL.Text = "Position In Wall:";
+
+                DropDownList doorPositionDDLDDL = new DropDownList();
+                doorPositionDDLDDL.ID = "ddlDoorPosition" + i + title;
+                doorPositionDDLDDL.Attributes.Add("onchange", "customDimension('" + i + "', '" + title + "','Position')");
+                ListItem PositionLeft = new ListItem("Left", "left");
+                ListItem PositionCenter = new ListItem("Center", "center");
+                ListItem PositionRight = new ListItem("Right", "right");
+                ListItem PositionCustom = new ListItem("Custom", "cPosition");
+                doorPositionDDLDDL.Items.Add(PositionLeft);
+                doorPositionDDLDDL.Items.Add(PositionCenter);
+                doorPositionDDLDDL.Items.Add(PositionRight);
+                doorPositionDDLDDL.Items.Add(PositionCustom);
+
+                doorPositionDDLLBL.AssociatedControlID = "ddlDoorPosition" + i + title;
+
+                #endregion
+
+                #region Table:# Row Door Position (tblDoorDetails)
+
+                TableRow doorPositionRow = new TableRow();
+                doorPositionRow.ID = "rowDoorCustomPosition" + i + title;
+                doorPositionRow.Attributes.Add("style", "display:none;");
+                TableCell doorPositionLBLCell = new TableCell();
+                TableCell doorPositionTXTCell = new TableCell();
+                TableCell doorPositionDDLCell = new TableCell();
+
+                Label doorPositionLBL = new Label();
+                doorPositionLBL.ID = "lblDoorCustomPosition" + i + title;
+                doorPositionLBL.Text = "Door position from left side (inches):";
+
+                TextBox doorPositionTXT = new TextBox();
+                doorPositionTXT.ID = "txtDoorCustomPosition" + i + title;
+                doorPositionTXT.CssClass = "txtField txtDoorInput";
+                doorPositionTXT.Attributes.Add("maxlength", "3");
+
+                DropDownList inchSpecificLeft = new DropDownList();
+                inchSpecificLeft.ID = "ddlInchSpecificLeft" + i + title;
+                inchSpecificLeft.Items.Add(lst0);
+                inchSpecificLeft.Items.Add(lst18);
+                inchSpecificLeft.Items.Add(lst14);
+                inchSpecificLeft.Items.Add(lst38);
+                inchSpecificLeft.Items.Add(lst12);
+                inchSpecificLeft.Items.Add(lst58);
+                inchSpecificLeft.Items.Add(lst34);
+                inchSpecificLeft.Items.Add(lst78);
+
+                doorPositionLBL.AssociatedControlID = "txtDoorCustomPosition" + i + title;
+
+                #endregion
+
+                #region Table:# Row Add This Door (tblDoorDetails)
+
+                TableRow doorButtonRow = new TableRow();
+                doorButtonRow.ID = "rowAddDoor" + i + title;
+                doorButtonRow.Attributes.Add("style", "display:inherit;");
+                TableCell doorAddButtonCell = new TableCell();
+                TableCell doorFillButtonCell = new TableCell();
+                TableCell doorUndoButtonCell = new TableCell();
+
+                #endregion
+
+                //Adding to table
+
+                #region Table:Default Row Title Current Door Added To Table (tblDoorDetails)
+
+                doorTitleLBLCell.Controls.Add(doorTitleLBL);
+
+                tblDoorDetails.Rows.Add(doorTitleRow);
+
+                doorTitleRow.Cells.Add(doorTitleLBLCell);
+
+                #endregion
+
+                #region Table:Second Row Style Of Door Added To Table (tblDoorDetails)
+
+                doorStyleLBLCell.Controls.Add(doorStyleLBL);
+                doorStyleDDLCell.Controls.Add(doorStyleDDL);
+
+                tblDoorDetails.Rows.Add(doorStyleRow);
+
+                doorStyleRow.Cells.Add(doorStyleLBLCell);
+                doorStyleRow.Cells.Add(doorStyleDDLCell);
+
+                #endregion
+
+                #region Table:Sixteenth Row Door V4T Vinyl Tint (tblDoorDetails)
+
+                doorVinylTintLBLCell.Controls.Add(doorVinylTintLBL);
+                doorVinylTintDDLCell.Controls.Add(doorVinylTintDDL);
+
+                tblDoorDetails.Rows.Add(doorVinylTintRow);
+
+                doorVinylTintRow.Cells.Add(doorVinylTintLBLCell);
+                doorVinylTintRow.Cells.Add(doorVinylTintDDLCell);
+
+                #endregion
+
+                #region Table:Twelfth Row Door V4T Number Of Vents Added To Table (tblDoorDetails)
+
+                doorNumberOfVentsLBLCell.Controls.Add(doorNumberOfVentsLBL);
+                doorNumberOfVentsDDLCell.Controls.Add(doorNumberOfVentsDDL);
+
+                tblDoorDetails.Rows.Add(doorNumberOfVentsRow);
+
+                doorNumberOfVentsRow.Cells.Add(doorNumberOfVentsLBLCell);
+                doorNumberOfVentsRow.Cells.Add(doorNumberOfVentsDDLCell);
+
+                #endregion
+
+                #region Table:# Row Door Transom Added To Table (tblDoorDetails)
+
+                doorTransomLBLCell.Controls.Add(doorTransomLBL);
+                doorTransomDDLCell.Controls.Add(doorTransomDDL);
+
+                tblDoorDetails.Rows.Add(doorTransomRow);
+
+                doorTransomRow.Cells.Add(doorTransomLBLCell);
+                doorTransomRow.Cells.Add(doorTransomDDLCell);
+
+                #endregion
+
+                #region Table:# Row Door Transom Vinyl Types Added To Table (tblDoorDetails)
+
+                doorTransomVinylTypesLBLCell.Controls.Add(doorTransomVinylTypesLBL);
+                doorTransomVinylTypesDDLCell.Controls.Add(doorTransomVinylTypesDDL);
+
+                tblDoorDetails.Rows.Add(doorTransomVinylTypesRow);
+
+                doorTransomVinylTypesRow.Cells.Add(doorTransomVinylTypesLBLCell);
+                doorTransomVinylTypesRow.Cells.Add(doorTransomVinylTypesDDLCell);
+
+                #endregion
+
+                #region Table:# Row Door Transom Glass Types Added To Table (tblDoorDetails)
+
+                doorTransomGlassTypesLBLCell.Controls.Add(doorTransomGlassTypesLBL);
+                doorTransomGlassTypesDDLCell.Controls.Add(doorTransomGlassTypesDDL);
+
+                tblDoorDetails.Rows.Add(doorTransomGlassTypesRow);
+
+                doorTransomGlassTypesRow.Cells.Add(doorTransomGlassTypesLBLCell);
+                doorTransomGlassTypesRow.Cells.Add(doorTransomGlassTypesDDLCell);
+
+                #endregion
+
+                #region Table:# Row Door Kickplate (tblDoorDetails)
+
+                doorKickplateLBLCell.Controls.Add(doorKickplateLBL);
+                doorKickplateDDLCell.Controls.Add(doorKickplateDDL);
+
+                tblDoorDetails.Rows.Add(doorKickplateRow);
+
+                doorKickplateRow.Cells.Add(doorKickplateLBLCell);
+                doorKickplateRow.Cells.Add(doorKickplateDDLCell);
+
+                #endregion
+
+                #region Table:# Row Door Kickplate Custom (tblDoorDetails)
+
+                doorCustomKickplateLBLCell.Controls.Add(doorCustomKickplateLBL);
+                doorCustomKickplateTXTCell.Controls.Add(doorCustomKickplateTXT);
+                doorCustomKickplateDDLCell.Controls.Add(inchCustomKickplate);
+
+                tblDoorDetails.Rows.Add(doorCustomKickplateRow);
+
+                doorCustomKickplateRow.Cells.Add(doorCustomKickplateLBLCell);
+                doorCustomKickplateRow.Cells.Add(doorCustomKickplateTXTCell);
+                doorCustomKickplateRow.Cells.Add(doorCustomKickplateDDLCell);
+
+                #endregion
+
+                #region Table:Third Row Color of Door Added to Table (tblDoorDetails)
+
+                colorOfDoorLBLCell.Controls.Add(colorOfDoorLBL);
+                colorOfDoorDDLCell.Controls.Add(colorOfDoorDDL);
+
+                tblDoorDetails.Rows.Add(colorOfDoorRow);
+
+                colorOfDoorRow.Cells.Add(colorOfDoorLBLCell);
+                colorOfDoorRow.Cells.Add(colorOfDoorDDLCell);
+
+                #endregion
+
+                #region Table:# Row Door Internal Grills Yes Added To Table (tblDoorDetails)
+
+                doorInternalGrillsYesLBLCell.Controls.Add(doorInternalGrillsYesLBLMain);
+
+                doorInternalGrillsYesRADCell.Controls.Add(doorInternalGrillsYesRad);
+                doorInternalGrillsYesRADCell.Controls.Add(doorInternalGrillsYesLBLRad);
+                doorInternalGrillsYesRADCell.Controls.Add(doorInternalGrillsYesLBL);
+
+                tblDoorDetails.Rows.Add(doorInternalGrillsYesRow);
+
+                doorInternalGrillsYesRow.Cells.Add(doorInternalGrillsYesLBLCell);
+                doorInternalGrillsYesRow.Cells.Add(doorInternalGrillsYesRADCell);
+
+                #endregion
+
+                #region Table:# Row Door Internal Grills No Added To Table (tblDoorDetails)
+
+                doorInternalGrillsNoRADCell.Controls.Add(doorInternalGrillsNoRad);
+                doorInternalGrillsNoRADCell.Controls.Add(doorInternalGrillsNoLBLRad);
+                doorInternalGrillsNoRADCell.Controls.Add(doorInternalGrillsNoLBL);
+
+                tblDoorDetails.Rows.Add(doorInternalGrillsNoRow);
+
+                doorInternalGrillsNoRow.Cells.Add(doorInternalGrillsNoLBLCell);
+                doorInternalGrillsNoRow.Cells.Add(doorInternalGrillsNoRADCell);
+
+                #endregion
+
+                #region Table:Fourth Row Height Of Door Added To Table (tblDoorDetails)
+
+                doorHeightLBLCell.Controls.Add(doorHeightLBL);
+                doorHeightDDLCell.Controls.Add(doorHeightDDL);
+
+                tblDoorDetails.Rows.Add(doorHeightRow);
+
+                doorHeightRow.Cells.Add(doorHeightLBLCell);
+                doorHeightRow.Cells.Add(doorHeightDDLCell);
+
+                #endregion
+
+                #region Table:Sixth Row Custom Height Of Door Added To Table (tblDoorDetails)
+
+                doorCustomHeightLBLCell.Controls.Add(doorCustomHeightLBL);
+                doorCustomHeightTXTCell.Controls.Add(doorCustomHeightTXT);
+                doorCustomHeightDDLCell.Controls.Add(inchCustomHeight);
+
+                tblDoorDetails.Rows.Add(doorCustomHeightRow);
+
+                doorCustomHeightRow.Cells.Add(doorCustomHeightLBLCell);
+                doorCustomHeightRow.Cells.Add(doorCustomHeightTXTCell);
+                doorCustomHeightRow.Cells.Add(doorCustomHeightDDLCell);
+
+                #endregion
+
+                #region Table:Fifth Row Width Of Door Added To Table (tblDoorDetails)
+
+                doorWidthLBLCell.Controls.Add(doorWidthLBL);
+                doorWidthDDLCell.Controls.Add(doorWidthDDL);
+
+                tblDoorDetails.Rows.Add(doorWidthRow);
+
+                doorWidthRow.Cells.Add(doorWidthLBLCell);
+                doorWidthRow.Cells.Add(doorWidthDDLCell);
+
+                #endregion
+
+                #region Table:Seventh Row Custom Width Of Door Added To Table (tblDoorDetails)
+
+                doorCustomWidthLBLCell.Controls.Add(doorCustomWidthLBL);
+                doorCustomWidthTXTCell.Controls.Add(doorCustomWidthTXT);
+                doorCustomWidthDDLCell.Controls.Add(inchCustomWidth);
+
+                tblDoorDetails.Rows.Add(doorCustomWidthRow);
+
+                doorCustomWidthRow.Cells.Add(doorCustomWidthLBLCell);
+                doorCustomWidthRow.Cells.Add(doorCustomWidthTXTCell);
+                doorCustomWidthRow.Cells.Add(doorCustomWidthDDLCell);
+
+                #endregion
+
+                #region Table:Eight Row Door Primary Operator LHH Added To Table (tblDoorDetails)
+
+                doorOperatorLHHLBLCell.Controls.Add(doorOperatorLHHLBLMain);
+
+                doorOperatorLHHRADCell.Controls.Add(doorOperatorLHHRad);
+                doorOperatorLHHRADCell.Controls.Add(doorOperatorLHHLBLRad);
+                doorOperatorLHHRADCell.Controls.Add(doorOperatorLHHLBL);
+
+                tblDoorDetails.Rows.Add(doorOperatorLHHRow);
+
+                doorOperatorLHHRow.Cells.Add(doorOperatorLHHLBLCell);
+                doorOperatorLHHRow.Cells.Add(doorOperatorLHHRADCell);
+
+                #endregion
+
+                #region Table:Ninth Row Door Primary Operator RHH Added To Table (tblDoorDetails)
+
+                doorOperatorRHHRADCell.Controls.Add(doorOperatorRHHRad);
+                doorOperatorRHHRADCell.Controls.Add(doorOperatorRHHLBLRad);
+                doorOperatorRHHRADCell.Controls.Add(doorOperatorRHHLBL);
+
+                tblDoorDetails.Rows.Add(doorOperatorRHHRow);
+
+                doorOperatorRHHRow.Cells.Add(doorOperatorRHHLBLCell);
+                doorOperatorRHHRow.Cells.Add(doorOperatorRHHRADCell);
+
+                #endregion
+
+                #region Table:Tenth Row Door Box Header Position (tblDoorDetails)
+
+                doorBoxHeaderLBLCell.Controls.Add(doorBoxHeaderLBL);
+                doorBoxHeaderDDLCell.Controls.Add(doorBoxHeaderDDL);
+
+                tblDoorDetails.Rows.Add(doorBoxHeaderRow);
+
+                doorBoxHeaderRow.Cells.Add(doorBoxHeaderLBLCell);
+                doorBoxHeaderRow.Cells.Add(doorBoxHeaderDDLCell);
+
+                #endregion
+
+                #region Table:Thirteenth Row Door Glass Tint Added To Table (tblDoorDetails)
+
+                doorGlassTintLBLCell.Controls.Add(doorGlassTintLBL);
+                doorGlassTintDDLCell.Controls.Add(doorGlassTintDDL);
+
+                tblDoorDetails.Rows.Add(doorGlassTintRow);
+
+                doorGlassTintRow.Cells.Add(doorGlassTintLBLCell);
+                doorGlassTintRow.Cells.Add(doorGlassTintDDLCell);
+
+                #endregion
+
+                #region Table:Tenth Row Door Hinge LHH Added To Table (tblDoorDetails)
+
+                doorLHHLBLCell.Controls.Add(doorLHHLBLMain);
+
+                doorLHHRADCell.Controls.Add(doorLHHRad);
+                doorLHHRADCell.Controls.Add(doorLHHLBLRad);
+                doorLHHRADCell.Controls.Add(doorLHHLBL);
+
+                tblDoorDetails.Rows.Add(doorLHHRow);
+
+                doorLHHRow.Cells.Add(doorLHHLBLCell);
+                doorLHHRow.Cells.Add(doorLHHRADCell);
+
+                #endregion
+
+                #region Table:Eleventh Row Door Hinge RHH Added To Table (tblDoorDetails)
+
+                doorRHHRADCell.Controls.Add(doorRHHRad);
+                doorRHHRADCell.Controls.Add(doorRHHLBLRad);
+                doorRHHRADCell.Controls.Add(doorRHHLBL);
+
+                tblDoorDetails.Rows.Add(doorRHHRow);
+
+                doorRHHRow.Cells.Add(doorRHHLBLCell);
+                doorRHHRow.Cells.Add(doorRHHRADCell);
+
+                #endregion
+
+                #region Table:Fourteenth Row Door Screen Options Added To Table (tblDoorDetails)
+
+                doorScreenOptionsLBLCell.Controls.Add(doorScreenOptionsLBL);
+                doorScreenOptionsDDLCell.Controls.Add(doorScreenOptionsDDL);
+
+                tblDoorDetails.Rows.Add(doorScreenOptionsRow);
+
+                doorScreenOptionsRow.Cells.Add(doorScreenOptionsLBLCell);
+                doorScreenOptionsRow.Cells.Add(doorScreenOptionsDDLCell);
+
+                #endregion
+
+                #region Table:Fifteenth Row Door Hardware Added To Table (tblDoorDetails)
+
+                doorHardwareLBLCell.Controls.Add(doorHardwareLBL);
+                doorHardwareDDLCell.Controls.Add(doorHardwareDDL);
+
+                tblDoorDetails.Rows.Add(doorHardwareRow);
+
+                doorHardwareRow.Cells.Add(doorHardwareLBLCell);
+                doorHardwareRow.Cells.Add(doorHardwareDDLCell);
+
+                #endregion
+
+                #region Table:Eight Row Swing In Added To Table (tblDoorDetails)
+
+                doorSwingInLBLCell.Controls.Add(doorSwingInLBLMain);
+
+                doorSwingInRADCell.Controls.Add(doorSwingInRAD);
+                doorSwingInRADCell.Controls.Add(doorSwingInLBLRad);
+                doorSwingInRADCell.Controls.Add(doorSwingInLBL);
+
+                tblDoorDetails.Rows.Add(doorSwingInRow);
+
+                doorSwingInRow.Cells.Add(doorSwingInLBLCell);
+                doorSwingInRow.Cells.Add(doorSwingInRADCell);
+
+                #endregion
+
+                #region Table:Ninth Row Swing Out Added To Table (tblDoorDetails)
+
+                doorSwingOutRADCell.Controls.Add(doorSwingOutRAD);
+                doorSwingOutRADCell.Controls.Add(doorSwingOutLBLRad);
+                doorSwingOutRADCell.Controls.Add(doorSwingOutLBL);
+
+                tblDoorDetails.Rows.Add(doorSwingOutRow);
+
+                doorSwingOutRow.Cells.Add(doorSwingOutLBLCell);
+                doorSwingOutRow.Cells.Add(doorSwingOutRADCell);
+
+                #endregion
+
+                #region Table:# Row Door Position DDL Added To Table (tblDoorDetails)
+
+                doorPositionDDLLBLCell.Controls.Add(doorPositionDDLLBL);
+                doorPositionDDLDDLCell.Controls.Add(doorPositionDDLDDL);
+
+                tblDoorDetails.Rows.Add(doorPositionDDLRow);
+
+
+                doorPositionDDLRow.Cells.Add(doorPositionDDLLBLCell);
+                doorPositionDDLRow.Cells.Add(doorPositionDDLDDLCell);
+
+                #endregion
+
+                #region Table:# Row Door Position Added To Table (tblDoorDetails)
+
+                doorPositionLBLCell.Controls.Add(doorPositionLBL);
+                doorPositionTXTCell.Controls.Add(doorPositionTXT);
+                doorPositionDDLCell.Controls.Add(inchSpecificLeft);
+
+                tblDoorDetails.Rows.Add(doorPositionRow);
+
+                doorPositionRow.Cells.Add(doorPositionLBLCell);
+                doorPositionRow.Cells.Add(doorPositionTXTCell);
+                doorPositionRow.Cells.Add(doorPositionDDLCell);
+
+                #endregion
+
+                #region Table:# Row Add This Door (tblDoorDetails)
+
+                if (title == "NoDoor")
+                {
+                    doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This Opening Only (No Door)'/>"));
+                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With Opening Only (No Doors)'/>"));
+                }
+                else
+                {
+                    doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
+                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
+                }
+                //doorUndoButtonCell.Controls.Add(new LiteralControl("<input id='btnUndoLastAddition" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Undo Last Addition Doors'/>"));
+
+                tblDoorDetails.Rows.Add(doorButtonRow);
+
+                doorButtonRow.Cells.Add(doorAddButtonCell);
+                doorButtonRow.Cells.Add(doorFillButtonCell);
+                //doorButtonRow.Cells.Add(doorUndoButtonCell);
+
+                #endregion
+
+                //Adding literal control div tag to hold the table, add to wallDoorOptions placeholder
+                wallDoorOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\" id=\"div_" + i + title + "\"><ul>"));
+
+                //Adding literal control li to keep proper page look and format
+                wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
+
+                //Adding table to placeholder wallDoorOptions
+                wallDoorOptions.Controls.Add(tblDoorDetails);
+
+                //Closing necessary tags
+                wallDoorOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
+                
             }
 
             #endregion
@@ -1416,6 +1730,13 @@ namespace SunspaceDealerDesktop
         }
 
         #region window stuff
+
+        /*
+         * fill all the usable space with largest size windows
+         * if extra usable space left over, divide the window size in 2 and add a window
+         * if some weird size of extra space left over, add filler 
+         */
+
 
         /// <summary>
         /// This method creates radio buttons/dropdowns for window frame colour options for all models 
@@ -2496,6 +2817,16 @@ namespace SunspaceDealerDesktop
                 html += "<input id=\"hidWall" + i + "Length\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall length
                 html += "<input id=\"hidWall" + i + "RightFiller\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall right filler
                 html += "<input id=\"hidWall" + i + "SoffitLength\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall soffit length
+
+
+
+                html += "<div id=\"hidWall" + i + "Length\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall length
+                html += "<div id=\"hidWall" + i + "LeftFiller\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall left filler
+                html += "<div id=\"hidWall" + i + "RightFiller\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall right filler
+                html += "<div id=\"hidWall" + i + "SetBack\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall setback
+                html += "<div id=\"hidWall" + i + "SoffitLength\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall soffit length
+                html += "<div id=\"hidWall" + i + "StartHeight\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall start height
+                html += "<div id=\"hidWall" + i + "EndHeight\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall end height
                 //html += "<input id=\"hidWall" + i + "Slope\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall slope
                 
             }
@@ -2512,9 +2843,8 @@ namespace SunspaceDealerDesktop
 
             //there are issues with getting values from dynamically generated hidden fields
             //hard coded hidden fields work fine...
+            
             //need to dynamically determine slope, and soffit length of each wall and store it in hidden fields
-
-
 
             float length, startHeight, endHeight, soffit;//, slope;
             string orientation, name, type, model;
@@ -2523,7 +2853,9 @@ namespace SunspaceDealerDesktop
             {
                 //find and store the dynamically created hidden fields
                 wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField; //wall length
-                wallSoffit = hiddenFieldsDiv.FindControl("hzidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
+                wallSoffit = hiddenFieldsDiv.FindControl("hidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
+
+                
 
                 //length = wallLength.Value;
                 //startHeight = Convert.ToSingle(hidBackWallHeight.Value);
@@ -2540,6 +2872,13 @@ namespace SunspaceDealerDesktop
                 //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
                 walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel));
             }
+        }
+
+        protected void btnQuestion4_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Blah1");
+            System.Diagnostics.Debug.WriteLine(Request.Form["Blah1"]);
+            //Console.WriteLine(Session["Blah1"].ToString());                
         }
     }
 }

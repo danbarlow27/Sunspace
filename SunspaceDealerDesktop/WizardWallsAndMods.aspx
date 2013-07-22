@@ -11,12 +11,61 @@
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
         for (var i = 0; i < lineList.length; i++) 
             coordList[i] = lineList[i].split(","); //populate the 2d array
+        
+        //var wallSlopeArray = new Array(); //array to store slope of each wall
+        var wallLengthArray = new Array(); //array to store the length of each wall
+        var wallLeftFillerArray = new Array(); //array to store left filler of each wall
+        var wallRightFillerArray = new Array(); //array to store right filler of each wall
         var wallSetBackArray = new Array(); //array to store the setback for each wall
-        var wallSlopeArray = new Array(); //array to store slope of each wall
         var wallSoffitArray = new Array(); //array to store soffit length of each wall
         var wallStartHeightArray = new Array(); //array to store start height of each wall
         var wallEndHeightArray = new Array(); //array to store end height of each wall
-        var wallLengthArray = new Array(); //array to store the length of each wall
+
+        var wallProperties = [
+            "wallId",
+            "length",
+            "height",
+            "doors",
+            "windows"
+        ]
+        var doorModProperties = [
+            "index",
+            "distanceFromLeft",
+            "type",
+            "style",
+            "vinylTint",
+            "numberOfVents",
+            "transom",
+            "transomVinyl",
+            "transomGlass",
+            "kickplate",
+            "color",
+            "internalGrills",
+            "height",
+            "width",
+            "operator",
+            "boxHeader",
+            "glassTint",
+            "hinge",
+            "screenOptions",
+            "hardware",
+            "swing",
+            "position"
+        ]
+
+        var backWall = "south"; //index of the back wall to determine wall heights
+        var backWallIndex = 0;
+
+        var existingWallCount = 0;
+        var proposedWallCount = 0;
+        for (var i = 0; i < coordList.length; i++) {
+            if (coordList[i][4] === "E")
+                existingWallCount++;
+            else
+                proposedWallCount++
+        }
+
+        var wallDoors = new Array(); //array to store the walls and their respective door objects
 
         var DOOR_MAX_WIDTH = '<%= DOOR_MAX_WIDTH %>';
         var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
@@ -25,7 +74,11 @@
         var projection = 120; //hard coded for testing, will come from the previous pages in the wizard
         var soffitLength = 0; //hard coded for testing, will come from the previous pages in the wizard
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
-        var model = '<%= currentModel %>';
+        var model = '<%= currentModel %>';        
+        
+        $(document).ready(function () {
+            $("#MainContent_btnQuestion3").click(submitDoorData);
+        });
 
         /**
         This function calculates the "setback" of each wall, i.e. the number the current wall adds to the projection.
@@ -131,116 +184,222 @@
 
         /*
         This function determines start and end height of each wall based on roof slope and length.
-        
-
-        needs a bit of tune up...
-
-
+        Depending on which wall is considered the back wall for the purposes of roof slope, this function
+            goes from wall 1 to the end setting start and end heights of each wall, or goes from the last
+            wall to the first, setting end and start height of each wall (going backwards).
         */
         function determineStartAndEndHeightOfEachWall() {
 
-            var existingWallCount = 0;
-            var proposedWallCount = 0;
+            if (backWall === "north") { //if back wall is a north facing wall, i.e. is not existing wall 
+                wallStartHeightArray[backWallIndex] = hidBackWallHeight.value;
+                wallEndHeightArray[backWallIndex] = hidBackWallHeight.value;
+                
+                for (var i = (backWallIndex - 1); i >= 0; i--) { //0 = index of first wall
 
-            for (var i = 0; i < coordList.length; i++) {
-                if (coordList[i][4] === "E") { //existing wall
-                    //if (coordList[i][5] === "S") {
 
-                    ///this is assuming that back wall is an existing wall...
+                    if (coordList[i][4] === "E") { //existing wall
+                        //if (coordList[i][5] === "S") {
 
+                        ///this is assuming that back wall is an existing wall...
                         wallStartHeightArray[i] = hidBackWallHeight.value;
                         wallEndHeightArray[i] = hidBackWallHeight.value;
-                    //}
+                        //}
 
-                }
-                else { //proposed wall
-
-                    wallStartHeightArray[i] = wallEndHeightArray[i - 1];
-
-                    switch(coordList[i][5]) {    
-                        case "S": //if south
-                        case "N": //or north
-                            wallEndHeightArray[i] = wallStartHeightArray[i];
-                            break;
-                        case "W": //if west
-                            wallEndHeightArray[i] = wallStartHeightArray[i] - ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
-                            break;
-                        case "E": //if east
-                            wallEndHeightArray[i] = wallStartHeightArray[i] + ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
-                            break;
-                        case "SW": //if southwest
-                        case "SE": //or northwest
-                            wallEndHeightArray[i] = wallStartHeightArray[i] - ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
-                            break;
-                        case "NW": //if southeast
-                        case "NE": //or northeast
-                            wallEndHeightArray[i] = wallStartHeightArray[i] + ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
-                            break;
                     }
-                }   
-            }    
+                    else { //proposed wall
+
+                        wallEndHeightArray[i] = wallStartHeightArray[i + 1];
+
+                        switch (coordList[i][5]) {
+                            case "S": //if south
+                            case "N": //or north
+                                wallStartHeightArray[i] = wallEndtHeightArray[i];
+                                break;
+                            case "W": //if west
+                                wallStartHeightArray[i] = wallEndHeightArray[i] - ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
+                                break;
+                            case "E": //if east
+                                wallStartHeightArray[i] = wallEndHeightArray[i] + ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
+                                break;
+                            case "SW": //if southwest
+                            case "SE": //or northwest
+                                wallStartHeightArray[i] = wallEndHeightArray[i] - ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
+                                break;
+                            case "NW": //if southeast
+                            case "NE": //or northeast
+                                wallStartHeightArray[i] = wallEndHeightArray[i] + ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
+                                break;
+                        }
+                    }
+                }
+            }
+            else if (backWall === "south") { //if backwall is a south facing wall.. i.e. is existing
+                for (var i = 0; i < coordList.length; i++) {
+                    if (coordList[i][4] === "E") { //existing wall
+                            wallStartHeightArray[i] = hidBackWallHeight.value;
+                            wallEndHeightArray[i] = hidBackWallHeight.value;
+                    }
+                    else { //proposed wall
+                    //if (coordList[i][4] === "P") {
+
+                        wallStartHeightArray[i] = wallEndHeightArray[i - 1];
+
+                        switch (coordList[i][5]) {
+                            case "S": //if south
+                            case "N": //or north
+                                wallEndHeightArray[i] = wallStartHeightArray[i];
+                                break;
+                            case "W": //if west
+                                wallEndHeightArray[i] = wallStartHeightArray[i] - ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
+                                break;
+                            case "E": //if east
+                                wallEndHeightArray[i] = wallStartHeightArray[i] + ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
+                                break;
+                            case "SW": //if southwest
+                            case "SE": //or northwest
+                                wallEndHeightArray[i] = wallStartHeightArray[i] - ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
+                                break;
+                            case "NW": //if southeast
+                            case "NE": //or northeast
+                                wallEndHeightArray[i] = wallStartHeightArray[i] + ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
+                                break;
+                        }
+                    }
+                }
+            }
         }
 
 
         /*
         This function populates the wall soffit array by determining the orientation of each wall 
             and checking to see if the soffit length would affect it or not 
+
+
+            ////this function needs more functionality to account for soffit length on diagonal walls 
+                and soffit length that's greater than the length of a wall
+                    (if there a case when soffit length would be greater than wall length,
+                     and span multiple walls???)
+
+            ////note: soffit only affects the first wall and the last wall... 
+                        if they are vertical and perpendicular to the existing walls
+
+
+Dan H:
+"There is no default size and yes a soffit can span multiple walls. When that occurs the first wall is considered no slope and the second wall is slope with soffit.
+Soffit is not limited to first and last wall. The value saved is probably best though of as slopestart... the soffit of the house is, of course, used to determine that slopestart position."
+
+
+
+see "new soffit conundrum" image on desktop for new soffit conundrum... 
+
+
         */
         function determineSoffitLengthOfEachWall() {
             
-            for (var index = 0; index < coordList.length; index++) {
-                if (coordList[index][4] === "E") //if existing wall  
-                    wallSoffitArray[index] = 0; //slope is unimportant
-                else { //if proposed wall
-                    //get the orientation of the proposed wall
-                    switch (coordList[index][5]) { //5 = orientation
-                        case "S": //if south
-                        case "N": //or north
-                            wallSoffitArray[index] = 0; //soffit length is unimportant thus zero
-                            break;
+            var firstWallLength = document.getElementById("hidWall" + (existingWallCount + 1) + "Length").value;
+            var lastWallLength = document.getElementById("hidWall" + (coordList.length - 1) + "Length").value;
 
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                        case "SW": //or southwest
-                        case "NW": //or northwest
-                        case "SE": //or southeast
-                        case "NE": //or northeast
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                        case "W": //if west
-                            for (var i = 0; i < coordList.length; i++) { //run through all the walls
-                                if (coordList[i][4] === "E") { //if there's an existing wall
-                                    if (coordList[i][2] === coordList[index][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
-                                        wallSoffitArray[index] = soffitLength; //set the soffit length
-                                        break; //break out of the loop
-                                    }
-                                }
-                            }
-                            break; //break out of the switch
-                        case "E": //if east
-                            for (var i = 0; i < coordList.length; i++) { //run through all the walls
-                                if (coordList[i][4] === "E") { //if there's an existing wall
-                                    if (coordList[i][2] === coordList[index][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
-                                        wallSoffitArray[index] = -soffitLength; //should probably be positive soffit length, but just to differentiate between beginning soffit and ending soffit
-                                        break; //break out of the loop
-                                    }
-                                }
-                            }
-                            break; //break out of the switch
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
-                            /**********************************************************************************************/
+            /*************************************************************************************/
+            /*************************************************************************************/
+            /*************************************************************************************/
+            var firstWallStartPoint = coordList[existingWallCount + 1][2]; // 2 = y1
+            var lastWallEndPoint = coordList[coordList.length - 1][3]; // 3 = y2
+            /*************************************************************************************/
+            /*************************************************************************************/
+            /*************************************************************************************/
+
+            for (var i = 0; i < coordList.length; i++) {
+                if (i === (existingWallCount + 1) || i === (coordList.length - 1)) { //first proposed wall or last proposed wall
+                    if (coordList[i][5] === "W" || coordList[i][5] === "E") { //if its vertical and perpendicular to existing wall 
+                        wallSoffitArray[i] = soffitLength; //set the soffit length
+                        if (firstWallLength > lastWallLength) //if different lengths
+                            wallSoffitArray[existingWallCount + 1] += (firstWallLength - lastWallLength); //add the difference to the appropriate wall
+                        else if (lastWallLength > firstWallLength) //if different lengths
+                            wallSoffitArray[coordList.length - 1] += (lastWallLength - firstWallLength); //add the difference to the appropriate wall
                     }
+                    else //if they are not vertical perpendicular
+                        wallSoffitArray[i] = 0; //no soffit
                 }
+                else //if not first or last proposed wall
+                    wallSoffitArray[i] = 0; //no soffit
             }
+
+
+            //for (var i = 0; i < coordList.length; i++)
+            //    if (coordList[i][4] === "E") { //if existing wall  
+            //        //wallSoffitArray[index] = 0; //slope is unimportant
+            //    }
+            //    else { //if proposed wall
+            //        //get the orientation of the proposed wall
+            //        switch (coordList[i][5]) { //5 = orientation
+            //            case "S": //if south
+            //            case "N": //or north
+            //                wallSoffitArray[i] = 0; //soffit length is unimportant thus zero
+            //                break;
+
+            //                /**********************************************************************************************/
+            //                /**********************************************************************************************/
+            //                /**********************************************************************************************/
+            //                /**********************************************************************************************/
+            //                /**********************************************************************************************/
+            //            case "SW": //or southwest
+            //            case "NW": //or northwest
+            //            case "SE": //or southeast
+            //            case "NE": //or northeast
+            //                /**********************************************************************************************/
+            //                /**********************************************************************************************/
+            //                /**********************************************************************************************/
+            //                /**********************************************************************************************/
+            //                /**********************************************************************************************/
+            //                break;
+            //            case "W": //if west
+            //            case "E": //or
+            //                coordList
+
+            //                
+                                /**********************************************************************************************/
+                                /******************* the following was done to account for multiple ***************************/
+                                /*******************    proposed walls touching existing walls      ***************************/
+                                /*******************    multiple existing walls not relevant atm    ***************************/
+                                /**********************************************************************************************/
+                                //for (var j = 0; j < coordList.length; j++) { //run through all the walls
+                                //    if (coordList[j][4] === "E") { //if there's an existing wall
+                                //        if (coordList[j][2] === coordList[i][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
+                                //            wallSoffitArray[i] = soffitLength; //set the soffit length
+                                //            break; //break out of the loop
+                                //        }
+                                //    }
+                                //}
+                                //break; //break out of the switch
+                                /**********************************************************************************************/
+                                /**********************************************************************************************/
+                                /**********************************************************************************************/
+                                /**********************************************************************************************/
+                                /**********************************************************************************************/
+
+                                /**********************************************************************************************/
+                                /******************* the following was done to differentiate between ***************************/
+                                /*******************    beginning soffit and ending soffit       ***************************/
+                                /*******************    soffit placement on wall no longer desired    ***************************/
+                                /**********************************************************************************************/
+                                //case "E": //if east
+                                //    for (var j = 0; j < coordList.length; j++) { //run through all the walls
+                                //        if (coordList[j][4] === "E") { //if there's an existing wall
+                                //            if (coordList[j][2] === coordList[i][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
+                                //                wallSoffitArray[i] = -soffitLength; //should probably be positive soffit length, but just to differentiate between beginning soffit and ending soffit
+                                //                break; //break out of the loop
+                                //            }
+                                //        }
+                                //    }
+                                //    break; //break out of the switch
+                                /**********************************************************************************************/
+                                /**********************************************************************************************/
+                                /**********************************************************************************************/
+                                /**********************************************************************************************/
+                                /**********************************************************************************************/
+                            
+                //}
+            //}
         }
 
         /**
@@ -281,32 +440,40 @@
             //document.getElementById('MainContent_btnQuestion3').disabled = false;
 
             //var lengthList = new Array();
-            var isValid = true; //to do valid input or invalid input logic
+            var isValid;// = true; //to do valid input or invalid input logic
             var answer = ""; //answer, to be displayed on the side panel
 
             //run through all the textboxes and check if the values in there are valid numbers
             for (var i = 1; i <= lineList.length; i++) {
-                if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) //if invalid numbers
-                    || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0 //zero should be changed to MIN_WALL_LENGTH
-                    || isNaN(document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value)
-                    || document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value < 0
-                    || isNaN(document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value)
-                    || document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value < 0)
-                    isValid = false; //set isvalid to false
+                if (coordList[i - 1][4] === "P") {
+                    if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) //if invalid numbers
+                        || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0 //zero should be changed to MIN_WALL_LENGTH
+                        || isNaN(document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value)
+                        || document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value < 0
+                        || isNaN(document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value)
+                        || document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value < 0)
+                        isValid = false; //set isvalid to false
+                    else
+                        isValid = true;
+                }
             }
 
             if (isValid) { //if everything is valid
+
+                determineSoffitLengthOfEachWall(); //calculate and store soffitlength of each wall
                 for (var i = 1; i <= lineList.length; i++) { //populate the hidden fields for each wall
-
-                    document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i]; //store wall setback 
-                    document.getElementById("hidWall" + i + "LeftFiller").value = document.getElementById("MainContent_txtWall" + i + "LeftFiller").value + document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").selectedIndex].value; //store left filler
-                    wallLengthArray[i] = document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value + document.getElementById("MainContent_ddlWall" + i + "InchFractions").options[document.getElementById("MainContent_ddlWall" + i + "InchFractions").selectedIndex].value; //store length
-                    document.getElementById("hidWall" + i + "RightFiller").value = document.getElementById("MainContent_txtWall" + i + "RightFiller").value + document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").selectedIndex].value; //store right filler
-
-                    answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value; //store the values in the answer variable to be displayed
-                    calculateSetBack((i - 1)); //calculate setback of the given wall 
+                    if (coordList[i - 1][4] === "P") {
+                        calculateSetBack((i - 1)); //calculate setback of the given wall
+                        
+                        document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i - 1]; //store wall setback 
+                        wallLeftFillerArray[i-1] = document.getElementById("hidWall" + i + "LeftFiller").value = document.getElementById("MainContent_txtWall" + i + "LeftFiller").value + document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").selectedIndex].value; //store left filler
+                        wallLengthArray[i-1] = document.getElementById("hidWall" + i + "Length").value = document.getElementById("MainContent_txtWall" + i + "Length").value + document.getElementById("MainContent_ddlWall" + i + "InchFractions").options[document.getElementById("MainContent_ddlWall" + i + "InchFractions").selectedIndex].value; //store length
+                        wallRightFillerArray[i-1] = document.getElementById("hidWall" + i + "RightFiller").value = document.getElementById("MainContent_txtWall" + i + "RightFiller").value + document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").selectedIndex].value; //store right filler
+                        document.getElementById("hidWall" + i + "SoffitLength").value = wallSoffitArray[i - 1];//store wall soffitlength
+                        answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value; //store the values in the answer variable to be displayed
+                  
+                    }
                 }
-
                 //store projection in the projection variable and hidden field
                 document.getElementById("MainContent_hidProjection").value = projection = calculateProjection(); 
 
@@ -469,156 +636,197 @@
         *typeOfRowsDisplayed
         *This function finds which type of door is selected and displays the appropriate fields
         *from a table hidden to the user
+        *@param wallNumber - holds an integer to know which wall is currently being affected
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
         */
-        function typeRowsDisplayed() {
+        function typeRowsDisplayed(wallNumber, type) {
 
-            for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
+            /****START:TABLE ROWS BY ID****/
+            var doorTitle = document.getElementById("MainContent_rowDoorTitle" + wallNumber + type);
+            var doorStyleTable = document.getElementById("MainContent_rowDoorStyle" + wallNumber + type);
+            var doorVinylTint = document.getElementById("MainContent_rowDoorVinylTint" + wallNumber + type);
+            var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallNumber + type);
+            var doorTransom = document.getElementById("MainContent_rowDoorTransom" + wallNumber + type);
+            var doorTransomVinyl = document.getElementById("MainContent_rowDoorTransomVinylTypes" + wallNumber + type);
+            var doorTransomGlass = document.getElementById("MainContent_rowDoorTransomGlassTypes" + wallNumber + type);
+            var doorKickplate = document.getElementById("MainContent_rowDoorKickplate" + wallNumber + type);
+            var doorKicplateCustom = document.getElementById("MainContent_rowDoorCustomKickplate" + wallNumber + type);
+            var doorColor = document.getElementById("MainContent_rowDoorColor" + wallNumber + type);
+            var doorInternalGrillsYes = document.getElementById("MainContent_rowDoorInternalGrillsYes" + wallNumber + type);
+            var doorInternalGrillsNo = document.getElementById("MainContent_rowDoorInternalGrillsNo" + wallNumber + type);
+            var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallNumber + type);
+            var doorHeightCustom = document.getElementById("MainContent_rowDoorCustomHeight" + wallNumber + type);
+            var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallNumber + type);
+            var doorWidthCustom = document.getElementById("MainContent_rowDoorCustomWidth" + wallNumber + type);
+            var doorOperatorLHH = document.getElementById("MainContent_rowDoorOperatorLHH" + wallNumber + type);
+            var doorOperatorRHH = document.getElementById("MainContent_rowDoorOperatorRHH" + wallNumber + type);
+            var doorBoxHeader = document.getElementById("MainContent_rowDoorBoxHeader" + wallNumber + type);
+            var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallNumber + type);
+            var doorLHH = document.getElementById("MainContent_rowDoorLHH" + wallNumber + type);
+            var doorRHH = document.getElementById("MainContent_rowDoorRHH" + wallNumber + type);
+            var doorScreenOptions = document.getElementById("MainContent_rowDoorScreenOptions" + wallNumber + type);            
+            var doorHardware = document.getElementById("MainContent_rowDoorHardware" + wallNumber + type);
+            var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + wallNumber + type);
+            var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallNumber + type);
+            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallNumber + type);
+            var doorPositionCustom = document.getElementById("MainContent_rowDoorCustomPosition" + wallNumber + type);
+            /****END:TABLE ROWS BY ID****/
 
-                if (coordList[wallCount-1][4] === "P") {
+            /****START:RADIO BUTTONS TO BE CHECKED INITIALLY****/
+            var doorInternalGrillYesChecked = document.getElementById("MainContent_radDoorInternalGrillsYes" + wallNumber + type);
+            var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallNumber + type).options[document.getElementById("MainContent_ddlDoorPosition" + wallNumber + type).selectedIndex].value;
+            var doorLHHChecked = document.getElementById("MainContent_radDoorLHH" + wallNumber + type);
+            var doorSwingInChecked = document.getElementById("MainContent_radDoorSwingIn" + wallNumber + type);
 
-                    if (document.getElementById('MainContent_radWall' + wallCount).checked) {
+            //FRENCH/PATIO DOOR ONLY
+            var doorOperatorLHHChecked = document.getElementById("MainContent_radDoorOperatorLHH" + wallNumber + type);
+            /****END:RADIO BUTTONS TO BE CHECKED INITIALLY****/
 
-                        if (document.getElementById('MainContent_radType' + wallCount + 'Cabana').checked) {
+            //If type is Cabana, display the appropriate fields
+            if (type == "Cabana") {               
 
-                            var doorTitle = document.getElementById("MainContent_rowDoorTitle" + wallCount + "Cabana");
-                            var doorStyle = document.getElementById("MainContent_rowDoorStyle" + wallCount + "Cabana");
-                            var doorColor = document.getElementById("MainContent_rowDoorColor" + wallCount + "Cabana");
-                            var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "Cabana");
-                            var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "Cabana");
-                            var doorBoxHeader = document.getElementById("MainContent_rowDoorBoxHeader" + wallCount + "Cabana");
+                //General
+                doorTitle.style.display = "inherit";
+                doorStyleTable.style.display = "inherit";
+                doorColor.style.display = "inherit";
+                doorHeight.style.display = "inherit";
+                doorWidth.style.display = "inherit";
+                doorBoxHeader.style.display = "inherit";
+                doorTransom.style.display = "inherit";
+                doorKickplate.style.display = "inherit";
 
-                            var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallCount + "Cabana");
-                            var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallCount + "Cabana");
-                            var doorLHH = document.getElementById("MainContent_rowDoorLHH" + wallCount + "Cabana");
-                            var doorRHH = document.getElementById("MainContent_rowDoorRHH" + wallCount + "Cabana");
-                            var doorHardware = document.getElementById("MainContent_rowDoorHardware" + wallCount + "Cabana");
-                            var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + wallCount + "Cabana");
-                            var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallCount + "Cabana");
-                            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Cabana");
-
-                            //General
-                            doorTitle.style.display = "inherit";
-                            doorStyle.style.display = "inherit";
-                            doorColor.style.display = "inherit";
-                            doorHeight.style.display = "inherit";
-                            doorWidth.style.display = "inherit";
-                            doorBoxHeader.style.display = "inherit";
-
-                            //Cabana Specific
-                            doorGlassTint.style.display = "inherit";
-                            doorLHH.style.display = "inherit";
-                            doorRHH.style.display = "inherit";
-                            doorSwingIn.style.display = "inherit";
-                            doorSwingOut.style.display = "inherit";
-                            doorHardware.style.display = "inherit";
-                            doorNumberOfVents.style.display = "inherit";
-                            doorPosition.style.display = "inherit";
-                        }
-                        else if (document.getElementById('MainContent_radType' + wallCount + 'French').checked) {
-
-                            var doorTitle = document.getElementById("MainContent_rowDoorTitle" + wallCount + "French");
-                            var doorStyle = document.getElementById("MainContent_rowDoorStyle" + wallCount + "French");
-                            var doorColor = document.getElementById("MainContent_rowDoorColor" + wallCount + "French");
-                            var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "French");
-                            var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "French");
-                            var doorBoxHeader = document.getElementById("MainContent_rowDoorBoxHeader" + wallCount + "French");
-
-                            var doorOperatorLHH = document.getElementById("MainContent_rowDoorOperatorLHH" + wallCount + "French");
-                            var doorOperatorRHH = document.getElementById("MainContent_rowDoorOperatorRHH" + wallCount + "French");
-                            var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallCount + "French");
-                            var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallCount + "French");
-                            var doorHardware = document.getElementById("MainContent_rowDoorHardware" + wallCount + "French");
-                            var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + wallCount + "French");
-                            var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + wallCount + "French");
-                            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "French");
-
-                            //General
-                            doorTitle.style.display = "inherit";
-                            doorStyle.style.display = "inherit";
-                            doorColor.style.display = "inherit";
-                            doorHeight.style.display = "inherit";
-                            doorWidth.style.display = "inherit";
-                            doorBoxHeader.style.display = "inherit";
-
-                            //French specific
-                            doorOperatorLHH.style.display = "inherit";
-                            doorOperatorRHH.style.display = "inherit";
-                            doorSwingIn.style.display = "inherit";
-                            doorSwingOut.style.display = "inherit";
-                            doorHardware.style.display = "inherit";
-                            doorNumberOfVents.style.display = "inherit";
-                            doorPosition.style.display = "inherit";
-                        }
-                        else if (document.getElementById('MainContent_radType' + wallCount + 'Patio').checked) {
-
-                            var doorTitle = document.getElementById("MainContent_rowDoorTitle" + wallCount + "Patio");
-                            var doorColor = document.getElementById("MainContent_rowDoorColor" + wallCount + "Patio");
-                            var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "Patio");
-                            var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "Patio");
-                            var doorBoxHeader = document.getElementById("MainContent_rowDoorBoxHeader" + wallCount + "Patio");
-
-                            var doorOperatorLHH = document.getElementById("MainContent_rowDoorOperatorLHH" + wallCount + "Patio");
-                            var doorOperatorRHH = document.getElementById("MainContent_rowDoorOperatorRHH" + wallCount + "Patio");
-                            var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallCount + "Patio");
-                            var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallCount + "Patio");
-                            var doorScreenOptions = document.getElementById("MainContent_rowDoorScreenOptions" + wallCount + "Patio");
-                            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "Patio");
-
-                            //General
-                            doorTitle.style.display = "inherit";
-                            doorColor.style.display = "inherit";
-                            doorHeight.style.display = "inherit";
-                            doorWidth.style.display = "inherit";
-                            doorBoxHeader.style.display = "inherit";
-
-                            //Patio Specifics
-                            doorGlassTint.style.display = "inherit";
-                            doorOperatorLHH.style.display = "inherit";
-                            doorOperatorRHH.style.display = "inherit";
-                            doorNumberOfVents.style.display = "inherit";
-                            doorPosition.style.display = "inherit";
-                            doorScreenOptions.style.display = "inherit";
-                        }
-                        else if (document.getElementById('MainContent_radType' + wallCount + 'NoDoor').checked) {
-
-                            var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallCount + "NoDoor");
-                            var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallCount + "NoDoor");
-                            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + wallCount + "NoDoor");
-
-                            doorHeight.style.display = "inherit";
-                            doorWidth.style.display = "inherit";
-                            doorPosition.style.display = "inherit";
-                        }
-                    }
+                //Cabana Specific                            
+                doorGlassTint.style.display = "inherit";
+                doorLHH.style.display = "inherit";
+                doorRHH.style.display = "inherit";
+                doorSwingIn.style.display = "inherit";
+                doorSwingOut.style.display = "inherit";
+                doorHardware.style.display = "inherit";
+                doorPosition.style.display = "inherit";
+                            
+                if (doorPositionCustom == "cPosition") {
+                    customDimension(wallNumber, type, "Position");
                 }
+
+                //Model Specifics
+                if (model === "M400") {                                
+                    doorInternalGrillsYes.style.display = "inherit";
+                    doorInternalGrillsNo.style.display = "inherit";
+                    doorInternalGrillYesChecked.setAttribute("checked", "checked");
+                }
+
+                //Radio button defaults
+                doorLHHChecked.setAttribute("checked", "checked");
+                doorSwingInChecked.setAttribute("checked", "checked");
+
+                doorStyle(type, wallNumber);
+                doorTransomStyle(type, wallNumber);
             }
+                //If type is French, display the appropriate fields
+            else if (type == "French") {                
+
+                //General
+                doorTitle.style.display = "inherit";
+                doorStyleTable.style.display = "inherit";
+                doorColor.style.display = "inherit";
+                doorHeight.style.display = "inherit";
+                doorWidth.style.display = "inherit";
+                doorBoxHeader.style.display = "inherit";
+                doorTransom.style.display = "inherit";
+                doorKickplate.style.display = "inherit";
+
+                //French specific
+                doorOperatorLHH.style.display = "inherit";
+                doorOperatorRHH.style.display = "inherit";
+                doorSwingIn.style.display = "inherit";
+                doorSwingOut.style.display = "inherit";
+                doorHardware.style.display = "inherit";
+                doorPosition.style.display = "inherit";
+
+                if (doorPositionCustom == "cPosition") {
+                    customDimension(wallNumber, type, "Position");
+                }
+
+                //Model Specifics
+                if (model === "M400") {
+                    doorInternalGrillsYes.style.display = "inherit";
+                    doorInternalGrillsNo.style.display = "inherit";
+                    doorInternalGrillYesChecked.setAttribute("checked", "checked");
+                }
+
+                //Radio button defaults
+                doorOperatorLHHChecked.setAttribute("checked", "checked");
+                doorSwingInChecked.setAttribute("checked", "checked");
+
+                doorStyle(type, wallNumber);
+                doorTransomStyle(type, wallNumber);
+            }
+                //If type is Patio, display the appropriate fields
+            else if (type == "Patio") {
+
+                //General
+                doorTitle.style.display = "inherit";
+                doorStyleTable.style.display = "inherit";
+                doorColor.style.display = "inherit";
+                doorHeight.style.display = "inherit";
+                doorWidth.style.display = "inherit";
+                doorTransom.style.display = "inherit";
+                doorBoxHeader.style.display = "inherit";
+
+                //Patio Specifics
+                doorGlassTint.style.display = "inherit";
+                doorOperatorLHH.style.display = "inherit";
+                doorOperatorRHH.style.display = "inherit";
+                doorPosition.style.display = "inherit";
+                doorScreenOptions.style.display = "inherit";
+
+                if (doorPositionCustom == "cPosition") {
+                    customDimension(wallNumber, type, "Position");
+                }
+
+                //Model Specifics
+                if (model === "M400") {
+                    doorInternalGrillsYes.style.display = "inherit";
+                    doorInternalGrillsNo.style.display = "inherit";
+                    doorInternalGrillYesChecked.setAttribute("checked", "checked");
+                }
+
+                //Radio button defaults
+                doorOperatorLHHChecked.setAttribute("checked", "checked");
+
+                doorStyle(type, wallNumber);
+                doorTransomStyle(type, wallNumber);
+            }
+                //If type is NoDoor, display the appropriate fields
+            else if (type == "NoDoor") {
+
+                doorHeight.style.display = "inherit";
+                doorWidth.style.display = "inherit";
+                doorPosition.style.display = "inherit";
+
+                if (doorPositionCustom == "cPosition") {
+                    customDimension(wallNumber, type, "Position");
+                }
+            }                    
         }
 
         /**
         *customDimension
         *Checks the drop down selection on change, if the selection is custom, displays additional fields,
         *else custom field is hidden (i.e. css style.display = none)
+        *@param wallNumber - holds an integer to know which wall is currently being affected
         *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
         *@param dimension - gets the dimension currently being called (i.e Width, Height)
         */
-        function customDimension(type, dimension) {
+        function customDimension(wallNumber, type, dimension) {
 
-            for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
+            var dimensionDDL = document.getElementById('MainContent_ddlDoor' + dimension + wallNumber + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallNumber + type).selectedIndex].value;
 
-                if (coordList[wallCount - 1][4] === "P") {
-
-                    if (document.getElementById('MainContent_radWall' + wallCount).checked) {                        
-
-                        var dimensionDDL = document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).selectedIndex].value;
-
-                        if (document.getElementById('MainContent_radType' + wallCount + type).checked && dimensionDDL == 'c' + dimension) {
-                            document.getElementById('MainContent_rowDoorCustom' + dimension + wallCount + type).style.display = 'inherit';
-                        }
-                        else {
-                            document.getElementById('MainContent_rowDoorCustom' + dimension + wallCount + type).style.display = 'none';
-                        }
-                    }
-                }
+            if (document.getElementById('MainContent_radType' + wallNumber + type).checked && dimensionDDL == 'c' + dimension) {
+                document.getElementById('MainContent_rowDoorCustom' + dimension + wallNumber + type).style.display = 'inherit';
+            }
+            else {
+                document.getElementById('MainContent_rowDoorCustom' + dimension + wallNumber + type).style.display = 'none';
             }
         }
 
@@ -627,22 +835,62 @@
         *Door style function is triggered when the user selects Vertical Four Track, 
         *vinyl tint becomes displayed, since Vertical Four Track is the only door style
         *that has vinyl tint options
-        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        *@param type - holds the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        *@param wallNumber - holds an integer to know which wall is currently being affected
         */
-        function doorStyle(type) {
-            for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
+        function doorStyle(type, wallNumber) {
+            var heightDDL = document.getElementById('MainContent_ddlDoorStyle' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorStyle' + wallNumber + type).selectedIndex].value;
 
-                if (document.getElementById('MainContent_radWall' + wallCount).checked) {
+            if (heightDDL == 'v4TCabana') {
+                document.getElementById('MainContent_rowDoorVinylTint' + wallNumber + type).style.display = 'inherit';
+                document.getElementById('MainContent_rowDoorNumberOfVents' + wallNumber + type).style.display = 'inherit';
+            }
+            else {
+                document.getElementById('MainContent_rowDoorVinylTint' + wallNumber + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorNumberOfVents' + wallNumber + type).style.display = 'none';
+            }
+        }
 
-                    var HeightDDL = document.getElementById('MainContent_ddlDoorStyle' + wallCount + type).options[document.getElementById('MainContent_ddlDoorStyle' + wallCount + type).selectedIndex].value;
+        /**
+        *doorTransomStyle
+        *Door transom style function is triggered when the user selects Vinyl or Glass, 
+        *vinyl or glass tint becomes displayed.
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        *@param wallNumber - holds an integer to know which wall is currently being affected
+        */
+        function doorTransomStyle(type, wallNumber) {
 
-                    if (document.getElementById('MainContent_radType' + wallCount + type).checked && HeightDDL == 'v4TCabana') {
-                        document.getElementById('MainContent_rowDoorVinylTint' + wallCount + type).style.display = 'inherit';
-                    }
-                    else {
-                        document.getElementById('MainContent_rowDoorVinylTint' + wallCount + type).style.display = 'none';
-                    }
-                }
+            var transomType = document.getElementById('MainContent_ddlDoorTransom' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorTransom' + wallNumber + type).selectedIndex].value;
+
+            if (transomType == 'vinyl') {
+                document.getElementById('MainContent_rowDoorTransomVinylTypes' + wallNumber + type).style.display = 'inherit';
+                document.getElementById('MainContent_rowDoorTransomGlassTypes' + wallNumber + type).style.display = 'none';
+            }
+            else if (transomType == 'glass') {
+                document.getElementById('MainContent_rowDoorTransomVinylTypes' + wallNumber + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorTransomGlassTypes' + wallNumber + type).style.display = 'inherit';
+            }
+            else {
+                document.getElementById('MainContent_rowDoorTransomVinylTypes' + wallNumber + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorTransomGlassTypes' + wallNumber + type).style.display = 'none';
+            }
+        }
+
+        /**
+        *doorKickplateStyle
+        *Door kickplate style function changes the fields being displayed based on the selected index.
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        *@param wallNumber - holds an integer to know which wall is currently being affected
+        */
+        function doorKickplateStyle(type, wallNumber) {
+
+            var KickplateType = document.getElementById('MainContent_ddlDoorKickplate' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorKickplate' + wallNumber + type).selectedIndex].value;
+
+            if (KickplateType == 'cKickplate') {
+                document.getElementById('MainContent_rowDoorCustomKickplate' + wallNumber + type).style.display = 'inherit';
+            }
+            else {
+                document.getElementById('MainContent_rowDoorCustomKickplate' + wallNumber + type).style.display = 'none';
             }
         }
 
@@ -654,21 +902,21 @@
         *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
         *@param dimension - gets the dimension currently being called (i.e. Width, Height)
         *@param custom - this argument is used to determine if a custom dimension is being entered and which controls to use
-        *@param wallCount - is used to determine which wall's control to use
+        *@param wallNumber - holds an integer to know which wall is currently being affected
         */
-        function calculateActualDoorDimension(type, dimension, custom, wallCount) {
+        function calculateActualDoorDimension(type, dimension, custom, wallNumber) {
 
             var newDimension;
 
             var controlToUse;
 
             if (custom === true) {
-                controlToUse = parseFloat(document.getElementById('MainContent_txtDoorCustom' + dimension + wallCount + type).value)
-                    + parseFloat(document.getElementById('MainContent_ddlInchCustom' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlInchCustom' + dimension + wallCount + type).selectedIndex].value);
+                controlToUse = parseFloat(document.getElementById('MainContent_txtDoorCustom' + dimension + wallNumber + type).value)
+                    + parseFloat(document.getElementById('MainContent_ddlInchCustom' + dimension + wallNumber + type).options[document.getElementById('MainContent_ddlInchCustom' + dimension + wallNumber + type).selectedIndex].value);
             }
             else {
 
-                controlToUse = parseFloat(document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallCount + type).selectedIndex].value);
+                controlToUse = parseFloat(document.getElementById('MainContent_ddlDoor' + dimension + wallNumber + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallNumber + type).selectedIndex].value);
             }
 
             if (type === 'Cabana') {
@@ -686,7 +934,445 @@
 
             return newDimension;
         }
+            
+        /**
+        *addDoor
+        *This function is used to add doors to an array of wall objects
+        *@param wallNumber - holds an integer to know which wall is currently being affected
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
+        */
+        function addDoor(wallNumber, type) {
+                        
+            /****PAGER VARIABLES****/
+            var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wallNumber);
+            var pagerTextAnswer = document.getElementById("wall" + wallNumber + "DoorsAdded");
+            var pagerTextDoor = document.getElementById("MainContent_lblQuestion3DoorsInfoWall" + wallNumber);
+            var proposedWall = document.getElementById("MainContent_lblTextArea" + wallNumber);
+                        
+            /****LOGICAL AND FUNCTIONALITY VARIABLES****/                    
+            var isValid = true;
+            var spacesRemaining = null;
+            var doorMods = new Array();
+
+            /****CALCULATION VARIABLES****/
+            var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'Length').value);                            
+            var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'LeftFiller').value);
+            var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'RightFiller').value);
+            var usableSpace = wallLength - leftFiller - rightFiller;
+            var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorCustomPosition' + wallNumber + type).value
+                + document.getElementById('MainContent_ddlInchSpecificLeft' + wallNumber + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallNumber + type).selectedIndex].value);
+            var positionDropDown = document.getElementById('MainContent_ddlDoorPosition' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallNumber + type).selectedIndex].value;
+            var widthDropDown = document.getElementById('MainContent_ddlDoorWidth' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallNumber + type).selectedIndex].value;
+            var heightDropDown = document.getElementById('MainContent_ddlDoorHeight' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorHeight' + wallNumber + type).selectedIndex].value;
+
+            /****START:VARIABLES USED TO STORE DOOR INFO****/
+            var doorWidth;
+            var doorHeight;
+            /****END:VARIABLES USED TO STORE DOOR INFO****/
+
+            /*Set the variable to the appropriate value to be used for calculations*/
+            if (widthDropDown === "cWidth") {                            
+                doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', true, wallNumber));
+            }
+            else {
+                doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false, wallNumber));                            
+            }
+
+            /*Set the variable to the appropriate value to be used for calculations*/
+            if (widthDropDown === "cHeight") {
+                doorHeight = parseFloat(calculateActualDoorDimension(type, 'Height', true, wallNumber));
+            }
+            else {
+                doorHeight = parseFloat(calculateActualDoorDimension(type, 'Height', false, wallNumber));
+            }
+                        
+
+            /*Insert the door with the appropriate variables based on drop down selected index*/
+            if (positionDropDown === "left") {
+                doorMods[doorMods.length] = {
+                    "index": doorMods.length + 1,
+                    "width": doorWidth,
+                    "distanceFromLeft": 0
+                };
+            }
+            else if (positionDropDown === "right") {
+                doorMods[doorMods.length] = {
+                    "index": doorMods.length + 1,
+                    "width": doorWidth,
+                    "distanceFromLeft": usableSpace - doorWidth
+                };
+            }
+            else if (positionDropDown === "center") {
+                doorMods[doorMods.length] = {
+                    "index": doorMods.length + 1,
+                    "width": doorWidth,
+                    "distanceFromLeft": usableSpace / 2 - doorWidth / 2
+                };
+            }
+            else if (positionDropDown === "cPosition") {
+                if (!isNaN(doorCustomPosition)) {
+                    //alert("Custom " + doorCustomPosition);
+                    doorMods[doorMods.length] = {
+                        "index": doorMods.length + 1,
+                        "width": doorWidth,
+                        "distanceFromLeft": doorCustomPosition
+                    };
+                }
+                else {
+                    isValid = false;
+                    alert("Please enter a valid number into the custom distance text box");
+                }
+            }                        
+
+            //Validation of blank non-custom field passed
+            if (isValid) {
+
+                //Updates doorMods array from the appropriate index in walldoorMods array                
+                updateDoorModsArray(doorMods, wallNumber);
+
+                //Update doorMods by sorting most recent addition into previous array
+                doorMods = sortDoorModsLeftToRight(doorMods);
+
+                //Valid door was entered, perform various functions
+                if (checkQuestion3(doorMods, spacesRemaining, usableSpace)) {
+
+                    //Update spacesRemaining array
+                    spacesRemaining = availableSpacesArrayUpdate(usableSpace, doorMods);
+
+                    //Update total space left in the wall
+                    var space = totalSpaceLeftInWall(usableSpace, doorMods);
+
+                    //Block to add content to the pager
+                    $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
+                    document.getElementById("pagerThree").style.display = "inline";
+                    document.getElementById("wall" + wallNumber + "SpaceRemaining").style.display = "inline";
+                    pagerText.setAttribute("style", "display:block;");
+                    pagerTextAnswer.setAttribute("style", "display:block");
+                    pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerHTML).substr(14, 2) + " Doors";
+
+                    //Display appropriate message and controls within the pager
+                    updateDoorPager(doorMods, type, wallNumber);
+
+                    //Update drop downs based on selected value
+                    updateDoorDropDowns(positionDropDown, wallNumber, true);
+
+                    //Update walldoorMods array with most current addition
+                    updateWallsArray(wallNumber, usableSpace, doorMods, spacesRemaining)
+
+                }                      
+            }
+        }
         
+        /**
+        *fillWallWithdoorMods
+        *This function is used to fill the wall with as may doorMods as possible, they'll be centered and
+        *the ends will be filler
+        *@param wallNumber - holds an integer to know which wall is currently being affected
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
+        */
+        function fillWallWithDoorMods(wallNumber, type) {    
+            
+            var isValid = true;
+
+            for (var wallDoorModsCount = 0; wallDoorModsCount < wallDoors.length; wallDoorModsCount++) {
+
+                if (wallDoors[wallDoorModsCount].wallId == wallNumber) {
+
+                    if (wallDoors[wallDoorModsCount].doorsSorted.length > 0) {
+                        isValid = false;
+                        alert("To fill the wall no doorMods can exist, please delete all existing doorMods");
+                    }
+                }
+            }
+            if (isValid) {
+                
+                var spacesRemaining = new Array();
+                var doorMods = new Array();
+
+                /****PAGER VARIABLES****/
+                var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wallNumber);
+                var pagerTextAnswer = document.getElementById("wall" + wallNumber + "DoorsAdded");
+                var pagerTextDoor = document.getElementById("MainContent_lblQuestion3DoorsInfoWall" + wallNumber);
+                var proposedWall = document.getElementById("MainContent_lblTextArea" + wallNumber);
+
+                /****CALCULATION VARIABLES****/
+                var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'Length').value);
+                var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'LeftFiller').value);
+                var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'RightFiller').value);
+                var usableSpace = wallLength - leftFiller - rightFiller;
+
+                var widthDropDown = document.getElementById('MainContent_ddlDoorWidth' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallNumber + type).selectedIndex].value;
+
+                if (widthDropDown === "cWidth") {
+                    doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', true, wallNumber));
+                }
+                else {
+                    doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false, wallNumber));
+                }                
+
+                var numberOfdoorMods = parseInt(usableSpace / doorWidth);
+
+                spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": (usableSpace - (doorWidth * numberOfdoorMods)) / 2 };
+                spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorWidth * numberOfdoorMods + ((usableSpace - (doorWidth * numberOfdoorMods)) / 2), "space": (usableSpace - (doorWidth * numberOfdoorMods)) / 2 };
+
+                for (var doorCount = 0; doorCount < numberOfdoorMods; doorCount++) {
+                    doorMods[doorMods.length] = { "width": doorWidth, "distanceFromLeft": spacesRemaining[0].space + (doorCount * doorWidth) };
+                }
+
+                //Updates doorMods array from the appropriate index in walldoorMods array
+                updateDoorModsArray(doorMods, wallNumber);               
+
+                //Update doorMods by sorting most recent addition into previous array
+                doorMods = sortDoorModsLeftToRight(doorMods);
+
+                //Update total space left in the wall
+                var space = totalSpaceLeftInWall(usableSpace, doorMods);
+
+                //Block to add content to the pager
+                $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
+                document.getElementById("pagerThree").style.display = "inline";
+                document.getElementById("wall" + wallNumber + "SpaceRemaining").style.display = "inline";
+                pagerText.setAttribute("style", "display:block;");
+                pagerTextAnswer.setAttribute("style", "display:block");
+                pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerHTML).substr(14, 2) + " doorMods";
+
+                //Display appropriate message and controls within the pager
+                var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallNumber);
+
+                $("#MainContent_lblQuestion3DoorsInfoWallAnswer" + wallNumber).empty();
+
+                /****DELETE BUTTON CREATION ADDITION****/
+                var deleteButton = document.createElement("input");
+                deleteButton.id = "btnDeleteDoorFill" + type + "Wall" + wallNumber;
+                deleteButton.setAttribute("type", "button");
+                deleteButton.setAttribute("value", "Remove Fill");
+                deleteButton.setAttribute("onclick", "deleteDoorFill(\"" + type + "\", \"" + wallNumber + "\")");
+                deleteButton.setAttribute("class", "btnSubmit");
+
+                var labelForButton = document.createElement("label");
+                labelForButton.id = "lblDeleteDoorFill" + type + "Wall" + wallNumber;
+                labelForButton.setAttribute("for", "btnDeleteDoorFill" + type + "Wall" + wallNumber);
+                labelForButton.innerHTML = "Wall Filled With " + numberOfdoorMods + " " + type + " doorMods";
+
+                var labelBreakLineForButton = document.createElement("label");
+                labelBreakLineForButton.id = "lblDeleteDoorFillBR" + type + "Wall" + wallNumber;
+                labelBreakLineForButton.setAttribute("for", "btnDeleteDoorFill" + type + "Wall" + wallNumber);
+                labelBreakLineForButton.innerHTML = "<br/>";
+
+                pagerTextDoorAnswer.appendChild(labelForButton);
+                pagerTextDoorAnswer.appendChild(deleteButton);
+                pagerTextDoorAnswer.appendChild(labelBreakLineForButton);
+
+                //Update drop downs based on selected value
+                updateDoorDropDowns("all", wallNumber, true);
+
+                //Update walldoorMods array with most current addition
+                updateWallsArray(wallNumber, usableSpace, doorMods, spacesRemaining)
+                    
+            }            
+        }
+
+        /**
+        *updateDoorsArray
+        *This function is used to update the doors array
+        *@param doors - holds an array of doors 
+        *@param wallNumber - holds an integer to know which wall is currently being affected
+        */
+        function updateDoorModsArray(doors, wallNumber) {
+            //Load doors array info from wallDoors array
+            if (wallDoors.length > 0) {
+                for (var i = 0; i < wallDoors.length; i++) {
+                    //Store the index if wallId and wallCount are equal
+                    if (wallDoors[i].wallId == wallNumber) {
+                        for (var h = 0; h < wallDoors[i].doorsSorted.length; h++) {
+                            doors[doors.length] = { "width": wallDoors[i].doorsSorted[h].width, "distanceFromLeft": wallDoors[i].doorsSorted[h].distanceFromLeft };
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        /**
+        *updateWallsArray
+        *This function is used to update the wallDoors array
+        *@param wallNumber - holds an integer to know which wall is currently being affected
+        *@param doorMods - holds an array of sorted doors left to right
+        *@param spacesRemaining - holds an array of remaining spaces within the wall
+        */
+        function updateWallsArray(wallNumber, wallLength, doorMods, spacesRemaining) {
+
+            //Variable to hold wall index to update
+            var indexToStoreAt = null;
+
+            //Loop to find if a wallDoors object exist for the current wall count
+            for (var i = 0; i < wallDoors.length; i++) {
+                //Store the index if wallId and wallCount are equal
+                if (wallDoors[i].wallId == wallNumber) {
+                    indexToStoreAt = i;
+                    break;
+                }
+            }
+            //If no matches exist, create a new wallDoors object within the array
+            if (indexToStoreAt == null) {
+                wallDoors[wallDoors.length] = { "wallId": wallNumber, "wallLength": wallLength, "doorsSorted": doorMods, "spaces": spacesRemaining };
+            }
+            else {
+                wallDoors[indexToStoreAt] = { "wallId": wallNumber, "wallLength": wallLength, "doorsSorted": doorMods, "spaces": spacesRemaining };
+            }
+        }
+
+        /**
+        *updateDoorPager
+        *This function is used to update the pager details based on added or removed (deleted) doors
+        *@param walldoorMods - holds an array of sorted doors left to right
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
+        *@param wallNumber - holds an integer to know which wall is currently being affected
+        */
+        function updateDoorPager(doorMods, type, wallNumber) {
+            
+            var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallNumber);
+
+            $("#MainContent_lblQuestion3DoorsInfoWallAnswer" + wallNumber).empty();
+
+            if (doorMods.length > 0) {                
+
+                for (var childControls = 1; childControls <= doorMods.length ; childControls++) {
+                    //Rename controls and their attributes
+                    /****DELETE BUTTON CREATION ADDITION****/
+                    var deleteButton = document.createElement("input");
+                    deleteButton.id = "btnDeleteDoor" + childControls + type + "Wall" + wallNumber;
+                    deleteButton.setAttribute("type", "button");
+                    deleteButton.setAttribute("value", "X");
+                    deleteButton.setAttribute("onclick", "deleteDoor(\"" + childControls + "\", \"" + type + "\", \"" + wallNumber + "\")");
+                    deleteButton.setAttribute("class", "btnSubmit");
+                    deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
+
+                    var labelForButton = document.createElement("label");
+                    labelForButton.id = "lblDeleteDoor" + childControls + type + "Wall" + wallNumber;
+                    labelForButton.setAttribute("for", "btnDeleteDoor" + childControls + type + "Wall" + wallNumber);
+                    labelForButton.innerHTML = "Door " + childControls + " " + type + " added";
+
+                    var labelBreakLineForButton = document.createElement("label");
+                    labelBreakLineForButton.id = "lblDeleteDoorBR" + childControls + type + "Wall" + wallNumber;
+                    labelBreakLineForButton.setAttribute("for", "btnDeleteDoor" + childControls + type + "Wall" + wallNumber);
+                    labelBreakLineForButton.innerHTML = "<br/>";
+                    pagerTextDoorAnswer.appendChild(labelForButton);
+                    pagerTextDoorAnswer.appendChild(deleteButton);
+                    pagerTextDoorAnswer.appendChild(labelBreakLineForButton);
+                }
+
+            }
+            else {
+                document.getElementById("wall" + wallNumber + "DoorsAdded").style.display = "none";
+            }
+        }
+        
+        /**
+        *deleteDoor
+        *This function is used to perform certain task when a door is deleted (called on click), remove
+        *controls from pager, reset wallDoors[index].spaces to the appropriate value based on the door deleted.
+        *Same goes for wallDoors[index].doorsSorted the appropriate door is removed from the array.
+        *@param doorToDelete - holds the index of the door to be deleted
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
+        *@param wallNumber - holds an integer to know which wall is currently being affected
+        */
+        function deleteDoor(doorToDelete, type, wallNumber) {
+
+            for (var wallDoorsCount = 0; wallDoorsCount < wallDoors.length; wallDoorsCount++) {
+
+                if (wallDoors[wallDoorsCount].wallId == wallNumber) {
+
+                    //Controls to Delete
+                    var deleteButtonToRemove = document.getElementById("btnDeleteDoor" + doorToDelete + type + "Wall" + wallNumber);
+                    var deleteLabelToRemove = document.getElementById("lblDeleteDoor" + doorToDelete + type + "Wall" + wallNumber);
+                    var deleteBreakLineLabelToRemove = document.getElementById("lblDeleteDoorBR" + doorToDelete + type + "Wall" + wallNumber);
+                    
+                    var positionInWall = findPosition(wallDoors[wallDoorsCount].wallLength, wallDoors[wallDoorsCount].doorsSorted, (doorToDelete - 1));
+
+                    //Removes object at specified index
+                    wallDoors[wallDoorsCount].doorsSorted.splice(doorToDelete - 1, 1);
+
+                    //Resetting spaces property in the wallDoors array
+                    var spacesRemaining = availableSpacesArrayUpdate(wallDoors[wallDoorsCount].wallLength, wallDoors[wallDoorsCount].doorsSorted);
+                    wallDoors[wallDoorsCount].spaces = spacesRemaining;
+
+                    //Used to redisplay the appropriate space left in the wall
+                    var space = totalSpaceLeftInWall(wallDoors[wallDoorsCount].wallLength, wallDoors[wallDoorsCount].doorsSorted)                    
+
+                    //Removes controls displayed in the pager
+                    deleteButtonToRemove.remove();
+                    deleteLabelToRemove.remove();
+                    deleteBreakLineLabelToRemove.remove();
+
+                    //Need to reset pager titles
+                    $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
+                    updateDoorPager(wallDoors[wallDoorsCount].doorsSorted, type, wallNumber);
+                    updateDoorDropDowns(positionInWall, wallNumber, false);
+                }
+
+            }
+
+        }
+
+        /**
+        *deleteDoorFill
+        *This function is used to perform certain task when a door is deleted (called on click), remove
+        *controls from pager, reset wallDoors[index].spaces to null and same for wallDoors[index].doorsSorted.
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
+        *@param wallNumber - holds an integer to know which wall is currently being affected
+        */
+        function deleteDoorFill(type, wallNumber) {
+
+            for (var wallDoorsCount = 0; wallDoorsCount < wallDoors.length; wallDoorsCount++) {
+
+                if (wallDoors[wallDoorsCount].wallId == wallNumber) {
+
+                    //Controls to Delete
+                    var deleteButtonToRemove = document.getElementById("btnDeleteDoorFill" + type + "Wall" + wallNumber);
+                    var deleteLabelToRemove = document.getElementById("lblDeleteDoorFill" + type + "Wall" + wallNumber);
+                    var deleteBreakLineLabelToRemove = document.getElementById("lblDeleteDoorFillBR" + type + "Wall" + wallNumber);
+
+                    //Removes controls displayed in the pager
+                    deleteButtonToRemove.remove();
+                    deleteLabelToRemove.remove();
+                    deleteBreakLineLabelToRemove.remove();
+
+                    wallDoors[wallDoorsCount].spaces = new Array();
+                    wallDoors[wallDoorsCount].doorsSorted = new Array();
+
+                    $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(wallDoors[wallDoorsCount].wallLength);
+                    document.getElementById("wall" + wallNumber + "DoorsAdded").style.display = "none";
+                    updateDoorDropDowns("null", wallNumber, false);
+                }
+            }
+        }
+
+        /**
+        *findPosition
+        *This function is used to perform certain task when a door is deleted (called on click), remove
+        *controls from pager, reset wallDoors[index].spaces to null and same for wallDoors[index].doorsSorted.
+        *@param usable - holds the usable length within a wall
+        *@param doorMods - holds an array of doors which are in order from left to right
+        *@param indexToCheck - holds an integer of an index in which to get data from doorMods
+        *@return position - returns a string of the position in which the deleted door belongs to 
+        *for dropdown purposes (i.e. left, center, right);
+        */
+        function findPosition(usableLength, doorMods, indexToCheck) {
+            var position = "";
+
+            if (doorMods[indexToCheck].distanceFromLeft == 0)
+                position = "left";
+            else if (doorMods[indexToCheck].distanceFromLeft == (usableLength / 2 - doorMods[indexToCheck].width / 2))
+                position = "center";
+            else if (doorMods[indexToCheck].distanceFromLeft == (usableLength - doorMods[indexToCheck].width))
+                position = "right";
+            else
+                position = "custom";
+
+            return position;
+        }
+
         /**
         *Prototype used to create an "insert" function for arrays. This function can insert elements at specific indices
         *@param index - is which index to insert the item at
@@ -696,62 +1382,85 @@
             this.splice(index, 0, item);
         };
 
-        //To be moved, used to store remain spaces on a wall
-        var doors;
-        var sortedDoors;
-        var wallDoors = new Array();
-        var spacesRemaining;
-        var finalText;
-
         /**
-        *checkDoor
-        *This function is used to perform validation and array reordering
-        *@param usuableLength - holds the length of the wall which mods can be put into
-        *@param dropDownName - holds the name of the dropDown and remove the appropriate item based on inserted items
-        *@param dropDownValue - holds the preset positions to place a door in a wall (i.e. Left, Center, Right, and Custom)
-        *@return isValid - return boolean based on validation; no overlaps, no doors in too small place, etc...
+        *sortDoorsLeftToRight
+        *This function orders doors from left to right based on the distance from left
+        *@param doors - holds an array of unsorted doors
+        *@return doorMods - returns an array of sorted doors from left to right
         */
-        function checkDoor(usuableLength, dropDownName, dropDownValue) {
+        function sortDoorModsLeftToRight(doors) {
 
-            var isValid = true;
+            var doorMods = new Array();
 
-            sortedDoors = new Array();
-
-            // Sort left to right
+            //TYPE FUNCTION TO BE MADE: FUNCTONALITY
+            //AREA: SORT LEFT TO RIGHT
+            //NECESSARY VARIABLES: doors[], doorMods[]
             if (doors.length > 0) {
-                sortedDoors[0] = { "index": 0, "doorWidth" : doors[0].doorWidth, "distanceFromLeft": doors[0].distanceFromLeft };
+                doorMods[0] = doors[0];
             }
             for (var i = 1; i < doors.length; i++) {
                 var x;
-                for (x = 0; x < sortedDoors.length; x++) {
-                    if (sortedDoors[x].distanceFromLeft > doors[i].distanceFromLeft) {
-                        sortedDoors.insert(x, { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft });
+                for (x = 0; x < doorMods.length; x++) {
+                    if (doorMods[x].distanceFromLeft > doors[i].distanceFromLeft) {
+                        doorMods.insert(x, doors[i]);
                         break;
                     }
                 }
-                if (x == sortedDoors.length) {
-                    sortedDoors[sortedDoors.length] = { "index": i, "doorWidth": doors[i].doorWidth, "distanceFromLeft": doors[i].distanceFromLeft };
+                if (x == doorMods.length) {
+                    doorMods[doorMods.length] = doors[i];
                 }
             }
+            //ENDAREA: SORT LEFT TO RIGHT
 
-            // Check overlap
-            for (var i = 0; i < sortedDoors.length - 1; i++) {
-                if (sortedDoors[i].distanceFromLeft + sortedDoors[i].doorWidth > sortedDoors[i + 1].distanceFromLeft) {
-                    alert("Doors " + sortedDoors[i].index + " and " + (sortedDoors[i].index + 1) + " overlap");
-                    doors.splice(sortedDoors[i].index, 1);
-                    sortedDoors.splice(sortedDoors[i].index, 1);
+            return doorMods;
+        }
+
+        /**
+        *checkQuestion3
+        *This function performs validtion on doors added, such as: enough space to add a door,
+        *doors overlapping, doors outside of the wall, etc...
+        *@param doorMods - holds an array of sorted doors from left to right
+        *@param spacesRemaining - holds an array of remaining spaces within the wall
+        *@param usableLength - holds the usable length on the current wall
+        *@return isValid - returns whether the entered door(s) have met the validation
+        */
+        function checkQuestion3(doorMods, spacesRemaining, usableLength) {
+
+            var isValid = true;
+
+            //TYPE FUNCTION TO BE MADE: VALIDATION
+            //AREA: CHECK OVERLAP AND OUT OF WALL BOUNDS
+            //NECESSARY VARIABLES: doorMods[]
+            for (var i = 0; i < doorMods.length - 1; i++) {
+                if (doorMods[i].distanceFromLeft + doorMods[i].width > doorMods[i + 1].distanceFromLeft) {
+                    alert("Doors " + doorMods[i].index + " and " + (doorMods[i].index + 1) + " overlap");
+                    doors.splice(doorMods[i].index, 1);
+                    doorMods.splice(doorMods[i].index, 1);
                     isValid = false;
                 }
+                else if (doorMods[i + 1].distanceFromLeft >= usableLength) {
+                    alert("Door " + (doorMods[i].index + 1) + " is outside of the wall length");
+                    isValid = false;
+                }
+                else if (doorMods[i + 1].distanceFromLeft < 0) {
+                    alert("Door " + (doorMods[i].index + 1) + "'s position is smaller than zero");
+                    isValid = false;
+                }
+                //if (doorMods.length == 4 && i == 3) {
+                //    alert("Distance check " + doorMods[doorMods.length - 1].distanceFromLeft);
+                //}
             }
+            //ENDAREA: CHECK OVERLAP AND OUT OF WALL BOUNDS
 
-            //Check for possible door width in spaces, only if spacesRemaining is not null
+            //TYPE FUNCTION TO BE MADE: VALIDATION
+            //AREA: CHECK FOR POSSIBLE DOOR WIDTH IN SPACES, ONLY IF spacesRemaining IS NOT NULL
             if (spacesRemaining != null) {
                 var goodSpace = 0;
                 //Loop through all spaces in spacesRemaining and check it against the door width
                 for (var j = 0; j < spacesRemaining.length; j++) {
                     //alert(spacesRemaining[j]);
                     //Check all spaces in wall
-                    if (spacesRemaining[j].space > doors[doors.length - 1].doorWidth) {                        
+                    if (spacesRemaining[j].space > doors[doors.length - 1].width) {
                         goodSpace++;
                     }
                 }
@@ -761,24 +1470,40 @@
                     alert("This door is too small to fit in any available spaces");
                 }
             }
+            //ENDAREA: CHECK FOR POSSIBLE DOOR WIDTH IN SPACES, ONLY IF spacesRemaining IS NOT NULL
 
+
+            return isValid;
+        }
+
+        /**
+        *sortDoorsLeftToRight
+        *This function disables and changes the selected index of all position drop downs in the current wall
+        *@param dropDownValue - holds the value of the currently selected index
+        *@param wallNumber - holds the number of the current wall
+        */
+        function updateDoorDropDowns(dropDownValue, wallNumber, toBeRemoved) {
+            var dropDownName = 'MainContent_ddlDoorPosition' + wallNumber;
             
+            //TYPE FUNCTION TO BE MADE: FUNCTIONALITY
+            //AREA: CHANGE DROPDOWNS BASED ON SELECTED INDEX
+            //NECESSARY VARIABLES: dropDownName, dropDownValue
+            for (var typeCount = 1; typeCount <= 4; typeCount++) {
 
-            //Is valid disable appropriate dropdown item and change selected index
-            if (isValid) {
-                
-                for (var typeCount = 1; typeCount <= 4; typeCount++) {
+                var title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
 
-                    var title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
+                var dropDown = document.getElementById(dropDownName + title);
 
-                    if ($('#' + dropDownName + title).prop("selectedIndex") != "cPosition") {
+                if (toBeRemoved && dropDownValue == "all") {
+                    $('#' + dropDownName + title).attr('disabled', true);
+                    document.getElementById("MainContent_rowDoorCustomPosition" + wallNumber + title).style.display = "none";
+                }
+                else if (!toBeRemoved && dropDown.disabled == true) {
+                    $('#' + dropDownName + title).attr('disabled', false)                    
+                }
+                else if (toBeRemoved) {
+                    if ($('#' + dropDownName + title).val() != "cPosition") {
                         $('#' + dropDownName + title + ' option[value=' + dropDownValue + ']').attr('disabled', true);
-                    }
-                        //Not Working**************************************
-                    else {
-                        alert("Something");
-                        //alert(dropDownName.substring(28));
-                        //customPosition(dropDownName.substring(28));
                     }
 
                     for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + title + ' option').size() ; dropDownLoop++) {
@@ -787,26 +1512,36 @@
                             break;
                         }
                     }
+                    customDimension(wallNumber, title, "Position");
                 }
-                                
+                else {
+                    $('#' + dropDownName + title + ' option[value=' + dropDownValue + ']').attr('disabled', false);
+
+                    for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + title + ' option').size() ; dropDownLoop++) {
+                        if ($('#' + dropDownName + title + ' option')[dropDownLoop].disabled == false) {
+                            $('#' + dropDownName + title).prop("selectedIndex", dropDownLoop);
+                            break;
+                        }
+                    }
+                    customDimension(wallNumber, title, "Position");
+                }
             }
-            return isValid;
+            //ENDAREA: CHANGE DROPDOWNS BASED ON SELECTED INDEX
         }
 
         /**
         *totalSpaceLeftInWall
         *This function performs calculations to find the total space left in a wall
-        *@param usuableLength - holds the length of the wall which mods can be put into
+        *@param usableLength - holds the length of the wall which mods can be put into
+        *@param doorMods - holds a door array which are in proper order
         *@return totalSpace - returns the total space left on a specific wall
-        *
-        *MAY NEED TO PASS sortedDoors ARRAY ONCE SLIDE 3 COMPLETE
         */
-        function totalSpaceLeftInWall(usuableLength) {
+        function totalSpaceLeftInWall(usableLength, doorMods) {
 
-            var totalSpace = usuableLength;
+            var totalSpace = usableLength;
 
-            for (var wallSpace = 0; wallSpace < sortedDoors.length; wallSpace++)
-                totalSpace -= sortedDoors[wallSpace].doorWidth;
+            for (var wallSpace = 0; wallSpace < doorMods.length; wallSpace++)
+                totalSpace -= doorMods[wallSpace].width;
 
             return totalSpace;
         }
@@ -814,172 +1549,73 @@
         /**
         *availableSpacesArrayUpdate
         *This function is used to update remainingSpaces array
-        *@param usuableLength - holds the length of the wall which mods can be put into
-        *
-        ********MAY MAKE IT RETURN spacesRemaining ONCE SLIDE 3 COMPLETE
+        *@param usableLength - holds the length of the wall which mods can be put into
+        *@param doorMods - holds a door array which are in proper order
         */
-        function availableSpacesArrayUpdate(usuableLength) {            
-            
-            spacesRemaining = new Array();            
+        function availableSpacesArrayUpdate(usableLength, doorMods) {
 
-            //Block to store remaining spaces between various door(s)
-            if (sortedDoors[0].distanceFromLeft > 0 && sortedDoors.length > 1) {
-                spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
-            }
-            else if (sortedDoors.length == 1) {
-                if (sortedDoors[0].distanceFromLeft == 0) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].doorWidth, "space": usuableLength - sortedDoors[0].doorWidth };
-                }
-                else if (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth == usuableLength) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": usuableLength - sortedDoors[0].doorWidth };
-                }
-                else if (sortedDoors[0].distanceFromLeft > 0) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": sortedDoors[0].distanceFromLeft };
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth, "space": usuableLength - (sortedDoors[0].distanceFromLeft + sortedDoors[0].doorWidth) };
-                }
+            var spacesRemaining = new Array();
+
+            if (doorMods.length == 0) {
+                spacesRemaining[spacesRemaining.length] = null;
             }
             else {
-                var doorsLoop;
-                for (doorsLoop = 0; doorsLoop < sortedDoors.length - 1; doorsLoop++) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft, "space": sortedDoors[doorsLoop + 1].distanceFromLeft - (sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft) };
+                //Block to store remaining spaces between various door(s)
+                if (doorMods[0].distanceFromLeft > 0 && doorMods.length > 1) {
+                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": doorMods[0].distanceFromLeft };
+                    for (var doorsLoop = 0; doorsLoop < doorMods.length - 1; doorsLoop++) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[doorsLoop].width + doorMods[doorsLoop].distanceFromLeft, "space": doorMods[doorsLoop + 1].distanceFromLeft - (doorMods[doorsLoop].width + doorMods[doorsLoop].distanceFromLeft) };
+                    }
                 }
-                if (sortedDoors[doorsLoop].distanceFromLeft + sortedDoors[doorsLoop].doorWidth < usuableLength) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": sortedDoors[doorsLoop].distanceFromLeft + sortedDoors[doorsLoop].doorWidth, "space": usuableLength - sortedDoors[doorsLoop].doorWidth + sortedDoors[doorsLoop].distanceFromLeft };
+                else if (doorMods.length == 1) {
+                    if (doorMods[0].distanceFromLeft == 0) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[0].width, "space": usableLength - doorMods[0].width };
+                    }
+                    else if (doorMods[0].distanceFromLeft + doorMods[0].width == usableLength) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": usableLength - doorMods[0].width };
+                    }
+                    else if (doorMods[0].distanceFromLeft > 0) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": doorMods[0].distanceFromLeft };
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[0].distanceFromLeft + doorMods[0].width, "space": usableLength - (doorMods[0].distanceFromLeft + doorMods[0].width) };
+                    }
                 }
-            }
-
-        }
-
-        /**
-        *addDoor
-        *This function is used to add doors to an array of wall objects
-        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
-        */
-        function addDoor(type) {
-
-            var hiddenFieldsDiv = document.getElementById('MainContent_hiddenFieldsDiv');
-
-            for (var wallCount = 1; wallCount < coordList.length; wallCount++) {
-
-                if (coordList[wallCount - 1][4] === "P") {
-
-                    //Find if a door exist to set doorCount to the appropriate value
-                    if (document.getElementById('MainContent_radWall' + wallCount).checked) {
-
-                        /****PAGER VARIABLES****/
-                        var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wallCount);
-                        var pagerTextAnswer = document.getElementById("wall" + wallCount + "DoorsAdded");
-                        var pagerTextDoor = document.getElementById("MainContent_lblQuestion3DoorsInfoWall" + wallCount);
-                        var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallCount);
-                        
-                        /****LOGICAL AND FUNCTIONALITY VARIABLES****/
-                        var proposedWall = document.getElementById("MainContent_lblTextArea" + wallCount);
-                        var dropDownName = 'MainContent_ddlDoorPosition' + wallCount;
-
-                        /****CALCULATION VARIABLES****/
-                        var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'Length').value);                            
-                        var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'LeftFiller').value);
-                        var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallCount + 'RightFiller').value);
-                        var usuableSpace = wallLength - leftFiller - rightFiller;
-                        var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorCustomPosition' + wallCount + type).value
-                            + document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallCount + type).selectedIndex].value);
-                        var positionDropDown = document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallCount + type).selectedIndex].value;
-                        var widthDropDown = document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallCount + type).selectedIndex].value;
-                        var heightDropDown = document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).options[document.getElementById('MainContent_ddlDoorHeight' + wallCount + type).selectedIndex].value;
-                        var doorWidth;
-                        
-                        /*Set the variable to the appropriate value to be used for calculations*/
-                        if (widthDropDown === "cWidth") {
-                            doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', true, wallCount));
-                        }
-                        else {
-                            doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false, wallCount));
-                        }
-
-                        /*Insert the door with the appropriate variables based on drop down selected index*/
-                        if (positionDropDown === "left") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": 0 };
-                        }
-                        else if (positionDropDown === "right") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace - doorWidth };
-                        }
-                        else if (positionDropDown === "center") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": usuableSpace / 2 - doorWidth / 2 };
-                        }
-                        else if (positionDropDown === "cPosition") {
-                            doors[doors.length] = { "doorWidth": doorWidth, "distanceFromLeft": doorCustomPosition };
-                        }
-
-                        if (checkDoor(usuableSpace, dropDownName, positionDropDown)) {
-                            //Calling functions get space left in the wall, and other to update individual spaces within a wall
-                            var space = totalSpaceLeftInWall(usuableSpace);
-                            availableSpacesArrayUpdate(usuableSpace);
-
-                            $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallCount).text(space);
-                            document.getElementById("pagerThree").style.display = "inline";
-                            document.getElementById("wall" + wallCount + 'SpaceRemaining').style.display = "inline";
-
-                            pagerText.setAttribute("style", "display:block;");
-                            
-                            pagerTextAnswer.setAttribute("style", "display:block");
-                            
-                            pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerText).substr(14, 2) + " Doors";
-                            
-                            var deleteButton = document.createElement("input");
-                            deleteButton.id = "btnDeleteDoor" + (sortedDoors[sortedDoors.length - 1].index + 1) + type + "Wall" + wallCount;
-                            deleteButton.setAttribute("type", "button");
-                            deleteButton.setAttribute("value", "X");
-                            deleteButton.setAttribute("onclick", "deleteDoor()");
-                            deleteButton.setAttribute("class", "btnSubmit");
-                            deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
-                            pagerTextDoorAnswer.innerHTML += "Door " + sortedDoors.length + " " + type + " added";
-                            pagerTextDoorAnswer.appendChild(deleteButton);
-                            pagerTextDoorAnswer.innerHTML += "<br/>";
-
-                            alert(spacesRemaining.length);
-
-                            if (wallDoors.length == 0) {
-                                wallDoors[wallDoors.length] = { "wallId": wallCount, "doorsSorted": sortedDoors };
-                                //alert(wallDoors[wallDoors.length - 1].doorsSorted[0].doorWidth);
-                            }
-                            else {
-                                wallDoors.sort();
-                                //for (var i = 0; i < wallDoors.length; i++) {
-                                //    alert(wallDoors[i].doorsSorted[0].doorWidth);
-                                //}
-                            }
-                        }
-                        alert(spacesRemaining.length);
+                else {
+                    //var doorsLoop;
+                    for (var doorsLoop = 0; doorsLoop < doorMods.length - 1; doorsLoop++) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[doorsLoop].width + doorMods[doorsLoop].distanceFromLeft, "space": doorMods[doorsLoop + 1].distanceFromLeft - (doorMods[doorsLoop].width + doorMods[doorsLoop].distanceFromLeft) };
+                    }
+                    if (doorMods[doorMods.length - 1].distanceFromLeft + doorMods[doorMods.length - 1].width < usableLength) {
+                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[doorMods.length - 1].distanceFromLeft + doorMods[doorMods.length - 1].width, "space": usableLength - (doorMods[doorMods.length - 1].distanceFromLeft + doorMods[doorMods.length - 1].width) };
                     }
                 }
             }
-        }
-        
-        //TO BE COMPLETED
-        function onWallRadioChange(wallId) {
-            var idToLoad = 0;
-            sortedDoors = new Array();
-            doors = new Array();
-            //alert(sortedDoors[0] + " In On Change " + doors[0]);
-            //Store doors and sortedDoors arrays
-            //Reset their values
-            if (wallDoors.length == 0) {
-                for (var findDoors = 0; findDoors < wallDoors.length; findDoors++) {
-                    if (wallDoors[findDoors].wallId == wallId) {
-                        idToLoad = findDoors;
-                    }
-                }
-                if (idToLoad != 0) {                    
-                    sortedDoors = wallDoors[idToLoad].sortedDoors;
-                }
-            }
-            //alert(sortedDoors[0] + " In On Change " + doors[0]);
+            return spacesRemaining;
         }
 
-        //TO BE COMPLETED
-        function deleteDoor() {
-            //Delete the text and door from respective wall
+
+        function submitDoorData() {
+            var hiddenOne = document.createElement("input");
+            hiddenOne.setAttribute("type", "hidden");
+            hiddenOne.setAttribute("name", "Blah1");
+            hiddenOne.value = wallDoors[0].wallId;
+
+            var hiddenDiv = document.getElementById("MainContent_hiddenFieldsDiv");
+            hiddenDiv.appendChild(hiddenOne);
         }
+
+
+        /************************************************************************************************************************************/
+                    /****************                 new function to be written                *******************************/
+        /************************************************************************************************************************************/
+        function fillWindows() {
+
+        }
+        /************************************************************************************************************************************/
+        /************************************************************************************************************************************/
+        /************************************************************************************************************************************/
+
+
+
 
     </script>
     <%-- End hidden div populating scripts --%>
@@ -1191,7 +1827,7 @@
                     <asp:PlaceHolder ID="wallWindowOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion4" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Submit" />
+                <asp:Button ID="btnQuestion4" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Submit" OnClick="btnQuestion4_Click" />
 
             </div>
             <%-- end #slide4 --%>
@@ -1370,24 +2006,43 @@
         function highlightWallsHeight() {
             var wall = (document.activeElement.id.substr(15, 1)); //parse out B or F (for back wall or front wall) from the id
             var southWalls = new Array(); //array to store all the south facing walls 
+            var northWalls = new Array(); //array to store all the north facing walls
             var lowestWall = 0; //arbitrary number to determine the most south wall (i.e. the front wall) on the canvas
             var lowestIndex; //index of the most south wall
             var highestWall = 200; //arbitrary number to determine to least south wall (i.e. the back wall) on the canvas
             var highestIndex; //index of the least south wall
             var index = -1; //invalid to determine if there is a wall or not
-            
+            var southIsHigher = true;
 
             for (var i = 0; i < lineList.length; i++) { //run through the list of walls
                 if (coordList[i][5] == "S") //5 = orientation... if the orientation is south
                     southWalls.push({ "y2": lineArray[i].attr("y2"), "number": i, "type": coordList[i][4] }); //populate south walls array.. 4 = wall type
+                else if (coordList[i][5] == "N") //5 = orientation... if the orientation is north
+                    northWalls.push({ "y2": lineArray[i].attr("y2"), "number": i, "type": coordList[i][4] }); //populate north walls array.. 4 = wall type
+
             }
 
-            if (wall == "B") //if the textbox in focus is backwall textbox
-                index = getBackWall(southWalls); //get the index of the backwall
+            for (var i = 0; i < southWalls.length; i++) {
+                for (var j = 0; j < northWalls.length; j++) {
+                    if (southWalls[i].y2 < northWalls[j].y2)
+                        southIsHigher = false; //north is higher
+                }
+            }
+
+            if (wall == "B") { //if the textbox in focus is backwall textbox
+                if (southIsHigher) {
+                    index = getBackWall(southWalls, northWalls, southIsHigher); //get the index of the backwall
+                }
+                else { //northwall is higher
+                    index = getBackWall(southIsHigher, northWalls, southIsHigher);
+                }
+            }
             else { //if (wall == "F") //if the textbox in focus is frontwall textbox
-                if (southWalls[southWalls.length - 1].type == "P") //check if the front wall is a proposed walls
+                if (southWalls[southWalls.length - 1].type === "P") { //check if the front wall is a proposed walls
                     index = getFrontWall(southWalls); //if its a proposed wall, get its index
-            } //if its not a proposed wall that means there is no front wall 
+                }
+            } //if its not a proposed wall that means there is no front wall
+
 
             if (index >= 0) { //if valid index, i.e. there is a front wall
                 lineArray[index].attr("stroke", "cyan"); //highlight the front wall cyan
@@ -1396,23 +2051,40 @@
             else { //index, invalid ..there is no front wall
                 highlightFrontPoint(); //highlight front point
             }
+
         }
 
         /**
         This function is used to determine the back wall index
         @param southWalls - the array of all south facing walls
+        @param northWalls - the array of all north facing walls
+        @param southIsHigher - used to determine which wall array to use
         @return lowestIndex - index of the top most south facing wall on the canvas, i.e. the back wall
         */
-        function getBackWall(southWalls) {
+        function getBackWall(southWalls, northWalls, southIsHigher) {
             var lowestWall = 0; //arbitrary number to determine back wall (number represents value of coordinate, low number means top of canvas)
             var lowestIndex; //to store the index of the back wall
-            for (var i = 0; i < southWalls.length; i++) { //run through all south facing walls
-                if (southWalls[i].y2 > lowestWall) { //if the y2 coordinate of the current wall is higher than the value of lowest wall
-                    lowestWall = southWalls[i].y2; //that means we have a new lowest coordinate
-                    lowestIndex = southWalls[i].number; //store the index of the wall
+
+            if (southIsHigher) {
+                for (var i = 0; i < southWalls.length; i++) { //run through all south facing walls
+                    if (southWalls[i].y2 > lowestWall) { //if the y2 coordinate of the current wall is higher than the value of lowest wall
+                        lowestWall = southWalls[i].y2; //that means we have a new lowest coordinate
+                        lowestIndex = southWalls[i].number; //store the index of the wall
+                    }
                 }
+                backWall = "south";
             }
-            return lowestIndex; //return the index of the lowest wall found, i.e. wall that's nearest to the top of canvas
+            else { //northishigher
+                for (var i = 0; i < northWalls.length; i++) { //run through all south facing walls
+                    if (northWalls[i].y2 > lowestWall) { //if the y2 coordinate of the current wall is higher than the value of lowest wall
+                        lowestWall = northWalls[i].y2; //that means we have a new lowest coordinate
+                        lowestIndex = northWalls[i].number; //store the index of the wall
+                    }
+                }
+                backWall = "north"
+            }
+
+            return backWallIndex = lowestIndex; //return the index of the lowest wall found, i.e. wall that's nearest to the top of canvas
         }
 
         /**
@@ -1421,13 +2093,17 @@
         @return highestIndex - index of the bottom most south facing wall on the canvas, i.e. the front wall
         */
         function getFrontWall(southWalls) {
-            var highestWall = 501; //arbitrary number to determine back wall (number represents value of coordinate, low number means top of canvas)
+            var highestWall = 500; //arbitrary number to determine back wall (number represents value of coordinate, low number means top of canvas)
             var highestIndex; //to store the index of the back wall
+
             for (var i = 0; i < southWalls.length; i++) { //run through all south facing walls
-                if (southWalls[i].y2 < highestWall) { //if the y2 coordinate of the current wall is lower than the value of highest wall
-                    highestWall = southWalls[i].y2; //that means we have a new highest coordinate
-                    highestIndex = southWalls[i].number; //store the index of the wall
+                if (coordList[southWalls[i].number][4] == "P") {
+                    if (southWalls[i].y2 < highestWall) { //if the y2 coordinate of the current wall is lower than the value of highest wall
+                        highestWall = southWalls[i].y2; //that means we have a new highest coordinate
+                        highestIndex = southWalls[i].number; //store the index of the wall
+                    }
                 }
+
             }
             return highestIndex; //return the index of the highest wall found, i.e. wall that's nearest to the bottom of canvas
         }
@@ -1470,9 +2146,7 @@
     <input id="hidBackWallHeight" type="hidden" runat="server" />
     <input id="hidRoofSlope" type="hidden" runat="server" />
 
-    <%-- end hidden fields --%>
-
-    
+    <%-- end hidden fields --%>    
 
     <script>
         $(function () {
