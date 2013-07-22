@@ -86,7 +86,458 @@
 
              //now that colours have cascading we still need to validate the slide
             //newProjectCheckQuestion4();
-}
+        }
+
+        function MoveValuesToHiddenDivs()
+        {
+            //general
+            document.getElementById("<%=hidInstallationType.ClientID%>").value = $('#<%=ddlInstallationType.ClientID%>').val();
+            document.getElementById("<%=hidModelNumber.ClientID%>").value = $('#<%=ddlModelNumber.ClientID%>').val();
+            document.getElementById("<%=hidLayout.ClientID%>").value = $('#<%=ddlLayout.ClientID%>').val();
+
+            //100
+            document.getElementById("<%=hid100DefaultFiller.ClientID%>").value = $('#<%=txt100DefaultFiller.ClientID%>').val();
+
+            document.getElementById("<%=hid100WallInteriorPanelColour.ClientID%>").value = $('#<%=ddl100InteriorPanelColour.ClientID%>').val();
+            document.getElementById("<%=hid100WallInteriorPanelSkin.ClientID%>").value = $('#<%=ddl100InteriorPanelSkin.ClientID%>').val();
+            document.getElementById("<%=hid100WallExteriorPanelColour.ClientID%>").value = $('#<%=ddl100ExteriorPanelColour.ClientID%>').val();
+            document.getElementById("<%=hid100WallExteriorPanelSkin.ClientID%>").value = $('#<%=ddl100ExteriorPanelSkin.ClientID%>').val();
+            document.getElementById("<%=hid100WallFrameColour.ClientID%>").value = $('#<%=ddl100FrameColour.ClientID%>').val();
+
+            document.getElementById("<%=hid100DoorType.ClientID%>").value = $('#<%=ddl100DoorType.ClientID%>').val();
+            document.getElementById("<%=hid100DoorStyle.ClientID%>").value = $('#<%=ddl100DoorStyle.ClientID%>').val();
+            document.getElementById("<%=hid100DoorSwing.ClientID%>").value = $('#<%=ddl100DoorSwing.ClientID%>').val();
+            document.getElementById("<%=hid100DoorHinge.ClientID%>").value = $('#<%=ddl100DoorHinge.ClientID%>').val();
+            document.getElementById("<%=hid100DoorHardware.ClientID%>").value = $('#<%=ddl100DoorHardware.ClientID%>').val();
+            document.getElementById("<%=hid100DoorColour.ClientID%>").value = $('#<%=ddl100DoorColour.ClientID%>').val();
+            document.getElementById("<%=hid100DoorGlassTint.ClientID%>").value = $('#<%=ddl100DoorGlassTint.ClientID%>').val();
+            document.getElementById("<%=hid100DoorVinylTint.ClientID%>").value = $('#<%=ddl100DoorVinylTint.ClientID%>').val();
+            document.getElementById("<%=hid100DoorScreenType.ClientID%>").value = $('#<%=ddl100DoorScreenType.ClientID%>').val();
+
+            document.getElementById("<%=hid100WindowType.ClientID%>").value = $('#<%=ddl100WindowType.ClientID%>').val();
+            document.getElementById("<%=hid100WindowColour.ClientID%>").value = "None";
+            document.getElementById("<%=hid100WindowGlassTint.ClientID%>").value = $('#<%=ddl100WindowGlassTint.ClientID%>').val();
+            document.getElementById("<%=hid100WindowVinylTint.ClientID%>").value = $('#<%=ddl100WindowVinylTint.ClientID%>').val();
+            document.getElementById("<%=hid100WindowScreenType.ClientID%>").value = $('#<%=ddl100WindowScreenType.ClientID%>').val();
+
+            document.getElementById("<%=hid100SunshadeValanceColour.ClientID%>").value = $('#<%=ddl100SunshadeValanceColour.ClientID%>').val();
+            document.getElementById("<%=hid100SunshadeFabricColour.ClientID%>").value = $('#<%=ddl100SunshadeFabricColour.ClientID%>').val();
+            document.getElementById("<%=hid100SunshadeOpenness.ClientID%>").value = $('#<%=ddl100SunshadeOpenness.ClientID%>').val();
+
+            document.getElementById("<%=hid100RoofType.ClientID%>").value = $('#<%=ddl100RoofType.ClientID%>').val();
+            document.getElementById("<%=hid100RoofInteriorSkin.ClientID%>").value = $('#<%=ddl100RoofInteriorSkin.ClientID%>').val();
+            document.getElementById("<%=hid100RoofExteriorSkin.ClientID%>").value = $('#<%=ddl100RoofExteriorSkin.ClientID%>').val();
+            document.getElementById("<%=hid100RoofThickness.ClientID%>").value = $('#<%=ddl100RoofThickness.ClientID%>').val();
+
+            document.getElementById("<%=hid100FloorThickness.ClientID%>").value = $('#<%=ddl100FloorThickness.ClientID%>').val();
+            document.getElementById("<%=hid100FloorMetalBarrier.ClientID%>").value = $('#<%=chk100FloorMetalBarrier.ClientID%>').val();
+
+            document.getElementById("<%=hid100KneewallHeight.ClientID%>").value = $('#<%=txt100KneewallHeight.ClientID%>').val();
+            document.getElementById("<%=hid100KneewallType.ClientID%>").value = $('#<%=ddl100KneewallType.ClientID%>').val();
+            document.getElementById("<%=hid100KneewallGlassTint.ClientID%>").value = $('#<%=ddl100KneewallGlassTint.ClientID%>').val();
+
+            document.getElementById("<%=hid100TransomHeight.ClientID%>").value = $('#<%=txt100TransomHeight.ClientID%>').val();
+            document.getElementById("<%=hid100TransomType.ClientID%>").value = $('#<%=ddl100TransomType.ClientID%>').val();
+            document.getElementById("<%=hid100TransomGlassTint.ClientID%>").value = $('#<%=ddl100TransomGlassTint.ClientID%>').val();
+            document.getElementById("<%=hid100TransomVinylTint.ClientID%>").value = $('#<%=ddl100TransomVinylTint.ClientID%>').val();
+            document.getElementById("<%=hid100TransomScreenType.ClientID%>").value = $('#<%=ddl100TransomScreenType.ClientID%>').val();
+
+            document.getElementById("<%=hid100Markup.ClientID%>").value = $('#<%=txt100Markup.ClientID%>').val();
+
+            //200
+            document.getElementById("<%=hid200DefaultFiller.ClientID%>").value = $('#<%=txt200DefaultFiller.ClientID%>').val();
+
+            document.getElementById("<%=hid200WallInteriorPanelColour.ClientID%>").value = $('#<%=ddl200InteriorPanelColour.ClientID%>').val();
+            document.getElementById("<%=hid200WallInteriorPanelSkin.ClientID%>").value = $('#<%=ddl200InteriorPanelSkin.ClientID%>').val();
+            document.getElementById("<%=hid200WallExteriorPanelColour.ClientID%>").value = $('#<%=ddl200ExteriorPanelColour.ClientID%>').val();
+            document.getElementById("<%=hid200WallExteriorPanelSkin.ClientID%>").value = $('#<%=ddl200ExteriorPanelSkin.ClientID%>').val();
+            document.getElementById("<%=hid200WallFrameColour.ClientID%>").value = $('#<%=ddl200FrameColour.ClientID%>').val();
+
+            document.getElementById("<%=hid200DoorType.ClientID%>").value = $('#<%=ddl200DoorType.ClientID%>').val();
+            document.getElementById("<%=hid200DoorStyle.ClientID%>").value = $('#<%=ddl200DoorStyle.ClientID%>').val();
+            document.getElementById("<%=hid200DoorSwing.ClientID%>").value = $('#<%=ddl200DoorSwing.ClientID%>').val();
+            document.getElementById("<%=hid200DoorHinge.ClientID%>").value = $('#<%=ddl200DoorHinge.ClientID%>').val();
+            document.getElementById("<%=hid200DoorHardware.ClientID%>").value = $('#<%=ddl200DoorHardware.ClientID%>').val();
+            document.getElementById("<%=hid200DoorColour.ClientID%>").value = $('#<%=ddl200DoorColour.ClientID%>').val();
+            document.getElementById("<%=hid200DoorGlassTint.ClientID%>").value = $('#<%=ddl200DoorGlassTint.ClientID%>').val();
+            document.getElementById("<%=hid200DoorVinylTint.ClientID%>").value = $('#<%=ddl200DoorVinylTint.ClientID%>').val();
+            document.getElementById("<%=hid200DoorScreenType.ClientID%>").value = $('#<%=ddl200DoorScreenType.ClientID%>').val();
+
+            document.getElementById("<%=hid200WindowType.ClientID%>").value = $('#<%=ddl200WindowType.ClientID%>').val();
+            document.getElementById("<%=hid200WindowColour.ClientID%>").value = "None";
+            document.getElementById("<%=hid200WindowGlassTint.ClientID%>").value = $('#<%=ddl200WindowGlassTint.ClientID%>').val();
+            document.getElementById("<%=hid200WindowVinylTint.ClientID%>").value = $('#<%=ddl200WindowVinylTint.ClientID%>').val();
+            document.getElementById("<%=hid200WindowScreenType.ClientID%>").value = $('#<%=ddl200WindowScreenType.ClientID%>').val();
+
+            document.getElementById("<%=hid200SunshadeValanceColour.ClientID%>").value = $('#<%=ddl200SunshadeValanceColour.ClientID%>').val();
+            document.getElementById("<%=hid200SunshadeFabricColour.ClientID%>").value = $('#<%=ddl200SunshadeFabricColour.ClientID%>').val();
+            document.getElementById("<%=hid200SunshadeOpenness.ClientID%>").value = $('#<%=ddl200SunshadeOpenness.ClientID%>').val();
+
+            document.getElementById("<%=hid200RoofType.ClientID%>").value = $('#<%=ddl200RoofType.ClientID%>').val();
+            document.getElementById("<%=hid200RoofInteriorSkin.ClientID%>").value = $('#<%=ddl200RoofInteriorSkin.ClientID%>').val();
+            document.getElementById("<%=hid200RoofExteriorSkin.ClientID%>").value = $('#<%=ddl200RoofExteriorSkin.ClientID%>').val();
+            document.getElementById("<%=hid200RoofThickness.ClientID%>").value = $('#<%=ddl200RoofThickness.ClientID%>').val();
+
+            document.getElementById("<%=hid200FloorThickness.ClientID%>").value = $('#<%=ddl200FloorThickness.ClientID%>').val();
+            document.getElementById("<%=hid200FloorMetalBarrier.ClientID%>").value = $('#<%=chk200FloorMetalBarrier.ClientID%>').val();
+
+            document.getElementById("<%=hid200KneewallHeight.ClientID%>").value = $('#<%=txt200KneewallHeight.ClientID%>').val();
+            document.getElementById("<%=hid200KneewallType.ClientID%>").value = $('#<%=ddl200KneewallType.ClientID%>').val();
+            document.getElementById("<%=hid200KneewallGlassTint.ClientID%>").value = $('#<%=ddl200KneewallGlassTint.ClientID%>').val();
+
+            document.getElementById("<%=hid200TransomHeight.ClientID%>").value = $('#<%=txt200TransomHeight.ClientID%>').val();
+            document.getElementById("<%=hid200TransomType.ClientID%>").value = $('#<%=ddl200TransomType.ClientID%>').val();
+            document.getElementById("<%=hid200TransomGlassTint.ClientID%>").value = $('#<%=ddl200TransomGlassTint.ClientID%>').val();
+            document.getElementById("<%=hid200TransomVinylTint.ClientID%>").value = $('#<%=ddl200TransomVinylTint.ClientID%>').val();
+            document.getElementById("<%=hid200TransomScreenType.ClientID%>").value = $('#<%=ddl200TransomScreenType.ClientID%>').val();
+
+            document.getElementById("<%=hid200Markup.ClientID%>").value = $('#<%=txt200Markup.ClientID%>').val();
+
+            //300
+            document.getElementById("<%=hid300DefaultFiller.ClientID%>").value = $('#<%=txt300DefaultFiller.ClientID%>').val();
+
+            document.getElementById("<%=hid300WallInteriorPanelColour.ClientID%>").value = $('#<%=ddl300InteriorPanelColour.ClientID%>').val();
+            document.getElementById("<%=hid300WallInteriorPanelSkin.ClientID%>").value = $('#<%=ddl300InteriorPanelSkin.ClientID%>').val();
+            document.getElementById("<%=hid300WallExteriorPanelColour.ClientID%>").value = $('#<%=ddl300ExteriorPanelColour.ClientID%>').val();
+            document.getElementById("<%=hid300WallExteriorPanelSkin.ClientID%>").value = $('#<%=ddl300ExteriorPanelSkin.ClientID%>').val();
+            document.getElementById("<%=hid300WallFrameColour.ClientID%>").value = $('#<%=ddl300FrameColour.ClientID%>').val();
+
+            document.getElementById("<%=hid300DoorType.ClientID%>").value = $('#<%=ddl300DoorType.ClientID%>').val();
+            document.getElementById("<%=hid300DoorStyle.ClientID%>").value = $('#<%=ddl300DoorStyle.ClientID%>').val();
+            document.getElementById("<%=hid300DoorSwing.ClientID%>").value = $('#<%=ddl300DoorSwing.ClientID%>').val();
+            document.getElementById("<%=hid300DoorHinge.ClientID%>").value = $('#<%=ddl300DoorHinge.ClientID%>').val();
+            document.getElementById("<%=hid300DoorHardware.ClientID%>").value = $('#<%=ddl300DoorHardware.ClientID%>').val();
+            document.getElementById("<%=hid300DoorColour.ClientID%>").value = $('#<%=ddl300DoorColour.ClientID%>').val();
+            document.getElementById("<%=hid300DoorGlassTint.ClientID%>").value = $('#<%=ddl300DoorGlassTint.ClientID%>').val();
+            document.getElementById("<%=hid300DoorVinylTint.ClientID%>").value = $('#<%=ddl300DoorVinylTint.ClientID%>').val();
+            document.getElementById("<%=hid300DoorScreenType.ClientID%>").value = $('#<%=ddl300DoorScreenType.ClientID%>').val();
+
+            document.getElementById("<%=hid300WindowType.ClientID%>").value = $('#<%=ddl300WindowType.ClientID%>').val();
+            document.getElementById("<%=hid300WindowColour.ClientID%>").value = "None";
+            document.getElementById("<%=hid300WindowGlassTint.ClientID%>").value = $('#<%=ddl300WindowGlassTint.ClientID%>').val();
+            document.getElementById("<%=hid300WindowVinylTint.ClientID%>").value = $('#<%=ddl300WindowVinylTint.ClientID%>').val();
+            document.getElementById("<%=hid300WindowScreenType.ClientID%>").value = $('#<%=ddl300WindowScreenType.ClientID%>').val();
+
+            document.getElementById("<%=hid300SunshadeValanceColour.ClientID%>").value = $('#<%=ddl300SunshadeValanceColour.ClientID%>').val();
+            document.getElementById("<%=hid300SunshadeFabricColour.ClientID%>").value = $('#<%=ddl300SunshadeFabricColour.ClientID%>').val();
+            document.getElementById("<%=hid300SunshadeOpenness.ClientID%>").value = $('#<%=ddl300SunshadeOpenness.ClientID%>').val();
+
+            document.getElementById("<%=hid300RoofType.ClientID%>").value = $('#<%=ddl300RoofType.ClientID%>').val();
+            document.getElementById("<%=hid300RoofInteriorSkin.ClientID%>").value = $('#<%=ddl300RoofInteriorSkin.ClientID%>').val();
+            document.getElementById("<%=hid300RoofExteriorSkin.ClientID%>").value = $('#<%=ddl300RoofExteriorSkin.ClientID%>').val();
+            document.getElementById("<%=hid300RoofThickness.ClientID%>").value = $('#<%=ddl300RoofThickness.ClientID%>').val();
+
+            document.getElementById("<%=hid300FloorThickness.ClientID%>").value = $('#<%=ddl300FloorThickness.ClientID%>').val();
+            document.getElementById("<%=hid300FloorMetalBarrier.ClientID%>").value = $('#<%=chk300FloorMetalBarrier.ClientID%>').val();
+
+            document.getElementById("<%=hid300KneewallHeight.ClientID%>").value = $('#<%=txt300KneewallHeight.ClientID%>').val();
+            document.getElementById("<%=hid300KneewallType.ClientID%>").value = $('#<%=ddl300KneewallType.ClientID%>').val();
+            document.getElementById("<%=hid300KneewallGlassTint.ClientID%>").value = $('#<%=ddl300KneewallGlassTint.ClientID%>').val();
+
+            document.getElementById("<%=hid300TransomHeight.ClientID%>").value = $('#<%=txt300TransomHeight.ClientID%>').val();
+            document.getElementById("<%=hid300TransomType.ClientID%>").value = $('#<%=ddl300TransomType.ClientID%>').val();
+            document.getElementById("<%=hid300TransomGlassTint.ClientID%>").value = $('#<%=ddl300TransomGlassTint.ClientID%>').val();
+            document.getElementById("<%=hid300TransomVinylTint.ClientID%>").value = $('#<%=ddl300TransomVinylTint.ClientID%>').val();
+            document.getElementById("<%=hid300TransomScreenType.ClientID%>").value = $('#<%=ddl300TransomScreenType.ClientID%>').val();
+
+            document.getElementById("<%=hid300Markup.ClientID%>").value = $('#<%=txt300Markup.ClientID%>').val();
+
+            //400
+            document.getElementById("<%=hid400DefaultFiller.ClientID%>").value = $('#<%=txt400DefaultFiller.ClientID%>').val();
+
+            document.getElementById("<%=hid400WallInteriorPanelColour.ClientID%>").value = $('#<%=ddl400InteriorPanelColour.ClientID%>').val();
+            document.getElementById("<%=hid400WallInteriorPanelSkin.ClientID%>").value = $('#<%=ddl400InteriorPanelSkin.ClientID%>').val();
+            document.getElementById("<%=hid400WallExteriorPanelColour.ClientID%>").value = $('#<%=ddl400ExteriorPanelColour.ClientID%>').val();
+            document.getElementById("<%=hid400WallExteriorPanelSkin.ClientID%>").value = $('#<%=ddl400ExteriorPanelSkin.ClientID%>').val();
+            document.getElementById("<%=hid400WallFrameColour.ClientID%>").value = $('#<%=ddl400FrameColour.ClientID%>').val();
+
+            document.getElementById("<%=hid400DoorType.ClientID%>").value = $('#<%=ddl400DoorType.ClientID%>').val();
+            document.getElementById("<%=hid400DoorStyle.ClientID%>").value = $('#<%=ddl400DoorStyle.ClientID%>').val();
+            document.getElementById("<%=hid400DoorSwing.ClientID%>").value = $('#<%=ddl400DoorSwing.ClientID%>').val();
+            document.getElementById("<%=hid400DoorHinge.ClientID%>").value = $('#<%=ddl400DoorHinge.ClientID%>').val();
+            document.getElementById("<%=hid400DoorHardware.ClientID%>").value = $('#<%=ddl400DoorHardware.ClientID%>').val();
+            document.getElementById("<%=hid400DoorColour.ClientID%>").value = $('#<%=ddl400DoorColour.ClientID%>').val();
+            document.getElementById("<%=hid400DoorGlassTint.ClientID%>").value = $('#<%=ddl400DoorGlassTint.ClientID%>').val();
+            document.getElementById("<%=hid400DoorVinylTint.ClientID%>").value = $('#<%=ddl400DoorVinylTint.ClientID%>').val();
+            document.getElementById("<%=hid400DoorScreenType.ClientID%>").value = $('#<%=ddl400DoorScreenType.ClientID%>').val();
+
+            document.getElementById("<%=hid400WindowType.ClientID%>").value = $('#<%=ddl400WindowType.ClientID%>').val();
+            document.getElementById("<%=hid400WindowColour.ClientID%>").value = "None";
+            document.getElementById("<%=hid400WindowGlassTint.ClientID%>").value = $('#<%=ddl400WindowGlassTint.ClientID%>').val();
+            document.getElementById("<%=hid400WindowVinylTint.ClientID%>").value = $('#<%=ddl400WindowVinylTint.ClientID%>').val();
+            document.getElementById("<%=hid400WindowScreenType.ClientID%>").value = $('#<%=ddl400WindowScreenType.ClientID%>').val();
+
+            document.getElementById("<%=hid400SunshadeValanceColour.ClientID%>").value = $('#<%=ddl400SunshadeValanceColour.ClientID%>').val();
+            document.getElementById("<%=hid400SunshadeFabricColour.ClientID%>").value = $('#<%=ddl400SunshadeFabricColour.ClientID%>').val();
+            document.getElementById("<%=hid400SunshadeOpenness.ClientID%>").value = $('#<%=ddl400SunshadeOpenness.ClientID%>').val();
+
+            document.getElementById("<%=hid400RoofType.ClientID%>").value = $('#<%=ddl400RoofType.ClientID%>').val();
+            document.getElementById("<%=hid400RoofInteriorSkin.ClientID%>").value = $('#<%=ddl400RoofInteriorSkin.ClientID%>').val();
+            document.getElementById("<%=hid400RoofExteriorSkin.ClientID%>").value = $('#<%=ddl400RoofExteriorSkin.ClientID%>').val();
+            document.getElementById("<%=hid400RoofThickness.ClientID%>").value = $('#<%=ddl400RoofThickness.ClientID%>').val();
+
+            document.getElementById("<%=hid400FloorThickness.ClientID%>").value = $('#<%=ddl400FloorThickness.ClientID%>').val();
+            document.getElementById("<%=hid400FloorMetalBarrier.ClientID%>").value = $('#<%=chk400FloorMetalBarrier.ClientID%>').val();
+
+            document.getElementById("<%=hid400KneewallHeight.ClientID%>").value = $('#<%=txt400KneewallHeight.ClientID%>').val();
+            document.getElementById("<%=hid400KneewallType.ClientID%>").value = $('#<%=ddl400KneewallType.ClientID%>').val();
+            document.getElementById("<%=hid400KneewallGlassTint.ClientID%>").value = $('#<%=ddl400KneewallGlassTint.ClientID%>').val();
+
+            document.getElementById("<%=hid400TransomHeight.ClientID%>").value = $('#<%=txt400TransomHeight.ClientID%>').val();
+            document.getElementById("<%=hid400TransomType.ClientID%>").value = $('#<%=ddl400TransomType.ClientID%>').val();
+            document.getElementById("<%=hid400TransomGlassTint.ClientID%>").value = $('#<%=ddl400TransomGlassTint.ClientID%>').val();
+            document.getElementById("<%=hid400TransomVinylTint.ClientID%>").value = $('#<%=ddl400TransomVinylTint.ClientID%>').val();
+            document.getElementById("<%=hid400TransomScreenType.ClientID%>").value = $('#<%=ddl400TransomScreenType.ClientID%>').val();
+
+            document.getElementById("<%=hid400Markup.ClientID%>").value = $('#<%=txt400Markup.ClientID%>').val();
+        }
+
+        function ValidateNumericInput() {
+            MoveValuesToHiddenDivs();
+
+            var errorMessage = "";
+            var isValid = true;
+
+            //default filler
+            //100
+            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
+            if (defaultFiller100 == "" ) {
+                isValid = false;
+            }
+
+            try{
+                var defaultFiller100Numeric = parseInt(defaultFiller100);
+            }
+            catch (err) {
+                isValid = false;
+            }
+
+            if (isValid == false) {
+                errorMessage += "Error in Model 100 - Default Filler\n";
+            }
+
+            //200
+            isValid = true;
+            var defaultFiller200 = document.getElementById("<%=hid200DefaultFiller.ClientID%>").value;
+
+            if (defaultFiller200 == "") {
+                isValid = false;
+            }
+
+            try {
+                var defaultFiller200Numeric = parseInt(defaultFiller200);
+            }
+            catch (err) {
+                isValid = false;
+            }
+
+            if (isValid == false) {
+                errorMessage += "Error in Model 200 - Default Filler\n";
+            }
+            //300
+            var defaultFiller300 = document.getElementById("<%=hid300DefaultFiller.ClientID%>").value;
+            if (defaultFiller300 == "") {
+                isValid = false;
+            }
+            try {
+                parseInt(defaultFiller300)
+            }
+            catch (err) {
+                isValid = false;
+            }
+            if (isValid == false) {
+                errorMessage += "Error in Model 300 - Default Filler\n";
+            }
+            //400
+            var defaultFiller400 = document.getElementById("<%=hid400DefaultFiller.ClientID%>").value;
+            if (defaultFiller400 == "") {
+                isValid = false;
+            }
+            try {
+                parseInt(defaultFiller400)
+            }
+            catch (err) {
+                isValid = false;
+            }
+            if (isValid == false) {
+                errorMessage += "Error in Model 400 - Default Filler\n";
+            }
+
+            //markup
+            var markup100 = document.getElementById("<%=hid100Markup.ClientID%>").value;
+            //100
+            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
+            if (defaultFiller100 == "") {
+                isValid = false;
+            }
+            try {
+                parseInt(defaultFiller100)
+            }
+            catch (err) {
+                isValid = false;
+            }
+            if (isValid == false) {
+                errorMessage += "Error in Model 100 - Default Filler\n";
+            }
+            //100
+            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
+            if (defaultFiller100 == "") {
+                isValid = false;
+            }
+            try {
+                parseInt(defaultFiller100)
+            }
+            catch (err) {
+                isValid = false;
+            }
+            if (isValid == false) {
+                errorMessage += "Error in Model 100 - Default Filler\n";
+            }
+            //100
+            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
+            if (defaultFiller100 == "") {
+                isValid = false;
+            }
+            try {
+                parseInt(defaultFiller100)
+            }
+            catch (err) {
+                isValid = false;
+            }
+            if (isValid == false) {
+                errorMessage += "Error in Model 100 - Default Filler\n";
+            }
+            //100
+            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
+            if (defaultFiller100 == "") {
+                isValid = false;
+            }
+            try {
+                parseInt(defaultFiller100)
+            }
+            catch (err) {
+                isValid = false;
+            }
+            if (isValid == false) {
+                errorMessage += "Error in Model 100 - Default Filler\n";
+            }
+            //kneewall height
+            var kneewallHeight100 = document.getElementById("<%=hid100KneewallHeight.ClientID%>").value;
+            //100
+            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
+            if (defaultFiller100 == "") {
+                isValid = false;
+            }
+            try {
+                parseInt(defaultFiller100)
+            }
+            catch (err) {
+                isValid = false;
+            }
+            if (isValid == false) {
+                errorMessage += "Error in Model 100 - Default Filler\n";
+            }
+            //100
+            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
+            if (defaultFiller100 == "") {
+                isValid = false;
+            }
+            try {
+                parseInt(defaultFiller100)
+            }
+            catch (err) {
+                isValid = false;
+            }
+            if (isValid == false) {
+                errorMessage += "Error in Model 100 - Default Filler\n";
+            }
+            //100
+            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
+            if (defaultFiller100 == "") {
+                isValid = false;
+            }
+            try {
+                parseInt(defaultFiller100)
+            }
+            catch (err) {
+                isValid = false;
+            }
+            if (isValid == false) {
+                errorMessage += "Error in Model 100 - Default Filler\n";
+            }
+            //100
+            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
+            if (defaultFiller100 == "") {
+                isValid = false;
+            }
+            try {
+                parseInt(defaultFiller100)
+            }
+            catch (err) {
+                isValid = false;
+            }
+            if (isValid == false) {
+                errorMessage += "Error in Model 100 - Default Filler\n";
+            }
+            //transom height
+            var transomHeight100 = document.getElementById("<%=hid100TransomHeight.ClientID%>").value;
+            //100
+            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
+            if (defaultFiller100 == "") {
+                isValid = false;
+            }
+            try {
+                parseInt(defaultFiller100)
+            }
+            catch (err) {
+                isValid = false;
+            }
+            if (isValid == false) {
+                errorMessage += "Error in Model 100 - Default Filler\n";
+            }
+            //100
+            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
+            if (defaultFiller100 == "") {
+                isValid = false;
+            }
+            try {
+                parseInt(defaultFiller100)
+            }
+            catch (err) {
+                isValid = false;
+            }
+            if (isValid == false) {
+                errorMessage += "Error in Model 100 - Default Filler\n";
+            }
+            //100
+            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
+            if (defaultFiller100 == "") {
+                isValid = false;
+            }
+            try {
+                parseInt(defaultFiller100)
+            }
+            catch (err) {
+                isValid = false;
+            }
+            if (isValid == false) {
+                errorMessage += "Error in Model 100 - Default Filler\n";
+            }
+            //100
+            var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
+            if (defaultFiller100 == "") {
+                isValid = false;
+            }
+            try {
+                parseInt(defaultFiller100)
+            }
+            catch (err) {
+                isValid = false;
+            }
+            if (isValid == false) {
+                errorMessage += "Error in Model 100 - Default Filler\n";
+            }
+        }
     </script>
     <div>
         <asp:Label Text ="Welcome " ID="lblWelcome" runat="server"></asp:Label>
@@ -128,7 +579,7 @@
                                                     <li>
                                                         <%-- Installation Type --%>
                                                         <asp:Label ID="lblInstallationType" runat="server" Text="Installation Type:"></asp:Label>
-                                                        <asp:DropDownList ID="ddlInstallationType" runat="server"></asp:DropDownList>
+                                                        <asp:DropDownList ID="ddlInstallationType" OnSelectedIndexChanged="MoveValuesToHiddenDivs()" runat="server"></asp:DropDownList>
                                                     </li>
                                                     <li>
                                                         <%-- Model Type --%>
@@ -137,8 +588,8 @@
                                                     </li>
                                                     <li>
                                                         <%-- Layout --%>
-                                                        <asp:Label ID="lblLayoutDefault" runat="server" Text="Layout Default:"></asp:Label>
-                                                        <asp:DropDownList ID="ddlLayoutDefault" runat="server"></asp:DropDownList>
+                                                        <asp:Label ID="lblLayout" runat="server" Text="Layout Default:"></asp:Label>
+                                                        <asp:DropDownList ID="ddlLayout" runat="server"></asp:DropDownList>
                                                     </li>                                                  
                                                     <li>
                                                         <%-- Cut Pitch Option --%>
@@ -1549,7 +2000,7 @@
                     </li>
                 </ul>
                 
-                <asp:Button ID="btnUpdate" runat="server" Text="Update Preferences" CssClass="btnSubmit float-right" OnClick="btnUpdate_Click"/>
+                <asp:Button ID="btnUpdate" runat="server" Text="Update Preferences" CssClass="btnSubmit float-right" OnClick="btnUpdate_Click" UseSubmitBehavior="False"/>
                 <asp:SqlDataSource ID="sdsUsers" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [users]"></asp:SqlDataSource>
 
             </div> <%-- end #slide1 --%>
@@ -1558,59 +2009,209 @@
         
     </div> <%-- end .slide-window --%>
     <%-- Hidden input tags 
-    ======================= --%>
-    <asp:Repeater ID="rptHiddens" runat="server" >
-        <ItemTemplate>            
-            <input id="hidInstallationType" type="hidden" runat="server" />
-            <input id="hidModelType" type="hidden" runat="server" />
-            <input id="hidLayout" type="hidden" runat="server" />
-            <input id="hidMarkup" type="hidden" runat="server" />
+    ======================= --%>       
+    <!-- General Preferences -->
+    <input id="hidInstallationType" type="hidden" runat="server" />
+    <input id="hidModelNumber" type="hidden" runat="server" />
+    <input id="hidLayout" type="hidden" runat="server" />
 
-            <input id="hidWallInteriorPanelColour" type="hidden" runat="server" />
-            <input id="hidWallInteriorPanelSkin" type="hidden" runat="server" />
-            <input id="hidWallExteriorPanelColour" type="hidden" runat="server" />
-            <input id="hidWallExteriorPanelSkin" type="hidden" runat="server" />
-            <input id="hidWallFrameColour" type="hidden" runat="server" />
+    <!-- Start: Model 100 Hiddens -->   
+    <input id="hid100DefaultFiller" type="hidden" runat="server" />
 
-            <input id="hidDoorType" type="hidden" runat="server" />
-            <input id="hidDoorStyle" type="hidden" runat="server" />
-            <input id="hidDoorSwing" type="hidden" runat="server" />
-            <input id="hidDoorHinge" type="hidden" runat="server" />
-            <input id="hidDoorHardware" type="hidden" runat="server" />
-            <input id="hidDoorColour" type="hidden" runat="server" />
-            <input id="hidDoorGlassTint" type="hidden" runat="server" />
-            <input id="hidDoorVinylTint" type="hidden" runat="server" />
-            <input id="hidDoorScreenType" type="hidden" runat="server" />
+    <input id="hid100WallInteriorPanelColour" type="hidden" runat="server" />
+    <input id="hid100WallInteriorPanelSkin" type="hidden" runat="server" />
+    <input id="hid100WallExteriorPanelColour" type="hidden" runat="server" />
+    <input id="hid100WallExteriorPanelSkin" type="hidden" runat="server" />
+    <input id="hid100WallFrameColour" type="hidden" runat="server" />
+
+    <input id="hid100DoorType" type="hidden" runat="server" />
+    <input id="hid100DoorStyle" type="hidden" runat="server" />
+    <input id="hid100DoorSwing" type="hidden" runat="server" />
+    <input id="hid100DoorHinge" type="hidden" runat="server" />
+    <input id="hid100DoorHardware" type="hidden" runat="server" />
+    <input id="hid100DoorColour" type="hidden" runat="server" />
+    <input id="hid100DoorGlassTint" type="hidden" runat="server" />
+    <input id="hid100DoorVinylTint" type="hidden" runat="server" />
+    <input id="hid100DoorScreenType" type="hidden" runat="server" />
    
-            <input id="hidWindowType" type="hidden" runat="server" />       
-            <input id="hidWindowColour" type="hidden" runat="server" />
-            <input id="hidWindowGlassTint" type="hidden" runat="server" />
-            <input id="hidWindowVinylTint" type="hidden" runat="server" />
-            <input id="hidWindowScreenType" type="hidden" runat="server" />
+    <input id="hid100WindowType" type="hidden" runat="server" />       
+    <input id="hid100WindowColour" type="hidden" runat="server" />
+    <input id="hid100WindowGlassTint" type="hidden" runat="server" />
+    <input id="hid100WindowVinylTint" type="hidden" runat="server" />
+    <input id="hid100WindowScreenType" type="hidden" runat="server" />
     
-            <input id="hidSunshadeValanceColour" type="hidden" runat="server" />
-            <input id="hidSunshadeFabric" type="hidden" runat="server" />
-            <input id="hidSunshadeOpenness" type="hidden" runat="server" />
+    <input id="hid100SunshadeValanceColour" type="hidden" runat="server" />
+    <input id="hid100SunshadeFabricColour" type="hidden" runat="server" />
+    <input id="hid100SunshadeOpenness" type="hidden" runat="server" />
     
-            <input id="hidRoofType" type="hidden" runat="server" />
-            <input id="hidRoofInteriorSkin" type="hidden" runat="server" />
-            <input id="hidRoofExteriorSkin" type="hidden" runat="server" />
-            <input id="hidRoofThickness" type="hidden" runat="server" />
+    <input id="hid100RoofType" type="hidden" runat="server" />
+    <input id="hid100RoofInteriorSkin" type="hidden" runat="server" />
+    <input id="hid100RoofExteriorSkin" type="hidden" runat="server" />
+    <input id="hid100RoofThickness" type="hidden" runat="server" />
     
-            <input id="hidFloorInteriorSkin" type="hidden" runat="server" />
-            <input id="hidFloorExteriorSkin" type="hidden" runat="server" />
-            <input id="hidFloorThickness" type="hidden" runat="server" />
-            <input id="hidFloorMetalBarrier" type="hidden" runat="server" />
+    <input id="hid100FloorThickness" type="hidden" runat="server" />
+    <input id="hid100FloorMetalBarrier" type="hidden" runat="server" />
     
-            <input id="hidKneewallHeight" type="hidden" runat="server" />
-            <input id="hidKneewallType" type="hidden" runat="server" />
-            <input id="hidKneewallGlassTint" type="hidden" runat="server" />
+    <input id="hid100KneewallHeight" type="hidden" runat="server" />
+    <input id="hid100KneewallType" type="hidden" runat="server" />
+    <input id="hid100KneewallGlassTint" type="hidden" runat="server" />
     
-            <input id="hidTransomHeight" type="hidden" runat="server" />
-            <input id="hidTransomType" type="hidden" runat="server" />
-            <input id="hidTransomGlassTint" type="hidden" runat="server" />
-            <input id="hidTransomVinylTint" type="hidden" runat="server" />
-            <input id="hidTransomScreenType" type="hidden" runat="server" />
-        </ItemTemplate>
-    </asp:Repeater>
+    <input id="hid100TransomHeight" type="hidden" runat="server" />
+    <input id="hid100TransomType" type="hidden" runat="server" />
+    <input id="hid100TransomGlassTint" type="hidden" runat="server" />
+    <input id="hid100TransomVinylTint" type="hidden" runat="server" />
+    <input id="hid100TransomScreenType" type="hidden" runat="server" />
+
+    <input id="hid100Markup" type="hidden" runat="server" />
+    <!-- End: Model 100 Hiddens -->
+
+    <!-- Start: Model 200 Hiddens -->   
+    <input id="hid200DefaultFiller" type="hidden" runat="server" />
+
+    <input id="hid200WallInteriorPanelColour" type="hidden" runat="server" />
+    <input id="hid200WallInteriorPanelSkin" type="hidden" runat="server" />
+    <input id="hid200WallExteriorPanelColour" type="hidden" runat="server" />
+    <input id="hid200WallExteriorPanelSkin" type="hidden" runat="server" />
+    <input id="hid200WallFrameColour" type="hidden" runat="server" />
+
+    <input id="hid200DoorType" type="hidden" runat="server" />
+    <input id="hid200DoorStyle" type="hidden" runat="server" />
+    <input id="hid200DoorSwing" type="hidden" runat="server" />
+    <input id="hid200DoorHinge" type="hidden" runat="server" />
+    <input id="hid200DoorHardware" type="hidden" runat="server" />
+    <input id="hid200DoorColour" type="hidden" runat="server" />
+    <input id="hid200DoorGlassTint" type="hidden" runat="server" />
+    <input id="hid200DoorVinylTint" type="hidden" runat="server" />
+    <input id="hid200DoorScreenType" type="hidden" runat="server" />
+   
+    <input id="hid200WindowType" type="hidden" runat="server" />       
+    <input id="hid200WindowColour" type="hidden" runat="server" />
+    <input id="hid200WindowGlassTint" type="hidden" runat="server" />
+    <input id="hid200WindowVinylTint" type="hidden" runat="server" />
+    <input id="hid200WindowScreenType" type="hidden" runat="server" />
+    
+    <input id="hid200SunshadeValanceColour" type="hidden" runat="server" />
+    <input id="hid200SunshadeFabricColour" type="hidden" runat="server" />
+    <input id="hid200SunshadeOpenness" type="hidden" runat="server" />
+    
+    <input id="hid200RoofType" type="hidden" runat="server" />
+    <input id="hid200RoofInteriorSkin" type="hidden" runat="server" />
+    <input id="hid200RoofExteriorSkin" type="hidden" runat="server" />
+    <input id="hid200RoofThickness" type="hidden" runat="server" />
+    
+    <input id="hid200FloorThickness" type="hidden" runat="server" />
+    <input id="hid200FloorMetalBarrier" type="hidden" runat="server" />
+    
+    <input id="hid200KneewallHeight" type="hidden" runat="server" />
+    <input id="hid200KneewallType" type="hidden" runat="server" />
+    <input id="hid200KneewallGlassTint" type="hidden" runat="server" />
+    
+    <input id="hid200TransomHeight" type="hidden" runat="server" />
+    <input id="hid200TransomType" type="hidden" runat="server" />
+    <input id="hid200TransomGlassTint" type="hidden" runat="server" />
+    <input id="hid200TransomVinylTint" type="hidden" runat="server" />
+    <input id="hid200TransomScreenType" type="hidden" runat="server" />
+
+    <input id="hid200Markup" type="hidden" runat="server" />
+    <!-- End: Model 200 Hiddens -->
+
+    <!-- Start: Model 300 Hiddens -->   
+    <input id="hid300DefaultFiller" type="hidden" runat="server" />
+
+    <input id="hid300WallInteriorPanelColour" type="hidden" runat="server" />
+    <input id="hid300WallInteriorPanelSkin" type="hidden" runat="server" />
+    <input id="hid300WallExteriorPanelColour" type="hidden" runat="server" />
+    <input id="hid300WallExteriorPanelSkin" type="hidden" runat="server" />
+    <input id="hid300WallFrameColour" type="hidden" runat="server" />
+
+    <input id="hid300DoorType" type="hidden" runat="server" />
+    <input id="hid300DoorStyle" type="hidden" runat="server" />
+    <input id="hid300DoorSwing" type="hidden" runat="server" />
+    <input id="hid300DoorHinge" type="hidden" runat="server" />
+    <input id="hid300DoorHardware" type="hidden" runat="server" />
+    <input id="hid300DoorColour" type="hidden" runat="server" />
+    <input id="hid300DoorGlassTint" type="hidden" runat="server" />
+    <input id="hid300DoorVinylTint" type="hidden" runat="server" />
+    <input id="hid300DoorScreenType" type="hidden" runat="server" />
+   
+    <input id="hid300WindowType" type="hidden" runat="server" />       
+    <input id="hid300WindowColour" type="hidden" runat="server" />
+    <input id="hid300WindowGlassTint" type="hidden" runat="server" />
+    <input id="hid300WindowVinylTint" type="hidden" runat="server" />
+    <input id="hid300WindowScreenType" type="hidden" runat="server" />
+    
+    <input id="hid300SunshadeValanceColour" type="hidden" runat="server" />
+    <input id="hid300SunshadeFabricColour" type="hidden" runat="server" />
+    <input id="hid300SunshadeOpenness" type="hidden" runat="server" />
+    
+    <input id="hid300RoofType" type="hidden" runat="server" />
+    <input id="hid300RoofInteriorSkin" type="hidden" runat="server" />
+    <input id="hid300RoofExteriorSkin" type="hidden" runat="server" />
+    <input id="hid300RoofThickness" type="hidden" runat="server" />
+    
+    <input id="hid300FloorThickness" type="hidden" runat="server" />
+    <input id="hid300FloorMetalBarrier" type="hidden" runat="server" />
+    
+    <input id="hid300KneewallHeight" type="hidden" runat="server" />
+    <input id="hid300KneewallType" type="hidden" runat="server" />
+    <input id="hid300KneewallGlassTint" type="hidden" runat="server" />
+    
+    <input id="hid300TransomHeight" type="hidden" runat="server" />
+    <input id="hid300TransomType" type="hidden" runat="server" />
+    <input id="hid300TransomGlassTint" type="hidden" runat="server" />
+    <input id="hid300TransomVinylTint" type="hidden" runat="server" />
+    <input id="hid300TransomScreenType" type="hidden" runat="server" />
+
+    <input id="hid300Markup" type="hidden" runat="server" />
+    <!-- End: Model 300 Hiddens -->
+
+    <!-- Start: Model 400 Hiddens -->   
+    <input id="hid400DefaultFiller" type="hidden" runat="server" />
+
+    <input id="hid400WallInteriorPanelColour" type="hidden" runat="server" />
+    <input id="hid400WallInteriorPanelSkin" type="hidden" runat="server" />
+    <input id="hid400WallExteriorPanelColour" type="hidden" runat="server" />
+    <input id="hid400WallExteriorPanelSkin" type="hidden" runat="server" />
+    <input id="hid400WallFrameColour" type="hidden" runat="server" />
+
+    <input id="hid400DoorType" type="hidden" runat="server" />
+    <input id="hid400DoorStyle" type="hidden" runat="server" />
+    <input id="hid400DoorSwing" type="hidden" runat="server" />
+    <input id="hid400DoorHinge" type="hidden" runat="server" />
+    <input id="hid400DoorHardware" type="hidden" runat="server" />
+    <input id="hid400DoorColour" type="hidden" runat="server" />
+    <input id="hid400DoorGlassTint" type="hidden" runat="server" />
+    <input id="hid400DoorVinylTint" type="hidden" runat="server" />
+    <input id="hid400DoorScreenType" type="hidden" runat="server" />
+   
+    <input id="hid400WindowType" type="hidden" runat="server" />       
+    <input id="hid400WindowColour" type="hidden" runat="server" />
+    <input id="hid400WindowGlassTint" type="hidden" runat="server" />
+    <input id="hid400WindowVinylTint" type="hidden" runat="server" />
+    <input id="hid400WindowScreenType" type="hidden" runat="server" />
+    
+    <input id="hid400SunshadeValanceColour" type="hidden" runat="server" />
+    <input id="hid400SunshadeFabricColour" type="hidden" runat="server" />
+    <input id="hid400SunshadeOpenness" type="hidden" runat="server" />
+    
+    <input id="hid400RoofType" type="hidden" runat="server" />
+    <input id="hid400RoofInteriorSkin" type="hidden" runat="server" />
+    <input id="hid400RoofExteriorSkin" type="hidden" runat="server" />
+    <input id="hid400RoofThickness" type="hidden" runat="server" />
+    
+    <input id="hid400FloorThickness" type="hidden" runat="server" />
+    <input id="hid400FloorMetalBarrier" type="hidden" runat="server" />
+    
+    <input id="hid400KneewallHeight" type="hidden" runat="server" />
+    <input id="hid400KneewallType" type="hidden" runat="server" />
+    <input id="hid400KneewallGlassTint" type="hidden" runat="server" />
+    
+    <input id="hid400TransomHeight" type="hidden" runat="server" />
+    <input id="hid400TransomType" type="hidden" runat="server" />
+    <input id="hid400TransomGlassTint" type="hidden" runat="server" />
+    <input id="hid400TransomVinylTint" type="hidden" runat="server" />
+    <input id="hid400TransomScreenType" type="hidden" runat="server" />
+
+    <input id="hid400Markup" type="hidden" runat="server" />
+    <!-- End: Model 400 Hiddens -->
 </asp:Content>

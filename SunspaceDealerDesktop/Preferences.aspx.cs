@@ -257,8 +257,8 @@ namespace SunspaceDealerDesktop
 
             ddl200DoorSwing.Items.Add(new ListItem("In", "In"));
             ddl200DoorSwing.Items.Add(new ListItem("Out", "Out"));
-            ddl100DoorHinge.Items.Add(new ListItem("L", "L"));
-            ddl100DoorHinge.Items.Add(new ListItem("R", "R"));
+            ddl200DoorHinge.Items.Add(new ListItem("L", "L"));
+            ddl200DoorHinge.Items.Add(new ListItem("R", "R"));
             #endregion
 
             #region 300
@@ -293,8 +293,8 @@ namespace SunspaceDealerDesktop
 
             ddl300DoorSwing.Items.Add(new ListItem("In", "In"));
             ddl300DoorSwing.Items.Add(new ListItem("Out", "Out"));
-            ddl100DoorHinge.Items.Add(new ListItem("L", "L"));
-            ddl100DoorHinge.Items.Add(new ListItem("R", "R"));
+            ddl300DoorHinge.Items.Add(new ListItem("L", "L"));
+            ddl300DoorHinge.Items.Add(new ListItem("R", "R"));
             #endregion
 
             #region 400
@@ -329,8 +329,8 @@ namespace SunspaceDealerDesktop
 
             ddl400DoorSwing.Items.Add(new ListItem("In", "In"));
             ddl400DoorSwing.Items.Add(new ListItem("Out", "Out"));
-            ddl100DoorHinge.Items.Add(new ListItem("L", "L"));
-            ddl100DoorHinge.Items.Add(new ListItem("R", "R"));
+            ddl400DoorHinge.Items.Add(new ListItem("L", "L"));
+            ddl400DoorHinge.Items.Add(new ListItem("R", "R"));
             #endregion
             #endregion
 
@@ -823,7 +823,7 @@ namespace SunspaceDealerDesktop
                     ddl100TransomVinylTint.SelectedValue = aReader[33].ToString();
                     ddl100TransomScreenType.SelectedValue = aReader[34].ToString();
 
-                    txt100Markup.Text = aReader[35].ToString();
+                    txt100Markup.Text = (Convert.ToDecimal(aReader[35].ToString())*100).ToString();
                     aReader.Close();
                     #endregion
 
@@ -881,7 +881,7 @@ namespace SunspaceDealerDesktop
                     ddl200TransomVinylTint.SelectedValue = aReader[33].ToString();
                     ddl200TransomScreenType.SelectedValue = aReader[34].ToString();
 
-                    txt200Markup.Text = aReader[35].ToString();
+                    txt200Markup.Text = (Convert.ToDecimal(aReader[35].ToString()) * 100).ToString();
                     aReader.Close();
                     #endregion
 
@@ -939,7 +939,7 @@ namespace SunspaceDealerDesktop
                     ddl300TransomVinylTint.SelectedValue = aReader[33].ToString();
                     ddl300TransomScreenType.SelectedValue = aReader[34].ToString();
 
-                    txt300Markup.Text = aReader[35].ToString();
+                    txt300Markup.Text = (Convert.ToDecimal(aReader[35].ToString()) * 100).ToString();
                     aReader.Close();
                     #endregion
 
@@ -997,7 +997,7 @@ namespace SunspaceDealerDesktop
                     ddl400TransomVinylTint.SelectedValue = aReader[33].ToString();
                     ddl400TransomScreenType.SelectedValue = aReader[34].ToString();
 
-                    txt400Markup.Text = aReader[35].ToString();
+                    txt400Markup.Text = (Convert.ToDecimal(aReader[35].ToString()) * 100).ToString();
                     aReader.Close();
                     #endregion
 
@@ -1043,18 +1043,233 @@ namespace SunspaceDealerDesktop
                 aCommand.Connection = aConnection;
                 aCommand.Transaction = aTransaction;
 
-               
+                try
+                {
+                    //Add to dealer table
+                    int isChecked = 1;
+                    if (chkCutPitch.Checked == false)
+                    {
+                        isChecked = 0;
+                    }
+                    aCommand.CommandText = "UPDATE preferences SET "
+                                            + "installation_type='" + ddlInstallationType.SelectedValue + "', "
+                                            + "model_type='" + ddlModelNumber.SelectedValue + "', "
+                                            + "layout='" + "Preset 1" + "', "
+                                            + "cut_pitch=" + isChecked
+                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString();
+                    aCommand.ExecuteNonQuery();
+
+                    //An entrance into the model preferences table, one entry for each model type
+                    #region 100
+                    isChecked = 0;
+                    if (chk100FloorMetalBarrier.Checked == true)
+                    {
+                        isChecked = 1;
+                    }
+                    aCommand.CommandText = "UPDATE model_preferences SET "
+                                            + "default_filler=" + txt100DefaultFiller.Text + ", "
+                                            + "interior_panel_skin='" + ddl100InteriorPanelSkin.SelectedValue + "', "
+                                            + "exterior_panel_skin='" + ddl100ExteriorPanelSkin.SelectedValue + "', "
+                                            + "frame_colour='" + ddl100FrameColour.SelectedValue + "', "
+                                            + "door_type='" + ddl100DoorType.SelectedValue + "', "
+                                            + "door_style='" + ddl100DoorStyle.SelectedValue + "', "
+                                            + "door_swing='" + ddl100DoorSwing.SelectedValue + "', "
+                                            + "door_hinge='" + ddl100DoorHinge.SelectedValue + "', "
+                                            + "door_hardware='" + ddl100DoorHardware.SelectedValue + "', "
+                                            + "door_colour='" + ddl100DoorColour.SelectedValue + "', "
+                                            + "door_glass_tint='" + ddl100DoorGlassTint.SelectedValue + "', "
+                                            + "door_vinyl_tint='" + ddl100DoorVinylTint.SelectedValue + "', "
+                                            + "door_screen_type='" + ddl100DoorScreenType.SelectedValue + "', "
+                                            + "window_type='" + ddl100WindowType.SelectedValue + "', "
+                                            + "window_colour='None',"
+                                            + "window_glass_tint='" + ddl100WindowGlassTint.SelectedValue + "', "
+                                            + "window_vinyl_tint='" + ddl100WindowVinylTint.SelectedValue + "', "
+                                            + "window_screen_type='" + ddl100WindowScreenType.SelectedValue + "', "
+                                            + "sunshade_valance_colour='" + ddl100SunshadeValanceColour.SelectedValue + "', "
+                                            + "sunshade_fabric_colour='" + ddl100SunshadeFabricColour.SelectedValue + "', "
+                                            + "sunshade_openness='" + ddl100SunshadeOpenness.SelectedValue + "', "
+                                            + "roof_type='" + ddl100RoofType.SelectedValue + "', "
+                                            + "roof_interior_skin='" + ddl100RoofInteriorSkin.SelectedValue + "', "
+                                            + "roof_exterior_skin='" + ddl100RoofExteriorSkin.SelectedValue + "', "
+                                            + "roof_thickness='" + ddl100RoofThickness.SelectedValue + "', "
+                                            + "floor_thickness='" + ddl100FloorThickness.SelectedValue + "', "
+                                            + "floor_metal_barrier='" + isChecked + "', "
+                                            + "kneewall_height=" + txt100KneewallHeight.Text + ", "
+                                            + "kneewall_type='" + ddl100KneewallType.SelectedValue + "', "
+                                            + "kneewall_glass_tint='" + ddl100KneewallGlassTint.SelectedValue + "', "
+                                            + "transom_height=" + txt100TransomHeight.Text + ", "
+                                            + "transom_style='" + ddl100TransomType.SelectedValue + "', "
+                                            + "transom_glass_tint='" + ddl100TransomGlassTint.SelectedValue + "', "
+                                            + "transom_vinyl_tint='" + ddl100TransomVinylTint.SelectedValue + "', "
+                                            + "transom_screen_type='" + ddl100TransomScreenType.SelectedValue + "', "
+                                            + "markup=" + Convert.ToDecimal(txt100Markup.Text) / 100
+                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='100'";
+                    aCommand.ExecuteNonQuery();
+                    #endregion
+
+                    #region 200
+                    isChecked = 0;
+                    if (chk200FloorMetalBarrier.Checked == true)
+                    {
+                        isChecked = 1;
+                    }
+                    aCommand.CommandText = "UPDATE model_preferences SET "
+                                            + "default_filler=" + txt200DefaultFiller.Text + ", "
+                                            + "interior_panel_skin='" + ddl200InteriorPanelSkin.SelectedValue + "', "
+                                            + "exterior_panel_skin='" + ddl200ExteriorPanelSkin.SelectedValue + "', "
+                                            + "frame_colour='" + ddl200FrameColour.SelectedValue + "', "
+                                            + "door_type='" + ddl200DoorType.SelectedValue + "', "
+                                            + "door_style='" + ddl200DoorStyle.SelectedValue + "', "
+                                            + "door_swing='" + ddl200DoorSwing.SelectedValue + "', "
+                                            + "door_hinge='" + ddl200DoorHinge.SelectedValue + "', "
+                                            + "door_hardware='" + ddl200DoorHardware.SelectedValue + "', "
+                                            + "door_colour='" + ddl200DoorColour.SelectedValue + "', "
+                                            + "door_glass_tint='" + ddl200DoorGlassTint.SelectedValue + "', "
+                                            + "door_vinyl_tint='" + ddl200DoorVinylTint.SelectedValue + "', "
+                                            + "door_screen_type='" + ddl200DoorScreenType.SelectedValue + "', "
+                                            + "window_type='" + ddl200WindowType.SelectedValue + "', "
+                                            + "window_colour='" + ddl200WindowColour.SelectedValue + "', "
+                                            + "window_glass_tint='" + ddl200WindowGlassTint.SelectedValue + "', "
+                                            + "window_vinyl_tint='" + ddl200WindowVinylTint.SelectedValue + "', "
+                                            + "window_screen_type='" + ddl200WindowScreenType.SelectedValue + "', "
+                                            + "sunshade_valance_colour='" + ddl200SunshadeValanceColour.SelectedValue + "', "
+                                            + "sunshade_fabric_colour='" + ddl200SunshadeFabricColour.SelectedValue + "', "
+                                            + "sunshade_openness='" + ddl200SunshadeOpenness.SelectedValue + "', "
+                                            + "roof_type='" + ddl200RoofType.SelectedValue + "', "
+                                            + "roof_interior_skin='" + ddl200RoofInteriorSkin.SelectedValue + "', "
+                                            + "roof_exterior_skin='" + ddl200RoofExteriorSkin.SelectedValue + "', "
+                                            + "roof_thickness='" + ddl200RoofThickness.SelectedValue + "', "
+                                            + "floor_thickness='" + ddl200FloorThickness.SelectedValue + "', "
+                                            + "floor_metal_barrier='" + isChecked + "', "
+                                            + "kneewall_height=" + txt200KneewallHeight.Text + ", "
+                                            + "kneewall_type='" + ddl200KneewallType.SelectedValue + "', "
+                                            + "kneewall_glass_tint='" + ddl200KneewallGlassTint.SelectedValue + "', "
+                                            + "transom_height=" + txt200TransomHeight.Text + ", "
+                                            + "transom_style='" + ddl200TransomType.SelectedValue + "', "
+                                            + "transom_glass_tint='" + ddl200TransomGlassTint.SelectedValue + "', "
+                                            + "transom_vinyl_tint='" + ddl200TransomVinylTint.SelectedValue + "', "
+                                            + "transom_screen_type='" + ddl200TransomScreenType.SelectedValue + "', "
+                                            + "markup=" + Convert.ToDecimal(txt200Markup.Text) / 100
+                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='200'";
+                    aCommand.ExecuteNonQuery();
+                    #endregion
+
+                    #region 300
+                    isChecked = 0;
+                    if (chk300FloorMetalBarrier.Checked == true)
+                    {
+                        isChecked = 1;
+                    }
+                    aCommand.CommandText = "UPDATE model_preferences SET "
+                                            + "default_filler=" + txt300DefaultFiller.Text + ", "
+                                            + "interior_panel_skin='" + ddl300InteriorPanelSkin.SelectedValue + "', "
+                                            + "exterior_panel_skin='" + ddl300ExteriorPanelSkin.SelectedValue + "', "
+                                            + "frame_colour='" + ddl300FrameColour.SelectedValue + "', "
+                                            + "door_type='" + ddl300DoorType.SelectedValue + "', "
+                                            + "door_style='" + ddl300DoorStyle.SelectedValue + "', "
+                                            + "door_swing='" + ddl300DoorSwing.SelectedValue + "', "
+                                            + "door_hinge='" + ddl300DoorHinge.SelectedValue + "', "
+                                            + "door_hardware='" + ddl300DoorHardware.SelectedValue + "', "
+                                            + "door_colour='" + ddl300DoorColour.SelectedValue + "', "
+                                            + "door_glass_tint='" + ddl300DoorGlassTint.SelectedValue + "', "
+                                            + "door_vinyl_tint='" + ddl300DoorVinylTint.SelectedValue + "', "
+                                            + "door_screen_type='" + ddl300DoorScreenType.SelectedValue + "', "
+                                            + "window_type='" + ddl300WindowType.SelectedValue + "', "
+                                            + "window_colour='" + ddl300WindowColour.SelectedValue + "', "
+                                            + "window_glass_tint='" + ddl300WindowGlassTint.SelectedValue + "', "
+                                            + "window_vinyl_tint='" + ddl300WindowVinylTint.SelectedValue + "', "
+                                            + "window_screen_type='" + ddl300WindowScreenType.SelectedValue + "', "
+                                            + "sunshade_valance_colour='" + ddl300SunshadeValanceColour.SelectedValue + "', "
+                                            + "sunshade_fabric_colour='" + ddl300SunshadeFabricColour.SelectedValue + "', "
+                                            + "sunshade_openness='" + ddl300SunshadeOpenness.SelectedValue + "', "
+                                            + "roof_type='" + ddl300RoofType.SelectedValue + "', "
+                                            + "roof_interior_skin='" + ddl300RoofInteriorSkin.SelectedValue + "', "
+                                            + "roof_exterior_skin='" + ddl300RoofExteriorSkin.SelectedValue + "', "
+                                            + "roof_thickness='" + ddl300RoofThickness.SelectedValue + "', "
+                                            + "floor_thickness='" + ddl300FloorThickness.SelectedValue + "', "
+                                            + "floor_metal_barrier='" + isChecked + "', "
+                                            + "kneewall_height=" + txt300KneewallHeight.Text + ", "
+                                            + "kneewall_type='" + ddl300KneewallType.SelectedValue + "', "
+                                            + "kneewall_glass_tint='" + ddl300KneewallGlassTint.SelectedValue + "', "
+                                            + "transom_height=" + txt300TransomHeight.Text + ", "
+                                            + "transom_style='" + ddl300TransomType.SelectedValue + "', "
+                                            + "transom_glass_tint='" + ddl300TransomGlassTint.SelectedValue + "', "
+                                            + "transom_vinyl_tint='" + ddl300TransomVinylTint.SelectedValue + "', "
+                                            + "transom_screen_type='" + ddl300TransomScreenType.SelectedValue + "', "
+                                            + "markup=" + Convert.ToDecimal(txt300Markup.Text) / 100
+                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='300'";
+                    aCommand.ExecuteNonQuery();
+                    #endregion
+
+                    #region 400
+                    isChecked = 0;
+                    if (chk400FloorMetalBarrier.Checked == true)
+                    {
+                        isChecked = 1;
+                    }
+                    aCommand.CommandText = "UPDATE model_preferences SET "
+                                            + "default_filler=" + txt400DefaultFiller.Text + ", "
+                                            + "interior_panel_skin='" + ddl400InteriorPanelSkin.SelectedValue + "', "
+                                            + "exterior_panel_skin='" + ddl400ExteriorPanelSkin.SelectedValue + "', "
+                                            + "frame_colour='" + ddl400FrameColour.SelectedValue + "', "
+                                            + "door_type='" + ddl400DoorType.SelectedValue + "', "
+                                            + "door_style='" + ddl400DoorStyle.SelectedValue + "', "
+                                            + "door_swing='" + ddl400DoorSwing.SelectedValue + "', "
+                                            + "door_hinge='" + ddl400DoorHinge.SelectedValue + "', "
+                                            + "door_hardware='" + ddl400DoorHardware.SelectedValue + "', "
+                                            + "door_colour='" + ddl400DoorColour.SelectedValue + "', "
+                                            + "door_glass_tint='" + ddl400DoorGlassTint.SelectedValue + "', "
+                                            + "door_vinyl_tint='" + ddl400DoorVinylTint.SelectedValue + "', "
+                                            + "door_screen_type='" + ddl400DoorScreenType.SelectedValue + "', "
+                                            + "window_type='" + ddl400WindowType.SelectedValue + "', "
+                                            + "window_colour='" + ddl400WindowColour.SelectedValue + "', "
+                                            + "window_glass_tint='" + ddl400WindowGlassTint.SelectedValue + "', "
+                                            + "window_vinyl_tint='" + ddl400WindowVinylTint.SelectedValue + "', "
+                                            + "window_screen_type='" + ddl400WindowScreenType.SelectedValue + "', "
+                                            + "sunshade_valance_colour='" + ddl400SunshadeValanceColour.SelectedValue + "', "
+                                            + "sunshade_fabric_colour='" + ddl400SunshadeFabricColour.SelectedValue + "', "
+                                            + "sunshade_openness='" + ddl400SunshadeOpenness.SelectedValue + "', "
+                                            + "roof_type='" + ddl400RoofType.SelectedValue + "', "
+                                            + "roof_interior_skin='" + ddl400RoofInteriorSkin.SelectedValue + "', "
+                                            + "roof_exterior_skin='" + ddl400RoofExteriorSkin.SelectedValue + "', "
+                                            + "roof_thickness='" + ddl400RoofThickness.SelectedValue + "', "
+                                            + "floor_thickness='" + ddl400FloorThickness.SelectedValue + "', "
+                                            + "floor_metal_barrier='" + isChecked + "', "
+                                            + "kneewall_height=" + txt400KneewallHeight.Text + ", "
+                                            + "kneewall_type='" + ddl400KneewallType.SelectedValue + "', "
+                                            + "kneewall_glass_tint='" + ddl400KneewallGlassTint.SelectedValue + "', "
+                                            + "transom_height=" + txt400TransomHeight.Text + ", "
+                                            + "transom_style='" + ddl400TransomType.SelectedValue + "', "
+                                            + "transom_glass_tint='" + ddl400TransomGlassTint.SelectedValue + "', "
+                                            + "transom_vinyl_tint='" + ddl400TransomVinylTint.SelectedValue + "', "
+                                            + "transom_screen_type='" + ddl400TransomScreenType.SelectedValue + "', "
+                                            + "markup=" + Convert.ToDecimal(txt400Markup.Text) / 100
+                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='400'";
+                    aCommand.ExecuteNonQuery();
+                    #endregion
+
+                    aTransaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    lblError.Text = "Commit Exception Type: " + ex.GetType();
+                    lblError.Text += "  Message: " + ex.Message;
+
+                    // Attempt to roll back the transaction. 
+                    try
+                    {
+                        aTransaction.Rollback();
+                    }
+                    catch (Exception ex2)
+                    {
+                        // This catch block will handle any errors that may have occurred 
+                        // on the server that would cause the rollback to fail, such as 
+                        // a closed connection.
+                        lblError.Text = "Rollback Exception Type: " + ex2.GetType();
+                        lblError.Text += "  Message: " + ex2.Message;
+                    }
+                }
             }
-                //colours
-                //door
-                //window
-                //sunshade
-                //roof
-                //floor
-                //kneewall
-                //transom
-            //save all preferences
-            //additional comment here
         }
 
         protected void btnAddUsers_Click(object sender, EventArgs e)
