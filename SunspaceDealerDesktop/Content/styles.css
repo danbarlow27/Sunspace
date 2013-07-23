@@ -500,12 +500,15 @@ input[type="radio"]:checked + label:active {
     float: left;    
 }
 
-#paging-wrapper {
-    background: #f6f6f6;
-    padding: 10px 10px 0;
+#sidebar {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+#paging-wrapper {
+    background: #f6f6f6;
+    padding: 10px 10px 0;    
     overflow-y: auto;
 }
 
@@ -558,6 +561,26 @@ input[type="radio"]:checked + label:active {
 .toggleContent {
     padding: 10px 0 10px 35px;
     display: none;
+}
+
+
+
+/******************************************
+ * ERROR MESSAGE DISPLAY
+ ******************************************/
+
+.lblErrorMessage {
+    font-size: .9em;
+    font-style: italic;
+    line-height: 1em;
+    color: #fa0000;
+    width: 100%;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.lblErrorMessage:before {
+    content: "* ";
 }
 
 
