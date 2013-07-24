@@ -19,7 +19,7 @@ namespace SunspaceDealerDesktop
 
         //ListItems to be used in multiple dropdown lists for decimal points
         //This should eventually be stored in the constants file
-        protected ListItem lst0 = new ListItem("---", "", true); //0, i.e. no decimal value, selected by default
+        protected ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
         protected ListItem lst18 = new ListItem("1/8", ".125");
         protected ListItem lst14 = new ListItem("1/4", ".25");
         protected ListItem lst38 = new ListItem("3/8", ".375");
@@ -470,7 +470,6 @@ namespace SunspaceDealerDesktop
                 }
                 else if (currentModel == "M400")
                 {
-
                     doorStyleDDL.Items.Add(halfLite);
                     doorStyleDDL.Items.Add(halfLiteVenting);
                     doorStyleDDL.Items.Add(fullLite);
@@ -495,7 +494,7 @@ namespace SunspaceDealerDesktop
                 doorVinylTintLBL.Text = "V4T Vinyl Tint:";
 
                 DropDownList doorVinylTintDDL = new DropDownList();
-                doorVinylTintDDL.ID = "ddlVinylTint" + i + title;
+                doorVinylTintDDL.ID = "ddlDoorVinylTint" + i + title;
                 ListItem clearVinyl = new ListItem("Clear", "clear");
                 ListItem smokeGreyVinyl = new ListItem("Smoke Grey", "smokeGrey");
                 ListItem darkGreyVinyl = new ListItem("Dark Grey", "darkGrey");
@@ -507,7 +506,7 @@ namespace SunspaceDealerDesktop
                 doorVinylTintDDL.Items.Add(bronzeVinyl);
                 doorVinylTintDDL.Items.Add(mixedVinyl);
 
-                doorVinylTintLBL.AssociatedControlID = "ddlVinylTint" + i + title;
+                doorVinylTintLBL.AssociatedControlID = "ddlDoorVinylTint" + i + title;
 
                 #endregion
 
@@ -524,7 +523,7 @@ namespace SunspaceDealerDesktop
                 doorNumberOfVentsLBL.Text = "V4T Number Of Vents:";
 
                 DropDownList doorNumberOfVentsDDL = new DropDownList();
-                doorNumberOfVentsDDL.ID = "ddlNumberOfVents" + i + title;
+                doorNumberOfVentsDDL.ID = "ddlDoorNumberOfVents" + i + title;
                 ListItem two = new ListItem("2", "2");
                 ListItem three = new ListItem("3", "3");
                 ListItem four = new ListItem("4", "4");
@@ -532,7 +531,7 @@ namespace SunspaceDealerDesktop
                 doorNumberOfVentsDDL.Items.Add(three);
                 doorNumberOfVentsDDL.Items.Add(four);
 
-                doorNumberOfVentsLBL.AssociatedControlID = "ddlNumberOfVents" + i + title;
+                doorNumberOfVentsLBL.AssociatedControlID = "ddlDoorNumberOfVents" + i + title;
 
                 #endregion
 
@@ -567,51 +566,55 @@ namespace SunspaceDealerDesktop
 
                 #endregion
 
-                #region Table:# Row Door Transom Vinyl Types (tblDoorDetails)
+                #region Table:# Row Door Transom Vinyl (tblDoorDetails)
 
-                TableRow doorTransomVinylTypesRow = new TableRow();
-                doorTransomVinylTypesRow.ID = "rowDoorTransomVinylTypes" + i + title;
-                doorTransomVinylTypesRow.Attributes.Add("style", "display:none;");
+                TableRow doorTransomVinylRow = new TableRow();
+                doorTransomVinylRow.ID = "rowDoorTransomVinyl" + i + title;
+                doorTransomVinylRow.Attributes.Add("style", "display:none;");
                 TableCell doorTransomVinylTypesLBLCell = new TableCell();
                 TableCell doorTransomVinylTypesDDLCell = new TableCell();
 
-                Label doorTransomVinylTypesLBL = new Label();
-                doorTransomVinylTypesLBL.ID = "lblDoorTransomVinylTypes" + i + title;
-                doorTransomVinylTypesLBL.Text = "Transom Vinyl Types:";
+                Label doorTransomVinylLBL = new Label();
+                doorTransomVinylLBL.ID = "lblDoorTransomVinyl" + i + title;
+                doorTransomVinylLBL.Text = "Transom Vinyl Types:";
 
-                DropDownList doorTransomVinylTypesDDL = new DropDownList();
-                doorTransomVinylTypesDDL.ID = "ddlDoorTransomVinylTypes" + i + title;
+                DropDownList doorTransomVinylDDL = new DropDownList();
+                doorTransomVinylDDL.ID = "ddlDoorTransomVinyl" + i + title;
                 ListItem transomClearVinyl = new ListItem("Clear", "clear");
                 ListItem transomSmokeGreyVinyl = new ListItem("Smoke Grey", "smokeGrey");
                 ListItem transomDarkGreyVinyl = new ListItem("Dark Grey", "darkGrey");
                 ListItem transomBronzeVinyl = new ListItem("Bronze", "bronze");
                 ListItem transomMixedVinyl = new ListItem("Mixed", "mixed");
-                doorTransomVinylTypesDDL.Items.Add(transomClearVinyl);
-                doorTransomVinylTypesDDL.Items.Add(transomSmokeGreyVinyl);
-                doorTransomVinylTypesDDL.Items.Add(transomDarkGreyVinyl);
-                doorTransomVinylTypesDDL.Items.Add(transomBronzeVinyl);
-                doorTransomVinylTypesDDL.Items.Add(transomMixedVinyl);
+                doorTransomVinylDDL.Items.Add(transomClearVinyl);
+                doorTransomVinylDDL.Items.Add(transomSmokeGreyVinyl);
+                doorTransomVinylDDL.Items.Add(transomDarkGreyVinyl);
+                doorTransomVinylDDL.Items.Add(transomBronzeVinyl);
+                doorTransomVinylDDL.Items.Add(transomMixedVinyl);
+
+                doorTransomVinylLBL.AssociatedControlID = "ddlDoorTransomVinyl" + i + title;
 
                 #endregion
 
                 #region Table:# Row Door Transom Glass Types (tblDoorDetails)
 
-                TableRow doorTransomGlassTypesRow = new TableRow();
-                doorTransomGlassTypesRow.ID = "rowDoorTransomGlassTypes" + i + title;
-                doorTransomGlassTypesRow.Attributes.Add("style", "display:none;");
+                TableRow doorTransomGlassRow = new TableRow();
+                doorTransomGlassRow.ID = "rowDoorTransomGlass" + i + title;
+                doorTransomGlassRow.Attributes.Add("style", "display:none;");
                 TableCell doorTransomGlassTypesLBLCell = new TableCell();
                 TableCell doorTransomGlassTypesDDLCell = new TableCell();
 
-                Label doorTransomGlassTypesLBL = new Label();
-                doorTransomGlassTypesLBL.ID = "lblDoorTransomGlassTypes" + i + title;
-                doorTransomGlassTypesLBL.Text = "Transom Glass Types:";
+                Label doorTransomGlassLBL = new Label();
+                doorTransomGlassLBL.ID = "lblDoorTransomGlass" + i + title;
+                doorTransomGlassLBL.Text = "Transom Glass Types:";
 
-                DropDownList doorTransomGlassTypesDDL = new DropDownList();
-                doorTransomGlassTypesDDL.ID = "ddlDoorTransomGlassTypes" + i + title;
+                DropDownList doorTransomGlassDDL = new DropDownList();
+                doorTransomGlassDDL.ID = "ddlDoorTransomGlass" + i + title;
                 ListItem transomGrey = new ListItem("Grey", "grey");
                 ListItem transomBronze = new ListItem("Bronze", "bronze");
-                doorTransomGlassTypesDDL.Items.Add(transomGrey);
-                doorTransomGlassTypesDDL.Items.Add(transomBronze);
+                doorTransomGlassDDL.Items.Add(transomGrey);
+                doorTransomGlassDDL.Items.Add(transomBronze);
+
+                doorTransomGlassLBL.AssociatedControlID = "ddlDoorTransomGlass" + i + title;
 
                 #endregion
 
@@ -625,7 +628,7 @@ namespace SunspaceDealerDesktop
 
                 Label doorKickplateLBL = new Label();
                 doorKickplateLBL.ID = "lblDoorKickplate" + i + title;
-                doorKickplateLBL.Text = "Kickplate Type:";
+                doorKickplateLBL.Text = "Kickplate Height:";
 
                 DropDownList doorKickplateDDL = new DropDownList();
                 doorKickplateDDL.ID = "ddlDoorKickplate" + i + title;
@@ -687,12 +690,12 @@ namespace SunspaceDealerDesktop
                 doorCustomKickplateLBL.Text = "Custom Kickplate (inches):";
 
                 TextBox doorCustomKickplateTXT = new TextBox();
-                doorCustomKickplateTXT.ID = "txtDoorCustomKickplate" + i + title;
+                doorCustomKickplateTXT.ID = "txtDoorKickplateCustom" + i + title;
                 doorCustomKickplateTXT.CssClass = "txtField txtDoorInput";
                 doorCustomKickplateTXT.Attributes.Add("maxlength", "3");
 
                 DropDownList inchCustomKickplate = new DropDownList();
-                inchCustomKickplate.ID = "ddlInchCustomKickplate" + i + title;
+                inchCustomKickplate.ID = "ddlDoorKickplateCustom" + i + title;
                 inchCustomKickplate.Items.Add(lst0);
                 inchCustomKickplate.Items.Add(lst18);
                 inchCustomKickplate.Items.Add(lst14);
@@ -702,7 +705,7 @@ namespace SunspaceDealerDesktop
                 inchCustomKickplate.Items.Add(lst34);
                 inchCustomKickplate.Items.Add(lst78);
 
-                doorCustomKickplateLBL.AssociatedControlID = "txtDoorCustomKickplate" + i + title;
+                doorCustomKickplateLBL.AssociatedControlID = "txtDoorKickplateCustom" + i + title;
 
                 #endregion
 
@@ -761,11 +764,12 @@ namespace SunspaceDealerDesktop
                 doorInternalGrillsYesLBL.Text = "Yes";
 
                 RadioButton doorInternalGrillsYesRad = new RadioButton();
-                doorInternalGrillsYesRad.ID = "radDoorInternalGrillsYes" + i + title;
+                doorInternalGrillsYesRad.ID = "radDoorInternalGrills" + i + title;
+                doorInternalGrillsYesRad.Attributes.Add("value", "yes");
                 doorInternalGrillsYesRad.GroupName = "InternalGrills" + i + title;
 
-                doorInternalGrillsYesLBLRad.AssociatedControlID = "radDoorInternalGrillsYes" + i + title;
-                doorInternalGrillsYesLBL.AssociatedControlID = "radDoorInternalGrillsYes" + i + title;
+                doorInternalGrillsYesLBLRad.AssociatedControlID = "radDoorInternalGrills" + i + title;
+                doorInternalGrillsYesLBL.AssociatedControlID = "radDoorInternalGrills" + i + title;
 
                 #endregion
 
@@ -786,6 +790,7 @@ namespace SunspaceDealerDesktop
 
                 RadioButton doorInternalGrillsNoRad = new RadioButton();
                 doorInternalGrillsNoRad.ID = "radDoorInternalGrillsNo" + i + title;
+                doorInternalGrillsNoRad.Attributes.Add("value", "no");
                 doorInternalGrillsNoRad.GroupName = "InternalGrills" + i + title;
 
                 doorInternalGrillsNoLBLRad.AssociatedControlID = "radDoorInternalGrillsNo" + i + title;
@@ -831,12 +836,12 @@ namespace SunspaceDealerDesktop
                 doorCustomHeightLBL.Text = "Custom Height (inches):";
 
                 TextBox doorCustomHeightTXT = new TextBox();
-                doorCustomHeightTXT.ID = "txtDoorCustomHeight" + i + title;
+                doorCustomHeightTXT.ID = "txtDoorHeightCustom" + i + title;
                 doorCustomHeightTXT.CssClass = "txtField txtDoorInput";
                 doorCustomHeightTXT.Attributes.Add("maxlength", "3");
 
                 DropDownList inchCustomHeight = new DropDownList();
-                inchCustomHeight.ID = "ddlInchCustomHeight" + i + title;
+                inchCustomHeight.ID = "ddlDoorHeightCustom" + i + title;
                 inchCustomHeight.Items.Add(lst0);
                 inchCustomHeight.Items.Add(lst18);
                 inchCustomHeight.Items.Add(lst14);
@@ -846,7 +851,7 @@ namespace SunspaceDealerDesktop
                 inchCustomHeight.Items.Add(lst34);
                 inchCustomHeight.Items.Add(lst78);
 
-                doorCustomHeightLBL.AssociatedControlID = "txtDoorCustomHeight" + i + title;
+                doorCustomHeightLBL.AssociatedControlID = "txtDoorHeightCustom" + i + title;
 
                 #endregion
 
@@ -918,12 +923,12 @@ namespace SunspaceDealerDesktop
                 doorCustomWidthLBL.Text = "Custom Width (inches):";
 
                 TextBox doorCustomWidthTXT = new TextBox();
-                doorCustomWidthTXT.ID = "txtDoorCustomWidth" + i + title;
+                doorCustomWidthTXT.ID = "txtDoorWidthCustom" + i + title;
                 doorCustomWidthTXT.CssClass = "txtField txtDoorInput";
                 doorCustomWidthTXT.Attributes.Add("maxlength", "3");
 
                 DropDownList inchCustomWidth = new DropDownList();
-                inchCustomWidth.ID = "ddlInchCustomWidth" + i + title;
+                inchCustomWidth.ID = "ddlDoorWidthCustom" + i + title;
                 inchCustomWidth.Items.Add(lst0);
                 inchCustomWidth.Items.Add(lst18);
                 inchCustomWidth.Items.Add(lst14);
@@ -933,7 +938,7 @@ namespace SunspaceDealerDesktop
                 inchCustomWidth.Items.Add(lst34);
                 inchCustomWidth.Items.Add(lst78);
 
-                doorCustomWidthLBL.AssociatedControlID = "txtDoorCustomWidth" + i + title;
+                doorCustomWidthLBL.AssociatedControlID = "txtDoorWidthCustom" + i + title;
 
                 #endregion
 
@@ -957,11 +962,12 @@ namespace SunspaceDealerDesktop
                 doorOperatorLHHLBL.Text = "LHH";
 
                 RadioButton doorOperatorLHHRad = new RadioButton();
-                doorOperatorLHHRad.ID = "radDoorOperatorLHH" + i + title;
+                doorOperatorLHHRad.ID = "radDoorOperator" + i + title;
+                doorOperatorLHHRad.Attributes.Add("value", "lhh");
                 doorOperatorLHHRad.GroupName = "PrimaryOperator" + i + title;
 
-                doorOperatorLHHLBLRad.AssociatedControlID = "radDoorOperatorLHH" + i + title;
-                doorOperatorLHHLBL.AssociatedControlID = "radDoorOperatorLHH" + i + title;
+                doorOperatorLHHLBLRad.AssociatedControlID = "radDoorOperator" + i + title;
+                doorOperatorLHHLBL.AssociatedControlID = "radDoorOperator" + i + title;
 
                 #endregion
 
@@ -982,6 +988,7 @@ namespace SunspaceDealerDesktop
 
                 RadioButton doorOperatorRHHRad = new RadioButton();
                 doorOperatorRHHRad.ID = "radDoorOperatorRHH" + i + title;
+                doorOperatorRHHRad.Attributes.Add("value", "rhh");
                 doorOperatorRHHRad.GroupName = "PrimaryOperator" + i + title;
 
                 doorOperatorRHHLBLRad.AssociatedControlID = "radDoorOperatorRHH" + i + title;
@@ -1043,53 +1050,55 @@ namespace SunspaceDealerDesktop
 
                 #region Table:Tenth Row Door Hinge LHH (tblDoorDetails)
 
-                TableRow doorLHHRow = new TableRow();
-                doorLHHRow.ID = "rowDoorLHH" + i + title;
-                doorLHHRow.Attributes.Add("style", "display:none;");
-                TableCell doorLHHLBLCell = new TableCell();
-                TableCell doorLHHRADCell = new TableCell();
+                TableRow doorHingeLHHRow = new TableRow();
+                doorHingeLHHRow.ID = "rowDoorHingeLHH" + i + title;
+                doorHingeLHHRow.Attributes.Add("style", "display:none;");
+                TableCell doorHingeLHHLBLCell = new TableCell();
+                TableCell doorHingeLHHRADCell = new TableCell();
 
-                Label doorLHHLBLMain = new Label();
-                doorLHHLBLMain.ID = "lblDoorLHHMain" + i + title;
-                doorLHHLBLMain.Text = "Hinge placement:";
+                Label doorHingeLHHLBLMain = new Label();
+                doorHingeLHHLBLMain.ID = "lblDoorHingeLHHMain" + i + title;
+                doorHingeLHHLBLMain.Text = "Hinge placement:";
 
-                Label doorLHHLBLRad = new Label();
-                doorLHHLBLRad.ID = "lblLHHRad" + i + title;
+                Label doorHingeLHHLBLRad = new Label();
+                doorHingeLHHLBLRad.ID = "lblHingeLHHRad" + i + title;
 
-                Label doorLHHLBL = new Label();
-                doorLHHLBL.ID = "lblLHH" + i + title;
-                doorLHHLBL.Text = "LHH";
+                Label doorHingeLHHLBL = new Label();
+                doorHingeLHHLBL.ID = "lblHingeLHH" + i + title;
+                doorHingeLHHLBL.Text = "LHH";
 
-                RadioButton doorLHHRad = new RadioButton();
-                doorLHHRad.ID = "radDoorLHH" + i + title;
-                doorLHHRad.GroupName = "DoorHinge" + i + title;
+                RadioButton doorHingeLHHRad = new RadioButton();
+                doorHingeLHHRad.ID = "radDoorHinge" + i + title;
+                doorHingeLHHRad.Attributes.Add("value", "lhh");
+                doorHingeLHHRad.GroupName = "DoorHinge" + i + title;
 
-                doorLHHLBLRad.AssociatedControlID = "radDoorLHH" + i + title;
-                doorLHHLBL.AssociatedControlID = "radDoorLHH" + i + title;
+                doorHingeLHHLBLRad.AssociatedControlID = "radDoorHinge" + i + title;
+                doorHingeLHHLBL.AssociatedControlID = "radDoorHinge" + i + title;
 
                 #endregion
 
                 #region Table:Eleventh Row Door Hinge RHH (tblDoorDetails)
 
-                TableRow doorRHHRow = new TableRow();
-                doorRHHRow.ID = "rowDoorRHH" + i + title;
-                doorRHHRow.Attributes.Add("style", "display:none;");
-                TableCell doorRHHLBLCell = new TableCell();
-                TableCell doorRHHRADCell = new TableCell();
+                TableRow doorHingeRHHRow = new TableRow();
+                doorHingeRHHRow.ID = "rowDoorHingeRHH" + i + title;
+                doorHingeRHHRow.Attributes.Add("style", "display:none;");
+                TableCell doorHingeRHHLBLCell = new TableCell();
+                TableCell doorHingeRHHRADCell = new TableCell();
 
-                Label doorRHHLBLRad = new Label();
-                doorRHHLBLRad.ID = "lblDoorRHHRad" + i + title;
+                Label doorHingeRHHLBLRad = new Label();
+                doorHingeRHHLBLRad.ID = "lblDoorHingeRHHRad" + i + title;
 
-                Label doorRHHLBL = new Label();
-                doorRHHLBL.ID = "lblDoorRHH" + i + title;
-                doorRHHLBL.Text = "RHH";
+                Label doorHingeRHHLBL = new Label();
+                doorHingeRHHLBL.ID = "lblDoorHingeRHH" + i + title;
+                doorHingeRHHLBL.Text = "RHH";
 
-                RadioButton doorRHHRad = new RadioButton();
-                doorRHHRad.ID = "radDoorRHH" + i + title;
-                doorRHHRad.GroupName = "DoorHinge" + i + title;
+                RadioButton doorHingeRHHRad = new RadioButton();
+                doorHingeRHHRad.ID = "radDoorHingeRHH" + i + title;
+                doorHingeRHHRad.Attributes.Add("value", "rhh");
+                doorHingeRHHRad.GroupName = "DoorHinge" + i + title;
 
-                doorRHHLBLRad.AssociatedControlID = "radDoorRHH" + i + title;
-                doorRHHLBL.AssociatedControlID = "radDoorRHH" + i + title;
+                doorHingeRHHLBLRad.AssociatedControlID = "radDoorHingeRHH" + i + title;
+                doorHingeRHHLBL.AssociatedControlID = "radDoorHingeRHH" + i + title;
 
                 #endregion
 
@@ -1167,11 +1176,12 @@ namespace SunspaceDealerDesktop
                 doorSwingInLBL.Text = "In";
 
                 RadioButton doorSwingInRAD = new RadioButton();
-                doorSwingInRAD.ID = "radDoorSwingIn" + i + title;
+                doorSwingInRAD.ID = "radDoorSwing" + i + title;
+                doorSwingInRAD.Attributes.Add("value", "in");
                 doorSwingInRAD.GroupName = "SwingInOut" + i + title;
 
-                doorSwingInLBLRad.AssociatedControlID = "radDoorSwingIn" + i + title;
-                doorSwingInLBL.AssociatedControlID = "radDoorSwingIn" + i + title;
+                doorSwingInLBLRad.AssociatedControlID = "radDoorSwing" + i + title;
+                doorSwingInLBL.AssociatedControlID = "radDoorSwing" + i + title;
 
                 #endregion
 
@@ -1192,6 +1202,7 @@ namespace SunspaceDealerDesktop
 
                 RadioButton doorSwingOutRAD = new RadioButton();
                 doorSwingOutRAD.ID = "radDoorSwingOut" + i + title;
+                doorSwingOutRAD.Attributes.Add("value", "out");
                 doorSwingOutRAD.GroupName = "SwingInOut" + i + title;
 
                 doorSwingOutLBLRad.AssociatedControlID = "radDoorSwingOut" + i + title;
@@ -1227,7 +1238,7 @@ namespace SunspaceDealerDesktop
 
                 #endregion
 
-                #region Table:# Row Door Position (tblDoorDetails)
+                #region Table:# Row Door Position Custom (tblDoorDetails)
 
                 TableRow doorPositionRow = new TableRow();
                 doorPositionRow.ID = "rowDoorCustomPosition" + i + title;
@@ -1241,12 +1252,12 @@ namespace SunspaceDealerDesktop
                 doorPositionLBL.Text = "Door position from left side (inches):";
 
                 TextBox doorPositionTXT = new TextBox();
-                doorPositionTXT.ID = "txtDoorCustomPosition" + i + title;
+                doorPositionTXT.ID = "txtDoorPositionCustom" + i + title;
                 doorPositionTXT.CssClass = "txtField txtDoorInput";
                 doorPositionTXT.Attributes.Add("maxlength", "3");
 
                 DropDownList inchSpecificLeft = new DropDownList();
-                inchSpecificLeft.ID = "ddlInchSpecificLeft" + i + title;
+                inchSpecificLeft.ID = "ddlDoorPositionCustom" + i + title;
                 inchSpecificLeft.Items.Add(lst0);
                 inchSpecificLeft.Items.Add(lst18);
                 inchSpecificLeft.Items.Add(lst14);
@@ -1256,7 +1267,7 @@ namespace SunspaceDealerDesktop
                 inchSpecificLeft.Items.Add(lst34);
                 inchSpecificLeft.Items.Add(lst78);
 
-                doorPositionLBL.AssociatedControlID = "txtDoorCustomPosition" + i + title;
+                doorPositionLBL.AssociatedControlID = "txtDoorPositionCustom" + i + title;
 
                 #endregion
 
@@ -1333,25 +1344,25 @@ namespace SunspaceDealerDesktop
 
                 #region Table:# Row Door Transom Vinyl Types Added To Table (tblDoorDetails)
 
-                doorTransomVinylTypesLBLCell.Controls.Add(doorTransomVinylTypesLBL);
-                doorTransomVinylTypesDDLCell.Controls.Add(doorTransomVinylTypesDDL);
+                doorTransomVinylTypesLBLCell.Controls.Add(doorTransomVinylLBL);
+                doorTransomVinylTypesDDLCell.Controls.Add(doorTransomVinylDDL);
 
-                tblDoorDetails.Rows.Add(doorTransomVinylTypesRow);
+                tblDoorDetails.Rows.Add(doorTransomVinylRow);
 
-                doorTransomVinylTypesRow.Cells.Add(doorTransomVinylTypesLBLCell);
-                doorTransomVinylTypesRow.Cells.Add(doorTransomVinylTypesDDLCell);
+                doorTransomVinylRow.Cells.Add(doorTransomVinylTypesLBLCell);
+                doorTransomVinylRow.Cells.Add(doorTransomVinylTypesDDLCell);
 
                 #endregion
 
                 #region Table:# Row Door Transom Glass Types Added To Table (tblDoorDetails)
 
-                doorTransomGlassTypesLBLCell.Controls.Add(doorTransomGlassTypesLBL);
-                doorTransomGlassTypesDDLCell.Controls.Add(doorTransomGlassTypesDDL);
+                doorTransomGlassTypesLBLCell.Controls.Add(doorTransomGlassLBL);
+                doorTransomGlassTypesDDLCell.Controls.Add(doorTransomGlassDDL);
 
-                tblDoorDetails.Rows.Add(doorTransomGlassTypesRow);
+                tblDoorDetails.Rows.Add(doorTransomGlassRow);
 
-                doorTransomGlassTypesRow.Cells.Add(doorTransomGlassTypesLBLCell);
-                doorTransomGlassTypesRow.Cells.Add(doorTransomGlassTypesDDLCell);
+                doorTransomGlassRow.Cells.Add(doorTransomGlassTypesLBLCell);
+                doorTransomGlassRow.Cells.Add(doorTransomGlassTypesDDLCell);
 
                 #endregion
 
@@ -1527,29 +1538,29 @@ namespace SunspaceDealerDesktop
 
                 #region Table:Tenth Row Door Hinge LHH Added To Table (tblDoorDetails)
 
-                doorLHHLBLCell.Controls.Add(doorLHHLBLMain);
+                doorHingeLHHLBLCell.Controls.Add(doorHingeLHHLBLMain);
 
-                doorLHHRADCell.Controls.Add(doorLHHRad);
-                doorLHHRADCell.Controls.Add(doorLHHLBLRad);
-                doorLHHRADCell.Controls.Add(doorLHHLBL);
+                doorHingeLHHRADCell.Controls.Add(doorHingeLHHRad);
+                doorHingeLHHRADCell.Controls.Add(doorHingeLHHLBLRad);
+                doorHingeLHHRADCell.Controls.Add(doorHingeLHHLBL);
 
-                tblDoorDetails.Rows.Add(doorLHHRow);
+                tblDoorDetails.Rows.Add(doorHingeLHHRow);
 
-                doorLHHRow.Cells.Add(doorLHHLBLCell);
-                doorLHHRow.Cells.Add(doorLHHRADCell);
+                doorHingeLHHRow.Cells.Add(doorHingeLHHLBLCell);
+                doorHingeLHHRow.Cells.Add(doorHingeLHHRADCell);
 
                 #endregion
 
                 #region Table:Eleventh Row Door Hinge RHH Added To Table (tblDoorDetails)
 
-                doorRHHRADCell.Controls.Add(doorRHHRad);
-                doorRHHRADCell.Controls.Add(doorRHHLBLRad);
-                doorRHHRADCell.Controls.Add(doorRHHLBL);
+                doorHingeRHHRADCell.Controls.Add(doorHingeRHHRad);
+                doorHingeRHHRADCell.Controls.Add(doorHingeRHHLBLRad);
+                doorHingeRHHRADCell.Controls.Add(doorHingeRHHLBL);
 
-                tblDoorDetails.Rows.Add(doorRHHRow);
+                tblDoorDetails.Rows.Add(doorHingeRHHRow);
 
-                doorRHHRow.Cells.Add(doorRHHLBLCell);
-                doorRHHRow.Cells.Add(doorRHHRADCell);
+                doorHingeRHHRow.Cells.Add(doorHingeRHHLBLCell);
+                doorHingeRHHRow.Cells.Add(doorHingeRHHRADCell);
 
                 #endregion
 

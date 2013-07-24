@@ -65,7 +65,7 @@
                 proposedWallCount++
         }
 
-        var wallDoors = new Array(); //array to store the walls and their respective door objects
+        var walls = []; //array to store the walls
 
         var DOOR_MAX_WIDTH = '<%= DOOR_MAX_WIDTH %>';
         var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
@@ -77,7 +77,8 @@
         var model = '<%= currentModel %>';        
         
         $(document).ready(function () {
-            $("#MainContent_btnQuestion3").click(submitDoorData);
+            //$('#MainContent_btnQuestion3').click(submitDoorData);
+            $('#MainContent_btnQuestion1').click(loadWallData);
         });
 
         /**
@@ -662,8 +663,8 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
             var doorOperatorRHH = document.getElementById("MainContent_rowDoorOperatorRHH" + wallNumber + type);
             var doorBoxHeader = document.getElementById("MainContent_rowDoorBoxHeader" + wallNumber + type);
             var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + wallNumber + type);
-            var doorLHH = document.getElementById("MainContent_rowDoorLHH" + wallNumber + type);
-            var doorRHH = document.getElementById("MainContent_rowDoorRHH" + wallNumber + type);
+            var doorHingeLHH = document.getElementById("MainContent_rowDoorHingeLHH" + wallNumber + type);
+            var doorHingeRHH = document.getElementById("MainContent_rowDoorHingeRHH" + wallNumber + type);
             var doorScreenOptions = document.getElementById("MainContent_rowDoorScreenOptions" + wallNumber + type);            
             var doorHardware = document.getElementById("MainContent_rowDoorHardware" + wallNumber + type);
             var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + wallNumber + type);
@@ -675,11 +676,11 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
             /****START:RADIO BUTTONS TO BE CHECKED INITIALLY****/
             var doorInternalGrillYesChecked = document.getElementById("MainContent_radDoorInternalGrillsYes" + wallNumber + type);
             var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallNumber + type).options[document.getElementById("MainContent_ddlDoorPosition" + wallNumber + type).selectedIndex].value;
-            var doorLHHChecked = document.getElementById("MainContent_radDoorLHH" + wallNumber + type);
-            var doorSwingInChecked = document.getElementById("MainContent_radDoorSwingIn" + wallNumber + type);
+            var doorHingeLHHChecked = document.getElementById("MainContent_radDoorHinge" + wallNumber + type);
+            var doorSwingInChecked = document.getElementById("MainContent_radDoorSwing" + wallNumber + type);
 
             //FRENCH/PATIO DOOR ONLY
-            var doorOperatorLHHChecked = document.getElementById("MainContent_radDoorOperatorLHH" + wallNumber + type);
+            var doorOperatorLHHChecked = document.getElementById("MainContent_radDoorOperator" + wallNumber + type);
             /****END:RADIO BUTTONS TO BE CHECKED INITIALLY****/
 
             //If type is Cabana, display the appropriate fields
@@ -697,8 +698,8 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
 
                 //Cabana Specific                            
                 doorGlassTint.style.display = "inherit";
-                doorLHH.style.display = "inherit";
-                doorRHH.style.display = "inherit";
+                doorHingeLHH.style.display = "inherit";
+                doorHingeRHH.style.display = "inherit";
                 doorSwingIn.style.display = "inherit";
                 doorSwingOut.style.display = "inherit";
                 doorHardware.style.display = "inherit";
@@ -716,7 +717,7 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                 }
 
                 //Radio button defaults
-                doorLHHChecked.setAttribute("checked", "checked");
+                doorHingeLHHChecked.setAttribute("checked", "checked");
                 doorSwingInChecked.setAttribute("checked", "checked");
 
                 doorStyle(type, wallNumber);
@@ -863,16 +864,16 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
             var transomType = document.getElementById('MainContent_ddlDoorTransom' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorTransom' + wallNumber + type).selectedIndex].value;
 
             if (transomType == 'vinyl') {
-                document.getElementById('MainContent_rowDoorTransomVinylTypes' + wallNumber + type).style.display = 'inherit';
-                document.getElementById('MainContent_rowDoorTransomGlassTypes' + wallNumber + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorTransomVinyl' + wallNumber + type).style.display = 'inherit';
+                document.getElementById('MainContent_rowDoorTransomGlass' + wallNumber + type).style.display = 'none';
             }
             else if (transomType == 'glass') {
-                document.getElementById('MainContent_rowDoorTransomVinylTypes' + wallNumber + type).style.display = 'none';
-                document.getElementById('MainContent_rowDoorTransomGlassTypes' + wallNumber + type).style.display = 'inherit';
+                document.getElementById('MainContent_rowDoorTransomVinyl' + wallNumber + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorTransomGlass' + wallNumber + type).style.display = 'inherit';
             }
             else {
-                document.getElementById('MainContent_rowDoorTransomVinylTypes' + wallNumber + type).style.display = 'none';
-                document.getElementById('MainContent_rowDoorTransomGlassTypes' + wallNumber + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorTransomVinyl' + wallNumber + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorTransomGlass' + wallNumber + type).style.display = 'none';
             }
         }
 
@@ -899,40 +900,34 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
         *This function calculates a doors actual dimension based on model number, dimension, custom dimension, and
         *the current wall selected. This is needed because there is frame added to doors anywhere from 1.125 
         *to 3.625 depending on the type of door and the sunroom model.
-        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
         *@param dimension - gets the dimension currently being called (i.e. Width, Height)
-        *@param custom - this argument is used to determine if a custom dimension is being entered and which controls to use
-        *@param wallNumber - holds an integer to know which wall is currently being affected
         */
-        function calculateActualDoorDimension(type, dimension, custom, wallNumber) {
-
-            var newDimension;
-
-            var controlToUse;
-
-            if (custom === true) {
-                controlToUse = parseFloat(document.getElementById('MainContent_txtDoorCustom' + dimension + wallNumber + type).value)
-                    + parseFloat(document.getElementById('MainContent_ddlInchCustom' + dimension + wallNumber + type).options[document.getElementById('MainContent_ddlInchCustom' + dimension + wallNumber + type).selectedIndex].value);
-            }
-            else {
-
-                controlToUse = parseFloat(document.getElementById('MainContent_ddlDoor' + dimension + wallNumber + type).options[document.getElementById('MainContent_ddlDoor' + dimension + wallNumber + type).selectedIndex].value);
-            }
+        function calculateActualDoorDimension(width, height, type) {
 
             if (type === 'Cabana') {
-                newDimension = (model === 400) ? controlToUse + 3.625 : controlToUse + 2.125;
+                return {
+                    width: (model === 400) ? width + 3.625 : width + 2.125,
+                    height: (model === 400) ? height + 2.125 : height + 0.875
+                };
             }
             else if (type === 'French') {
-                newDimension = (model === 400) ? ((controlToUse + 3.625) - 1.625) * 2 + 2 : ((controlToUse + 2.125) - 1.625) * 2 + 2;
+                return {
+                    width: (model === 400) ? ((width + 3.625) - 1.625) + 2 : ((width + 2.125) - 1.625) + 2,
+                    height: (model === 400) ? height + 2.125 : height + 0.875
+                };
             }
             else if (type == 'Patio') {
-                newDimension = (model === 400) ? controlToUse + 1.165 : controlToUse + 1.125;
+                return {
+                    width: (model === 400) ? width + 3.625 : width + 2.125,
+                    height: (model === 400) ? height + 1.625 : height + 1.125
+                };
             }
             else {
-                newDimension = controlToUse;
+                return {
+                    width: width,
+                    height: height
+                };
             }   
-
-            return newDimension;
         }
             
         /**
@@ -943,124 +938,228 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
         */
         function addDoor(wallNumber, type) {
                         
-            /****PAGER VARIABLES****/
-            var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wallNumber);
-            var pagerTextAnswer = document.getElementById("wall" + wallNumber + "DoorsAdded");
-            var pagerTextDoor = document.getElementById("MainContent_lblQuestion3DoorsInfoWall" + wallNumber);
-            var proposedWall = document.getElementById("MainContent_lblTextArea" + wallNumber);
+
+            var positionDropDown = document.getElementById("MainContent_ddlDoorPosition" + wallNumber + type).value;
                         
             /****LOGICAL AND FUNCTIONALITY VARIABLES****/                    
             var isValid = true;
             var spacesRemaining = null;
             var doorMods = new Array();
 
-            /****CALCULATION VARIABLES****/
-            var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'Length').value);                            
-            var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'LeftFiller').value);
-            var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'RightFiller').value);
-            var usableSpace = wallLength - leftFiller - rightFiller;
-            var doorCustomPosition = parseFloat(document.getElementById('MainContent_txtDoorCustomPosition' + wallNumber + type).value
-                + document.getElementById('MainContent_ddlInchSpecificLeft' + wallNumber + type).options[document.getElementById('MainContent_ddlInchSpecificLeft' + wallNumber + type).selectedIndex].value);
-            var positionDropDown = document.getElementById('MainContent_ddlDoorPosition' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorPosition' + wallNumber + type).selectedIndex].value;
-            var widthDropDown = document.getElementById('MainContent_ddlDoorWidth' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallNumber + type).selectedIndex].value;
-            var heightDropDown = document.getElementById('MainContent_ddlDoorHeight' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorHeight' + wallNumber + type).selectedIndex].value;
+            var door = createDoorObject(wallNumber, type);
 
-            /****START:VARIABLES USED TO STORE DOOR INFO****/
-            var doorWidth;
-            var doorHeight;
-            /****END:VARIABLES USED TO STORE DOOR INFO****/
-
-            /*Set the variable to the appropriate value to be used for calculations*/
-            if (widthDropDown === "cWidth") {                            
-                doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', true, wallNumber));
-            }
-            else {
-                doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false, wallNumber));                            
+            if (!validateDoor(door, walls[wallNumber])) {
+                return;
             }
 
-            /*Set the variable to the appropriate value to be used for calculations*/
-            if (widthDropDown === "cHeight") {
-                doorHeight = parseFloat(calculateActualDoorDimension(type, 'Height', true, wallNumber));
+            //walls[wallNumber].doors[doors.length] = door;
+
+            //Update doorMods by sorting most recent addition into previous array
+            insertDoor(door, walls[wallNumber]);
+
+            
+
+            //Display appropriate message and controls within the pager
+            updateDoorPager(walls[wallNumber]);
+
+        }
+
+        //Framed Door holds all common information for doors
+        function FramedDoor() { 
+            this.type = null;           //Cabana, French, Patio, Open Space (No Door)
+            this.style = null;          //Full Screen, Vertical Four Track, Full View, Full View Colonial, Half Lite, Half Lite Venting, Full Lite, Half Lite With Mini Blinds, Full View With Mini Blinds
+            this.screenOptions = null;  //Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screen, Tuff Screen, No Screen
+            this.fheight = null;        //Inches: 80, Custom
+            this.fwidth = null;         //Inches: 30, 32, 34, 36, Custom
+            this.color = null;          //White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey
+            this.position = null;       //Left, Center, Right, Custom
+            this.boxHeader = null;      //Left, Right, Both, None
+            this.transom = null;        //Vinyl, Glass, Solid
+            this.transomVinyl = null;   //Vinyl Tints:Clear, Smoke Grey, Dark Grey, Bronze, Mixed 
+            this.transomGlass = null;   //Glass Tints: Grey, Bronze
+        }
+
+        //Constructor to hold cabana door specific information
+        function CabanaDoor() {
+            this.type = "Cabana";
+            this.height = null;
+            this.width = null;
+            this.vinylTint = null;
+            this.glassTint = null;
+            this.hinge = null;
+            this.swing = null;
+            this.hardware = null;
+            this.numberOfVents = null;
+            this.kickplate = null;
+        }
+
+        //Used to include general door information to CabanaDoor instances
+        CabanaDoor.prototype = new FramedDoor();
+
+        //Constructor to hold french door specific information
+        function FrenchDoor() {
+            this.type = "French";
+            this.height = null;
+            this.width = null;
+            this.vinylTint = null;
+            this.glassTint = null;
+            this.swing = null;
+            this.operator = null;
+            this.hardware = null;
+            this.numberOfVents = null;
+            this.kickplate = null;
+        }
+
+        //Used to include general door information to FrenchDoor instances
+        FrenchDoor.prototype = new FramedDoor();
+
+        //Constructor to hold patio door specific information
+        function PatioDoor() {
+            this.type = "Patio";
+            this.height = null;
+            this.width = null;
+            this.glassTint = null;
+            this.movingDoor = null;
+        }
+
+        //Used to include general door information to PatioDoor instances
+        PatioDoor.prototype = new FramedDoor();
+
+        //Constructor to hold open space specific information
+        function OpenSpaceDoor() {
+            this.type = "NoDoor";
+            this.height = null;
+            this.width = null;
+        }
+
+        //Used to include general door information to OpenSpaceDoor instances
+        OpenSpaceDoor.prototype = new FramedDoor();
+
+        /**
+        *createDoorObject
+        *This function creates a door object by loading values from fields within the table
+        *on the page
+        *@param wallNumber - used to hold the current wall number
+        *@param type - used to hold the type of door being made
+        *@return framedDoor - returns an object containing all information for the specific door (i.e. height, width, style, type, etc.)
+        */
+        function createDoorObject(wallNumber, type) {            
+            
+            var framedDoor;
+
+            switch(type){
+                case "Cabana":
+                    framedDoor = new CabanaDoor();
+                    break;
+                case "French":
+                    framedDoor = new FrenchDoor();
+                    break;
+                case "Patio":
+                    framedDoor = new PatioDoor();
+                    break;
+                case "NoDoor":
+                    framedDoor = new OpenSpaceDoor();
+                    break;
+                default:
+                    return;
             }
-            else {
-                doorHeight = parseFloat(calculateActualDoorDimension(type, 'Height', false, wallNumber));
+
+            var controlsArray = [
+                "ddlDoorStyle",
+                "ddlDoorVinylTint",
+                "ddlDoorNumberOfVents",
+                "ddlDoorTransom",
+                "ddlDoorTransomVinyl",
+                "ddlDoorTransomGlass",
+                "ddlDoorKickplate",
+                "ddlDoorColor",
+                "radDoorInternalGrills",
+                "ddlDoorHeight",
+                "ddlDoorWidth",
+                "radDoorOperator",
+                "ddlDoorBoxHeader",
+                "ddlDoorGlassTint",
+                "radDoorHinge",
+                "ddlDoorScreenOptions",
+                "ddlDoorHardware",
+                "radDoorSwing",
+                "ddlDoorPosition",
+            ];
+
+            var customControls = [
+                "Kickplate",
+                "Height",
+                "Width",
+                "Position"
+            ];
+
+            //Loop to find all visible controls on the slide and get the appropriate controls value
+            for (var i = 0; i < controlsArray.length; i++) {
+                var styleDropDown = $("#MainContent_" + controlsArray[i] + wallNumber + type);
+
+                if (styleDropDown.closest('tr').filter(':visible').length == 1) {
+                    var value;
+                    if (styleDropDown.attr('type') == 'radio'){
+                        styleValue = styleDropDown.closest('table').find('input[name=\"' + styleDropDown.attr('name') + '\"]:checked').val();
+                    }
+                    else{
+                        value = styleDropDown.val();
+                    }
+
+                    var identifier = controlsArray[i][7].toLowerCase() + controlsArray[i].substr(8);
+
+                    if (identifier in framedDoor) {
+                        framedDoor[identifier] = value;                        
+                    }                    
+                }
             }
-                        
+
+            //Changes any custom values to the actual value entered
+            for (var k = 0; k < customControls.length; k++) {
+
+                var identifier = customControls[k][0].toLowerCase() + customControls[k].substr(1);
+
+                if (!(identifier in framedDoor))
+                    continue;
+
+                var value = framedDoor[identifier];
+
+                if (value == 'c' + customControls[k]) {
+                    var valueText = $('#MainContent_txtDoor' + customControls[k] + 'Custom' + wallNumber + type).val();
+                    var valueDropDown = $('#MainContent_ddlDoor' + customControls[k] + 'Custom' + wallNumber + type).val();
+
+                    framedDoor[identifier] = parseFloat(valueText) + parseFloat(valueDropDown);
+                }
+                else if (identifier != "position") {
+                    framedDoor[identifier] = parseFloat(framedDoor[identifier]);
+                }
+            }
+
+            var dimensions = calculateActualDoorDimension(framedDoor.width, framedDoor.height, type);
+
+            framedDoor.fheight = dimensions.height;
+            framedDoor.fwidth = dimensions.width;
 
             /*Insert the door with the appropriate variables based on drop down selected index*/
-            if (positionDropDown === "left") {
-                doorMods[doorMods.length] = {
-                    "index": doorMods.length + 1,
-                    "width": doorWidth,
-                    "distanceFromLeft": 0
-                };
+            if (framedDoor.position === "left") {
+                framedDoor.position = walls[wallNumber].leftFiller;
             }
-            else if (positionDropDown === "right") {
-                doorMods[doorMods.length] = {
-                    "index": doorMods.length + 1,
-                    "width": doorWidth,
-                    "distanceFromLeft": usableSpace - doorWidth
-                };
+            else if (framedDoor.position === "right") {
+                framedDoor.position = walls[wallNumber].length - framedDoor.fwidth - walls[wallNumber].rightFiller;
             }
-            else if (positionDropDown === "center") {
-                doorMods[doorMods.length] = {
-                    "index": doorMods.length + 1,
-                    "width": doorWidth,
-                    "distanceFromLeft": usableSpace / 2 - doorWidth / 2
-                };
+            else if (framedDoor.position === "center") {
+                framedDoor.position = walls[wallNumber].length / 2 - framedDoor.fwidth / 2;
             }
-            else if (positionDropDown === "cPosition") {
-                if (!isNaN(doorCustomPosition)) {
-                    //alert("Custom " + doorCustomPosition);
-                    doorMods[doorMods.length] = {
-                        "index": doorMods.length + 1,
-                        "width": doorWidth,
-                        "distanceFromLeft": doorCustomPosition
-                    };
-                }
-                else {
-                    isValid = false;
-                    alert("Please enter a valid number into the custom distance text box");
-                }
-            }                        
+            
+            for (var j = 0; j < customControls.length; j++) {
+                var identifier = customControls[j][0].toLowerCase() + customControls[j].substr(1);
 
-            //Validation of blank non-custom field passed
-            if (isValid) {
-
-                //Updates doorMods array from the appropriate index in walldoorMods array                
-                updateDoorModsArray(doorMods, wallNumber);
-
-                //Update doorMods by sorting most recent addition into previous array
-                doorMods = sortDoorModsLeftToRight(doorMods);
-
-                //Valid door was entered, perform various functions
-                if (checkQuestion3(doorMods, spacesRemaining, usableSpace)) {
-
-                    //Update spacesRemaining array
-                    spacesRemaining = availableSpacesArrayUpdate(usableSpace, doorMods);
-
-                    //Update total space left in the wall
-                    var space = totalSpaceLeftInWall(usableSpace, doorMods);
-
-                    //Block to add content to the pager
-                    $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
-                    document.getElementById("pagerThree").style.display = "inline";
-                    document.getElementById("wall" + wallNumber + "SpaceRemaining").style.display = "inline";
-                    pagerText.setAttribute("style", "display:block;");
-                    pagerTextAnswer.setAttribute("style", "display:block");
-                    pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerHTML).substr(14, 2) + " Doors";
-
-                    //Display appropriate message and controls within the pager
-                    updateDoorPager(doorMods, type, wallNumber);
-
-                    //Update drop downs based on selected value
-                    updateDoorDropDowns(positionDropDown, wallNumber, true);
-
-                    //Update walldoorMods array with most current addition
-                    updateWallsArray(wallNumber, usableSpace, doorMods, spacesRemaining)
-
-                }                      
+                framedDoor[identifier] = parseFloat(framedDoor[identifier]);
             }
+
+            console.log(framedDoor);
+
+            return framedDoor;            
         }
         
         /**
@@ -1070,192 +1169,144 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
         *@param wallNumber - holds an integer to know which wall is currently being affected
         *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
         */
-        function fillWallWithDoorMods(wallNumber, type) {    
-            
-            var isValid = true;
+        function fillWallWithDoorMods(wallNumber, type) {                            
 
-            for (var wallDoorModsCount = 0; wallDoorModsCount < wallDoors.length; wallDoorModsCount++) {
+            var door = createDoorObject(wallNumber, type);
 
-                if (wallDoors[wallDoorModsCount].wallId == wallNumber) {
-
-                    if (wallDoors[wallDoorModsCount].doorsSorted.length > 0) {
-                        isValid = false;
-                        alert("To fill the wall no doorMods can exist, please delete all existing doorMods");
-                    }
-                }
+            if (type == "NoDoor") {
+                door.position = walls[wallNumber].leftFiller;
+                var frameSize = door.fwidth - door.width;
+                door.fwidth = walls[wallNumber].length - walls[wallNumber].leftFiller - walls[wallNumber].rightFiller;
+                door.width = door.fwidth - frameSize;
             }
-            if (isValid) {
-                
-                var spacesRemaining = new Array();
-                var doorMods = new Array();
 
-                /****PAGER VARIABLES****/
-                var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wallNumber);
-                var pagerTextAnswer = document.getElementById("wall" + wallNumber + "DoorsAdded");
-                var pagerTextDoor = document.getElementById("MainContent_lblQuestion3DoorsInfoWall" + wallNumber);
-                var proposedWall = document.getElementById("MainContent_lblTextArea" + wallNumber);
-
-                /****CALCULATION VARIABLES****/
-                var wallLength = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'Length').value);
-                var leftFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'LeftFiller').value);
-                var rightFiller = parseFloat(document.getElementById('MainContent_txtWall' + wallNumber + 'RightFiller').value);
-                var usableSpace = wallLength - leftFiller - rightFiller;
-
-                var widthDropDown = document.getElementById('MainContent_ddlDoorWidth' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorWidth' + wallNumber + type).selectedIndex].value;
-
-                if (widthDropDown === "cWidth") {
-                    doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', true, wallNumber));
-                }
-                else {
-                    doorWidth = parseFloat(calculateActualDoorDimension(type, 'Width', false, wallNumber));
-                }                
-
-                var numberOfdoorMods = parseInt(usableSpace / doorWidth);
-
-                spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": (usableSpace - (doorWidth * numberOfdoorMods)) / 2 };
-                spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorWidth * numberOfdoorMods + ((usableSpace - (doorWidth * numberOfdoorMods)) / 2), "space": (usableSpace - (doorWidth * numberOfdoorMods)) / 2 };
-
-                for (var doorCount = 0; doorCount < numberOfdoorMods; doorCount++) {
-                    doorMods[doorMods.length] = { "width": doorWidth, "distanceFromLeft": spacesRemaining[0].space + (doorCount * doorWidth) };
-                }
-
-                //Updates doorMods array from the appropriate index in walldoorMods array
-                updateDoorModsArray(doorMods, wallNumber);               
-
-                //Update doorMods by sorting most recent addition into previous array
-                doorMods = sortDoorModsLeftToRight(doorMods);
-
-                //Update total space left in the wall
-                var space = totalSpaceLeftInWall(usableSpace, doorMods);
-
-                //Block to add content to the pager
-                $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
-                document.getElementById("pagerThree").style.display = "inline";
-                document.getElementById("wall" + wallNumber + "SpaceRemaining").style.display = "inline";
-                pagerText.setAttribute("style", "display:block;");
-                pagerTextAnswer.setAttribute("style", "display:block");
-                pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerHTML).substr(14, 2) + " doorMods";
-
-                //Display appropriate message and controls within the pager
-                var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallNumber);
-
-                $("#MainContent_lblQuestion3DoorsInfoWallAnswer" + wallNumber).empty();
-
-                /****DELETE BUTTON CREATION ADDITION****/
-                var deleteButton = document.createElement("input");
-                deleteButton.id = "btnDeleteDoorFill" + type + "Wall" + wallNumber;
-                deleteButton.setAttribute("type", "button");
-                deleteButton.setAttribute("value", "Remove Fill");
-                deleteButton.setAttribute("onclick", "deleteDoorFill(\"" + type + "\", \"" + wallNumber + "\")");
-                deleteButton.setAttribute("class", "btnSubmit");
-
-                var labelForButton = document.createElement("label");
-                labelForButton.id = "lblDeleteDoorFill" + type + "Wall" + wallNumber;
-                labelForButton.setAttribute("for", "btnDeleteDoorFill" + type + "Wall" + wallNumber);
-                labelForButton.innerHTML = "Wall Filled With " + numberOfdoorMods + " " + type + " doorMods";
-
-                var labelBreakLineForButton = document.createElement("label");
-                labelBreakLineForButton.id = "lblDeleteDoorFillBR" + type + "Wall" + wallNumber;
-                labelBreakLineForButton.setAttribute("for", "btnDeleteDoorFill" + type + "Wall" + wallNumber);
-                labelBreakLineForButton.innerHTML = "<br/>";
-
-                pagerTextDoorAnswer.appendChild(labelForButton);
-                pagerTextDoorAnswer.appendChild(deleteButton);
-                pagerTextDoorAnswer.appendChild(labelBreakLineForButton);
-
-                //Update drop downs based on selected value
-                updateDoorDropDowns("all", wallNumber, true);
-
-                //Update walldoorMods array with most current addition
-                updateWallsArray(wallNumber, usableSpace, doorMods, spacesRemaining)
-                    
-            }            
-        }
-
-        /**
-        *updateDoorsArray
-        *This function is used to update the doors array
-        *@param doors - holds an array of doors 
-        *@param wallNumber - holds an integer to know which wall is currently being affected
-        */
-        function updateDoorModsArray(doors, wallNumber) {
-            //Load doors array info from wallDoors array
-            if (wallDoors.length > 0) {
-                for (var i = 0; i < wallDoors.length; i++) {
-                    //Store the index if wallId and wallCount are equal
-                    if (wallDoors[i].wallId == wallNumber) {
-                        for (var h = 0; h < wallDoors[i].doorsSorted.length; h++) {
-                            doors[doors.length] = { "width": wallDoors[i].doorsSorted[h].width, "distanceFromLeft": wallDoors[i].doorsSorted[h].distanceFromLeft };
-                        }
-                        break;
-                    }
-                }
+            if (!validateDoor(door, walls[wallNumber])){
+                return;
             }
-        }
 
-        /**
-        *updateWallsArray
-        *This function is used to update the wallDoors array
-        *@param wallNumber - holds an integer to know which wall is currently being affected
-        *@param doorMods - holds an array of sorted doors left to right
-        *@param spacesRemaining - holds an array of remaining spaces within the wall
-        */
-        function updateWallsArray(wallNumber, wallLength, doorMods, spacesRemaining) {
+            var amountOfDoors = parseInt((walls[wallNumber].length - walls[wallNumber].leftFiller - walls[wallNumber].rightFiller) / door.fwidth);
+            var padding = ((walls[wallNumber].length - walls[wallNumber].leftFiller - walls[wallNumber].rightFiller) - (amountOfDoors * door.fwidth))/2;
+            var currentPosition = padding;
 
-            //Variable to hold wall index to update
-            var indexToStoreAt = null;
-
-            //Loop to find if a wallDoors object exist for the current wall count
-            for (var i = 0; i < wallDoors.length; i++) {
-                //Store the index if wallId and wallCount are equal
-                if (wallDoors[i].wallId == wallNumber) {
-                    indexToStoreAt = i;
-                    break;
-                }
+            for (var i = 0; i < amountOfDoors; i++) {
+                var newDoor = $.extend(true, {}, door);
+                newDoor.position = currentPosition;
+                insertDoor(newDoor, walls[wallNumber]);
+                currentPosition += door.fwidth;
             }
-            //If no matches exist, create a new wallDoors object within the array
-            if (indexToStoreAt == null) {
-                wallDoors[wallDoors.length] = { "wallId": wallNumber, "wallLength": wallLength, "doorsSorted": doorMods, "spaces": spacesRemaining };
-            }
-            else {
-                wallDoors[indexToStoreAt] = { "wallId": wallNumber, "wallLength": wallLength, "doorsSorted": doorMods, "spaces": spacesRemaining };
-            }
-        }
 
-        /**
-        *updateDoorPager
-        *This function is used to update the pager details based on added or removed (deleted) doors
-        *@param walldoorMods - holds an array of sorted doors left to right
-        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
-        *@param wallNumber - holds an integer to know which wall is currently being affected
-        */
-        function updateDoorPager(doorMods, type, wallNumber) {
-            
+            //Update total space left in the wall
+            var space = totalSpaceLeftInWall(walls[wallNumber]);
+
+            /****PAGER VARIABLES****/
+            var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wallNumber);
+            var pagerTextAnswer = document.getElementById("wall" + wallNumber + "DoorsAdded");
+            var pagerTextDoor = document.getElementById("MainContent_lblQuestion3DoorsInfoWall" + wallNumber);
+            var proposedWall = document.getElementById("MainContent_lblTextArea" + wallNumber);
+
+            //Block to add content to the pager
+            $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
+            document.getElementById("pagerThree").style.display = "inline";
+            document.getElementById("wall" + wallNumber + "SpaceRemaining").style.display = "inline";
+            pagerText.setAttribute("style", "display:block;");
+            pagerTextAnswer.setAttribute("style", "display:block");
+            pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerHTML).substr(14, 2) + " Door Mods";
+
+            //Display appropriate message and controls within the pager
             var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wallNumber);
 
             $("#MainContent_lblQuestion3DoorsInfoWallAnswer" + wallNumber).empty();
 
-            if (doorMods.length > 0) {                
+            /****DELETE BUTTON CREATION ADDITION****/
+            var deleteButton = document.createElement("input");
+            deleteButton.id = "btnDeleteDoorFill" + type + "Wall" + wallNumber;
+            deleteButton.setAttribute("type", "button");
+            deleteButton.setAttribute("value", "Remove Fill");
+            deleteButton.setAttribute("onclick", "deleteDoorFill(\"" + type + "\", \"" + wallNumber + "\")");
+            deleteButton.setAttribute("class", "btnSubmit");
 
-                for (var childControls = 1; childControls <= doorMods.length ; childControls++) {
+            var labelForButton = document.createElement("label");
+            labelForButton.id = "lblDeleteDoorFill" + type + "Wall" + wallNumber;
+            labelForButton.setAttribute("for", "btnDeleteDoorFill" + type + "Wall" + wallNumber);
+            labelForButton.innerHTML = "Wall Filled With " + amountOfDoors + " " + type + " Door Mods";
+
+            var labelBreakLineForButton = document.createElement("label");
+            labelBreakLineForButton.id = "lblDeleteDoorFillBR" + type + "Wall" + wallNumber;
+            labelBreakLineForButton.setAttribute("for", "btnDeleteDoorFill" + type + "Wall" + wallNumber);
+            labelBreakLineForButton.innerHTML = "<br/>";
+
+            pagerTextDoorAnswer.appendChild(labelForButton);
+            pagerTextDoorAnswer.appendChild(deleteButton);
+            pagerTextDoorAnswer.appendChild(labelBreakLineForButton);
+        }
+
+
+        function validateDoorFill(door, wall) {
+
+            if (wall.length < door.fwidth) {
+                alert("This wall is too small to have a door of width " + door.fwidth + ". Please try again.");
+                return false;
+            }
+
+            if (wall.doors.length > 0) {
+                alert("Fill cannot be used on a wall with existing doors. Please empty the wall first.");
+                return false;
+            }
+
+            return true;
+        }
+                
+        /**
+        *updateDoorPager
+        *This function is used to update the pager details based on added or removed (deleted) doors
+        *@param wall - used to hold the current wall information
+        */
+        function updateDoorPager(wall) {
+            
+            var pagerTextDoorAnswer = document.getElementById("MainContent_lblQuestion3DoorsInfoWallAnswer" + wall.id);
+
+            /****PAGER VARIABLES****/
+            var pagerText = document.getElementById("MainContent_lblQuestion3SpaceInfoWall" + wall.id);
+            var pagerTextAnswer = document.getElementById("wall" + wall.id + "DoorsAdded");
+            var pagerTextDoor = document.getElementById("MainContent_lblQuestion3DoorsInfoWall" + wall.id);
+            var proposedWall = document.getElementById("MainContent_lblTextArea" + wall.id);
+
+            //Update total space left in the wall
+            var space = totalSpaceLeftInWall(walls[wall.id]);
+
+            console.log(wall.id);
+
+            $("#MainContent_lblQuestion3DoorsInfoWallAnswer" + wall.id).empty();
+
+            if (wall.doors.length > 0) {       
+
+                //Block to add content to the pager
+                $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wall.id).text(space);
+                document.getElementById("pagerThree").style.display = "inline";
+                document.getElementById("wall" + wall.id + "SpaceRemaining").style.display = "inline";
+                pagerText.setAttribute("style", "display:block;");
+                pagerTextAnswer.setAttribute("style", "display:block");
+                pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerHTML).substr(14, 2) + " Doors";
+
+                for (var childControls = 1; childControls <= wall.doors.length ; childControls++) {
                     //Rename controls and their attributes
                     /****DELETE BUTTON CREATION ADDITION****/
                     var deleteButton = document.createElement("input");
-                    deleteButton.id = "btnDeleteDoor" + childControls + type + "Wall" + wallNumber;
+                    deleteButton.id = "btnDeleteDoor" + childControls + wall.doors[childControls-1].type + "Wall" + wall.id;
                     deleteButton.setAttribute("type", "button");
                     deleteButton.setAttribute("value", "X");
-                    deleteButton.setAttribute("onclick", "deleteDoor(\"" + childControls + "\", \"" + type + "\", \"" + wallNumber + "\")");
+                    deleteButton.setAttribute("onclick", "deleteDoor(\"" + childControls + "\", \"" + wall.doors[childControls-1].type + "\", \"" + wall.id + "\")");
                     deleteButton.setAttribute("class", "btnSubmit");
                     deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
 
                     var labelForButton = document.createElement("label");
-                    labelForButton.id = "lblDeleteDoor" + childControls + type + "Wall" + wallNumber;
-                    labelForButton.setAttribute("for", "btnDeleteDoor" + childControls + type + "Wall" + wallNumber);
-                    labelForButton.innerHTML = "Door " + childControls + " " + type + " added";
+                    labelForButton.id = "lblDeleteDoor" + childControls + wall.doors[childControls-1].type + "Wall" + wall.id;
+                    labelForButton.setAttribute("for", "btnDeleteDoor" + childControls + wall.doors[childControls-1].type + "Wall" + wall.id);
+                    labelForButton.innerHTML = "Door " + childControls + " " + wall.doors[childControls-1].type + " added";
 
                     var labelBreakLineForButton = document.createElement("label");
-                    labelBreakLineForButton.id = "lblDeleteDoorBR" + childControls + type + "Wall" + wallNumber;
-                    labelBreakLineForButton.setAttribute("for", "btnDeleteDoor" + childControls + type + "Wall" + wallNumber);
+                    labelBreakLineForButton.id = "lblDeleteDoorBR" + childControls + wall.doors[childControls-1].type + "Wall" + wall.id;
+                    labelBreakLineForButton.setAttribute("for", "btnDeleteDoor" + childControls + wall.doors[childControls-1].type + "Wall" + wall.id);
                     labelBreakLineForButton.innerHTML = "<br/>";
                     pagerTextDoorAnswer.appendChild(labelForButton);
                     pagerTextDoorAnswer.appendChild(deleteButton);
@@ -1264,108 +1315,67 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
 
             }
             else {
-                document.getElementById("wall" + wallNumber + "DoorsAdded").style.display = "none";
+                document.getElementById("wall" + wall.id + "DoorsAdded").style.display = "none";
+                $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wall.id).text(space);
             }
         }
         
         /**
         *deleteDoor
         *This function is used to perform certain task when a door is deleted (called on click), remove
-        *controls from pager, reset wallDoors[index].spaces to the appropriate value based on the door deleted.
-        *Same goes for wallDoors[index].doorsSorted the appropriate door is removed from the array.
+        *controls from pager, reset walls[index].spaces to the appropriate value based on the door deleted.
+        *Same goes for walls[index].doorsSorted the appropriate door is removed from the array.
         *@param doorToDelete - holds the index of the door to be deleted
         *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
         *@param wallNumber - holds an integer to know which wall is currently being affected
         */
         function deleteDoor(doorToDelete, type, wallNumber) {
-
-            for (var wallDoorsCount = 0; wallDoorsCount < wallDoors.length; wallDoorsCount++) {
-
-                if (wallDoors[wallDoorsCount].wallId == wallNumber) {
-
-                    //Controls to Delete
-                    var deleteButtonToRemove = document.getElementById("btnDeleteDoor" + doorToDelete + type + "Wall" + wallNumber);
-                    var deleteLabelToRemove = document.getElementById("lblDeleteDoor" + doorToDelete + type + "Wall" + wallNumber);
-                    var deleteBreakLineLabelToRemove = document.getElementById("lblDeleteDoorBR" + doorToDelete + type + "Wall" + wallNumber);
                     
-                    var positionInWall = findPosition(wallDoors[wallDoorsCount].wallLength, wallDoors[wallDoorsCount].doorsSorted, (doorToDelete - 1));
+            var positionInWall = findPosition(walls[wallNumber], doorToDelete);
 
-                    //Removes object at specified index
-                    wallDoors[wallDoorsCount].doorsSorted.splice(doorToDelete - 1, 1);
+            //Removes object at specified index
+            walls[wallNumber].doors.splice(doorToDelete - 1, 1);
 
-                    //Resetting spaces property in the wallDoors array
-                    var spacesRemaining = availableSpacesArrayUpdate(wallDoors[wallDoorsCount].wallLength, wallDoors[wallDoorsCount].doorsSorted);
-                    wallDoors[wallDoorsCount].spaces = spacesRemaining;
+            //Used to redisplay the appropriate space left in the wall
+            var space = totalSpaceLeftInWall(walls[wallNumber]);
 
-                    //Used to redisplay the appropriate space left in the wall
-                    var space = totalSpaceLeftInWall(wallDoors[wallDoorsCount].wallLength, wallDoors[wallDoorsCount].doorsSorted)                    
-
-                    //Removes controls displayed in the pager
-                    deleteButtonToRemove.remove();
-                    deleteLabelToRemove.remove();
-                    deleteBreakLineLabelToRemove.remove();
-
-                    //Need to reset pager titles
-                    $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
-                    updateDoorPager(wallDoors[wallDoorsCount].doorsSorted, type, wallNumber);
-                    updateDoorDropDowns(positionInWall, wallNumber, false);
-                }
-
-            }
-
+            //Need to reset pager titles
+            $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(space);
+            updateDoorPager(walls[wallNumber]);          
         }
 
         /**
         *deleteDoorFill
         *This function is used to perform certain task when a door is deleted (called on click), remove
-        *controls from pager, reset wallDoors[index].spaces to null and same for wallDoors[index].doorsSorted.
+        *controls from pager, reset walls[index].spaces to null and same for walls[index].doorsSorted.
         *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
         *@param wallNumber - holds an integer to know which wall is currently being affected
         */
         function deleteDoorFill(type, wallNumber) {
 
-            for (var wallDoorsCount = 0; wallDoorsCount < wallDoors.length; wallDoorsCount++) {
+            walls[wallNumber].doors = [];
 
-                if (wallDoors[wallDoorsCount].wallId == wallNumber) {
-
-                    //Controls to Delete
-                    var deleteButtonToRemove = document.getElementById("btnDeleteDoorFill" + type + "Wall" + wallNumber);
-                    var deleteLabelToRemove = document.getElementById("lblDeleteDoorFill" + type + "Wall" + wallNumber);
-                    var deleteBreakLineLabelToRemove = document.getElementById("lblDeleteDoorFillBR" + type + "Wall" + wallNumber);
-
-                    //Removes controls displayed in the pager
-                    deleteButtonToRemove.remove();
-                    deleteLabelToRemove.remove();
-                    deleteBreakLineLabelToRemove.remove();
-
-                    wallDoors[wallDoorsCount].spaces = new Array();
-                    wallDoors[wallDoorsCount].doorsSorted = new Array();
-
-                    $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wallNumber).text(wallDoors[wallDoorsCount].wallLength);
-                    document.getElementById("wall" + wallNumber + "DoorsAdded").style.display = "none";
-                    updateDoorDropDowns("null", wallNumber, false);
-                }
-            }
+            updateDoorPager(walls[wallNumber]);
         }
 
         /**
         *findPosition
         *This function is used to perform certain task when a door is deleted (called on click), remove
-        *controls from pager, reset wallDoors[index].spaces to null and same for wallDoors[index].doorsSorted.
+        *controls from pager, reset walls[index].spaces to null and same for walls[index].doorsSorted.
         *@param usable - holds the usable length within a wall
         *@param doorMods - holds an array of doors which are in order from left to right
         *@param indexToCheck - holds an integer of an index in which to get data from doorMods
         *@return position - returns a string of the position in which the deleted door belongs to 
         *for dropdown purposes (i.e. left, center, right);
         */
-        function findPosition(usableLength, doorMods, indexToCheck) {
+        function findPosition(wall, indexToCheck) {
             var position = "";
 
-            if (doorMods[indexToCheck].distanceFromLeft == 0)
+            if (wall.doors[indexToCheck-1].position == wall.leftFiller)
                 position = "left";
-            else if (doorMods[indexToCheck].distanceFromLeft == (usableLength / 2 - doorMods[indexToCheck].width / 2))
+            else if (wall.doors[indexToCheck-1].position == (wall.length / 2 - wall.doors[indexToCheck-1].fwidth / 2))
                 position = "center";
-            else if (doorMods[indexToCheck].distanceFromLeft == (usableLength - doorMods[indexToCheck].width))
+            else if (wall.doors[indexToCheck-1].position == (wall.length - wall.doors[indexToCheck-1].fwidth))
                 position = "right";
             else
                 position = "custom";
@@ -1383,224 +1393,117 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
         };
 
         /**
-        *sortDoorsLeftToRight
-        *This function orders doors from left to right based on the distance from left
+        *insertDoor
+        *This function inserts the current wall to the appropriate wall and position
         *@param doors - holds an array of unsorted doors
-        *@return doorMods - returns an array of sorted doors from left to right
+        *@param wall - used to hold the current wall information
         */
-        function sortDoorModsLeftToRight(doors) {
+        function insertDoor(door, wall) {
 
-            var doorMods = new Array();
+            var position;
 
-            //TYPE FUNCTION TO BE MADE: FUNCTONALITY
-            //AREA: SORT LEFT TO RIGHT
-            //NECESSARY VARIABLES: doors[], doorMods[]
-            if (doors.length > 0) {
-                doorMods[0] = doors[0];
-            }
-            for (var i = 1; i < doors.length; i++) {
-                var x;
-                for (x = 0; x < doorMods.length; x++) {
-                    if (doorMods[x].distanceFromLeft > doors[i].distanceFromLeft) {
-                        doorMods.insert(x, doors[i]);
-                        break;
-                    }
-                }
-                if (x == doorMods.length) {
-                    doorMods[doorMods.length] = doors[i];
+            for (position = 0; position < wall.doors.length; position++) {
+                if (wall.doors[position].position > door.position) {
+                    break;
                 }
             }
-            //ENDAREA: SORT LEFT TO RIGHT
 
-            return doorMods;
+            wall.doors.insert(position, door);
         }
 
         /**
-        *checkQuestion3
-        *This function performs validtion on doors added, such as: enough space to add a door,
-        *doors overlapping, doors outside of the wall, etc...
-        *@param doorMods - holds an array of sorted doors from left to right
-        *@param spacesRemaining - holds an array of remaining spaces within the wall
-        *@param usableLength - holds the usable length on the current wall
-        *@return isValid - returns whether the entered door(s) have met the validation
+        *validateDoor
+        *This function performs validtion of the current door on existing doors
+        *checks for overlaps, out of the wall, etc.
+        *@param doors - holds an array of unsorted doors
+        *@param wall - used to hold the current wall information
         */
-        function checkQuestion3(doorMods, spacesRemaining, usableLength) {
+        function validateDoor(door, wall) {            
 
-            var isValid = true;
-
-            //TYPE FUNCTION TO BE MADE: VALIDATION
-            //AREA: CHECK OVERLAP AND OUT OF WALL BOUNDS
-            //NECESSARY VARIABLES: doorMods[]
-            for (var i = 0; i < doorMods.length - 1; i++) {
-                if (doorMods[i].distanceFromLeft + doorMods[i].width > doorMods[i + 1].distanceFromLeft) {
-                    alert("Doors " + doorMods[i].index + " and " + (doorMods[i].index + 1) + " overlap");
-                    doors.splice(doorMods[i].index, 1);
-                    doorMods.splice(doorMods[i].index, 1);
-                    isValid = false;
-                }
-                else if (doorMods[i + 1].distanceFromLeft >= usableLength) {
-                    alert("Door " + (doorMods[i].index + 1) + " is outside of the wall length");
-                    isValid = false;
-                }
-                else if (doorMods[i + 1].distanceFromLeft < 0) {
-                    alert("Door " + (doorMods[i].index + 1) + "'s position is smaller than zero");
-                    isValid = false;
-                }
-                //if (doorMods.length == 4 && i == 3) {
-                //    alert("Distance check " + doorMods[doorMods.length - 1].distanceFromLeft);
-                //}
+            if (door.position < wall.leftFiller) {
+                alert("Your door has a negative position. Please try again.");
+                return false;
             }
-            //ENDAREA: CHECK OVERLAP AND OUT OF WALL BOUNDS
-
-            //TYPE FUNCTION TO BE MADE: VALIDATION
-            //AREA: CHECK FOR POSSIBLE DOOR WIDTH IN SPACES, ONLY IF spacesRemaining IS NOT NULL
-            if (spacesRemaining != null) {
-                var goodSpace = 0;
-                //Loop through all spaces in spacesRemaining and check it against the door width
-                for (var j = 0; j < spacesRemaining.length; j++) {
-                    //alert(spacesRemaining[j]);
-                    //Check all spaces in wall
-                    if (spacesRemaining[j].space > doors[doors.length - 1].width) {
-                        goodSpace++;
-                    }
-                }
-                //If no good spaces exist, display error message
-                if (goodSpace == 0) {
-                    isValid = false;
-                    alert("This door is too small to fit in any available spaces");
-                }
+            else if ((door.position + door.fwidth) > (wall.length - wall.rightFiller)) {
+                alert("Your door is positioned outside of the walls usable length. Please try again.");
+                return false;
             }
-            //ENDAREA: CHECK FOR POSSIBLE DOOR WIDTH IN SPACES, ONLY IF spacesRemaining IS NOT NULL
-
-
-            return isValid;
-        }
-
-        /**
-        *sortDoorsLeftToRight
-        *This function disables and changes the selected index of all position drop downs in the current wall
-        *@param dropDownValue - holds the value of the currently selected index
-        *@param wallNumber - holds the number of the current wall
-        */
-        function updateDoorDropDowns(dropDownValue, wallNumber, toBeRemoved) {
-            var dropDownName = 'MainContent_ddlDoorPosition' + wallNumber;
             
-            //TYPE FUNCTION TO BE MADE: FUNCTIONALITY
-            //AREA: CHANGE DROPDOWNS BASED ON SELECTED INDEX
-            //NECESSARY VARIABLES: dropDownName, dropDownValue
-            for (var typeCount = 1; typeCount <= 4; typeCount++) {
+            var index;
 
-                var title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
-
-                var dropDown = document.getElementById(dropDownName + title);
-
-                if (toBeRemoved && dropDownValue == "all") {
-                    $('#' + dropDownName + title).attr('disabled', true);
-                    document.getElementById("MainContent_rowDoorCustomPosition" + wallNumber + title).style.display = "none";
-                }
-                else if (!toBeRemoved && dropDown.disabled == true) {
-                    $('#' + dropDownName + title).attr('disabled', false)                    
-                }
-                else if (toBeRemoved) {
-                    if ($('#' + dropDownName + title).val() != "cPosition") {
-                        $('#' + dropDownName + title + ' option[value=' + dropDownValue + ']').attr('disabled', true);
-                    }
-
-                    for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + title + ' option').size() ; dropDownLoop++) {
-                        if ($('#' + dropDownName + title + ' option')[dropDownLoop].disabled == false) {
-                            $('#' + dropDownName + title).prop("selectedIndex", dropDownLoop);
-                            break;
-                        }
-                    }
-                    customDimension(wallNumber, title, "Position");
-                }
-                else {
-                    $('#' + dropDownName + title + ' option[value=' + dropDownValue + ']').attr('disabled', false);
-
-                    for (var dropDownLoop = 0; dropDownLoop < $('#' + dropDownName + title + ' option').size() ; dropDownLoop++) {
-                        if ($('#' + dropDownName + title + ' option')[dropDownLoop].disabled == false) {
-                            $('#' + dropDownName + title).prop("selectedIndex", dropDownLoop);
-                            break;
-                        }
-                    }
-                    customDimension(wallNumber, title, "Position");
+            for (index = 0; index < wall.doors.length; index++) {
+                if (wall.doors[index].position > door.position) {
+                    break;
                 }
             }
-            //ENDAREA: CHANGE DROPDOWNS BASED ON SELECTED INDEX
-        }
 
+            if (index < wall.doors.length && (door.position + door.fwidth) > wall.doors[index].position) {
+                alert("The door you're trying to insert is overlapping door " + (index + 1) + ". Please try again.");
+                return false;
+            }
+
+            if (index > 0 && door.position < (wall.doors[index - 1].position + wall.doors[index - 1].fwidth)) {
+                alert("The door you're trying to insert is overlapping door " + index + ". Please try again.");
+                return false;
+            }
+
+            return true;
+        }
+                
         /**
         *totalSpaceLeftInWall
         *This function performs calculations to find the total space left in a wall
-        *@param usableLength - holds the length of the wall which mods can be put into
-        *@param doorMods - holds a door array which are in proper order
-        *@return totalSpace - returns the total space left on a specific wall
+        *@param wall - used to hold the current wall information
         */
-        function totalSpaceLeftInWall(usableLength, doorMods) {
+        function totalSpaceLeftInWall(wall) {
 
-            var totalSpace = usableLength;
+            var totalSpace = wall.length - wall.leftFiller - wall.rightFiller;
 
-            for (var wallSpace = 0; wallSpace < doorMods.length; wallSpace++)
-                totalSpace -= doorMods[wallSpace].width;
+            for (var wallSpace = 0; wallSpace < wall.doors.length; wallSpace++) {
+                totalSpace -= wall.doors[wallSpace].fwidth;
+            }
 
             return totalSpace;
         }
-
-        /**
-        *availableSpacesArrayUpdate
-        *This function is used to update remainingSpaces array
-        *@param usableLength - holds the length of the wall which mods can be put into
-        *@param doorMods - holds a door array which are in proper order
-        */
-        function availableSpacesArrayUpdate(usableLength, doorMods) {
-
-            var spacesRemaining = new Array();
-
-            if (doorMods.length == 0) {
-                spacesRemaining[spacesRemaining.length] = null;
-            }
-            else {
-                //Block to store remaining spaces between various door(s)
-                if (doorMods[0].distanceFromLeft > 0 && doorMods.length > 1) {
-                    spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": doorMods[0].distanceFromLeft };
-                    for (var doorsLoop = 0; doorsLoop < doorMods.length - 1; doorsLoop++) {
-                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[doorsLoop].width + doorMods[doorsLoop].distanceFromLeft, "space": doorMods[doorsLoop + 1].distanceFromLeft - (doorMods[doorsLoop].width + doorMods[doorsLoop].distanceFromLeft) };
-                    }
-                }
-                else if (doorMods.length == 1) {
-                    if (doorMods[0].distanceFromLeft == 0) {
-                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[0].width, "space": usableLength - doorMods[0].width };
-                    }
-                    else if (doorMods[0].distanceFromLeft + doorMods[0].width == usableLength) {
-                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": usableLength - doorMods[0].width };
-                    }
-                    else if (doorMods[0].distanceFromLeft > 0) {
-                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": 0, "space": doorMods[0].distanceFromLeft };
-                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[0].distanceFromLeft + doorMods[0].width, "space": usableLength - (doorMods[0].distanceFromLeft + doorMods[0].width) };
-                    }
-                }
-                else {
-                    //var doorsLoop;
-                    for (var doorsLoop = 0; doorsLoop < doorMods.length - 1; doorsLoop++) {
-                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[doorsLoop].width + doorMods[doorsLoop].distanceFromLeft, "space": doorMods[doorsLoop + 1].distanceFromLeft - (doorMods[doorsLoop].width + doorMods[doorsLoop].distanceFromLeft) };
-                    }
-                    if (doorMods[doorMods.length - 1].distanceFromLeft + doorMods[doorMods.length - 1].width < usableLength) {
-                        spacesRemaining[spacesRemaining.length] = { "distanceFromLeft": doorMods[doorMods.length - 1].distanceFromLeft + doorMods[doorMods.length - 1].width, "space": usableLength - (doorMods[doorMods.length - 1].distanceFromLeft + doorMods[doorMods.length - 1].width) };
-                    }
-                }
-            }
-            return spacesRemaining;
-        }
-
-
+        
         function submitDoorData() {
             var hiddenOne = document.createElement("input");
             hiddenOne.setAttribute("type", "hidden");
             hiddenOne.setAttribute("name", "Blah1");
-            hiddenOne.value = wallDoors[0].wallId;
+            hiddenOne.value = walls[0].wallId;
 
             var hiddenDiv = document.getElementById("MainContent_hiddenFieldsDiv");
             hiddenDiv.appendChild(hiddenOne);
+        }
+
+        function loadWallData() {
+
+            walls = [];
+
+            var wallInfo = [
+                ["LeftFiller", "LeftInchFractions"],
+                ["Length", "InchFractions"],
+                ["RightFiller", "RightInchFractions"]
+            ];
+
+            for (var i = 1; i <= lineList.length; i++) { 
+                if (coordList[i - 1][4] === "P") {
+
+                    wall = {
+                        "id": i,
+                        "doors": [],
+                        "windows": []
+                    };
+
+                    for (var inner = 0; inner < wallInfo.length; inner++) {
+                        var valueText = parseFloat($('#MainContent_txtWall' + i + wallInfo[inner][0]).val());
+                        var valueDDL = parseFloat($('#MainContent_ddlWall' + i + wallInfo[inner][1]).val());
+
+                        wall[wallInfo[inner][0][0].toLowerCase() + wallInfo[inner][0].substr(1)] = parseFloat(valueText) + parseFloat(valueDDL);
+                    }
+                    walls[i] = wall;
+                }
+            }
         }
 
 
