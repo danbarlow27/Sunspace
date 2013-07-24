@@ -615,23 +615,20 @@
     <%-- EXISTING CUSTOMER --%>
     <div class="slide-window"  >
 
-        <div class="slide-wrapper">
-            
-            <%-- end .toggleContent --%>
+        <div class="slide-wrapper"> 
+            <%-- Slide 1 - Select a Customer --%>           
             <div id="slide1" class="slide">
-
                 <h1>
                     <asp:Label ID="lblQuestion1" runat="server" Text="Is this a new or existing customer?"></asp:Label>
                 </h1>        
                               
                 <ul class="toggleOptions">
-
-                    <%-- end 'existing customer' option --%>
+                    <%--New Customer --%>
                     <li>
                         <asp:RadioButton ID="radNewCustomer" GroupName="question1" runat="server" OnClick="newProjectCheckQuestion1()" />
                         <asp:Label ID="lblNewCustomerRadio" AssociatedControlID="radNewCustomer" runat="server"></asp:Label>
                         <asp:Label ID="lblNewCustomer" AssociatedControlID="radNewCustomer" runat="server" Text="New customer"></asp:Label>
-           
+                        <%--New Customer Options --%>
                         <div class="toggleContent">
                             <ul>
                                 <li>
@@ -740,15 +737,16 @@
                                     </asp:Table>
                                 </li>
                             </ul>            
-                        </div> <%-- end .toggleOptions --%>
-                    </li> <%-- end #slide1 --%>
-                    <%-- QUESTION 2 - Project name
-            ======================================== --%>
+                        </div>
+                    </li> 
+
+                    <%-- Existing Customer --%>
                     <li>
                         <asp:RadioButton ID="radExistingCustomer" GroupName="question1" runat="server" OnClick="newProjectCheckQuestion1()" />
                         <asp:Label ID="lblExistingCustomerRadio" AssociatedControlID="radExistingCustomer" runat="server"></asp:Label>
                         <asp:Label ID="lblExistingCustomer" AssociatedControlID="radExistingCustomer" runat="server" Text="Existing customer"></asp:Label>
 
+                        <%-- Existing Customer Options --%>
                         <div class="toggleContent">
                             <ul>
                                 <li>
@@ -756,18 +754,16 @@
                                     <!-- DataTextField="percentage" DataValueField="id" DataSourceId="sds_Items" in case we decide to data-bind -->
                                 </li>
                             </ul>            
-                        </div> <%-- end .toggleOptions --%>
-                    </li> <%-- end #slide2 --%>
+                        </div> 
+                    </li> 
 
-                </ul> <%-- QUESTION 3 - What type of project?
-            ======================================== --%>
+                </ul> 
 
                 <asp:Button ID="btnQuestion1" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
 
-            </div> 
-            <%-- COMPLETE SUNROOM --%>
+            </div>             
 
-            <%-- end 'complete sunroom' options --%>
+            <%-- Slide 2 - Project Name --%>
             <div id="slide2" class="slide">
                 
                 <h1>
@@ -789,23 +785,21 @@
                         </asp:Table>
                     </li>
 
-                </ul> <%-- end 'complete sunroom' --%>
+                </ul>
 
                 <asp:Button ID="btnQuestion2" Enabled = "false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
                 
             </div> 
-            <%-- WALLS --%>
 
-            <%-- end 'wall' options --%>
+            <%-- Slide 3 - Project Type --%>
             <div id="slide3" class="slide">
-
                 <h1>
                     <asp:Label ID="lblQuestion3" runat="server" Text="What type of project would you like to create?"></asp:Label>
-                </h1>        
-                              
+                </h1>         
+                                
+                <%-- Project Type Options--%>   
                 <ul class="toggleOptions">
-
-                    <%-- end 'walls' --%>
+                    <%-- Sunroom --%>
                     <li>
                         <asp:RadioButton ID="radProjectSunroom" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectSunroomRadio" AssociatedControlID="radProjectSunroom" runat="server"></asp:Label>
@@ -834,9 +828,10 @@
                                     <asp:Label ID="lblSunroomModel400" AssociatedControlID="radSunroomModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
                             </ul>            
-                        </div> <%-- WINDOWS --%>
-                    </li> <%-- end 'windows' --%>
-                    <%-- DOORS --%>
+                        </div>
+                    </li>
+
+                    <%-- Walls --%>
                     <li>
                         <asp:RadioButton ID="radProjectWalls" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectWallsRadio" AssociatedControlID="radProjectWalls" runat="server"></asp:Label>
@@ -865,27 +860,31 @@
                                     <asp:Label ID="lblWallsModel400" AssociatedControlID="radWallsModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
                             </ul>            
-                        </div> <%-- end 'doors' --%>
-                    </li> <%-- FLOORING --%>
-                    <%-- end 'flooring' --%>
+                        </div>
+                    </li> 
+
+                    <%-- Window Only --%>
                     <li>
                         <asp:RadioButton ID="radProjectWindows" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectWindowsRadio" AssociatedControlID="radProjectWindows" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectWindows" AssociatedControlID="radProjectWindows" runat="server" Text="Windows"></asp:Label>
-                    </li> <%-- ROOF --%>
-                    <%-- end 'roof' options --%>
+                    </li> 
+                    
+                    <%-- Door only --%>
                     <li>
                         <asp:RadioButton ID="radProjectDoors" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectDoorsRadio" AssociatedControlID="radProjectDoors" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectDoors" AssociatedControlID="radProjectDoors" runat="server" Text="Doors"></asp:Label>
-                    </li> <%-- end 'roof' --%>
-                    <%-- SHOWROOM --%>
+                    </li>
+                    
+                    <%-- Floor only --%>
                     <li>
                         <asp:RadioButton ID="radProjectFlooring" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectFlooringRadio" AssociatedControlID="radProjectFlooring" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectFlooring" AssociatedControlID="radProjectFlooring" runat="server" Text="Flooring"></asp:Label>
-                    </li> <%-- end 'showroom' options --%>
-                    <%-- COMPONENTS --%>
+                    </li>
+                    
+                    <%-- Roof only --%>
                     <li>
                         <asp:RadioButton ID="radProjectRoof" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectRoofRadio" AssociatedControlID="radProjectRoof" runat="server"></asp:Label>
@@ -919,8 +918,10 @@
                                     <asp:Label ID="lblRoofOSB" AssociatedControlID="radRoofOSB" runat="server" Text="OSB/OSB"></asp:Label>
                                 </li>
                             </ul>            
-                        </div> <%-- end 'components' --%>
-                    </li> <%-- end .toggleOptions --%>                    <%-- end #slide3 --%>                    
+                        </div>
+                    </li>  
+                                        
+                    <%-- Showroom --%>                 
                     <li>
                         <asp:RadioButton ID="radSunroomModelShowroom" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblSunroomModelShowroomRadio" AssociatedControlID="radSunroomModelShowroom" runat="server"></asp:Label>
@@ -949,34 +950,28 @@
                                     <asp:Label ID="lblShowroomModel400Radio" AssociatedControlID="radShowroomModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
                             </ul>            
-                        </div> <%-- QUESTION 4 - Styling Options
-            ======================================== --%>
+                        </div>
                     </li>
-
-                    <%-- Option 1 - Kneewall 
-                    ======================================== --%>
+                    
+                    <%-- Component Order --%>
                     <li>
                         <asp:RadioButton ID="radProjectComponents" GroupName="projectType" runat="server"  OnClick="goComponents()"/>
                         <asp:Label ID="lblProjectComponentsRadio" AssociatedControlID="radProjectComponents" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectComponents" AssociatedControlID="radProjectComponents" runat="server" Text="Components"></asp:Label>
-                    </li> <%-- end .toggleContent --%>
-
-                </ul> <%-- end Q4 option 1 --%>
+                    </li> 
+                </ul> 
 
                 <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
             </div> 
-            <%-- Option 2 - Transom
-                    ======================================== --%>
             
-            <%-- end .toggleContent --%>
-            <div id="slide4" class="slide">
-                
+            <%-- Slide 4 - Styling Options --%>
+            <div id="slide4" class="slide">                
                 <h1>
                     <asp:Label ID="lblQuestion4" runat="server" Text="Styling Options"></asp:Label>
-                </h1>  
+                </h1> 
 
                 <ul class="toggleOptions">
-                    <%-- end Q4 option 2 --%>
+                    <%-- Kneewall --%>
                     <li>
                                     
                         <asp:RadioButton ID="radKneewallOptions" GroupName="styling" runat="server" />
@@ -993,11 +988,11 @@
                                     <asp:Label ID="lblKneewallType" AssociatedControlID="txtKneewallHeight" runat="server" Text="Type" />
                                 </li>
                             </ul>   
-                        </div> <%-- Option 3 - Framing
-                    ======================================== --%>
+                        </div> 
 
-                    </li> <%-- end .toggleContent --%>
-                    <%-- end Q2 option 2 --%>
+                    </li> 
+
+                    <%-- Transom --%>
                     <li>
                 
                         <asp:RadioButton ID="radTransomOptions" GroupName="styling" runat="server" />
@@ -1014,11 +1009,10 @@
                                     <asp:Label ID="lblTransomType" AssociatedControlID="txtTransomHeight" runat="server" Text="Type" />
                                 </li>
                             </ul>
-                        </div> <%-- end .toggleOptions --%>
-
-                    </li> <%-- end #slide4 --%>              
-                    <%-- QUESTION 5 - Foam Protection
-            ======================================== --%>
+                        </div> 
+                    </li> 
+                    
+                    <%-- Walls --%>            
                     <li>
                 
                         <asp:RadioButton ID="radFramingOptions" GroupName="styling" runat="server" />
@@ -1044,27 +1038,21 @@
                                     <asp:Label ID="lblExteriorSkin" AssociatedControlID="ddlExteriorSkin" runat="server" Text="Exterior Skin" />
                                 </li>
                             </ul>
-                        </div> <%-- end .toggleOptions --%>
-
-                    </li> <%-- end #slide5 --%>
-                </ul> <%-- QUESTION 6 - Prefab Floor
-            ======================================== --%>
+                        </div>
+                    </li>
+                </ul> 
 
                 <asp:Button ID="btnQuestion4" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" />
                 <asp:Button ID="btnQuestion4Walls" Enabled="false" CssClass="btnSubmit float-right slidePanel" OnClick="btnQuestion4Walls_Click" runat="server" Text="Next Question" />
-
             </div> 
-            <%-- end .toggleOptions --%>
 
-            <%-- end #slide6 --%>
-            <div id="slide5" class="slide">
-                
+            <%-- Slide 5 - Foam Protected Panels --%>
+            <div id="slide5" class="slide">                
                 <h1>
                     <asp:Label ID="lblFoamProtected" runat="server" Text="Would you like foam protected panels?"></asp:Label>
                 </h1> 
 
                 <ul class="toggleOptions">
-
                     <li>
                         <asp:RadioButton ID="radFoamProtectedYes" OnClick="newProjectCheckQuestion5()" GroupName="foam" runat="server" />
                         <asp:Label ID="lblFoamProtectedYesRadio" AssociatedControlID="radFoamProtectedYes" runat="server"></asp:Label>
@@ -1077,22 +1065,18 @@
                         <asp:Label ID="lblFoamProtectedNo" AssociatedControlID="radFoamProtectedNo" runat="server" Text="No"></asp:Label>
                     </li>
 
-                </ul> <%-- QUESTION 7 - Roof
-            ======================================== --%>
+                </ul>
 
                 <asp:Button ID="btnQuestion5" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide6" runat="server" Text="Next Question" />
-
             </div> 
-            <%-- end 'yes' option --%>
-            <%-- end .toggleOptions --%>
-            <div id="slide6" class="slide">
-                
+
+            <%-- Slide 6 - Prefabricated Floors --%>
+            <div id="slide6" class="slide">                
                 <h1>
                     <asp:Label ID="lblPrefabFloor" runat="server" Text="Would you like a prefabricated floor?"></asp:Label>
                 </h1> 
 
                 <ul class="toggleOptions">
-
                     <li>
                         <asp:RadioButton ID="radPrefabFloorYes" OnClick="newProjectCheckQuestion6()" GroupName="floor" runat="server" />
                         <asp:Label ID="lblPrefabFloorYesRadio" AssociatedControlID="radPrefabFloorYes" runat="server"></asp:Label>
@@ -1105,22 +1089,18 @@
                         <asp:Label ID="lblPrefabFloorNo" AssociatedControlID="radPrefabFloorNo" runat="server" Text="No"></asp:Label>
                     </li>
 
-                </ul> <%-- end #slide7 --%>
+                </ul>
 
                 <asp:Button ID="btnQuestion6" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide7" runat="server" Text="Next Question" />
-
             </div> 
-            <%-- QUESTION 8 - Layout
-            ======================================== --%>
-            <%-- end .toggleOptions --%>
-            <div id="slide7" class="slide">
-                
+
+            <%-- Slide 7 - Roof Choice --%>
+            <div id="slide7" class="slide">                
                 <h1>
                     <asp:Label ID="lblRoof" runat="server" Text="Would you like to include a roof?"></asp:Label>
                 </h1> 
 
                 <ul class="toggleOptions">
-
                     <li>
                         <asp:RadioButton ID="radRoofYes" GroupName="roof" runat="server" />
                         <asp:Label ID="lblRoofYesRadio" AssociatedControlID="radRoofYes" runat="server"></asp:Label>
@@ -1144,7 +1124,7 @@
                                     <asp:Label ID="lblSunspaceGable" AssociatedControlID="radSunspaceGable" runat="server" Text="Sunspace gable"></asp:Label>
                                 </li>
                             </ul>
-                        </div> <%-- end #slide8 --%>
+                        </div>
                     </li>
 
                     <li>
@@ -1153,22 +1133,18 @@
                         <asp:Label ID="lblRoofNo" AssociatedControlID="radRoofNo" runat="server" Text="No"></asp:Label>
                     </li>
 
-                </ul> <%-- end .slide-wrapper --%>
+                </ul>
 
                 <asp:Button ID="btnQuestion7" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide8" runat="server" Text="Next Question" />
-
             </div> 
-            <%-- end .slide-window --%>
-            <%-- SLIDE PAGING (QUESTION NAVIGATION)
-    ======================================== --%>
-            <div id="slide8" class="slide">
-                
+
+            <%-- Slide 8 - Layout --%>
+            <div id="slide8" class="slide">                
                 <h1>
                     <asp:Label ID="lblLayout" runat="server" Text="Please choose a sunroom layout."></asp:Label>
                 </h1> 
 
                 <ul class="toggleOptions">
-
                     <li>
                         <asp:RadioButton ID="radPreset1" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
                         <asp:Label ID="lblPreset1Radio" AssociatedControlID="radPreset1" runat="server"></asp:Label>
@@ -1227,20 +1203,13 @@
 
                     <asp:Button ID="btnQuestion8" Enabled="false" CssClass="btnSubmit float-right slidePanel" Text="Confirm all selections" runat="server" OnClientClick="newProjectCheckQuestion8()" OnClick="btnLayout_Click"/>
 
-                </ul> <%-- end #paging --%>
-
+                </ul>
             </div> 
-            <%-- Hidden input tags 
-    ======================= --%>
-            <asp:SqlDataSource ID="sdsCustomers" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [customers]"></asp:SqlDataSource>
-
             
-
-        </div> <%-- end hidden divs --%>
-
-    </div> 
-    <%-- end .slide-window --%>
-    
+            <%-- Database Connection Source --%>
+            <asp:SqlDataSource ID="sdsCustomers" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [customers]"></asp:SqlDataSource>            
+        </div>
+    </div>     
 
     <%-- SLIDE PAGING (QUESTION NAVIGATION)
     ======================================== --%>
@@ -1321,7 +1290,7 @@
                     </li>
                 </div>
             </ul>    
-        </div> <%-- end #paging --%>
+        </div> 
     </div>
 
     <%-- Hidden input tags 
@@ -1363,9 +1332,7 @@
 
     <input id="hidLayoutSelection" type="hidden" runat="server" />
 
-    <%-- end hidden divs --%>
-
-    
+    <%-- end hidden divs --%>    
 
     <script>
         $(function () {

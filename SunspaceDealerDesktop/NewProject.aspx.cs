@@ -66,7 +66,7 @@ namespace SunspaceDealerDesktop
                 if (Session["dealer_id"].ToString() == "-1")
                 {
                     //Get the customers assosciated with this dealer
-                    sdsCustomers.SelectCommand = "SELECT first_name, last_name FROM customers ORDER BY last_name, first_name";
+                    Response.Redirect("Spoof.aspx");
                 }
                 else
                 {

@@ -9,7 +9,7 @@ namespace SunspaceDealerDesktop
 {
     public static class Constants
     {
-        public static string[] MODEL_NUMBERS = { "100", "200", "300", "400" };
+        public static string[] MODEL_NUMBERS = { "M100", "M200", "M300", "M400" };
 
         #region Database Field Length Constants
         //Patterns:

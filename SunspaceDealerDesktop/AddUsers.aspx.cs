@@ -11,17 +11,16 @@ namespace SunspaceDealerDesktop
 {
     public partial class AddUsers : System.Web.UI.Page
     {
+        //Will hold the usertype and usergroup that will be accessed through javascript
         public string userType;
         public string userGroup;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (Session["loggedIn"] == null)
             {
-                //uncomment me when login functionality is working
+                //Must login to view this page
                 Response.Redirect("Login.aspx");
-                //Session.Add("loggedIn", "1");
             }
 
             if (Session["user_type"].ToString() == "D" && Session["user_group"].ToString() == "S")
@@ -36,6 +35,7 @@ namespace SunspaceDealerDesktop
                 Response.Redirect("Spoof.aspx");
             }
 
+            //On first load only, not on posts
             if (!IsPostBack)
             {
                 //Add countries to country dropdown
@@ -49,13 +49,11 @@ namespace SunspaceDealerDesktop
                 {
                     UserTypeDiv.Visible = false;
                     UserGroupDiv.Visible = false;
-                    DealerListDiv.Visible = false;
-                    DealerAdminDiv.Visible = false;
                     userType = "D";
                 }
                 else
                 {
-                    //sunspace CSR
+                    //sunspace CSR, so add initial values to dropdown list, and update usertype
                     if (Session["user_type"].ToString() == "S" && Session["user_group"].ToString() == "C")
                     {
                         UserTypeDiv.Visible = false;
@@ -63,11 +61,9 @@ namespace SunspaceDealerDesktop
                         ddlUserGroup.Items.Add("Sales Rep");
                         userType = "S";
                     }
-                    //sunspace admin
+                    //sunspace admin, so add initial values to dropdown list, and update usertype
                     else
                     {
-                        DealerListDiv.Attributes.Add("style", "display: none;");
-                        DealerAdminDiv.Attributes.Add("style", "display: none;");
                         ddlUserType.Items.Add("Sunspace");
                         ddlUserType.Items.Add("Dealer");
 
@@ -75,34 +71,7 @@ namespace SunspaceDealerDesktop
                         ddlUserGroup.Items.Add("Admin");
                         ddlUserGroup.Items.Add("Customer Service Rep");
                         userType = "S";
-                    }
-                    //sunspace user, so populate dealer list
-
-                    //check to see if the list has already been retrieved
-                    if (Session["ddlDealers"] == null)
-                    {
-                        //Get the customers assosciated with this dealer
-                        sdsUsers.SelectCommand = "SELECT dealer_name, dealer_id FROM dealers ORDER BY dealer_name";
-
-                        //assign the table names to the dataview object
-                        DataView dvDealers = (DataView)sdsUsers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
-
-                        ddlDealers.Items.Clear();
-
-                        for (int i = 0; i < dvDealers.Count; i++)
-                        {
-                            ddlDealers.Items.Add(new ListItem(dvDealers[i][0].ToString(), dvDealers[i][1].ToString()));
-                        }
-
-                        ddlDealers.SelectedValue = Session["dealer_id"].ToString(); //pick your spoofed user by default
-                        Session.Add("ddlDealers", ddlDealers);
-                    }
-                    //if it exists, just populate from session
-                    else
-                    {
-                        ddlDealers = (DropDownList)Session["ddlDealers"];
-                        ddlDealers.SelectedValue = Session["dealer_id"].ToString(); //pick your spoofed user by default
-                    }
+                    }                    
                 }
                 // set usergroup for jscript access
                 userGroup = Session["user_group"].ToString();
@@ -120,6 +89,7 @@ namespace SunspaceDealerDesktop
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
+            //If any of the textboxes required for all users are empty stop immediately
             if (txtLogin.Text == "" ||
                 txtPassword.Text == "" ||
                 txtEmail.Text == "" ||
@@ -139,7 +109,7 @@ namespace SunspaceDealerDesktop
                     sdsUsers.InsertCommand = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
                                             + "VALUES('"
                                             + txtLogin.Text + "', '"
-                                            + GlobalFunctions.CalculateMD5Hash(txtPassword.Text) + "', '"
+                                            + GlobalFunctions.CalculateSHAHash(txtPassword.Text) + "', '"
                                             + txtEmail.Text + "', '"
                                             + aDate.ToString("yyyy/MM/dd") + "', '"
                                             + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
@@ -158,294 +128,308 @@ namespace SunspaceDealerDesktop
                 //adding a head dealer
                 else if (ddlUserType.SelectedValue == "Dealer" && hidUserGroup.Value == "Admin")
                 {
-                    using (SqlConnection aConnection = new SqlConnection(sdsUsers.ConnectionString))
+                    //Requires additional checks if adding a dealer
+                    if (txtDealershipName.Text == "" ||
+                        txtMultiplier.Text == "")
                     {
-                        aConnection.Open();
-                        SqlCommand aCommand = aConnection.CreateCommand();
-                        SqlTransaction aTransaction;
-
-                        // Start a local transaction.
-                        aTransaction = aConnection.BeginTransaction("SampleTransaction");
-
-                        // Must assign both transaction object and connection 
-                        // to Command object for a pending local transaction
-                        aCommand.Connection = aConnection;
-                        aCommand.Transaction = aTransaction;
-
-                        try
+                        lblError.Text = "Please enter data into all fields.";
+                    }
+                    else
+                    {
+                        //open SQL connection for use with transaction
+                        using (SqlConnection aConnection = new SqlConnection(sdsUsers.ConnectionString))
                         {
-                            //Add to dealer table
-                            aCommand.CommandText = "INSERT INTO dealers (dealer_name, first_name, last_name, country, multiplier)"
-                                                    + "VALUES('"
-                                                    + txtDealershipName.Text + "', '"
-                                                    + txtFirstName.Text + "', '"
-                                                    + txtLastName.Text + "', '"
-                                                    + ddlCountry.SelectedValue + "', "
-                                                    + Convert.ToDecimal(txtMultiplier.Text)/100 + ")"; //user enters %, so 80% will become 0.8
-                            aCommand.ExecuteNonQuery();
+                            //Open connection, then create a command and a transaction that are linked to it
+                            aConnection.Open();
+                            SqlCommand aCommand = aConnection.CreateCommand();
+                            SqlTransaction aTransaction;
 
-                            aCommand.CommandText = "SELECT dealer_id FROM dealers WHERE dealer_name='" + txtDealershipName.Text + "'";
-                            int newDealerId = Convert.ToInt32(aCommand.ExecuteScalar());
+                            // Start a local transaction.
+                            aTransaction = aConnection.BeginTransaction("SampleTransaction");
 
-                            //Now add user
-                            DateTime aDate = DateTime.Now;
-                            aCommand.CommandText = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
-                                                    + "VALUES('"
-                                                    + txtLogin.Text + "', '"
-                                                    + GlobalFunctions.CalculateMD5Hash(txtPassword.Text) + "', '"
-                                                    + txtEmail.Text + "', '"
-                                                    + aDate.ToString("yyyy/MM/dd") + "', '"
-                                                    + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
-                                                    + "D" + "', '" //Must be D-A within this block of logic
-                                                    + "A" + "', "
-                                                    + newDealerId + ", '" //reference ID is the dealer id in the dealer table they belong to
-                                                    + txtFirstName.Text + "', '"
-                                                    + txtLastName.Text + "', "
-                                                    + 1 + ")";
-                            aCommand.ExecuteNonQuery();
+                            // Must assign both transaction object and connection 
+                            // to Command object for a pending local transaction
+                            aCommand.Connection = aConnection;
+                            aCommand.Transaction = aTransaction;
 
-                            //An entrance into the model preferences table, one entry for each model type
-                            #region Model 100 preferences entry
-                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
-                                                    + "VALUES("
-                                                    + newDealerId + ", "
-                                                    + "'100',"
-                                                    + "10,"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White',"
-                                                    //door
-                                                    + "'Cabana',"
-                                                    + "'Full Screen',"
-                                                    + "'Out',"
-                                                    + "'R',"
-                                                    + "'Satin Silver',"
-                                                    + "'White',"
-                                                    + "'Clear',"
-                                                    + "'Clear',"
-                                                    + "'No Screen',"
-                                                    //window
-                                                    + "'Fixed Vinyl',"
-                                                    + "'White',"
-                                                    + "'Clear',"
-                                                    + "'Clear',"
-                                                    + "'No Screen',"
-                                                    //sunshade
-                                                    + "'White',"
-                                                    + "'Chalk',"
-                                                    + "'3%',"
-                                                    //roof
-                                                    + "'Studio',"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'3',"
-                                                    //floor
-                                                    + "'4.5',"
-                                                    + "0,"
-                                                    //kneewall
-                                                    + 20d + ","
-                                                    + "'Glass',"
-                                                    + "'Clear',"
-                                                    //transom
-                                                    + 20d + ","
-                                                    + "'Glass',"
-                                                    + "'Clear',"
-                                                    + "'Clear',"
-                                                    + "'No Screen',"
-                                                    + 0.25d
-                                                    + ")";
-                            aCommand.ExecuteNonQuery();
-                            #endregion
-
-                            #region Model 200 preferences entry
-                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
-                                                    + "VALUES("
-                                                    + newDealerId + ", "
-                                                    + "'200',"
-                                                    + "10,"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White',"
-                                //door
-                                                    + "'Cabana',"
-                                                    + "'Full Screen',"
-                                                    + "'Out',"
-                                                    + "'R',"
-                                                    + "'Satin Silver',"
-                                                    + "'White',"
-                                                    + "'Clear',"
-                                                    + "'Clear',"
-                                                    + "'No Screen',"
-                                //window
-                                                    + "'Vertical 4 Track',"
-                                                    + "'White',"
-                                                    + "'Clear',"
-                                                    + "'Clear',"
-                                                    + "'No Screen',"
-                                //sunshade
-                                                    + "'White',"
-                                                    + "'Chalk',"
-                                                    + "'3%',"
-                                //roof
-                                                    + "'Studio',"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'3',"
-                                //floor
-                                                    + "'4.5',"
-                                                    + "0,"
-                                //kneewall
-                                                    + 20d + ","
-                                                    + "'Glass',"
-                                                    + "'Clear',"
-                                //transom
-                                                    + 20d + ","
-                                                    + "'Glass',"
-                                                    + "'Clear',"
-                                                    + "'Clear',"
-                                                    + "'No Screen',"
-                                                    + 0.25d
-                                                    + ")";
-                            aCommand.ExecuteNonQuery();
-                            #endregion
-
-                            #region Model 300 preferences entry
-                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
-                                                    + "VALUES("
-                                                    + newDealerId + ", "
-                                                    + "'300',"
-                                                    + "10,"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White',"
-                                //door
-                                                    + "'Cabana',"
-                                                    + "'Full Screen',"
-                                                    + "'Out',"
-                                                    + "'R',"
-                                                    + "'Satin Silver',"
-                                                    + "'White',"
-                                                    + "'Clear',"
-                                                    + "'Clear',"
-                                                    + "'No Screen',"
-                                //window
-                                                    + "'Horizontal Roller',"
-                                                    + "'White',"
-                                                    + "'Clear',"
-                                                    + "'Clear',"
-                                                    + "'No Screen',"
-                                //sunshade
-                                                    + "'White',"
-                                                    + "'Chalk',"
-                                                    + "'3%',"
-                                //roof
-                                                    + "'Studio',"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'3',"
-                                //floor
-                                                    + "'4.5',"
-                                                    + "0,"
-                                //kneewall
-                                                    + 20d + ","
-                                                    + "'Glass',"
-                                                    + "'Clear',"
-                                //transom
-                                                    + 20d + ","
-                                                    + "'Glass',"
-                                                    + "'Clear',"
-                                                    + "'Clear',"
-                                                    + "'No Screen',"
-                                                    + 0.25d
-                                                    + ")";
-                            aCommand.ExecuteNonQuery();
-                            #endregion
-
-                            #region Model 400 preferences entry
-                            aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
-                                                    + "VALUES("
-                                                    + newDealerId + ", "
-                                                    + "'400',"
-                                                    + "10,"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White',"
-                                //door
-                                                    + "'Cabana',"
-                                                    + "'Full Screen',"
-                                                    + "'Out',"
-                                                    + "'R',"
-                                                    + "'Satin Silver',"
-                                                    + "'White',"
-                                                    + "'Clear',"
-                                                    + "'Clear',"
-                                                    + "'No Screen',"
-                                //window
-                                                    + "'Horizontal Roller',"
-                                                    + "'White',"
-                                                    + "'Clear',"
-                                                    + "'Clear',"
-                                                    + "'No Screen',"
-                                //sunshade
-                                                    + "'White',"
-                                                    + "'Chalk',"
-                                                    + "'3%',"
-                                //roof
-                                                    + "'Studio',"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'White Aluminum Stucco',"
-                                                    + "'3',"
-                                //floor
-                                                    + "'4.5',"
-                                                    + "0,"
-                                //kneewall
-                                                    + 20d + ","
-                                                    + "'Glass',"
-                                                    + "'Clear',"
-                                //transom
-                                                    + 20d + ","
-                                                    + "'Glass',"
-                                                    + "'Clear',"
-                                                    + "'Clear',"
-                                                    + "'No Screen',"
-                                                    + 0.25d
-                                                    + ")";
-                            aCommand.ExecuteNonQuery();
-                            #endregion
-
-                            //Lastly, a preferences table entry, with defaults
-                            aCommand.CommandText = "INSERT INTO preferences (dealer_id, installation_type, model_type, layout, cut_pitch)"
-                                                    + "VALUES("
-                                                    + newDealerId + ", "
-                                                    + "'House',"
-                                                    + "'200',"
-                                                    + "'preset 1',"
-                                                    + "1"
-                                                    +")";
-                            aCommand.ExecuteNonQuery();
-
-                            lblError.Text = "Successfully Added";
-
-                            // Attempt to commit the transaction.
-                            aTransaction.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            lblError.Text = "Commit Exception Type: " + ex.GetType();
-                            lblError.Text += "  Message: " + ex.Message;
-
-                            // Attempt to roll back the transaction. 
                             try
                             {
-                                aTransaction.Rollback();
+                                //Add to dealer table
+                                aCommand.CommandText = "INSERT INTO dealers (dealer_name, first_name, last_name, country, multiplier)"
+                                                        + "VALUES('"
+                                                        + txtDealershipName.Text + "', '"
+                                                        + txtFirstName.Text + "', '"
+                                                        + txtLastName.Text + "', '"
+                                                        + ddlCountry.SelectedValue + "', "
+                                                        + (Convert.ToDecimal(txtMultiplier.Text) / 100) + 1 + ")"; //user enters %, so 80% will become 1.8 as a multiplier                               
+                                aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
+
+                                aCommand.CommandText = "SELECT dealer_id FROM dealers WHERE dealer_name='" + txtDealershipName.Text + "'";
+                                int newDealerId = Convert.ToInt32(aCommand.ExecuteScalar()); //ExecuteScalar returns the value in the first field of the first row of a query. Good for getting one piece of data immediately
+
+                                //Now add user
+                                DateTime aDate = DateTime.Now;
+                                aCommand.CommandText = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
+                                                        + "VALUES('"
+                                                        + txtLogin.Text + "', '"
+                                                        + GlobalFunctions.CalculateSHAHash(txtPassword.Text) + "', '"
+                                                        + txtEmail.Text + "', '"
+                                                        + aDate.ToString("yyyy/MM/dd") + "', '"
+                                                        + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
+                                                        + "D" + "', '" //Must be D-A within this block of logic
+                                                        + "A" + "', "
+                                                        + newDealerId + ", '" //reference ID is the dealer id in the dealer table they belong to
+                                                        + txtFirstName.Text + "', '"
+                                                        + txtLastName.Text + "', "
+                                                        + 1 + ")";
+                                aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
+
+                                //An entrance into the model preferences table, one entry for each model type
+                                //These have hardcoded default values that any added dealer will have as their preferences.
+                                //They can be edited here.
+
+                                #region Model 100 preferences entry
+                                aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
+                                                        + "VALUES("
+                                                        + newDealerId + ", "
+                                                        + "'M100',"
+                                                        + "10,"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'White',"
+                                    //door
+                                                        + "'Cabana',"
+                                                        + "'Full Screen',"
+                                                        + "'Out',"
+                                                        + "'R',"
+                                                        + "'Satin Silver',"
+                                                        + "'White',"
+                                                        + "'Clear',"
+                                                        + "'Clear',"
+                                                        + "'No Screen',"
+                                    //window
+                                                        + "'Fixed Vinyl',"
+                                                        + "'White',"
+                                                        + "'Clear',"
+                                                        + "'Clear',"
+                                                        + "'No Screen',"
+                                    //sunshade
+                                                        + "'White',"
+                                                        + "'Chalk',"
+                                                        + "'3%',"
+                                    //roof
+                                                        + "'Studio',"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'3',"
+                                    //floor
+                                                        + "'4.5',"
+                                                        + "0,"
+                                    //kneewall
+                                                        + 20d + ","
+                                                        + "'Glass',"
+                                                        + "'Clear',"
+                                    //transom
+                                                        + 20d + ","
+                                                        + "'Glass',"
+                                                        + "'Clear',"
+                                                        + "'Clear',"
+                                                        + "'No Screen',"
+                                                        + 0.25d
+                                                        + ")";
+                                aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
+                                #endregion
+
+                                #region Model 200 preferences entry
+                                aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
+                                                        + "VALUES("
+                                                        + newDealerId + ", "
+                                                        + "'M200',"
+                                                        + "10,"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'White',"
+                                    //door
+                                                        + "'Cabana',"
+                                                        + "'Full Screen',"
+                                                        + "'Out',"
+                                                        + "'R',"
+                                                        + "'Satin Silver',"
+                                                        + "'White',"
+                                                        + "'Clear',"
+                                                        + "'Clear',"
+                                                        + "'No Screen',"
+                                    //window
+                                                        + "'Vertical 4 Track',"
+                                                        + "'White',"
+                                                        + "'Clear',"
+                                                        + "'Clear',"
+                                                        + "'No Screen',"
+                                    //sunshade
+                                                        + "'White',"
+                                                        + "'Chalk',"
+                                                        + "'3%',"
+                                    //roof
+                                                        + "'Studio',"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'3',"
+                                    //floor
+                                                        + "'4.5',"
+                                                        + "0,"
+                                    //kneewall
+                                                        + 20d + ","
+                                                        + "'Glass',"
+                                                        + "'Clear',"
+                                    //transom
+                                                        + 20d + ","
+                                                        + "'Glass',"
+                                                        + "'Clear',"
+                                                        + "'Clear',"
+                                                        + "'No Screen',"
+                                                        + 0.25d
+                                                        + ")";
+                                aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
+                                #endregion
+
+                                #region Model 300 preferences entry
+                                aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
+                                                        + "VALUES("
+                                                        + newDealerId + ", "
+                                                        + "'M300',"
+                                                        + "10,"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'White',"
+                                    //door
+                                                        + "'Cabana',"
+                                                        + "'Full Screen',"
+                                                        + "'Out',"
+                                                        + "'R',"
+                                                        + "'Satin Silver',"
+                                                        + "'White',"
+                                                        + "'Clear',"
+                                                        + "'Clear',"
+                                                        + "'No Screen',"
+                                    //window
+                                                        + "'Horizontal Roller',"
+                                                        + "'White',"
+                                                        + "'Clear',"
+                                                        + "'Clear',"
+                                                        + "'No Screen',"
+                                    //sunshade
+                                                        + "'White',"
+                                                        + "'Chalk',"
+                                                        + "'3%',"
+                                    //roof
+                                                        + "'Studio',"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'3',"
+                                    //floor
+                                                        + "'4.5',"
+                                                        + "0,"
+                                    //kneewall
+                                                        + 20d + ","
+                                                        + "'Glass',"
+                                                        + "'Clear',"
+                                    //transom
+                                                        + 20d + ","
+                                                        + "'Glass',"
+                                                        + "'Clear',"
+                                                        + "'Clear',"
+                                                        + "'No Screen',"
+                                                        + 0.25d
+                                                        + ")";
+                                aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
+                                #endregion
+
+                                #region Model 400 preferences entry
+                                aCommand.CommandText = "INSERT INTO model_preferences (dealer_id, model_type, default_filler, interior_panel_skin, exterior_panel_skin, frame_colour, door_type, door_style, door_swing, door_hinge, door_hardware, door_colour, door_glass_tint, door_vinyl_tint, door_screen_type, window_type, window_colour, window_glass_tint, window_vinyl_tint, window_screen_type, sunshade_valance_colour, sunshade_fabric_colour, sunshade_openness, roof_type, roof_interior_skin, roof_exterior_skin, roof_thickness, floor_thickness, floor_metal_barrier, kneewall_height, kneewall_type, kneewall_glass_tint, transom_height, transom_style, transom_glass_tint, transom_vinyl_tint, transom_screen_type, markup)"
+                                                        + "VALUES("
+                                                        + newDealerId + ", "
+                                                        + "'M400',"
+                                                        + "10,"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'White',"
+                                    //door
+                                                        + "'Cabana',"
+                                                        + "'Full Screen',"
+                                                        + "'Out',"
+                                                        + "'R',"
+                                                        + "'Satin Silver',"
+                                                        + "'White',"
+                                                        + "'Clear',"
+                                                        + "'Clear',"
+                                                        + "'No Screen',"
+                                    //window
+                                                        + "'Horizontal Roller',"
+                                                        + "'White',"
+                                                        + "'Clear',"
+                                                        + "'Clear',"
+                                                        + "'No Screen',"
+                                    //sunshade
+                                                        + "'White',"
+                                                        + "'Chalk',"
+                                                        + "'3%',"
+                                    //roof
+                                                        + "'Studio',"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'White Aluminum Stucco',"
+                                                        + "'3',"
+                                    //floor
+                                                        + "'4.5',"
+                                                        + "0,"
+                                    //kneewall
+                                                        + 20d + ","
+                                                        + "'Glass',"
+                                                        + "'Clear',"
+                                    //transom
+                                                        + 20d + ","
+                                                        + "'Glass',"
+                                                        + "'Clear',"
+                                                        + "'Clear',"
+                                                        + "'No Screen',"
+                                                        + 0.25d
+                                                        + ")";
+                                aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
+                                #endregion
+
+                                //Lastly, a preferences table entry, with defaults
+                                aCommand.CommandText = "INSERT INTO preferences (dealer_id, installation_type, model_type, layout, cut_pitch)"
+                                                        + "VALUES("
+                                                        + newDealerId + ", "
+                                                        + "'House',"
+                                                        + "'M200',"
+                                                        + "'preset 1',"
+                                                        + "1"
+                                                        + ")";
+                                aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
+
+                                lblError.Text = "Successfully Added";
+
+                                // Attempt to commit the transaction.
+                                aTransaction.Commit();
                             }
-                            catch (Exception ex2)
+                            catch (Exception ex)
                             {
-                                // This catch block will handle any errors that may have occurred 
-                                // on the server that would cause the rollback to fail, such as 
-                                // a closed connection.
-                                Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
-                                Console.WriteLine("  Message: {0}", ex2.Message);
+                                lblError.Text = "Commit Exception Type: " + ex.GetType();
+                                lblError.Text += "  Message: " + ex.Message;
+
+                                // Attempt to roll back the transaction. 
+                                try
+                                {
+                                    aTransaction.Rollback();
+                                }
+                                catch (Exception ex2)
+                                {
+                                    // This catch block will handle any errors that may have occurred 
+                                    // on the server that would cause the rollback to fail, such as 
+                                    // a closed connection.
+                                    Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
+                                    Console.WriteLine("  Message: {0}", ex2.Message);
+                                }
                             }
                         }
                     }
@@ -479,17 +463,17 @@ namespace SunspaceDealerDesktop
                                                     + txtFirstName.Text + "', '"
                                                     + txtLastName.Text + "'"
                                                     + ")";
-                            aCommand.ExecuteNonQuery();
+                            aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
 
                             aCommand.CommandText = "SELECT sunspace_id FROM sunspace WHERE position='" + "CSR" + "' AND first_name='" + txtFirstName.Text + "' AND last_name='" + txtLastName.Text + "'";
-                            int newSunspaceId = Convert.ToInt32(aCommand.ExecuteScalar());
+                            int newSunspaceId = Convert.ToInt32(aCommand.ExecuteScalar()); //ExecuteScalar returns the value in the first field of the first row of a query. Good for getting one piece of data immediately
 
                             //Now add user
                             DateTime aDate = DateTime.Now;
                             aCommand.CommandText = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
                                                     + "VALUES('"
                                                     + txtLogin.Text + "', '"
-                                                    + GlobalFunctions.CalculateMD5Hash(txtPassword.Text) + "', '"
+                                                    + GlobalFunctions.CalculateSHAHash(txtPassword.Text) + "', '"
                                                     + txtEmail.Text + "', '"
                                                     + aDate.ToString("yyyy/MM/dd") + "', '"
                                                     + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
@@ -499,7 +483,7 @@ namespace SunspaceDealerDesktop
                                                     + txtFirstName.Text + "', '"
                                                     + txtLastName.Text + "', "
                                                     + 1 + ")";
-                            aCommand.ExecuteNonQuery();
+                            aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
 
                             lblError.Text = "Successfully Added";
 
@@ -533,7 +517,7 @@ namespace SunspaceDealerDesktop
                 //Sunspace Admin
                 else
                 {
-
+                    //You currently may not add an admin in such a way.  Such a decision should come from high up and be done directly through a database query.
                 }
                 #endregion
             }

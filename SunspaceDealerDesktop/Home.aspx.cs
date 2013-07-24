@@ -17,6 +17,11 @@ namespace SunspaceDealerDesktop
                 Response.Redirect("Login.aspx");
                 //Session.Add("loggedIn", "1");
             }
+            //if its a dealer side user, we don't show the spoof button.
+            if (Session["user_type"].ToString() == "D")
+            {
+                btnSpoof.Visible = false;
+            }
         }
 
         protected void btnPreferences_Click(object sender, EventArgs e)
@@ -32,6 +37,11 @@ namespace SunspaceDealerDesktop
         protected void btnSpoof_Click(object sender, EventArgs e)
         {
             Response.Redirect("Spoof.aspx");
+        }
+
+        protected void btnNewProject_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("NewProject.aspx");
         }
     }
 }

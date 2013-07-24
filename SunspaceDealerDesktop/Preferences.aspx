@@ -318,6 +318,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 100 - Default Filler\n";
             }
+            isValid = true;
 
             //200
             isValid = true;
@@ -337,6 +338,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 200 - Default Filler\n";
             }
+            isValid = true;
             //300
             var defaultFiller300 = document.getElementById("<%=hid300DefaultFiller.ClientID%>").value;
             if (defaultFiller300 == "") {
@@ -351,6 +353,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 300 - Default Filler\n";
             }
+            isValid = true;
             //400
             var defaultFiller400 = document.getElementById("<%=hid400DefaultFiller.ClientID%>").value;
             if (defaultFiller400 == "") {
@@ -365,6 +368,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 400 - Default Filler\n";
             }
+            isValid = true;
 
             //markup
             //100
@@ -381,6 +385,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 100 - Markup\n";
             }
+            isValid = true;
             //200
             var markup200 = document.getElementById("<%=hid200Markup.ClientID%>").value;
             if (markup200 == "") {
@@ -395,6 +400,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 200 - Markup\n";
             }
+            isValid = true;
             //300
             var markup300 = document.getElementById("<%=hid300Markup.ClientID%>").value;
             if (markup300 == "") {
@@ -409,6 +415,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 300 - Markup\n";
             }
+            isValid = true;
             //400
             var markup400 = document.getElementById("<%=hid400Markup.ClientID%>").value;
             if (markup400 == "") {
@@ -423,6 +430,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 400 - Markup\n";
             }
+            isValid = true;
 
             //kneewall height
             //100
@@ -439,6 +447,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 100 - Kneewall Height Filler\n";
             }
+            isValid = true;
             //200
             var kneewallHeight200 = document.getElementById("<%=hid200KneewallHeight.ClientID%>").value;
             if (kneewallHeight200 == "") {
@@ -453,6 +462,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 200 - Kneewall Height Filler\n";
             }
+            isValid = true;
             //300
             var kneewallHeight300 = document.getElementById("<%=hid300KneewallHeight.ClientID%>").value;
             if (kneewallHeight300 == "") {
@@ -467,6 +477,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 300 - Kneewall Height Filler\n";
             }
+            isValid = true;
             //400
             var kneewallHeight400 = document.getElementById("<%=hid400KneewallHeight.ClientID%>").value;
             if (kneewallHeight400 == "") {
@@ -481,6 +492,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 400 - Kneewall Height Filler\n";
             }
+            isValid = true;
 
             //transom height
             //100
@@ -497,6 +509,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 100 - Transom Height\n";
             }
+            isValid = true;
             //200
             var transomHeight200 = document.getElementById("<%=hid200TransomHeight.ClientID%>").value;
             if (transomHeight200 == "") {
@@ -511,6 +524,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 200 - Transom Height\n";
             }
+            isValid = true;
             //300
             var transomHeight300 = document.getElementById("<%=hid300TransomHeight.ClientID%>").value;
             if (transomHeight300 == "") {
@@ -525,6 +539,7 @@
             if (isValid == false) {
                 errorMessage += "Error in Model 300 - Transom Height\n";
             }
+            isValid = true;
             //400
             var transomHeight400 = document.getElementById("<%=hid400TransomHeight.ClientID%>").value;
             if (transomHeight400 == "") {
@@ -540,7 +555,7 @@
                 errorMessage += "Error in Model 400 - Transom Height\n";
             }
 
-            document.getElementById("<%=lblError.ClientID%>").value = errorMessage;
+            document.getElementById("<%=lblError.ClientID%>").innerHTML = errorMessage;
         }
     </script>
     <div>
@@ -551,11 +566,11 @@
     <div class="slide-window no-sidebar">
 
         <div class="slide-wrapper">
-            <asp:Label ID="lblError" runat="server"></asp:Label>
 
             <div id="slide1" class="slide">
                 <%-- fancy --%>
                 <h1>
+                    <asp:Label ID="lblError" runat="server"></asp:Label>
                     <asp:Label ID="lblPreferences" runat="server" Text="Set your preferences below"></asp:Label>
                 </h1>        
                               

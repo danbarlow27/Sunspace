@@ -53,7 +53,7 @@ namespace SunspaceDealerDesktop
                 returnDecimal = 0;
             }
 
-            return (noDecimalNumber + returnDecimal);
+            return (float)(noDecimalNumber + returnDecimal);
         }
                 
         /**
@@ -100,7 +100,7 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public static string CalculateMD5Hash(string input)
+        public static string CalculateSHAHash(string input)
         {
             // step 1, calculate sha512 hash from input
             SHA512 sha512 = SHA512Managed.Create();

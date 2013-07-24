@@ -30,7 +30,7 @@ namespace SunspaceDealerDesktop
             else
             {
                 string userName = txtUsername.Text;
-                string userHash = GlobalFunctions.CalculateMD5Hash(txtPassword.Text);
+                string userHash = GlobalFunctions.CalculateSHAHash(txtPassword.Text);
 
                 //Get the customers assosciated with this dealer
                 sdsLogin.SelectCommand = "SELECT login, password, user_type, user_group, reference_id FROM users WHERE login='" + userName + "' AND password='" + userHash + "'"; //and status=1
