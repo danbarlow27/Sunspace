@@ -31,6 +31,15 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblUser;
         
         /// <summary>
+        /// lblError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblError;
+        
+        /// <summary>
         /// lblPreferences control.
         /// </summary>
         /// <remarks>
@@ -130,40 +139,49 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddlModelNumber;
         
         /// <summary>
-        /// lblLayoutDefault control.
+        /// lblLayout control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLayoutDefault;
+        protected global::System.Web.UI.WebControls.Label lblLayout;
         
         /// <summary>
-        /// ddlLayoutDefault control.
+        /// ddlLayout control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlLayoutDefault;
+        protected global::System.Web.UI.WebControls.DropDownList ddlLayout;
         
         /// <summary>
-        /// lblMarkup control.
+        /// chkCutPitch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMarkup;
+        protected global::System.Web.UI.WebControls.CheckBox chkCutPitch;
         
         /// <summary>
-        /// txtMarkup control.
+        /// lblCutPitchCheck control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMarkup;
+        protected global::System.Web.UI.WebControls.Label lblCutPitchCheck;
+        
+        /// <summary>
+        /// lblCutPitch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCutPitch;
         
         /// <summary>
         /// radSunroom100 control.
@@ -193,33 +211,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblSunroom100;
         
         /// <summary>
-        /// chk100Cut control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chk100Cut;
-        
-        /// <summary>
-        /// lbl100CutCheck control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl100CutCheck;
-        
-        /// <summary>
-        /// lbl100Cut control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl100Cut;
-        
-        /// <summary>
         /// lbl100DefaultFiller control.
         /// </summary>
         /// <remarks>
@@ -245,6 +236,24 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl100DefaultFiller;
+        
+        /// <summary>
+        /// lbl100Markup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl100Markup;
+        
+        /// <summary>
+        /// txt100Markup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt100Markup;
         
         /// <summary>
         /// rad100WallColours control.
@@ -535,22 +544,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl100DoorVinylTint;
         
         /// <summary>
-        /// lbl100DoorScreenTint control.
+        /// lbl100DoorScreenType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl100DoorScreenTint;
+        protected global::System.Web.UI.WebControls.Label lbl100DoorScreenType;
         
         /// <summary>
-        /// ddl100DoorScreenTint control.
+        /// ddl100DoorScreenType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl100DoorScreenTint;
+        protected global::System.Web.UI.WebControls.DropDownList ddl100DoorScreenType;
         
         /// <summary>
         /// rad100WindowOptions control.
@@ -596,24 +605,6 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl100WindowType;
-        
-        /// <summary>
-        /// lbl100WindowColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl100WindowColour;
-        
-        /// <summary>
-        /// ddl100WindowColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl100WindowColour;
         
         /// <summary>
         /// lbl100WindowGlassTint control.
@@ -877,42 +868,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lbl100FloorOptions;
         
         /// <summary>
-        /// lbl100FloorInteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl100FloorInteriorSkin;
-        
-        /// <summary>
-        /// ddl100FloorInteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl100FloorInteriorSkin;
-        
-        /// <summary>
-        /// lbl100FloorExteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl100FloorExteriorSkin;
-        
-        /// <summary>
-        /// ddl100FloorExteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl100FloorExteriorSkin;
-        
-        /// <summary>
         /// lbl100FloorThickness control.
         /// </summary>
         /// <remarks>
@@ -931,6 +886,24 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl100FloorThickness;
         
         /// <summary>
+        /// chk100FloorMetalBarrier control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chk100FloorMetalBarrier;
+        
+        /// <summary>
+        /// lbl100FloorMetalBarrierCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl100FloorMetalBarrierCheck;
+        
+        /// <summary>
         /// lbl100FloorMetalBarrier control.
         /// </summary>
         /// <remarks>
@@ -938,15 +911,6 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl100FloorMetalBarrier;
-        
-        /// <summary>
-        /// ddl100FloorMetalBarrier control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl100FloorMetalBarrier;
         
         /// <summary>
         /// rad100KneewallOptions control.
@@ -992,6 +956,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt100KneewallHeight;
+        
+        /// <summary>
+        /// ddl100KneewallHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl100KneewallHeight;
         
         /// <summary>
         /// lbl100KneewallType control.
@@ -1073,6 +1046,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt100TransomHeight;
+        
+        /// <summary>
+        /// ddl100TransomHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl100TransomHeight;
         
         /// <summary>
         /// lbl100TransomType control.
@@ -1174,33 +1156,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblSunroom200;
         
         /// <summary>
-        /// chk200Cut control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chk200Cut;
-        
-        /// <summary>
-        /// lbl200CutCheck control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl200CutCheck;
-        
-        /// <summary>
-        /// lbl200Cut control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl200Cut;
-        
-        /// <summary>
         /// lbl200DefaultFiller control.
         /// </summary>
         /// <remarks>
@@ -1226,6 +1181,24 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl200DefaultFiller;
+        
+        /// <summary>
+        /// lbl200Markup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl200Markup;
+        
+        /// <summary>
+        /// txt200Markup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt200Markup;
         
         /// <summary>
         /// rad200WallColours control.
@@ -1516,22 +1489,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl200DoorVinylTint;
         
         /// <summary>
-        /// lbl200DoorScreenTint control.
+        /// lbl200DoorScreenType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl200DoorScreenTint;
+        protected global::System.Web.UI.WebControls.Label lbl200DoorScreenType;
         
         /// <summary>
-        /// ddl200DoorScreenTint control.
+        /// ddl200DoorScreenType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl200DoorScreenTint;
+        protected global::System.Web.UI.WebControls.DropDownList ddl200DoorScreenType;
         
         /// <summary>
         /// rad200WindowOptions control.
@@ -1858,42 +1831,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lbl200FloorOptions;
         
         /// <summary>
-        /// lbl200FloorInteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl200FloorInteriorSkin;
-        
-        /// <summary>
-        /// ddl200FloorInteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl200FloorInteriorSkin;
-        
-        /// <summary>
-        /// lbl200FloorExteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl200FloorExteriorSkin;
-        
-        /// <summary>
-        /// ddl200FloorExteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl200FloorExteriorSkin;
-        
-        /// <summary>
         /// lbl200FloorThickness control.
         /// </summary>
         /// <remarks>
@@ -1912,6 +1849,24 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl200FloorThickness;
         
         /// <summary>
+        /// chk200FloorMetalBarrier control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chk200FloorMetalBarrier;
+        
+        /// <summary>
+        /// lbl200FloorMetalBarrierCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl200FloorMetalBarrierCheck;
+        
+        /// <summary>
         /// lbl200FloorMetalBarrier control.
         /// </summary>
         /// <remarks>
@@ -1919,15 +1874,6 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl200FloorMetalBarrier;
-        
-        /// <summary>
-        /// ddl200FloorMetalBarrier control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl200FloorMetalBarrier;
         
         /// <summary>
         /// rad200KneewallOptions control.
@@ -1973,6 +1919,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt200KneewallHeight;
+        
+        /// <summary>
+        /// ddl200KneewallHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl200KneewallHeight;
         
         /// <summary>
         /// lbl200KneewallType control.
@@ -2054,6 +2009,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt200TransomHeight;
+        
+        /// <summary>
+        /// ddl200TransomHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl200TransomHeight;
         
         /// <summary>
         /// lbl200TransomType control.
@@ -2155,33 +2119,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblSunroom300;
         
         /// <summary>
-        /// chk300Cut control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chk300Cut;
-        
-        /// <summary>
-        /// lbl300CutCheck control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl300CutCheck;
-        
-        /// <summary>
-        /// lbl300Cut control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl300Cut;
-        
-        /// <summary>
         /// lbl300DefaultFiller control.
         /// </summary>
         /// <remarks>
@@ -2207,6 +2144,24 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl300DefaultFiller;
+        
+        /// <summary>
+        /// lbl300Markup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl300Markup;
+        
+        /// <summary>
+        /// txt300Markup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt300Markup;
         
         /// <summary>
         /// rad300WallColours control.
@@ -2497,22 +2452,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl300DoorVinylTint;
         
         /// <summary>
-        /// lbl300DoorScreenTint control.
+        /// lbl300DoorScreenType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl300DoorScreenTint;
+        protected global::System.Web.UI.WebControls.Label lbl300DoorScreenType;
         
         /// <summary>
-        /// ddl300DoorScreenTint control.
+        /// ddl300DoorScreenType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl300DoorScreenTint;
+        protected global::System.Web.UI.WebControls.DropDownList ddl300DoorScreenType;
         
         /// <summary>
         /// rad300WindowOptions control.
@@ -2839,42 +2794,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lbl300FloorOptions;
         
         /// <summary>
-        /// lbl300FloorInteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl300FloorInteriorSkin;
-        
-        /// <summary>
-        /// ddl300FloorInteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl300FloorInteriorSkin;
-        
-        /// <summary>
-        /// lbl300FloorExteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl300FloorExteriorSkin;
-        
-        /// <summary>
-        /// ddl300FloorExteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl300FloorExteriorSkin;
-        
-        /// <summary>
         /// lbl300FloorThickness control.
         /// </summary>
         /// <remarks>
@@ -2893,6 +2812,24 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl300FloorThickness;
         
         /// <summary>
+        /// chk300FloorMetalBarrier control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chk300FloorMetalBarrier;
+        
+        /// <summary>
+        /// lbl300FloorMetalBarrierCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl300FloorMetalBarrierCheck;
+        
+        /// <summary>
         /// lbl300FloorMetalBarrier control.
         /// </summary>
         /// <remarks>
@@ -2900,15 +2837,6 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl300FloorMetalBarrier;
-        
-        /// <summary>
-        /// ddl300FloorMetalBarrier control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl300FloorMetalBarrier;
         
         /// <summary>
         /// rad300KneewallOptions control.
@@ -2954,6 +2882,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt300KneewallHeight;
+        
+        /// <summary>
+        /// ddl300KneewallHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl300KneewallHeight;
         
         /// <summary>
         /// lbl300KneewallType control.
@@ -3035,6 +2972,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt300TransomHeight;
+        
+        /// <summary>
+        /// ddl300TransomHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl300TransomHeight;
         
         /// <summary>
         /// lbl300TransomType control.
@@ -3136,33 +3082,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblSunroom400;
         
         /// <summary>
-        /// chk400Cut control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chk400Cut;
-        
-        /// <summary>
-        /// lbl400CutCheck control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl400CutCheck;
-        
-        /// <summary>
-        /// lbl400Cut control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl400Cut;
-        
-        /// <summary>
         /// lbl400DefaultFiller control.
         /// </summary>
         /// <remarks>
@@ -3188,6 +3107,24 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl400DefaultFiller;
+        
+        /// <summary>
+        /// lbl400Markup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl400Markup;
+        
+        /// <summary>
+        /// txt400Markup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt400Markup;
         
         /// <summary>
         /// rad400WallColours control.
@@ -3478,22 +3415,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl400DoorVinylTint;
         
         /// <summary>
-        /// lbl400DoorScreenTint control.
+        /// lbl400DoorScreenType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl400DoorScreenTint;
+        protected global::System.Web.UI.WebControls.Label lbl400DoorScreenType;
         
         /// <summary>
-        /// ddl400DoorScreenTint control.
+        /// ddl400DoorScreenType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl400DoorScreenTint;
+        protected global::System.Web.UI.WebControls.DropDownList ddl400DoorScreenType;
         
         /// <summary>
         /// rad400WindowOptions control.
@@ -3820,42 +3757,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lbl400FloorOptions;
         
         /// <summary>
-        /// lbl400FloorInteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl400FloorInteriorSkin;
-        
-        /// <summary>
-        /// ddl400FloorInteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl400FloorInteriorSkin;
-        
-        /// <summary>
-        /// lbl400FloorExteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl400FloorExteriorSkin;
-        
-        /// <summary>
-        /// ddl400FloorExteriorSkin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl400FloorExteriorSkin;
-        
-        /// <summary>
         /// lbl400FloorThickness control.
         /// </summary>
         /// <remarks>
@@ -3874,6 +3775,24 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl400FloorThickness;
         
         /// <summary>
+        /// chk400FloorMetalBarrier control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chk400FloorMetalBarrier;
+        
+        /// <summary>
+        /// lbl400FloorMetalBarrierCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl400FloorMetalBarrierCheck;
+        
+        /// <summary>
         /// lbl400FloorMetalBarrier control.
         /// </summary>
         /// <remarks>
@@ -3881,15 +3800,6 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl400FloorMetalBarrier;
-        
-        /// <summary>
-        /// ddl400FloorMetalBarrier control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl400FloorMetalBarrier;
         
         /// <summary>
         /// rad400KneewallOptions control.
@@ -3935,6 +3845,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt400KneewallHeight;
+        
+        /// <summary>
+        /// ddl400KneewallHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl400KneewallHeight;
         
         /// <summary>
         /// lbl400KneewallType control.
@@ -4016,6 +3935,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt400TransomHeight;
+        
+        /// <summary>
+        /// ddl400TransomHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl400TransomHeight;
         
         /// <summary>
         /// lbl400TransomType control.
@@ -4252,12 +4180,1407 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Button btnUpdate;
         
         /// <summary>
-        /// rptHiddens control.
+        /// sdsUsers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptHiddens;
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsUsers;
+        
+        /// <summary>
+        /// hidInstallationType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidInstallationType;
+        
+        /// <summary>
+        /// hidModelNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidModelNumber;
+        
+        /// <summary>
+        /// hidLayout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidLayout;
+        
+        /// <summary>
+        /// hid100DefaultFiller control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100DefaultFiller;
+        
+        /// <summary>
+        /// hid100WallInteriorPanelColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100WallInteriorPanelColour;
+        
+        /// <summary>
+        /// hid100WallInteriorPanelSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100WallInteriorPanelSkin;
+        
+        /// <summary>
+        /// hid100WallExteriorPanelColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100WallExteriorPanelColour;
+        
+        /// <summary>
+        /// hid100WallExteriorPanelSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100WallExteriorPanelSkin;
+        
+        /// <summary>
+        /// hid100WallFrameColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100WallFrameColour;
+        
+        /// <summary>
+        /// hid100DoorType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100DoorType;
+        
+        /// <summary>
+        /// hid100DoorStyle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100DoorStyle;
+        
+        /// <summary>
+        /// hid100DoorSwing control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100DoorSwing;
+        
+        /// <summary>
+        /// hid100DoorHinge control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100DoorHinge;
+        
+        /// <summary>
+        /// hid100DoorHardware control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100DoorHardware;
+        
+        /// <summary>
+        /// hid100DoorColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100DoorColour;
+        
+        /// <summary>
+        /// hid100DoorGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100DoorGlassTint;
+        
+        /// <summary>
+        /// hid100DoorVinylTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100DoorVinylTint;
+        
+        /// <summary>
+        /// hid100DoorScreenType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100DoorScreenType;
+        
+        /// <summary>
+        /// hid100WindowType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100WindowType;
+        
+        /// <summary>
+        /// hid100WindowColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100WindowColour;
+        
+        /// <summary>
+        /// hid100WindowGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100WindowGlassTint;
+        
+        /// <summary>
+        /// hid100WindowVinylTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100WindowVinylTint;
+        
+        /// <summary>
+        /// hid100WindowScreenType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100WindowScreenType;
+        
+        /// <summary>
+        /// hid100SunshadeValanceColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100SunshadeValanceColour;
+        
+        /// <summary>
+        /// hid100SunshadeFabricColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100SunshadeFabricColour;
+        
+        /// <summary>
+        /// hid100SunshadeOpenness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100SunshadeOpenness;
+        
+        /// <summary>
+        /// hid100RoofType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100RoofType;
+        
+        /// <summary>
+        /// hid100RoofInteriorSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100RoofInteriorSkin;
+        
+        /// <summary>
+        /// hid100RoofExteriorSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100RoofExteriorSkin;
+        
+        /// <summary>
+        /// hid100RoofThickness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100RoofThickness;
+        
+        /// <summary>
+        /// hid100FloorThickness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100FloorThickness;
+        
+        /// <summary>
+        /// hid100FloorMetalBarrier control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100FloorMetalBarrier;
+        
+        /// <summary>
+        /// hid100KneewallHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100KneewallHeight;
+        
+        /// <summary>
+        /// hid100KneewallType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100KneewallType;
+        
+        /// <summary>
+        /// hid100KneewallGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100KneewallGlassTint;
+        
+        /// <summary>
+        /// hid100TransomHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100TransomHeight;
+        
+        /// <summary>
+        /// hid100TransomType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100TransomType;
+        
+        /// <summary>
+        /// hid100TransomGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100TransomGlassTint;
+        
+        /// <summary>
+        /// hid100TransomVinylTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100TransomVinylTint;
+        
+        /// <summary>
+        /// hid100TransomScreenType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100TransomScreenType;
+        
+        /// <summary>
+        /// hid100Markup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid100Markup;
+        
+        /// <summary>
+        /// hid200DefaultFiller control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200DefaultFiller;
+        
+        /// <summary>
+        /// hid200WallInteriorPanelColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200WallInteriorPanelColour;
+        
+        /// <summary>
+        /// hid200WallInteriorPanelSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200WallInteriorPanelSkin;
+        
+        /// <summary>
+        /// hid200WallExteriorPanelColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200WallExteriorPanelColour;
+        
+        /// <summary>
+        /// hid200WallExteriorPanelSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200WallExteriorPanelSkin;
+        
+        /// <summary>
+        /// hid200WallFrameColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200WallFrameColour;
+        
+        /// <summary>
+        /// hid200DoorType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200DoorType;
+        
+        /// <summary>
+        /// hid200DoorStyle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200DoorStyle;
+        
+        /// <summary>
+        /// hid200DoorSwing control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200DoorSwing;
+        
+        /// <summary>
+        /// hid200DoorHinge control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200DoorHinge;
+        
+        /// <summary>
+        /// hid200DoorHardware control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200DoorHardware;
+        
+        /// <summary>
+        /// hid200DoorColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200DoorColour;
+        
+        /// <summary>
+        /// hid200DoorGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200DoorGlassTint;
+        
+        /// <summary>
+        /// hid200DoorVinylTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200DoorVinylTint;
+        
+        /// <summary>
+        /// hid200DoorScreenType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200DoorScreenType;
+        
+        /// <summary>
+        /// hid200WindowType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200WindowType;
+        
+        /// <summary>
+        /// hid200WindowColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200WindowColour;
+        
+        /// <summary>
+        /// hid200WindowGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200WindowGlassTint;
+        
+        /// <summary>
+        /// hid200WindowVinylTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200WindowVinylTint;
+        
+        /// <summary>
+        /// hid200WindowScreenType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200WindowScreenType;
+        
+        /// <summary>
+        /// hid200SunshadeValanceColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200SunshadeValanceColour;
+        
+        /// <summary>
+        /// hid200SunshadeFabricColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200SunshadeFabricColour;
+        
+        /// <summary>
+        /// hid200SunshadeOpenness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200SunshadeOpenness;
+        
+        /// <summary>
+        /// hid200RoofType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200RoofType;
+        
+        /// <summary>
+        /// hid200RoofInteriorSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200RoofInteriorSkin;
+        
+        /// <summary>
+        /// hid200RoofExteriorSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200RoofExteriorSkin;
+        
+        /// <summary>
+        /// hid200RoofThickness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200RoofThickness;
+        
+        /// <summary>
+        /// hid200FloorThickness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200FloorThickness;
+        
+        /// <summary>
+        /// hid200FloorMetalBarrier control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200FloorMetalBarrier;
+        
+        /// <summary>
+        /// hid200KneewallHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200KneewallHeight;
+        
+        /// <summary>
+        /// hid200KneewallType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200KneewallType;
+        
+        /// <summary>
+        /// hid200KneewallGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200KneewallGlassTint;
+        
+        /// <summary>
+        /// hid200TransomHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200TransomHeight;
+        
+        /// <summary>
+        /// hid200TransomType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200TransomType;
+        
+        /// <summary>
+        /// hid200TransomGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200TransomGlassTint;
+        
+        /// <summary>
+        /// hid200TransomVinylTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200TransomVinylTint;
+        
+        /// <summary>
+        /// hid200TransomScreenType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200TransomScreenType;
+        
+        /// <summary>
+        /// hid200Markup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid200Markup;
+        
+        /// <summary>
+        /// hid300DefaultFiller control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300DefaultFiller;
+        
+        /// <summary>
+        /// hid300WallInteriorPanelColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300WallInteriorPanelColour;
+        
+        /// <summary>
+        /// hid300WallInteriorPanelSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300WallInteriorPanelSkin;
+        
+        /// <summary>
+        /// hid300WallExteriorPanelColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300WallExteriorPanelColour;
+        
+        /// <summary>
+        /// hid300WallExteriorPanelSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300WallExteriorPanelSkin;
+        
+        /// <summary>
+        /// hid300WallFrameColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300WallFrameColour;
+        
+        /// <summary>
+        /// hid300DoorType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300DoorType;
+        
+        /// <summary>
+        /// hid300DoorStyle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300DoorStyle;
+        
+        /// <summary>
+        /// hid300DoorSwing control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300DoorSwing;
+        
+        /// <summary>
+        /// hid300DoorHinge control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300DoorHinge;
+        
+        /// <summary>
+        /// hid300DoorHardware control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300DoorHardware;
+        
+        /// <summary>
+        /// hid300DoorColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300DoorColour;
+        
+        /// <summary>
+        /// hid300DoorGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300DoorGlassTint;
+        
+        /// <summary>
+        /// hid300DoorVinylTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300DoorVinylTint;
+        
+        /// <summary>
+        /// hid300DoorScreenType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300DoorScreenType;
+        
+        /// <summary>
+        /// hid300WindowType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300WindowType;
+        
+        /// <summary>
+        /// hid300WindowColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300WindowColour;
+        
+        /// <summary>
+        /// hid300WindowGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300WindowGlassTint;
+        
+        /// <summary>
+        /// hid300WindowVinylTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300WindowVinylTint;
+        
+        /// <summary>
+        /// hid300WindowScreenType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300WindowScreenType;
+        
+        /// <summary>
+        /// hid300SunshadeValanceColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300SunshadeValanceColour;
+        
+        /// <summary>
+        /// hid300SunshadeFabricColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300SunshadeFabricColour;
+        
+        /// <summary>
+        /// hid300SunshadeOpenness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300SunshadeOpenness;
+        
+        /// <summary>
+        /// hid300RoofType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300RoofType;
+        
+        /// <summary>
+        /// hid300RoofInteriorSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300RoofInteriorSkin;
+        
+        /// <summary>
+        /// hid300RoofExteriorSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300RoofExteriorSkin;
+        
+        /// <summary>
+        /// hid300RoofThickness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300RoofThickness;
+        
+        /// <summary>
+        /// hid300FloorThickness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300FloorThickness;
+        
+        /// <summary>
+        /// hid300FloorMetalBarrier control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300FloorMetalBarrier;
+        
+        /// <summary>
+        /// hid300KneewallHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300KneewallHeight;
+        
+        /// <summary>
+        /// hid300KneewallType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300KneewallType;
+        
+        /// <summary>
+        /// hid300KneewallGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300KneewallGlassTint;
+        
+        /// <summary>
+        /// hid300TransomHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300TransomHeight;
+        
+        /// <summary>
+        /// hid300TransomType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300TransomType;
+        
+        /// <summary>
+        /// hid300TransomGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300TransomGlassTint;
+        
+        /// <summary>
+        /// hid300TransomVinylTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300TransomVinylTint;
+        
+        /// <summary>
+        /// hid300TransomScreenType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300TransomScreenType;
+        
+        /// <summary>
+        /// hid300Markup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid300Markup;
+        
+        /// <summary>
+        /// hid400DefaultFiller control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400DefaultFiller;
+        
+        /// <summary>
+        /// hid400WallInteriorPanelColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400WallInteriorPanelColour;
+        
+        /// <summary>
+        /// hid400WallInteriorPanelSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400WallInteriorPanelSkin;
+        
+        /// <summary>
+        /// hid400WallExteriorPanelColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400WallExteriorPanelColour;
+        
+        /// <summary>
+        /// hid400WallExteriorPanelSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400WallExteriorPanelSkin;
+        
+        /// <summary>
+        /// hid400WallFrameColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400WallFrameColour;
+        
+        /// <summary>
+        /// hid400DoorType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400DoorType;
+        
+        /// <summary>
+        /// hid400DoorStyle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400DoorStyle;
+        
+        /// <summary>
+        /// hid400DoorSwing control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400DoorSwing;
+        
+        /// <summary>
+        /// hid400DoorHinge control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400DoorHinge;
+        
+        /// <summary>
+        /// hid400DoorHardware control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400DoorHardware;
+        
+        /// <summary>
+        /// hid400DoorColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400DoorColour;
+        
+        /// <summary>
+        /// hid400DoorGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400DoorGlassTint;
+        
+        /// <summary>
+        /// hid400DoorVinylTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400DoorVinylTint;
+        
+        /// <summary>
+        /// hid400DoorScreenType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400DoorScreenType;
+        
+        /// <summary>
+        /// hid400WindowType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400WindowType;
+        
+        /// <summary>
+        /// hid400WindowColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400WindowColour;
+        
+        /// <summary>
+        /// hid400WindowGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400WindowGlassTint;
+        
+        /// <summary>
+        /// hid400WindowVinylTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400WindowVinylTint;
+        
+        /// <summary>
+        /// hid400WindowScreenType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400WindowScreenType;
+        
+        /// <summary>
+        /// hid400SunshadeValanceColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400SunshadeValanceColour;
+        
+        /// <summary>
+        /// hid400SunshadeFabricColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400SunshadeFabricColour;
+        
+        /// <summary>
+        /// hid400SunshadeOpenness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400SunshadeOpenness;
+        
+        /// <summary>
+        /// hid400RoofType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400RoofType;
+        
+        /// <summary>
+        /// hid400RoofInteriorSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400RoofInteriorSkin;
+        
+        /// <summary>
+        /// hid400RoofExteriorSkin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400RoofExteriorSkin;
+        
+        /// <summary>
+        /// hid400RoofThickness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400RoofThickness;
+        
+        /// <summary>
+        /// hid400FloorThickness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400FloorThickness;
+        
+        /// <summary>
+        /// hid400FloorMetalBarrier control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400FloorMetalBarrier;
+        
+        /// <summary>
+        /// hid400KneewallHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400KneewallHeight;
+        
+        /// <summary>
+        /// hid400KneewallType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400KneewallType;
+        
+        /// <summary>
+        /// hid400KneewallGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400KneewallGlassTint;
+        
+        /// <summary>
+        /// hid400TransomHeight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400TransomHeight;
+        
+        /// <summary>
+        /// hid400TransomType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400TransomType;
+        
+        /// <summary>
+        /// hid400TransomGlassTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400TransomGlassTint;
+        
+        /// <summary>
+        /// hid400TransomVinylTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400TransomVinylTint;
+        
+        /// <summary>
+        /// hid400TransomScreenType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400TransomScreenType;
+        
+        /// <summary>
+        /// hid400Markup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hid400Markup;
     }
 }

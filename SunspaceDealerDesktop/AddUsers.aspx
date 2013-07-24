@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddUsers.aspx.cs" Inherits="SunspaceDealerDesktop.AddUsers" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddUsers.aspx.cs" Inherits="SunspaceDealerDesktop.AddUsers" EnableEventValidation="false" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
@@ -27,6 +27,8 @@
                     ddlUserGroup.options.add(new Option("Admin", "Admin"));
                     ddlUserGroup.options.add(new Option("Sales Rep", "Sales Rep"));
                 }
+                //Move initial value of usergroup to hidden field
+                document.getElementById("<%=hidUserGroup.ClientID%>").value = $('#<%=ddlUserGroup.ClientID%>').val();
             }
         }
 
@@ -35,11 +37,15 @@
             var ddlUserGroup = document.getElementById("<%=ddlUserGroup.ClientID%>");
             var ddlDealers = document.getElementById("<%=ddlDealers.ClientID%>");
 
+            //if changed, move new value to hidden field
+            document.getElementById("<%=hidUserGroup.ClientID%>").value = $('#<%=ddlUserGroup.ClientID%>').val();
             if (ddlUserType.value == "Dealer" && ddlUserGroup.value == "Admin") {
                 document.getElementById("<%=DealerListDiv.ClientID%>").style.display = "none";
+                document.getElementById("<%=DealerAdminDiv.ClientID%>").style.display = "inline";
             }
             else if (ddlUserType.value == "Dealer" && ddlUserGroup.value == "Sales Rep") {
                 document.getElementById("<%=DealerListDiv.ClientID%>").style.display = "inline";
+                document.getElementById("<%=DealerAdminDiv.ClientID%>").style.display = "none";
             }
         }
     </script>
@@ -62,11 +68,15 @@
         <br /><br />
     </div>
     <div id="DealerAdminDiv" runat="server">
+        <asp:Label ID="lblDealershipName" runat="server" Text="Dealership Name:"></asp:Label>
+        <asp:TextBox ID="txtDealershipName" runat="server"></asp:TextBox>
+        <br /><br />
         <asp:Label ID="lblCountry" runat="server" Text="Country:"></asp:Label>
         <asp:DropDownList ID="ddlCountry" runat="server" ></asp:DropDownList>
         <br /><br />
         <asp:Label ID="lblMultiplier" runat="server" Text="Multiplier: "></asp:Label>
-        <asp:TextBox ID="txtMultiplier" runat="server" MaxLength="3"></asp:TextBox>
+        <asp:TextBox ID="txtMultiplier" runat="server"></asp:TextBox>
+        %
         <br /><br />
     </div>
     <asp:Label ID="lblLogin" runat="server" Text="Login:"></asp:Label>
@@ -84,6 +94,8 @@
     <asp:Label ID="lblLastName" runat="server" Text="Last Name:"></asp:Label>
     <asp:TextBox ID="txtLastName" runat="server"></asp:TextBox>
     <br /><br />
-    <asp:Button id="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
+    <asp:Button id="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" UseSubmitBehavior="false" />
     <asp:SqlDataSource ID="sdsUsers" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [users]"></asp:SqlDataSource>
+    
+    <input id="hidUserGroup" type="hidden" runat="server" />
 </asp:Content>

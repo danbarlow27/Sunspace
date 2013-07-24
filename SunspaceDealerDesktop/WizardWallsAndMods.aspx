@@ -1588,6 +1588,7 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                 </div>
                 <%-- end of div for lenghts tables --%>
 
+    
                 <%-- button to go to the next question --%>
                 <asp:Button ID="btnQuestion1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
 
@@ -1745,100 +1746,105 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
 
     <%-- SLIDE PAGING (QUESTION NAVIGATION)
     ======================================== --%>
-    <div id="paging-wrapper">    
-        <div id="paging"> 
-            <h2>Wall Specifications</h2>
+    <div id="sidebar">
+        <div id="paging-wrapper">    
+            <div id="paging"> 
+                <h2>Wall Specifications</h2>
 
-            <ul>
-                <%-- MINI CANVAS (HIGHLIGHTS CURRENT WALL)
-                ======================================== --%>
-                <!--Div tag to hold the canvas/grid-->
-                <div style="position:inherit; text-align:center; top:0px; right:0px;" id="mySunroom"></div>
-                <%--==================================== --%>
+                <ul>
+                    <%-- MINI CANVAS (HIGHLIGHTS CURRENT WALL)
+                    ======================================== --%>
+                    <!--Div tag to hold the canvas/grid-->
+                    <div style="position:inherit; text-align:center; top:0px; right:0px;" id="mySunroom"></div>
+                    <%--==================================== --%>
 
 
-                <%-- div to display the answers for question 1 --%>
-                <div style="display: none" id="pagerOne">
-                    <li>
-                            <a href="#" data-slide="#slide1" class="slidePanel">
-                                <asp:Label ID="lblWallLengthsSlidePanel" runat="server" Text="Wall Lengths"></asp:Label>
-                                <asp:Label ID="lblWallLengthsAnswer" runat="server" Text="Wall Lengths"></asp:Label>
-                            </a>
-                    </li>
-                </div>
+                    <%-- div to display the answers for question 1 --%>
+                    <div style="display: none" id="pagerOne">
+                        <li>
+                                <a href="#" data-slide="#slide1" class="slidePanel">
+                                    <asp:Label ID="lblWallLengthsSlidePanel" runat="server" Text="Wall Lengths"></asp:Label>
+                                    <asp:Label ID="lblWallLengthsAnswer" runat="server" Text="Wall Lengths"></asp:Label>
+                                </a>
+                        </li>
+                    </div>
 
-                <%-- div to display the answers for question 2 --%>
-                <div style="display: none" id="pagerTwo">
-                    <li>
-                            <a href="#" data-slide="#slide2" class="slidePanel">
-                                <asp:Label ID="lblWallHeightsSlidePanel" runat="server" Text="Wall Heights"></asp:Label>
-                                <asp:Label ID="lblWallHeightsAnswer" runat="server" Text="Wall Heights"></asp:Label>
-                            </a>
-                    </li>
-                </div>
+                    <%-- div to display the answers for question 2 --%>
+                    <div style="display: none" id="pagerTwo">
+                        <li>
+                                <a href="#" data-slide="#slide2" class="slidePanel">
+                                    <asp:Label ID="lblWallHeightsSlidePanel" runat="server" Text="Wall Heights"></asp:Label>
+                                    <asp:Label ID="lblWallHeightsAnswer" runat="server" Text="Wall Heights"></asp:Label>
+                                </a>
+                        </li>
+                    </div>
 
-                <%-- div to display the answers for question 3 --%>
-                <div style="display: none" id="pagerThree">
-                    <li>
-                        <asp:Label runat="server" Text="Wall and Door Details"></asp:Label>
-                    </li>
-                    <asp:PlaceHolder ID="pager3Information" runat="server"></asp:PlaceHolder>
-                    <%--<li>
-                            <a href="#" data-slide="#slide3" class="slidePanel">
-                                <asp:Label ID="lblQuestion3Pager" runat="server" Text="Wall and Door Details"></asp:Label>
-                                <asp:Label ID="lblQuestion3PagerAnswer" runat="server" Text=""></asp:Label>
-                            </a>
-                    </li>--%>
-                </div>
+                    <%-- div to display the answers for question 3 --%>
+                    <div style="display: none" id="pagerThree">
+                        <li>
+                            <asp:Label runat="server" Text="Wall and Door Details"></asp:Label>
+                        </li>
+                        <asp:PlaceHolder ID="pager3Information" runat="server"></asp:PlaceHolder>
+                        <%--<li>
+                                <a href="#" data-slide="#slide3" class="slidePanel">
+                                    <asp:Label ID="lblQuestion3Pager" runat="server" Text="Wall and Door Details"></asp:Label>
+                                    <asp:Label ID="lblQuestion3PagerAnswer" runat="server" Text=""></asp:Label>
+                                </a>
+                        </li>--%>
+                    </div>
 
-                <%-- div to display the answers for question 4 --%>
-                <div style="display: none" id="pagerFour">
-                    <li>
-                            <a href="#" data-slide="#slide4" class="slidePanel">
-                                <asp:Label ID="Label27" runat="server" Text="Styling options"></asp:Label>
-                                <asp:Label ID="lblQuestion4PagerAnswer" runat="server" Text="Question 4 Answer"></asp:Label>
-                            </a>
-                    </li>
-                </div>
+                    <%-- div to display the answers for question 4 --%>
+                    <div style="display: none" id="pagerFour">
+                        <li>
+                                <a href="#" data-slide="#slide4" class="slidePanel">
+                                    <asp:Label ID="Label27" runat="server" Text="Styling options"></asp:Label>
+                                    <asp:Label ID="lblQuestion4PagerAnswer" runat="server" Text="Question 4 Answer"></asp:Label>
+                                </a>
+                        </li>
+                    </div>
 
- <%--               <div style="display: none" id="pagerFive">
-                    <li>
-                            <a href="#" data-slide="#slide5" class="slidePanel">
-                                <asp:Label ID="Label31" runat="server" Text="Foam protection"></asp:Label>
-                                <asp:Label ID="lblQuestion5PagerAnswer" runat="server" Text="Question 5 Answer"></asp:Label>
-                            </a>
-                    </li>          
-                </div>    
+     <%--               <div style="display: none" id="pagerFive">
+                        <li>
+                                <a href="#" data-slide="#slide5" class="slidePanel">
+                                    <asp:Label ID="Label31" runat="server" Text="Foam protection"></asp:Label>
+                                    <asp:Label ID="lblQuestion5PagerAnswer" runat="server" Text="Question 5 Answer"></asp:Label>
+                                </a>
+                        </li>          
+                    </div>    
                   
-                <div style="display: none" id="pagerSix">
-                    <li>
-                            <a href="#" data-slide="#slide6" class="slidePanel">
-                                <asp:Label ID="Label1" runat="server" Text="Prefab floor"></asp:Label>
-                                <asp:Label ID="lblQuestion6PagerAnswer" runat="server" Text="Question 6 Answer"></asp:Label>
-                            </a>
-                    </li>
-                </div>
+                    <div style="display: none" id="pagerSix">
+                        <li>
+                                <a href="#" data-slide="#slide6" class="slidePanel">
+                                    <asp:Label ID="Label1" runat="server" Text="Prefab floor"></asp:Label>
+                                    <asp:Label ID="lblQuestion6PagerAnswer" runat="server" Text="Question 6 Answer"></asp:Label>
+                                </a>
+                        </li>
+                    </div>
 
-                <div style="display: none" id="pagerSeven">                
-                    <li>
-                            <a href="#" data-slide="#slide7" class="slidePanel">
-                                <asp:Label ID="Label3" runat="server" Text="Roof"></asp:Label>
-                                <asp:Label ID="lblQuestion7PagerAnswer" runat="server" Text="Question 7 Answer"></asp:Label>
-                            </a>
-                    </li>
-                </div>
+                    <div style="display: none" id="pagerSeven">                
+                        <li>
+                                <a href="#" data-slide="#slide7" class="slidePanel">
+                                    <asp:Label ID="Label3" runat="server" Text="Roof"></asp:Label>
+                                    <asp:Label ID="lblQuestion7PagerAnswer" runat="server" Text="Question 7 Answer"></asp:Label>
+                                </a>
+                        </li>
+                    </div>
 
-                <div style="display: none" id="pagerEight">
-                    <li>
-                            <a href="#" data-slide="#slide8" class="slidePanel">
-                                <asp:Label ID="Label5" runat="server" Text="Layout"></asp:Label>
-                                <asp:Label ID="lblQuestion8PagerAnswer" runat="server" Text="Question 8 Answer"></asp:Label>
-                            </a>
-                    </li>
-                </div>--%>
-            </ul>    
-        </div> <%-- end #paging --%>
+                    <div style="display: none" id="pagerEight">
+                        <li>
+                                <a href="#" data-slide="#slide8" class="slidePanel">
+                                    <asp:Label ID="Label5" runat="server" Text="Layout"></asp:Label>
+                                    <asp:Label ID="lblQuestion8PagerAnswer" runat="server" Text="Question 8 Answer"></asp:Label>
+                                </a>
+                        </li>
+                    </div>--%>
+                </ul>    
+            </div> <%-- end #paging --%>      
+        </div>
+
+        <asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label> 
     </div>
+    
 
 
     <%-- %>/*********************CANVAS FUNCTIONS*********************************/ --%>
