@@ -316,7 +316,7 @@
             }
 
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Default Filler\n";
+                errorMessage += "Error in Model 100 - Default Filler<br/>";
             }
             isValid = true;
 
@@ -336,7 +336,7 @@
             }
 
             if (isValid == false) {
-                errorMessage += "Error in Model 200 - Default Filler\n";
+                errorMessage += "Error in Model 200 - Default Filler<br/>";
             }
             isValid = true;
             //300
@@ -351,7 +351,7 @@
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 300 - Default Filler\n";
+                errorMessage += "Error in Model 300 - Default Filler<br/>";
             }
             isValid = true;
             //400
@@ -366,7 +366,7 @@
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 400 - Default Filler\n";
+                errorMessage += "Error in Model 400 - Default Filler<br/>";
             }
             isValid = true;
 
@@ -383,7 +383,7 @@
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Markup\n";
+                errorMessage += "Error in Model 100 - Markup<br/>";
             }
             isValid = true;
             //200
@@ -398,7 +398,7 @@
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 200 - Markup\n";
+                errorMessage += "Error in Model 200 - Markup<br/>";
             }
             isValid = true;
             //300
@@ -413,7 +413,7 @@
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 300 - Markup\n";
+                errorMessage += "Error in Model 300 - Markup<br/>";
             }
             isValid = true;
             //400
@@ -428,7 +428,7 @@
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 400 - Markup\n";
+                errorMessage += "Error in Model 400 - Markup<br/>";
             }
             isValid = true;
 
@@ -445,7 +445,7 @@
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Kneewall Height Filler\n";
+                errorMessage += "Error in Model 100 - Kneewall Height Filler<br/>";
             }
             isValid = true;
             //200
@@ -460,7 +460,7 @@
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 200 - Kneewall Height Filler\n";
+                errorMessage += "Error in Model 200 - Kneewall Height Filler<br/>";
             }
             isValid = true;
             //300
@@ -475,7 +475,7 @@
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 300 - Kneewall Height Filler\n";
+                errorMessage += "Error in Model 300 - Kneewall Height Filler<br/>";
             }
             isValid = true;
             //400
@@ -490,7 +490,7 @@
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 400 - Kneewall Height Filler\n";
+                errorMessage += "Error in Model 400 - Kneewall Height Filler<br/>";
             }
             isValid = true;
 
@@ -507,7 +507,7 @@
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 100 - Transom Height\n";
+                errorMessage += "Error in Model 100 - Transom Height<br/>";
             }
             isValid = true;
             //200
@@ -522,7 +522,7 @@
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 200 - Transom Height\n";
+                errorMessage += "Error in Model 200 - Transom Height<br/>";
             }
             isValid = true;
             //300
@@ -537,7 +537,7 @@
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 300 - Transom Height\n";
+                errorMessage += "Error in Model 300 - Transom Height<br/>";
             }
             isValid = true;
             //400
@@ -552,10 +552,10 @@
                 isValid = false;
             }
             if (isValid == false) {
-                errorMessage += "Error in Model 400 - Transom Height\n";
+                errorMessage += "Error in Model 400 - Transom Height<br/>";
             }
 
-            document.getElementById("<%=lblError.ClientID%>").innerHTML = errorMessage;
+            $('#<%=lblError.ClientID%>').html = errorMessage;
         }
     </script>
     <div>

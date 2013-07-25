@@ -12,6 +12,7 @@ namespace SunspaceDealerDesktop
     public partial class NewProject : Page
     {
         //colour arrays generated as javascript usable objects
+        //Used for population of corresponding dropdown lists
         public string model100FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_100_FRAMING_COLOURS);
         public string model200FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_200_FRAMING_COLOURS);
         public string model300FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_300_FRAMING_COLOURS);
@@ -26,9 +27,7 @@ namespace SunspaceDealerDesktop
         {
             if (Session["loggedIn"] == null)
             {
-                //uncomment me when login functionality is working
                 Response.Redirect("Login.aspx");
-                //Session.Add("loggedIn", "1");
             }           
 
             //slide1
@@ -61,29 +60,31 @@ namespace SunspaceDealerDesktop
                 }
             }
 
+            //Only on first load
             if (!IsPostBack)
             {
                 if (Session["dealer_id"].ToString() == "-1")
                 {
-                    //Get the customers assosciated with this dealer
+                    //If sunspace user is not spoofed, require them too
                     Response.Redirect("Spoof.aspx");
                 }
-                else
-                {
-                    //Get the customers assosciated with this dealer
-                    sdsCustomers.SelectCommand = "SELECT first_name, last_name FROM customers WHERE dealer_id=" + Session["dealer_id"] + "ORDER BY last_name, first_name";
-                }
+
+                //Get list of customers that belong to this dealer
+                sdsCustomers.SelectCommand = "SELECT first_name, last_name, email FROM customers WHERE dealer_id=" + Session["dealer_id"] + "ORDER BY last_name, first_name";                
 
                 //assign the table names to the dataview object
                 DataView dvExistingCustomers = (DataView)sdsCustomers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
 
+                //clear customer dropdownlist for start
                 ddlExistingCustomer.Items.Clear();
 
+                //loop through all results, adding each customer to the dropdown list
                 for (int i = 0; i < dvExistingCustomers.Count; i++)
                 {
-                    ddlExistingCustomer.Items.Add(dvExistingCustomers[i][0].ToString() + " " + dvExistingCustomers[i][1].ToString());
+                    ddlExistingCustomer.Items.Add(dvExistingCustomers[i][0].ToString() + " " + dvExistingCustomers[i][1].ToString() + "(" + dvExistingCustomers[i][2].ToString() + ")");
                 }
 
+                //add this customer list to the session so we don't have to constantly query on refreshes
                 Session.Add("ddlExistingCustomer", ddlExistingCustomer);
             }
             else
@@ -237,6 +238,7 @@ namespace SunspaceDealerDesktop
 
         protected void btnQuestion4Walls_Click(object sender, EventArgs e)
         {
+            //if existing is blank, it must be a new customer
             if (hidExisting.Value == "")
             {
                 insertNewCustomer();
@@ -245,6 +247,7 @@ namespace SunspaceDealerDesktop
             Response.Redirect("Home.aspx");
         }
 
+        //This function will add a new user to the customer database at an applicable time when the page is completed and has been posted back.
         protected void insertNewCustomer()
         {
             sdsCustomers.SelectCommand = "SELECT * FROM customers"; ;

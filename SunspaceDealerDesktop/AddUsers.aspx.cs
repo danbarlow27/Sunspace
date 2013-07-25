@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Script.Serialization;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -14,6 +15,10 @@ namespace SunspaceDealerDesktop
         //Will hold the usertype and usergroup that will be accessed through javascript
         public string userType;
         public string userGroup;
+
+        //Get constants for javascript use
+        public string minMultiplier = (new JavaScriptSerializer().Serialize(Constants.MINIMUM_MULTIPLIER));
+        public string maxMultiplier = (new JavaScriptSerializer().Serialize(Constants.MAXIMUM_MULTIPLIER));
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -64,6 +69,7 @@ namespace SunspaceDealerDesktop
                     //sunspace admin, so add initial values to dropdown list, and update usertype
                     else
                     {
+                        DealerAdminDiv.Attributes.Add("style", "display: none");
                         ddlUserType.Items.Add("Sunspace");
                         ddlUserType.Items.Add("Dealer");
 
@@ -161,7 +167,7 @@ namespace SunspaceDealerDesktop
                                                         + txtFirstName.Text + "', '"
                                                         + txtLastName.Text + "', '"
                                                         + ddlCountry.SelectedValue + "', "
-                                                        + (Convert.ToDecimal(txtMultiplier.Text) / 100) + 1 + ")"; //user enters %, so 80% will become 1.8 as a multiplier                               
+                                                        + Convert.ToDecimal(txtMultiplier.Text) + ")"; //user enters %, so 80% will become 1.8 as a multiplier                               
                                 aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
 
                                 aCommand.CommandText = "SELECT dealer_id FROM dealers WHERE dealer_name='" + txtDealershipName.Text + "'";

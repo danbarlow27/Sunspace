@@ -36,6 +36,63 @@
                 document.getElementById("<%=hidUserGroup.ClientID%>").value = $('#<%=ddlUserGroup.ClientID%>').val();
             }        
         }
+
+        function toggleDealerDropdown() {
+            var ddlUserType = document.getElementById("<%=ddlUserType.ClientID%>");
+            var ddlUserGroup = document.getElementById("<%=ddlUserGroup.ClientID%>");
+
+            //if changed, move new value to hidden field
+            document.getElementById("<%=hidUserGroup.ClientID%>").value = $('#<%=ddlUserGroup.ClientID%>').val();
+            if (ddlUserType.value == "Dealer" && ddlUserGroup.value == "Admin") {
+                document.getElementById("<%=DealerAdminDiv.ClientID%>").style.display = "inline";
+            }
+            else if (ddlUserType.value == "Dealer" && ddlUserGroup.value == "Sales Rep") {
+                document.getElementById("<%=DealerAdminDiv.ClientID%>").style.display = "none";
+            }
+        }
+
+        //This function is used to validate the user entered multiplier and email to make sure they are valid for database entry
+        function validateInput() {
+            //Getting the values of the constants for the range of valid multipliers
+            var minMultiplier = parseFloat("<%=minMultiplier%>");
+            var maxMultiplier = parseFloat("<%=maxMultiplier%>");
+            var errorMessage = ""; //default error message to blank
+
+            try {
+                //Cast multiplier to float
+                var multiplier = +($('#<%=txtMultiplier.ClientID%>').val()) + 0.0;
+
+                //After countless tries to make parseFloat and float casts throw an error to the catch block, it just won't happen.
+                //check if not a number and throw manually
+                if (isNaN(multiplier)) {
+                    throw Error;
+                }
+                //if valid float number, make sure its in range.
+                if (multiplier < minMultiplier || multiplier > maxMultiplier) {
+                    errorMessage += "Invalid multiplier, must be between <%=minMultiplier%> and <%=maxMultiplier%>.<br/>";
+                }
+            }
+            catch (err) {
+                //if it got here, it isn't numeric
+                errorMessage += "Invalid multiplier, must be numeric.<br/>";
+            }
+            //lastly, check email validation using the emailvalidation function
+            if (emailValidation() == false) {
+                errorMessage += "Invalid email, please use format Something@something.something<br/>"
+            }
+            //update error label with our error
+            $('#<%=lblError.ClientID%>').html(errorMessage) 
+        }
+
+        //This function uses a regex value to validate email, returns true or false
+        function emailValidation() {
+            var anEmail = $('#<%=txtEmail.ClientID%>').val();
+            //Regex for RFC 2822 email address validation.
+            //var re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            //Simpler, but less accurate string@string.string
+            var re = /[^\s@]+@[^\s@]+\.[^\s@]+/;
+            return re.test(anEmail);
+        }
     </script>
 
     <asp:Label ID="lblError" runat="server"></asp:Label>
@@ -61,8 +118,7 @@
         <asp:DropDownList ID="ddlCountry" runat="server" ></asp:DropDownList>
         <br /><br />
         <asp:Label ID="lblMultiplier" runat="server" Text="Multiplier: "></asp:Label>
-        <asp:TextBox ID="txtMultiplier" runat="server"></asp:TextBox>
-        %
+        <asp:TextBox ID="txtMultiplier" runat="server" onkeyup="validateInput()"></asp:TextBox>
         <br /><br />
     </div>
     <asp:Label ID="lblLogin" runat="server" Text="Login:"></asp:Label>
@@ -72,7 +128,7 @@
     <asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
     <br /><br />
     <asp:Label ID="lblEmail" runat="server" Text="Email:"></asp:Label>
-    <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
+    <asp:TextBox ID="txtEmail" runat="server" onkeyup="validateInput()"></asp:TextBox>
     <br /><br />
     <asp:Label ID="lblFirstName" runat="server" Text="First Name:"></asp:Label>
     <asp:TextBox ID="txtFirstName" runat="server"></asp:TextBox>
@@ -84,4 +140,5 @@
     <asp:SqlDataSource ID="sdsUsers" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [users]"></asp:SqlDataSource>
     
     <input id="hidUserGroup" type="hidden" runat="server" />
+    <input id="hidEmail" type="hidden" runat="server" />
 </asp:Content>

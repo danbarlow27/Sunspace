@@ -100,6 +100,13 @@ namespace SunspaceDealerDesktop
             }
         }
 
+        /**
+         * CalculateSHAHash
+         * sent string input, The string to be converted to a hash
+         * 
+         * This method will take a string input, convert it to a SHA512 hash, and then return the 128 character hash. Used for encryption.
+         * Currently unsalted, if you would like to salt this encryption, add a pattern of characters to input before any of the currently implemented code.
+         */
         public static string CalculateSHAHash(string input)
         {
             // step 1, calculate sha512 hash from input

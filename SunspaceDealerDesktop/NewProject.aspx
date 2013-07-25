@@ -84,11 +84,13 @@
                         isValid = false;
                     }
 
+                    //check to see if email is valid
                     if (emailValidation() == false)
                     {
                         isValid = false;
                     }
 
+                    //isValid remains true if nothing became false
                     if (isValid == true) {
                         //Set answer to 'new' on side pager and enable button
                         $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("New");
@@ -129,8 +131,10 @@
             //disable 'next slide' button until after validation
             document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
 
+            //move project name to hidden field
             document.getElementById("<%=hidProjectName.ClientID%>").value = $('#<%=txtProjectName.ClientID%>').val();
 
+            //if its not blank, its valid
             if (document.getElementById("<%=hidProjectName.ClientID%>").value != "") {
                 //valid, so update pager and enable button
                 $('#<%=lblProjectNameAnswer.ClientID%>').text(document.getElementById("<%=hidProjectName.ClientID%>").value);
@@ -182,6 +186,9 @@
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="none";
             }
             else if ($('#<%=radProjectWalls.ClientID%>').is(':checked')) {
+                //They check one of 4 model types
+                //update pager, enable button, and update hidden value
+                //corresponding to selected model #
                 if ($('#<%=radWallsModel100.ClientID%>').is(':checked')) {
                     document.getElementById("<%=hidModelNumber.ClientID%>").value = "100";
                     document.getElementById('pagerThree').style.display = "inline";
@@ -211,6 +218,7 @@
                 document.getElementById('<%=btnQuestion4.ClientID%>').style.display="none";
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="inline";
             }
+            //Now that we know what type of project they have, we can call this function for the colour dropdowns on the next slide
             newProjectChangeColours();
             return false;
         }
@@ -245,6 +253,7 @@
             if (document.getElementById("<%=txtTransomHeight.ClientID%>").value != "" &&
                 document.getElementById("<%=ddlTransomType.ClientID%>").value != "") {
 
+                //if not a number, its invalid, otherwise move to hidden fields
                 if (isNaN(document.getElementById("<%=txtTransomHeight.ClientID%>").value)) {
                     console.log("Invalid transom height");
                 }
@@ -277,6 +286,7 @@
                 //framing error styling
             }
 
+            //if everything was valid it will say =true, so enable button and update pager
             if (optionChecksPassed) {
                 document.getElementById('<%=btnQuestion4.ClientID%>').disabled = false;
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').disabled = false;
@@ -350,6 +360,7 @@
                 document.getElementById("<%=hidRoof.ClientID%>").value = "No";
             }
             else if ($('#<%=radRoofYes.ClientID%>').is(':checked')) {
+                //If they want a roof, they must specify the type of roof
                 if ($('#<%=radStudio.ClientID%>').is(':checked')) {
                     document.getElementById('<%=btnQuestion7.ClientID%>').disabled = false;
                     $('#<%=lblQuestion7PagerAnswer.ClientID%>').text("Studio");
@@ -459,6 +470,8 @@
             return false;
         }
 
+        //This function populates and changes the values of the dropdown lists containing framing colours and skins on slide 4
+        //It is called for initial population
         function newProjectChangeColours() {
             console.log("new project change colours");
             
@@ -469,6 +482,8 @@
             //var blankOption = new Option("Choose a colour...", "Choose a colour...");
             //ddlFramingColour.options.add(blankOption);
 
+            //Depending on model number we'll have different colours, so we use the corresponding serialized variable for that model's colours
+            //retrieving it, and adding its values to the dropdowns
             switch (modelNumber.value) {
                 case '100':
                     var anArray =  <%= model100FramingColoursJ %>;
@@ -511,10 +526,15 @@
                     break;
             }
             
+            //As this is on the same slide as kneewall and transom, we still need a way to populate those.
+            //I didn't want to tack that on to this function, so I just made a new one and called it from here.
+            //One function, one purpose.
             newProjectPopulateKneewallTransom();
             return true;
         }
 
+        //this function is called whenever frame colour is changed, and will update the remaining dropdowns for interior/exterior colours and skins
+        //corresponding to the chosen frame colour.
         function newProjectCascadeColours() {
             console.log("Cascading Colours");
             ddlFramingColour = document.getElementById("<%= ddlFramingColour.ClientID %>");
@@ -541,10 +561,11 @@
                 $("#<%=ddlExteriorSkin.ClientID%>").val('Bronze Aluminum Stucco');
             }
 
-            //now that colours have cascading we still need to validate the slide
+            //now that colours have cascaded we still need to validate the slide
             newProjectCheckQuestion4();
         }
 
+        //This function is used for initial population of the transom and kneewall type dropdowns
         function newProjectPopulateKneewallTransom() {
             console.log("populate kneewall transom");
             
@@ -555,6 +576,7 @@
             //var blankOption = new Option("Choose a type...", "Choose a type...");
             //ddlTransomTypes.options.add(blankOption);
 
+            //Like above, types are based on model, and will get the proper variable based on model
             switch (modelNumber.value) {
                 case '100':
                     var anArray =  <%= model100TransomTypesJ %>;
@@ -599,6 +621,7 @@
             return true;
         }
 
+        //This function uses a regex value to validate email, returns true or false
         function emailValidation(){
             var anEmail = document.getElementById("<%=hidEmail.ClientID%>").value;
             //Regex for RFC 2822 email address validation.
@@ -610,9 +633,6 @@
         }
     </script>
 
-    <%-- end 'complete sunroom' option --%>    
-
-    <%-- EXISTING CUSTOMER --%>
     <div class="slide-window"  >
 
         <div class="slide-wrapper"> 
