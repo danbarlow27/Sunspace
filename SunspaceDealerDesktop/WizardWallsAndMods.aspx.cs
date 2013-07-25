@@ -2887,9 +2887,7 @@ namespace SunspaceDealerDesktop
 
         protected void btnQuestion4_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Blah1");
-            System.Diagnostics.Debug.WriteLine(Request.Form["Blah1"]);
-            //Console.WriteLine(Session["Blah1"].ToString());                
+            //System.Diagnostics.Debug.WriteLine(Request.Form["Blah1"]);                
         }
     }
 }
