@@ -959,11 +959,11 @@ namespace SunspaceDealerDesktop
 
                 Label doorOperatorLHHLBL = new Label();
                 doorOperatorLHHLBL.ID = "lblDoorOperatorLHH" + i + title;
-                doorOperatorLHHLBL.Text = "LHH";
+                doorOperatorLHHLBL.Text = "Left";
 
                 RadioButton doorOperatorLHHRad = new RadioButton();
                 doorOperatorLHHRad.ID = "radDoorOperator" + i + title;
-                doorOperatorLHHRad.Attributes.Add("value", "lhh");
+                doorOperatorLHHRad.Attributes.Add("value", "left");
                 doorOperatorLHHRad.GroupName = "PrimaryOperator" + i + title;
 
                 doorOperatorLHHLBLRad.AssociatedControlID = "radDoorOperator" + i + title;
@@ -984,11 +984,11 @@ namespace SunspaceDealerDesktop
 
                 Label doorOperatorRHHLBL = new Label();
                 doorOperatorRHHLBL.ID = "lblDoorOperatorRHH" + i + title;
-                doorOperatorRHHLBL.Text = "RHH";
+                doorOperatorRHHLBL.Text = "Right";
 
                 RadioButton doorOperatorRHHRad = new RadioButton();
                 doorOperatorRHHRad.ID = "radDoorOperatorRHH" + i + title;
-                doorOperatorRHHRad.Attributes.Add("value", "rhh");
+                doorOperatorRHHRad.Attributes.Add("value", "right");
                 doorOperatorRHHRad.GroupName = "PrimaryOperator" + i + title;
 
                 doorOperatorRHHLBLRad.AssociatedControlID = "radDoorOperatorRHH" + i + title;
@@ -1065,11 +1065,11 @@ namespace SunspaceDealerDesktop
 
                 Label doorHingeLHHLBL = new Label();
                 doorHingeLHHLBL.ID = "lblHingeLHH" + i + title;
-                doorHingeLHHLBL.Text = "LHH";
+                doorHingeLHHLBL.Text = "Left";
 
                 RadioButton doorHingeLHHRad = new RadioButton();
                 doorHingeLHHRad.ID = "radDoorHinge" + i + title;
-                doorHingeLHHRad.Attributes.Add("value", "lhh");
+                doorHingeLHHRad.Attributes.Add("value", "left");
                 doorHingeLHHRad.GroupName = "DoorHinge" + i + title;
 
                 doorHingeLHHLBLRad.AssociatedControlID = "radDoorHinge" + i + title;
@@ -1090,11 +1090,11 @@ namespace SunspaceDealerDesktop
 
                 Label doorHingeRHHLBL = new Label();
                 doorHingeRHHLBL.ID = "lblDoorHingeRHH" + i + title;
-                doorHingeRHHLBL.Text = "RHH";
+                doorHingeRHHLBL.Text = "Right";
 
                 RadioButton doorHingeRHHRad = new RadioButton();
                 doorHingeRHHRad.ID = "radDoorHingeRHH" + i + title;
-                doorHingeRHHRad.Attributes.Add("value", "rhh");
+                doorHingeRHHRad.Attributes.Add("value", "right");
                 doorHingeRHHRad.GroupName = "DoorHinge" + i + title;
 
                 doorHingeRHHLBLRad.AssociatedControlID = "radDoorHingeRHH" + i + title;

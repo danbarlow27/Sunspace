@@ -16,28 +16,28 @@ function FramedDoor() {
     this.type = null;           //Cabana, French, Patio, Open Space (No Door)
     this.style = null;          //Full Screen, Vertical Four Track, Full View, Full View Colonial, Half Lite, Half Lite Venting, Full Lite, Half Lite With Mini Blinds, Full View With Mini Blinds
     this.screenOptions = null;  //Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screen, Tuff Screen, No Screen
-    this.fheight = null;        //Inches: 80, Custom
-    this.fwidth = null;         //Inches: 30, 32, 34, 36, Custom
+    this.fheight = null;        //In example, 80" door stores 80.875 to this field(inches)
+    this.fwidth = null;         //In example, 30" door stores 32.125 to this field(inches)
     this.color = null;          //White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey
     this.position = null;       //Left, Center, Right, Custom
     this.boxHeader = null;      //Left, Right, Both, None
     this.transom = null;        //Vinyl, Glass, Solid
-    this.transomVinyl = null;   //Vinyl Tints:Clear, Smoke Grey, Dark Grey, Bronze, Mixed 
+    this.transomVinyl = null;   //Vinyl Tints: Clear, Smoke Grey, Dark Grey, Bronze, Mixed 
     this.transomGlass = null;   //Glass Tints: Grey, Bronze
 }
 
 //Constructor to hold cabana door specific information
 function CabanaDoor() {
-    this.type = "Cabana";
-    this.height = null;
-    this.width = null;
-    this.vinylTint = null;
-    this.glassTint = null;
-    this.hinge = null;
-    this.swing = null;
-    this.hardware = null;
-    this.numberOfVents = null;
-    this.kickplate = null;
+    this.type = "Cabana";       //Sets the door type to Cabana
+    this.height = null;         //Used to hold various heights, currently: 80", and Custom for all models and door types
+    this.width = null;          //Used to hold various widths (varies on door type), in example: 30", 32", 34", 36", Custom
+    this.vinylTint = null;      //Holds one of the vinyl tints: Clear, Smoke Grey, Dark Grey, Bronze, Mixed 
+    this.glassTint = null;      //Holds one of the glass tints: Grey, Bronze
+    this.hinge = null;          //Holds the hinge placement: Right or Left
+    this.swing = null;          //Holds the swing orientation: In or Out
+    this.hardware = null;       //Holds the kind of hardware used: Satin Silver, Bright Brass, Antique Brass
+    this.numberOfVents = null;  //Holds the number of vents: 2, 3, 4
+    this.kickplate = null;      //Holds the height of the kickplate: 6", 7", 8", 9"...24", Custom
 }
 
 //Used to include general door information to CabanaDoor instances
@@ -45,28 +45,29 @@ CabanaDoor.prototype = new FramedDoor();
 
 //Constructor to hold french door specific information
 function FrenchDoor() {
-    this.type = "French";
-    this.height = null;
-    this.width = null;
-    this.vinylTint = null;
-    this.glassTint = null;
-    this.swing = null;
-    this.operator = null;
-    this.hardware = null;
-    this.numberOfVents = null;
-    this.kickplate = null;
+    this.type = "French";       //Sets the door type to French
+    this.height = null;         //Used to hold various heights, currently: 80", and Custom for all models and door types
+    this.width = null;          //Used to hold various widths (varies on door type), in example: 30", 32", 34", 36", Custom
+    this.vinylTint = null;      //Holds one of the vinyl tints: Clear, Smoke Grey, Dark Grey, Bronze, Mixed 
+    this.glassTint = null;      //Holds one of the glass tints: Grey, Bronze
+    this.swing = null;          //Holds the swing orientation: In or Out
+    this.operator = null;       //Holds the operator: Left or Right
+    this.hardware = null;       //Holds the kind of hardware used: Satin Silver, Bright Brass, Antique Brass
+    this.numberOfVents = null;  //Holds the number of vents: 2, 3, 4
+    this.kickplate = null;      //Holds the height of the kickplate: 6", 7", 8", 9"...24", Custom
 }
 
 //Used to include general door information to FrenchDoor instances
 FrenchDoor.prototype = new FramedDoor();
 
 //Constructor to hold patio door specific information
+/****MORE TO BE ADDED****/
 function PatioDoor() {
-    this.type = "Patio";
-    this.height = null;
-    this.width = null;
-    this.glassTint = null;
-    this.movingDoor = null;
+    this.type = "Patio";        //Sets the door type to Patio
+    this.height = null;         //Used to hold various heights, currently: 80", and Custom for all models and door types
+    this.width = null;          //Used to hold various widths (varies on door type), in example: 30", 32", 34", 36", Custom
+    this.glassTint = null;      //Holds one of the glass tints: Grey, Bronze
+    this.operator = null;       //Holds the operator: Left or Right
 }
 
 //Used to include general door information to PatioDoor instances
@@ -74,9 +75,9 @@ PatioDoor.prototype = new FramedDoor();
 
 //Constructor to hold open space specific information
 function OpenSpaceDoor() {
-    this.type = "NoDoor";
-    this.height = null;
-    this.width = null;
+    this.type = "NoDoor";       //Sets the door type to NoDoor
+    this.height = null;         //Used to hold various heights, currently: 80", and Custom for all models and door types
+    this.width = null;          //Used to hold various widths (varies on door type), in example: 30", 32", 34", 36", Custom
 }
 
 //Used to include general door information to OpenSpaceDoor instances
@@ -290,8 +291,7 @@ function createDoorObject(wallNumber, type) {
 /**
 *deleteDoor
 *This function is used to perform certain task when a door is deleted (called on click), remove
-*controls from pager, reset walls[index].spaces to the appropriate value based on the door deleted.
-*Same goes for walls[index].doorsSorted the appropriate door is removed from the array.
+*controls from pager, remove the door from walls[index].
 *@param doorToDelete - holds the index of the door to be deleted
 *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
 *@param wallNumber - holds an integer to know which wall is currently being affected
@@ -313,8 +313,7 @@ function deleteDoor(doorToDelete, type, wallNumber) {
 
 /**
 *deleteDoorFill
-*This function is used to perform certain task when a door is deleted (called on click), remove
-*controls from pager, reset walls[index].spaces to null and same for walls[index].doorsSorted.
+*This function is used to perform certain task when a door fill is deleted (called on click).
 *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
 *@param wallNumber - holds an integer to know which wall is currently being affected
 */
