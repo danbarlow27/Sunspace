@@ -61,10 +61,14 @@ namespace SunspaceDealerDesktop
             wallDetails = new string[strWalls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
             currentModel = (string)Session["model"];
             sofftLength = (float)Session["soffitLength"];
-            int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
+            //int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
             int proposedWallCount = 0; //used to determine how many proposed walls are in a drawing
 
             //populate the array with all the wall details for each wall
+            /***************************************************************************/
+            /********************All of this can go to the page where ******************/
+            /********************the coordList string is concatenated!******************/
+            /***************************************************************************/
             for (int i = 0; i < strWalls.Count(); i++) //run through all the walls in the array
             {
                 string[] tempDetails = strWalls[i].Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the given wall string into its individual detail items and store it in temporary array
@@ -320,6 +324,8 @@ namespace SunspaceDealerDesktop
             row.Cells.Add(cell7);
             #endregion
 
+
+            //perhaps slide 3 stuff can go in another function and be called from the same loop???
             //SLIDE 3 DOOR DETAILS PER WALL
             #region Slide 3: Onload dynamic loop to insert wall door options            
 
@@ -2522,7 +2528,7 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void model300WindowOptions()
         {            
-            singlePageHorizontalRollersWindowOptions();
+            singlePaneHorizontalRollersWindowOptions();
             fixedGlassWindowOptions();
             openWall();
             solidWall();
@@ -2768,7 +2774,7 @@ namespace SunspaceDealerDesktop
         /// <summary>
         /// glass tint (grey, bronze, clear)
         /// </summary>
-        protected void singlePageHorizontalRollersWindowOptions()
+        protected void singlePaneHorizontalRollersWindowOptions()
         {
             tintOptions("SinglePaneHorizontalRollers", "Single Pane Horizontal Rollers [XX]", true, false, false, true);
         }
