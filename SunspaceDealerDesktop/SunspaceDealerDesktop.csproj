@@ -216,6 +216,8 @@
     <Content Include="Content\fonts\Shanti-Regular.ttf" />
     <Content Include="ProjectPreview.aspx" />
     <Content Include="RoofWizard.aspx" />
+    <Content Include="Scripts\DoorSlideFunctions.js" />
+    <Content Include="Scripts\MiniCanvasFunctions.js" />
     <Content Include="Spoof.aspx" />
     <Content Include="WizardWallsAndMods.aspx" />
     <Content Include="NoIcons.Master" />
