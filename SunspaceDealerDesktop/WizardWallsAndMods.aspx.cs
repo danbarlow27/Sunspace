@@ -380,7 +380,7 @@ namespace SunspaceDealerDesktop
                 RadioButton typeRadio = new RadioButton();
                 typeRadio.ID = "radType" + i + title; //Adding appropriate id to door type radio button
                 typeRadio.GroupName = "doorTypeRadios" + i;         //Adding group name for all door types
-                typeRadio.Attributes.Add("onclick", "typeRowsDisplayed('" + i + "', '" + title + "')"); //On click event to display the proper fields/rows
+                typeRadio.Attributes.Add("onclick", "typeRowsDisplayed('" + title + "', '" + i + "')"); //On click event to display the proper fields/rows
                     
 
                 //Door type radio button label for clickable area
@@ -1648,12 +1648,12 @@ namespace SunspaceDealerDesktop
                 if (title == "NoDoor")
                 {
                     doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This Opening Only (No Door)'/>"));
-                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With Opening Only (No Doors)'/>"));
+                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + title + "\", \"" + i +"\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With Opening Only (No Doors)'/>"));
                 }
                 else
                 {
                     doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
-                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
+                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + title + "\", \"" + i +"\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
                 }
                 //doorUndoButtonCell.Controls.Add(new LiteralControl("<input id='btnUndoLastAddition" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Undo Last Addition Doors'/>"));
 
