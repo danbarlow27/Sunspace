@@ -156,71 +156,55 @@ namespace SunspaceDealerDesktop
             {
                 insertNewCustomer();
             }
-            //Session.Add("hidFirstName", hidFirstName.Value);
-            //Session.Add("hidExisting", hidExisting.Value);
-            //Session.Add("hidFirstName", hidFirstName.Value);
-            //Session.Add("hidLastName", hidLastName.Value);
-            //Session.Add("hidAddress", hidAddress.Value);
-            //Session.Add("hidCity", hidCity.Value);
-            //Session.Add("hidZip", hidZip.Value);
-            //Session.Add("hidPhone", hidPhone.Value);
 
-            //Session.Add("hidProjectTag", hidProjectTag.Value);
+            //Move all hidden fields into this array, then put array on the session
+            string[] newProjectArray = new string[28];
 
-            //Session.Add("hidProjectType", hidProjectType.Value);
-            //Session.Add("hidModelNumber", hidModelNumber.Value);
+            newProjectArray[0] = hidCountry.Value.ToString();
+            newProjectArray[1] = hidExisting.Value.ToString();
+            newProjectArray[2] = hidFirstName.Value.ToString();
+            newProjectArray[3] = hidLastName.Value.ToString();
+            newProjectArray[4] = hidAddress.Value.ToString();
+            newProjectArray[5] = hidProvState.Value.ToString();
+            newProjectArray[6] = hidCity.Value.ToString();
+            newProjectArray[7] = hidZip.Value.ToString();
+            newProjectArray[8] = hidPhone.Value.ToString();
+            newProjectArray[9] = hidCell.Value.ToString();
+            newProjectArray[10] = hidEmail.Value.ToString();
+            newProjectArray[11] = hidProjectName.Value.ToString();
+            newProjectArray[12] = hidProjectType.Value.ToString();
+            newProjectArray[13] = hidModelNumber.Value.ToString();
+            newProjectArray[14] = hidKneewallType.Value.ToString();
+            newProjectArray[15] = hidKneewallHeight.Value.ToString();
+            newProjectArray[16] = hidTransomType.Value.ToString();
+            newProjectArray[17] = hidTransomHeight.Value.ToString();
+            newProjectArray[18] = hidFramingColour.Value.ToString();
+            newProjectArray[19] = hidInteriorColour.Value.ToString();
+            newProjectArray[20] = hidInteriorSkin.Value.ToString();
+            newProjectArray[21] = hidExteriorColour.Value.ToString();
+            newProjectArray[22] = hidExteriorSkin.Value.ToString();
+            newProjectArray[23] = hidFoamProtected.Value.ToString();
+            newProjectArray[24] = hidPrefabFloor.Value.ToString();
+            newProjectArray[25] = hidRoof.Value.ToString();
+            newProjectArray[26] = hidRoofType.Value.ToString();
+            newProjectArray[27] = hidLayoutSelection.Value.ToString();
 
-            //Session.Add("hidKneewallType", hidKneewallType.Value);
-            //Session.Add("hidKneewallColour", hidKneewallColour.Value);
-            //Session.Add("hidKneewallHeight", hidKneewallHeight.Value);
-            //Session.Add("hidTransomType", hidTransomType.Value);
-            //Session.Add("hidTransomColour", hidTransomColour.Value);
-            //Session.Add("hidTransomHeight", hidTransomHeight.Value);
-            //Session.Add("hidInteriorColour", hidInteriorColour.Value);
-            //Session.Add("hidInteriorSkin", hidInteriorSkin.Value);
-            //Session.Add("hidExteriorColour", hidExteriorColour.Value);
-            //Session.Add("hidExteriorSkin", hidExteriorSkin.Value);
+            Session.Add("newProjectArray", newProjectArray);
 
-            //Session.Add("hidFoamProtected", hidFoamProtected.Value);
-
-            //Session.Add("hidPrefabFloor", hidPrefabFloor.Value);
-
-            //Session.Add("hidRoof", hidRoof.Value);
-            //Session.Add("hidRoofType", hidRoofType.Value);
-
-            //Session.Add("hidLayoutSelection", hidLayoutSelection.Value);
-
-            string[] viewingArray = new string[24];
-
-            //viewingArray[0] = hidFirstName.Value.ToString();
-            //viewingArray[1] = hidLastName.Value.ToString();
-            //viewingArray[2] = hidAddress.Value.ToString();
-            //viewingArray[3] = hidCity.Value.ToString();
-            //viewingArray[4] = hidZip.Value.ToString();
-            //viewingArray[5] = hidPhone.Value.ToString();
-            //viewingArray[6] = hidProjectTag.Value.ToString();
-            //viewingArray[7] = hidProjectType.Value.ToString();
-            //viewingArray[8] = hidModelNumber.Value.ToString();
-            //viewingArray[9] = hidKneewallType.Value.ToString();
-            //viewingArray[10] = hidKneewallColour.Value.ToString();
-            //viewingArray[11] = hidKneewallHeight.Value.ToString();
-            //viewingArray[12] = hidTransomType.Value.ToString();
-            //viewingArray[13] = hidTransomColour.Value.ToString();
-            //viewingArray[14] = hidTransomHeight.Value.ToString();
-            //viewingArray[15] = hidInteriorColour.Value.ToString();
-            //viewingArray[16] = hidInteriorSkin.Value.ToString();
-            //viewingArray[17] = hidExteriorColour.Value.ToString();
-            //viewingArray[18] = hidExteriorSkin.Value.ToString();
-            //viewingArray[19] = hidFoamProtected.Value.ToString();
-            //viewingArray[20] = hidPrefabFloor.Value.ToString();
-            //viewingArray[21] = hidRoof.Value.ToString();
-            //viewingArray[22] = hidRoofType.Value.ToString();
-            //viewingArray[23] = hidLayoutSelection.Value.ToString();
-
-            Session.Add("viewingArray", viewingArray);
-
-            //If custom btnLayout, Page 2, else, page3
-            Response.Redirect("TestingHiddens.aspx");
+            //If custom is selected, send to drawing tool
+            if (hidLayoutSelection.Value.ToString() == "Custom")
+            {
+                Response.Redirect("CustomDrawingTool.aspx");
+            }
+            //if sunroom or walls, send to wall building page
+            else if (hidProjectType.Value.ToString() == "Sunroom" || hidProjectType.Value.ToString() == "Walls")
+            {
+                Response.Redirect("WizardWallsAndMods.aspx");
+            }
+            else
+            {
+                //Should never get here, some type of session error has occurred.
+            }
         }
 
         protected void btnQuestion3_Click(object sender, EventArgs e)
