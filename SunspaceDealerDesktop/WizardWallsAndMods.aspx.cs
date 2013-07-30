@@ -2875,7 +2875,8 @@ namespace SunspaceDealerDesktop
                 
 
                 //length = wallLength.Value;
-                //startHeight = Convert.ToSingle(hidBackWallHeight.Value);
+                //startHeight = Convert.ToSingle(hid
+                Height.Value);
                 //endHeight = Convert.ToSingle(hidFrontWallHeight.Value);
                 //soffit = Convert.ToSingle(wallSoffit.Value);
                // slope = Convert.ToSingle(hidRoofSlope.Value);
