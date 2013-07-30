@@ -39,7 +39,7 @@
         var DOOR_FRENCH_MIN_WIDTH = '<%= DOOR_FRENCH_MIN_WIDTH %>';
         var DOOR_FRENCH_MAX_WIDTH = '<%= DOOR_FRENCH_MAX_WIDTH %>';
         var projection = 120; //room projection from the left ... hard coded for testing
-        var antiProjection = -120; //room projection from the right ... hard coded for testing
+        var antiProjection = 120; //room projection from the right ... hard coded for testing
         var roomProjection = 120; //the higher of the two room projections
         var soffitLength = '<%= sofftLength %>'; //hard coded for testing, will come from the previous pages in the wizard
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
@@ -236,7 +236,7 @@
             projection = highestProjection;
             antiProjection = lowestProjection * -1;
 
-            if ((antiProjection * -1) > projection)
+            if (antiProjection > projection)
                 return antiProjection;
             else 
                 return projection;
@@ -412,6 +412,10 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
             */
             
             var soffitLeft, soffitRight, roofLength;
+            var soffitLeftArray = new Array();
+            var soffitRightArray = new Array();
+            var iLeft = 0;
+            var iRight = 0;
 
             if (projection > antiProjection) {
                 soffitRight = soffitLength;
@@ -428,10 +432,29 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
             }
 
 
+            //determine how many walls the left soffit spans
+            do {
+                if (soffitLeft > wallLengthArray[existingWallCount + 1 + iLeft]) { //if the length of the left soffit is greater than the (first) proposed wall length
+                    soffitLeftArray[iLeft] = wallLengthArray[existingWallCount + 1 + iLeft]; //set the element of left soffit array to length of the proposed wall
+                    soffitLeftArray[iLeft + 1] = soffitLeft - wallLengthArray[existingWallCount + 1 + iLeft]; //subtract the length of the proposed wall from soffit length
+                                                                                                           //set the remaining soffit length to the next element of the left soffit array
+                    iLeft++; //increment the counter
+                }
+                else //if the length of the left soffit is the same or less than proposed wall length
+                    soffitLeftArray[iLeft] = soffitLeft; //set the element of the left soffit array to length of the left soffit
+            } while (iLeft > 0 && soffitLeftArray[iLeft] > wallLengthArray[existingWallCount + 1 + iLeft]); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
 
-
-
-
+            //determine how many walls the right soffit spans
+            do {
+                if (soffitRight > wallLengthArray[wallLengthArray.length - 1 - iRight]) { //if the length of the right soffit is greater than the (last) proposed wall length
+                    soffitRightArray[iRight] = wallLengthArray[wallLengthArray.length - 1 - iRight]; //set the element of right soffit array to length of the proposed wall
+                    soffitRightArray[iRight + 1] = soffitRight - wallLengthArray[wallLengthArray.length - 1 - iRight]; //subtract the length of the proposed wall from soffit length
+                                                                                                                    //set the remaining soffit length to the next element of the right soffit array
+                    iRight++; //increment the counter
+                }
+                else //if the length of the right soffit is the same or less than proposed wall length
+                    soffitRightArray[iRight] = soffitRight;  //set the element of the right soffit array to length of the right soffit
+            } while (iRight > 0 && soffitRightArray[iRight] > wallLengthArray[wallLengthArray.length - 1 - iRight]); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
 
 
 
