@@ -2898,6 +2898,50 @@ namespace SunspaceDealerDesktop
             System.Diagnostics.Debug.WriteLine(Request.Form["wall4DoorCount"]);
             System.Diagnostics.Debug.WriteLine(Request.Form["wall4Door0PropertyCount"]);
             System.Diagnostics.Debug.WriteLine(Request.Form["wall4Door0type"]);
+
+            int wallCount = Convert.ToInt32(Request.Form["wallCount"]);
+
+            for (int walls = 0; walls < wallCount; walls++) { 
+                
+
+                int doorCount = Convert.ToInt32(Request.Form["wall" + walls + "DoorCount"]);
+
+                for (int doors = 0; doors < doorCount; doors++) {
+                                        
+                    int propertyCount = Convert.ToInt32(Request.Form["wall" + walls + "Door" + doors + "PropertyCount"]);
+                    string doorType = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "type"]);
+                    
+                    //if (doorType == "Cabana")
+                    //{
+                    //    CabanaDoor thisDoor = new CabanaDoor();
+                    //    //Load all properties
+                        
+                    //}
+                    //else if (doorType == "French")
+                    //{
+                    //    FrenchDoor thisDoor = new FrenchDoor();
+                    //    //Load all properties
+                    //}
+                    //else if (doorType == "Patio")
+                    //{
+                    //    PatioDoor thisDoor = new PatioDoor();
+                    //    //Load all properties
+                    //}
+                    //else
+                    //{
+                    //    OpenSpaceDoor thisDoor = new OpenSpaceDoor();
+                    //    //Load all properties
+                    //}
+
+                    //for (int properties = 0; properties < propertyCount; properties++) { 
+                    
+
+                    //}
+
+                }
+
+            }
+
         }
     }
 }
