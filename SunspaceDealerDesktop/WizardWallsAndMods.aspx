@@ -20,9 +20,7 @@
         var wallSetBackArray = new Array(); //array to store the setback for each wall
         var wallSoffitArray = new Array(); //array to store soffit length of each wall
         var wallStartHeightArray = new Array(); //array to store start height of each wall
-        var wallEndHeightArray = new Array(); //array to store end height of each wall
-
-        
+        var wallEndHeightArray = new Array(); //array to store end height of each wall        
 
         var backWall = "south"; //index of the back wall to determine wall heights
         var backWallIndex = 0;
@@ -67,6 +65,7 @@
         /**
         *submitData
         *This function will submit data to the session which will be used within C#
+        *to create objects.
         */
         function submitData() {
 
@@ -286,9 +285,7 @@
 
             return decimal; //return the corrected decimal value as an array of two elements, 0: value before the decimal, 1: value after the decimal
         }
-
         
-
         /*
         This function determines start and end height of each wall based on roof slope and length.
         Depending on which wall is considered the back wall for the purposes of roof slope, this function
@@ -523,8 +520,7 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
 
             return (((rise * RUN) / (roomProjection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
         }
-
-
+        
         /**
         This function calculates the rise based on the slope (over 12) and one of the heights
         @return rise (from the slope equation)

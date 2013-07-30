@@ -5,40 +5,25 @@ using System.Web;
 
 namespace SunspaceDealerDesktop
 {
-    public class CabanaDoor
+    public class CabanaDoor : Door
     {
         #region Attributes
-        private float width;
-        private float height; //79.125 if 2", 82.125 if 3"
-        private string swingDirection; //in or out
-        private string hingePosition; //Left or Right
-        private string boxHeader; //Left, right, both. Must have one on hinge, must have one on strike if it meets solid wall
+        private float height = 0f;
+        private float length = 0f;
+        private string vinylTint = null;
+        private string screenType = null;
+        private string glassTint = null;
+        private string hinge = null;
+        private string swing = null;
+        private string hardwareType = null;
+        private string numberVents = null;
         #endregion
 
-        #region Constructors
-        public CabanaDoor()
-        {
-            width = 0f;
-            height = 79.125f;
-            swingDirection = "out";
-            hingePosition = "left";
-            boxHeader = "left";
-        }
+        #region Constructor
+        public CabanaDoor() : base() {}
         #endregion
 
         #region Accessors
-        public float Width
-        {
-            get
-            {
-                return width;
-            }
-
-            set
-            {
-                width = value;
-            }
-        }
         public float Height
         {
             get
@@ -51,40 +36,100 @@ namespace SunspaceDealerDesktop
                 height = value;
             }
         }
-        public string SwingDirection
+        public float Length
         {
             get
             {
-                return swingDirection;
+                return length;
             }
 
             set
             {
-                swingDirection = value;
+                length = value;
+            }
+        }        
+        public string VinylTint
+        {
+            get
+            {
+                return vinylTint;
+            }
+
+            set
+            {
+                vinylTint = value;
             }
         }
-        public string HingePosition
+        public string GlassTint
         {
             get
             {
-                return hingePosition;
+                return glassTint;
             }
 
             set
             {
-                hingePosition = value;
+                glassTint = value;
             }
         }
-        public string BoxHeader
+        public string ScreenType
         {
             get
             {
-                return boxHeader;
+                return screenType;
             }
 
             set
             {
-                boxHeader = value;
+                screenType = value;
+            }
+        }
+        public string Hinge
+        {
+            get
+            {
+                return hinge;
+            }
+
+            set
+            {
+                hinge = value;
+            }
+        }
+        public string Swing
+        {
+            get
+            {
+                return swing;
+            }
+
+            set
+            {
+                swing = value;
+            }
+        }
+        public string HardwareType
+        {
+            get
+            {
+                return hardwareType;
+            }
+
+            set
+            {
+                hardwareType = value;
+            }
+        }
+        public string NumberVents
+        {
+            get
+            {
+                return numberVents;
+            }
+
+            set
+            {
+                numberVents = value;
             }
         }
         #endregion

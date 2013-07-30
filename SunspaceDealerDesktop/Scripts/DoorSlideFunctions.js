@@ -541,6 +541,15 @@ function fillWallWithDoorMods(type, wallNumber) {
     pagerTextDoorAnswer.appendChild(labelBreakLineForButton);
 }
 
+//function findCurrentHeight(door, wall) {
+//    var y, y0, y1, x, x0, x1;
+    
+//    y = y0 + (y1 - y0)(x - x0) / (x1 - x0);
+
+//    return wall.height + (wall.height - wall.height)((door.position + door.fwidth) - wall.length) / (0 - wall.length);
+//    ///////start//////////end///////////start
+//}
+
 /**
 *insertDoor
 *This function inserts the current door to the appropriate wall and position
@@ -748,28 +757,6 @@ function typeRowsDisplayed(type, wallNumber) {
 }
 
 /**
-*validateDoorFill
-*This function validates doors that are being filled into a wall
-*@param doors - holds an array of unsorted doors
-*@param wall - used to hold the current wall information
-*@returns true or false based on if validation passes
-*/
-function validateDoorFill(door, wall) {
-
-    if ((wall.length - wall.rightFiller - wall.leftFiller) < door.fwidth) {
-        alert("This wall is too small to have a door of width " + door.fwidth + ". Please try again.");
-        return false;
-    }
-
-    if (wall.doors.length > 0) {
-        alert("Fill cannot be used on a wall with existing doors. Please empty the wall first.");
-        return false;
-    }
-
-    return true;
-}
-
-/**
 *updateDoorPager
 *This function is used to update the pager details based on added or removed (deleted) doors
 *@param wall - used to hold the current wall information
@@ -904,6 +891,28 @@ function validateDoor(door, wall) {
     //and this door is overlapping the door before it, display the appropriate message
     if (index > 0 && door.position < (wall.doors[index - 1].position + wall.doors[index - 1].fwidth)) {
         alert("The door you're trying to insert is overlapping door " + index + ". Please try again.");
+        return false;
+    }
+
+    return true;
+}
+
+/**
+*validateDoorFill
+*This function validates doors that are being filled into a wall
+*@param doors - holds an array of unsorted doors
+*@param wall - used to hold the current wall information
+*@returns true or false based on if validation passes
+*/
+function validateDoorFill(door, wall) {
+
+    if ((wall.length - wall.rightFiller - wall.leftFiller) < door.fwidth) {
+        alert("This wall is too small to have a door of width " + door.fwidth + ". Please try again.");
+        return false;
+    }
+
+    if (wall.doors.length > 0) {
+        alert("Fill cannot be used on a wall with existing doors. Please empty the wall first.");
         return false;
     }
 

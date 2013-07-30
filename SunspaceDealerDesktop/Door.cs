@@ -7,39 +7,21 @@ namespace SunspaceDealerDesktop
 {
     public class Door
     {
-        private String typeOfDoor; //Type of Door String
-        //private bool isPatioDoor; //True if Patio Door ?????????????
-        private int itemIndex; //LinearItems Array Index
-        private String transomStyle; //Transom Style: 0-Solid, 1-Glass, 2-Vinyl , glass rect, vinyl rect
-        private String transomTint;
-        //private int underHeaderStyle; //Transom Style: 0-Solid, 1-Glass, 2-Vinyl , glass rect, vinyl rect
-        //private int underHeaderTint; //?????????????????????????????????????????????????????????????????
-        private float height; //Punch Height of Door
-        private float width; //Door Width (Not including Frame)
+        #region Attributes
+        private int itemIndex = 0; //LinearItems Array Index
+        private string doorType = null; //Type of Door
+        private string doorStyle = null;
+        private string screenType = null;
+        private float fHeight = 0f; //Height of Door
+        private float fLength = 0f; //Width of Door
+        private string colour = null;
+        #endregion
 
-        public Door()
-        {
-            TypeOfDoor = "cabana"; 
-            ItemIndex = -1;
-            TransomStyle = "solid"; 
-            TransomTint = "glass";
-            Height = 80f; 
-            Width = 40f;
-        }
+        #region Constructor
+        public Door() {}
+        #endregion
 
-        public String TypeOfDoor
-        {
-            get
-            {
-                return typeOfDoor;
-            }
-
-            set
-            {
-                typeOfDoor = value.ToLower();
-            }
-        }
-       
+        #region Accessors
         public int ItemIndex
         {
             get
@@ -52,58 +34,79 @@ namespace SunspaceDealerDesktop
                 itemIndex = value;
             }
         }
-
-        public String TransomStyle
+        public String DoorType
         {
             get
             {
-                return transomStyle;
+                return doorType;
             }
 
             set
             {
-                transomStyle = value.ToLower();
+                doorType = value;
             }
-        }
-
-        public String TransomTint
+        }              
+        public String DoorStyle
         {
             get
             {
-                return transomTint;
+                return doorStyle;
             }
 
             set
             {
-                transomTint = value.ToLower();
+                doorStyle = value.ToLower();
             }
         }
-
-        public float Height
+        public string ScreenType
         {
             get
             {
-                return height;
+                return screenType;
             }
 
             set
             {
-                height = value;
+                screenType = value;
             }
         }
-
-        public float Width
+        public float FHeight
         {
             get
             {
-                return width;
+                return fHeight;
             }
 
             set
             {
-                width = value;
+                fHeight = value;
             }
         }
+        public float FLength
+        {
+            get
+            {
+                return fLength;
+            }
+
+            set
+            {
+                fLength = value;
+            }
+        }
+        public string Colour
+        {
+            get
+            {
+                return colour;
+            }
+
+            set
+            {
+                colour = value;
+            }
+        }
+        #endregion
 
         /*
         bool patioXO; //??????????????
