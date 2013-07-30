@@ -136,6 +136,7 @@ namespace SunspaceDealerDesktop
                 {
                     proposedWallCount++; //increment the proposed wall counter
                     populateTblProposed(i, proposedWallCount); //populate the proposed walls table on slide 1
+                    populateWallDoorOptions(i, proposedWallCount); //populate slide 3 with appropriate proposed wall door options
                 }
             }
 
@@ -326,8 +327,13 @@ namespace SunspaceDealerDesktop
 
 
             //perhaps slide 3 stuff can go in another function and be called from the same loop???
+            
+        }
+
+        protected void populateWallDoorOptions(int i, int proposedWallCount)
+        {
             //SLIDE 3 DOOR DETAILS PER WALL
-            #region Slide 3: Onload dynamic loop to insert wall door options            
+            #region Slide 3: Onload dynamic loop to insert wall door options
 
             #region Wall #:Radio button section
             //li tags created for every wall
@@ -381,13 +387,13 @@ namespace SunspaceDealerDesktop
                     //li tag to hold door type radio button and all its content
                     wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
                 }
-                    
+
                 //Door type radio button
                 RadioButton typeRadio = new RadioButton();
                 typeRadio.ID = "radType" + i + title; //Adding appropriate id to door type radio button
                 typeRadio.GroupName = "doorTypeRadios" + i;         //Adding group name for all door types
                 typeRadio.Attributes.Add("onclick", "typeRowsDisplayed('" + title + "', '" + i + "')"); //On click event to display the proper fields/rows
-                    
+
 
                 //Door type radio button label for clickable area
                 Label typeLabelRadio = new Label();
@@ -414,8 +420,8 @@ namespace SunspaceDealerDesktop
 
                 tblDoorDetails.ID = "tblDoorDetails" + i + title; //Adding appropriate id to the table
                 tblDoorDetails.CssClass = "tblTextFields";                  //Adding CssClass to the table for styling
-                    
-                    
+
+
                 //Creating cells and controls for rows
 
                 #region Table:Default Row Title Current Door (tblDoorDetails)
@@ -542,7 +548,7 @@ namespace SunspaceDealerDesktop
                 #endregion
 
                 #region Table:# Row Door Transom (tblDoorDetails)
-                    
+
                 TableRow doorTransomRow = new TableRow();
                 doorTransomRow.ID = "rowDoorTransom" + i + title;
                 doorTransomRow.Attributes.Add("style", "display:none;");
@@ -555,14 +561,14 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorTransomDDL = new DropDownList();
                 doorTransomDDL.ID = "ddlDoorTransom" + i + title;
-                doorTransomDDL.Attributes.Add("onchange", "doorTransomStyle('" + title + "','" + i +"')");
+                doorTransomDDL.Attributes.Add("onchange", "doorTransomStyle('" + title + "','" + i + "')");
                 ListItem transomVinyl = new ListItem("Vinyl", "vinyl");
                 ListItem transomGlass = new ListItem("Glass", "glass");
                 ListItem transomScreen = new ListItem("Screen", "screen");
                 ListItem transomSolidWall = new ListItem("Solid Wall", "solidWall");
 
                 doorTransomDDL.Items.Add(transomVinyl);
-                    
+
                 if (currentModel == "M100")
                     doorTransomDDL.Items.Add(transomScreen);
                 else
@@ -749,7 +755,7 @@ namespace SunspaceDealerDesktop
                 colorOfDoorLBL.AssociatedControlID = "ddlDoorColor" + i + title;
 
                 #endregion
-                    
+
                 #region Table:# Row Door Internal Grills Yes(tblDoorDetails)
 
                 TableRow doorInternalGrillsYesRow = new TableRow();
@@ -1028,7 +1034,7 @@ namespace SunspaceDealerDesktop
                 doorBoxHeaderLBL.AssociatedControlID = "ddlDoorBoxHeader" + i + title;
 
                 #endregion
-                    
+
                 #region Table:Thirteenth Row Door Glass Tint (tblDoorDetails)
 
                 TableRow doorGlassTintRow = new TableRow();
@@ -1654,12 +1660,12 @@ namespace SunspaceDealerDesktop
                 if (title == "NoDoor")
                 {
                     doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This Opening Only (No Door)'/>"));
-                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + title + "\", \"" + i +"\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With Opening Only (No Doors)'/>"));
+                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + title + "\", \"" + i + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With Opening Only (No Doors)'/>"));
                 }
                 else
                 {
                     doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
-                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + title + "\", \"" + i +"\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
+                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + title + "\", \"" + i + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
                 }
                 //doorUndoButtonCell.Controls.Add(new LiteralControl("<input id='btnUndoLastAddition" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Undo Last Addition Doors'/>"));
 
@@ -1682,7 +1688,7 @@ namespace SunspaceDealerDesktop
 
                 //Closing necessary tags
                 wallDoorOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
-                
+
             }
 
             #endregion
@@ -2875,8 +2881,7 @@ namespace SunspaceDealerDesktop
                 
 
                 //length = wallLength.Value;
-                //startHeight = Convert.ToSingle(hid
-                Height.Value);
+                //startHeight = Convert.ToSingle(hidHeight.Value);
                 //endHeight = Convert.ToSingle(hidFrontWallHeight.Value);
                 //soffit = Convert.ToSingle(wallSoffit.Value);
                // slope = Convert.ToSingle(hidRoofSlope.Value);
