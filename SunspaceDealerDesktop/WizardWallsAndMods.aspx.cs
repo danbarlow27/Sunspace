@@ -363,8 +363,11 @@ namespace SunspaceDealerDesktop
 
             //Creating one ul tag to hold multiple li tags contain Cabana, French, Patio, Opening Only (No Door) options
 
-            wallDoorOptions.Controls.Add(new LiteralControl("<ul><li><ul id='doorDetailsList" + i + "' class='toggleOptions'>"));
+            wallDoorOptions.Controls.Add(new LiteralControl("<ul>"));
 
+            wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
+
+            wallDoorOptions.Controls.Add(new LiteralControl("<ul id='doorDetailsList" + i + "' class='toggleOptions'>"));
 
             #endregion
 
@@ -1290,7 +1293,6 @@ namespace SunspaceDealerDesktop
                 doorButtonRow.Attributes.Add("style", "display:inherit;");
                 TableCell doorAddButtonCell = new TableCell();
                 TableCell doorFillButtonCell = new TableCell();
-                TableCell doorUndoButtonCell = new TableCell();
 
                 #endregion
 
@@ -1667,18 +1669,18 @@ namespace SunspaceDealerDesktop
                     doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
                     doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + title + "\", \"" + i + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
                 }
-                //doorUndoButtonCell.Controls.Add(new LiteralControl("<input id='btnUndoLastAddition" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Undo Last Addition Doors'/>"));
 
                 tblDoorDetails.Rows.Add(doorButtonRow);
 
                 doorButtonRow.Cells.Add(doorAddButtonCell);
                 doorButtonRow.Cells.Add(doorFillButtonCell);
-                //doorButtonRow.Cells.Add(doorUndoButtonCell);
 
                 #endregion
 
                 //Adding literal control div tag to hold the table, add to wallDoorOptions placeholder
-                wallDoorOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\" id=\"div_" + i + title + "\"><ul>"));
+                wallDoorOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\" id=\"div_" + i + title + "\">"));
+
+                wallDoorOptions.Controls.Add(new LiteralControl("<ul>"));
 
                 //Adding literal control li to keep proper page look and format
                 wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
@@ -1687,13 +1689,27 @@ namespace SunspaceDealerDesktop
                 wallDoorOptions.Controls.Add(tblDoorDetails);
 
                 //Closing necessary tags
-                wallDoorOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
+                wallDoorOptions.Controls.Add(new LiteralControl("</li>"));
+
+                wallDoorOptions.Controls.Add(new LiteralControl("</ul>"));
+
+                wallDoorOptions.Controls.Add(new LiteralControl("</div>"));
+
+                wallDoorOptions.Controls.Add(new LiteralControl("</li>"));
 
             }
 
             #endregion
             //Closing more necessary tags
-            wallDoorOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>"));
+            wallDoorOptions.Controls.Add(new LiteralControl("</ul>"));
+
+            wallDoorOptions.Controls.Add(new LiteralControl("</li>"));
+
+            wallDoorOptions.Controls.Add(new LiteralControl("</ul>"));
+
+            wallDoorOptions.Controls.Add(new LiteralControl("</div>"));
+
+            wallDoorOptions.Controls.Add(new LiteralControl("</li>"));
 
             #endregion
 
