@@ -40,7 +40,9 @@
         var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
         var DOOR_FRENCH_MIN_WIDTH = '<%= DOOR_FRENCH_MIN_WIDTH %>';
         var DOOR_FRENCH_MAX_WIDTH = '<%= DOOR_FRENCH_MAX_WIDTH %>';
-        var projection = 120; //hard coded for testing, will come from the previous pages in the wizard
+        var projection = 120; //room projection from the left ... hard coded for testing
+        var antiProjection = -120; //room projection from the right ... hard coded for testing
+        var roomProjection = 120; //the higher of the two room projections
         var soffitLength = '<%= sofftLength %>'; //hard coded for testing, will come from the previous pages in the wizard
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
         var model = '<%= currentModel %>';  
@@ -213,19 +215,38 @@
 
         /**
         This function uses the setbackArray which is already populated by calculateSetBack() function
-            to calculate the projection by simply adding each setback value.
-        @return highestProjection - i.e. projection
+            to calculate the room projection and antiProjection by simply adding each setback value.
+        @return projection - i.e. room projection from the left
+        @return antiProjection - i.e. room projection from the right
         */
         function calculateProjection() {
             var tempProjection = 0; //variable to store each setback
-            var highestProjection = 0; //variable to store the highest projection calculated, which at the end is the projection.
+            var highestProjection = 0; //variable to store the highest projection calculated from the left side of the room
+            var lowestProjection = 0; //variable to store the highest projection calculated from the right side of the room
+            var overallProjection
             for (var i = 0; i < wallSetBackArray.length; i++) { //run through all the setbacks
                 tempProjection = +tempProjection + +wallSetBackArray[i]; //add the values to temp variable
                 if (tempProjection > highestProjection) { //determine if the current temp projection is greater than the highest projection calculated
                     highestProjection = tempProjection; // reset the highest projection
                 }
+                if (tempProjection < lowestProjection) {
+                    lowestProjection = tempProjection;
+                }
             }
-            return highestProjection; //return the highest projection calculated
+
+            projection = highestProjection;
+            antiProjection = lowestProjection;
+
+            if ((antiProjection * -1) > projection)
+                return antiProjection * -1;
+            else 
+                return projection;
+
+            //return 
+            //{
+            //    "projection" : highestProjection, //return the highest projection calculated
+            //    "antiProjection" : lowestProjection
+            //};
         }
 
         /** 
@@ -493,14 +514,14 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
         @return slope over 12
         */
         function calculateSlope() {
-            var rise; //m = ((rise * run)/(projection - soffitLength)) slope over 12
+            var rise; //m = ((rise * run)/(roomProjection - soffitLength)) slope over 12
 
             rise = ((document.getElementById("MainContent_txtBackWallHeight").value //textbox value
                 + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) //dropdown listitem value
                 - (document.getElementById("MainContent_txtFrontWallHeight").value //textbox value
                 + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value)); //dropdown listitem value
 
-            return (((rise * RUN) / (projection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
+            return (((rise * RUN) / (roomProjection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
         }
 
 
@@ -509,11 +530,11 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
         @return rise (from the slope equation)
         */
         function calculateRise() {
-            var m;    //m = ((rise * run)/(projection - soffitLength)) slope over 12
+            var m;    //m = ((rise * run)/(roomProjection - soffitLength)) slope over 12
 
             m = document.getElementById("MainContent_txtRoofSlope").value; //get the slope from the textbox
 
-            return ((((projection - soffitLength) * m) / RUN).toFixed(2)); //rise, rounded to 2 decimal places
+            return ((((roomProjection - soffitLength) * m) / RUN).toFixed(2)); //rise, rounded to 2 decimal places
         }
 
         /**
@@ -560,8 +581,8 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                   
                     }
                 }
-                //store projection in the projection variable and hidden field
-                document.getElementById("MainContent_hidProjection").value = projection = calculateProjection(); 
+                //store roomProjection in the roomProjection variable and hidden field
+                document.getElementById("MainContent_hidroomProjection").value = roomProjection = calculateProjection(); 
 
                 //Set answer on side pager and enable button
                 $('#MainContent_lblWallLengthsAnswer').text(answer);
@@ -1068,7 +1089,7 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
     <%-- hiddenFieldsDiv is used to store dynamically generated hidden fields from codebehind --%>
     <div id="hiddenFieldsDiv" runat="server"></div>
     <%-- <input id="hidSoffitLength" type="hidden" runat="server" /> --%>
-    <input id="hidProjection" type="hidden" runat="server" />
+    <input id="hidroomProjection" type="hidden" runat="server" />
     <input id="hidFrontWallHeight" type="hidden" runat="server" />
     <input id="hidBackWallHeight" type="hidden" runat="server" />
     <input id="hidRoofSlope" type="hidden" runat="server" />
