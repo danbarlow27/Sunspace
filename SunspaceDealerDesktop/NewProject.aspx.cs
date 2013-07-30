@@ -12,6 +12,7 @@ namespace SunspaceDealerDesktop
     public partial class NewProject : Page
     {
         //colour arrays generated as javascript usable objects
+        //Used for population of corresponding dropdown lists
         public string model100FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_100_FRAMING_COLOURS);
         public string model200FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_200_FRAMING_COLOURS);
         public string model300FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_300_FRAMING_COLOURS);
@@ -26,9 +27,7 @@ namespace SunspaceDealerDesktop
         {
             if (Session["loggedIn"] == null)
             {
-                //uncomment me when login functionality is working
                 Response.Redirect("Login.aspx");
-                //Session.Add("loggedIn", "1");
             }           
 
             //slide1
@@ -61,29 +60,31 @@ namespace SunspaceDealerDesktop
                 }
             }
 
+            //Only on first load
             if (!IsPostBack)
             {
                 if (Session["dealer_id"].ToString() == "-1")
                 {
-                    //Get the customers assosciated with this dealer
-                    sdsCustomers.SelectCommand = "SELECT first_name, last_name FROM customers ORDER BY last_name, first_name";
+                    //If sunspace user is not spoofed, require them too
+                    Response.Redirect("Spoof.aspx");
                 }
-                else
-                {
-                    //Get the customers assosciated with this dealer
-                    sdsCustomers.SelectCommand = "SELECT first_name, last_name FROM customers WHERE dealer_id=" + Session["dealer_id"] + "ORDER BY last_name, first_name";
-                }
+
+                //Get list of customers that belong to this dealer
+                sdsCustomers.SelectCommand = "SELECT first_name, last_name, email FROM customers WHERE dealer_id=" + Session["dealer_id"] + "ORDER BY last_name, first_name";                
 
                 //assign the table names to the dataview object
                 DataView dvExistingCustomers = (DataView)sdsCustomers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
 
+                //clear customer dropdownlist for start
                 ddlExistingCustomer.Items.Clear();
 
+                //loop through all results, adding each customer to the dropdown list
                 for (int i = 0; i < dvExistingCustomers.Count; i++)
                 {
-                    ddlExistingCustomer.Items.Add(dvExistingCustomers[i][0].ToString() + " " + dvExistingCustomers[i][1].ToString());
+                    ddlExistingCustomer.Items.Add(dvExistingCustomers[i][0].ToString() + " " + dvExistingCustomers[i][1].ToString() + "(" + dvExistingCustomers[i][2].ToString() + ")");
                 }
 
+                //add this customer list to the session so we don't have to constantly query on refreshes
                 Session.Add("ddlExistingCustomer", ddlExistingCustomer);
             }
             else
@@ -155,71 +156,55 @@ namespace SunspaceDealerDesktop
             {
                 insertNewCustomer();
             }
-            //Session.Add("hidFirstName", hidFirstName.Value);
-            //Session.Add("hidExisting", hidExisting.Value);
-            //Session.Add("hidFirstName", hidFirstName.Value);
-            //Session.Add("hidLastName", hidLastName.Value);
-            //Session.Add("hidAddress", hidAddress.Value);
-            //Session.Add("hidCity", hidCity.Value);
-            //Session.Add("hidZip", hidZip.Value);
-            //Session.Add("hidPhone", hidPhone.Value);
 
-            //Session.Add("hidProjectTag", hidProjectTag.Value);
+            //Move all hidden fields into this array, then put array on the session
+            string[] newProjectArray = new string[28];
 
-            //Session.Add("hidProjectType", hidProjectType.Value);
-            //Session.Add("hidModelNumber", hidModelNumber.Value);
+            newProjectArray[0] = hidCountry.Value.ToString();
+            newProjectArray[1] = hidExisting.Value.ToString();
+            newProjectArray[2] = hidFirstName.Value.ToString();
+            newProjectArray[3] = hidLastName.Value.ToString();
+            newProjectArray[4] = hidAddress.Value.ToString();
+            newProjectArray[5] = hidProvState.Value.ToString();
+            newProjectArray[6] = hidCity.Value.ToString();
+            newProjectArray[7] = hidZip.Value.ToString();
+            newProjectArray[8] = hidPhone.Value.ToString();
+            newProjectArray[9] = hidCell.Value.ToString();
+            newProjectArray[10] = hidEmail.Value.ToString();
+            newProjectArray[11] = hidProjectName.Value.ToString();
+            newProjectArray[12] = hidProjectType.Value.ToString();
+            newProjectArray[13] = hidModelNumber.Value.ToString();
+            newProjectArray[14] = hidKneewallType.Value.ToString();
+            newProjectArray[15] = hidKneewallHeight.Value.ToString();
+            newProjectArray[16] = hidTransomType.Value.ToString();
+            newProjectArray[17] = hidTransomHeight.Value.ToString();
+            newProjectArray[18] = hidFramingColour.Value.ToString();
+            newProjectArray[19] = hidInteriorColour.Value.ToString();
+            newProjectArray[20] = hidInteriorSkin.Value.ToString();
+            newProjectArray[21] = hidExteriorColour.Value.ToString();
+            newProjectArray[22] = hidExteriorSkin.Value.ToString();
+            newProjectArray[23] = hidFoamProtected.Value.ToString();
+            newProjectArray[24] = hidPrefabFloor.Value.ToString();
+            newProjectArray[25] = hidRoof.Value.ToString();
+            newProjectArray[26] = hidRoofType.Value.ToString();
+            newProjectArray[27] = hidLayoutSelection.Value.ToString();
 
-            //Session.Add("hidKneewallType", hidKneewallType.Value);
-            //Session.Add("hidKneewallColour", hidKneewallColour.Value);
-            //Session.Add("hidKneewallHeight", hidKneewallHeight.Value);
-            //Session.Add("hidTransomType", hidTransomType.Value);
-            //Session.Add("hidTransomColour", hidTransomColour.Value);
-            //Session.Add("hidTransomHeight", hidTransomHeight.Value);
-            //Session.Add("hidInteriorColour", hidInteriorColour.Value);
-            //Session.Add("hidInteriorSkin", hidInteriorSkin.Value);
-            //Session.Add("hidExteriorColour", hidExteriorColour.Value);
-            //Session.Add("hidExteriorSkin", hidExteriorSkin.Value);
+            Session.Add("newProjectArray", newProjectArray);
 
-            //Session.Add("hidFoamProtected", hidFoamProtected.Value);
-
-            //Session.Add("hidPrefabFloor", hidPrefabFloor.Value);
-
-            //Session.Add("hidRoof", hidRoof.Value);
-            //Session.Add("hidRoofType", hidRoofType.Value);
-
-            //Session.Add("hidLayoutSelection", hidLayoutSelection.Value);
-
-            string[] viewingArray = new string[24];
-
-            //viewingArray[0] = hidFirstName.Value.ToString();
-            //viewingArray[1] = hidLastName.Value.ToString();
-            //viewingArray[2] = hidAddress.Value.ToString();
-            //viewingArray[3] = hidCity.Value.ToString();
-            //viewingArray[4] = hidZip.Value.ToString();
-            //viewingArray[5] = hidPhone.Value.ToString();
-            //viewingArray[6] = hidProjectTag.Value.ToString();
-            //viewingArray[7] = hidProjectType.Value.ToString();
-            //viewingArray[8] = hidModelNumber.Value.ToString();
-            //viewingArray[9] = hidKneewallType.Value.ToString();
-            //viewingArray[10] = hidKneewallColour.Value.ToString();
-            //viewingArray[11] = hidKneewallHeight.Value.ToString();
-            //viewingArray[12] = hidTransomType.Value.ToString();
-            //viewingArray[13] = hidTransomColour.Value.ToString();
-            //viewingArray[14] = hidTransomHeight.Value.ToString();
-            //viewingArray[15] = hidInteriorColour.Value.ToString();
-            //viewingArray[16] = hidInteriorSkin.Value.ToString();
-            //viewingArray[17] = hidExteriorColour.Value.ToString();
-            //viewingArray[18] = hidExteriorSkin.Value.ToString();
-            //viewingArray[19] = hidFoamProtected.Value.ToString();
-            //viewingArray[20] = hidPrefabFloor.Value.ToString();
-            //viewingArray[21] = hidRoof.Value.ToString();
-            //viewingArray[22] = hidRoofType.Value.ToString();
-            //viewingArray[23] = hidLayoutSelection.Value.ToString();
-
-            Session.Add("viewingArray", viewingArray);
-
-            //If custom btnLayout, Page 2, else, page3
-            Response.Redirect("TestingHiddens.aspx");
+            //If custom is selected, send to drawing tool
+            if (hidLayoutSelection.Value.ToString() == "Custom")
+            {
+                Response.Redirect("CustomDrawingTool.aspx");
+            }
+            //if sunroom or walls, send to wall building page
+            else if (hidProjectType.Value.ToString() == "Sunroom" || hidProjectType.Value.ToString() == "Walls")
+            {
+                Response.Redirect("WizardWallsAndMods.aspx");
+            }
+            else
+            {
+                //Should never get here, some type of session error has occurred.
+            }
         }
 
         protected void btnQuestion3_Click(object sender, EventArgs e)
@@ -237,6 +222,7 @@ namespace SunspaceDealerDesktop
 
         protected void btnQuestion4Walls_Click(object sender, EventArgs e)
         {
+            //if existing is blank, it must be a new customer
             if (hidExisting.Value == "")
             {
                 insertNewCustomer();
@@ -245,6 +231,7 @@ namespace SunspaceDealerDesktop
             Response.Redirect("Home.aspx");
         }
 
+        //This function will add a new user to the customer database at an applicable time when the page is completed and has been posted back.
         protected void insertNewCustomer()
         {
             sdsCustomers.SelectCommand = "SELECT * FROM customers"; ;

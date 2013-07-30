@@ -20,6 +20,12 @@ namespace SunspaceDealerDesktop
                 //Session.Add("loggedIn", "userA");
             }
 
+            if (Session["user_type"].ToString() == "S" && Session["dealer_id"].ToString() == "-1")
+            {
+                //if a sunspace user hasn't spoofed, send them there, that is step one
+                Response.Redirect("Spoof.aspx");
+            }
+
             #region Dropdown population
 
             ListItem lst0 = new ListItem("---", "", true);
@@ -1323,7 +1329,7 @@ namespace SunspaceDealerDesktop
                                             + "layout='" + "Preset 1" + "', "
                                             + "cut_pitch=" + isChecked
                                             + " WHERE dealer_id=" + Session["dealer_id"].ToString();
-                    aCommand.ExecuteNonQuery();
+                    aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
 
                     //An entrance into the model preferences table, one entry for each model type
                     #region 100
@@ -1369,8 +1375,8 @@ namespace SunspaceDealerDesktop
                                             + "transom_vinyl_tint='" + ddl100TransomVinylTint.SelectedValue + "', "
                                             + "transom_screen_type='" + ddl100TransomScreenType.SelectedValue + "', "
                                             + "markup=" + Convert.ToDecimal(txt100Markup.Text) / 100
-                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='100'";
-                    aCommand.ExecuteNonQuery();
+                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='M100'";
+                    aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
                     #endregion
 
                     #region 200
@@ -1416,8 +1422,8 @@ namespace SunspaceDealerDesktop
                                             + "transom_vinyl_tint='" + ddl200TransomVinylTint.SelectedValue + "', "
                                             + "transom_screen_type='" + ddl200TransomScreenType.SelectedValue + "', "
                                             + "markup=" + Convert.ToDecimal(txt200Markup.Text) / 100
-                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='200'";
-                    aCommand.ExecuteNonQuery();
+                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='M200'";
+                    aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
                     #endregion
 
                     #region 300
@@ -1463,8 +1469,8 @@ namespace SunspaceDealerDesktop
                                             + "transom_vinyl_tint='" + ddl300TransomVinylTint.SelectedValue + "', "
                                             + "transom_screen_type='" + ddl300TransomScreenType.SelectedValue + "', "
                                             + "markup=" + Convert.ToDecimal(txt300Markup.Text) / 100
-                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='300'";
-                    aCommand.ExecuteNonQuery();
+                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='M300'";
+                    aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
                     #endregion
 
                     #region 400
@@ -1510,10 +1516,11 @@ namespace SunspaceDealerDesktop
                                             + "transom_vinyl_tint='" + ddl400TransomVinylTint.SelectedValue + "', "
                                             + "transom_screen_type='" + ddl400TransomScreenType.SelectedValue + "', "
                                             + "markup=" + Convert.ToDecimal(txt400Markup.Text) / 100
-                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='400'";
-                    aCommand.ExecuteNonQuery();
+                                            + " WHERE dealer_id=" + Session["dealer_id"].ToString() + " AND model_type='M400'";
+                    aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
                     #endregion
 
+                    lblError.Text = "Successfully Updated!\n\n";
                     aTransaction.Commit();
                 }
                 catch (Exception ex)

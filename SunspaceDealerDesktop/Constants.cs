@@ -9,9 +9,9 @@ namespace SunspaceDealerDesktop
 {
     public static class Constants
     {
-        public static string[] MODEL_NUMBERS = { "100", "200", "300", "400" };
+        public static string[] MODEL_NUMBERS = { "M100", "M200", "M300", "M400" };
 
-        #region Database Field Length Constants
+        #region Database Restricted Constants
         //Patterns:
         //MAX_LENGTH_
         
@@ -22,7 +22,7 @@ namespace SunspaceDealerDesktop
         //By table:
         #region dealers
         public const int MAX_LENGTH_DEALERSHIP_NAME = 35;
-        public const int MAX_LENGTH_DEALER_MULTIPLIER = 3;
+        public const int MAX_LENGTH_DEALER_MULTIPLIER = 5;
         #endregion
 
         #region sunspace
@@ -32,6 +32,8 @@ namespace SunspaceDealerDesktop
         #region users
         public const int MAX_LENGTH_USER_LOGIN = 15;
         public const int MAX_LENGTH_USER_PASSWORD = 15;
+        public const float MINIMUM_MULTIPLIER = 0;
+        public const float MAXIMUM_MULTIPLIER = 2;
         #endregion
         #endregion
 

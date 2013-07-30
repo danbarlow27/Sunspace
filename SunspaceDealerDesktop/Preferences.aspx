@@ -2,9 +2,11 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script>
-        function preferencesCascadeColours(modelNumber) {
-            console.log("Cascading Colours");
 
+        //Copied from NewProject.  When you select a frame colour, will update the interior and exterior colour dropdowns
+        //Edited slightly for preferences use.
+        function preferencesCascadeColours(modelNumber) {
+            //There are four different sections of these, so I'll handle which to update based on modelNumber sent
             if (modelNumber == 100) {
                 ddlFramingColour = document.getElementById("<%= ddl100FrameColour.ClientID %>");
                 if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "White") {
@@ -84,11 +86,11 @@
                 }
             }       
 
+            //We've changed values so we need to move hidden values, which I already have a function for, instead of doing it manually
             MoveValuesToHiddenDivs();
-             //now that colours have cascading we still need to validate the slide
-            //newProjectCheckQuestion4();
         }
 
+        //This function will move all values to hidden divs
         function MoveValuesToHiddenDivs()
         {
             console.log("Moving");
@@ -294,253 +296,182 @@
             document.getElementById("<%=hid400Markup.ClientID%>").value = $('#<%=txt400Markup.ClientID%>').val();
         }
 
+        //This is valid to check all numeric fields, rather than having several smaller ones.  Will be pre-populated before change with valid numbers so risk of error spam is low
+        //and can really only happen by manually making it do that intentionally.
         function ValidateNumericInput() {
+            //Need to have newest values, so move them again just in case.
             MoveValuesToHiddenDivs();
-            console.log("Validating");
 
+            //Make message empty for the start, if still empty at end, no errors
             var errorMessage = "";
-            var isValid = true;
 
-            //default filler
+            //For each numeric field's model, check to be sure its entered, and that entered value is numeric.
+            
+            //Default Filler
             //100
             var defaultFiller100 = document.getElementById("<%=hid100DefaultFiller.ClientID%>").value;
-            if (defaultFiller100 == "" ) {
-                isValid = false;
+            if (defaultFiller100 == "") {
+                errorMessage += "Model 100 - Default Filler - Must be entered.<br/>";
             }
 
-            try{
-                var defaultFiller100Numeric = parseInt(defaultFiller100);
-            }
-            catch (err) {
-                isValid = false;
-            }
-
-            if (isValid == false) {
-                errorMessage += "Error in Model 100 - Default Filler\n";
+            if (isNaN(defaultFiller100)) {
+                errorMessage += "Model 100 - Default Filler - Must be numeric.<br/>";
             }
 
             //200
-            isValid = true;
             var defaultFiller200 = document.getElementById("<%=hid200DefaultFiller.ClientID%>").value;
-
             if (defaultFiller200 == "") {
-                isValid = false;
+                errorMessage += "Model 200 - Default Filler - Must be entered.<br/>";
+            }
+            
+            if (isNaN(defaultFiller100)) {
+                errorMessage += "Model 200 - Default Filler - Must be numeric<br/>";
             }
 
-            try {
-                var defaultFiller200Numeric = parseInt(defaultFiller200);
-            }
-            catch (err) {
-                isValid = false;
-            }
-
-            if (isValid == false) {
-                errorMessage += "Error in Model 200 - Default Filler\n";
-            }
             //300
             var defaultFiller300 = document.getElementById("<%=hid300DefaultFiller.ClientID%>").value;
             if (defaultFiller300 == "") {
-                isValid = false;
+                errorMessage += "Model 300 - Default Filler - Must be entered.<br/>";
             }
-            try {
-                var defaultFiller300Numeric = parseInt(defaultFiller300);
+
+            if (isNaN(defaultFiller300)) {
+                errorMessage += "Model 300 - Default Filler - Must be numeric.<br/>";
             }
-            catch (err) {
-                isValid = false;
-            }
-            if (isValid == false) {
-                errorMessage += "Error in Model 300 - Default Filler\n";
-            }
+
             //400
             var defaultFiller400 = document.getElementById("<%=hid400DefaultFiller.ClientID%>").value;
             if (defaultFiller400 == "") {
-                isValid = false;
+                errorMessage += "Model 400 - Default Filler - Must be entered.<br/>";
             }
-            try {
-                var defaultFiller400Numeric = parseInt(defaultFiller400);
-            }
-            catch (err) {
-                isValid = false;
-            }
-            if (isValid == false) {
-                errorMessage += "Error in Model 400 - Default Filler\n";
+
+            if (isNaN(defaultFiller300)) {
+                errorMessage += "Model 400 - Default Filler - Must be numeric.<br/>";
             }
 
             //markup
             //100
             var markup100 = document.getElementById("<%=hid100Markup.ClientID%>").value;
             if (markup100 == "") {
-                isValid = false;
+                errorMessage += "Model 100 - Markup - Must be entered.<br/>";
             }
-            try {
-                var markup100Numeric = parseInt(markup100);
+
+            if (isNaN(markup100)) {
+                errorMessage += "Model 100 - Markup - Must be numeric.<br/>";
             }
-            catch (err) {
-                isValid = false;
-            }
-            if (isValid == false) {
-                errorMessage += "Error in Model 100 - Markup\n";
-            }
+
             //200
             var markup200 = document.getElementById("<%=hid200Markup.ClientID%>").value;
             if (markup200 == "") {
-                isValid = false;
+                errorMessage += "Model 200 - Markup - Must be entered.<br/>";
             }
-            try {
-                var markup200Numeric = parseInt(markup200);
+
+            if (isNaN(markup200)) {
+                errorMessage += "Model 200 - Markup - Must be numeric.<br/>";
             }
-            catch (err) {
-                isValid = false;
-            }
-            if (isValid == false) {
-                errorMessage += "Error in Model 200 - Markup\n";
-            }
+
             //300
             var markup300 = document.getElementById("<%=hid300Markup.ClientID%>").value;
             if (markup300 == "") {
-                isValid = false;
+                errorMessage += "Model 300 - Markup - Must be entered.<br/>";
             }
-            try {
-                var markup300Numeric = parseInt(markup300);
+
+            if (isNaN(markup300)) {
+                errorMessage += "Model 300 - Markup - Must be numeric.<br/>";
             }
-            catch (err) {
-                isValid = false;
-            }
-            if (isValid == false) {
-                errorMessage += "Error in Model 300 - Markup\n";
-            }
+
             //400
             var markup400 = document.getElementById("<%=hid400Markup.ClientID%>").value;
             if (markup400 == "") {
-                isValid = false;
-            }
-            try {
-                var markup400Numeric = parseInt(markup400);
-            }
-            catch (err) {
-                isValid = false;
-            }
-            if (isValid == false) {
-                errorMessage += "Error in Model 400 - Markup\n";
+                errorMessage += "Model 400 - Markup - Must be entered.<br/>";
             }
 
+            if (isNaN(markup400)) {
+                errorMessage += "Model 400 - Markup - Must be numeric.<br/>";
+            }
+            
             //kneewall height
             //100
             var kneewallHeight100 = document.getElementById("<%=hid100KneewallHeight.ClientID%>").value;
             if (kneewallHeight100 == "") {
-                isValid = false;
+                errorMessage += "Model 100 - Kneewall Height - Must be entered.<br/>";
             }
-            try {
-                var kneewallHeight100Numeric = parseInt(kneewallHeight100);
+
+            if (isNaN(kneewallHeight100)) {
+                errorMessage += "Model 100 - Kneewall Height - Must be numeric.<br/>";
             }
-            catch (err) {
-                isValid = false;
-            }
-            if (isValid == false) {
-                errorMessage += "Error in Model 100 - Kneewall Height Filler\n";
-            }
+
             //200
             var kneewallHeight200 = document.getElementById("<%=hid200KneewallHeight.ClientID%>").value;
             if (kneewallHeight200 == "") {
-                isValid = false;
+                errorMessage += "Model 200 - Kneewall Height - Must be entered.<br/>";
             }
-            try {
-                var kneewallHeight200Numeric = parseInt(kneewallHeight200);
+
+            if (isNaN(kneewallHeight200)) {
+                errorMessage += "Model 200 - Kneewall Height - Must be numeric.<br/>";
             }
-            catch (err) {
-                isValid = false;
-            }
-            if (isValid == false) {
-                errorMessage += "Error in Model 200 - Kneewall Height Filler\n";
-            }
+
             //300
             var kneewallHeight300 = document.getElementById("<%=hid300KneewallHeight.ClientID%>").value;
             if (kneewallHeight300 == "") {
-                isValid = false;
+                errorMessage += "Model 300 - Kneewall Height - Must be entered.<br/>";
             }
-            try {
-                var kneewallHeight300Numeric = parseInt(kneewallHeight300);
+
+            if (isNaN(kneewallHeight300)) {
+                errorMessage += "Model 300 - Kneewall Height - Must be numeric.<br/>";
             }
-            catch (err) {
-                isValid = false;
-            }
-            if (isValid == false) {
-                errorMessage += "Error in Model 300 - Kneewall Height Filler\n";
-            }
+
             //400
             var kneewallHeight400 = document.getElementById("<%=hid400KneewallHeight.ClientID%>").value;
             if (kneewallHeight400 == "") {
-                isValid = false;
-            }
-            try {
-                var kneewallHeight400Numeric = parseInt(kneewallHeight400);
-            }
-            catch (err) {
-                isValid = false;
-            }
-            if (isValid == false) {
-                errorMessage += "Error in Model 400 - Kneewall Height Filler\n";
+                errorMessage += "Model 400 - Kneewall Height - Must be entered.<br/>";
             }
 
+            if (isNaN(kneewallHeight400)) {
+                errorMessage += "Model 400 - Kneewall Height - Must be numeric.<br/>";
+            }
+            
             //transom height
             //100
             var transomHeight100 = document.getElementById("<%=hid100TransomHeight.ClientID%>").value;
             if (transomHeight100 == "") {
-                isValid = false;
+                errorMessage += "Model 100 - Transom Height - Must be entered.<br/>";
             }
-            try {
-                var transomHeight100Numeric = parseInt(transomHeight100);
+
+            if (isNaN(transomHeight100)) {
+                errorMessage += "Model 100 - Transom Height - Must be numeric.<br/>";
             }
-            catch (err) {
-                isValid = false;
-            }
-            if (isValid == false) {
-                errorMessage += "Error in Model 100 - Transom Height\n";
-            }
+
             //200
             var transomHeight200 = document.getElementById("<%=hid200TransomHeight.ClientID%>").value;
             if (transomHeight200 == "") {
-                isValid = false;
+                errorMessage += "Model 200 - Transom Height - Must be entered.<br/>";
             }
-            try {
-                var transomHeight200Numeric = parseInt(transomHeight200);
+
+            if (isNaN(transomHeight200)) {
+                errorMessage += "Model 200 - Transom Height - Must be numeric.<br/>";
             }
-            catch (err) {
-                isValid = false;
-            }
-            if (isValid == false) {
-                errorMessage += "Error in Model 200 - Transom Height\n";
-            }
+
             //300
             var transomHeight300 = document.getElementById("<%=hid300TransomHeight.ClientID%>").value;
             if (transomHeight300 == "") {
-                isValid = false;
+                errorMessage += "Model 300 - Transom Height - Must be entered.<br/>";
             }
-            try {
-                var transomHeight300Numeric = parseInt(transomHeight300);
+
+            if (isNaN(transomHeight300)) {
+                errorMessage += "Model 300 - Transom Height - Must be numeric.<br/>";
             }
-            catch (err) {
-                isValid = false;
-            }
-            if (isValid == false) {
-                errorMessage += "Error in Model 300 - Transom Height\n";
-            }
+
             //400
             var transomHeight400 = document.getElementById("<%=hid400TransomHeight.ClientID%>").value;
             if (transomHeight400 == "") {
-                isValid = false;
-            }
-            try {
-                var transomHeight400Numeric = parseInt(transomHeight400);
-            }
-            catch (err) {
-                isValid = false;
-            }
-            if (isValid == false) {
-                errorMessage += "Error in Model 400 - Transom Height\n";
+                errorMessage += "Model 400 - Transom Height - Must be entered.<br/>";
             }
 
-            document.getElementById("<%=lblError.ClientID%>").value = errorMessage;
+            if (isNaN(transomHeight400)) {
+                errorMessage += "Model 400 - Transom Height - Must be numeric.<br/>";
+            }
+
+            $('#<%=lblError.ClientID%>').html = errorMessage;
         }
     </script>
     <div>
@@ -551,11 +482,11 @@
     <div class="slide-window no-sidebar">
 
         <div class="slide-wrapper">
-            <asp:Label ID="lblError" runat="server"></asp:Label>
 
             <div id="slide1" class="slide">
                 <%-- fancy --%>
                 <h1>
+                    <asp:Label ID="lblError" runat="server"></asp:Label>
                     <asp:Label ID="lblPreferences" runat="server" Text="Set your preferences below"></asp:Label>
                 </h1>        
                               
