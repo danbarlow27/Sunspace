@@ -17,6 +17,12 @@ namespace SunspaceDealerDesktop
                 string[] tempArray = new String[27];
                 tempArray[26] = "Studio";
                 Session.Add("newProjectArray", tempArray);
+                //projection
+                //width
+                //slope
+                //enter an overhang #
+                //include gutter in overhang
+
                 //Fill skin dropdowns
                 for (int i = 0; i < Constants.ROOF_INTERIOR_SKIN_TYPES.Length; i++)
                 {

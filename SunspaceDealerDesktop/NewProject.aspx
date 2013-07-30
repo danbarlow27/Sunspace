@@ -385,6 +385,11 @@
                 else {
                     //no type selection, errors
                 }
+
+                if ($('#<%=txtSoffitLength.ClientID%>').val() == "")
+                {
+
+                }
             }
             else {
                 //no selection, errors
@@ -1142,6 +1147,10 @@
                                     <asp:RadioButton ID="radSunspaceGable" OnClick="newProjectCheckQuestion7()" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblSunspaceGableRadio" AssociatedControlID="radSunspaceGable" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunspaceGable" AssociatedControlID="radSunspaceGable" runat="server" Text="Sunspace gable"></asp:Label>
+                                </li>
+                                <li>
+                                    <asp:TextBox ID="txtSoffitLength" onkeyup="newProjectCheckQuestion7()" runat="server"></asp:TextBox>
+                                    <asp:Label ID="lblSoffitLength" runat="server" Text="Soffit Length:"></asp:Label>
                                 </li>
                             </ul>
                         </div>
