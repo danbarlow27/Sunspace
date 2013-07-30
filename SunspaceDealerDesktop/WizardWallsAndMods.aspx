@@ -58,21 +58,62 @@
         ]
         
         $(document).ready(function () {
-            //$('#MainContent_btnQuestion3').click(submitDoorData);
+            $('#MainContent_btnQuestion4').click(submitData);
             $('#MainContent_btnQuestion1').click(loadWallData);
         });
 
         /**
-        *
+        *submitData
+        *This function will submit data to the session which will be used within C#
         */
         function submitData() {
-            var hiddenOne = document.createElement("input");
-            hiddenOne.setAttribute("type", "hidden");
-            hiddenOne.setAttribute("name", "Blah1");
-            hiddenOne.value = walls[0].wallId;
 
             var hiddenDiv = document.getElementById("MainContent_hiddenFieldsDiv");
-            hiddenDiv.appendChild(hiddenOne);
+            var proposedWalls = 0;
+            //Loop through all the lines(walls)
+            for (var i = 1; i <= lineList.length; i++) {
+                //If the wall is of type "P" (proposed), perform this block
+                if (coordList[i - 1][4] === "P") {
+
+                    proposedWalls++;
+                    var wall = walls[i];
+                    var hiddenDoorCount = document.createElement("input");
+                    hiddenDoorCount.setAttribute("type", "hidden");
+                    hiddenDoorCount.setAttribute("name", "wall" + i + "DoorCount");
+                    hiddenDoorCount.value = wall.doors.length;
+
+                    hiddenDiv.appendChild(hiddenDoorCount);
+
+                    for (var doorCount = 0; doorCount < wall.doors.length; doorCount++) {
+
+                        var door = wall.doors[doorCount];
+
+                        var hiddenPropertiesCount = document.createElement("input");
+                        hiddenPropertiesCount.setAttribute("type", "hidden");
+                        hiddenPropertiesCount.setAttribute("name", "wall" + i + "Door" + doorCount + "PropertyCount");
+                        hiddenPropertiesCount.value = Object.keys(door).length;
+
+                        hiddenDiv.appendChild(hiddenPropertiesCount);
+
+                        for (var prop in door) {
+                            if (door.hasOwnProperty(prop)) {
+                                var hiddenDoorProperty = document.createElement("input");
+                                hiddenDoorProperty.setAttribute("type", "hidden");
+                                hiddenDoorProperty.setAttribute("name", "wall" + i + "Door" + doorCount + prop[0].toUpperCase() + prop.substr(1));
+                                hiddenDoorProperty.value = door[prop];
+
+                                hiddenDiv.appendChild(hiddenDoorProperty);
+                            }
+                        }
+                    }
+                }
+            }
+            var hiddenWallCount = document.createElement("input");
+            hiddenWallCount.setAttribute("type", "hidden");
+            hiddenWallCount.setAttribute("name", "wallCount");
+            hiddenWallCount.value = proposedWalls;
+
+            hiddenDiv.appendChild(hiddenWallCount);
         }
 
         /**
@@ -85,29 +126,41 @@
         */
         function loadWallData() {
 
+            //New array of walls
             walls = [];
 
+            //Array containing fields to get from the first slide
             var wallInfo = [
                 ["LeftFiller", "LeftInchFractions"],
                 ["Length", "InchFractions"],
                 ["RightFiller", "RightInchFractions"]
             ];
 
+            //Loop through all the lines(walls)
             for (var i = 1; i <= lineList.length; i++) {
+                //If the wall is of type "P" (proposed), perform this block
                 if (coordList[i - 1][4] === "P") {
 
-                    wall = {
+                    //Create variable wall to hold hold the current walls id and various properties
+                    var wall = {
                         "id": i,
                         "doors": [],
                         "windows": []
                     };
 
+                    //For loop to get values from first slide controls, which are: Left Filler, Length, Right Filler.
+                    //These are repeated for every proposed wall.
                     for (var inner = 0; inner < wallInfo.length; inner++) {
+                        //Get the text box value of the current pair of controls
                         var valueText = parseFloat($('#MainContent_txtWall' + i + wallInfo[inner][0]).val());
+                        //Get the drop down value of the current pair of controls
                         var valueDDL = parseFloat($('#MainContent_ddlWall' + i + wallInfo[inner][1]).val());
 
+                        //Store the respective values to a property in wall, they are named as follows:
+                        //leftFiller, length, rightFiller
                         wall[wallInfo[inner][0][0].toLowerCase() + wallInfo[inner][0].substr(1)] = parseFloat(valueText) + parseFloat(valueDDL);
                     }
+                    //Store the current wall within the walls array
                     walls[i] = wall;
                 }
             }
