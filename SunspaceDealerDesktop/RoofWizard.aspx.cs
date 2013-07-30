@@ -13,6 +13,10 @@ namespace SunspaceDealerDesktop
         {
             if (!IsPostBack)
             {
+                //Temporary session declarations
+                string[] tempArray = new String[27];
+                tempArray[26] = "Studio";
+                Session.Add("newProjectArray", tempArray);
                 //Fill skin dropdowns
                 for (int i = 0; i < Constants.ROOF_INTERIOR_SKIN_TYPES.Length; i++)
                 {
