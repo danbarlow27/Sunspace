@@ -2893,7 +2893,11 @@ namespace SunspaceDealerDesktop
 
         protected void btnQuestion4_Click(object sender, EventArgs e)
         {
-            //System.Diagnostics.Debug.WriteLine(Request.Form["Blah1"]);                
+            System.Diagnostics.Debug.WriteLine("This is working");
+            System.Diagnostics.Debug.WriteLine(Request.Form["wallCount"]);
+            System.Diagnostics.Debug.WriteLine(Request.Form["wall4DoorCount"]);
+            System.Diagnostics.Debug.WriteLine(Request.Form["wall4Door0PropertyCount"]);
+            System.Diagnostics.Debug.WriteLine(Request.Form["wall4Door0type"]);
         }
     }
 }
