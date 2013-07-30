@@ -234,10 +234,10 @@
             }
 
             projection = highestProjection;
-            antiProjection = lowestProjection;
+            antiProjection = lowestProjection * -1;
 
             if ((antiProjection * -1) > projection)
-                return antiProjection * -1;
+                return antiProjection;
             else 
                 return projection;
 
@@ -399,7 +399,60 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
 
         */
         function determineSoffitLengthOfEachWall() {
+
+            /*
+            IF PROJECTION > ANTI-PROJECTION
+                ROOF-LENGTH = ANTI-PROJECTION - SOFFIT-RIGHT
+                SOFFIT-LEFT = PROJECTION - ROOF-LENGTH
+            IF PROJECTION < ANTI-PROJECTION
+                ROOF-LENGTH = PROJECTION - SOFFIT-LEFT
+                SOFFIT-RIGHT = ANTI-PROJECTION - ROOF-LENGTH
+            IF PROJECTION = ANTI-PROJECTION
+                SOFFIT-LEFT = SOFFIT-RIGHT
+            */
             
+            var soffitLeft, soffitRight, roofLength;
+
+            if (projection > antiProjection) {
+                soffitRight = soffitLength;
+                roofLength = antiProjection - soffitRight;
+                soffitLeft = projection - roofLength;
+            }
+            else if (projection < antiProjection) {
+                soffitLeft = soffitLength;
+                roofLength = projection - soffitLeft;
+                soffitRight = antiProjection - roofLength;
+            }
+            else { //projection === antiProjection
+                soffitLeft = soffitRight = soffitLength;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             var firstWallLength = document.getElementById("hidWall" + (existingWallCount + 1) + "Length").value;
             var lastWallLength = document.getElementById("hidWall" + (coordList.length - 1) + "Length").value;
 
