@@ -399,6 +399,17 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
 
         */
         function determineSoffitLengthOfEachWall() {
+
+            /*
+            IF PROJECTION > ANTI-PROJECTION
+                ANTI-PROJECTION - SOFFIT-RIGHT = ROOF-LENGTH
+                SOFFIT-LEFT = PROJECTION - ROOF-LENGTH
+            IF PROJECTION < ANTI-PROJECTION
+                PROJECTION - SOFFIT-LEFT = ROOF-LENGTH
+                SOFFIT-RIGHT = ANTI-PROJECTION - ROOF-LENGTH
+            IF PROJECTION = ANTI-PROJECTION
+                SOFFIT-LEFT = SOFFIT-RIGHT
+            */
             
             var firstWallLength = document.getElementById("hidWall" + (existingWallCount + 1) + "Length").value;
             var lastWallLength = document.getElementById("hidWall" + (coordList.length - 1) + "Length").value;
