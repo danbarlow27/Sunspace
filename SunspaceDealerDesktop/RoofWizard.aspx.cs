@@ -17,8 +17,10 @@ namespace SunspaceDealerDesktop
                 string[] tempArray = new String[27];
                 tempArray[26] = "Studio";
                 Session.Add("newProjectArray", tempArray);
-                //projection
-                //width
+                Session.Add("sunroomProjection", 120);
+                Session.Add("sunroomWidth", 120);
+                Session.Add("roofSlope", 10);
+                Session.Add("soffitLength", 0);
                 //slope
                 //enter an overhang #
                 //include gutter in overhang
@@ -34,19 +36,24 @@ namespace SunspaceDealerDesktop
                     ddlExteriorRoofSkin.Items.Add(new ListItem(Constants.ROOF_EXTERIOR_SKIN_TYPES[i], Constants.ROOF_EXTERIOR_SKIN_TYPES[i]));
                 }
 
-                //Check roof type, position 26
-                string[] newProjectArray = (string[])Session["newProjectArray"];
+                
+            }
+        }
 
-                //if gable, we need two studio roof systems
-                if (newProjectArray[26] == "Dealer Gable" || newProjectArray[26] == "Sunspace Gable")
-                {
+        protected void btnFinalButton_Click(object sender, EventArgs e)
+        {
+            //Check roof type, position 26
+            string[] newProjectArray = (string[])Session["newProjectArray"];
 
-                }
-                //studio system
-                else
-                {
+            //if gable, we need two studio roof systems
+            if (newProjectArray[26] == "Dealer Gable" || newProjectArray[26] == "Sunspace Gable")
+            {
 
-                }
+            }
+            //studio system
+            else
+            {
+
             }
         }
     }
