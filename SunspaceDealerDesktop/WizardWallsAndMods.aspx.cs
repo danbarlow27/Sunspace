@@ -326,7 +326,6 @@ namespace SunspaceDealerDesktop
             #endregion
 
 
-            //perhaps slide 3 stuff can go in another function and be called from the same loop???
             
         }
 

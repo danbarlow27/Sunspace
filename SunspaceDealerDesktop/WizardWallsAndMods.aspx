@@ -168,7 +168,7 @@
         }
         
         /**
-        This function calculates the "setback" of each wall, i.e. the number the current wall adds to the projection.
+        This function calculates the "setback" of each wall, i.e. the number of inches the current wall adds to the projection.
         This is calculated based on the orientation or facing-direction of the given wall. The value is then stored
         in an array called wallSetBackArray, at the appropriate index.
         @param index - index of the wall on which to calculate setback
@@ -1152,7 +1152,6 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
         <asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label> 
     </div>
     
-
 <script src="Scripts/MiniCanvasFunctions.js"></script>
 
     <%-- Hidden input tags 
