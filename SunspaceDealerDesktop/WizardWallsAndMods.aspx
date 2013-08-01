@@ -308,8 +308,8 @@
             m = document.getElementById("MainContent_txtRoofSlope").value;
 
             if (backWall === "north") { //if back wall is a north facing wall, i.e. is not existing wall 
-                wallStartHeightArray[backWallIndex] = document.getElementById("MainContent_hidBackWallHeight").value;
-                wallEndHeightArray[backWallIndex] = document.getElementById("MainContent_hidBackWallHeight").value;
+                wallStartHeightArray[backWallIndex] = +document.getElementById("MainContent_hidBackWallHeight").value;
+                wallEndHeightArray[backWallIndex] = +document.getElementById("MainContent_hidBackWallHeight").value;
                 
                 for (var i = (backWallIndex - 1); i >= 0; i--) { //0 = index of first wall
 
@@ -318,82 +318,80 @@
                         //if (coordList[i][5] === "S") {
 
                         ///this is assuming that back wall is an existing wall...
-                        wallStartHeightArray[i] = document.getElementById("MainContent_hidBackWallHeight").value;
-                        wallEndHeightArray[i] = document.getElementById("MainContent_hidBackWallHeight").value;
+                        wallStartHeightArray[i] = +document.getElementById("MainContent_hidBackWallHeight").value;
+                        wallEndHeightArray[i] = +document.getElementById("MainContent_hidBackWallHeight").value;
                         //}
 
                     }
                     else { //proposed wall
 
-                        wallEndHeightArray[i] = wallStartHeightArray[i + 1];
+                        wallEndHeightArray[i] = +wallStartHeightArray[i + 1];
 
                         switch (coordList[i][5]) {
                             case "S": //if south
                             case "N": //or north
-                                wallStartHeightArray[i] = wallEndtHeightArray[i];
+                                wallStartHeightArray[i] = +wallEndtHeightArray[i];
                                 break;
                             case "W": //if west
-                                wallStartHeightArray[i] = wallEndHeightArray[i] - ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
+                                wallStartHeightArray[i] = +wallEndHeightArray[i] - parseFloat((((+wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
                                 break;
                             case "E": //if east
-                                wallStartHeightArray[i] = wallEndHeightArray[i] + ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
+                                wallStartHeightArray[i] = +wallEndHeightArray[i] + parseFloat((((+wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
                                 break;
                             case "SW": //if southwest
                             case "SE": //or northwest
-                                wallStartHeightArray[i] = wallEndHeightArray[i] - ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
+                                wallStartHeightArray[i] = +wallEndHeightArray[i] - parseFloat((((+wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
                                 break;
                             case "NW": //if southeast
                             case "NE": //or northeast
-                                wallStartHeightArray[i] = wallEndHeightArray[i] + ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
+                                wallStartHeightArray[i] = +wallEndHeightArray[i] + parseFloat((((+wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
                                 break;
                         }
                     }
-                    //console.log("North facing starting: " + wallStartHeightArray[i]);
-                    //console.log("North facing ending: " + wallEndHeightArray[i]);
+                    console.log("North facing starting: " + wallStartHeightArray[i]);
+                    console.log("North facing ending: " + wallEndHeightArray[i]);
                 }
             }
             else if (backWall === "south") { //if backwall is a south facing wall.. i.e. is existing
                 for (var i = 0; i < coordList.length; i++) {
                     if (coordList[i][4] === "E") { //existing wall
-                        wallStartHeightArray[i] = document.getElementById("MainContent_hidBackWallHeight").value;
-                        wallEndHeightArray[i] = document.getElementById("MainContent_hidBackWallHeight").value;
+                        wallStartHeightArray[i] = +document.getElementById("MainContent_hidBackWallHeight").value;
+                        wallEndHeightArray[i] = +document.getElementById("MainContent_hidBackWallHeight").value;
                     }
                     else { //proposed wall
                     //if (coordList[i][4] === "P") {
 
-                        wallStartHeightArray[i] = wallEndHeightArray[i - 1];
+                        wallStartHeightArray[i] = +wallEndHeightArray[i - 1];
 
                         switch (coordList[i][5]) {
                             case "S": //if south
                             case "N": //or north
-                                wallEndHeightArray[i] = wallStartHeightArray[i];
+                                wallEndHeightArray[i] = +wallStartHeightArray[i];
                                 break;
                             case "W": //if west
-                                wallEndHeightArray[i] = wallStartHeightArray[i] - ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
+                                wallEndHeightArray[i] = +wallStartHeightArray[i] - parseFloat((((+wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
                                 break;
                             case "E": //if east
-                                wallEndHeightArray[i] = wallStartHeightArray[i] + ((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
+                                wallEndHeightArray[i] = +wallStartHeightArray[i] + parseFloat((((+wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
                                 break;
                             case "SW": //if southwest
                             case "SE": //or northwest
-                                wallEndHeightArray[i] = wallStartHeightArray[i] - ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
+                                wallEndHeightArray[i] = +wallStartHeightArray[i] - parseFloat((((+wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
                                 break;
                             case "NW": //if southeast
                             case "NE": //or northeast
-                                wallEndHeightArray[i] = wallStartHeightArray[i] + ((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
+                                wallEndHeightArray[i] = +wallStartHeightArray[i] + parseFloat((((+wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
                                 break;
                         }
                     }
-                    //console.log("North facing starting: " + wallStartHeightArray[i]);
-                    //console.log("North facing ending: " + wallEndHeightArray[i]);
-                    //console.log("Soffit: " + wallSoffitArray[i]);
-                    //console.log("Wall length: " + wallLengthArray[i]);
-                    //console.log("Wall setback: " + wallSetBackArray[i]);
+                    console.log("South facing starting: " + wallStartHeightArray[i]);
+                    console.log("South facing ending: " + wallEndHeightArray[i]);
+                    console.log("Soffit: " + wallSoffitArray[i]);
+                    console.log("Wall length: " + wallLengthArray[i]);
+                    console.log("Wall setback: " + wallSetBackArray[i]);
+                    console.log("--------------------------------");
                 }
             }
-            //for (var i = 0; i < wallStartHeightArray.length; i++) {
-            //    console.log(wallStartHeightArray[i]);
-            //}
         }
 
 
