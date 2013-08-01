@@ -17,6 +17,11 @@ namespace SunspaceDealerDesktop
         protected const int DOOR_MAX_HEIGHT = Constants.CUSTOM_DOOR_MAX_HEIGHT;
         protected const int DOOR_MIN_HEIGHT = Constants.CUSTOM_DOOR_MIN_HEIGHT;
 
+        protected const int PATIO_DOOR_MAX_WIDTH = Constants.PATIO_DOOR_MAX_WIDTH;
+        protected const int PATIO_DOOR_MIN_WIDTH = Constants.PATIO_DOOR_MIN_WIDTH;
+        protected const int PATIO_DOOR_MAX_HEIGHT = Constants.PATIO_DOOR_MAX_HEIGHT;
+        protected const int PATIO_DOOR_MIN_HEIGHT = Constants.PATIO_DOOR_MIN_HEIGHT;
+
         //ListItems to be used in multiple dropdown lists for decimal points
         //This should eventually be stored in the constants file
         protected ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
@@ -44,10 +49,14 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             /****VALIDATION VARIABLES***/
-            Session["CABANA_MAX_WIDTH"] = DOOR_MAX_WIDTH;
-            Session["CABANA_MIN_WIDTH"] = DOOR_MIN_WIDTH;
-            Session["CABANA_MAX_HEIGHT"] = DOOR_MAX_HEIGHT;
-            Session["CABANA_MIN_HEIGHT"] = DOOR_MIN_HEIGHT;
+            Session["CABANA_MAX_WIDTH"] = Constants.CUSTOM_DOOR_MAX_WIDTH;
+            Session["CABANA_MIN_WIDTH"] = Constants.CUSTOM_DOOR_MIN_WIDTH;
+            Session["CABANA_MAX_HEIGHT"] = Constants.CUSTOM_DOOR_MAX_HEIGHT;
+            Session["CABANA_MIN_HEIGHT"] = Constants.CUSTOM_DOOR_MIN_HEIGHT;
+            Session["PATIO_DOOR_MAX_WIDTH"] = Constants.PATIO_DOOR_MAX_WIDTH;
+            Session["PATIO_DOOR_MIN_WIDTH"] = Constants.PATIO_DOOR_MIN_WIDTH;
+            Session["PATIO_DOOR_MAX_HEIGHT"] = Constants.PATIO_DOOR_MAX_HEIGHT;
+            Session["PATIO_DOOR_MIN_HEIGHT"] = Constants.PATIO_DOOR_MIN_HEIGHT;
 
             /***hard coded variables***/
             Session["model"] = "M200";
@@ -864,7 +873,10 @@ namespace SunspaceDealerDesktop
                         {
                             if (currentModel == "M400" && Constants.DOOR_WIDTHS_PATIO[j] != "7")
                             {
-                                doorWidthDDL.Items.Add(new ListItem(Constants.DOOR_WIDTHS_PATIO[j] + "\'", Constants.DOOR_WIDTHS_PATIO[j]));
+                                //Do nothing, no 7' for patio doors
+                            }
+                            else {
+                                doorWidthDDL.Items.Add(new ListItem(Constants.DOOR_WIDTHS_PATIO[j] + "\'", Convert.ToString((Convert.ToInt32(Constants.DOOR_WIDTHS_PATIO[j])*12))));
                             }
                         }
                     }
