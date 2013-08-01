@@ -70,9 +70,9 @@
         /**
         *Adding onclick events to next question buttons
         */
-        $(document).ready(function () {            
-            $('#MainContent_btnQuestion1').click(loadWallData);
+        $(document).ready(function () {
             $('#MainContent_btnQuestion2').click(determineStartAndEndHeightOfEachWall);
+            $('#MainContent_btnQuestion2').click(loadWallData);
             $('#MainContent_btnQuestion4').click(submitData);
         });
 
@@ -159,10 +159,11 @@
                     //Create variable wall to hold hold the current walls id and various properties
                     var wall = {
                         "id": i,
+                        "startHeight": wallStartHeightArray[i - 1],
+                        "endHeight": wallEndHeightArray[i - 1],
                         "doors": [],
                         "windows": []
                     };
-
                     //For loop to get values from first slide controls, which are: Left Filler, Length, Right Filler.
                     //These are repeated for every proposed wall.
                     for (var inner = 0; inner < wallInfo.length; inner++) {

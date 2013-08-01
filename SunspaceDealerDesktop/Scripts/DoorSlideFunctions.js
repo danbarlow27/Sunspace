@@ -344,13 +344,13 @@ function createDoorObject(wallNumber, type) {
     framedDoor.fwidth = dimensions.width;   //Store frame width into fwidth
 
     /*Insert the door with the appropriate variables based on drop down selected index*/
-    if (framedDoor.position === "left") {
+    if (framedDoor.position === "Left") {
         framedDoor.position = walls[wallNumber].leftFiller;
     }
-    else if (framedDoor.position === "right") {
+    else if (framedDoor.position === "Right") {
         framedDoor.position = walls[wallNumber].length - framedDoor.fwidth - walls[wallNumber].rightFiller;
     }
-    else if (framedDoor.position === "center") {
+    else if (framedDoor.position === "Center") {
         framedDoor.position = walls[wallNumber].length / 2 - framedDoor.fwidth / 2;
     }
 
@@ -571,14 +571,20 @@ function fillWallWithDoorMods(type, wallNumber) {
     pagerTextDoorAnswer.appendChild(labelBreakLineForButton);
 }
 
-//function findCurrentWallHeight(door, wall) {
-//    var y, y0, y1, x, x0, x1;
-    
-//    y = y0 + (y1 - y0)(x - x0) / (x1 - x0);
-
-//    return wall.height + (wall.height - wall.height)((door.position + door.fwidth) - wall.length) / (0 - wall.length);
-//    ///////start//////////end///////////start
-//}
+/**
+*findCurrentWallHeight
+*This function finds the height of the wall at any giving point within it.
+*This function is used to ensure a door isn't outside of the limits of the wall.
+*@param doors - holds an array of unsorted doors
+*@param wall - used to hold the current wall information
+*@return - the height at the current position within the current wall
+*/
+function findCurrentWallHeight(door, wall) {
+    if (wall.startHeight > wall.endHeight)
+        return ((wall.endHeight + (wall.startHeight - wall.endHeight) * ((door.position + door.fwidth) - wall.length) / (0 - wall.length)));
+    else
+        return (wall.startHeight + (wall.endHeight - wall.startHeight) * ((door.position + door.fwidth) - wall.length) / (0 - wall.length));
+}
 
 /**
 *insertDoor
@@ -953,6 +959,11 @@ function validateDoor(door, wall) {
             alert("Your " + door.type + " door height is " + door.height + "\", the minimum is " + PATIO_DOOR_MIN_HEIGHT + "\" which is smallest possible. Please try again.")
             return false;
         }
+    }
+
+    if (door.fheight > findCurrentWallHeight(door, wall)) {
+        alert("Your " + door.type + " door's height in its current position is higher than the wall. Please try again.")
+        return false;
     }
 
     //If the door's position is smaller than the left filler,
