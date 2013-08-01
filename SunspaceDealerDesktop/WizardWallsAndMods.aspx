@@ -452,6 +452,12 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                 soffitLeft = soffitRight = soffitLength;
             }
 
+            console.log("roof length:", roofLength);
+            console.log("soffit left:", soffitLeft);
+            console.log("soffit right:", soffitRight);
+
+
+
             //console.log("Left soffit:", soffitLeft);
             //console.log("Right soffit:", soffitRight);
 
