@@ -13,15 +13,19 @@
 
 var cabanaMinValues = calculateActualDoorDimension(parseInt(CABANA_MIN_WIDTH), parseInt(CABANA_MIN_HEIGHT), "Cabana");
 var cabanaMaxValues = calculateActualDoorDimension(parseInt(CABANA_MAX_WIDTH), parseInt(CABANA_MAX_HEIGHT), "Cabana");
+
 var cabanaMinWidth = cabanaMinValues.width;
 var cabanaMinHeight = cabanaMinValues.height;
+
 var cabanaMaxWidth = cabanaMaxValues.width;
 var cabanaMaxHeight = cabanaMaxValues.height;
 
-var frenchMinValues = calculateActualDoorDimension(parseInt(CABANA_MIN_WIDTH) * 2, parseInt(CABANA_MIN_HEIGHT) * 2, "French");
-var frenchMaxValues = calculateActualDoorDimension(parseInt(CABANA_MAX_WIDTH) * 2, parseInt(CABANA_MAX_HEIGHT) * 2, "French");
+var frenchMinValues = calculateActualDoorDimension(parseInt(CABANA_MIN_WIDTH) * 2, parseInt(CABANA_MIN_HEIGHT), "French");
+var frenchMaxValues = calculateActualDoorDimension(parseInt(CABANA_MAX_WIDTH) * 2, parseInt(CABANA_MAX_HEIGHT), "French");
+
 var frenchMinWidth = frenchMinValues.width;
 var frenchMinHeight = frenchMinValues.height;
+
 var frenchMaxWidth = frenchMaxValues.width;
 var frenchMaxHeight = frenchMaxValues.height;
 
@@ -558,7 +562,7 @@ function fillWallWithDoorMods(type, wallNumber) {
     pagerTextDoorAnswer.appendChild(labelBreakLineForButton);
 }
 
-//function findCurrentHeight(door, wall) {
+//function findCurrentWallHeight(door, wall) {
 //    var y, y0, y1, x, x0, x1;
     
 //    y = y0 + (y1 - y0)(x - x0) / (x1 - x0);
@@ -882,11 +886,30 @@ function validateDoor(door, wall) {
             return false;
         }
         if (door.fheight > cabanaMaxHeight) {
-            alert("Your height door is " + door.height + ", the minimum is " + CABANA_MAX_HEIGHT + "\" which is largest possible. Please try again.")
+            alert("Your door height is " + door.height + ", the maximum is " + CABANA_MAX_HEIGHT + "\" which is largest possible. Please try again.")
             return false;
         }
         if (door.fheight < cabanaMinHeight) {
-            alert("Your height door " + door.height + ", the minimum is " + CABANA_MIN_HEIGHT + "\" which is smallest possible. Please try again.")
+            alert("Your door height is " + door.height + ", the minimum is " + CABANA_MIN_HEIGHT + "\" which is smallest possible. Please try again.")
+            return false;
+        }
+
+    }
+    else if (door.type == "French") {
+        if (door.fwidth > frenchMaxWidth) {
+            alert("Your door width is " + door.width + ", the maximum is " + CABANA_MAX_WIDTH*2 + "\" which is largest possible. Please try again.")
+            return false;
+        }
+        if (door.fwidth < frenchMinWidth) {
+            alert("Your door width is " + door.width + ", the minimum is " + CABANA_MIN_WIDTH*2 + "\" which is smallest possible. Please try again.")
+            return false;
+        }
+        if (door.fheight > frenchMaxHeight) {
+            alert("Your door height is " + door.height + ", the maximum is " + CABANA_MAX_HEIGHT + "\" which is largest possible. Please try again.")
+            return false;
+        }
+        if (door.fheight < frenchMinHeight) {
+            alert("Your door height is " + door.height + ", the minimum is " + CABANA_MIN_HEIGHT + "\" which is smallest possible. Please try again.")
             return false;
         }
 

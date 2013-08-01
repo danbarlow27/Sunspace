@@ -85,9 +85,6 @@ namespace SunspaceDealerDesktop
         public const int CUSTOM_DOOR_MIN_HEIGHT = 48;
         public const int CUSTOM_DOOR_MAX_HEIGHT = 96;
 
-        public const float CUSTOM_FRENCH_DOOR_MIN_WIDTH = 48.75f;
-        public const float CUSTOM_FRENCH_DOOR_MAX_WIDTH = 82.75f;
-
         public const float SOFT_MIN_WINDOW_SIZE = 30.0F; //Minimum size of a window (soft)
         public const float SOFT_MAX_WINDOW_SIZE = 58.0F; //Maximum size of a window (soft)
 
