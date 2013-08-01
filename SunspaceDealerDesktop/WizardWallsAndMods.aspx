@@ -6,9 +6,13 @@
         //Embedded variables needed before call or addition of DoorSlideFunction.js
         var model = '<%= currentModel %>';
         var CABANA_MAX_WIDTH = '<%= Session["CABANA_MAX_WIDTH"] %>';
-        var CABANA_MIN_WIDTH = '<%= Session["CABANA_MIN_WIDTH"]%>';
-        var CABANA_MAX_HEIGHT = '<%= Session["CABANA_MAX_HEIGHT"]%>';
-        var CABANA_MIN_HEIGHT = '<%= Session["CABANA_MIN_HEIGHT"]%>';
+        var CABANA_MIN_WIDTH = '<%= Session["CABANA_MIN_WIDTH"] %>';
+        var CABANA_MAX_HEIGHT = '<%= Session["CABANA_MAX_HEIGHT"] %>';
+        var CABANA_MIN_HEIGHT = '<%= Session["CABANA_MIN_HEIGHT"] %>';
+        var PATIO_DOOR_MIN_WIDTH = '<%= Session["PATIO_DOOR_MIN_WIDTH"] %>';
+        var PATIO_DOOR_MAX_WIDTH = '<%= Session["PATIO_DOOR_MAX_WIDTH"] %>';
+        var PATIO_DOOR_MIN_HEIGHT = '<%= Session["PATIO_DOOR_MIN_HEIGHT"] %>';
+        var PATIO_DOOR_MAX_HEIGHT = '<%= Session["PATIO_DOOR_MAX_HEIGHT"] %>';
     </script>
     <script src="Scripts/DoorSlideFunctions.js"></script>
     <%-- Hidden field populating scripts 
