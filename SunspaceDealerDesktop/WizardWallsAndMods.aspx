@@ -234,10 +234,8 @@
             var lowestProjection = 0; //variable to store the highest projection calculated from the right side of the room
             //var overallProjection;
             for (var i = 0; i < wallSetBackArray.length; i++) { //run through all the setbacks
-                if (wallSetBackArray[i]) {
+                if (wallSetBackArray[i]) { //if its not null (it would be null for existing walls
                     tempProjection = +tempProjection + +wallSetBackArray[i]; //add the values to temp variable
-                    console.log(tempProjection);
-                    console.log(wallSetBackArray[i]);
                     if (tempProjection > highestProjection) { //determine if the current temp projection is greater than the highest projection calculated
                         highestProjection = tempProjection; // reset the highest projection
                     }
@@ -248,21 +246,13 @@
             }
 
             projection = highestProjection;
-            antiProjection = lowestProjection * -1;
-
-            console.log(projection);
-            console.log(antiProjection);
+            antiProjection = highestProjection + (lowestProjection * -1);
 
             if (antiProjection > projection)
                 return antiProjection;
             else 
                 return projection;
 
-            //return 
-            //{
-            //    "projection" : highestProjection, //return the highest projection calculated
-            //    "antiProjection" : lowestProjection
-            //};
         }
 
         /** 
@@ -622,26 +612,7 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
             backWallHeight = +(document.getElementById("MainContent_txtBackWallHeight").value) + +(document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value);
             frontWallHeight = +(document.getElementById("MainContent_txtFrontWallHeight").value) + +(document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value);
 
-            //rise = ((+(document.getElementById("MainContent_txtBackWallHeight").value) //textbox value
-            //    + +(document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value)) //dropdown listitem value
-            //    - +((document.getElementById("MainContent_txtFrontWallHeight").value) //textbox value
-            //    + +(document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value))); //dropdown listitem value
-
             rise = backWallHeight - frontWallHeight;
-
-            
-            //console.log(document.getElementById("MainContent_txtBackWallHeight").value);
-            //console.log(document.getElementById(document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value));
-            //console.log(document.getElementById("MainContent_txtFrontWallHeight").value);
-            //console.log(document.getElementById(document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value));
-            //console.log(backWallHeight);
-            //console.log(frontWallHeight);
-            //console.log(rise);
-            //console.log(RUN);
-            //console.log(roomProjection);
-            //console.log(soffitLength);
-
-
 
             return (((rise * RUN) / (roomProjection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
         }
@@ -694,15 +665,15 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                         calculateSetBack((i - 1)); //calculate setback of the given wall
                         
                         document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i - 1]; //store wall setback 
-                        wallLeftFillerArray[i - 1] = document.getElementById("hidWall" + i + "LeftFiller").value =
-                            +(document.getElementById("MainContent_txtWall" + i + "LeftFiller").value) +
-                            +(document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").selectedIndex].value); //store left filler
-                        wallLengthArray[i - 1] = document.getElementById("hidWall" + i + "Length").value =
-                            +(document.getElementById("MainContent_txtWall" + i + "Length").value) +
-                            +(document.getElementById("MainContent_ddlWall" + i + "InchFractions").options[document.getElementById("MainContent_ddlWall" + i + "InchFractions").selectedIndex].value); //store length
-                        wallRightFillerArray[i - 1] = document.getElementById("hidWall" + i + "RightFiller").value =
-                            +(document.getElementById("MainContent_txtWall" + i + "RightFiller").value) +
-                            +(document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").selectedIndex].value); //store right filler
+                        wallLeftFillerArray[i - 1] = document.getElementById("hidWall" + i + "LeftFiller").value = //store left filler
+                            +(document.getElementById("MainContent_txtWall" + i + "LeftFiller").value) + //textbox value
+                            +(document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "LeftInchFractions").selectedIndex].value); //dropdown value
+                        wallLengthArray[i - 1] = document.getElementById("hidWall" + i + "Length").value = //store length
+                            +(document.getElementById("MainContent_txtWall" + i + "Length").value) + //textbox value
+                            +(document.getElementById("MainContent_ddlWall" + i + "InchFractions").options[document.getElementById("MainContent_ddlWall" + i + "InchFractions").selectedIndex].value); //dropdown value
+                        wallRightFillerArray[i - 1] = document.getElementById("hidWall" + i + "RightFiller").value = //store right filler
+                            +(document.getElementById("MainContent_txtWall" + i + "RightFiller").value) + //textbox value
+                            +(document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").selectedIndex].value); //dropdown value
                         document.getElementById("hidWall" + i + "SoffitLength").value = wallSoffitArray[i - 1];//store wall soffitlength
                         answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value; //store the values in the answer variable to be displayed
                   
