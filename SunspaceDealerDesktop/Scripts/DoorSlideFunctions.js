@@ -140,6 +140,10 @@ function addDoor(wallNumber, type) {
     if (!validateDoor(door, walls[wallNumber])) {
         return;
     }
+    //Validate door(s) width/height parameters
+    if (!validateDoorParameters(door, walls[wallNumber])) {
+        return;
+    }
 
     //Call to insertDoor to place the valid door in its respective place
     insertDoor(door, walls[wallNumber]);
@@ -505,6 +509,10 @@ function fillWallWithDoorMods(type, wallNumber) {
     
     //If validation fails, perform block
     if (!validateDoorFill(door, walls[wallNumber])) {
+        return;
+    }
+    //Validate door(s) width/height parameters
+    if (!validateDoorParameters(door, walls[wallNumber])) {
         return;
     }
 
@@ -883,14 +891,13 @@ function totalSpaceLeftInWall(wall) {
 }
 
 /**
-*validateDoor
-*This function performs validtion of the current door on existing doors
-*checks for overlaps, out of the wall, etc.
+*validateDoorParameters
+*This function performs validtion of the current door's parameters (height/width)
 *@param doors - holds an array of unsorted doors
 *@param wall - used to hold the current wall information
+*@return - boolean whether validation passed
 */
-function validateDoor(door, wall) {
-
+function validateDoorParameters(door, wall) {
     //If the door type is Cabana check for minimum and maximum height and width
     if (door.type == "Cabana") {
         //If the door frame width is larger than the acceptable size, display error message
@@ -965,6 +972,19 @@ function validateDoor(door, wall) {
         alert("Your " + door.type + " door's height in its current position is higher than the wall. Please try again.")
         return false;
     }
+
+    return true;
+}
+
+/**
+*validateDoor
+*This function performs validtion of the current door on existing doors
+*checks for overlaps, out of the wall, etc.
+*@param doors - holds an array of unsorted doors
+*@param wall - used to hold the current wall information
+*@return - boolean whether validation passed
+*/
+function validateDoor(door, wall) {    
 
     //If the door's position is smaller than the left filler,
     //the door isn't within the usable space
