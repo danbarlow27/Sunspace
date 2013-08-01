@@ -432,11 +432,10 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                 SOFFIT-LEFT = SOFFIT-RIGHT
             */
             
-            var soffitLeft, soffitRight, roofLength;
+            var soffitLeft = 0, soffitRight = 0, roofLength = 0;
             var soffitLeftArray = new Array();
             var soffitRightArray = new Array();
-            var iLeft = 0;
-            var iRight = 0;
+            var iLeft = 0, iRight = 0;
 
             if (projection > antiProjection) {
                 soffitRight = soffitLength;
@@ -452,22 +451,39 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                 soffitLeft = soffitRight = soffitLength;
             }
 
+            //console.log("Left soffit:", soffitLeft);
+            //console.log("Right soffit:", soffitRight);
+
+            soffitLeftArray[0] = soffitLeft;
+            soffitRightArray[0] = soffitRight;
 
             //determine how many walls the left soffit spans
             do {
-                if (soffitLeft > wallLengthArray[existingWallCount + 1 + iLeft]) { //if the length of the left soffit is greater than the (first) proposed wall length
-                    soffitLeftArray[iLeft] = wallLengthArray[existingWallCount + 1 + iLeft]; //set the element of left soffit array to length of the proposed wall
-                    soffitLeftArray[iLeft + 1] = soffitLeft - wallLengthArray[existingWallCount + 1 + iLeft]; //subtract the length of the proposed wall from soffit length
+                if (soffitLeftArray[iLeft] > wallLengthArray[existingWallCount + iLeft]) { //if the length of the left soffit is greater than the (first) proposed wall length
+                    soffitLeftArray[iLeft] = wallLengthArray[existingWallCount + iLeft]; //set the element of left soffit array to length of the proposed wall
+                    soffitLeftArray[iLeft + 1] = parseFloat(soffitLeftArray[iLeft]) - parseFloat(wallLengthArray[existingWallCount + iLeft]); //subtract the length of the proposed wall from soffit length
                                                                                                            //set the remaining soffit length to the next element of the left soffit array
                     iLeft++; //increment the counter
                 }
                 else //if the length of the left soffit is the same or less than proposed wall length
                     soffitLeftArray[iLeft] = soffitLeft; //set the element of the left soffit array to length of the left soffit
-            } while (iLeft > 0 && soffitLeftArray[iLeft] > wallLengthArray[existingWallCount + 1 + iLeft]); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
+
+                console.log("DO left soffit array:", soffitLeftArray[iLeft]);
+                console.log("DO wall length:", wallLengthArray[existingWallCount + iLeft]);
+                console.log("count:", existingWallCount + iLeft);
+                console.log("iLeft:", iLeft);
+                console.log("DO left soffit array TWO:", soffitLeftArray[iLeft + 1]);
+
+            } while (iLeft > 0 && soffitLeftArray[iLeft] > wallLengthArray[existingWallCount + iLeft]); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
 
             //determine how many walls the right soffit spans
             do {
-                if (soffitRight > wallLengthArray[wallLengthArray.length - 1 - iRight]) { //if the length of the right soffit is greater than the (last) proposed wall length
+
+                console.log("DO right soffit array:", soffitRightArray[iRight]);
+                console.log("DO wall length:", wallLengthArray[wallLengthArray.length - 1 - iRight]);
+                console.log("count:", wallLengthArray.length - 1 - iRight);
+                console.log("iRight:", iRight);
+                if (soffitRightArray[iRight] > wallLengthArray[wallLengthArray.length - 1 - iRight]) { //if the length of the right soffit is greater than the (last) proposed wall length
                     soffitRightArray[iRight] = wallLengthArray[wallLengthArray.length - 1 - iRight]; //set the element of right soffit array to length of the proposed wall
                     soffitRightArray[iRight + 1] = soffitRight - wallLengthArray[wallLengthArray.length - 1 - iRight]; //subtract the length of the proposed wall from soffit length
                                                                                                                     //set the remaining soffit length to the next element of the right soffit array
@@ -478,17 +494,19 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
             } while (iRight > 0 && soffitRightArray[iRight] > wallLengthArray[wallLengthArray.length - 1 - iRight]); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
 
 
-            for (var i = 0; i < soffitLeftArray.length; i++)
-                console.log(soffitLeftArray[i]);
-            for (var i = 0; i < soffitRightArray.length; i++)
-                console.log(soffitRightArray[i]);
+            //for (var i = 0; i < soffitLeftArray.length; i++)
+            //    console.log("left soffit array:", soffitLeftArray[i]);
+            //for (var i = 0; i < soffitRightArray.length; i++)
+            //    console.log("right soffit array:", soffitRightArray[i]);
 
             for (var i = 0; i < soffitLeftArray.length; i++) {
                 wallSoffitArray[existingWallCount + 1 + i] = soffitLeftArray[i];
+                //console.log(soffitLeftArray[i]);
             }
 
             for (var i = 0; i < soffitRightArray.length; i++) {
                 wallSoffitArray[coordList.length - 1 - i] = soffitRightArray[i];
+                //console.log(soffitRightArray[i]);
             }
 
 
@@ -672,7 +690,7 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
 
             if (isValid) { //if everything is valid
 
-                determineSoffitLengthOfEachWall(); //calculate and store soffitlength of each wall
+
                 for (var i = 1; i <= lineList.length; i++) { //populate the hidden fields for each wall
                     if (coordList[i - 1][4] === "P") {
                         calculateSetBack((i - 1)); //calculate setback of the given wall
@@ -691,7 +709,11 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                         answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value; //store the values in the answer variable to be displayed
                   
                     }
+
                 }
+
+                determineSoffitLengthOfEachWall(); //calculate and store soffitlength of each wall
+
                 //store roomProjection in the roomProjection variable and hidden field
                 document.getElementById("MainContent_hidroomProjection").value = roomProjection = calculateProjection(); 
 
