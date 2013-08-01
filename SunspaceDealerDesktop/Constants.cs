@@ -85,10 +85,10 @@ namespace SunspaceDealerDesktop
         public const int CUSTOM_DOOR_MIN_HEIGHT = 48;
         public const int CUSTOM_DOOR_MAX_HEIGHT = 96;
 
-        public const int PATIO_DOOR_MIN_WIDTH = 60;
-        public const int PATIO_DOOR_MAX_WIDTH = 96;
-        public const int PATIO_DOOR_MIN_HEIGHT = 72;
-        public const int PATIO_DOOR_MAX_HEIGHT = 96;
+        public const int PATIO_DOOR_MIN_WIDTH = 60;     //5'
+        public const int PATIO_DOOR_MAX_WIDTH = 96;     //8'
+        public const int PATIO_DOOR_MIN_HEIGHT = 72;    //6'
+        public const int PATIO_DOOR_MAX_HEIGHT = 96;    //8'
 
         public const float SOFT_MIN_WINDOW_SIZE = 30.0F; //Minimum size of a window (soft)
         public const float SOFT_MAX_WINDOW_SIZE = 58.0F; //Maximum size of a window (soft)

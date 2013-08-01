@@ -12,16 +12,6 @@ namespace SunspaceDealerDesktop
     {
         protected List<Wall> walls = new List<Wall>();
 
-        protected const int DOOR_MAX_WIDTH = Constants.CUSTOM_DOOR_MAX_WIDTH;
-        protected const int DOOR_MIN_WIDTH = Constants.CUSTOM_DOOR_MIN_WIDTH;
-        protected const int DOOR_MAX_HEIGHT = Constants.CUSTOM_DOOR_MAX_HEIGHT;
-        protected const int DOOR_MIN_HEIGHT = Constants.CUSTOM_DOOR_MIN_HEIGHT;
-
-        protected const int PATIO_DOOR_MAX_WIDTH = Constants.PATIO_DOOR_MAX_WIDTH;
-        protected const int PATIO_DOOR_MIN_WIDTH = Constants.PATIO_DOOR_MIN_WIDTH;
-        protected const int PATIO_DOOR_MAX_HEIGHT = Constants.PATIO_DOOR_MAX_HEIGHT;
-        protected const int PATIO_DOOR_MIN_HEIGHT = Constants.PATIO_DOOR_MIN_HEIGHT;
-
         //ListItems to be used in multiple dropdown lists for decimal points
         //This should eventually be stored in the constants file
         protected ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default

@@ -16,7 +16,6 @@ namespace SunspaceDealerDesktop
         private string hinge = null;        //Door hinge placement: Left or Right (stored value: Left)
         private string swing = null;        //Door swing: In or Out (stored value: In)
         private string hardwareType = null; //Door hardware type: Satin Silver, Bright Brass, Antique Brass (stored value: Satin Silver)
-        private string numberVents = null;  //Door number of vents: 2, 3, 4 (stored value: 2)
         #endregion
 
         #region Constructor
@@ -118,18 +117,6 @@ namespace SunspaceDealerDesktop
             set
             {
                 hardwareType = value;
-            }
-        }
-        public string NumberVents
-        {
-            get
-            {
-                return numberVents;
-            }
-
-            set
-            {
-                numberVents = value;
             }
         }
         #endregion
