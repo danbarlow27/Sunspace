@@ -34,7 +34,7 @@ namespace SunspaceDealerDesktop
         protected ListItem lst78 = new ListItem("7/8", ".875");
 
         protected string currentModel;
-        protected float sofftLength;
+        protected float soffitLength;
 
         protected const int SUGGESTED_DEFAULT_FILLER = 2;
         protected const int PREFERRED_DEFAULT_FILLER = 2;
@@ -60,7 +60,7 @@ namespace SunspaceDealerDesktop
 
             /***hard coded variables***/
             Session["model"] = "M200";
-            Session["soffitLength"] = 0F;
+            Session["soffitLength"] = 500F;
             /****************diffrent sunroom layouts******************/
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
             //Session["coordList"] = "75,425,150,150,E,S/150,150,150,250,P,W/150,350,250,250,P,S/350,350,250,150,P,E/";
@@ -74,7 +74,7 @@ namespace SunspaceDealerDesktop
             strWalls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
             wallDetails = new string[strWalls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
             currentModel = (string)Session["model"];
-            sofftLength = (float)Session["soffitLength"];
+            soffitLength = (float)Session["soffitLength"];
             //int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
             int proposedWallCount = 0; //used to determine how many proposed walls are in a drawing
 
