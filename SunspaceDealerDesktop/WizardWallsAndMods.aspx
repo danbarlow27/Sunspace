@@ -51,7 +51,7 @@
         var projection = 120; //room projection from the left ... hard coded for testing
         var antiProjection = 120; //room projection from the right ... hard coded for testing
         var roomProjection = 120; //the higher of the two room projections
-        var soffitLength = '<%= sofftLength %>'; //hard coded for testing, will come from the previous pages in the wizard
+        var soffitLength = '<%= soffitLength %>'; //hard coded for testing, will come from the previous pages in the wizard
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
          
         
@@ -480,52 +480,63 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
             } while (iRight > 0 && soffitRightArray[iRight] > wallLengthArray[wallLengthArray.length - 1 - iRight]); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
 
 
+            for (var i = 0; i < soffitLeftArray.length; i++)
+                console.log(soffitLeftArray[i]);
+            for (var i = 0; i < soffitRightArray.length; i++)
+                console.log(soffitRightArray[i]);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            var firstWallLength = document.getElementById("hidWall" + (existingWallCount + 1) + "Length").value;
-            var lastWallLength = document.getElementById("hidWall" + (coordList.length - 1) + "Length").value;
-
-            /*************************************************************************************/
-            /*************************************************************************************/
-            /*************************************************************************************/
-            var firstWallStartPoint = coordList[existingWallCount + 1][2]; // 2 = y1
-            var lastWallEndPoint = coordList[coordList.length - 1][3]; // 3 = y2
-            /*************************************************************************************/
-            /*************************************************************************************/
-            /*************************************************************************************/
-
-            for (var i = 0; i < coordList.length; i++) {
-                if (i === (existingWallCount + 1) || i === (coordList.length - 1)) { //first proposed wall or last proposed wall
-                    if (coordList[i][5] === "W" || coordList[i][5] === "E") { //if its vertical and perpendicular to existing wall 
-                        wallSoffitArray[i] = soffitLength; //set the soffit length
-                        if (firstWallLength > lastWallLength) //if different lengths
-                            wallSoffitArray[existingWallCount + 1] += (firstWallLength - lastWallLength); //add the difference to the appropriate wall
-                        else if (lastWallLength > firstWallLength) //if different lengths
-                            wallSoffitArray[coordList.length - 1] += (lastWallLength - firstWallLength); //add the difference to the appropriate wall
-                    }
-                    else //if they are not vertical perpendicular
-                        wallSoffitArray[i] = 0; //no soffit
-                }
-                else //if not first or last proposed wall
-                    wallSoffitArray[i] = 0; //no soffit
+            for (var i = 0; i < soffitLeftArray.length; i++) {
+                wallSoffitArray[existingWallCount + 1 + i] = soffitLeftArray[i];
             }
+
+            for (var i = 0; i < soffitRightArray.length; i++) {
+                wallSoffitArray[coordList.length - 1 - i] = soffitRightArray[i];
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //var firstWallLength = document.getElementById("hidWall" + (existingWallCount + 1) + "Length").value;
+            //var lastWallLength = document.getElementById("hidWall" + (coordList.length - 1) + "Length").value;
+
+            ///*************************************************************************************/
+            ///*************************************************************************************/
+            ///*************************************************************************************/
+            //var firstWallStartPoint = coordList[existingWallCount + 1][2]; // 2 = y1
+            //var lastWallEndPoint = coordList[coordList.length - 1][3]; // 3 = y2
+            ///*************************************************************************************/
+            ///*************************************************************************************/
+            ///*************************************************************************************/
+
+            //for (var i = 0; i < coordList.length; i++) {
+            //    if (i === (existingWallCount + 1) || i === (coordList.length - 1)) { //first proposed wall or last proposed wall
+            //        if (coordList[i][5] === "W" || coordList[i][5] === "E") { //if its vertical and perpendicular to existing wall 
+            //            wallSoffitArray[i] = soffitLength; //set the soffit length
+            //            if (firstWallLength > lastWallLength) //if different lengths
+            //                wallSoffitArray[existingWallCount + 1] += (firstWallLength - lastWallLength); //add the difference to the appropriate wall
+            //            else if (lastWallLength > firstWallLength) //if different lengths
+            //                wallSoffitArray[coordList.length - 1] += (lastWallLength - firstWallLength); //add the difference to the appropriate wall
+            //        }
+            //        else //if they are not vertical perpendicular
+            //            wallSoffitArray[i] = 0; //no soffit
+            //    }
+            //    else //if not first or last proposed wall
+            //        wallSoffitArray[i] = 0; //no soffit
+            //}
 
 
             //for (var i = 0; i < coordList.length; i++)
