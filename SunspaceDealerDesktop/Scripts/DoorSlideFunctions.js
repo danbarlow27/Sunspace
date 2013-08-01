@@ -8,6 +8,23 @@
 *               user based on validation.                                                   *
 *********************************************************************************************/
 
+/******************************************VALIDATION VARIABLES******************************************/
+
+
+var cabanaMinValues = calculateActualDoorDimension(parseInt(CABANA_MIN_WIDTH), parseInt(CABANA_MIN_HEIGHT), "Cabana");
+var cabanaMaxValues = calculateActualDoorDimension(parseInt(CABANA_MAX_WIDTH), parseInt(CABANA_MAX_HEIGHT), "Cabana");
+var cabanaMinWidth = cabanaMinValues.width;
+var cabanaMinHeight = cabanaMinValues.height;
+var cabanaMaxWidth = cabanaMaxValues.width;
+var cabanaMaxHeight = cabanaMaxValues.height;
+
+var frenchMinValues = calculateActualDoorDimension(parseInt(CABANA_MIN_WIDTH) * 2, parseInt(CABANA_MIN_HEIGHT) * 2, "French");
+var frenchMaxValues = calculateActualDoorDimension(parseInt(CABANA_MAX_WIDTH) * 2, parseInt(CABANA_MAX_HEIGHT) * 2, "French");
+var frenchMinWidth = frenchMinValues.width;
+var frenchMinHeight = frenchMinValues.height;
+var frenchMaxWidth = frenchMaxValues.width;
+var frenchMaxHeight = frenchMaxValues.height;
+
 /******************************************CONSTRUCTORS AND PROTOTYPES******************************************/
 
 /**
@@ -140,7 +157,7 @@ function calculateActualDoorDimension(width, height, type) {
     else if (type === 'French') {
         //Return width and height, may change if the model is M400
         return {
-            width: (model === 'M400') ? ((width + 3.625) - 1.625) + 2 : ((width + 2.125) - 1.625) + 2,
+            width: (model === 'M400') ? ((width/2 + 3.625) - 1.625)*2 + 2 : ((width/2 + 2.125) - 1.625)*2 + 2,
             height: (model === 'M400') ? height + 2.125 : height + 0.875
         };
     }
@@ -377,7 +394,7 @@ function doorStyle(type, wallNumber) {
     var doorStyleDDL = document.getElementById('MainContent_ddlDoorStyle' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorStyle' + wallNumber + type).selectedIndex].value;
 
     //If drop down value is v4TCabana, perform block
-    if (doorStyleDDL == 'v4TCabana') {
+    if (doorStyleDDL == 'Vertical Four Track') {
         //Change door vinyl tint display style to inherit
         document.getElementById('MainContent_rowDoorVinylTint' + wallNumber + type).style.display = 'inherit';
         //Change door number of vents display style to inherit
@@ -428,14 +445,14 @@ function doorTransomStyle(type, wallNumber) {
     var transomType = document.getElementById('MainContent_ddlDoorTransom' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorTransom' + wallNumber + type).selectedIndex].value;
 
     //If transomType value is vinyl, perform block
-    if (transomType == 'vinyl') {
+    if (transomType == 'Vinyl') {
         //Change transom vinyl row display style to inherit
         document.getElementById('MainContent_rowDoorTransomVinyl' + wallNumber + type).style.display = 'inherit';
         //Change transom glass row display style to none
         document.getElementById('MainContent_rowDoorTransomGlass' + wallNumber + type).style.display = 'none';
     }
         //Else if transomType value is glass, perform block
-    else if (transomType == 'glass') {
+    else if (transomType == 'Glass') {
         //Change transom vinyl row display style to none
         document.getElementById('MainContent_rowDoorTransomVinyl' + wallNumber + type).style.display = 'none';
         //Change transom glass row display style to inherit
@@ -855,6 +872,25 @@ function totalSpaceLeftInWall(wall) {
 */
 function validateDoor(door, wall) {
 
+    if (door.type == "Cabana"){
+        if (door.fwidth > cabanaMaxWidth) {
+            alert("Your door width is " + door.width + ", the maximum is " + CABANA_MAX_WIDTH + "\" which is largest possible. Please try again.")
+            return false;
+        }
+        if (door.fwidth < cabanaMinWidth) {
+            alert("Your door width is " + door.width + ", the minimum is " + CABANA_MIN_WIDTH + "\" which is smallest possible. Please try again.")
+            return false;
+        }
+        if (door.fheight > cabanaMaxHeight) {
+            alert("Your height door is " + door.height + ", the minimum is " + CABANA_MAX_HEIGHT + "\" which is largest possible. Please try again.")
+            return false;
+        }
+        if (door.fheight < cabanaMinHeight) {
+            alert("Your height door " + door.height + ", the minimum is " + CABANA_MIN_HEIGHT + "\" which is smallest possible. Please try again.")
+            return false;
+        }
+
+    }
     //If the door's position is smaller than the left filler,
     //the door isn't within the usable space
     if (door.position < wall.leftFiller) {

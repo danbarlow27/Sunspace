@@ -8,11 +8,11 @@ namespace SunspaceDealerDesktop
     public class PatioDoor : Door
     {
         #region Attributes
-        private float height;
-        private float length;
-        private string screenType;
-        private string glassTint;
-        private string movingDoor;
+        private float height = 0f;          //Door height: 80" (stored value: 80)
+        private float length = 0f;          //Door width: 30" (stored value: 30)
+        private string screenType = null;   //Door screen type: Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen (stored value: Better Vue Insect Screen)
+        private string glassTint = null;    //Door glass tint: Grey, Bronze, Clear (stored value: Grey)
+        private string movingDoor = null;   //Door moving door: Left or Right (stored value: Left)
         #endregion
 
         #region Constructor

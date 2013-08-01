@@ -8,13 +8,13 @@ namespace SunspaceDealerDesktop
     public class Door
     {
         #region Attributes
-        private int itemIndex = 0; //LinearItems Array Index
-        private string doorType = null; //Type of Door
-        private string doorStyle = null;
-        private string screenType = null;
-        private float fHeight = 0f; //Height of Door
-        private float fLength = 0f; //Width of Door
-        private string colour = null;
+        private int itemIndex = 0;          //LinearItems Array Index (stored value: 1)
+        private string doorType = null;     //Door type: Cabana, French, Patio, NoDoor (stored value: Cabana)
+        private string doorStyle = null;    //Door style: Full View, Vertical Four Track, Full View Colonial, etc... (stored value: Full View)
+        private string screenType = null;   //Door screen type: Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen (stored value: Better Vue Insect Screen)
+        private float fHeight = 0f;         //Door height including frame: 79.125" (stored value: 79.125)
+        private float fLength = 0f;         //Door lenth including frame: 32.125" (stored value: 32.125)
+        private string colour = null;       //Door colour: White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey (stored value: White)
         #endregion
 
         #region Constructor

@@ -2,10 +2,19 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script src="Scripts/Validation.js"></script>
+    <script>
+        //Embedded variables needed before call or addition of DoorSlideFunction.js
+        var model = '<%= currentModel %>';
+        var CABANA_MAX_WIDTH = '<%= Session["CABANA_MAX_WIDTH"] %>';
+        var CABANA_MIN_WIDTH = '<%= Session["CABANA_MIN_WIDTH"]%>';
+        var CABANA_MAX_HEIGHT = '<%= Session["CABANA_MAX_HEIGHT"]%>';
+        var CABANA_MIN_HEIGHT = '<%= Session["CABANA_MIN_HEIGHT"]%>';
+    </script>
     <script src="Scripts/DoorSlideFunctions.js"></script>
     <%-- Hidden field populating scripts 
     =================================== --%>
     <script>
+        
 
         var detailsOfAllLines = '<%= (string)Session["coordList"] %>'; //all the coordinates and details of all the lines, coming from the session
         var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/"); //a list of individual lines and their coordinates and details 
@@ -34,16 +43,14 @@
                 proposedWallCount++
         }        
 
-        var DOOR_MAX_WIDTH = '<%= DOOR_MAX_WIDTH %>';
-        var DOOR_MIN_WIDTH = '<%= DOOR_MIN_WIDTH %>';
-        var DOOR_FRENCH_MIN_WIDTH = '<%= DOOR_FRENCH_MIN_WIDTH %>';
-        var DOOR_FRENCH_MAX_WIDTH = '<%= DOOR_FRENCH_MAX_WIDTH %>';
+        
+
         var projection = 120; //room projection from the left ... hard coded for testing
         var antiProjection = -120; //room projection from the right ... hard coded for testing
         var roomProjection = 120; //the higher of the two room projections
         var soffitLength = '<%= sofftLength %>'; //hard coded for testing, will come from the previous pages in the wizard
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
-        var model = '<%= currentModel %>';  
+         
         
         var walls = []; //array to store the walls
 

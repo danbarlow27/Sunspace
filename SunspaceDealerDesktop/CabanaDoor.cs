@@ -8,15 +8,15 @@ namespace SunspaceDealerDesktop
     public class CabanaDoor : Door
     {
         #region Attributes
-        private float height = 0f;
-        private float length = 0f;
-        private string vinylTint = null;
-        private string screenType = null;
-        private string glassTint = null;
-        private string hinge = null;
-        private string swing = null;
-        private string hardwareType = null;
-        private string numberVents = null;
+        private float height = 0f;          //Door height: 80" (stored value: 80)
+        private float length = 0f;          //Door width: 30" (stored value: 30)
+        private string vinylTint = null;    //Door vinyl tint: Smoke Grey, DarkGrey, Bronze, Clear, Mixed (stored value: Smoke Grey)
+        private string screenType = null;   //Door screen type: Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen (stored value: Better Vue Insect Screen)
+        private string glassTint = null;    //Door glass tint: Grey, Bronze, Clear
+        private string hinge = null;        //Door hinge placement: Left or Right (stored value: Left)
+        private string swing = null;        //Door swing: In or Out (stored value: In)
+        private string hardwareType = null; //Door hardware type: Satin Silver, Bright Brass, Antique Brass (stored value: Satin Silver)
+        private string numberVents = null;  //Door number of vents: 2, 3, 4 (stored value: 2)
         #endregion
 
         #region Constructor

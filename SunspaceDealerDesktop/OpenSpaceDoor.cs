@@ -8,8 +8,8 @@ namespace SunspaceDealerDesktop
     public class OpenSpaceDoor : Door
     {
         #region Attributes
-        private float height = 0f;
-        private float length = 0f;
+        private float height = 0f;  //Door height: 80" (stored value: 80)
+        private float length = 0f;  //Door width: 30" (stored value: 30)
         #endregion
 
         #region Constructor

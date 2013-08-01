@@ -67,7 +67,7 @@ namespace SunspaceDealerDesktop
                                                "White FRP (Interior Only)", "Driftwood FRP (Interior Only)", "Bronze FRP (Interior Only)"};
 
 
-        public static string[] VINYL_TINTS = { "Clear", "Smoke Grey", "Dark Grey", "Bronze" };
+        public static string[] VINYL_TINTS = { "Clear", "Smoke Grey", "Dark Grey", "Bronze"};
 
         public static string[] INSTALLATION_TYPES = { "House", "Trailer", "Standalone" };
         //Glass, Vinyl, Screen, Panel, Open?
@@ -80,8 +80,10 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Size Limits
-        public const float CUSTOM_DOOR_MIN_WIDTH = 25f;
-        public const float CUSTOM_DOOR_MAX_WIDTH = 42f;
+        public const int CUSTOM_DOOR_MIN_WIDTH = 25;
+        public const int CUSTOM_DOOR_MAX_WIDTH = 42;
+        public const int CUSTOM_DOOR_MIN_HEIGHT = 48;
+        public const int CUSTOM_DOOR_MAX_HEIGHT = 96;
 
         public const float CUSTOM_FRENCH_DOOR_MIN_WIDTH = 48.75f;
         public const float CUSTOM_FRENCH_DOOR_MAX_WIDTH = 82.75f;
@@ -201,11 +203,36 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Doors
-        public static string[] DOOR_TYPES = { "Cabana", "French", "Patio", "No Door" };
+        public static string[] DOOR_TYPES = { "Cabana", "French", "Patio", "NoDoor" };
+
         public static string[] DOOR_STYLES = { "Full Screen", "Vertical Four Track", "Full View", "Full View Colonial", "Half Lite", "Half Lite Venting", "Half Lite with Mini Blinds", "Full View with Mini Blinds" };
-        public static string[] DOOR_HARDWARE = { "Satin Silver", "Bright Brass", "Antique Brass" };
+        public static string[] DOOR_MODEL_100_STYLES = { "Full Screen", "Vertical Four Track" };
+        public static string[] DOOR_MODEL_200_STYLES = { "Vertical Four Track", "Full View", "Full View Colonial" };
+        public static string[] DOOR_MODEL_300_STYLES = { "Full View", "Full View Colonial" };
+        public static string[] DOOR_MODEL_400_STYLES = { "Half Lite", "Half Lite Venting", "Half Lite with Mini Blinds", "Full View with Mini Blinds" };              
+        
+        public static string[] DOOR_GLASS_TINTS = { "Grey", "Bronze", "Clear" };
+
+        public static string[] DOOR_V4T_VINYL_OPTIONS = { "Clear", "Smoke Grey", "Dark Grey", "Bronze", "Mixed" };
+
+        public static string[] DOOR_NUMBER_OF_VENTS = { "2", "3", "4" };
+
         public static string[] DOOR_COLOURS = { "White", "Driftwood", "Bronze", "Green", "Black", "Ivory", "Cherrywood", "Grey" };
-        public static string[] GLASS_DOOR_TINTS = { "Grey", "Bronze", "Clear" };
+
+        public static string[] DOOR_HEIGHTS = { "80", "Custom" };
+
+        public static string[] DOOR_WIDTHS_PATIO = { "5", "6", "7", "8", "Custom" };
+
+        public static string[] DOOR_WIDTHS_FRENCH = { "60", "72", "Custom" };
+
+        public static string[] DOOR_WIDTHS_CABANA_NODOOR = { "30", "32", "34", "36", "Custom" };
+
+        public static string[] DOOR_BOXHEADER_POSITION = { "Left", "Right", "Both", "None" };
+
+        public static string[] DOOR_HARDWARE = { "Satin Silver", "Bright Brass", "Antique Brass" };
+
+        public static string[] DOOR_POSITION = { "Left", "Center", "Right", "Custom" };
+        
         #endregion Doors
 
         #region Windows
@@ -248,6 +275,12 @@ namespace SunspaceDealerDesktop
         #region Kneewalls
         public static string[] KNEEWALL_TYPES = { "Panel", "Glass" };
         public static string[] KNEEWALL_GLASS_TINTS = { "Grey", "Bronze" };
+        #endregion
+
+        #region Kickplate
+
+        public static string[] KICKPLATE_SIZE_OPTIONS = { "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "Custom" };
+
         #endregion
 
         #region Transom
