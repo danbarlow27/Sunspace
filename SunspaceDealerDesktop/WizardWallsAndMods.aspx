@@ -439,6 +439,7 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
             var soffitRightArray = new Array();
             var iLeft = 0;
             var iRight = 0;
+            var length;
 
             if (projection > antiProjection) {
                 soffitRight = soffitLength;
@@ -454,9 +455,9 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                 soffitLeft = soffitRight = soffitLength;
             }
 
-            console.log("roof length:", roofLength);
-            console.log("soffit left:", soffitLeft);
-            console.log("soffit right:", soffitRight);
+            //console.log("roof length:", roofLength);
+            //console.log("soffit left:", soffitLeft);
+            //console.log("soffit right:", soffitRight);
 
 
 
@@ -468,7 +469,19 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
 
             //determine how many walls the left soffit spans
             do {
+                switch (coordList[iLeft][5]) {
+                    case "W": //if west
+                    case "E": //if east
+                        length = wallLengthArray[existingWallCount + iLeft];
+                        break;
+                    case "SW": //if southwest
+                    case "SE": //or northwest
 
+                    case "NW": //if southeast
+                    case "NE": //or northeast
+                        length = wallSetBackArray[existingWallCount + iLeft];
+                        break;
+                }
                 //console.log("DO left soffit array:", soffitLeftArray[iLeft]);
                 //console.log("DO wall length:", wallLengthArray[existingWallCount + iLeft]);
                 //console.log("count:", existingWallCount + iLeft);
@@ -485,18 +498,18 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
                 //console.log("iLeft:", iLeft);
                 //console.log("DO left soffit array TWO:", soffitLeftArray[iLeft]);
 
-            } while (iLeft > 0 && soffitLeftArray[iLeft] > wallLengthArray[existingWallCount + iLeft]); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
+            } while (iLeft > 0 && soffitLeftArray[iLeft] > Math.abs([existingWallCount + iLeft])); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
 
             //determine how many walls the right soffit spans
             do {
 
-                console.log("DO right soffit array:", soffitRightArray[iRight]);
-                console.log("DO wall length:", wallLengthArray[wallLengthArray.length - 1 - iRight]);
-                console.log("count:", wallLengthArray.length - 1 - iRight);
-                console.log("iRight:", iRight);
+                //console.log("DO right soffit array:", soffitRightArray[iRight]);
+                //console.log("DO wall length:", wallLengthArray[wallLengthArray.length - 1 - iRight]);
+                //console.log("count:", wallLengthArray.length - 1 - iRight);
+                //console.log("iRight:", iRight);
                 if (soffitRightArray[iRight] > wallLengthArray[wallLengthArray.length - 1 - iRight]) { //if the length of the right soffit is greater than the (last) proposed wall length
                     soffitRightArray[iRight] = wallLengthArray[wallLengthArray.length - 1 - iRight]; //set the element of right soffit array to length of the proposed wall
-                    soffitRightArray[iRight + 1] = soffitRight - wallLengthArray[wallLengthArray.length - 1 - iRight]; //subtract the length of the proposed wall from soffit length
+                    soffitRightArray[iRight + 1] = parseFloat(soffitRight) - parseFloat(wallLengthArray[wallLengthArray.length - 1 - iRight]); //subtract the length of the proposed wall from soffit length
                                                                                                                     //set the remaining soffit length to the next element of the right soffit array
                     iRight++; //increment the counter
                 }
@@ -510,16 +523,23 @@ see "new soffit conundrum" image on desktop for new soffit conundrum...
             //for (var i = 0; i < soffitRightArray.length; i++)
             //    console.log("right soffit array:", soffitRightArray[i]);
 
+            for (var i = 0; i < coordList.length; i++)
+                wallSoffitArray[i] = 0;
+
             for (var i = 0; i < soffitLeftArray.length; i++) {
-                wallSoffitArray[existingWallCount + 1 + i] = soffitLeftArray[i];
+                wallSoffitArray[existingWallCount + i] = soffitLeftArray[i];
                 //console.log(soffitLeftArray[i]);
             }
 
             for (var i = 0; i < soffitRightArray.length; i++) {
-                wallSoffitArray[coordList.length - 1 - i] = soffitRightArray[i];
+                wallSoffitArray[wallSoffitArray.length - 1 - i] = soffitRightArray[i];
                 //console.log(soffitRightArray[i]);
             }
 
+            for (var i = 0; i < wallSoffitArray.length; i++) {
+                console.log("wall soffit " + i, wallSoffitArray[i]);
+                console.log("length: ", wallSoffitArray.length);
+            }
 
 
 
