@@ -417,7 +417,10 @@ Soffit is not limited to first and last wall. The value saved is probably best t
 
 
 
-see "new soffit conundrum" image on desktop for new soffit conundrum... 
+see "new soffit conundrum" image on desktop for new soffit conundrum... [SOLVED]
+
+Update [3/8/2013]: most of the problems solved... see below... however some new soffit conundrums appeared which need to be dealt with.... 
+                    see diagram in notebook and dropbox for details on the conundrum.
 
 
         */
