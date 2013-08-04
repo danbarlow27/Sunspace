@@ -472,27 +472,14 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
 
             //determine how many walls the left soffit spans
             do {
-                switch (coordList[iLeft][5]) {
-                    case "W": //if west
-                    case "E": //if east
-                        length = wallLengthArray[existingWallCount + iLeft];
-                        break;
-                    case "SW": //if southwest
-                    case "SE": //or northwest
-
-                    case "NW": //if southeast
-                    case "NE": //or northeast
-                        length = wallSetBackArray[existingWallCount + iLeft];
-                        break;
-                }
                 //console.log("DO left soffit array:", soffitLeftArray[iLeft]);
                 //console.log("DO wall length:", wallLengthArray[existingWallCount + iLeft]);
                 //console.log("count:", existingWallCount + iLeft);
                 //console.log("iLeft:", iLeft);
 
-                if (soffitLeftArray[iLeft] > wallLengthArray[existingWallCount + iLeft]) { //if the length of the left soffit is greater than the (first) proposed wall length
-                    soffitLeftArray[iLeft] = wallLengthArray[existingWallCount + iLeft]; //set the element of left soffit array to length of the proposed wall
-                    soffitLeftArray[iLeft + 1] = parseFloat(soffitLeft) - parseFloat(wallLengthArray[existingWallCount + iLeft]); //subtract the length of the proposed wall from soffit length
+                if (soffitLeftArray[iLeft] > wallSetBackArray[existingWallCount + iLeft]) { //if the length of the left soffit is greater than the (first) proposed wall length
+                    soffitLeftArray[iLeft] = wallSetBackArray[existingWallCount + iLeft]; //set the element of left soffit array to length of the proposed wall
+                    soffitLeftArray[iLeft + 1] = parseFloat(soffitLeft) - parseFloat(wallSetBackArray[existingWallCount + iLeft]); //subtract the length of the proposed wall from soffit length
                     iLeft++; //increment the counter
                 }
                 else //if the length of the left soffit is the same or less than proposed wall length
@@ -501,7 +488,7 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
                 //console.log("iLeft:", iLeft);
                 //console.log("DO left soffit array TWO:", soffitLeftArray[iLeft]);
 
-            } while (iLeft > 0 && soffitLeftArray[iLeft] > Math.abs([existingWallCount + iLeft])); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
+            } while (iLeft > 0 && soffitLeftArray[iLeft] > Math.abs(wallSetBackArray[existingWallCount + iLeft])); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
 
             //determine how many walls the right soffit spans
             do {
@@ -510,15 +497,15 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
                 //console.log("DO wall length:", wallLengthArray[wallLengthArray.length - 1 - iRight]);
                 //console.log("count:", wallLengthArray.length - 1 - iRight);
                 //console.log("iRight:", iRight);
-                if (soffitRightArray[iRight] > wallLengthArray[wallLengthArray.length - 1 - iRight]) { //if the length of the right soffit is greater than the (last) proposed wall length
-                    soffitRightArray[iRight] = wallLengthArray[wallLengthArray.length - 1 - iRight]; //set the element of right soffit array to length of the proposed wall
-                    soffitRightArray[iRight + 1] = parseFloat(soffitRight) - parseFloat(wallLengthArray[wallLengthArray.length - 1 - iRight]); //subtract the length of the proposed wall from soffit length
+                if (soffitRightArray[iRight] > wallSetBackArray[wallSetBackArray.length - 1 - iRight]) { //if the length of the right soffit is greater than the (last) proposed wall length
+                    soffitRightArray[iRight] = wallSetBackArray[wallSetBackArray.length - 1 - iRight]; //set the element of right soffit array to length of the proposed wall
+                    soffitRightArray[iRight + 1] = parseFloat(soffitRight) - parseFloat(wallSetBackArray[wallSetBackArray.length - 1 - iRight]); //subtract the length of the proposed wall from soffit length
                                                                                                                     //set the remaining soffit length to the next element of the right soffit array
                     iRight++; //increment the counter
                 }
                 else //if the length of the right soffit is the same or less than proposed wall length
                     soffitRightArray[iRight] = soffitRight;  //set the element of the right soffit array to length of the right soffit
-            } while (iRight > 0 && soffitRightArray[iRight] > wallLengthArray[wallLengthArray.length - 1 - iRight]); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
+            } while (iRight > 0 && soffitRightArray[iRight] > Math.abs([wallSetBackArray.length - 1 - iRight])); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
 
 
             //for (var i = 0; i < soffitLeftArray.length; i++)
