@@ -1,28 +1,6 @@
 ﻿/*********************CANVAS FUNCTIONS*********************************/
 
 
-/*************************************************************************
-/*************************************************************************
-/*************************************************************************
-
-SOMETHIGN WEIRD HAPPENING IN THIS FILE... I MODIFIED SOME CODE IN GETBACKWALL
-FUNCTION AND ITS NOT CHANGING ANYTHING IN THE ACTUAL APPLICATION... I EVEN
-TRIED GETTING RID OF THE FUNCTION ALTOGETHER, BUT IT STILL RUNS IN THE 
-APPLICATION... 
-
-ALSO, NEED TO REWRITE AND SIMPLIFY THE HIGHLIGHTWALLSHEIGHT FUNCTION
-AND POSSIBLY GET RID OF GETBACKWALL AND GETFRONTWALL FUNCTIONS, 
-BECAUSE OF THE SIMPLER LOGIC WHICH REPLACES GETBACK/FRONTWALL
-DETAILS: RUN THROUGH ALL THE WALLS, FIND THE HORIZONTAL WALLS
-I.E. WALLS THAT ARE N OR S FACING. FIND THE ONE WITH THE LOWEST Y2 COORD
-GET ITS INDEX, AND USE IT TO HIGHLIGHT THE LINE IN THE LINE ARRAY FOR
-BACK WALL. FIND THE ONE WITH THE HIGHEST Y2 COORD, GET ITS INDEX AND USE
-IT TO HIGHLIGHT THE LINE IN THE LINE ARRAY FOR FRONT WALL.
-
-*************************************************************************
-*************************************************************************
-*************************************************************************
-*************************************************************************/
 
     /* CREATE CANVAS */
 var canvas = d3.select("#mySunroom")            //Select the div tag with id "mySunroom"
@@ -105,22 +83,38 @@ function highlightWallsHeight() {
 
     for (var i = 0; i < southWalls.length; i++) {
         for (var j = 0; j < northWalls.length; j++) {
-            if (southWalls[i].y2 < northWalls[j].y2)
+            if (southWalls[i].y2 < northWalls[j].y2) {
                 southIsHigher = false; //north is higher
+                backWall = "north";
+            }
+            else {
+                southIsHigher = true;
+                backWall = "south";
+            }
         }
     }
 
     if (wall == "B") { //if the textbox in focus is backwall textbox
-        if (southIsHigher) {
-            index = getBackWall(southWalls, northWalls, southIsHigher); //get the index of the backwall
+        var lowestWall = 500; //arbitrary number to determine back wall (number represents value of coordinate, low number means top of canvas)
+        
+        for (var i = 0; i < coordList.length; i++) {
+            if (coordList[i][5] === "N" || coordList[i][5] === "S") {
+                if (coordList[i][2] < lowestWall) {
+                    lowestWall = coordList[i][2];
+                    index = i; 
+                }
+            }
         }
-        else { //northwall is higher
-            index = getBackWall(southIsHigher, northWalls, southIsHigher);
-        }
+        //if (southIsHigher) {
+        //    index = getBackWall(southWalls, northWalls, southIsHigher); //get the index of the backwall
+        //}
+        //else { //northwall is higher
+        //    index = getBackWall(southIsHigher, northWalls, southIsHigher);
+        //}
     }
     else { //if (wall == "F") //if the textbox in focus is frontwall textbox
         if (southWalls[southWalls.length - 1].type === "P") { //check if the front wall is a proposed walls
-            index = getFrontWall(southWalls); //if its a proposed wall, get its index
+            index = backWallIndex = getFrontWall(southWalls); //if its a proposed wall, get its index
         }
     } //if its not a proposed wall that means there is no front wall
 
@@ -135,47 +129,47 @@ function highlightWallsHeight() {
 
 }
 
-/**
-This function is used to determine the back wall index
-@param southWalls - the array of all south facing walls
-@param northWalls - the array of all north facing walls
-@param southIsHigher - used to determine which wall array to use
-@return lowestIndex - index of the top most south facing wall on the canvas, i.e. the back wall
-*/
-function getBackWall(southWalls, northWalls, southIsHigher) {
-    var lowestWall = 500; //arbitrary number to determine back wall (number represents value of coordinate, low number means top of canvas)
-    var lowestIndex; //to store the index of the back wall
+///**
+//This function is used to determine the back wall index
+//@param southWalls - the array of all south facing walls
+//@param northWalls - the array of all north facing walls
+//@param southIsHigher - used to determine which wall array to use
+//@return lowestIndex - index of the top most south facing wall on the canvas, i.e. the back wall
+//*/
+//function getBackWall(southWalls, northWalls, southIsHigher) {
+//    var lowestWall = 500; //arbitrary number to determine back wall (number represents value of coordinate, low number means top of canvas)
+//    var lowestIndex; //to store the index of the back wall
 
-    for (var i = 0; i < coordList.length; i++) {
-        if (coordList[i][5] === "N" || coordList[i][5] === "S") {
-            if (coordList[i][2] < lowestWall) {
-                lowestWall = coordList[i][2];
-                lowestIndex = i;
-            }
-        }
-    }
+//    for (var i = 0; i < coordList.length; i++) {
+//        if (coordList[i][5] === "N" || coordList[i][5] === "S") {
+//            if (coordList[i][2] < lowestWall) {
+//                lowestWall = coordList[i][2];
+//                lowestIndex = i;
+//            }
+//        }
+//    }
 
-    if (southIsHigher) {
-        //for (var i = 0; i < southWalls.length; i++) { //run through all south facing walls
-        //    if (southWalls[i].y2 > lowestWall) { //if the y2 coordinate of the current wall is higher than the value of lowest wall
-        //        lowestWall = southWalls[i].y2; //that means we have a new lowest coordinate
-        //        lowestIndex = southWalls[i].number; //store the index of the wall
-        //    }
-        //}
-        backWall = "south";
-    }
-    else { //northishigher
-        //for (var i = 0; i < northWalls.length; i++) { //run through all south facing walls
-        //    if (northWalls[i].y2 > lowestWall) { //if the y2 coordinate of the current wall is higher than the value of lowest wall
-        //        lowestWall = northWalls[i].y2; //that means we have a new lowest coordinate
-        //        lowestIndex = northWalls[i].number; //store the index of the wall
-        //    }
-        //}
-        backWall = "north"
-    }
+//    if (southIsHigher) {
+//        //for (var i = 0; i < southWalls.length; i++) { //run through all south facing walls
+//        //    if (southWalls[i].y2 > lowestWall) { //if the y2 coordinate of the current wall is higher than the value of lowest wall
+//        //        lowestWall = southWalls[i].y2; //that means we have a new lowest coordinate
+//        //        lowestIndex = southWalls[i].number; //store the index of the wall
+//        //    }
+//        //}
+//        backWall = "south";
+//    }
+//    else { //northishigher
+//        //for (var i = 0; i < northWalls.length; i++) { //run through all south facing walls
+//        //    if (northWalls[i].y2 > lowestWall) { //if the y2 coordinate of the current wall is higher than the value of lowest wall
+//        //        lowestWall = northWalls[i].y2; //that means we have a new lowest coordinate
+//        //        lowestIndex = northWalls[i].number; //store the index of the wall
+//        //    }
+//        //}
+//        backWall = "north"
+//    }
 
-    return backWallIndex = lowestIndex; //return the index of the lowest wall found, i.e. wall that's nearest to the top of canvas
-}
+//    return backWallIndex = lowestIndex; //return the index of the lowest wall found, i.e. wall that's nearest to the top of canvas
+//}
 
 /**
 This function is used to determine the front wall index
