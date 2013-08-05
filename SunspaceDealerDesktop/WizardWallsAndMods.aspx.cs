@@ -240,6 +240,7 @@ namespace SunspaceDealerDesktop
             DropDownList ddlLeftInchFractions = new DropDownList(); //new dropdown list for left filler inch fractions
             DropDownList ddlRightInchFractions = new DropDownList();//new dropdown list for right filler inch fractions
 
+          
             //add the inch fraction list items to the dropdown list
             ddlInchFractions.Items.Add(lst0);
             ddlInchFractions.Items.Add(lst18);

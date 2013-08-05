@@ -198,10 +198,17 @@ namespace SunspaceDealerDesktop
         //    EAST = "E"
         //};
 
+<<<<<<< HEAD
         public static float MINIMUM_WALL_HEIGHT = 0F;
         public static float MINIMUM_WALL_LENGTH = 0F;
         public static float MINIMUM_FILLER_SIZE = 0F;
         public static float MAXIMUM_FILLER_SIZE = 46.5F; //NEED TO DOUBLE CHECK THIS VALUE
+=======
+        //public static const float MINIMUM_WALL_HEIGHT = 0F;
+        //public static const float MINIMUM_WALL_LENGTH = 0F;
+        //public static const float MINIMUM_FILLER_SIZE = 0F;
+        //public static const float MAXIMUM_FILLER_SIZE = 46.5F; //NEED TO DOUBLE CHECK THIS VALUE
+>>>>>>> 9006711a6ce76d55ed7f47c6b3e50eff2cab883d
         //more constants
 
         #endregion
@@ -252,8 +259,13 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_300_WINDOW_TYPES = { "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
         public static string[] MODEL_400_WINDOW_TYPES = { "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
 
+<<<<<<< HEAD
         public static float MINIMUM_WINDOW_SIZE = 30.0F; //NEED TO DOUBLE CHECK THIS VALUE
         public static float MAXIMUM_WINDOW_SIZE = 58.0F; //NEED TO DOUBLE CHECK THIS VALUE
+=======
+        //public static const float MINIMUM_WINDOW_SIZE = 30.0F; //NEED TO DOUBLE CHECK THIS VALUE
+        //public static const float MAXIMUM_WINDOW_SIZE = 58.0F; //NEED TO DOUBLE CHECK THIS VALUE
+>>>>>>> 9006711a6ce76d55ed7f47c6b3e50eff2cab883d
         #endregion
 
         #region Sunshades

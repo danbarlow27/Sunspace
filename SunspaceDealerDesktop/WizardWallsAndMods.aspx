@@ -937,7 +937,7 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
                               
                 <%-- div to store and organize the tables for textboxes and dropdowns for each wall length 
                     number of rows in the 2 tables below are added dynamically in the codebehind--%>
-                <div id="tableWallLengths" class="tblWallLengths" runat="server" style="padding-right:15%; padding-left:15%; padding-top:5%;">
+                <div id="tableWallLengths" class="tblWallLengths" runat="server" >
                     <%-- first table for existing walls, only contains input fields for lengths --%>
                     <%--<asp:Table ID="tblExistingWalls" runat="server">
                         <asp:TableRow>--%>
@@ -955,7 +955,7 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
                         </asp:TableRow>
                     </asp:Table>--%>
                     <%-- end of existing walls table --%>
-                    <br />
+                    
                     <%-- second table for proposed walls, contains input fields for lengths, as well as left and right fillers --%>
                     <asp:Table ID="tblProposedWalls" runat="server">
                         <%--<asp:TableRow>--%>
@@ -965,10 +965,10 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
                             </asp:TableHeaderCell>
                         </asp:TableRow>--%>
                         
-                        <asp:TableRow>
+                        <asp:TableRow  style="text-align:center">
                             <asp:TableCell></asp:TableCell>
                             <%-- column headings --%>
-                            <asp:TableCell ColumnSpan="2" >
+                            <asp:TableCell ColumnSpan="2">
                                 Left Filler
                             </asp:TableCell>
                             <asp:TableCell ColumnSpan="2">
@@ -999,11 +999,11 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
                     <asp:Label ID="lblQuestion2" runat="server" Text="Please enter the wall heights"></asp:Label>
                 </h1>
            
-                        <div class="tblWallLengths" runat="server" style="padding-right:15%; padding-left:15%; padding-top:5%;">
+                        <div class="tblWallLengths" runat="server" >
                             <ul>
                                 <li>
                                     <%-- table contains textboxes, dropdowns, and radio buttons for user input --%>
-                                    <asp:Table ID="tblWallHeights" CssClass="tblTxtFields" runat="server">
+                                    <asp:Table ID="tblWallHeights" runat="server">
 
                                         <%-- row 1: backwall height --%>
                                         <asp:TableRow>
