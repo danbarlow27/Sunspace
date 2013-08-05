@@ -27,7 +27,7 @@ namespace SunspaceDealerDesktop
             //If either entry is blank, stop checks
             if (txtUsername.Text == "" || txtPassword.Text == "")
             {
-                Session["loginErrorMessage"] = "Please enter your information into the text boxes.";
+                Session["loginErrorMessage"] = "Please enter your username and password.";
                 lblError.Text = Session["loginErrorMessage"].ToString();
             }
             else
