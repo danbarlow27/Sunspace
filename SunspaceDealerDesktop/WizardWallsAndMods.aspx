@@ -733,7 +733,7 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
 
                 }
 
-                determineSoffitLengthOfEachWall(); //calculate and store soffitlength of each wall
+                //determineSoffitLengthOfEachWall(); //calculate and store soffitlength of each wall
 
                 //store roomProjection in the roomProjection variable and hidden field
                 document.getElementById("MainContent_hidroomProjection").value = roomProjection = calculateProjection(); 
