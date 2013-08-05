@@ -179,36 +179,29 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Walls
-        //public enum WALL_TYPE
-        //{
-        //    EXISTING = "E",
-        //    PROPOSED = "P",
-        //    //others...
-        //};
+        public static string[] WALL_TYPE =
+        {
+            "EXISTING",
+            "PROPOSED"
+            //others...
+        };
 
-        //public enum WALL_FACING
-        //{
-        //    SOUTH = "S",
-        //    NORTH = "N",
-        //    SOUTH_WEST = "SW",
-        //    SOUTH_EAST = "SE",
-        //    NORTH_WEST = "NW",
-        //    NORTH_EAST = "NE",
-        //    WEST = "W",
-        //    EAST = "E"
-        //};
+        public static string[] WALL_FACING =
+        {
+            "SOUTH",
+            "NORTH",
+            "SOUTH_WEST",
+            "SOUTH_EAST",
+            "NORTH_WEST",
+            "NORTH_EAST",
+            "WEST",
+            "EAST"
+        };
 
-<<<<<<< HEAD
         public static float MINIMUM_WALL_HEIGHT = 0F;
         public static float MINIMUM_WALL_LENGTH = 0F;
         public static float MINIMUM_FILLER_SIZE = 0F;
         public static float MAXIMUM_FILLER_SIZE = 46.5F; //NEED TO DOUBLE CHECK THIS VALUE
-=======
-        //public static const float MINIMUM_WALL_HEIGHT = 0F;
-        //public static const float MINIMUM_WALL_LENGTH = 0F;
-        //public static const float MINIMUM_FILLER_SIZE = 0F;
-        //public static const float MAXIMUM_FILLER_SIZE = 46.5F; //NEED TO DOUBLE CHECK THIS VALUE
->>>>>>> 9006711a6ce76d55ed7f47c6b3e50eff2cab883d
         //more constants
 
         #endregion
