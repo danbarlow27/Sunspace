@@ -20,26 +20,28 @@ namespace SunspaceDealerDesktop
         private int numberSupports;
         private double projection;
         private double width;
+        private List<RoofModule> roofModules; //a list of roof modules that make up this roof
         #endregion
 
         #region Constructors
         Roof()
         {
-            type="";
-            interiorSkin="";
-            exteriorSkin="";
-            thickness=0;
-            fireProtection=false;
-            thermadeck=false;
-            gutters=false;
-            gutterPro=false;
-            gutterColour="";
-            numberSupports=0;
-            projection=0;
-            width=0;
+            Type="";
+            InteriorSkin="";
+            ExteriorSkin="";
+            Thickness=0;
+            FireProtection=false;
+            Thermadeck=false;
+            Gutters=false;
+            GutterPro=false;
+            GutterColour="";
+            NumberSupports=0;
+            Projection=0;
+            Width=0;
+            RoofModules = new List<RoofModule>();
         }
 
-        Roof(string sentType, string sentInteriorSkin, string sentExteriorSkin, double sentThickness, bool sentFireProtection, bool sentThermadeck, bool sentGutters, bool sentGutterPro, string sentGutterColour, int sentNumberSupports, double sentProjection, double sentWidth)
+        Roof(string sentType, string sentInteriorSkin, string sentExteriorSkin, double sentThickness, bool sentFireProtection, bool sentThermadeck, bool sentGutters, bool sentGutterPro, string sentGutterColour, int sentNumberSupports, double sentProjection, double sentWidth, List<RoofModule> sentModules)
         {
             type = sentType;
             interiorSkin = sentInteriorSkin;
@@ -53,6 +55,7 @@ namespace SunspaceDealerDesktop
             numberSupports = sentNumberSupports;
             projection = sentProjection;
             width = sentWidth;
+            roofModules = sentModules;
         }
         #endregion
 
@@ -213,6 +216,19 @@ namespace SunspaceDealerDesktop
             set
             {
                 width = value;
+            }
+        }
+
+        public List<RoofModule> RoofModules
+        {
+            get
+            {
+                return roofModules;
+            }
+
+            set
+            {
+                roofModules = value;
             }
         }
         #endregion Acessors
