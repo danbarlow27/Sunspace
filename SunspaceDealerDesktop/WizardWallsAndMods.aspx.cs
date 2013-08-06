@@ -2925,12 +2925,6 @@ namespace SunspaceDealerDesktop
 
         protected void btnQuestion4_Click(object sender, EventArgs e)
         {
-            //System.Diagnostics.Debug.WriteLine("This is working");
-            //System.Diagnostics.Debug.WriteLine(Request.Form["wallCount"]);
-            //System.Diagnostics.Debug.WriteLine(Request.Form["wallStartIndex"]);
-            //System.Diagnostics.Debug.WriteLine(Request.Form["wall2DoorCount"]);
-            //System.Diagnostics.Debug.WriteLine(Request.Form["wall2Door0PropertyCount"]);
-            //System.Diagnostics.Debug.WriteLine(Request.Form["wall2Door0type"]);
 
             int wallCount = Convert.ToInt32(Request.Form["wallCount"]);
             int wallStartIndex = Convert.ToInt32(Request.Form["wallStartIndex"]);
@@ -2968,28 +2962,13 @@ namespace SunspaceDealerDesktop
                         FrenchDoor newFrench = (FrenchDoor)aDoor;
 
                         newFrench.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
-                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "Height"]);
-
                         newFrench.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
-                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "Width"]);
-
                         newFrench.VinylTint = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "VinylTint"]);
-                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "VinylTint"]);
-
-                        newFrench.ScreenType = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"]);
-                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"]);
-
-                        newFrench.GlassTint = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "GlassTint"]);
-                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "GlassTint"]);
-
-                        newFrench.Swing = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "Swing"]);
-                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "Swing"]);
-
-                        newFrench.OperatingDoor = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "Operator"]);
-                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "Operator"]);
-
-                        newFrench.HardwareType = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "HardwareType"]);
-                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "HardwareType"]);
+                        newFrench.ScreenType = Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"];
+                        newFrench.GlassTint = Request.Form["wall" + walls + "Door" + doors + "GlassTint"];
+                        newFrench.Swing = Request.Form["wall" + walls + "Door" + doors + "Swing"];
+                        newFrench.OperatingDoor = Request.Form["wall" + walls + "Door" + doors + "Operator"];
+                        newFrench.HardwareType = Request.Form["wall" + walls + "Door" + doors + "HardwareType"];
                     }
                     else if (doorType == "Patio")
                     {
@@ -2999,9 +2978,9 @@ namespace SunspaceDealerDesktop
 
                         newPatio.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
                         newPatio.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
-                        newPatio.ScreenType = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"]);
-                        newPatio.GlassTint = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "GlassTint"]);
-                        newPatio.MovingDoor = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "Operator"]);
+                        newPatio.ScreenType = Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"];
+                        newPatio.GlassTint = Request.Form["wall" + walls + "Door" + doors + "GlassTint"];
+                        newPatio.MovingDoor = Request.Form["wall" + walls + "Door" + doors + "Operator"];
                     }
                     else
                     {
@@ -3016,10 +2995,10 @@ namespace SunspaceDealerDesktop
                     //Load all properties
                     aDoor.DoorType = doorType;
                     aDoor.DoorStyle = Request.Form["wall" + walls + "Door" + doors + "Style"];
-                    aDoor.ScreenType = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"]);
+                    aDoor.ScreenType = Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"];
                     aDoor.FHeight = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "FHeight"]);
                     aDoor.FLength = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "FWidth"]);                    
-                    aDoor.Colour = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "Colour"]);
+                    aDoor.Colour = Request.Form["wall" + walls + "Door" + doors + "Colour"];
 
                     Session["Door" + doors] = aDoor;
                 }

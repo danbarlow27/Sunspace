@@ -38,6 +38,13 @@ var patioMinHeight = patioMinValues.height;
 var patioMaxWidth = patioMaxValues.width;
 var patioMaxHeight = patioMaxValues.height;
 
+var errorMessageArea;
+
+//Setting the appropriate value to errorMessageArea when the document is ready (or loaded)
+$(document).ready(function () {
+    errorMessageArea = document.getElementById('MainContent_lblErrorMessage');
+});
+
 /******************************************CONSTRUCTORS AND PROTOTYPES******************************************/
 
 /**
@@ -48,7 +55,6 @@ var patioMaxHeight = patioMaxValues.height;
 Array.prototype.insert = function (index, item) {
     this.splice(index, 0, item);
 };
-
 
 //Framed Door holds all common information for doors
 function FramedDoor() {
@@ -302,7 +308,7 @@ function createDoorObject(wallNumber, type) {
             else {
                 //Get control value
                 value = styleDropDown.val();
-            }
+            }            
 
             //Create identifier for property within door object. In example, 
             //"ddlDoorStyle" now becomes "style" property inside of framedDoor
@@ -311,7 +317,6 @@ function createDoorObject(wallNumber, type) {
             if (identifier in framedDoor) {
                 //Store value to appropriate obejct property
                 framedDoor[identifier] = value;
-                //console.log("Framed Door: " + framedDoor[identifier] + " / Identifier: " + identifier);
             }
         }
     }
@@ -908,92 +913,6 @@ function totalSpaceLeftInWall(wall) {
 }
 
 /**
-*validateDoorParameters
-*This function performs validtion of the current door's parameters (height/width)
-*@param doors - holds an array of unsorted doors
-*@param wall - used to hold the current wall information
-*@return - boolean whether validation passed
-*/
-function validateDoorParameters(door, wall) {
-    //If the door type is Cabana check for minimum and maximum height and width
-    if (door.type == "Cabana") {
-        //If the door frame width is larger than the acceptable size, display error message
-        if (door.fwidth > cabanaMaxWidth) {
-            alert("Your " + door.type + " door width is " + door.width + "\", the maximum is " + CABANA_MAX_WIDTH + "\" which is largest possible. Please try again.")
-            return false;
-        }
-        //If the door frame width is smaller than the acceptable size, display error message
-        if (door.fwidth < cabanaMinWidth) {
-            alert("Your " + door.type + " door width is " + door.width + "\", the minimum is " + CABANA_MIN_WIDTH + "\" which is smallest possible. Please try again.")
-            return false;
-        }
-        //If the door frame height is larger than the acceptable size, display error message
-        if (door.fheight > cabanaMaxHeight) {
-            alert("Your " + door.type + " door height is " + door.height + "\", the maximum is " + CABANA_MAX_HEIGHT + "\" which is largest possible. Please try again.")
-            return false;
-        }
-        //If the door frame height is smaller than the acceptable size, display error message
-        if (door.fheight < cabanaMinHeight) {
-            alert("Your " + door.type + " door height is " + door.height + "\", the minimum is " + CABANA_MIN_HEIGHT + "\" which is smallest possible. Please try again.")
-            return false;
-        }
-    }
-        //If the door type is French check for minimum and maximum height and width
-    else if (door.type == "French") {
-        //If the door frame width is larger than the acceptable size, display error message
-        if (door.fwidth > frenchMaxWidth) {
-            alert("Your " + door.type + " door width is " + door.width + "\", the maximum is " + CABANA_MAX_WIDTH * 2 + "\" which is largest possible. Please try again.")
-            return false;
-        }
-        //If the door frame width is smaller than the acceptable size, display error message
-        if (door.fwidth < frenchMinWidth) {
-            alert("Your " + door.type + " door width is " + door.width + "\", the minimum is " + CABANA_MIN_WIDTH * 2 + "\" which is smallest possible. Please try again.")
-            return false;
-        }
-        //If the door frame height is larger than the acceptable size, display error message
-        if (door.fheight > frenchMaxHeight) {
-            alert("Your " + door.type + " door height is " + door.height + "\", the maximum is " + CABANA_MAX_HEIGHT + "\" which is largest possible. Please try again.")
-            return false;
-        }
-        //If the door frame height is smaller than the acceptable size, display error message
-        if (door.fheight < frenchMinHeight) {
-            alert("Your " + door.type + " door height is " + door.height + "\", the minimum is " + CABANA_MIN_HEIGHT + "\" which is smallest possible. Please try again.")
-            return false;
-        }
-    }
-        //If the door type is Patio check for minimum and maximum height and width
-    else if (door.type == "Patio") {
-        //If the door frame width is larger than the acceptable size, display error message
-        if (door.fwidth > patioMaxWidth) {
-            alert("Your " + door.type + " door width is " + door.width + "\", the maximum is " + PATIO_DOOR_MAX_WIDTH + "\" which is largest possible. Please try again.")
-            return false;
-        }
-        //If the door frame width is smaller than the acceptable size, display error message
-        if (door.fwidth < patioMinWidth) {
-            alert("Your " + door.type + " door width is " + door.width + "\", the minimum is " + PATIO_DOOR_MIN_WIDTH + "\" which is smallest possible. Please try again.")
-            return false;
-        }
-        //If the door frame height is larger than the acceptable size, display error message
-        if (door.fheight > patioMaxHeight) {
-            alert("Your " + door.type + " door height is " + door.height + "\", the maximum is " + PATIO_DOOR_MAX_HEIGHT + "\" which is largest possible. Please try again.")
-            return false;
-        }
-        //If the door frame height is smaller than the acceptable size, display error message
-        if (door.fheight < patioMinHeight) {
-            alert("Your " + door.type + " door height is " + door.height + "\", the minimum is " + PATIO_DOOR_MIN_HEIGHT + "\" which is smallest possible. Please try again.")
-            return false;
-        }
-    }
-
-    if (door.fheight > findCurrentWallHeight(door, wall)) {
-        alert("Your " + door.type + " door's height in its current position is higher than the wall. Please try again.")
-        return false;
-    }
-
-    return true;
-}
-
-/**
 *validateDoor
 *This function performs validtion of the current door on existing doors
 *checks for overlaps, out of the wall, etc.
@@ -1001,20 +920,19 @@ function validateDoorParameters(door, wall) {
 *@param wall - used to hold the current wall information
 *@return - boolean whether validation passed
 */
-function validateDoor(door, wall) {    
-
+function validateDoor(door, wall) {   
     //If the door's position is smaller than the left filler,
     //the door isn't within the usable space
     if (door.position < wall.leftFiller) {
         //Error message
-        alert("Your door position is overlapping the left filler, or is a negative value. Please try again.");
+        errorMessageArea.innerHTML = "Your door position is overlapping the left filler, or is a negative value. Please try again.";
         return false;
     }
         //Else if the door's position plus its length is larger than the right fillers position,
         //the door isn't within the usable space
     else if ((door.position + door.fwidth) > (wall.length - wall.rightFiller)) {
         //Error message
-        alert("Your door position is overlapping the right filler, or larger than the wall length. Please try again.");
+        errorMessageArea.innerHTML = "Your door position is overlapping the right filler, or larger than the wall length. Please try again.";
         return false;
     }
 
@@ -1031,14 +949,100 @@ function validateDoor(door, wall) {
     //If the index value is smaller than the wall.doors arrays length
     //and this door is overlapping the door after it, display the appropriate message
     if (index < wall.doors.length && (door.position + door.fwidth) > wall.doors[index].position) {
-        alert("The door you're trying to insert is overlapping door " + (index + 1) + ". Please try again.");
+        errorMessageArea.innerHTML = "The door you're trying to insert is overlapping door " + (index + 1) + ". Please try again.";
         return false;
     }
 
     //If the index value is larger than the zero
     //and this door is overlapping the door before it, display the appropriate message
     if (index > 0 && door.position < (wall.doors[index - 1].position + wall.doors[index - 1].fwidth)) {
-        alert("The door you're trying to insert is overlapping door " + index + ". Please try again.");
+        errorMessageArea.innerHTML = "The door you're trying to insert is overlapping door " + index + ". Please try again.";
+        return false;
+    }
+
+    return true;
+}
+
+/**
+*validateDoorParameters
+*This function performs validtion of the current door's parameters (height/width)
+*@param doors - holds an array of unsorted doors
+*@param wall - used to hold the current wall information
+*@return - boolean whether validation passed
+*/
+function validateDoorParameters(door, wall) {
+    //If the door type is Cabana check for minimum and maximum height and width
+    if (door.type == "Cabana") {
+        //If the door frame width is larger than the acceptable size, display error message
+        if (door.fwidth > cabanaMaxWidth) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door width is " + door.width + "\", the maximum is " + CABANA_MAX_WIDTH + "\" which is largest possible. Please try again.";
+            return false;
+        }
+        //If the door frame width is smaller than the acceptable size, display error message
+        if (door.fwidth < cabanaMinWidth) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door width is " + door.width + "\", the minimum is " + CABANA_MIN_WIDTH + "\" which is smallest possible. Please try again.";
+            return false;
+        }
+        //If the door frame height is larger than the acceptable size, display error message
+        if (door.fheight > cabanaMaxHeight) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door height is " + door.height + "\", the maximum is " + CABANA_MAX_HEIGHT + "\" which is largest possible. Please try again.";
+            return false;
+        }
+        //If the door frame height is smaller than the acceptable size, display error message
+        if (door.fheight < cabanaMinHeight) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door height is " + door.height + "\", the minimum is " + CABANA_MIN_HEIGHT + "\" which is smallest possible. Please try again.";
+            return false;
+        }
+    }
+        //If the door type is French check for minimum and maximum height and width
+    else if (door.type == "French") {
+        //If the door frame width is larger than the acceptable size, display error message
+        if (door.fwidth > frenchMaxWidth) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door width is " + door.width + "\", the maximum is " + CABANA_MAX_WIDTH * 2 + "\" which is largest possible. Please try again.";
+            return false;
+        }
+        //If the door frame width is smaller than the acceptable size, display error message
+        if (door.fwidth < frenchMinWidth) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door width is " + door.width + "\", the minimum is " + CABANA_MIN_WIDTH * 2 + "\" which is smallest possible. Please try again.";
+            return false;
+        }
+        //If the door frame height is larger than the acceptable size, display error message
+        if (door.fheight > frenchMaxHeight) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door height is " + door.height + "\", the maximum is " + CABANA_MAX_HEIGHT + "\" which is largest possible. Please try again.";
+            return false;
+        }
+        //If the door frame height is smaller than the acceptable size, display error message
+        if (door.fheight < frenchMinHeight) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door height is " + door.height + "\", the minimum is " + CABANA_MIN_HEIGHT + "\" which is smallest possible. Please try again.";
+            return false;
+        }
+    }
+        //If the door type is Patio check for minimum and maximum height and width
+    else if (door.type == "Patio") {
+        //If the door frame width is larger than the acceptable size, display error message
+        if (door.fwidth > patioMaxWidth) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door width is " + door.width + "\", the maximum is " + PATIO_DOOR_MAX_WIDTH + "\" which is largest possible. Please try again.";
+            return false;
+        }
+        //If the door frame width is smaller than the acceptable size, display error message
+        if (door.fwidth < patioMinWidth) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door width is " + door.width + "\", the minimum is " + PATIO_DOOR_MIN_WIDTH + "\" which is smallest possible. Please try again.";
+            return false;
+        }
+        //If the door frame height is larger than the acceptable size, display error message
+        if (door.fheight > patioMaxHeight) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door height is " + door.height + "\", the maximum is " + PATIO_DOOR_MAX_HEIGHT + "\" which is largest possible. Please try again.";
+            return false;
+        }
+        //If the door frame height is smaller than the acceptable size, display error message
+        if (door.fheight < patioMinHeight) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door height is " + door.height + "\", the minimum is " + PATIO_DOOR_MIN_HEIGHT + "\" which is smallest possible. Please try again.";
+            return false;
+        }
+    }
+
+    if (door.fheight > findCurrentWallHeight(door, wall)) {
+        errorMessageArea.innerHTML = "Your " + door.type + " door's height in its current position is higher than the wall. Please try again.";
         return false;
     }
 
@@ -1055,12 +1059,12 @@ function validateDoor(door, wall) {
 function validateDoorFill(door, wall) {
 
     if ((wall.length - wall.rightFiller - wall.leftFiller) < door.fwidth) {
-        alert("This wall is too small to have a door of width " + door.fwidth + ". Please try again.");
+        errorMessageArea.innerHTML = "This wall is too small to have a door of width " + door.fwidth + ". Please try again.";
         return false;
     }
 
     if (wall.doors.length > 0) {
-        alert("Fill cannot be used on a wall with existing doors. Please empty the wall first.");
+        errorMessageArea.innerHTML = "Fill cannot be used on a wall with existing doors. Please empty the wall first.";
         return false;
     }
 

@@ -55,7 +55,7 @@ namespace SunspaceDealerDesktop
 
             set
             {
-                doorStyle = value.ToLower();
+                doorStyle = value;
             }
         }
         public string ScreenType
