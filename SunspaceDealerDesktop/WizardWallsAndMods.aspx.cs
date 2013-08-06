@@ -26,9 +26,6 @@ namespace SunspaceDealerDesktop
         protected string currentModel;
         protected float soffitLength;
 
-        protected const float SUGGESTED_DEFAULT_FILLER = Constants.SUGGESTED_DEFAULT_FILLER;
-        protected const float PREFERRED_DEFAULT_FILLER = Constants.PREFERRED_DEFAULT_FILLER;
-
         /***hard coded variables***/
         protected string coordList; //to store the string from the session and store it in a local variable for further use                                    
         protected char[] lineDelimiter = { '/' }; //character(s) that seperate lines in a session string variable
@@ -47,7 +44,9 @@ namespace SunspaceDealerDesktop
             Session["PATIO_DOOR_MIN_WIDTH"] = Constants.PATIO_DOOR_MIN_WIDTH;
             Session["PATIO_DOOR_MAX_HEIGHT"] = Constants.PATIO_DOOR_MAX_HEIGHT;
             Session["PATIO_DOOR_MIN_HEIGHT"] = Constants.PATIO_DOOR_MIN_HEIGHT;
-            Session["DEFAULT_FILLER"] = PREFERRED_DEFAULT_FILLER;
+            Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
+            Session["MAX_WINDOW_WIDTH"] = Constants.MAX_WINDOW_WIDTH;
+            Session["MIN_WINDOW_WIDTH"] = Constants.MIN_WINDOW_WIDTH;
 
             /***hard coded variables***/
             Session["model"] = "M300";
