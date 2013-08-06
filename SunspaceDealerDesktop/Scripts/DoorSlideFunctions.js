@@ -228,6 +228,8 @@ function customDimension(wallNumber, type, dimension) {
 *@param wallNumber - used to hold the current wall number
 *@param type - used to hold the type of door being made
 *@return framedDoor - returns an object containing all information for the specific door (i.e. height, width, style, type, etc.)
+*
+***************RADIO BUTTON VALUES NOT STORING PROPERLY, TO BE FIXED***************
 */
 function createDoorObject(wallNumber, type) {
 
@@ -290,10 +292,11 @@ function createDoorObject(wallNumber, type) {
         //If the controls parent 'tr' is visible, perform block
         if (styleDropDown.closest('tr').filter(':visible').length == 1) {
             var value;
+
             //If the control is of type radio, perform block
             if (styleDropDown.attr('type') == 'radio') {
                 //Get the checked value
-                styleValue = styleDropDown.closest('table').find('input[name=\"' + styleDropDown.attr('name') + '\"]:checked').val();
+                value = styleDropDown.closest('table').find('input[name=\"' + styleDropDown.attr('name') + '\"]:checked').val();
             }
                 //Else, perform block
             else {
@@ -308,6 +311,7 @@ function createDoorObject(wallNumber, type) {
             if (identifier in framedDoor) {
                 //Store value to appropriate obejct property
                 framedDoor[identifier] = value;
+                //console.log("Framed Door: " + framedDoor[identifier] + " / Identifier: " + identifier);
             }
         }
     }
@@ -412,17 +416,30 @@ function doorStyle(type, wallNumber) {
 
     //If drop down value is v4TCabana, perform block
     if (doorStyleDDL == 'Vertical Four Track') {
-        //Change door vinyl tint display style to inherit
+        //Change door vinyl tint row display style to inherit
         document.getElementById('MainContent_rowDoorVinylTint' + wallNumber + type).style.display = 'inherit';
-        //Change door number of vents display style to inherit
+        //Change door number of vents row display style to inherit
         document.getElementById('MainContent_rowDoorNumberOfVents' + wallNumber + type).style.display = 'inherit';
+        //Change door screen options row display style to none
+        document.getElementById('MainContent_rowDoorScreenOptions' + wallNumber + type).style.display = 'none';
+    }
+    else if (doorStyleDDL == 'Full Screen' || doorStyleDDL == 'Screen')
+    {
+        //Change door screen options row display style to inherit
+        document.getElementById('MainContent_rowDoorScreenOptions' + wallNumber + type).style.display = 'inherit';
+        //Change door vinyl tint row display style to none
+        document.getElementById('MainContent_rowDoorVinylTint' + wallNumber + type).style.display = 'none';
+        //Change door number of vents row display style to inherit
+        document.getElementById('MainContent_rowDoorNumberOfVents' + wallNumber + type).style.display = 'none';
     }
         //else, perform block
     else {
-        //Change door vinyl tint display style to none
+        //Change door vinyl tint row display style to none
         document.getElementById('MainContent_rowDoorVinylTint' + wallNumber + type).style.display = 'none';
-        //Change door number of vents display style to inherit
+        //Change door number of vents row display style to inherit
         document.getElementById('MainContent_rowDoorNumberOfVents' + wallNumber + type).style.display = 'none';
+        //Change door screen options row display style to none
+        document.getElementById('MainContent_rowDoorScreenOptions' + wallNumber + type).style.display = 'none';
     }
 }
 

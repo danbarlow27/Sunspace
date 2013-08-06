@@ -49,7 +49,7 @@ namespace SunspaceDealerDesktop
             Session["PATIO_DOOR_MIN_HEIGHT"] = Constants.PATIO_DOOR_MIN_HEIGHT;
 
             /***hard coded variables***/
-            Session["model"] = "M200";
+            Session["model"] = "M300";
             Session["soffitLength"] = 500F;
             /****************diffrent sunroom layouts******************/
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
@@ -461,30 +461,70 @@ namespace SunspaceDealerDesktop
                 doorStyleDDL.Attributes.Add("onchange", "doorStyle('" + title + "','" + i + "')");
                 if (currentModel == "M100")
                 {
-                    for (int j = 0; j < Constants.DOOR_MODEL_100_STYLES.Count(); j++)
+                    if (title == "Patio")
                     {
-                        doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_100_STYLES[j], Constants.DOOR_MODEL_100_STYLES[j]));
+                        for (int j = 0; j < Constants.DOOR_MODEL_100_PATIO_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_100_PATIO_STYLES[j], Constants.DOOR_MODEL_100_PATIO_STYLES[j]));
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < Constants.DOOR_MODEL_100_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_100_STYLES[j], Constants.DOOR_MODEL_100_STYLES[j]));
+                        }
                     }
                 }
                 else if (currentModel == "M200")
                 {
-                    for (int j = 0; j < Constants.DOOR_MODEL_200_STYLES.Count(); j++)
+                    if (title == "Patio")
                     {
-                        doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_STYLES[j], Constants.DOOR_MODEL_200_STYLES[j]));
+                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_400_PATIO_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j]));
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < Constants.DOOR_MODEL_200_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_STYLES[j], Constants.DOOR_MODEL_200_STYLES[j]));
+                        }
                     }
                 }
                 else if (currentModel == "M300")
                 {
-                    for (int j = 0; j < Constants.DOOR_MODEL_300_STYLES.Count(); j++)
+                    if (title == "Patio")
                     {
-                        doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_300_STYLES[j], Constants.DOOR_MODEL_300_STYLES[j]));
+                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_400_PATIO_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j]));
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < Constants.DOOR_MODEL_300_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_300_STYLES[j], Constants.DOOR_MODEL_300_STYLES[j]));
+                        }
                     }
                 }
                 else if (currentModel == "M400")
                 {
-                    for (int j = 0; j < Constants.DOOR_MODEL_400_STYLES.Count(); j++)
+                    if (title == "Patio")
                     {
-                        doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_400_STYLES[j], Constants.DOOR_MODEL_400_STYLES[j]));
+                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_400_PATIO_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j]));
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < Constants.DOOR_MODEL_400_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_400_STYLES[j], Constants.DOOR_MODEL_400_STYLES[j]));
+                        }
                     }
                 }
 
@@ -2884,54 +2924,107 @@ namespace SunspaceDealerDesktop
 
         protected void btnQuestion4_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("This is working");
-            System.Diagnostics.Debug.WriteLine(Request.Form["wallCount"]);
-            System.Diagnostics.Debug.WriteLine(Request.Form["wall4DoorCount"]);
-            System.Diagnostics.Debug.WriteLine(Request.Form["wall4Door0PropertyCount"]);
-            System.Diagnostics.Debug.WriteLine(Request.Form["wall4Door0type"]);
+            //System.Diagnostics.Debug.WriteLine("This is working");
+            //System.Diagnostics.Debug.WriteLine(Request.Form["wallCount"]);
+            //System.Diagnostics.Debug.WriteLine(Request.Form["wallStartIndex"]);
+            //System.Diagnostics.Debug.WriteLine(Request.Form["wall2DoorCount"]);
+            //System.Diagnostics.Debug.WriteLine(Request.Form["wall2Door0PropertyCount"]);
+            //System.Diagnostics.Debug.WriteLine(Request.Form["wall2Door0type"]);
 
             int wallCount = Convert.ToInt32(Request.Form["wallCount"]);
+            int wallStartIndex = Convert.ToInt32(Request.Form["wallStartIndex"]);
 
-            for (int walls = 0; walls < wallCount; walls++) { 
-                
+            for (int walls = wallStartIndex; walls <= wallCount; walls++) {
 
                 int doorCount = Convert.ToInt32(Request.Form["wall" + walls + "DoorCount"]);
+                Session["DoorCount" + walls] = Request.Form["wall" + walls + "DoorCount"];
+                Door aDoor;
 
                 for (int doors = 0; doors < doorCount; doors++) {
                                         
                     int propertyCount = Convert.ToInt32(Request.Form["wall" + walls + "Door" + doors + "PropertyCount"]);
-                    string doorType = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "type"]);
-                    
-                    //if (doorType == "Cabana")
-                    //{
-                    //    CabanaDoor thisDoor = new CabanaDoor();
-                    //    //Load all properties
+                    string doorType = Request.Form["wall" + walls + "Door" + doors + "type"];
+
+                    aDoor = new Door();
+
+                    if (doorType == "Cabana")
+                    {
+                        aDoor = new CabanaDoor();
                         
-                    //}
-                    //else if (doorType == "French")
-                    //{
-                    //    FrenchDoor thisDoor = new FrenchDoor();
-                    //    //Load all properties
-                    //}
-                    //else if (doorType == "Patio")
-                    //{
-                    //    PatioDoor thisDoor = new PatioDoor();
-                    //    //Load all properties
-                    //}
-                    //else
-                    //{
-                    //    OpenSpaceDoor thisDoor = new OpenSpaceDoor();
-                    //    //Load all properties
-                    //}
+                        CabanaDoor newCabana = (CabanaDoor)aDoor;
 
-                    //for (int properties = 0; properties < propertyCount; properties++) { 
-                    
+                        newCabana.GlassTint = Request.Form["wall" + walls + "Door" + doors + "GlassTint"];
+                        newCabana.HardwareType = Request.Form["wall" + walls + "Door" + doors + "HardwareType"];
+                        newCabana.Hinge = Request.Form["wall" + walls + "Door" + doors + "Hinge"];
+                        newCabana.Swing = Request.Form["wall" + walls + "Door" + doors + "Swing"];
+                        newCabana.VinylTint = Request.Form["wall" + walls + "Door" + doors + "VinylTint"];
+                        newCabana.ScreenType = Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"];
+                    }
+                    else if (doorType == "French")
+                    {
+                        aDoor = new FrenchDoor();
 
-                    //}
+                        FrenchDoor newFrench = (FrenchDoor)aDoor;
 
+                        newFrench.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
+                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "Height"]);
+
+                        newFrench.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
+                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "Width"]);
+
+                        newFrench.VinylTint = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "VinylTint"]);
+                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "VinylTint"]);
+
+                        newFrench.ScreenType = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"]);
+                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"]);
+
+                        newFrench.GlassTint = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "GlassTint"]);
+                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "GlassTint"]);
+
+                        newFrench.Swing = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "Swing"]);
+                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "Swing"]);
+
+                        newFrench.OperatingDoor = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "Operator"]);
+                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "Operator"]);
+
+                        newFrench.HardwareType = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "HardwareType"]);
+                        System.Diagnostics.Debug.WriteLine(Request.Form["wall" + walls + "Door" + doors + "HardwareType"]);
+                    }
+                    else if (doorType == "Patio")
+                    {
+                        aDoor = new PatioDoor();
+
+                        PatioDoor newPatio = (PatioDoor)aDoor;
+
+                        newPatio.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
+                        newPatio.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
+                        newPatio.ScreenType = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"]);
+                        newPatio.GlassTint = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "GlassTint"]);
+                        newPatio.MovingDoor = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "Operator"]);
+                    }
+                    else
+                    {
+                        aDoor = new OpenSpaceDoor();
+
+                        OpenSpaceDoor newOpenSpace = (OpenSpaceDoor)aDoor;
+
+                        newOpenSpace.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
+                        newOpenSpace.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
+                    }
+
+                    //Load all properties
+                    aDoor.DoorType = doorType;
+                    aDoor.DoorStyle = Request.Form["wall" + walls + "Door" + doors + "Style"];
+                    aDoor.ScreenType = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"]);
+                    aDoor.FHeight = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "FHeight"]);
+                    aDoor.FLength = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "FWidth"]);                    
+                    aDoor.Colour = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "Colour"]);
+
+                    Session["Door" + doors] = aDoor;
                 }
-
             }
+
+            Response.Redirect("TestingHiddens.aspx");
 
         }
     }

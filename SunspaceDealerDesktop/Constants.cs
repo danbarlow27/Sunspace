@@ -211,8 +211,10 @@ namespace SunspaceDealerDesktop
         public static string[] DOOR_MODEL_100_STYLES = { "Full Screen", "Vertical Four Track" };
         public static string[] DOOR_MODEL_200_STYLES = { "Vertical Four Track", "Full View", "Full View Colonial" };
         public static string[] DOOR_MODEL_300_STYLES = { "Full View", "Full View Colonial" };
-        public static string[] DOOR_MODEL_400_STYLES = { "Half Lite", "Half Lite Venting", "Half Lite with Mini Blinds", "Full View with Mini Blinds" };              
-        
+        public static string[] DOOR_MODEL_400_STYLES = { "Half Lite", "Half Lite Venting", "Half Lite with Mini Blinds", "Full View with Mini Blinds" };
+        public static string[] DOOR_MODEL_100_PATIO_STYLES = { "Screen", "Glass" };
+        public static string[] DOOR_MODEL_200_300_400_PATIO_STYLES = { "Glass" };
+
         public static string[] DOOR_GLASS_TINTS = { "Grey", "Bronze", "Clear" };
 
         public static string[] DOOR_V4T_VINYL_OPTIONS = { "Clear", "Smoke Grey", "Dark Grey", "Bronze", "Mixed" };

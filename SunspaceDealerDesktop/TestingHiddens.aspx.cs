@@ -11,7 +11,20 @@ namespace SunspaceDealerDesktop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            testField.InnerText = (string)Session["testing"];
+            FrenchDoor thisDoor = (FrenchDoor)Session["Door0"];
+            testField.InnerText = (string)Session["DoorCount2"];
+            testField.InnerText += "\t" + (string)thisDoor.DoorType;
+            testField.InnerText += "\t" + (string)thisDoor.DoorStyle;
+            testField.InnerText += "\t" + (string)thisDoor.Colour;
+            testField.InnerText += "\t" + Convert.ToString(thisDoor.FHeight);
+            testField.InnerText += "\t" + Convert.ToString(thisDoor.FLength);
+            testField.InnerText += "\t" + (string)thisDoor.ScreenType;
+
+            if ((string)thisDoor.DoorType == "Cabana")
+            {
+                FrenchDoor typeDoor = (FrenchDoor)thisDoor;
+                testField.InnerText += "\t" + (string)typeDoor.GlassTint;
+            }
             //string[] newViewingArray = (string[])Session["viewingArray"];
 
             //for (int i = 0; i < newViewingArray.Length; i++)

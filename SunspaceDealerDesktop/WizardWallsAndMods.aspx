@@ -80,7 +80,6 @@
         *to create objects.
         */
         function submitData() {
-
             var hiddenDiv = document.getElementById("MainContent_hiddenFieldsDiv");
             var proposedWalls = 0;
             //Loop through all the lines(walls)
@@ -89,13 +88,22 @@
                 if (coordList[i - 1][4] === "P") {
 
                     proposedWalls++;
+
+                    if (proposedWalls == 1) {
+                        var hiddenWallStartIndex = document.createElement("input");
+                        hiddenWallStartIndex.setAttribute("type", "hidden");
+                        hiddenWallStartIndex.setAttribute("name", "wallStartIndex");
+                        hiddenWallStartIndex.value = i;
+                        hiddenDiv.appendChild(hiddenWallStartIndex);
+                    }
+
                     var wall = walls[i];
                     var hiddenDoorCount = document.createElement("input");
                     hiddenDoorCount.setAttribute("type", "hidden");
                     hiddenDoorCount.setAttribute("name", "wall" + i + "DoorCount");
-                    hiddenDoorCount.value = wall.doors.length;
+                    hiddenDoorCount.value = wall.doors.length;                    
 
-                    hiddenDiv.appendChild(hiddenDoorCount);
+                    hiddenDiv.appendChild(hiddenDoorCount);                    
 
                     for (var doorCount = 0; doorCount < wall.doors.length; doorCount++) {
 
@@ -115,6 +123,8 @@
                                 hiddenDoorProperty.setAttribute("name", "wall" + i + "Door" + doorCount + prop[0].toUpperCase() + prop.substr(1));
                                 hiddenDoorProperty.value = door[prop];
 
+                                //console.log("wall" + i + "Door" + doorCount + prop[0].toUpperCase() + prop.substr(1) + " \ " + door[prop]);
+
                                 hiddenDiv.appendChild(hiddenDoorProperty);
                             }
                         }
@@ -124,7 +134,7 @@
             var hiddenWallCount = document.createElement("input");
             hiddenWallCount.setAttribute("type", "hidden");
             hiddenWallCount.setAttribute("name", "wallCount");
-            hiddenWallCount.value = proposedWalls;
+            hiddenWallCount.value = lineList.length;
 
             hiddenDiv.appendChild(hiddenWallCount);
         }
@@ -347,8 +357,6 @@
                                 break;
                         }
                     }
-                    console.log("North facing starting: " + wallStartHeightArray[i]);
-                    console.log("North facing ending: " + wallEndHeightArray[i]);
                 }
             }
             else if (backWall === "south") { //if backwall is a south facing wall.. i.e. is existing
@@ -383,15 +391,6 @@
                                 break;
                         }
                     }
-                    console.log("South facing starting: " + wallStartHeightArray[i]);
-                    console.log("South facing ending: " + wallEndHeightArray[i]);
-                    console.log("Soffit: " + wallSoffitArray[i]);
-                    console.log("Wall length: " + wallLengthArray[i]);
-                    console.log("Wall setback: " + wallSetBackArray[i]);
-                    console.log("RUN: " + RUN);
-                    console.log("m: " + m);
-                    console.log(parseFloat(wallStartHeightArray[i]) - parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)));
-                    console.log("--------------------------------");
                 }
             }
         }
