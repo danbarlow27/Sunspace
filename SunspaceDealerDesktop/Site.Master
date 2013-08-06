@@ -54,7 +54,7 @@
                 <li><asp:HyperLink ID="lnkMainNavHome" NavigateUrl="Home.aspx" runat="server">Home</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkMainNavSavedProjects" NavigateUrl="SavedProjects.aspx" runat="server">Saved Projects</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkMainNavNewProject" NavigateUrl="NewProject.aspx" runat="server">New Project</asp:HyperLink></li>
-                <li><asp:Button ID="btnMainNavLogout" Text="Logout" runat="server" OnClick="btnMainNavLogout_Click" CssClass ="btnSubmit float-right"/></li>
+                <li><asp:Button ID="btnMainNavLogout" Text="Logout" runat="server" OnClick="btnMainNavLogout_Click" /></li>
             </ul>
         </nav>    
     </header>
@@ -112,6 +112,14 @@
 
             // toggle visibility of radio button (accordion) options
             $('ul.toggleOptions > li > input[type="radio"]').click(function () {
+                // toggle (show/hide) clicked radio button option 
+                $(this).siblings('.toggleContent').slideToggle(400);
+
+                // hide other options
+                $(this).parent().siblings().children('.toggleContent').slideUp(400);
+            });
+
+            $('ul.toggleOptions > li > span').click(function () {
                 // toggle (show/hide) clicked radio button option 
                 $(this).siblings('.toggleContent').slideToggle(400);
 

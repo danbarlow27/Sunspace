@@ -999,18 +999,33 @@
                     <%-- Kneewall --%>
                     <li>
                                     
-                        <asp:RadioButton ID="radKneewallOptions" GroupName="styling" runat="server" />
+                        <%--<asp:RadioButton ID="radKneewallOptions" GroupName="styling" runat="server" />
                         <asp:Label ID="lblKneewallOptionsRadio" AssociatedControlID="radKneewallOptions" runat="server"></asp:Label>
-                        <asp:Label ID="lblKneewallOptions" AssociatedControlID="radKneewallOptions" runat="server" Text="Kneewall"></asp:Label>
+                        <asp:Label ID="lblKneewallOptions" AssociatedControlID="radKneewallOptions" runat="server" Text="Kneewall"></asp:Label>--%>
+                        <asp:Label ID="lblKneewallOptions" runat="server" Text="Kneewall"></asp:Label>
 
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:TextBox ID="txtKneewallHeight" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" runat="server" MaxLength="3" />
-                                    <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height" />
-                                    <br />
-                                    <asp:DropDownList ID="ddlKneewallType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
-                                    <asp:Label ID="lblKneewallType" AssociatedControlID="txtKneewallHeight" runat="server" Text="Type" />
+                                    <asp:Table runat="server">
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height:" />
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtKneewallHeight" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" runat="server" MaxLength="3" />
+                                            </asp:TableCell>                                         
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblKneewallType" AssociatedControlID="txtKneewallHeight" runat="server" Text="Type:" />
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlKneewallType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+                                    </asp:Table>
                                 </li>
                             </ul>   
                         </div> 
@@ -1020,18 +1035,34 @@
                     <%-- Transom --%>
                     <li>
                 
-                        <asp:RadioButton ID="radTransomOptions" GroupName="styling" runat="server" />
+                        <%--<asp:RadioButton ID="radTransomOptions" GroupName="styling" runat="server" />
                         <asp:Label ID="lblTransomOptionsRadio" AssociatedControlID="radTransomOptions" runat="server"></asp:Label>
-                        <asp:Label ID="lblTransomOptions" AssociatedControlID="radTransomOptions" runat="server" Text="Transom"></asp:Label>
+                        <asp:Label ID="lblTransomOptions" AssociatedControlID="radTransomOptions" runat="server" Text="Transom"></asp:Label>--%>
+                        <asp:Label ID="lblTransomOptions" runat="server" Text="Transom"></asp:Label>
 
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:TextBox ID="txtTransomHeight" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" runat="server" />
-                                    <asp:Label ID="lblTransomHeight" AssociatedControlID="txtTransomHeight" runat="server" Text="Height" />
-                                    <br />
-                                    <asp:DropDownList ID="ddlTransomType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
-                                    <asp:Label ID="lblTransomType" AssociatedControlID="txtTransomHeight" runat="server" Text="Type" />
+                                    <asp:Table runat="server">
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblTransomHeight" AssociatedControlID="txtTransomHeight" runat="server" Text="Height:" />
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtTransomHeight" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblTransomType" AssociatedControlID="txtTransomHeight" runat="server" Text="Type:" />
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlTransomType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+                                    </asp:Table>
+                                
                                 </li>
                             </ul>
                         </div> 
@@ -1040,27 +1071,60 @@
                     <%-- Walls --%>            
                     <li>
                 
-                        <asp:RadioButton ID="radFramingOptions" GroupName="styling" runat="server" />
+                        <%--<asp:RadioButton ID="radFramingOptions" GroupName="styling" runat="server" />
                         <asp:Label ID="lblFramingOptionsRadio" AssociatedControlID="radFramingOptions" runat="server"></asp:Label>
-                        <asp:Label ID="lblFramingOptions" AssociatedControlID="radFramingOptions" runat="server" Text="Framing"></asp:Label>
+                        <asp:Label ID="lblFramingOptions" AssociatedControlID="radFramingOptions" runat="server" Text="Framing"></asp:Label>--%>
+                        <asp:Label ID="lblFramingOptions" runat="server" Text="Framing"></asp:Label>
 
                         <div class="toggleContent">
                             <ul>                                
                                 <li>
-                                    <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectCascadeColours()" GroupName="styling" runat="server" />
-                                    <asp:Label ID="lblFramingColour" AssociatedControlID="ddlFramingColour" runat="server" Text="Framing Colour" />
-                                    <br />
-                                    <asp:DropDownList ID="ddlInteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
-                                    <asp:Label ID="lblInteriorColour" AssociatedControlID="ddlInteriorColour" runat="server" Text="Interior Colour" />
-                                    <br />
-                                    <asp:DropDownList ID="ddlInteriorSkin" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
-                                    <asp:Label ID="lblInteriorSkin" AssociatedControlID="ddlInteriorSkin" runat="server" Text="Interior Skin" />
-                                    <br />
-                                    <asp:DropDownList ID="ddlExteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
-                                    <asp:Label ID="lblExteriorColour" AssociatedControlID="ddlExteriorColour" runat="server" Text="Exterior Colour" />
-                                    <br />
-                                    <asp:DropDownList ID="ddlExteriorSkin" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
-                                    <asp:Label ID="lblExteriorSkin" AssociatedControlID="ddlExteriorSkin" runat="server" Text="Exterior Skin" />
+                                    <asp:Table runat="server">
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblFramingColour" AssociatedControlID="ddlFramingColour" runat="server" Text="Framing Colour:" />
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectCascadeColours()" GroupName="styling" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblInteriorColour" AssociatedControlID="ddlInteriorColour" runat="server" Text="Interior Colour:" />
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlInteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblInteriorSkin" AssociatedControlID="ddlInteriorSkin" runat="server" Text="Interior Skin:" />
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlInteriorSkin" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblExteriorColour" AssociatedControlID="ddlExteriorColour" runat="server" Text="Exterior Colour:" />
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlExteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblExteriorSkin" AssociatedControlID="ddlExteriorSkin" runat="server" Text="Exterior Skin:" />
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlExteriorSkin" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>  
+                                    </asp:Table>                            
                                 </li>
                             </ul>
                         </div>
@@ -1175,59 +1239,81 @@
 
                 <ul class="toggleOptions">
                     <li>
-                        <asp:RadioButton ID="radPreset1" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
-                        <asp:Label ID="lblPreset1Radio" AssociatedControlID="radPreset1" runat="server"></asp:Label>
-                        <asp:Image ID="imbPreset1" GroupName="layout" AssociatedControlID="radPreset1" AlternateText="missing preset image" ImageUrl="./images/layout/Preset1.png" runat="server" />                  
-                    </li>
-                    <li>
-                        <asp:RadioButton ID="radPreset2" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
-                        <asp:Label ID="lblPreset2Radio" AssociatedControlID="radPreset2" runat="server"></asp:Label>
-                        <asp:Image ID="imbPreset2" GroupName="layout" AssociatedControlID="radPreset2" AlternateText="missing preset image" ImageUrl="./images/layout/Preset2.png" runat="server" />                  
-                    </li>
-                    <li>
-                        <asp:RadioButton ID="radPreset3" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
-                        <asp:Label ID="lblPreset3Radio" AssociatedControlID="radPreset3" runat="server"></asp:Label>
-                        <asp:Image ID="imbPreset3" GroupName="layout" AssociatedControlID="radPreset3" AlternateText="missing preset image" ImageUrl="./images/layout/Preset3.png" runat="server" />                  
-                    </li>
-                    <li>
-                        <asp:RadioButton ID="radPreset4" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
-                        <asp:Label ID="lblPreset4Radio" AssociatedControlID="radPreset4" runat="server"></asp:Label>
-                        <asp:Image ID="imbPreset4" GroupName="layout" AssociatedControlID="radPreset4" AlternateText="missing preset image" ImageUrl="./images/layout/Preset4.png" runat="server" />                  
-                    </li>
-                    <li>
-                        <asp:RadioButton ID="radPreset5" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
-                        <asp:Label ID="lblPreset5Radio" AssociatedControlID="radPreset5" runat="server"></asp:Label>
-                        <asp:Image ID="imbPreset5" GroupName="layout" AssociatedControlID="radPreset5" AlternateText="missing preset image" ImageUrl="./images/layout/Preset5.png" runat="server" />                  
-                    </li>
-                    <li>
-                        <asp:RadioButton ID="radPreset6" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
-                        <asp:Label ID="lblPreset6Radio" AssociatedControlID="radPreset6" runat="server"></asp:Label>
-                        <asp:Image ID="imbPreset6" GroupName="layout" AssociatedControlID="radPreset6" AlternateText="missing preset image" ImageUrl="./images/layout/Preset6.png" runat="server" />                  
-                    </li>
-                    <li>
-                        <asp:RadioButton ID="radPreset7" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
-                        <asp:Label ID="lblPreset7Radio" AssociatedControlID="radPreset7" runat="server"></asp:Label>
-                        <asp:Image ID="imbPreset7" GroupName="layout" AssociatedControlID="radPreset7" AlternateText="missing preset image" ImageUrl="./images/layout/Preset7.png" runat="server" />                  
-                    </li>
-                    <li>
-                        <asp:RadioButton ID="radPreset8" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
-                        <asp:Label ID="lblPreset8Radio" AssociatedControlID="radPreset8" runat="server"></asp:Label>
-                        <asp:Image ID="imbPreset8" GroupName="layout" AssociatedControlID="radPreset8" AlternateText="missing preset image" ImageUrl="./images/layout/Preset8.png" runat="server" />                  
-                    </li>
-                    <li>
-                        <asp:RadioButton ID="radPreset9" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
-                        <asp:Label ID="lblPreset9Radio" AssociatedControlID="radPreset9" runat="server"></asp:Label>
-                        <asp:Image ID="imbPreset9" GroupName="layout" AssociatedControlID="radPreset9" AlternateText="missing preset image" ImageUrl="./images/layout/Preset9.png" runat="server" />                  
-                    </li>
-                    <li>
-                        <asp:RadioButton ID="radPreset10" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
-                        <asp:Label ID="lblPreset10Radio" AssociatedControlID="radPreset10" runat="server"></asp:Label>
-                        <asp:Image ID="imbPreset10" GroupName="layout" AssociatedControlID="radPreset10" AlternateText="missing preset image" ImageUrl="./images/layout/Preset10.png" runat="server" />                  
-                    </li>
-                    <li>
-                        <asp:RadioButton ID="radPresetC1" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
-                        <asp:Label ID="lblPresetC1Radio" AssociatedControlID="radPresetC1" runat="server"></asp:Label>
-                        <asp:Image ID="imbPresetC1" GroupName="layout" AssociatedControlID="radPresetC1" AlternateText="missing preset image" ImageUrl="./images/layout/PresetC1.png" runat="server" />                  
+                        <asp:Table runat="server" ID="tblSunroomLayout" CssClass="tblSunroomLayout">
+                            <asp:TableRow>
+                                <asp:TableCell>
+                                    <asp:RadioButton ID="radPreset1" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
+                                    <asp:Label ID="lblPreset1Radio" AssociatedControlID="radPreset1" runat="server"></asp:Label>
+                                    <asp:Image ID="imbPreset1" GroupName="layout" AssociatedControlID="radPreset1" AlternateText="missing preset image" ImageUrl="./images/layout/Preset1.png" runat="server" />  
+                                </asp:TableCell>
+
+                                <asp:TableCell>
+                                    <asp:RadioButton ID="radPreset2" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
+                                    <asp:Label ID="lblPreset2Radio" AssociatedControlID="radPreset2" runat="server"></asp:Label>
+                                    <asp:Image ID="imbPreset2" GroupName="layout" AssociatedControlID="radPreset2" AlternateText="missing preset image" ImageUrl="./images/layout/Preset2.png" runat="server" /> 
+                                </asp:TableCell>
+
+                                <asp:TableCell>
+                                    <asp:RadioButton ID="radPreset3" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
+                                    <asp:Label ID="lblPreset3Radio" AssociatedControlID="radPreset3" runat="server"></asp:Label>
+                                    <asp:Image ID="imbPreset3" GroupName="layout" AssociatedControlID="radPreset3" AlternateText="missing preset image" ImageUrl="./images/layout/Preset3.png" runat="server" />  
+                                </asp:TableCell>
+                            </asp:TableRow>
+
+                            <asp:TableRow>
+                                <asp:TableCell>
+                                    <asp:RadioButton ID="radPreset4" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
+                                    <asp:Label ID="lblPreset4Radio" AssociatedControlID="radPreset4" runat="server"></asp:Label>
+                                    <asp:Image ID="imbPreset4" GroupName="layout" AssociatedControlID="radPreset4" AlternateText="missing preset image" ImageUrl="./images/layout/Preset4.png" runat="server" />  
+                                </asp:TableCell>
+
+                                <asp:TableCell>
+                                    <asp:RadioButton ID="radPreset5" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
+                                    <asp:Label ID="lblPreset5Radio" AssociatedControlID="radPreset5" runat="server"></asp:Label>
+                                    <asp:Image ID="imbPreset5" GroupName="layout" AssociatedControlID="radPreset5" AlternateText="missing preset image" ImageUrl="./images/layout/Preset5.png" runat="server" /> 
+                                </asp:TableCell>
+
+                                <asp:TableCell>
+                                    <asp:RadioButton ID="radPreset6" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
+                                    <asp:Label ID="lblPreset6Radio" AssociatedControlID="radPreset6" runat="server"></asp:Label>
+                                    <asp:Image ID="imbPreset6" GroupName="layout" AssociatedControlID="radPreset6" AlternateText="missing preset image" ImageUrl="./images/layout/Preset6.png" runat="server" />                  
+                                </asp:TableCell>
+                            </asp:TableRow>
+
+                            <asp:TableRow>
+                                <asp:TableCell>
+                                    <asp:RadioButton ID="radPreset7" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
+                                    <asp:Label ID="lblPreset7Radio" AssociatedControlID="radPreset7" runat="server"></asp:Label>
+                                    <asp:Image ID="imbPreset7" GroupName="layout" AssociatedControlID="radPreset7" AlternateText="missing preset image" ImageUrl="./images/layout/Preset7.png" runat="server" />  
+                                </asp:TableCell>
+
+                                <asp:TableCell>
+                                    <asp:RadioButton ID="radPreset8" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
+                                    <asp:Label ID="lblPreset8Radio" AssociatedControlID="radPreset8" runat="server"></asp:Label>
+                                    <asp:Image ID="imbPreset8" GroupName="layout" AssociatedControlID="radPreset8" AlternateText="missing preset image" ImageUrl="./images/layout/Preset8.png" runat="server" />  
+                                </asp:TableCell>
+
+                                <asp:TableCell>
+                                     <asp:RadioButton ID="radPreset9" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
+                                    <asp:Label ID="lblPreset9Radio" AssociatedControlID="radPreset9" runat="server"></asp:Label>
+                                    <asp:Image ID="imbPreset9" GroupName="layout" AssociatedControlID="radPreset9" AlternateText="missing preset image" ImageUrl="./images/layout/Preset9.png" runat="server" />  
+                                </asp:TableCell>
+                            </asp:TableRow>
+
+                            <asp:TableRow>
+                                <asp:TableCell>
+                                    <asp:RadioButton ID="radPreset10" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
+                                    <asp:Label ID="lblPreset10Radio" AssociatedControlID="radPreset10" runat="server"></asp:Label>
+                                    <asp:Image ID="imbPreset10" GroupName="layout" AssociatedControlID="radPreset10" AlternateText="missing preset image" ImageUrl="./images/layout/Preset10.png" runat="server" />  
+                                </asp:TableCell>
+
+                                <asp:TableCell>
+                                     <asp:RadioButton ID="radPresetC1" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
+                                    <asp:Label ID="lblPresetC1Radio" AssociatedControlID="radPresetC1" runat="server"></asp:Label>
+                                    <asp:Image ID="imbPresetC1" GroupName="layout" AssociatedControlID="radPresetC1" AlternateText="missing preset image" ImageUrl="./images/layout/PresetC1.png" runat="server" />
+                                </asp:TableCell>
+                            </asp:TableRow>
+                        </asp:Table>         
                     </li>
 
                     <asp:Button ID="btnQuestion8" Enabled="false" CssClass="btnSubmit float-right slidePanel" Text="Confirm all selections" runat="server" OnClientClick="newProjectCheckQuestion8()" OnClick="btnLayout_Click"/>
@@ -1242,84 +1328,86 @@
 
     <%-- SLIDE PAGING (QUESTION NAVIGATION)
     ======================================== --%>
-    <div id="paging-wrapper">    
-        <div id="paging"> 
-            <h2>Project Specifications</h2>
+    <div id="sidebar">
+        <div id="paging-wrapper">    
+            <div id="paging"> 
+                <h2>Project Specifications</h2>
 
-            <ul>
-                <div style="display: none" id="pagerOne">
-                    <li>
-                            <a href="#" data-slide="#slide1" class="slidePanel">
-                                <asp:Label ID="lblSpecsProjectType" runat="server" Text="New/Existing Customer"></asp:Label>
-                                <asp:Label ID="lblSpecsProjectTypeAnswer" runat="server" Text="Customer Answer"></asp:Label>
-                            </a>
-                    </li>
-                </div>
+                <ul>
+                    <div style="display: none" id="pagerOne">
+                        <li>
+                                <a href="#" data-slide="#slide1" class="slidePanel">
+                                    <asp:Label ID="lblSpecsProjectType" runat="server" Text="New/Existing Customer"></asp:Label>
+                                    <asp:Label ID="lblSpecsProjectTypeAnswer" runat="server" Text="Customer Answer"></asp:Label>
+                                </a>
+                        </li>
+                    </div>
 
-                <div style="display: none" id="pagerTwo">
-                    <li>
-                            <a href="#" data-slide="#slide2" class="slidePanel">
-                                <asp:Label ID="lblProjectNamePager" runat="server" Text="Project Name"></asp:Label>
-                                <asp:Label ID="lblProjectNameAnswer" runat="server" Text="Question 2 Answer"></asp:Label>
-                            </a>
-                    </li>
-                </div>
+                    <div style="display: none" id="pagerTwo">
+                        <li>
+                                <a href="#" data-slide="#slide2" class="slidePanel">
+                                    <asp:Label ID="lblProjectNamePager" runat="server" Text="Project Name"></asp:Label>
+                                    <asp:Label ID="lblProjectNameAnswer" runat="server" Text="Question 2 Answer"></asp:Label>
+                                </a>
+                        </li>
+                    </div>
 
-                <div style="display: none" id="pagerThree">
-                    <li>
-                            <a href="#" data-slide="#slide3" class="slidePanel">
-                                <asp:Label ID="lblProjectType" runat="server" Text="Type of project"></asp:Label>
-                                <asp:Label ID="lblProjectTypeAnswer" runat="server" Text="Question 3 Answer"></asp:Label>
-                            </a>
-                    </li>
-                </div>
+                    <div style="display: none" id="pagerThree">
+                        <li>
+                                <a href="#" data-slide="#slide3" class="slidePanel">
+                                    <asp:Label ID="lblProjectType" runat="server" Text="Type of project"></asp:Label>
+                                    <asp:Label ID="lblProjectTypeAnswer" runat="server" Text="Question 3 Answer"></asp:Label>
+                                </a>
+                        </li>
+                    </div>
 
-                <div style="display: none" id="pagerFour">
-                    <li>
-                            <a href="#" data-slide="#slide4" class="slidePanel">
-                                <asp:Label ID="Label27" runat="server" Text="Styling options"></asp:Label>
-                                <asp:Label ID="lblQuestion4PagerAnswer" runat="server" Text="Question 4 Answer"></asp:Label>
-                            </a>
-                    </li>
-                </div>
+                    <div style="display: none" id="pagerFour">
+                        <li>
+                                <a href="#" data-slide="#slide4" class="slidePanel">
+                                    <asp:Label ID="Label27" runat="server" Text="Styling options"></asp:Label>
+                                    <asp:Label ID="lblQuestion4PagerAnswer" runat="server" Text="Question 4 Answer"></asp:Label>
+                                </a>
+                        </li>
+                    </div>
 
-                <div style="display: none" id="pagerFive">
-                    <li>
-                            <a href="#" data-slide="#slide5" class="slidePanel">
-                                <asp:Label ID="Label31" runat="server" Text="Foam protection"></asp:Label>
-                                <asp:Label ID="lblQuestion5PagerAnswer" runat="server" Text="Question 5 Answer"></asp:Label>
-                            </a>
-                    </li>          
-                </div>    
+                    <div style="display: none" id="pagerFive">
+                        <li>
+                                <a href="#" data-slide="#slide5" class="slidePanel">
+                                    <asp:Label ID="Label31" runat="server" Text="Foam protection"></asp:Label>
+                                    <asp:Label ID="lblQuestion5PagerAnswer" runat="server" Text="Question 5 Answer"></asp:Label>
+                                </a>
+                        </li>          
+                    </div>    
                   
-                <div style="display: none" id="pagerSix">
-                    <li>
-                            <a href="#" data-slide="#slide6" class="slidePanel">
-                                <asp:Label ID="Label1" runat="server" Text="Prefab floor"></asp:Label>
-                                <asp:Label ID="lblQuestion6PagerAnswer" runat="server" Text="Question 6 Answer"></asp:Label>
-                            </a>
-                    </li>
-                </div>
+                    <div style="display: none" id="pagerSix">
+                        <li>
+                                <a href="#" data-slide="#slide6" class="slidePanel">
+                                    <asp:Label ID="Label1" runat="server" Text="Prefab floor"></asp:Label>
+                                    <asp:Label ID="lblQuestion6PagerAnswer" runat="server" Text="Question 6 Answer"></asp:Label>
+                                </a>
+                        </li>
+                    </div>
 
-                <div style="display: none" id="pagerSeven">                
-                    <li>
-                            <a href="#" data-slide="#slide7" class="slidePanel">
-                                <asp:Label ID="Label3" runat="server" Text="Roof"></asp:Label>
-                                <asp:Label ID="lblQuestion7PagerAnswer" runat="server" Text="Question 7 Answer"></asp:Label>
-                            </a>
-                    </li>
-                </div>
+                    <div style="display: none" id="pagerSeven">                
+                        <li>
+                                <a href="#" data-slide="#slide7" class="slidePanel">
+                                    <asp:Label ID="Label3" runat="server" Text="Roof"></asp:Label>
+                                    <asp:Label ID="lblQuestion7PagerAnswer" runat="server" Text="Question 7 Answer"></asp:Label>
+                                </a>
+                        </li>
+                    </div>
 
-                <div style="display: none" id="pagerEight">
-                    <li>
-                            <a href="#" data-slide="#slide8" class="slidePanel">
-                                <asp:Label ID="Label5" runat="server" Text="Layout"></asp:Label>
-                                <asp:Label ID="lblQuestion8PagerAnswer" runat="server" Text="Question 8 Answer"></asp:Label>
-                            </a>
-                    </li>
-                </div>
-            </ul>    
-        </div> 
+                    <div style="display: none" id="pagerEight">
+                        <li>
+                                <a href="#" data-slide="#slide8" class="slidePanel">
+                                    <asp:Label ID="Label5" runat="server" Text="Layout"></asp:Label>
+                                    <asp:Label ID="lblQuestion8PagerAnswer" runat="server" Text="Question 8 Answer"></asp:Label>
+                                </a>
+                        </li>
+                    </div>
+                </ul>    
+            </div> 
+        </div>
     </div>
 
     <%-- Hidden input tags 

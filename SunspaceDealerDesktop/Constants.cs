@@ -179,27 +179,29 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Walls
-        //public enum WALL_TYPE
-        //{
-        //    EXISTING = "E",
-        //    PROPOSED = "P",
-        //    //others...
-        //};
+        public static string[] WALL_TYPE =
+        {
+            "EXISTING",
+            "PROPOSED"
+            //others...
+        };
 
-        //public enum WALL_FACING
-        //{
-        //    SOUTH = "S",
-        //    NORTH = "N",
-        //    SOUTH_WEST = "SW",
-        //    SOUTH_EAST = "SE",
-        //    NORTH_WEST = "NW",
-        //    NORTH_EAST = "NE",
-        //    WEST = "W",
-        //    EAST = "E"
-        //};
+        public static string[] WALL_FACING =
+        {
+            "SOUTH",
+            "NORTH",
+            "SOUTH_WEST",
+            "SOUTH_EAST",
+            "NORTH_WEST",
+            "NORTH_EAST",
+            "WEST",
+            "EAST"
+        };
 
-        public const float MINIMUM_WALL_HEIGHT = 0F;
-        public const float MINIMUM_WALL_LENGTH = 0F;
+        public static float MINIMUM_WALL_HEIGHT = 0F;
+        public static float MINIMUM_WALL_LENGTH = 0F;
+        public static float MINIMUM_FILLER_SIZE = 0F;
+        public static float MAXIMUM_FILLER_SIZE = 46.5F; //NEED TO DOUBLE CHECK THIS VALUE
         //more constants
 
         #endregion
@@ -251,6 +253,10 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_200_WINDOW_TYPES = { "Vertical 4 Track (ISM)", "Vertical 4 Track (OSM)", "Horizontal 4 Track" };
         public static string[] MODEL_300_WINDOW_TYPES = { "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
         public static string[] MODEL_400_WINDOW_TYPES = { "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
+
+
+        public static float MINIMUM_WINDOW_SIZE = 30.0F; //NEED TO DOUBLE CHECK THIS VALUE
+        public static float MAXIMUM_WINDOW_SIZE = 58.0F; //NEED TO DOUBLE CHECK THIS VALUE
         #endregion
 
         #region Sunshades

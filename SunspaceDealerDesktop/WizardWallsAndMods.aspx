@@ -471,27 +471,14 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
 
             //determine how many walls the left soffit spans
             do {
-                switch (coordList[iLeft][5]) {
-                    case "W": //if west
-                    case "E": //if east
-                        length = wallLengthArray[existingWallCount + iLeft];
-                        break;
-                    case "SW": //if southwest
-                    case "SE": //or northwest
-
-                    case "NW": //if southeast
-                    case "NE": //or northeast
-                        length = wallSetBackArray[existingWallCount + iLeft];
-                        break;
-                }
                 //console.log("DO left soffit array:", soffitLeftArray[iLeft]);
                 //console.log("DO wall length:", wallLengthArray[existingWallCount + iLeft]);
                 //console.log("count:", existingWallCount + iLeft);
                 //console.log("iLeft:", iLeft);
 
-                if (soffitLeftArray[iLeft] > wallLengthArray[existingWallCount + iLeft]) { //if the length of the left soffit is greater than the (first) proposed wall length
-                    soffitLeftArray[iLeft] = wallLengthArray[existingWallCount + iLeft]; //set the element of left soffit array to length of the proposed wall
-                    soffitLeftArray[iLeft + 1] = parseFloat(soffitLeft) - parseFloat(wallLengthArray[existingWallCount + iLeft]); //subtract the length of the proposed wall from soffit length
+                if (soffitLeftArray[iLeft] > wallSetBackArray[existingWallCount + iLeft]) { //if the length of the left soffit is greater than the (first) proposed wall length
+                    soffitLeftArray[iLeft] = wallSetBackArray[existingWallCount + iLeft]; //set the element of left soffit array to length of the proposed wall
+                    soffitLeftArray[iLeft + 1] = parseFloat(soffitLeft) - parseFloat(wallSetBackArray[existingWallCount + iLeft]); //subtract the length of the proposed wall from soffit length
                     iLeft++; //increment the counter
                 }
                 else //if the length of the left soffit is the same or less than proposed wall length
@@ -500,7 +487,7 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
                 //console.log("iLeft:", iLeft);
                 //console.log("DO left soffit array TWO:", soffitLeftArray[iLeft]);
 
-            } while (iLeft > 0 && soffitLeftArray[iLeft] > Math.abs([existingWallCount + iLeft])); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
+            } while (iLeft > 0 && soffitLeftArray[iLeft] > Math.abs(wallSetBackArray[existingWallCount + iLeft])); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
 
             //determine how many walls the right soffit spans
             do {
@@ -509,15 +496,15 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
                 //console.log("DO wall length:", wallLengthArray[wallLengthArray.length - 1 - iRight]);
                 //console.log("count:", wallLengthArray.length - 1 - iRight);
                 //console.log("iRight:", iRight);
-                if (soffitRightArray[iRight] > wallLengthArray[wallLengthArray.length - 1 - iRight]) { //if the length of the right soffit is greater than the (last) proposed wall length
-                    soffitRightArray[iRight] = wallLengthArray[wallLengthArray.length - 1 - iRight]; //set the element of right soffit array to length of the proposed wall
-                    soffitRightArray[iRight + 1] = parseFloat(soffitRight) - parseFloat(wallLengthArray[wallLengthArray.length - 1 - iRight]); //subtract the length of the proposed wall from soffit length
+                if (soffitRightArray[iRight] > wallSetBackArray[wallSetBackArray.length - 1 - iRight]) { //if the length of the right soffit is greater than the (last) proposed wall length
+                    soffitRightArray[iRight] = wallSetBackArray[wallSetBackArray.length - 1 - iRight]; //set the element of right soffit array to length of the proposed wall
+                    soffitRightArray[iRight + 1] = parseFloat(soffitRight) - parseFloat(wallSetBackArray[wallSetBackArray.length - 1 - iRight]); //subtract the length of the proposed wall from soffit length
                                                                                                                     //set the remaining soffit length to the next element of the right soffit array
                     iRight++; //increment the counter
                 }
                 else //if the length of the right soffit is the same or less than proposed wall length
                     soffitRightArray[iRight] = soffitRight;  //set the element of the right soffit array to length of the right soffit
-            } while (iRight > 0 && soffitRightArray[iRight] > wallLengthArray[wallLengthArray.length - 1 - iRight]); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
+            } while (iRight > 0 && soffitRightArray[iRight] > Math.abs([wallSetBackArray.length - 1 - iRight])); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
 
 
             //for (var i = 0; i < soffitLeftArray.length; i++)
@@ -745,7 +732,7 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
 
                 }
 
-                determineSoffitLengthOfEachWall(); //calculate and store soffitlength of each wall
+                //determineSoffitLengthOfEachWall(); //calculate and store soffitlength of each wall
 
                 //store roomProjection in the roomProjection variable and hidden field
                 document.getElementById("MainContent_hidroomProjection").value = roomProjection = calculateProjection(); 
@@ -949,7 +936,7 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
                               
                 <%-- div to store and organize the tables for textboxes and dropdowns for each wall length 
                     number of rows in the 2 tables below are added dynamically in the codebehind--%>
-                <div id="tableWallLengths" class="tblWallLengths" runat="server" style="padding-right:15%; padding-left:15%; padding-top:5%;">
+                <div id="tableWallLengths" class="tblWallLengths" runat="server" >
                     <%-- first table for existing walls, only contains input fields for lengths --%>
                     <%--<asp:Table ID="tblExistingWalls" runat="server">
                         <asp:TableRow>--%>
@@ -967,7 +954,7 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
                         </asp:TableRow>
                     </asp:Table>--%>
                     <%-- end of existing walls table --%>
-                    <br />
+                    
                     <%-- second table for proposed walls, contains input fields for lengths, as well as left and right fillers --%>
                     <asp:Table ID="tblProposedWalls" runat="server">
                         <%--<asp:TableRow>--%>
@@ -977,10 +964,10 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
                             </asp:TableHeaderCell>
                         </asp:TableRow>--%>
                         
-                        <asp:TableRow>
+                        <asp:TableRow  style="text-align:center">
                             <asp:TableCell></asp:TableCell>
                             <%-- column headings --%>
-                            <asp:TableCell ColumnSpan="2" >
+                            <asp:TableCell ColumnSpan="2">
                                 Left Filler
                             </asp:TableCell>
                             <asp:TableCell ColumnSpan="2">
@@ -1011,11 +998,11 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
                     <asp:Label ID="lblQuestion2" runat="server" Text="Please enter the wall heights"></asp:Label>
                 </h1>
            
-                        <div class="tblWallLengths" runat="server" style="padding-right:15%; padding-left:15%; padding-top:5%;">
+                        <div class="tblWallLengths" runat="server" >
                             <ul>
                                 <li>
                                     <%-- table contains textboxes, dropdowns, and radio buttons for user input --%>
-                                    <asp:Table ID="tblWallHeights" CssClass="tblTxtFields" runat="server">
+                                    <asp:Table ID="tblWallHeights" runat="server">
 
                                         <%-- row 1: backwall height --%>
                                         <asp:TableRow>

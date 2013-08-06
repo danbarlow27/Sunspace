@@ -31,8 +31,8 @@
         -->    
 
         <!--Div tag to hold canvas/grid buttons-->
-        <div id="buttons" style="width:20%; text-align:center; vertical-align:central; float:left; padding-top:10%">
-            <ol>
+        <div id="buttons" style="width:20%; text-align:center; float:left; margin-right: 20px;">
+            <ul>
                 <!--Undo button to undo the last line drawn-->
                 <li><input class="btnSubmit" type="button" value ="Undo" onclick="undo(true)" style="width:150px"/></li>
 
@@ -50,15 +50,18 @@
                 <!--Button to send line information to C#-->
                 <li><asp:Button ID="Button1" CSSClass="btnSubmit" runat="server" Text="Submit Drawing" OnClick="Button1_Click1" style="width:150px"/></li>
 
-            </ol>
+            </ul>
         </div>
-        <!--Div tag to hold the canvas/grid-->
-        <div style="max-width:500px; max-height:500px; min-width:100px; min-height:100px; float:left;" id="mySunroom"></div>
-        
+
         <!--Div tag to hold the error log-->
-        <div style="width:20%; float:right; padding-right:10%;" >
+        <div style="width:20%; float:right;" >
             <textarea id="drawingLog" rows="31" cols="30" style="resize:none; border:0px;" readonly></textarea>
         </div>
+
+        <!--Div tag to hold the canvas/grid-->
+        <div style="max-width:500px; max-height:500px; min-width:100px; min-height:100px; margin: 0 auto;" id="mySunroom"></div>
+        
+        
 
     <!--Hidden input field to hold concatenated string of line information to be passed to C#-->
     <input type="hidden" id="hiddenVar" runat="server" />

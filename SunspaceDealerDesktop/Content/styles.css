@@ -35,7 +35,8 @@ a, a:visited {
     color: inherit;
 }
 
-a:hover {
+a:hover,
+input[type=submit]:hover {
     -webkit-transition: all ease 300ms;
        -moz-transition: all ease 300ms;
         -ms-transition: all ease 300ms;
@@ -94,21 +95,31 @@ header {
 	height: 50px;
 }
 
-.ulNavMain li a {
+.ulNavMain li a,
+.ulNavMain li input[type=submit] {
     font-size: 1.25em;
     text-transform: uppercase;
     text-indent: 30px;
     line-height: 50px;
-    background: url('../Images/iconsNav.png') no-repeat left top;
+    color: #fff;
+    background: transparent url('../Images/iconsNav.png') no-repeat left top;
     background-size: 36px 200px;
     margin: 0 20px;
+    border: 0;
     float: left;
     display: block;
 }
 
+.ulNavMain li input[type=submit] {
+    height: 50px;
+}
+
 .ulNavMain li a:hover,
 .ulNavMain li a:active,
-.ulNavMain li a:focus {
+.ulNavMain li a:focus,
+.ulNavMain li input[type=submit]:hover,
+.ulNavMain li input[type=submit]:active,
+.ulNavMain li input[type=submit]:focus {
     color: #dfbf98;
 }
 
@@ -116,7 +127,7 @@ header {
     color: #dfbf98;
 }
 
-.ulNavMain li:last-child a {
+.ulNavMain li:last-child {
     float: right;
 }
 
@@ -133,7 +144,7 @@ header {
     background-position: 0 -100px;
 }
 
-.ulNavMain li:nth-child(4) a {
+.ulNavMain li:nth-child(4) input[type=submit] {
     background-position: 0 -150px;
 }
 /* #endregion */
@@ -148,7 +159,7 @@ footer {
     color: #898989;
     padding: 0 5px;
     margin-top: 50px;
-    position: absolute;
+    position: fixed;
     right: 0;
     bottom: 0;
 }
@@ -203,29 +214,18 @@ footer {
 }
 
 
-/* Table layout for text fields */
+/* DROP DOWN LISTS
+---------------------------------------- */
 
-.tblTxtFields {
-    border-collapse: collapse;
-}
-
-.tblTxtFields td {
-    padding: 3px 8px 3px 0;
-}
-
-.tblTxtFields tr td:first-child {
-    text-align: right;
-}
-
-.tblWallLengths {
-    border-collapse: collapse;
-    background-color: rgb(242, 235, 214);
-    min-height:250px;
-}
-
-.tblWallLengths td{
-    text-align:center;
-    padding: 3px 8px 3px 0;
+select {
+    font-size: 1em;
+    color: #555;
+    background: #fff;
+    min-width: 70px;
+    height: 31px;
+    padding: 5px;
+    border: 1px solid #cacece;
+    border-radius: 5px;     
 }
 
 
@@ -236,12 +236,23 @@ footer {
     padding: 4px 0;
 }
 
-.toggleOptions li > label + label {
+input[type=radio] + label + label,
+input[type=radio] + label + img {
     margin-left: 32px;
     display: block;
 }
 
-.toggleOptions li > label + label:hover {
+input[type=radio] + label:hover,
+.toggleOptions li > label + label:hover,
+input[type=radio] + label + label:hover {
+    cursor: pointer;
+}
+
+.toggleOptions > li > span {
+    display: block !important;
+}
+
+.toggleOptions > li > span:hover {
     cursor: pointer;
 }
 
@@ -386,90 +397,44 @@ input[type="radio"]:checked + label:active {
     margin-right: 5%;
     float: right;
 }
-/* #endregion */
+
+/* DISABLED BUTTON */
+.btnDisabled {
+    font: .75em 'Shanti', Helvetica, Arial, sans-serif !important;
+    text-transform: uppercase;
+    color: #bcbcbc;
+    background: #dcdcdc;
+    padding: 5px;
+    margin: 15px;
+    border: 1px solid #bcbcbc;
+    border-radius: 5px;
+}
+
+.btnDisabled:hover {
+    cursor: inherit;
+}
 
 
+/* TABLE LAYOUT FOR LABELS/INPUTS
+---------------------------------------- */
 
-/******************************************
- * SAVED PROJECTS PAGE
- ******************************************/
-/* #region */
-.tblSavedProjects {
-    width: 100%;
-    /*margin-top: 30px;*/
+.table {
     border-collapse: collapse;
 }
 
-/*.tblSavedProjects thead {
-    width: 100%;
-}*/
-
-/*.tblSavedProjects tbody {
-    overflow: auto;
-    display: block;
-}*/
-
-.tblSavedProjects tr th {
-    font-size: 1.25em;
-    text-transform: uppercase;
-    text-align: center;
-    background: #f6f6f6;
-    padding: 15px 10px;
-    white-space: nowrap;
+table td {
+    padding: 3px 8px 3px 0;
 }
 
-.tblSavedProjects tr th.thSortable:hover {
-    color: #dfbf98;
-    -webkit-transition: all ease 300ms;
-       -moz-transition: all ease 300ms;
-        -ms-transition: all ease 300ms;
-         -o-transition: all ease 300ms;
-            transition: all ease 300ms;
-    cursor: pointer;
+div.tblWallLengths {
+    background-color: rgb(242, 235, 214);
+    padding: 20px 0;
 }
 
-.tblSavedProjects tr td {
-    font-size: 1.125em;
-    text-align: center;
-    padding: 10px;
+div.tblWallLengths table {
+    margin: 0 auto;
 }
 
-.tblSavedProjects tr:nth-child(odd) td {
-    background: rgb(242, 235, 214);
-}
-
-.tblSavedProjects tr:nth-child(even) td {
-    background: rgba(242, 235, 214,.5);
-}
-
-.tblSavedProjects tr th:first-child,
-.tblSavedProjects tr td:first-child { /* Project name column */
-    text-align: left;
-}
-
-.tblSavedProjects tr th:nth-child(2),
-.tblSavedProjects tr td:nth-child(2),
-.tblSavedProjects tr th:last-child { /* Date column */
-    width: 20%;
-}
-
-.tblSavedProjects tr th:nth-child(3),
-.tblSavedProjects tr td:nth-child(3) { /* Delete column */
-    width: 10%;
-}
-
-.tblSavedProjects tr td:last-child { /* Add to estimate column */
-    padding-left: 9%;
-    width: 20%;
-}
-
-/*.tblSavedProjects tfoot td {
-    font-size: 1em;
-    text-align: center;
-    background: none !important;
-    padding-top: 0;
-    padding-bottom: 0;
-}*/
 /* #endregion */
 
 
@@ -563,6 +528,10 @@ input[type="radio"]:checked + label:active {
     display: none;
 }
 
+li > .toggleOptions > li {
+    background: transparent !important;
+}
+
 
 
 /******************************************
@@ -584,6 +553,159 @@ input[type="radio"]:checked + label:active {
 }
 
 
+
+/******************************************
+ * LOGIN PAGE
+ ******************************************/
+
+.tblLogin {
+    background: rgb(242, 235, 214);
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.tblLogin tr td:first-child {
+    text-align: right;
+    padding-left: 20px; 
+}
+
+.tblLogin tr td:last-child {
+    padding-right: 20px; 
+}
+
+.tblLogin tr:nth-child(2) td {
+    padding-top: 15px;
+}
+
+.tblLogin tr:last-child td {
+    padding: 10px 0 20px;
+}
+
+.tdErrorLogin {
+    text-align: left !important;
+    padding-bottom: 10px;
+}
+
+.lblErrorLogin {
+    font-size: .9em;
+    font-style: italic;
+    line-height: 1em;
+    color: #fa0000;
+}
+
+.btnLogin {
+    width: 90px;
+    margin: 0;
+}
+
+
+
+/******************************************
+ * SAVED PROJECTS PAGE
+ ******************************************/
+/* #region */
+.tblSavedProjects {
+    width: 100%;
+    /*margin-top: 30px;*/
+    border-collapse: collapse;
+}
+
+/*.tblSavedProjects thead {
+    width: 100%;
+}*/
+
+/*.tblSavedProjects tbody {
+    overflow: auto;
+    display: block;
+}*/
+
+.tblSavedProjects tr th {
+    font-size: 1.25em;
+    text-transform: uppercase;
+    text-align: center;
+    background: #f6f6f6;
+    padding: 15px 10px;
+    white-space: nowrap;
+}
+
+.tblSavedProjects tr th.thSortable:hover {
+    color: #dfbf98;
+    -webkit-transition: all ease 300ms;
+       -moz-transition: all ease 300ms;
+        -ms-transition: all ease 300ms;
+         -o-transition: all ease 300ms;
+            transition: all ease 300ms;
+    cursor: pointer;
+}
+
+.tblSavedProjects tr td {
+    font-size: 1.125em;
+    text-align: center;
+    padding: 10px;
+}
+
+.tblSavedProjects tr:nth-child(odd) td {
+    background: rgb(242, 235, 214);
+}
+
+.tblSavedProjects tr:nth-child(even) td {
+    background: rgba(242, 235, 214,.5);
+}
+
+.tblSavedProjects tr th:first-child,
+.tblSavedProjects tr td:first-child { /* Project name column */
+    text-align: left;
+}
+
+.tblSavedProjects tr th:nth-child(2),
+.tblSavedProjects tr td:nth-child(2),
+.tblSavedProjects tr th:last-child { /* Date column */
+    width: 20%;
+}
+
+.tblSavedProjects tr th:nth-child(3),
+.tblSavedProjects tr td:nth-child(3) { /* Delete column */
+    width: 10%;
+}
+
+.tblSavedProjects tr td:last-child { /* Add to estimate column */
+    padding-left: 9%;
+    width: 20%;
+}
+
+/*.tblSavedProjects tfoot td {
+    font-size: 1em;
+    text-align: center;
+    background: none !important;
+    padding-top: 0;
+    padding-bottom: 0;
+}*/
+/* #endregion */
+
+
+
+/******************************************
+ * NEW PROJECT PAGE
+ ******************************************/
+
+.tblSunroomLayout {
+    width: 100%;
+}
+
+.tblSunroomLayout td {
+    padding: 20px 0;
+    position: relative;
+}
+
+
+
+/******************************************
+ * CUSTOM DRAWING TOOL
+ ******************************************/
+
+textarea {
+    font: 1em/1.5em 'Shanti', Helvetica, Arial, sans-serif;
+}
 
 /******************************************
  * GLOBAL FIXES
