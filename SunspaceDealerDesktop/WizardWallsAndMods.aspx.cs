@@ -50,7 +50,7 @@ namespace SunspaceDealerDesktop
 
             /***hard coded variables***/
             Session["model"] = "M300";
-            Session["soffitLength"] = 500F;
+            Session["soffitLength"] = 0F;
             /****************diffrent sunroom layouts******************/
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
             //Session["coordList"] = "75,425,150,150,E,S/150,150,150,250,P,W/150,350,250,250,P,S/350,350,250,150,P,E/";
