@@ -26,8 +26,8 @@ namespace SunspaceDealerDesktop
         protected string currentModel;
         protected float soffitLength;
 
-        protected const int SUGGESTED_DEFAULT_FILLER = 2;
-        protected const int PREFERRED_DEFAULT_FILLER = 2;
+        protected const float SUGGESTED_DEFAULT_FILLER = Constants.SUGGESTED_DEFAULT_FILLER;
+        protected const float PREFERRED_DEFAULT_FILLER = Constants.PREFERRED_DEFAULT_FILLER;
 
         /***hard coded variables***/
         protected string coordList; //to store the string from the session and store it in a local variable for further use                                    
@@ -47,6 +47,7 @@ namespace SunspaceDealerDesktop
             Session["PATIO_DOOR_MIN_WIDTH"] = Constants.PATIO_DOOR_MIN_WIDTH;
             Session["PATIO_DOOR_MAX_HEIGHT"] = Constants.PATIO_DOOR_MAX_HEIGHT;
             Session["PATIO_DOOR_MIN_HEIGHT"] = Constants.PATIO_DOOR_MIN_HEIGHT;
+            Session["DEFAULT_FILLER"] = PREFERRED_DEFAULT_FILLER;
 
             /***hard coded variables***/
             Session["model"] = "M300";

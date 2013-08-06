@@ -202,6 +202,8 @@ namespace SunspaceDealerDesktop
         public static float MINIMUM_WALL_LENGTH = 0F;
         public static float MINIMUM_FILLER_SIZE = 0F;
         public static float MAXIMUM_FILLER_SIZE = 46.5F; //NEED TO DOUBLE CHECK THIS VALUE
+        public static float SUGGESTED_DEFAULT_FILLER 2F;
+        public static float PREFERRED_DEFAULT_FILLER 2F;
         //more constants
 
         #endregion
