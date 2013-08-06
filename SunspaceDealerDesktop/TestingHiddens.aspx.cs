@@ -11,19 +11,50 @@ namespace SunspaceDealerDesktop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            FrenchDoor thisDoor = (FrenchDoor)Session["Door0"];
-            testField.InnerText = (string)Session["DoorCount2"];
-            testField.InnerText += "\t" + (string)thisDoor.DoorType;
-            testField.InnerText += "\t" + (string)thisDoor.DoorStyle;
-            testField.InnerText += "\t" + (string)thisDoor.Colour;
-            testField.InnerText += "\t" + Convert.ToString(thisDoor.FHeight);
-            testField.InnerText += "\t" + Convert.ToString(thisDoor.FLength);
-            testField.InnerText += "\t" + (string)thisDoor.ScreenType;
+            testField.InnerText = (string)Session["DoorCount2"];            
 
-            if ((string)thisDoor.DoorType == "Cabana")
+            if (typeof(CabanaDoor) == Session["Door0"].GetType())
             {
-                FrenchDoor typeDoor = (FrenchDoor)thisDoor;
+                CabanaDoor typeDoor = (CabanaDoor)Session["Door0"];
+                testField.InnerText += "\t" + (string)typeDoor.DoorType;
+                testField.InnerText += "\t" + (string)typeDoor.DoorStyle;
+                testField.InnerText += "\t" + (string)typeDoor.Colour;
+                testField.InnerText += "\t" + Convert.ToString(typeDoor.FHeight);
+                testField.InnerText += "\t" + Convert.ToString(typeDoor.FLength);
+                testField.InnerText += "\t" + (string)typeDoor.ScreenType;
                 testField.InnerText += "\t" + (string)typeDoor.GlassTint;
+            }
+            if (typeof(FrenchDoor) == Session["Door0"].GetType())
+            {
+                FrenchDoor typeDoor = (FrenchDoor)Session["Door0"];
+                testField.InnerText += "\t" + (string)typeDoor.DoorType;
+                testField.InnerText += "\t" + (string)typeDoor.DoorStyle;
+                testField.InnerText += "\t" + (string)typeDoor.Colour;
+                testField.InnerText += "\t" + Convert.ToString(typeDoor.FHeight);
+                testField.InnerText += "\t" + Convert.ToString(typeDoor.FLength);
+                testField.InnerText += "\t" + (string)typeDoor.ScreenType;
+                testField.InnerText += "\t" + (string)typeDoor.GlassTint;
+            }
+            if (typeof(PatioDoor) == Session["Door0"].GetType())
+            {
+                PatioDoor typeDoor = (PatioDoor)Session["Door0"];
+                testField.InnerText += "\t" + (string)typeDoor.DoorType;
+                testField.InnerText += "\t" + (string)typeDoor.DoorStyle;
+                testField.InnerText += "\t" + (string)typeDoor.Colour;
+                testField.InnerText += "\t" + Convert.ToString(typeDoor.FHeight);
+                testField.InnerText += "\t" + Convert.ToString(typeDoor.FLength);
+                testField.InnerText += "\t" + (string)typeDoor.ScreenType;
+                testField.InnerText += "\t" + (string)typeDoor.GlassTint;
+            }
+            if (typeof(OpenSpaceDoor) == Session["Door0"].GetType())
+            {
+                OpenSpaceDoor typeDoor = (OpenSpaceDoor)Session["Door0"];
+                testField.InnerText += "\t" + (string)typeDoor.DoorType;
+                testField.InnerText += "\t" + (string)typeDoor.DoorStyle;
+                testField.InnerText += "\t" + (string)typeDoor.Colour;
+                testField.InnerText += "\t" + Convert.ToString(typeDoor.FHeight);
+                testField.InnerText += "\t" + Convert.ToString(typeDoor.FLength);
+                testField.InnerText += "\t" + (string)typeDoor.ScreenType;
             }
             //string[] newViewingArray = (string[])Session["viewingArray"];
 
