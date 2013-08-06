@@ -63,7 +63,7 @@ function FramedDoor() {
     this.screenOptions = null;  //Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screen, Tuff Screen, No Screen
     this.fheight = null;        //In example, 80" door stores 80.875 to this field(inches)
     this.fwidth = null;         //In example, 30" door stores 32.125 to this field(inches)
-    this.color = null;          //White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey
+    this.colour = null;          //White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey
     this.position = null;       //Left, Center, Right, Custom
     this.boxHeader = null;      //Left, Right, Both, None
     this.transom = null;        //Vinyl, Glass, Solid
@@ -269,8 +269,7 @@ function createDoorObject(wallNumber, type) {
         "ddlDoorTransomVinyl",
         "ddlDoorTransomGlass",
         "ddlDoorKickplate",
-        "ddlDoorColor",
-        "radDoorInternalGrills",
+        "ddlDoorColour",
         "ddlDoorHeight",
         "ddlDoorWidth",
         "radDoorOperator",
@@ -640,6 +639,26 @@ function insertDoor(door, wall) {
 }
 
 /**
+*totalSpaceLeftInWall
+*This function performs calculations to find the total space left in a wall
+*@param wall - used to hold the current wall information
+*/
+function totalSpaceLeftInWall(wall) {
+
+    //Calculates usable length in the wall
+    var totalSpace = wall.length - wall.leftFiller - wall.rightFiller;
+
+    //Loop through all the doors
+    for (var wallSpace = 0; wallSpace < wall.doors.length; wallSpace++) {
+        //Substract each door from the usable space
+        totalSpace -= wall.doors[wallSpace].fwidth;
+    }
+
+    //Return the total space remaining
+    return totalSpace;
+}
+
+/**
 *typeOfRowsDisplayed
 *This function finds which type of door is selected and displays the appropriate fields
 *from a table hidden from the user
@@ -658,9 +677,7 @@ function typeRowsDisplayed(type, wallNumber) {
     var doorTransomGlass = document.getElementById("MainContent_rowDoorTransomGlassTypes" + wallNumber + type);
     var doorKickplate = document.getElementById("MainContent_rowDoorKickplate" + wallNumber + type);
     var doorKicplateCustom = document.getElementById("MainContent_rowDoorCustomKickplate" + wallNumber + type);
-    var doorColor = document.getElementById("MainContent_rowDoorColor" + wallNumber + type);
-    var doorInternalGrillsYes = document.getElementById("MainContent_rowDoorInternalGrillsYes" + wallNumber + type);
-    var doorInternalGrillsNo = document.getElementById("MainContent_rowDoorInternalGrillsNo" + wallNumber + type);
+    var doorColour = document.getElementById("MainContent_rowDoorColour" + wallNumber + type);
     var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallNumber + type);
     var doorHeightCustom = document.getElementById("MainContent_rowDoorCustomHeight" + wallNumber + type);
     var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallNumber + type);
@@ -680,7 +697,6 @@ function typeRowsDisplayed(type, wallNumber) {
     /****END:TABLE ROWS BY ID****/
 
     /****START:RADIO BUTTONS TO BE CHECKED INITIALLY****/
-    var doorInternalGrillYesChecked = document.getElementById("MainContent_radDoorInternalGrillsYes" + wallNumber + type);
     var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallNumber + type).options[document.getElementById("MainContent_ddlDoorPosition" + wallNumber + type).selectedIndex].value;
     var doorHingeLHHChecked = document.getElementById("MainContent_radDoorHinge" + wallNumber + type);
     var doorSwingInChecked = document.getElementById("MainContent_radDoorSwing" + wallNumber + type);
@@ -696,7 +712,7 @@ function typeRowsDisplayed(type, wallNumber) {
         //General
         doorTitle.style.display = "inherit";
         doorStyleTable.style.display = "inherit";
-        doorColor.style.display = "inherit";
+        doorColour.style.display = "inherit";
         doorHeight.style.display = "inherit";
         doorWidth.style.display = "inherit";
         doorBoxHeader.style.display = "inherit";
@@ -717,13 +733,6 @@ function typeRowsDisplayed(type, wallNumber) {
             customDimension(wallNumber, type, "Position");
         }
 
-        //Model Specifics
-        if (model === "M400") {
-            doorInternalGrillsYes.style.display = "inherit";
-            doorInternalGrillsNo.style.display = "inherit";
-            doorInternalGrillYesChecked.setAttribute("checked", "checked");
-        }
-
         //Radio button defaults
         doorHingeLHHChecked.setAttribute("checked", "checked");
         doorSwingInChecked.setAttribute("checked", "checked");
@@ -737,7 +746,7 @@ function typeRowsDisplayed(type, wallNumber) {
         //General
         doorTitle.style.display = "inherit";
         doorStyleTable.style.display = "inherit";
-        doorColor.style.display = "inherit";
+        doorColour.style.display = "inherit";
         doorHeight.style.display = "inherit";
         doorWidth.style.display = "inherit";
         doorBoxHeader.style.display = "inherit";
@@ -757,13 +766,6 @@ function typeRowsDisplayed(type, wallNumber) {
             customDimension(wallNumber, type, "Position");
         }
 
-        //Model Specifics
-        if (model === "M400") {
-            doorInternalGrillsYes.style.display = "inherit";
-            doorInternalGrillsNo.style.display = "inherit";
-            doorInternalGrillYesChecked.setAttribute("checked", "checked");
-        }
-
         //Radio button defaults
         doorOperatorLHHChecked.setAttribute("checked", "checked");
         doorSwingInChecked.setAttribute("checked", "checked");
@@ -777,7 +779,7 @@ function typeRowsDisplayed(type, wallNumber) {
         //General
         doorTitle.style.display = "inherit";
         doorStyleTable.style.display = "inherit";
-        doorColor.style.display = "inherit";
+        doorColour.style.display = "inherit";
         doorHeight.style.display = "inherit";
         doorWidth.style.display = "inherit";
         doorTransom.style.display = "inherit";
@@ -793,13 +795,6 @@ function typeRowsDisplayed(type, wallNumber) {
         //If the value of position drop down is custom, display the appropriate field
         if (doorPositionCustom == "cPosition") {
             customDimension(wallNumber, type, "Position");
-        }
-
-        //Model Specifics
-        if (model === "M400") {
-            doorInternalGrillsYes.style.display = "inherit";
-            doorInternalGrillsNo.style.display = "inherit";
-            doorInternalGrillYesChecked.setAttribute("checked", "checked");
         }
 
         //Radio button defaults
@@ -890,26 +885,6 @@ function updateDoorPager(wall) {
         //Update the space in the wall
         $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wall.id).text(space);
     }
-}
-
-/**
-*totalSpaceLeftInWall
-*This function performs calculations to find the total space left in a wall
-*@param wall - used to hold the current wall information
-*/
-function totalSpaceLeftInWall(wall) {
-
-    //Calculates usable length in the wall
-    var totalSpace = wall.length - wall.leftFiller - wall.rightFiller;
-
-    //Loop through all the doors
-    for (var wallSpace = 0; wallSpace < wall.doors.length; wallSpace++) {
-        //Substract each door from the usable space
-        totalSpace -= wall.doors[wallSpace].fwidth;
-    }
-
-    //Return the total space remaining
-    return totalSpace;
 }
 
 /**

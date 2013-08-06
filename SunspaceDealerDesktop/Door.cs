@@ -15,6 +15,7 @@ namespace SunspaceDealerDesktop
         private float fHeight = 0f;         //Door height including frame: 79.125" (stored value: 79.125)
         private float fLength = 0f;         //Door lenth including frame: 32.125" (stored value: 32.125)
         private string colour = null;       //Door colour: White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey (stored value: White)
+        private float kickplate = 0f;       //Door kickplate height: 6" (stored value: 6)
         #endregion
 
         #region Constructor
@@ -104,6 +105,18 @@ namespace SunspaceDealerDesktop
             set
             {
                 colour = value;
+            }
+        }
+        public float Kickplate
+        {
+            get
+            {
+                return kickplate;
+            }
+
+            set
+            {
+                kickplate = value;
             }
         }
         #endregion
