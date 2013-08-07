@@ -397,6 +397,7 @@
     <Compile Include="Receiver.cs" />
     <Compile Include="RoofWizard.aspx.cs">
       <DependentUpon>RoofWizard.aspx</DependentUpon>
+	</Compile>
     <Compile Include="Roof.cs" />
     <Compile Include="RoofItem.cs" />
     <Compile Include="RoofModule.cs" />
