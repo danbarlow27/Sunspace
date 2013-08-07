@@ -77,6 +77,10 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_400_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
 
         public static string[] SCREEN_TYPES = { "No Screen", "Better Vue Insect Screen (Default)", "No See Ums 20 x 20 Mesh", "Solar Insect Screening", "Tuff Screen" };
+
+        public static string[] ACRYLIC_COLOUR = { "Clear", "Bronze", "Solar Cool White", "Heat Stop Cool Blue" };
+
+        public static string[] GUTTER_COLOUR = { "White", "Driftwood", "Bronze"};
         #endregion
 
         #region Size Limits
@@ -198,10 +202,16 @@ namespace SunspaceDealerDesktop
             "EAST"
         };
 
-        public static float MINIMUM_WALL_HEIGHT = 0F;
-        public static float MINIMUM_WALL_LENGTH = 0F;
-        public static float MINIMUM_FILLER_SIZE = 0F;
-        public static float MAXIMUM_FILLER_SIZE = 46.5F; //NEED TO DOUBLE CHECK THIS VALUE
+        ////////NEED TO DOUBLE CHECK THESE VALUES...//////////
+        public static float MIN_WALL_HEIGHT = 0F;
+        public static float MAX_WALL_HEIGHT;
+        public static float MIN_WALL_LENGTH = 0F;
+        public static float MAX_WALL_LENGTH;
+        public static float MIN_FILLER_SIZE = 0F;
+        public static float MAX_FILLER_SIZE = 46.5F; 
+        //////////////////////////////////////////////////////
+        public static float SUGGESTED_DEFAULT_FILLER = 2.0F;
+        public static float PREFERRED_DEFAULT_FILLER = 2.0F;
         //more constants
 
         #endregion
@@ -255,8 +265,8 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_400_WINDOW_TYPES = { "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
 
 
-        public static float MINIMUM_WINDOW_SIZE = 30.0F; //NEED TO DOUBLE CHECK THIS VALUE
-        public static float MAXIMUM_WINDOW_SIZE = 58.0F; //NEED TO DOUBLE CHECK THIS VALUE
+        public static float MIN_WINDOW_WIDTH = 30.0F; //NEED TO DOUBLE CHECK THIS VALUE
+        public static float MAX_WINDOW_WIDTH = 58.0F; //NEED TO DOUBLE CHECK THIS VALUE
         #endregion
 
         #region Sunshades
@@ -276,6 +286,7 @@ namespace SunspaceDealerDesktop
                                                "Driftwood Rigiwall Pebble", "White Rigiwall Stucco", "Driftwood Rigiwall Stucco", "OSB",
                                                "White FRP (Interior Only)", "Driftwood FRP (Interior Only)", "Bronze FRP (Interior Only)"};
         public static string[] ROOF_THICKNESSES = { "3", "4", "6" };
+        public static string[] ROOF_EXTRUSION_TYPE = { "I-Beam", "I-Beam FP", "I-Beam OSB", "I-Beam OSB/OSB", "Pressure Cap", "Pressure Cap FP", "Pressure Cap OSB", "Pressure Cap OSB/OSB" };
         #endregion
 
         #region Floors

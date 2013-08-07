@@ -190,6 +190,7 @@ namespace SunspaceDealerDesktop
             newProjectArray[27] = hidLayoutSelection.Value.ToString();
 
             Session.Add("newProjectArray", newProjectArray);
+            Session.Add("soffitLength", hidSoffitLength.Value.ToString());
 
             //If custom is selected, send to drawing tool
             if (hidLayoutSelection.Value.ToString() == "Custom")
