@@ -12,11 +12,6 @@ namespace SunspaceDealerDesktop
     {
         protected List<Wall> walls = new List<Wall>();
 
-        protected const float DOOR_MAX_WIDTH = Constants.CUSTOM_DOOR_MAX_WIDTH;
-        protected const float DOOR_MIN_WIDTH = Constants.CUSTOM_DOOR_MIN_WIDTH;
-        protected const float DOOR_FRENCH_MIN_WIDTH = Constants.CUSTOM_FRENCH_DOOR_MIN_WIDTH;
-        protected const float DOOR_FRENCH_MAX_WIDTH = Constants.CUSTOM_FRENCH_DOOR_MAX_WIDTH;
-
         //ListItems to be used in multiple dropdown lists for decimal points
         //This should eventually be stored in the constants file
         protected ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
@@ -28,12 +23,8 @@ namespace SunspaceDealerDesktop
         protected ListItem lst34 = new ListItem("3/4", ".75");
         protected ListItem lst78 = new ListItem("7/8", ".875");
 
-
         protected string currentModel;
-        protected float sofftLength;
-
-        protected const int SUGGESTED_DEFAULT_FILLER = 2;
-        protected const int PREFERRED_DEFAULT_FILLER = 2;
+        protected float soffitLength;
 
         /***hard coded variables***/
         protected string coordList; //to store the string from the session and store it in a local variable for further use                                    
@@ -44,9 +35,23 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            /****VALIDATION VARIABLES***/
+            Session["CABANA_MAX_WIDTH"] = Constants.CUSTOM_DOOR_MAX_WIDTH;
+            Session["CABANA_MIN_WIDTH"] = Constants.CUSTOM_DOOR_MIN_WIDTH;
+            Session["CABANA_MAX_HEIGHT"] = Constants.CUSTOM_DOOR_MAX_HEIGHT;
+            Session["CABANA_MIN_HEIGHT"] = Constants.CUSTOM_DOOR_MIN_HEIGHT;
+            Session["PATIO_DOOR_MAX_WIDTH"] = Constants.PATIO_DOOR_MAX_WIDTH;
+            Session["PATIO_DOOR_MIN_WIDTH"] = Constants.PATIO_DOOR_MIN_WIDTH;
+            Session["PATIO_DOOR_MAX_HEIGHT"] = Constants.PATIO_DOOR_MAX_HEIGHT;
+            Session["PATIO_DOOR_MIN_HEIGHT"] = Constants.PATIO_DOOR_MIN_HEIGHT;
+            Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
+            Session["MAX_WINDOW_WIDTH"] = Constants.MAX_WINDOW_WIDTH;
+            Session["MIN_WINDOW_WIDTH"] = Constants.MIN_WINDOW_WIDTH;
+
             /***hard coded variables***/
-            Session["model"] = "M200";
+            Session["model"] = "M300";
             Session["soffitLength"] = 0F;
+
             /****************diffrent sunroom layouts******************/
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
             //Session["coordList"] = "75,425,150,150,E,S/150,150,150,250,P,W/150,350,250,250,P,S/350,350,250,150,P,E/";
@@ -60,7 +65,7 @@ namespace SunspaceDealerDesktop
             strWalls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
             wallDetails = new string[strWalls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
             currentModel = (string)Session["model"];
-            sofftLength = (float)Session["soffitLength"];
+            soffitLength = (float)Session["soffitLength"];
             //int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
             int proposedWallCount = 0; //used to determine how many proposed walls are in a drawing
 
@@ -136,6 +141,7 @@ namespace SunspaceDealerDesktop
                 {
                     proposedWallCount++; //increment the proposed wall counter
                     populateTblProposed(i, proposedWallCount); //populate the proposed walls table on slide 1
+                    populateWallDoorOptions(i, proposedWallCount); //populate slide 3 with appropriate proposed wall door options
                 }
             }
 
@@ -235,6 +241,7 @@ namespace SunspaceDealerDesktop
             DropDownList ddlLeftInchFractions = new DropDownList(); //new dropdown list for left filler inch fractions
             DropDownList ddlRightInchFractions = new DropDownList();//new dropdown list for right filler inch fractions
 
+          
             //add the inch fraction list items to the dropdown list
             ddlInchFractions.Items.Add(lst0);
             ddlInchFractions.Items.Add(lst18);
@@ -325,9 +332,13 @@ namespace SunspaceDealerDesktop
             #endregion
 
 
-            //perhaps slide 3 stuff can go in another function and be called from the same loop???
+            
+        }
+
+        protected void populateWallDoorOptions(int i, int proposedWallCount)
+        {
             //SLIDE 3 DOOR DETAILS PER WALL
-            #region Slide 3: Onload dynamic loop to insert wall door options            
+            #region Slide 3: Onload dynamic loop to insert wall door options
 
             #region Wall #:Radio button section
             //li tags created for every wall
@@ -357,8 +368,11 @@ namespace SunspaceDealerDesktop
 
             //Creating one ul tag to hold multiple li tags contain Cabana, French, Patio, Opening Only (No Door) options
 
-            wallDoorOptions.Controls.Add(new LiteralControl("<ul><li><ul id='doorDetailsList" + i + "' class='toggleOptions'>"));
+            wallDoorOptions.Controls.Add(new LiteralControl("<ul>"));
 
+            wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
+
+            wallDoorOptions.Controls.Add(new LiteralControl("<ul id='doorDetailsList" + i + "' class='toggleOptions'>"));
 
             #endregion
 
@@ -367,10 +381,10 @@ namespace SunspaceDealerDesktop
             #region Loop to display door types as radio buttons
 
             //For loop to get through all the possible door types: Cabana, French, Patio, Opening Only (No Door)
-            for (int typeCount = 1; typeCount <= 4; typeCount++)
+            for (int typeCount = 0; typeCount < 4; typeCount++)
             {
                 //Conditional operator to set the current door type with the right label
-                string title = (typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
+                string title = Constants.DOOR_TYPES[typeCount]; //(typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
 
                 if (currentModel == "M400" && title == "French")
                 {
@@ -381,13 +395,13 @@ namespace SunspaceDealerDesktop
                     //li tag to hold door type radio button and all its content
                     wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
                 }
-                    
+
                 //Door type radio button
                 RadioButton typeRadio = new RadioButton();
                 typeRadio.ID = "radType" + i + title; //Adding appropriate id to door type radio button
                 typeRadio.GroupName = "doorTypeRadios" + i;         //Adding group name for all door types
                 typeRadio.Attributes.Add("onclick", "typeRowsDisplayed('" + title + "', '" + i + "')"); //On click event to display the proper fields/rows
-                    
+
 
                 //Door type radio button label for clickable area
                 Label typeLabelRadio = new Label();
@@ -414,8 +428,8 @@ namespace SunspaceDealerDesktop
 
                 tblDoorDetails.ID = "tblDoorDetails" + i + title; //Adding appropriate id to the table
                 tblDoorDetails.CssClass = "tblTextFields";                  //Adding CssClass to the table for styling
-                    
-                    
+
+
                 //Creating cells and controls for rows
 
                 #region Table:Default Row Title Current Door (tblDoorDetails)
@@ -447,40 +461,73 @@ namespace SunspaceDealerDesktop
                 DropDownList doorStyleDDL = new DropDownList();
                 doorStyleDDL.ID = "ddlDoorStyle" + i + title;
                 doorStyleDDL.Attributes.Add("onchange", "doorStyle('" + title + "','" + i + "')");
-                ListItem fullScreen = new ListItem("Full Screen", "fullScreen");
-                ListItem v4TCabana = new ListItem("Vertical Four Track", "v4TCabana");
-                ListItem fullView = new ListItem("Full View", "fullView");
-                ListItem fullViewColonial = new ListItem("Full View Colonial", "fullViewColonial");
-                ListItem halfLite = new ListItem("Half Lite", "halfLite");
-                ListItem halfLiteVenting = new ListItem("Half Lite Venting", "halfLiteVenting");
-                ListItem fullLite = new ListItem("Full Lite", "fullLite");
-                ListItem halfLiteWithMiniBlinds = new ListItem("Half Lite With Mini Blinds", "halfLiteWithMiniBlinds");
-                ListItem fullViewWithMiniBlinds = new ListItem("Full View With Mini Blinds", "fullViewWithMiniBlinds");
                 if (currentModel == "M100")
                 {
-                    doorStyleDDL.Items.Add(fullScreen);
-                    doorStyleDDL.Items.Add(v4TCabana);
+                    if (title == "Patio")
+                    {
+                        for (int j = 0; j < Constants.DOOR_MODEL_100_PATIO_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_100_PATIO_STYLES[j], Constants.DOOR_MODEL_100_PATIO_STYLES[j]));
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < Constants.DOOR_MODEL_100_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_100_STYLES[j], Constants.DOOR_MODEL_100_STYLES[j]));
+                        }
+                    }
                 }
                 else if (currentModel == "M200")
                 {
-                    //doorStyleDDL.Items.Add(fullScreen);
-                    doorStyleDDL.Items.Add(v4TCabana);
-                    doorStyleDDL.Items.Add(fullView);
-                    doorStyleDDL.Items.Add(fullViewColonial);
+                    if (title == "Patio")
+                    {
+                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_400_PATIO_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j]));
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < Constants.DOOR_MODEL_200_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_STYLES[j], Constants.DOOR_MODEL_200_STYLES[j]));
+                        }
+                    }
                 }
                 else if (currentModel == "M300")
                 {
-                    //doorStyleDDL.Items.Add(fullScreen);
-                    doorStyleDDL.Items.Add(fullView);
-                    doorStyleDDL.Items.Add(fullViewColonial);
+                    if (title == "Patio")
+                    {
+                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_400_PATIO_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j]));
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < Constants.DOOR_MODEL_300_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_300_STYLES[j], Constants.DOOR_MODEL_300_STYLES[j]));
+                        }
+                    }
                 }
                 else if (currentModel == "M400")
                 {
-                    doorStyleDDL.Items.Add(halfLite);
-                    doorStyleDDL.Items.Add(halfLiteVenting);
-                    doorStyleDDL.Items.Add(fullLite);
-                    doorStyleDDL.Items.Add(halfLiteWithMiniBlinds);
-                    doorStyleDDL.Items.Add(fullViewWithMiniBlinds);
+                    if (title == "Patio")
+                    {
+                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_400_PATIO_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j]));
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < Constants.DOOR_MODEL_400_STYLES.Count(); j++)
+                        {
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_400_STYLES[j], Constants.DOOR_MODEL_400_STYLES[j]));
+                        }
+                    }
                 }
 
                 doorStyleLBL.AssociatedControlID = "ddlDoorStyle" + i + title;
@@ -501,16 +548,10 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorVinylTintDDL = new DropDownList();
                 doorVinylTintDDL.ID = "ddlDoorVinylTint" + i + title;
-                ListItem clearVinyl = new ListItem("Clear", "clear");
-                ListItem smokeGreyVinyl = new ListItem("Smoke Grey", "smokeGrey");
-                ListItem darkGreyVinyl = new ListItem("Dark Grey", "darkGrey");
-                ListItem bronzeVinyl = new ListItem("Bronze", "bronze");
-                ListItem mixedVinyl = new ListItem("Mixed", "mixed");
-                doorVinylTintDDL.Items.Add(clearVinyl);
-                doorVinylTintDDL.Items.Add(smokeGreyVinyl);
-                doorVinylTintDDL.Items.Add(darkGreyVinyl);
-                doorVinylTintDDL.Items.Add(bronzeVinyl);
-                doorVinylTintDDL.Items.Add(mixedVinyl);
+                for (int j = 0; j < Constants.DOOR_V4T_VINYL_OPTIONS.Count(); j++)
+                {
+                    doorVinylTintDDL.Items.Add(new ListItem(Constants.DOOR_V4T_VINYL_OPTIONS[j], Constants.DOOR_V4T_VINYL_OPTIONS[j]));
+                }
 
                 doorVinylTintLBL.AssociatedControlID = "ddlDoorVinylTint" + i + title;
 
@@ -530,19 +571,17 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorNumberOfVentsDDL = new DropDownList();
                 doorNumberOfVentsDDL.ID = "ddlDoorNumberOfVents" + i + title;
-                ListItem two = new ListItem("2", "2");
-                ListItem three = new ListItem("3", "3");
-                ListItem four = new ListItem("4", "4");
-                doorNumberOfVentsDDL.Items.Add(two);
-                doorNumberOfVentsDDL.Items.Add(three);
-                doorNumberOfVentsDDL.Items.Add(four);
+                for (int j = 0; j < Constants.DOOR_NUMBER_OF_VENTS.Count(); j++)
+                {
+                    doorNumberOfVentsDDL.Items.Add(new ListItem(Constants.DOOR_NUMBER_OF_VENTS[j], Constants.DOOR_NUMBER_OF_VENTS[j]));
+                }
 
                 doorNumberOfVentsLBL.AssociatedControlID = "ddlDoorNumberOfVents" + i + title;
 
                 #endregion
 
                 #region Table:# Row Door Transom (tblDoorDetails)
-                    
+
                 TableRow doorTransomRow = new TableRow();
                 doorTransomRow.ID = "rowDoorTransom" + i + title;
                 doorTransomRow.Attributes.Add("style", "display:none;");
@@ -555,20 +594,37 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorTransomDDL = new DropDownList();
                 doorTransomDDL.ID = "ddlDoorTransom" + i + title;
-                doorTransomDDL.Attributes.Add("onchange", "doorTransomStyle('" + title + "','" + i +"')");
-                ListItem transomVinyl = new ListItem("Vinyl", "vinyl");
-                ListItem transomGlass = new ListItem("Glass", "glass");
-                ListItem transomScreen = new ListItem("Screen", "screen");
-                ListItem transomSolidWall = new ListItem("Solid Wall", "solidWall");
+                doorTransomDDL.Attributes.Add("onchange", "doorTransomStyle('" + title + "','" + i + "')");
 
-                doorTransomDDL.Items.Add(transomVinyl);
-                    
+
                 if (currentModel == "M100")
-                    doorTransomDDL.Items.Add(transomScreen);
-                else
-                    doorTransomDDL.Items.Add(transomGlass);
-
-                doorTransomDDL.Items.Add(transomSolidWall);
+                {
+                    for (int j = 0; j < Constants.MODEL_100_TRANSOM_TYPES.Count(); j++)
+                    {
+                        doorTransomDDL.Items.Add(new ListItem(Constants.MODEL_100_TRANSOM_TYPES[j], Constants.MODEL_100_TRANSOM_TYPES[j]));
+                    }
+                }
+                else if (currentModel == "M200")
+                {
+                    for (int j = 0; j < Constants.MODEL_200_TRANSOM_TYPES.Count(); j++)
+                    {
+                        doorTransomDDL.Items.Add(new ListItem(Constants.MODEL_200_TRANSOM_TYPES[j], Constants.MODEL_200_TRANSOM_TYPES[j]));
+                    }
+                }
+                else if (currentModel == "M300")
+                {
+                    for (int j = 0; j < Constants.MODEL_300_TRANSOM_TYPES.Count(); j++)
+                    {
+                        doorTransomDDL.Items.Add(new ListItem(Constants.MODEL_300_TRANSOM_TYPES[j], Constants.MODEL_300_TRANSOM_TYPES[j]));
+                    }
+                }
+                else if (currentModel == "M400")
+                {
+                    for (int j = 0; j < Constants.MODEL_400_TRANSOM_TYPES.Count(); j++)
+                    {
+                        doorTransomDDL.Items.Add(new ListItem(Constants.MODEL_400_TRANSOM_TYPES[j], Constants.MODEL_400_TRANSOM_TYPES[j]));
+                    }
+                }
 
                 #endregion
 
@@ -586,16 +642,10 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorTransomVinylDDL = new DropDownList();
                 doorTransomVinylDDL.ID = "ddlDoorTransomVinyl" + i + title;
-                ListItem transomClearVinyl = new ListItem("Clear", "clear");
-                ListItem transomSmokeGreyVinyl = new ListItem("Smoke Grey", "smokeGrey");
-                ListItem transomDarkGreyVinyl = new ListItem("Dark Grey", "darkGrey");
-                ListItem transomBronzeVinyl = new ListItem("Bronze", "bronze");
-                ListItem transomMixedVinyl = new ListItem("Mixed", "mixed");
-                doorTransomVinylDDL.Items.Add(transomClearVinyl);
-                doorTransomVinylDDL.Items.Add(transomSmokeGreyVinyl);
-                doorTransomVinylDDL.Items.Add(transomDarkGreyVinyl);
-                doorTransomVinylDDL.Items.Add(transomBronzeVinyl);
-                doorTransomVinylDDL.Items.Add(transomMixedVinyl);
+                for (int j = 0; j < Constants.VINYL_TINTS.Count(); j++)
+                {
+                    doorTransomVinylDDL.Items.Add(new ListItem(Constants.VINYL_TINTS[j], Constants.VINYL_TINTS[j]));
+                }
 
                 doorTransomVinylLBL.AssociatedControlID = "ddlDoorTransomVinyl" + i + title;
 
@@ -615,10 +665,10 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorTransomGlassDDL = new DropDownList();
                 doorTransomGlassDDL.ID = "ddlDoorTransomGlass" + i + title;
-                ListItem transomGrey = new ListItem("Grey", "grey");
-                ListItem transomBronze = new ListItem("Bronze", "bronze");
-                doorTransomGlassDDL.Items.Add(transomGrey);
-                doorTransomGlassDDL.Items.Add(transomBronze);
+                for (int j = 0; j < Constants.TRANSOM_GLASS_TINTS.Count(); j++)
+                {
+                    doorTransomGlassDDL.Items.Add(new ListItem(Constants.TRANSOM_GLASS_TINTS[j], Constants.TRANSOM_GLASS_TINTS[j]));
+                }
 
                 doorTransomGlassLBL.AssociatedControlID = "ddlDoorTransomGlass" + i + title;
 
@@ -639,46 +689,17 @@ namespace SunspaceDealerDesktop
                 DropDownList doorKickplateDDL = new DropDownList();
                 doorKickplateDDL.ID = "ddlDoorKickplate" + i + title;
                 doorKickplateDDL.Attributes.Add("onchange", "doorKickplateStyle('" + title + "','" + i + "')");
-                ListItem KickplateSix = new ListItem("6\"", "6");
-                ListItem KickplateSeven = new ListItem("7\"", "7");
-                ListItem KickplateEight = new ListItem("8\"", "8");
-                ListItem KickplateNine = new ListItem("9\"", "9");
-                ListItem KickplateTen = new ListItem("10\"", "10");
-                ListItem KickplateEleven = new ListItem("11\"", "11");
-                ListItem KickplateTwelve = new ListItem("12\"", "12");
-                ListItem KickplateThirteen = new ListItem("13\"", "13");
-                ListItem KickplateFourteen = new ListItem("14\"", "14");
-                ListItem KickplateFifteen = new ListItem("15\"", "15");
-                ListItem KickplateSixteen = new ListItem("16\"", "16");
-                ListItem KickplateSeventeen = new ListItem("17\"", "17");
-                ListItem KickplateEighteen = new ListItem("18\"", "18");
-                ListItem KickplateNineteen = new ListItem("19\"", "19");
-                ListItem KickplateTwenty = new ListItem("20\"", "20");
-                ListItem KickplateTwentyOne = new ListItem("21\"", "21");
-                ListItem KickplateTwentyTwo = new ListItem("22\"", "22");
-                ListItem KickplateTwentyThree = new ListItem("23\"", "23");
-                ListItem KickplateTwentyFour = new ListItem("24\"", "24");
-                ListItem KickplateCustom = new ListItem("Custom", "cKickplate");
-                doorKickplateDDL.Items.Add(KickplateSix);
-                doorKickplateDDL.Items.Add(KickplateSeven);
-                doorKickplateDDL.Items.Add(KickplateEight);
-                doorKickplateDDL.Items.Add(KickplateNine);
-                doorKickplateDDL.Items.Add(KickplateTen);
-                doorKickplateDDL.Items.Add(KickplateEleven);
-                doorKickplateDDL.Items.Add(KickplateTwelve);
-                doorKickplateDDL.Items.Add(KickplateThirteen);
-                doorKickplateDDL.Items.Add(KickplateFourteen);
-                doorKickplateDDL.Items.Add(KickplateFifteen);
-                doorKickplateDDL.Items.Add(KickplateSixteen);
-                doorKickplateDDL.Items.Add(KickplateSeventeen);
-                doorKickplateDDL.Items.Add(KickplateEighteen);
-                doorKickplateDDL.Items.Add(KickplateNineteen);
-                doorKickplateDDL.Items.Add(KickplateTwenty);
-                doorKickplateDDL.Items.Add(KickplateTwentyOne);
-                doorKickplateDDL.Items.Add(KickplateTwentyTwo);
-                doorKickplateDDL.Items.Add(KickplateTwentyThree);
-                doorKickplateDDL.Items.Add(KickplateTwentyFour);
-                doorKickplateDDL.Items.Add(KickplateCustom);
+                for (int j = 0; j < Constants.KICKPLATE_SIZE_OPTIONS.Count(); j++)
+                {
+                    if (Constants.KICKPLATE_SIZE_OPTIONS[j] == "Custom")
+                    {
+                        doorKickplateDDL.Items.Add(new ListItem(Constants.KICKPLATE_SIZE_OPTIONS[j], "cKickplate"));
+                    }
+                    else
+                    {
+                        doorKickplateDDL.Items.Add(new ListItem(Constants.KICKPLATE_SIZE_OPTIONS[j] + "\"", Constants.KICKPLATE_SIZE_OPTIONS[j]));
+                    }
+                }
 
                 #endregion
 
@@ -717,90 +738,24 @@ namespace SunspaceDealerDesktop
 
                 #region Table:Third Row Color of Door (tblDoorDetails)
 
-                TableRow colorOfDoorRow = new TableRow();
-                colorOfDoorRow.ID = "rowDoorColor" + i + title;
-                colorOfDoorRow.Attributes.Add("style", "display:none;");
-                TableCell colorOfDoorLBLCell = new TableCell();
-                TableCell colorOfDoorDDLCell = new TableCell();
+                TableRow colourOfDoorRow = new TableRow();
+                colourOfDoorRow.ID = "rowDoorColour" + i + title;
+                colourOfDoorRow.Attributes.Add("style", "display:none;");
+                TableCell colourOfDoorLBLCell = new TableCell();
+                TableCell colourOfDoorDDLCell = new TableCell();
 
-                Label colorOfDoorLBL = new Label();
-                colorOfDoorLBL.ID = "lblDoorColor" + i + title;
-                colorOfDoorLBL.Text = "Color:";
+                Label colourOfDoorLBL = new Label();
+                colourOfDoorLBL.ID = "lblDoorColour" + i + title;
+                colourOfDoorLBL.Text = "Colour:";
 
-                DropDownList colorOfDoorDDL = new DropDownList();
-                colorOfDoorDDL.ID = "ddlDoorColor" + i + title;
-                ListItem white = new ListItem("White", "white");
-                ListItem driftwood = new ListItem("Driftwood", "driftwood");
-                ListItem bronze = new ListItem("Bronze", "bronze");
-                ListItem green = new ListItem("Green", "green");
-                ListItem black = new ListItem("Black", "black");
-                ListItem ivory = new ListItem("Ivory", "ivory");
-                ListItem cherrywood = new ListItem("Cherrywood", "cherrywood");
-                ListItem grey = new ListItem("Grey", "grey");
-                colorOfDoorDDL.Items.Add(white);
-                colorOfDoorDDL.Items.Add(driftwood);
-                colorOfDoorDDL.Items.Add(bronze);
-                colorOfDoorDDL.Items.Add(green);
-                colorOfDoorDDL.Items.Add(black);
-                colorOfDoorDDL.Items.Add(ivory);
-                colorOfDoorDDL.Items.Add(cherrywood);
-                colorOfDoorDDL.Items.Add(grey);
+                DropDownList colourOfDoorDDL = new DropDownList();
+                colourOfDoorDDL.ID = "ddlDoorColour" + i + title;
+                for (int j = 0; j < Constants.DOOR_COLOURS.Count(); j++)
+                {
+                    colourOfDoorDDL.Items.Add(new ListItem(Constants.DOOR_COLOURS[j], Constants.DOOR_COLOURS[j]));
+                }
 
-                colorOfDoorLBL.AssociatedControlID = "ddlDoorColor" + i + title;
-
-                #endregion
-                    
-                #region Table:# Row Door Internal Grills Yes(tblDoorDetails)
-
-                TableRow doorInternalGrillsYesRow = new TableRow();
-                doorInternalGrillsYesRow.ID = "rowDoorInternalGrillsYes" + i + title;
-                doorInternalGrillsYesRow.Attributes.Add("style", "display:none;");
-                TableCell doorInternalGrillsYesLBLCell = new TableCell();
-                TableCell doorInternalGrillsYesRADCell = new TableCell();
-
-                Label doorInternalGrillsYesLBLMain = new Label();
-                doorInternalGrillsYesLBLMain.ID = "lblDoorInternalGrillsMain" + i + title;
-                doorInternalGrillsYesLBLMain.Text = "Internal Grills:";
-
-                Label doorInternalGrillsYesLBLRad = new Label();
-                doorInternalGrillsYesLBLRad.ID = "lblDoorInternalGrillRadYes" + i + title;
-
-                Label doorInternalGrillsYesLBL = new Label();
-                doorInternalGrillsYesLBL.ID = "lblDoorInternalGrillsYes" + i + title;
-                doorInternalGrillsYesLBL.Text = "Yes";
-
-                RadioButton doorInternalGrillsYesRad = new RadioButton();
-                doorInternalGrillsYesRad.ID = "radDoorInternalGrills" + i + title;
-                doorInternalGrillsYesRad.Attributes.Add("value", "yes");
-                doorInternalGrillsYesRad.GroupName = "InternalGrills" + i + title;
-
-                doorInternalGrillsYesLBLRad.AssociatedControlID = "radDoorInternalGrills" + i + title;
-                doorInternalGrillsYesLBL.AssociatedControlID = "radDoorInternalGrills" + i + title;
-
-                #endregion
-
-                #region Table:# Row Door Internal Grills No (tblDoorDetails)
-
-                TableRow doorInternalGrillsNoRow = new TableRow();
-                doorInternalGrillsNoRow.ID = "rowDoorInternalGrillsNo" + i + title;
-                doorInternalGrillsNoRow.Attributes.Add("style", "display:none;");
-                TableCell doorInternalGrillsNoLBLCell = new TableCell();
-                TableCell doorInternalGrillsNoRADCell = new TableCell();
-
-                Label doorInternalGrillsNoLBLRad = new Label();
-                doorInternalGrillsNoLBLRad.ID = "lblDoorInternalGrillsRadNo" + i + title;
-
-                Label doorInternalGrillsNoLBL = new Label();
-                doorInternalGrillsNoLBL.ID = "lblDoorInternalGrillsNo" + i + title;
-                doorInternalGrillsNoLBL.Text = "No";
-
-                RadioButton doorInternalGrillsNoRad = new RadioButton();
-                doorInternalGrillsNoRad.ID = "radDoorInternalGrillsNo" + i + title;
-                doorInternalGrillsNoRad.Attributes.Add("value", "no");
-                doorInternalGrillsNoRad.GroupName = "InternalGrills" + i + title;
-
-                doorInternalGrillsNoLBLRad.AssociatedControlID = "radDoorInternalGrillsNo" + i + title;
-                doorInternalGrillsNoLBL.AssociatedControlID = "radDoorInternalGrillsNo" + i + title;
+                colourOfDoorLBL.AssociatedControlID = "ddlDoorColour" + i + title;
 
                 #endregion
 
@@ -819,10 +774,17 @@ namespace SunspaceDealerDesktop
                 DropDownList doorHeightDDL = new DropDownList();
                 doorHeightDDL.ID = "ddlDoorHeight" + i + title;
                 doorHeightDDL.Attributes.Add("onchange", "customDimension('" + i + "','" + title + "','Height')");
-                ListItem eighty = new ListItem("80\" (Default)", "80");
-                ListItem customHeight = new ListItem("Custom", "cHeight");
-                doorHeightDDL.Items.Add(eighty);
-                doorHeightDDL.Items.Add(customHeight);
+                for (int j = 0; j < Constants.DOOR_HEIGHTS.Count(); j++)
+                {
+                    if (Constants.DOOR_HEIGHTS[j] == "Custom")
+                    {
+                        doorHeightDDL.Items.Add(new ListItem(Constants.DOOR_HEIGHTS[j], "cHeight"));
+                    }
+                    else
+                    {
+                        doorHeightDDL.Items.Add(new ListItem(Constants.DOOR_HEIGHTS[j] + "\"", Constants.DOOR_HEIGHTS[j]));
+                    }
+                }
 
                 doorHeightLBL.AssociatedControlID = "ddlDoorHeight" + i + title;
 
@@ -876,39 +838,54 @@ namespace SunspaceDealerDesktop
                 DropDownList doorWidthDDL = new DropDownList();
                 doorWidthDDL.ID = "ddlDoorWidth" + i + title;
                 doorWidthDDL.Attributes.Add("onchange", "customDimension('" + i + "', '" + title + "','Width')");
-                ListItem thirty = new ListItem("30\"", "30");
-                ListItem thirtyTwo = new ListItem("32\"", "32");
-                ListItem thirtyFour = new ListItem("34\"", "34");
-                ListItem thirtySix = new ListItem("36\"", "36");
-                ListItem sixty = new ListItem("60\"", "30");
-                ListItem seventyTwo = new ListItem("72\"", "36");
-                ListItem fiveFeet = new ListItem("5'", "60");
-                ListItem sixFeet = new ListItem("6'", "72");
-                ListItem sevenFeet = new ListItem("7'", "84");
-                ListItem eightFeet = new ListItem("8'", "96");
-                ListItem customWidth = new ListItem("Custom", "cWidth");
 
                 if (title == "Patio")
                 {
-                    doorWidthDDL.Items.Add(fiveFeet);
-                    doorWidthDDL.Items.Add(sixFeet);
-                    doorWidthDDL.Items.Add(sevenFeet);
-                    doorWidthDDL.Items.Add(eightFeet);
-                    doorWidthDDL.Items.Add(customWidth);
+                    for (int j = 0; j < Constants.DOOR_WIDTHS_PATIO.Count(); j++)
+                    {
+                        if (Constants.DOOR_WIDTHS_PATIO[j] == "Custom")
+                        {
+                            doorWidthDDL.Items.Add(new ListItem(Constants.DOOR_WIDTHS_PATIO[j], "cWidth"));
+                        }
+                        else
+                        {
+                            if (currentModel == "M400" && Constants.DOOR_WIDTHS_PATIO[j] != "7")
+                            {
+                                //Do nothing, no 7' for patio doors
+                            }
+                            else {
+                                doorWidthDDL.Items.Add(new ListItem(Constants.DOOR_WIDTHS_PATIO[j] + "\'", Convert.ToString((Convert.ToInt32(Constants.DOOR_WIDTHS_PATIO[j])*12))));
+                            }
+                        }
+                    }
                 }
                 else if (title == "French")
                 {
-                    doorWidthDDL.Items.Add(sixty);
-                    doorWidthDDL.Items.Add(seventyTwo);
-                    doorWidthDDL.Items.Add(customWidth);
+                    for (int j = 0; j < Constants.DOOR_WIDTHS_FRENCH.Count(); j++)
+                    {
+                        if (Constants.DOOR_WIDTHS_FRENCH[j] == "Custom")
+                        {
+                            doorWidthDDL.Items.Add(new ListItem(Constants.DOOR_WIDTHS_FRENCH[j], "cWidth"));
+                        }
+                        else
+                        {
+                            doorWidthDDL.Items.Add(new ListItem(Constants.DOOR_WIDTHS_FRENCH[j] + "\"", Constants.DOOR_WIDTHS_FRENCH[j]));
+                        }
+                    }
                 }
                 else
                 {
-                    doorWidthDDL.Items.Add(thirty);
-                    doorWidthDDL.Items.Add(thirtyTwo);
-                    doorWidthDDL.Items.Add(thirtyFour);
-                    doorWidthDDL.Items.Add(thirtySix);
-                    doorWidthDDL.Items.Add(customWidth);
+                    for (int j = 0; j < Constants.DOOR_WIDTHS_CABANA_NODOOR.Count(); j++)
+                    {
+                        if (Constants.DOOR_WIDTHS_CABANA_NODOOR[j] == "Custom")
+                        {
+                            doorWidthDDL.Items.Add(new ListItem(Constants.DOOR_WIDTHS_CABANA_NODOOR[j], "cWidth"));
+                        }
+                        else
+                        {
+                            doorWidthDDL.Items.Add(new ListItem(Constants.DOOR_WIDTHS_CABANA_NODOOR[j] + "\"", Constants.DOOR_WIDTHS_CABANA_NODOOR[j]));
+                        }
+                    }
                 }
 
                 doorWidthLBL.AssociatedControlID = "ddlDoorWidth" + i + title;
@@ -969,7 +946,7 @@ namespace SunspaceDealerDesktop
 
                 RadioButton doorOperatorLHHRad = new RadioButton();
                 doorOperatorLHHRad.ID = "radDoorOperator" + i + title;
-                doorOperatorLHHRad.Attributes.Add("value", "left");
+                doorOperatorLHHRad.Attributes.Add("value", "Left");
                 doorOperatorLHHRad.GroupName = "PrimaryOperator" + i + title;
 
                 doorOperatorLHHLBLRad.AssociatedControlID = "radDoorOperator" + i + title;
@@ -994,7 +971,7 @@ namespace SunspaceDealerDesktop
 
                 RadioButton doorOperatorRHHRad = new RadioButton();
                 doorOperatorRHHRad.ID = "radDoorOperatorRHH" + i + title;
-                doorOperatorRHHRad.Attributes.Add("value", "right");
+                doorOperatorRHHRad.Attributes.Add("value", "Right");
                 doorOperatorRHHRad.GroupName = "PrimaryOperator" + i + title;
 
                 doorOperatorRHHLBLRad.AssociatedControlID = "radDoorOperatorRHH" + i + title;
@@ -1016,19 +993,15 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorBoxHeaderDDL = new DropDownList();
                 doorBoxHeaderDDL.ID = "ddlDoorBoxHeader" + i + title;
-                ListItem Left = new ListItem("Left", "left");
-                ListItem Right = new ListItem("Right", "right");
-                ListItem Both = new ListItem("Both", "both");
-                ListItem None = new ListItem("None", "none");
-                doorBoxHeaderDDL.Items.Add(Left);
-                doorBoxHeaderDDL.Items.Add(Right);
-                doorBoxHeaderDDL.Items.Add(Both);
-                doorBoxHeaderDDL.Items.Add(None);
+                for (int j = 0; j < Constants.DOOR_BOXHEADER_POSITION.Count(); j++)
+                {
+                    doorBoxHeaderDDL.Items.Add(new ListItem(Constants.DOOR_BOXHEADER_POSITION[j], Constants.DOOR_BOXHEADER_POSITION[j]));
+                }
 
                 doorBoxHeaderLBL.AssociatedControlID = "ddlDoorBoxHeader" + i + title;
 
                 #endregion
-                    
+
                 #region Table:Thirteenth Row Door Glass Tint (tblDoorDetails)
 
                 TableRow doorGlassTintRow = new TableRow();
@@ -1043,12 +1016,10 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorGlassTintDDL = new DropDownList();
                 doorGlassTintDDL.ID = "ddlDoorGlassTint" + i + title;
-                ListItem clear = new ListItem("Clear", "clear");
-                ListItem greyTint = new ListItem("Grey", "grey");
-                ListItem bronzeTint = new ListItem("Bronze", "bronze");
-                doorGlassTintDDL.Items.Add(clear);
-                doorGlassTintDDL.Items.Add(grey);
-                doorGlassTintDDL.Items.Add(bronzeTint);
+                for (int j = 0; j < Constants.DOOR_GLASS_TINTS.Count(); j++)
+                {
+                    doorGlassTintDDL.Items.Add(new ListItem(Constants.DOOR_GLASS_TINTS[j], Constants.DOOR_GLASS_TINTS[j]));
+                }
 
                 doorGlassTintLBL.AssociatedControlID = "ddlDoorGlassTint" + i + title;
 
@@ -1075,7 +1046,7 @@ namespace SunspaceDealerDesktop
 
                 RadioButton doorHingeLHHRad = new RadioButton();
                 doorHingeLHHRad.ID = "radDoorHinge" + i + title;
-                doorHingeLHHRad.Attributes.Add("value", "left");
+                doorHingeLHHRad.Attributes.Add("value", "Left");
                 doorHingeLHHRad.GroupName = "DoorHinge" + i + title;
 
                 doorHingeLHHLBLRad.AssociatedControlID = "radDoorHinge" + i + title;
@@ -1100,7 +1071,7 @@ namespace SunspaceDealerDesktop
 
                 RadioButton doorHingeRHHRad = new RadioButton();
                 doorHingeRHHRad.ID = "radDoorHingeRHH" + i + title;
-                doorHingeRHHRad.Attributes.Add("value", "right");
+                doorHingeRHHRad.Attributes.Add("value", "Right");
                 doorHingeRHHRad.GroupName = "DoorHinge" + i + title;
 
                 doorHingeRHHLBLRad.AssociatedControlID = "radDoorHingeRHH" + i + title;
@@ -1122,16 +1093,10 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorScreenOptionsDDL = new DropDownList();
                 doorScreenOptionsDDL.ID = "ddlDoorScreenOptions" + i + title;
-                ListItem betterVueInsect = new ListItem("Better Vue Insect Screen (Default)", "betterVueInsectScreen");
-                ListItem noSeeUms = new ListItem("No See Ums 20x20 Mesh", "noSeeUms");
-                ListItem solarInsectScreening = new ListItem("Solar Insect Screening", "solarInsectScreening");
-                ListItem tuffScreen = new ListItem("Tuff Screen", "tuffScreen");
-                ListItem noScreen = new ListItem("No Screen", "noScreen");
-                doorScreenOptionsDDL.Items.Add(betterVueInsect);
-                doorScreenOptionsDDL.Items.Add(noSeeUms);
-                doorScreenOptionsDDL.Items.Add(solarInsectScreening);
-                doorScreenOptionsDDL.Items.Add(tuffScreen);
-                doorScreenOptionsDDL.Items.Add(noScreen);
+                for (int j = 0; j < Constants.SCREEN_TYPES.Count(); j++)
+                {
+                    doorScreenOptionsDDL.Items.Add(new ListItem(Constants.SCREEN_TYPES[j], Constants.SCREEN_TYPES[j]));
+                }
 
                 doorScreenOptionsLBL.AssociatedControlID = "ddlDoorScreenOptions" + i + title;
 
@@ -1151,12 +1116,10 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorHardwareDDL = new DropDownList();
                 doorHardwareDDL.ID = "ddlDoorHardware" + i + title;
-                ListItem satinSilver = new ListItem("Satin Silver", "satinSilver");
-                ListItem brightBrass = new ListItem("Bright Brass", "brightBrass");
-                ListItem antiqueBrass = new ListItem("Antique Brass", "antiqueBrass");
-                doorHardwareDDL.Items.Add(satinSilver);
-                doorHardwareDDL.Items.Add(brightBrass);
-                doorHardwareDDL.Items.Add(antiqueBrass);
+                for (int j = 0; j < Constants.DOOR_HARDWARE.Count(); j++)
+                {
+                    doorHardwareDDL.Items.Add(new ListItem(Constants.DOOR_HARDWARE[j], Constants.DOOR_HARDWARE[j]));
+                }
 
                 doorHardwareLBL.AssociatedControlID = "ddlDoorHardware" + i + title;
 
@@ -1183,7 +1146,7 @@ namespace SunspaceDealerDesktop
 
                 RadioButton doorSwingInRAD = new RadioButton();
                 doorSwingInRAD.ID = "radDoorSwing" + i + title;
-                doorSwingInRAD.Attributes.Add("value", "in");
+                doorSwingInRAD.Attributes.Add("value", "In");
                 doorSwingInRAD.GroupName = "SwingInOut" + i + title;
 
                 doorSwingInLBLRad.AssociatedControlID = "radDoorSwing" + i + title;
@@ -1208,7 +1171,7 @@ namespace SunspaceDealerDesktop
 
                 RadioButton doorSwingOutRAD = new RadioButton();
                 doorSwingOutRAD.ID = "radDoorSwingOut" + i + title;
-                doorSwingOutRAD.Attributes.Add("value", "out");
+                doorSwingOutRAD.Attributes.Add("value", "Out");
                 doorSwingOutRAD.GroupName = "SwingInOut" + i + title;
 
                 doorSwingOutLBLRad.AssociatedControlID = "radDoorSwingOut" + i + title;
@@ -1231,14 +1194,17 @@ namespace SunspaceDealerDesktop
                 DropDownList doorPositionDDLDDL = new DropDownList();
                 doorPositionDDLDDL.ID = "ddlDoorPosition" + i + title;
                 doorPositionDDLDDL.Attributes.Add("onchange", "customDimension('" + i + "', '" + title + "','Position')");
-                ListItem PositionLeft = new ListItem("Left", "left");
-                ListItem PositionCenter = new ListItem("Center", "center");
-                ListItem PositionRight = new ListItem("Right", "right");
-                ListItem PositionCustom = new ListItem("Custom", "cPosition");
-                doorPositionDDLDDL.Items.Add(PositionLeft);
-                doorPositionDDLDDL.Items.Add(PositionCenter);
-                doorPositionDDLDDL.Items.Add(PositionRight);
-                doorPositionDDLDDL.Items.Add(PositionCustom);
+                for (int j = 0; j < Constants.DOOR_POSITION.Count(); j++)
+                {
+                    if (Constants.DOOR_POSITION[j] == "Custom")
+                    {
+                        doorPositionDDLDDL.Items.Add(new ListItem(Constants.DOOR_POSITION[j], "cPosition"));
+                    }
+                    else
+                    {
+                        doorPositionDDLDDL.Items.Add(new ListItem(Constants.DOOR_POSITION[j], Constants.DOOR_POSITION[j]));
+                    }
+                }
 
                 doorPositionDDLLBL.AssociatedControlID = "ddlDoorPosition" + i + title;
 
@@ -1284,7 +1250,6 @@ namespace SunspaceDealerDesktop
                 doorButtonRow.Attributes.Add("style", "display:inherit;");
                 TableCell doorAddButtonCell = new TableCell();
                 TableCell doorFillButtonCell = new TableCell();
-                TableCell doorUndoButtonCell = new TableCell();
 
                 #endregion
 
@@ -1400,41 +1365,13 @@ namespace SunspaceDealerDesktop
 
                 #region Table:Third Row Color of Door Added to Table (tblDoorDetails)
 
-                colorOfDoorLBLCell.Controls.Add(colorOfDoorLBL);
-                colorOfDoorDDLCell.Controls.Add(colorOfDoorDDL);
+                colourOfDoorLBLCell.Controls.Add(colourOfDoorLBL);
+                colourOfDoorDDLCell.Controls.Add(colourOfDoorDDL);
 
-                tblDoorDetails.Rows.Add(colorOfDoorRow);
+                tblDoorDetails.Rows.Add(colourOfDoorRow);
 
-                colorOfDoorRow.Cells.Add(colorOfDoorLBLCell);
-                colorOfDoorRow.Cells.Add(colorOfDoorDDLCell);
-
-                #endregion
-
-                #region Table:# Row Door Internal Grills Yes Added To Table (tblDoorDetails)
-
-                doorInternalGrillsYesLBLCell.Controls.Add(doorInternalGrillsYesLBLMain);
-
-                doorInternalGrillsYesRADCell.Controls.Add(doorInternalGrillsYesRad);
-                doorInternalGrillsYesRADCell.Controls.Add(doorInternalGrillsYesLBLRad);
-                doorInternalGrillsYesRADCell.Controls.Add(doorInternalGrillsYesLBL);
-
-                tblDoorDetails.Rows.Add(doorInternalGrillsYesRow);
-
-                doorInternalGrillsYesRow.Cells.Add(doorInternalGrillsYesLBLCell);
-                doorInternalGrillsYesRow.Cells.Add(doorInternalGrillsYesRADCell);
-
-                #endregion
-
-                #region Table:# Row Door Internal Grills No Added To Table (tblDoorDetails)
-
-                doorInternalGrillsNoRADCell.Controls.Add(doorInternalGrillsNoRad);
-                doorInternalGrillsNoRADCell.Controls.Add(doorInternalGrillsNoLBLRad);
-                doorInternalGrillsNoRADCell.Controls.Add(doorInternalGrillsNoLBL);
-
-                tblDoorDetails.Rows.Add(doorInternalGrillsNoRow);
-
-                doorInternalGrillsNoRow.Cells.Add(doorInternalGrillsNoLBLCell);
-                doorInternalGrillsNoRow.Cells.Add(doorInternalGrillsNoRADCell);
+                colourOfDoorRow.Cells.Add(colourOfDoorLBLCell);
+                colourOfDoorRow.Cells.Add(colourOfDoorDDLCell);
 
                 #endregion
 
@@ -1654,25 +1591,25 @@ namespace SunspaceDealerDesktop
                 if (title == "NoDoor")
                 {
                     doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This Opening Only (No Door)'/>"));
-                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + title + "\", \"" + i +"\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With Opening Only (No Doors)'/>"));
+                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + title + "\", \"" + i + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With Opening Only (No Doors)'/>"));
                 }
                 else
                 {
                     doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + i + title + "' type='button' onclick='addDoor(\"" + i + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
-                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + title + "\", \"" + i +"\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
+                    doorFillButtonCell.Controls.Add(new LiteralControl("<input id='btnFillWallWithThisDoor" + i + title + "' type='button' onclick='fillWallWithDoorMods(\"" + title + "\", \"" + i + "\")' class='btnSubmit' style='display:inherit;' value='Fill Wall With " + title + " Doors'/>"));
                 }
-                //doorUndoButtonCell.Controls.Add(new LiteralControl("<input id='btnUndoLastAddition" + i + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Undo Last Addition Doors'/>"));
 
                 tblDoorDetails.Rows.Add(doorButtonRow);
 
                 doorButtonRow.Cells.Add(doorAddButtonCell);
                 doorButtonRow.Cells.Add(doorFillButtonCell);
-                //doorButtonRow.Cells.Add(doorUndoButtonCell);
 
                 #endregion
 
                 //Adding literal control div tag to hold the table, add to wallDoorOptions placeholder
-                wallDoorOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\" id=\"div_" + i + title + "\"><ul>"));
+                wallDoorOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\" id=\"div_" + i + title + "\">"));
+
+                wallDoorOptions.Controls.Add(new LiteralControl("<ul>"));
 
                 //Adding literal control li to keep proper page look and format
                 wallDoorOptions.Controls.Add(new LiteralControl("<li>"));
@@ -1681,13 +1618,27 @@ namespace SunspaceDealerDesktop
                 wallDoorOptions.Controls.Add(tblDoorDetails);
 
                 //Closing necessary tags
-                wallDoorOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
-                
+                wallDoorOptions.Controls.Add(new LiteralControl("</li>"));
+
+                wallDoorOptions.Controls.Add(new LiteralControl("</ul>"));
+
+                wallDoorOptions.Controls.Add(new LiteralControl("</div>"));
+
+                wallDoorOptions.Controls.Add(new LiteralControl("</li>"));
+
             }
 
             #endregion
             //Closing more necessary tags
-            wallDoorOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>"));
+            wallDoorOptions.Controls.Add(new LiteralControl("</ul>"));
+
+            wallDoorOptions.Controls.Add(new LiteralControl("</li>"));
+
+            wallDoorOptions.Controls.Add(new LiteralControl("</ul>"));
+
+            wallDoorOptions.Controls.Add(new LiteralControl("</div>"));
+
+            wallDoorOptions.Controls.Add(new LiteralControl("</li>"));
 
             #endregion
 
@@ -2893,11 +2844,90 @@ namespace SunspaceDealerDesktop
 
         protected void btnQuestion4_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("This is working");
-            System.Diagnostics.Debug.WriteLine(Request.Form["wallCount"]);
-            System.Diagnostics.Debug.WriteLine(Request.Form["wall4DoorCount"]);
-            System.Diagnostics.Debug.WriteLine(Request.Form["wall4Door0PropertyCount"]);
-            System.Diagnostics.Debug.WriteLine(Request.Form["wall4Door0type"]);
+
+            int wallCount = Convert.ToInt32(Request.Form["wallCount"]);
+            int wallStartIndex = Convert.ToInt32(Request.Form["wallStartIndex"]);
+
+            for (int walls = wallStartIndex; walls <= wallCount; walls++) {
+
+                int doorCount = Convert.ToInt32(Request.Form["wall" + walls + "DoorCount"]);
+                Session["Wall" + walls + "DoorCount" + walls] = Request.Form["wall" + walls + "DoorCount"];
+                Door aDoor;
+
+                for (int doors = 0; doors < doorCount; doors++) {
+
+                    string doorType = Request.Form["wall" + walls + "Door" + doors + "type"];
+
+                    aDoor = new Door();
+
+                    if (doorType == "Cabana")
+                    {
+                        aDoor = new CabanaDoor();
+                        
+                        CabanaDoor newCabana = (CabanaDoor)aDoor;
+
+                        newCabana.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
+                        newCabana.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
+                        newCabana.VinylTint = Request.Form["wall" + walls + "Door" + doors + "VinylTint"];
+                        newCabana.ScreenType = Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"];
+                        newCabana.GlassTint = Request.Form["wall" + walls + "Door" + doors + "GlassTint"];
+                        newCabana.Hinge = Request.Form["wall" + walls + "Door" + doors + "Hinge"];
+                        newCabana.Swing = Request.Form["wall" + walls + "Door" + doors + "Swing"];
+                        newCabana.HardwareType = Request.Form["wall" + walls + "Door" + doors + "Hardware"];
+                    }
+                    else if (doorType == "French")
+                    {
+                        aDoor = new FrenchDoor();
+
+                        FrenchDoor newFrench = (FrenchDoor)aDoor;
+
+                        newFrench.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
+                        newFrench.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
+                        newFrench.VinylTint = Request.Form["wall" + walls + "Door" + doors + "VinylTint"];
+                        newFrench.ScreenType = Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"];
+                        newFrench.GlassTint = Request.Form["wall" + walls + "Door" + doors + "GlassTint"];
+                        newFrench.Swing = Request.Form["wall" + walls + "Door" + doors + "Swing"];
+                        newFrench.OperatingDoor = Request.Form["wall" + walls + "Door" + doors + "Operator"];
+                        newFrench.HardwareType = Request.Form["wall" + walls + "Door" + doors + "Hardware"];
+                    }
+                    else if (doorType == "Patio")
+                    {
+                        aDoor = new PatioDoor();
+
+                        PatioDoor newPatio = (PatioDoor)aDoor;
+
+                        newPatio.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
+                        newPatio.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
+                        newPatio.ScreenType = Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"];
+                        newPatio.GlassTint = Request.Form["wall" + walls + "Door" + doors + "GlassTint"];
+                        newPatio.MovingDoor = Request.Form["wall" + walls + "Door" + doors + "Operator"];
+                    }
+                    else
+                    {
+                        aDoor = new OpenSpaceDoor();
+
+                        OpenSpaceDoor newOpenSpace = (OpenSpaceDoor)aDoor;
+
+                        newOpenSpace.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
+                        newOpenSpace.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
+                    }
+
+                    //Load all properties
+                    aDoor.DoorType = doorType;
+                    aDoor.DoorStyle = Request.Form["wall" + walls + "Door" + doors + "Style"];
+                    aDoor.ScreenType = Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"];
+                    aDoor.FHeight = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "FHeight"]);
+                    aDoor.FLength = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "FWidth"]);                    
+                    aDoor.Colour = Request.Form["wall" + walls + "Door" + doors + "Colour"];
+                    System.Diagnostics.Debug.WriteLine("This colour is: " + Request.Form["wall" + walls + "Door" + doors + "Colour"]);
+                    aDoor.Kickplate = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Kickplate"]);
+
+                    Session["Wall" + walls + "Door" + doors] = aDoor;
+                }
+            }
+
+            Response.Redirect("TestingHiddens.aspx");
+
         }
     }
 }

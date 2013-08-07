@@ -8,6 +8,43 @@
 *               user based on validation.                                                   *
 *********************************************************************************************/
 
+/******************************************VALIDATION VARIABLES******************************************/
+
+
+var cabanaMinValues = calculateActualDoorDimension(parseInt(CABANA_MIN_WIDTH), parseInt(CABANA_MIN_HEIGHT), "Cabana");
+var cabanaMaxValues = calculateActualDoorDimension(parseInt(CABANA_MAX_WIDTH), parseInt(CABANA_MAX_HEIGHT), "Cabana");
+
+var cabanaMinWidth = cabanaMinValues.width;
+var cabanaMinHeight = cabanaMinValues.height;
+
+var cabanaMaxWidth = cabanaMaxValues.width;
+var cabanaMaxHeight = cabanaMaxValues.height;
+
+var frenchMinValues = calculateActualDoorDimension(parseInt(CABANA_MIN_WIDTH) * 2, parseInt(CABANA_MIN_HEIGHT), "French");
+var frenchMaxValues = calculateActualDoorDimension(parseInt(CABANA_MAX_WIDTH) * 2, parseInt(CABANA_MAX_HEIGHT), "French");
+
+var frenchMinWidth = frenchMinValues.width;
+var frenchMinHeight = frenchMinValues.height;
+
+var frenchMaxWidth = frenchMaxValues.width;
+var frenchMaxHeight = frenchMaxValues.height;
+
+var patioMinValues = calculateActualDoorDimension(parseInt(PATIO_DOOR_MIN_WIDTH), parseInt(PATIO_DOOR_MIN_HEIGHT), "Patio");
+var patioMaxValues = calculateActualDoorDimension(parseInt(PATIO_DOOR_MAX_WIDTH), parseInt(PATIO_DOOR_MAX_HEIGHT), "Patio");
+
+var patioMinWidth = patioMinValues.width;
+var patioMinHeight = patioMinValues.height;
+
+var patioMaxWidth = patioMaxValues.width;
+var patioMaxHeight = patioMaxValues.height;
+
+var errorMessageArea;
+
+//Setting the appropriate value to errorMessageArea when the document is ready (or loaded)
+$(document).ready(function () {
+    errorMessageArea = document.getElementById('MainContent_lblErrorMessage');
+});
+
 /******************************************CONSTRUCTORS AND PROTOTYPES******************************************/
 
 /**
@@ -19,7 +56,6 @@ Array.prototype.insert = function (index, item) {
     this.splice(index, 0, item);
 };
 
-
 //Framed Door holds all common information for doors
 function FramedDoor() {
     this.type = null;           //Cabana, French, Patio, Open Space (No Door)
@@ -27,7 +63,7 @@ function FramedDoor() {
     this.screenOptions = null;  //Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screen, Tuff Screen, No Screen
     this.fheight = null;        //In example, 80" door stores 80.875 to this field(inches)
     this.fwidth = null;         //In example, 30" door stores 32.125 to this field(inches)
-    this.color = null;          //White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey
+    this.colour = null;          //White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey
     this.position = null;       //Left, Center, Right, Custom
     this.boxHeader = null;      //Left, Right, Both, None
     this.transom = null;        //Vinyl, Glass, Solid
@@ -110,6 +146,10 @@ function addDoor(wallNumber, type) {
     if (!validateDoor(door, walls[wallNumber])) {
         return;
     }
+    //Validate door(s) width/height parameters
+    if (!validateDoorParameters(door, walls[wallNumber])) {
+        return;
+    }
 
     //Call to insertDoor to place the valid door in its respective place
     insertDoor(door, walls[wallNumber]);
@@ -140,7 +180,7 @@ function calculateActualDoorDimension(width, height, type) {
     else if (type === 'French') {
         //Return width and height, may change if the model is M400
         return {
-            width: (model === 'M400') ? ((width + 3.625) - 1.625) + 2 : ((width + 2.125) - 1.625) + 2,
+            width: (model === 'M400') ? ((width/2 + 3.625) - 1.625)*2 + 2 : ((width/2 + 2.125) - 1.625)*2 + 2,
             height: (model === 'M400') ? height + 2.125 : height + 0.875
         };
     }
@@ -194,6 +234,8 @@ function customDimension(wallNumber, type, dimension) {
 *@param wallNumber - used to hold the current wall number
 *@param type - used to hold the type of door being made
 *@return framedDoor - returns an object containing all information for the specific door (i.e. height, width, style, type, etc.)
+*
+***************RADIO BUTTON VALUES NOT STORING PROPERLY, TO BE FIXED***************
 */
 function createDoorObject(wallNumber, type) {
 
@@ -227,8 +269,7 @@ function createDoorObject(wallNumber, type) {
         "ddlDoorTransomVinyl",
         "ddlDoorTransomGlass",
         "ddlDoorKickplate",
-        "ddlDoorColor",
-        "radDoorInternalGrills",
+        "ddlDoorColour",
         "ddlDoorHeight",
         "ddlDoorWidth",
         "radDoorOperator",
@@ -256,16 +297,17 @@ function createDoorObject(wallNumber, type) {
         //If the controls parent 'tr' is visible, perform block
         if (styleDropDown.closest('tr').filter(':visible').length == 1) {
             var value;
+
             //If the control is of type radio, perform block
             if (styleDropDown.attr('type') == 'radio') {
                 //Get the checked value
-                styleValue = styleDropDown.closest('table').find('input[name=\"' + styleDropDown.attr('name') + '\"]:checked').val();
+                value = styleDropDown.closest('table').find('input[name=\"' + styleDropDown.attr('name') + '\"]:checked').val();
             }
                 //Else, perform block
             else {
                 //Get control value
                 value = styleDropDown.val();
-            }
+            }            
 
             //Create identifier for property within door object. In example, 
             //"ddlDoorStyle" now becomes "style" property inside of framedDoor
@@ -314,13 +356,13 @@ function createDoorObject(wallNumber, type) {
     framedDoor.fwidth = dimensions.width;   //Store frame width into fwidth
 
     /*Insert the door with the appropriate variables based on drop down selected index*/
-    if (framedDoor.position === "left") {
+    if (framedDoor.position === "Left") {
         framedDoor.position = walls[wallNumber].leftFiller;
     }
-    else if (framedDoor.position === "right") {
+    else if (framedDoor.position === "Right") {
         framedDoor.position = walls[wallNumber].length - framedDoor.fwidth - walls[wallNumber].rightFiller;
     }
-    else if (framedDoor.position === "center") {
+    else if (framedDoor.position === "Center") {
         framedDoor.position = walls[wallNumber].length / 2 - framedDoor.fwidth / 2;
     }
 
@@ -377,18 +419,31 @@ function doorStyle(type, wallNumber) {
     var doorStyleDDL = document.getElementById('MainContent_ddlDoorStyle' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorStyle' + wallNumber + type).selectedIndex].value;
 
     //If drop down value is v4TCabana, perform block
-    if (doorStyleDDL == 'v4TCabana') {
-        //Change door vinyl tint display style to inherit
+    if (doorStyleDDL == 'Vertical Four Track') {
+        //Change door vinyl tint row display style to inherit
         document.getElementById('MainContent_rowDoorVinylTint' + wallNumber + type).style.display = 'inherit';
-        //Change door number of vents display style to inherit
+        //Change door number of vents row display style to inherit
         document.getElementById('MainContent_rowDoorNumberOfVents' + wallNumber + type).style.display = 'inherit';
+        //Change door screen options row display style to none
+        document.getElementById('MainContent_rowDoorScreenOptions' + wallNumber + type).style.display = 'none';
+    }
+    else if (doorStyleDDL == 'Full Screen' || doorStyleDDL == 'Screen')
+    {
+        //Change door screen options row display style to inherit
+        document.getElementById('MainContent_rowDoorScreenOptions' + wallNumber + type).style.display = 'inherit';
+        //Change door vinyl tint row display style to none
+        document.getElementById('MainContent_rowDoorVinylTint' + wallNumber + type).style.display = 'none';
+        //Change door number of vents row display style to inherit
+        document.getElementById('MainContent_rowDoorNumberOfVents' + wallNumber + type).style.display = 'none';
     }
         //else, perform block
     else {
-        //Change door vinyl tint display style to none
+        //Change door vinyl tint row display style to none
         document.getElementById('MainContent_rowDoorVinylTint' + wallNumber + type).style.display = 'none';
-        //Change door number of vents display style to inherit
+        //Change door number of vents row display style to inherit
         document.getElementById('MainContent_rowDoorNumberOfVents' + wallNumber + type).style.display = 'none';
+        //Change door screen options row display style to none
+        document.getElementById('MainContent_rowDoorScreenOptions' + wallNumber + type).style.display = 'none';
     }
 }
 
@@ -428,14 +483,14 @@ function doorTransomStyle(type, wallNumber) {
     var transomType = document.getElementById('MainContent_ddlDoorTransom' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorTransom' + wallNumber + type).selectedIndex].value;
 
     //If transomType value is vinyl, perform block
-    if (transomType == 'vinyl') {
+    if (transomType == 'Vinyl') {
         //Change transom vinyl row display style to inherit
         document.getElementById('MainContent_rowDoorTransomVinyl' + wallNumber + type).style.display = 'inherit';
         //Change transom glass row display style to none
         document.getElementById('MainContent_rowDoorTransomGlass' + wallNumber + type).style.display = 'none';
     }
         //Else if transomType value is glass, perform block
-    else if (transomType == 'glass') {
+    else if (transomType == 'Glass') {
         //Change transom vinyl row display style to none
         document.getElementById('MainContent_rowDoorTransomVinyl' + wallNumber + type).style.display = 'none';
         //Change transom glass row display style to inherit
@@ -475,6 +530,10 @@ function fillWallWithDoorMods(type, wallNumber) {
     
     //If validation fails, perform block
     if (!validateDoorFill(door, walls[wallNumber])) {
+        return;
+    }
+    //Validate door(s) width/height parameters
+    if (!validateDoorParameters(door, walls[wallNumber])) {
         return;
     }
 
@@ -542,6 +601,21 @@ function fillWallWithDoorMods(type, wallNumber) {
 }
 
 /**
+*findCurrentWallHeight
+*This function finds the height of the wall at any giving point within it.
+*This function is used to ensure a door isn't outside of the limits of the wall.
+*@param doors - holds an array of unsorted doors
+*@param wall - used to hold the current wall information
+*@return - the height at the current position within the current wall
+*/
+function findCurrentWallHeight(door, wall) {
+    if (wall.startHeight > wall.endHeight)
+        return ((wall.endHeight + (wall.startHeight - wall.endHeight) * ((door.position + door.fwidth) - wall.length) / (0 - wall.length)));
+    else
+        return (wall.startHeight + (wall.endHeight - wall.startHeight) * ((door.position + door.fwidth) - wall.length) / (0 - wall.length));
+}
+
+/**
 *insertDoor
 *This function inserts the current door to the appropriate wall and position
 *@param doors - holds an array of unsorted doors
@@ -565,6 +639,26 @@ function insertDoor(door, wall) {
 }
 
 /**
+*totalSpaceLeftInWall
+*This function performs calculations to find the total space left in a wall
+*@param wall - used to hold the current wall information
+*/
+function totalSpaceLeftInWall(wall) {
+
+    //Calculates usable length in the wall
+    var totalSpace = wall.length - wall.leftFiller - wall.rightFiller;
+
+    //Loop through all the doors
+    for (var wallSpace = 0; wallSpace < wall.doors.length; wallSpace++) {
+        //Substract each door from the usable space
+        totalSpace -= wall.doors[wallSpace].fwidth;
+    }
+
+    //Return the total space remaining
+    return totalSpace;
+}
+
+/**
 *typeOfRowsDisplayed
 *This function finds which type of door is selected and displays the appropriate fields
 *from a table hidden from the user
@@ -583,9 +677,7 @@ function typeRowsDisplayed(type, wallNumber) {
     var doorTransomGlass = document.getElementById("MainContent_rowDoorTransomGlassTypes" + wallNumber + type);
     var doorKickplate = document.getElementById("MainContent_rowDoorKickplate" + wallNumber + type);
     var doorKicplateCustom = document.getElementById("MainContent_rowDoorCustomKickplate" + wallNumber + type);
-    var doorColor = document.getElementById("MainContent_rowDoorColor" + wallNumber + type);
-    var doorInternalGrillsYes = document.getElementById("MainContent_rowDoorInternalGrillsYes" + wallNumber + type);
-    var doorInternalGrillsNo = document.getElementById("MainContent_rowDoorInternalGrillsNo" + wallNumber + type);
+    var doorColour = document.getElementById("MainContent_rowDoorColour" + wallNumber + type);
     var doorHeight = document.getElementById("MainContent_rowDoorHeight" + wallNumber + type);
     var doorHeightCustom = document.getElementById("MainContent_rowDoorCustomHeight" + wallNumber + type);
     var doorWidth = document.getElementById("MainContent_rowDoorWidth" + wallNumber + type);
@@ -605,7 +697,6 @@ function typeRowsDisplayed(type, wallNumber) {
     /****END:TABLE ROWS BY ID****/
 
     /****START:RADIO BUTTONS TO BE CHECKED INITIALLY****/
-    var doorInternalGrillYesChecked = document.getElementById("MainContent_radDoorInternalGrillsYes" + wallNumber + type);
     var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + wallNumber + type).options[document.getElementById("MainContent_ddlDoorPosition" + wallNumber + type).selectedIndex].value;
     var doorHingeLHHChecked = document.getElementById("MainContent_radDoorHinge" + wallNumber + type);
     var doorSwingInChecked = document.getElementById("MainContent_radDoorSwing" + wallNumber + type);
@@ -621,7 +712,7 @@ function typeRowsDisplayed(type, wallNumber) {
         //General
         doorTitle.style.display = "inherit";
         doorStyleTable.style.display = "inherit";
-        doorColor.style.display = "inherit";
+        doorColour.style.display = "inherit";
         doorHeight.style.display = "inherit";
         doorWidth.style.display = "inherit";
         doorBoxHeader.style.display = "inherit";
@@ -642,13 +733,6 @@ function typeRowsDisplayed(type, wallNumber) {
             customDimension(wallNumber, type, "Position");
         }
 
-        //Model Specifics
-        if (model === "M400") {
-            doorInternalGrillsYes.style.display = "inherit";
-            doorInternalGrillsNo.style.display = "inherit";
-            doorInternalGrillYesChecked.setAttribute("checked", "checked");
-        }
-
         //Radio button defaults
         doorHingeLHHChecked.setAttribute("checked", "checked");
         doorSwingInChecked.setAttribute("checked", "checked");
@@ -662,7 +746,7 @@ function typeRowsDisplayed(type, wallNumber) {
         //General
         doorTitle.style.display = "inherit";
         doorStyleTable.style.display = "inherit";
-        doorColor.style.display = "inherit";
+        doorColour.style.display = "inherit";
         doorHeight.style.display = "inherit";
         doorWidth.style.display = "inherit";
         doorBoxHeader.style.display = "inherit";
@@ -682,13 +766,6 @@ function typeRowsDisplayed(type, wallNumber) {
             customDimension(wallNumber, type, "Position");
         }
 
-        //Model Specifics
-        if (model === "M400") {
-            doorInternalGrillsYes.style.display = "inherit";
-            doorInternalGrillsNo.style.display = "inherit";
-            doorInternalGrillYesChecked.setAttribute("checked", "checked");
-        }
-
         //Radio button defaults
         doorOperatorLHHChecked.setAttribute("checked", "checked");
         doorSwingInChecked.setAttribute("checked", "checked");
@@ -702,7 +779,7 @@ function typeRowsDisplayed(type, wallNumber) {
         //General
         doorTitle.style.display = "inherit";
         doorStyleTable.style.display = "inherit";
-        doorColor.style.display = "inherit";
+        doorColour.style.display = "inherit";
         doorHeight.style.display = "inherit";
         doorWidth.style.display = "inherit";
         doorTransom.style.display = "inherit";
@@ -718,13 +795,6 @@ function typeRowsDisplayed(type, wallNumber) {
         //If the value of position drop down is custom, display the appropriate field
         if (doorPositionCustom == "cPosition") {
             customDimension(wallNumber, type, "Position");
-        }
-
-        //Model Specifics
-        if (model === "M400") {
-            doorInternalGrillsYes.style.display = "inherit";
-            doorInternalGrillsNo.style.display = "inherit";
-            doorInternalGrillYesChecked.setAttribute("checked", "checked");
         }
 
         //Radio button defaults
@@ -745,28 +815,6 @@ function typeRowsDisplayed(type, wallNumber) {
             customDimension(wallNumber, type, "Position");
         }
     }
-}
-
-/**
-*validateDoorFill
-*This function validates doors that are being filled into a wall
-*@param doors - holds an array of unsorted doors
-*@param wall - used to hold the current wall information
-*@returns true or false based on if validation passes
-*/
-function validateDoorFill(door, wall) {
-
-    if ((wall.length - wall.rightFiller - wall.leftFiller) < door.fwidth) {
-        alert("This wall is too small to have a door of width " + door.fwidth + ". Please try again.");
-        return false;
-    }
-
-    if (wall.doors.length > 0) {
-        alert("Fill cannot be used on a wall with existing doors. Please empty the wall first.");
-        return false;
-    }
-
-    return true;
 }
 
 /**
@@ -840,46 +888,26 @@ function updateDoorPager(wall) {
 }
 
 /**
-*totalSpaceLeftInWall
-*This function performs calculations to find the total space left in a wall
-*@param wall - used to hold the current wall information
-*/
-function totalSpaceLeftInWall(wall) {
-
-    //Calculates usable length in the wall
-    var totalSpace = wall.length - wall.leftFiller - wall.rightFiller;
-
-    //Loop through all the doors
-    for (var wallSpace = 0; wallSpace < wall.doors.length; wallSpace++) {
-        //Substract each door from the usable space
-        totalSpace -= wall.doors[wallSpace].fwidth;
-    }
-
-    //Return the total space remaining
-    return totalSpace;
-}
-
-/**
 *validateDoor
 *This function performs validtion of the current door on existing doors
 *checks for overlaps, out of the wall, etc.
 *@param doors - holds an array of unsorted doors
 *@param wall - used to hold the current wall information
+*@return - boolean whether validation passed
 */
-function validateDoor(door, wall) {
-
+function validateDoor(door, wall) {   
     //If the door's position is smaller than the left filler,
     //the door isn't within the usable space
     if (door.position < wall.leftFiller) {
         //Error message
-        alert("Your door position is overlapping the left filler, or is a negative value. Please try again.");
+        errorMessageArea.innerHTML = "Your door position is overlapping the left filler, or is a negative value. Please try again.";
         return false;
     }
         //Else if the door's position plus its length is larger than the right fillers position,
         //the door isn't within the usable space
     else if ((door.position + door.fwidth) > (wall.length - wall.rightFiller)) {
         //Error message
-        alert("Your door position is overlapping the right filler, or larger than the wall length. Please try again.");
+        errorMessageArea.innerHTML = "Your door position is overlapping the right filler, or larger than the wall length. Please try again.";
         return false;
     }
 
@@ -896,14 +924,122 @@ function validateDoor(door, wall) {
     //If the index value is smaller than the wall.doors arrays length
     //and this door is overlapping the door after it, display the appropriate message
     if (index < wall.doors.length && (door.position + door.fwidth) > wall.doors[index].position) {
-        alert("The door you're trying to insert is overlapping door " + (index + 1) + ". Please try again.");
+        errorMessageArea.innerHTML = "The door you're trying to insert is overlapping door " + (index + 1) + ". Please try again.";
         return false;
     }
 
     //If the index value is larger than the zero
     //and this door is overlapping the door before it, display the appropriate message
     if (index > 0 && door.position < (wall.doors[index - 1].position + wall.doors[index - 1].fwidth)) {
-        alert("The door you're trying to insert is overlapping door " + index + ". Please try again.");
+        errorMessageArea.innerHTML = "The door you're trying to insert is overlapping door " + index + ". Please try again.";
+        return false;
+    }
+
+    return true;
+}
+
+/**
+*validateDoorParameters
+*This function performs validtion of the current door's parameters (height/width)
+*@param doors - holds an array of unsorted doors
+*@param wall - used to hold the current wall information
+*@return - boolean whether validation passed
+*/
+function validateDoorParameters(door, wall) {
+    //If the door type is Cabana check for minimum and maximum height and width
+    if (door.type == "Cabana") {
+        //If the door frame width is larger than the acceptable size, display error message
+        if (door.fwidth > cabanaMaxWidth) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door width is " + door.width + "\", the maximum is " + CABANA_MAX_WIDTH + "\" which is largest possible. Please try again.";
+            return false;
+        }
+        //If the door frame width is smaller than the acceptable size, display error message
+        if (door.fwidth < cabanaMinWidth) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door width is " + door.width + "\", the minimum is " + CABANA_MIN_WIDTH + "\" which is smallest possible. Please try again.";
+            return false;
+        }
+        //If the door frame height is larger than the acceptable size, display error message
+        if (door.fheight > cabanaMaxHeight) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door height is " + door.height + "\", the maximum is " + CABANA_MAX_HEIGHT + "\" which is largest possible. Please try again.";
+            return false;
+        }
+        //If the door frame height is smaller than the acceptable size, display error message
+        if (door.fheight < cabanaMinHeight) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door height is " + door.height + "\", the minimum is " + CABANA_MIN_HEIGHT + "\" which is smallest possible. Please try again.";
+            return false;
+        }
+    }
+        //If the door type is French check for minimum and maximum height and width
+    else if (door.type == "French") {
+        //If the door frame width is larger than the acceptable size, display error message
+        if (door.fwidth > frenchMaxWidth) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door width is " + door.width + "\", the maximum is " + CABANA_MAX_WIDTH * 2 + "\" which is largest possible. Please try again.";
+            return false;
+        }
+        //If the door frame width is smaller than the acceptable size, display error message
+        if (door.fwidth < frenchMinWidth) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door width is " + door.width + "\", the minimum is " + CABANA_MIN_WIDTH * 2 + "\" which is smallest possible. Please try again.";
+            return false;
+        }
+        //If the door frame height is larger than the acceptable size, display error message
+        if (door.fheight > frenchMaxHeight) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door height is " + door.height + "\", the maximum is " + CABANA_MAX_HEIGHT + "\" which is largest possible. Please try again.";
+            return false;
+        }
+        //If the door frame height is smaller than the acceptable size, display error message
+        if (door.fheight < frenchMinHeight) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door height is " + door.height + "\", the minimum is " + CABANA_MIN_HEIGHT + "\" which is smallest possible. Please try again.";
+            return false;
+        }
+    }
+        //If the door type is Patio check for minimum and maximum height and width
+    else if (door.type == "Patio") {
+        //If the door frame width is larger than the acceptable size, display error message
+        if (door.fwidth > patioMaxWidth) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door width is " + door.width + "\", the maximum is " + PATIO_DOOR_MAX_WIDTH + "\" which is largest possible. Please try again.";
+            return false;
+        }
+        //If the door frame width is smaller than the acceptable size, display error message
+        if (door.fwidth < patioMinWidth) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door width is " + door.width + "\", the minimum is " + PATIO_DOOR_MIN_WIDTH + "\" which is smallest possible. Please try again.";
+            return false;
+        }
+        //If the door frame height is larger than the acceptable size, display error message
+        if (door.fheight > patioMaxHeight) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door height is " + door.height + "\", the maximum is " + PATIO_DOOR_MAX_HEIGHT + "\" which is largest possible. Please try again.";
+            return false;
+        }
+        //If the door frame height is smaller than the acceptable size, display error message
+        if (door.fheight < patioMinHeight) {
+            errorMessageArea.innerHTML = "Your " + door.type + " door height is " + door.height + "\", the minimum is " + PATIO_DOOR_MIN_HEIGHT + "\" which is smallest possible. Please try again.";
+            return false;
+        }
+    }
+
+    if (door.fheight > findCurrentWallHeight(door, wall)) {
+        errorMessageArea.innerHTML = "Your " + door.type + " door's height in its current position is higher than the wall. Please try again.";
+        return false;
+    }
+
+    return true;
+}
+
+/**
+*validateDoorFill
+*This function validates doors that are being filled into a wall
+*@param doors - holds an array of unsorted doors
+*@param wall - used to hold the current wall information
+*@returns true or false based on if validation passes
+*/
+function validateDoorFill(door, wall) {
+
+    if ((wall.length - wall.rightFiller - wall.leftFiller) < door.fwidth) {
+        errorMessageArea.innerHTML = "This wall is too small to have a door of width " + door.fwidth + ". Please try again.";
+        return false;
+    }
+
+    if (wall.doors.length > 0) {
+        errorMessageArea.innerHTML = "Fill cannot be used on a wall with existing doors. Please empty the wall first.";
         return false;
     }
 

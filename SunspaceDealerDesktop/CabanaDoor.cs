@@ -5,40 +5,24 @@ using System.Web;
 
 namespace SunspaceDealerDesktop
 {
-    public class CabanaDoor
+    public class CabanaDoor : Door
     {
         #region Attributes
-        private float width;
-        private float height; //79.125 if 2", 82.125 if 3"
-        private string swingDirection; //in or out
-        private string hingePosition; //Left or Right
-        private string boxHeader; //Left, right, both. Must have one on hinge, must have one on strike if it meets solid wall
+        private float height = 0f;          //Door height: 80" (stored value: 80)
+        private float length = 0f;          //Door width: 30" (stored value: 30)
+        private string vinylTint = null;    //Door vinyl tint: Smoke Grey, DarkGrey, Bronze, Clear, Mixed (stored value: Smoke Grey)
+        private string screenType = null;   //Door screen type: Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen (stored value: Better Vue Insect Screen)
+        private string glassTint = null;    //Door glass tint: Grey, Bronze, Clear
+        private string hinge = null;        //Door hinge placement: Left or Right (stored value: Left)
+        private string swing = null;        //Door swing: In or Out (stored value: In)
+        private string hardwareType = null; //Door hardware type: Satin Silver, Bright Brass, Antique Brass (stored value: Satin Silver)
         #endregion
 
-        #region Constructors
-        public CabanaDoor()
-        {
-            width = 0f;
-            height = 79.125f;
-            swingDirection = "out";
-            hingePosition = "left";
-            boxHeader = "left";
-        }
+        #region Constructor
+        public CabanaDoor() : base() {}
         #endregion
 
         #region Accessors
-        public float Width
-        {
-            get
-            {
-                return width;
-            }
-
-            set
-            {
-                width = value;
-            }
-        }
         public float Height
         {
             get
@@ -51,40 +35,88 @@ namespace SunspaceDealerDesktop
                 height = value;
             }
         }
-        public string SwingDirection
+        public float Length
         {
             get
             {
-                return swingDirection;
+                return length;
             }
 
             set
             {
-                swingDirection = value;
+                length = value;
+            }
+        }        
+        public string VinylTint
+        {
+            get
+            {
+                return vinylTint;
+            }
+
+            set
+            {
+                vinylTint = value;
             }
         }
-        public string HingePosition
+        public string GlassTint
         {
             get
             {
-                return hingePosition;
+                return glassTint;
             }
 
             set
             {
-                hingePosition = value;
+                glassTint = value;
             }
         }
-        public string BoxHeader
+        public string ScreenType
         {
             get
             {
-                return boxHeader;
+                return screenType;
             }
 
             set
             {
-                boxHeader = value;
+                screenType = value;
+            }
+        }
+        public string Hinge
+        {
+            get
+            {
+                return hinge;
+            }
+
+            set
+            {
+                hinge = value;
+            }
+        }
+        public string Swing
+        {
+            get
+            {
+                return swing;
+            }
+
+            set
+            {
+                swing = value;
+            }
+        }
+        public string HardwareType
+        {
+            get
+            {
+                return hardwareType;
+            }
+
+            set
+            {
+                hardwareType = value;
             }
         }
         #endregion

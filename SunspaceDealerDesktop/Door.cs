@@ -7,39 +7,22 @@ namespace SunspaceDealerDesktop
 {
     public class Door
     {
-        private String typeOfDoor; //Type of Door String
-        //private bool isPatioDoor; //True if Patio Door ?????????????
-        private int itemIndex; //LinearItems Array Index
-        private String transomStyle; //Transom Style: 0-Solid, 1-Glass, 2-Vinyl , glass rect, vinyl rect
-        private String transomTint;
-        //private int underHeaderStyle; //Transom Style: 0-Solid, 1-Glass, 2-Vinyl , glass rect, vinyl rect
-        //private int underHeaderTint; //?????????????????????????????????????????????????????????????????
-        private float height; //Punch Height of Door
-        private float width; //Door Width (Not including Frame)
+        #region Attributes
+        private int itemIndex = 0;          //LinearItems Array Index (stored value: 1)
+        private string doorType = null;     //Door type: Cabana, French, Patio, NoDoor (stored value: Cabana)
+        private string doorStyle = null;    //Door style: Full View, Vertical Four Track, Full View Colonial, etc... (stored value: Full View)
+        private string screenType = null;   //Door screen type: Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen (stored value: Better Vue Insect Screen)
+        private float fHeight = 0f;         //Door height including frame: 79.125" (stored value: 79.125)
+        private float fLength = 0f;         //Door lenth including frame: 32.125" (stored value: 32.125)
+        private string colour = null;       //Door colour: White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey (stored value: White)
+        private float kickplate = 0f;       //Door kickplate height: 6" (stored value: 6)
+        #endregion
 
-        public Door()
-        {
-            TypeOfDoor = "cabana"; 
-            ItemIndex = -1;
-            TransomStyle = "solid"; 
-            TransomTint = "glass";
-            Height = 80f; 
-            Width = 40f;
-        }
+        #region Constructor
+        public Door() {}
+        #endregion
 
-        public String TypeOfDoor
-        {
-            get
-            {
-                return typeOfDoor;
-            }
-
-            set
-            {
-                typeOfDoor = value.ToLower();
-            }
-        }
-       
+        #region Accessors
         public int ItemIndex
         {
             get
@@ -52,58 +35,91 @@ namespace SunspaceDealerDesktop
                 itemIndex = value;
             }
         }
-
-        public String TransomStyle
+        public String DoorType
         {
             get
             {
-                return transomStyle;
+                return doorType;
             }
 
             set
             {
-                transomStyle = value.ToLower();
+                doorType = value;
             }
-        }
-
-        public String TransomTint
+        }              
+        public String DoorStyle
         {
             get
             {
-                return transomTint;
+                return doorStyle;
             }
 
             set
             {
-                transomTint = value.ToLower();
+                doorStyle = value;
             }
         }
-
-        public float Height
+        public string ScreenType
         {
             get
             {
-                return height;
+                return screenType;
             }
 
             set
             {
-                height = value;
+                screenType = value;
             }
         }
-
-        public float Width
+        public float FHeight
         {
             get
             {
-                return width;
+                return fHeight;
             }
 
             set
             {
-                width = value;
+                fHeight = value;
             }
         }
+        public float FLength
+        {
+            get
+            {
+                return fLength;
+            }
+
+            set
+            {
+                fLength = value;
+            }
+        }
+        public string Colour
+        {
+            get
+            {
+                return colour;
+            }
+
+            set
+            {
+                colour = value;
+            }
+        }
+        public float Kickplate
+        {
+            get
+            {
+                return kickplate;
+            }
+
+            set
+            {
+                kickplate = value;
+            }
+        }
+        #endregion
 
         /*
         bool patioXO; //??????????????

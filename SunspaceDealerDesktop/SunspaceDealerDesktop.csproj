@@ -215,11 +215,11 @@
     <Content Include="packages.config" />
     <Content Include="Content\fonts\Shanti-Regular.ttf" />
     <Content Include="ProjectPreview.aspx" />
-    <Content Include="RoofWizard.aspx" />
     <Content Include="Scripts\DoorSlideFunctions.js" />
     <Content Include="Scripts\MiniCanvasFunctions.js" />
     <Content Include="SkylightWizard.aspx" />
     <Content Include="Spoof.aspx" />
+    <Content Include="WizardFloors.aspx" />
     <Content Include="WizardWallsAndMods.aspx" />
     <Content Include="NoIcons.Master" />
     <Content Include="WizardWindows.aspx" />
@@ -353,6 +353,7 @@
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="OpenSpaceDoor.cs" />
     <Compile Include="Preferences.aspx.cs">
       <DependentUpon>Preferences.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -462,6 +463,13 @@
     </Compile>
     <Compile Include="Wall.cs" />
     <Compile Include="Window.cs" />
+    <Compile Include="WizardFloors.aspx.cs">
+      <DependentUpon>WizardFloors.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WizardFloors.aspx.designer.cs">
+      <DependentUpon>WizardFloors.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WizardWallsAndMods.aspx.cs">
       <DependentUpon>WizardWallsAndMods.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -286,9 +286,9 @@ namespace SunspaceDealerDesktop
             {
                 ddl100DoorColour.Items.Add(new ListItem(Constants.DOOR_COLOURS[i], Constants.DOOR_COLOURS[i]));
             }
-            for (int i = 0; i < Constants.GLASS_DOOR_TINTS.Count(); i++)
+            for (int i = 0; i < Constants.DOOR_GLASS_TINTS.Count(); i++)
             {
-                ddl100DoorGlassTint.Items.Add(new ListItem(Constants.GLASS_DOOR_TINTS[i], Constants.GLASS_DOOR_TINTS[i]));
+                ddl100DoorGlassTint.Items.Add(new ListItem(Constants.DOOR_GLASS_TINTS[i], Constants.DOOR_GLASS_TINTS[i]));
             }
             for (int i = 0; i < Constants.VINYL_TINTS.Count(); i++)
             {
@@ -322,9 +322,9 @@ namespace SunspaceDealerDesktop
             {
                 ddl200DoorColour.Items.Add(new ListItem(Constants.DOOR_COLOURS[i], Constants.DOOR_COLOURS[i]));
             }
-            for (int i = 0; i < Constants.GLASS_DOOR_TINTS.Count(); i++)
+            for (int i = 0; i < Constants.DOOR_GLASS_TINTS.Count(); i++)
             {
-                ddl200DoorGlassTint.Items.Add(new ListItem(Constants.GLASS_DOOR_TINTS[i], Constants.GLASS_DOOR_TINTS[i]));
+                ddl200DoorGlassTint.Items.Add(new ListItem(Constants.DOOR_GLASS_TINTS[i], Constants.DOOR_GLASS_TINTS[i]));
             }
             for (int i = 0; i < Constants.VINYL_TINTS.Count(); i++)
             {
@@ -358,9 +358,9 @@ namespace SunspaceDealerDesktop
             {
                 ddl300DoorColour.Items.Add(new ListItem(Constants.DOOR_COLOURS[i], Constants.DOOR_COLOURS[i]));
             }
-            for (int i = 0; i < Constants.GLASS_DOOR_TINTS.Count(); i++)
+            for (int i = 0; i < Constants.DOOR_GLASS_TINTS.Count(); i++)
             {
-                ddl300DoorGlassTint.Items.Add(new ListItem(Constants.GLASS_DOOR_TINTS[i], Constants.GLASS_DOOR_TINTS[i]));
+                ddl300DoorGlassTint.Items.Add(new ListItem(Constants.DOOR_GLASS_TINTS[i], Constants.DOOR_GLASS_TINTS[i]));
             }
             for (int i = 0; i < Constants.VINYL_TINTS.Count(); i++)
             {
@@ -394,9 +394,9 @@ namespace SunspaceDealerDesktop
             {
                 ddl400DoorColour.Items.Add(new ListItem(Constants.DOOR_COLOURS[i], Constants.DOOR_COLOURS[i]));
             }
-            for (int i = 0; i < Constants.GLASS_DOOR_TINTS.Count(); i++)
+            for (int i = 0; i < Constants.DOOR_GLASS_TINTS.Count(); i++)
             {
-                ddl400DoorGlassTint.Items.Add(new ListItem(Constants.GLASS_DOOR_TINTS[i], Constants.GLASS_DOOR_TINTS[i]));
+                ddl400DoorGlassTint.Items.Add(new ListItem(Constants.DOOR_GLASS_TINTS[i], Constants.DOOR_GLASS_TINTS[i]));
             }
             for (int i = 0; i < Constants.VINYL_TINTS.Count(); i++)
             {

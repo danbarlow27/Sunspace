@@ -5,10 +5,81 @@ using System.Web;
 
 namespace SunspaceDealerDesktop
 {
-    public class PatioDoor
+    public class PatioDoor : Door
     {
-        private float height;
-        private float length;
-        private float sizeModifier; //1.125 if 2" wall thickness, 1.625 if 3" wall thickness
+        #region Attributes
+        private float height = 0f;          //Door height: 80" (stored value: 80)
+        private float length = 0f;          //Door width: 30" (stored value: 30)
+        private string screenType = null;   //Door screen type: Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen (stored value: Better Vue Insect Screen)
+        private string glassTint = null;    //Door glass tint: Grey, Bronze, Clear (stored value: Grey)
+        private string movingDoor = null;   //Door moving door: Left or Right (stored value: Left)
+        #endregion
+
+        #region Constructor
+        public PatioDoor() : base() {}
+        #endregion
+
+        #region Accessors
+        public float Height
+        {
+            get
+            {
+                return height;
+            }
+
+            set
+            {
+                height = value;
+            }
+        }
+        public float Length
+        {
+            get
+            {
+                return length;
+            }
+
+            set
+            {
+                length = value;
+            }
+        }
+        public string ScreenType
+        {
+            get
+            {
+                return screenType;
+            }
+
+            set
+            {
+                screenType = value;
+            }
+        }
+        public string GlassTint
+        {
+            get
+            {
+                return glassTint;
+            }
+
+            set
+            {
+                glassTint = value;
+            }
+        }
+        public string MovingDoor
+        {
+            get
+            {
+                return movingDoor;
+            }
+
+            set
+            {
+                movingDoor = value;
+            }
+        }
+        #endregion
     }
 }
