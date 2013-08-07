@@ -425,6 +425,9 @@ see "new soffit conundrum" image on desktop for new soffit conundrum... [SOLVED]
 Update [3/8/2013]: most of the problems solved... see below... however some new soffit conundrums appeared which need to be dealt with.... 
                     see diagram in notebook and dropbox for details on the conundrum.
 
+UPDATE [7/8/2013]: NO MORE DIFFERENT SOFFIT LENGTHS... SOFFIT LENGTH ONLY APPLIES TO THE BACK WALL ... THE REST GETS SLOPED DOWN. 
+                    NO PLATEAU SITUATION.
+
 
         */
         function determineSoffitLengthOfEachWall() {
