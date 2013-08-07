@@ -296,7 +296,7 @@ namespace SunspaceDealerDesktop
             txtLeftFiller.ID = "txtWall" + i + "LeftFiller"; //give an appropriate id to the left filler textbox
             txtLeftFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
             txtLeftFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
-            txtLeftFiller.Text = SUGGESTED_DEFAULT_FILLER.ToString();
+            txtLeftFiller.Text = Constants.PREFERRED_DEFAULT_FILLER.ToString();
             txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
             txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
             txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
@@ -305,7 +305,7 @@ namespace SunspaceDealerDesktop
             txtRightFiller.ID = "txtWall" + i + "RightFiller";//give an appropriate id to the right filler textbox
             txtRightFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
             txtRightFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
-            txtRightFiller.Text = SUGGESTED_DEFAULT_FILLER.ToString();
+            txtRightFiller.Text = Constants.PREFERRED_DEFAULT_FILLER.ToString();
             txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");//set its attribute to check question 1 on key up
             txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
             txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
