@@ -111,6 +111,8 @@
 
                         var door = wall.doors[doorCount];
 
+                        //console.log(door["colour"]);
+
                         var hiddenPropertiesCount = document.createElement("input");
                         hiddenPropertiesCount.setAttribute("type", "hidden");
                         hiddenPropertiesCount.setAttribute("name", "wall" + i + "Door" + doorCount + "PropertyCount");
@@ -124,6 +126,8 @@
                                 hiddenDoorProperty.setAttribute("type", "hidden");
                                 hiddenDoorProperty.setAttribute("name", "wall" + i + "Door" + doorCount + prop[0].toUpperCase() + prop.substr(1));
                                 hiddenDoorProperty.value = door[prop];
+
+                                console.log("wall" + i + "Door" + doorCount + prop[0].toUpperCase() + prop.substr(1) + " \ " + door[prop]);
 
                                 hiddenDiv.appendChild(hiddenDoorProperty);
                             }

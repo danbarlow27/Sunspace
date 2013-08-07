@@ -11,50 +11,86 @@ namespace SunspaceDealerDesktop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            testField.InnerText = (string)Session["DoorCount2"];            
+            //testField.InnerText = (string)Session["Wall4DoorCount2"];            
 
-            if (typeof(CabanaDoor) == Session["Door0"].GetType())
+            if (typeof(CabanaDoor) == Session["Wall4Door0"].GetType())
             {
-                CabanaDoor typeDoor = (CabanaDoor)Session["Door0"];
-                testField.InnerText += "\t" + (string)typeDoor.DoorType;
-                testField.InnerText += "\t" + (string)typeDoor.DoorStyle;
-                testField.InnerText += "\t" + (string)typeDoor.Colour;
-                testField.InnerText += "\t" + Convert.ToString(typeDoor.FHeight);
-                testField.InnerText += "\t" + Convert.ToString(typeDoor.FLength);
-                testField.InnerText += "\t" + (string)typeDoor.ScreenType;
-                testField.InnerText += "\t" + (string)typeDoor.GlassTint;
+                CabanaDoor typeDoor = (CabanaDoor)Session["Wall4Door0"];
+
+                //Door fields
+                testField.InnerText += "Type: " + typeDoor.DoorType + " | ";
+                testField.InnerText += "Style: " + typeDoor.DoorStyle + " | ";
+                testField.InnerText += "Colour: " + typeDoor.Colour + " | ";
+                testField.InnerText += "FramedHeight: " + typeDoor.FHeight + " | ";
+                testField.InnerText += "FramedLength: " + typeDoor.FLength + " | ";
+                testField.InnerText += "ScreenType: " + typeDoor.ScreenType + " | ";
+
+                //Cabana fields
+                testField.InnerText += "Height: " + typeDoor.Height + " | ";
+                testField.InnerText += "Length: " + typeDoor.Length + " | ";
+                testField.InnerText += "VinylTint: " + typeDoor.VinylTint + " | ";
+                testField.InnerText += "ScreenType: " + typeDoor.ScreenType + " | ";
+                testField.InnerText += "GlassTint: " + typeDoor.GlassTint + " | ";
+                testField.InnerText += "Hinge: " + typeDoor.Hinge + " | ";
+                testField.InnerText += "Swing: " + typeDoor.Swing + " | ";
+                testField.InnerText += "HardwareType: " + typeDoor.HardwareType + " | ";
             }
-            if (typeof(FrenchDoor) == Session["Door0"].GetType())
+            if (typeof(FrenchDoor) == Session["Wall4Door0"].GetType())
             {
-                FrenchDoor typeDoor = (FrenchDoor)Session["Door0"];
-                testField.InnerText += "\t" + (string)typeDoor.DoorType;
-                testField.InnerText += "\t" + (string)typeDoor.DoorStyle;
-                testField.InnerText += "\t" + (string)typeDoor.Colour;
-                testField.InnerText += "\t" + Convert.ToString(typeDoor.FHeight);
-                testField.InnerText += "\t" + Convert.ToString(typeDoor.FLength);
-                testField.InnerText += "\t" + (string)typeDoor.ScreenType;
-                testField.InnerText += "\t" + (string)typeDoor.GlassTint;
+                FrenchDoor typeDoor = (FrenchDoor)Session["Wall4Door0"];
+
+                //Door fields
+                testField.InnerText += "Type: " + typeDoor.DoorType + " | ";
+                testField.InnerText += "Style: " + typeDoor.DoorStyle + " | ";
+                testField.InnerText += "Colour: " + typeDoor.Colour + " | ";
+                testField.InnerText += "FramedHeight: " + typeDoor.FHeight + " | ";
+                testField.InnerText += "FramedLength: " + typeDoor.FLength + " | ";
+                testField.InnerText += "ScreenType: " + typeDoor.ScreenType + " | ";
+
+                //Cabana fields
+                testField.InnerText += "Height: " + typeDoor.Height + " | ";
+                testField.InnerText += "Length: " + typeDoor.Length + " | ";
+                testField.InnerText += "GlassTint: " + typeDoor.GlassTint + " | ";
+                testField.InnerText += "ScreenType: " + typeDoor.ScreenType + " | ";
+                testField.InnerText += "VinylTint: " + typeDoor.VinylTint + " | ";
+                testField.InnerText += "Swing: " + typeDoor.Swing + " | ";
+                testField.InnerText += "OperatingDoor: " + typeDoor.OperatingDoor + " | ";
+                testField.InnerText += "HardwareType: " + typeDoor.HardwareType + " | ";
             }
-            if (typeof(PatioDoor) == Session["Door0"].GetType())
+            if (typeof(PatioDoor) == Session["Wall4Door0"].GetType())
             {
-                PatioDoor typeDoor = (PatioDoor)Session["Door0"];
-                testField.InnerText += "\t" + (string)typeDoor.DoorType;
-                testField.InnerText += "\t" + (string)typeDoor.DoorStyle;
-                testField.InnerText += "\t" + (string)typeDoor.Colour;
-                testField.InnerText += "\t" + Convert.ToString(typeDoor.FHeight);
-                testField.InnerText += "\t" + Convert.ToString(typeDoor.FLength);
-                testField.InnerText += "\t" + (string)typeDoor.ScreenType;
-                testField.InnerText += "\t" + (string)typeDoor.GlassTint;
+                PatioDoor typeDoor = (PatioDoor)Session["Wall4Door0"];
+
+                //Door fields
+                testField.InnerText += "Type: " + typeDoor.DoorType + " | ";
+                testField.InnerText += "Style: " + typeDoor.DoorStyle + " | ";
+                testField.InnerText += "Colour: " + typeDoor.Colour + " | ";
+                testField.InnerText += "FramedHeight: " + typeDoor.FHeight + " | ";
+                testField.InnerText += "FramedLength: " + typeDoor.FLength + " | ";
+                testField.InnerText += "ScreenType: " + typeDoor.ScreenType + " | ";
+
+                //Cabana fields
+                testField.InnerText += "Height: " + typeDoor.Height + " | ";
+                testField.InnerText += "Length: " + typeDoor.Length + " | ";
+                testField.InnerText += "GlassTint: " + typeDoor.GlassTint + " | ";
+                testField.InnerText += "MovingDoor: " + typeDoor.MovingDoor + " | ";
+                
             }
-            if (typeof(OpenSpaceDoor) == Session["Door0"].GetType())
+            if (typeof(OpenSpaceDoor) == Session["Wall4Door0"].GetType())
             {
-                OpenSpaceDoor typeDoor = (OpenSpaceDoor)Session["Door0"];
-                testField.InnerText += "\t" + (string)typeDoor.DoorType;
-                testField.InnerText += "\t" + (string)typeDoor.DoorStyle;
-                testField.InnerText += "\t" + (string)typeDoor.Colour;
-                testField.InnerText += "\t" + Convert.ToString(typeDoor.FHeight);
-                testField.InnerText += "\t" + Convert.ToString(typeDoor.FLength);
-                testField.InnerText += "\t" + (string)typeDoor.ScreenType;
+                OpenSpaceDoor typeDoor = (OpenSpaceDoor)Session["Wall4Door0"];
+
+                //Door fields
+                testField.InnerText += "Type: " + typeDoor.DoorType + " | ";
+                testField.InnerText += "Style: " + typeDoor.DoorStyle + " | ";
+                testField.InnerText += "Colour: " + typeDoor.Colour + " | ";
+                testField.InnerText += "FramedHeight: " + typeDoor.FHeight + " | ";
+                testField.InnerText += "FramedLength: " + typeDoor.FLength + " | ";
+                testField.InnerText += "ScreenType: " + typeDoor.ScreenType + " | ";
+
+                //OpenSpace fields
+                testField.InnerText += "Height: " + typeDoor.Height + " | ";
+                testField.InnerText += "Lenght: " + typeDoor.Length + " | ";
             }
             //string[] newViewingArray = (string[])Session["viewingArray"];
 

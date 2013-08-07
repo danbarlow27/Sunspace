@@ -51,6 +51,7 @@ namespace SunspaceDealerDesktop
             /***hard coded variables***/
             Session["model"] = "M300";
             Session["soffitLength"] = 0F;
+
             /****************diffrent sunroom layouts******************/
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
             //Session["coordList"] = "75,425,150,150,E,S/150,150,150,250,P,W/150,350,250,250,P,S/350,350,250,150,P,E/";
@@ -737,78 +738,24 @@ namespace SunspaceDealerDesktop
 
                 #region Table:Third Row Color of Door (tblDoorDetails)
 
-                TableRow colorOfDoorRow = new TableRow();
-                colorOfDoorRow.ID = "rowDoorColor" + i + title;
-                colorOfDoorRow.Attributes.Add("style", "display:none;");
-                TableCell colorOfDoorLBLCell = new TableCell();
-                TableCell colorOfDoorDDLCell = new TableCell();
+                TableRow colourOfDoorRow = new TableRow();
+                colourOfDoorRow.ID = "rowDoorColour" + i + title;
+                colourOfDoorRow.Attributes.Add("style", "display:none;");
+                TableCell colourOfDoorLBLCell = new TableCell();
+                TableCell colourOfDoorDDLCell = new TableCell();
 
-                Label colorOfDoorLBL = new Label();
-                colorOfDoorLBL.ID = "lblDoorColor" + i + title;
-                colorOfDoorLBL.Text = "Color:";
+                Label colourOfDoorLBL = new Label();
+                colourOfDoorLBL.ID = "lblDoorColour" + i + title;
+                colourOfDoorLBL.Text = "Colour:";
 
-                DropDownList colorOfDoorDDL = new DropDownList();
-                colorOfDoorDDL.ID = "ddlDoorColor" + i + title;
+                DropDownList colourOfDoorDDL = new DropDownList();
+                colourOfDoorDDL.ID = "ddlDoorColour" + i + title;
                 for (int j = 0; j < Constants.DOOR_COLOURS.Count(); j++)
                 {
-                    colorOfDoorDDL.Items.Add(new ListItem(Constants.DOOR_COLOURS[j], Constants.DOOR_COLOURS[j]));
+                    colourOfDoorDDL.Items.Add(new ListItem(Constants.DOOR_COLOURS[j], Constants.DOOR_COLOURS[j]));
                 }
 
-                colorOfDoorLBL.AssociatedControlID = "ddlDoorColor" + i + title;
-
-                #endregion
-
-                #region Table:# Row Door Internal Grills Yes(tblDoorDetails)
-
-                TableRow doorInternalGrillsYesRow = new TableRow();
-                doorInternalGrillsYesRow.ID = "rowDoorInternalGrillsYes" + i + title;
-                doorInternalGrillsYesRow.Attributes.Add("style", "display:none;");
-                TableCell doorInternalGrillsYesLBLCell = new TableCell();
-                TableCell doorInternalGrillsYesRADCell = new TableCell();
-
-                Label doorInternalGrillsYesLBLMain = new Label();
-                doorInternalGrillsYesLBLMain.ID = "lblDoorInternalGrillsMain" + i + title;
-                doorInternalGrillsYesLBLMain.Text = "Internal Grills:";
-
-                Label doorInternalGrillsYesLBLRad = new Label();
-                doorInternalGrillsYesLBLRad.ID = "lblDoorInternalGrillRadYes" + i + title;
-
-                Label doorInternalGrillsYesLBL = new Label();
-                doorInternalGrillsYesLBL.ID = "lblDoorInternalGrillsYes" + i + title;
-                doorInternalGrillsYesLBL.Text = "Yes";
-
-                RadioButton doorInternalGrillsYesRad = new RadioButton();
-                doorInternalGrillsYesRad.ID = "radDoorInternalGrills" + i + title;
-                doorInternalGrillsYesRad.Attributes.Add("value", "Yes");
-                doorInternalGrillsYesRad.GroupName = "InternalGrills" + i + title;
-
-                doorInternalGrillsYesLBLRad.AssociatedControlID = "radDoorInternalGrills" + i + title;
-                doorInternalGrillsYesLBL.AssociatedControlID = "radDoorInternalGrills" + i + title;
-
-                #endregion
-
-                #region Table:# Row Door Internal Grills No (tblDoorDetails)
-
-                TableRow doorInternalGrillsNoRow = new TableRow();
-                doorInternalGrillsNoRow.ID = "rowDoorInternalGrillsNo" + i + title;
-                doorInternalGrillsNoRow.Attributes.Add("style", "display:none;");
-                TableCell doorInternalGrillsNoLBLCell = new TableCell();
-                TableCell doorInternalGrillsNoRADCell = new TableCell();
-
-                Label doorInternalGrillsNoLBLRad = new Label();
-                doorInternalGrillsNoLBLRad.ID = "lblDoorInternalGrillsRadNo" + i + title;
-
-                Label doorInternalGrillsNoLBL = new Label();
-                doorInternalGrillsNoLBL.ID = "lblDoorInternalGrillsNo" + i + title;
-                doorInternalGrillsNoLBL.Text = "No";
-
-                RadioButton doorInternalGrillsNoRad = new RadioButton();
-                doorInternalGrillsNoRad.ID = "radDoorInternalGrillsNo" + i + title;
-                doorInternalGrillsNoRad.Attributes.Add("value", "No");
-                doorInternalGrillsNoRad.GroupName = "InternalGrills" + i + title;
-
-                doorInternalGrillsNoLBLRad.AssociatedControlID = "radDoorInternalGrillsNo" + i + title;
-                doorInternalGrillsNoLBL.AssociatedControlID = "radDoorInternalGrillsNo" + i + title;
+                colourOfDoorLBL.AssociatedControlID = "ddlDoorColour" + i + title;
 
                 #endregion
 
@@ -1418,41 +1365,13 @@ namespace SunspaceDealerDesktop
 
                 #region Table:Third Row Color of Door Added to Table (tblDoorDetails)
 
-                colorOfDoorLBLCell.Controls.Add(colorOfDoorLBL);
-                colorOfDoorDDLCell.Controls.Add(colorOfDoorDDL);
+                colourOfDoorLBLCell.Controls.Add(colourOfDoorLBL);
+                colourOfDoorDDLCell.Controls.Add(colourOfDoorDDL);
 
-                tblDoorDetails.Rows.Add(colorOfDoorRow);
+                tblDoorDetails.Rows.Add(colourOfDoorRow);
 
-                colorOfDoorRow.Cells.Add(colorOfDoorLBLCell);
-                colorOfDoorRow.Cells.Add(colorOfDoorDDLCell);
-
-                #endregion
-
-                #region Table:# Row Door Internal Grills Yes Added To Table (tblDoorDetails)
-
-                doorInternalGrillsYesLBLCell.Controls.Add(doorInternalGrillsYesLBLMain);
-
-                doorInternalGrillsYesRADCell.Controls.Add(doorInternalGrillsYesRad);
-                doorInternalGrillsYesRADCell.Controls.Add(doorInternalGrillsYesLBLRad);
-                doorInternalGrillsYesRADCell.Controls.Add(doorInternalGrillsYesLBL);
-
-                tblDoorDetails.Rows.Add(doorInternalGrillsYesRow);
-
-                doorInternalGrillsYesRow.Cells.Add(doorInternalGrillsYesLBLCell);
-                doorInternalGrillsYesRow.Cells.Add(doorInternalGrillsYesRADCell);
-
-                #endregion
-
-                #region Table:# Row Door Internal Grills No Added To Table (tblDoorDetails)
-
-                doorInternalGrillsNoRADCell.Controls.Add(doorInternalGrillsNoRad);
-                doorInternalGrillsNoRADCell.Controls.Add(doorInternalGrillsNoLBLRad);
-                doorInternalGrillsNoRADCell.Controls.Add(doorInternalGrillsNoLBL);
-
-                tblDoorDetails.Rows.Add(doorInternalGrillsNoRow);
-
-                doorInternalGrillsNoRow.Cells.Add(doorInternalGrillsNoLBLCell);
-                doorInternalGrillsNoRow.Cells.Add(doorInternalGrillsNoRADCell);
+                colourOfDoorRow.Cells.Add(colourOfDoorLBLCell);
+                colourOfDoorRow.Cells.Add(colourOfDoorDDLCell);
 
                 #endregion
 
@@ -2932,12 +2851,11 @@ namespace SunspaceDealerDesktop
             for (int walls = wallStartIndex; walls <= wallCount; walls++) {
 
                 int doorCount = Convert.ToInt32(Request.Form["wall" + walls + "DoorCount"]);
-                Session["DoorCount" + walls] = Request.Form["wall" + walls + "DoorCount"];
+                Session["Wall" + walls + "DoorCount" + walls] = Request.Form["wall" + walls + "DoorCount"];
                 Door aDoor;
 
                 for (int doors = 0; doors < doorCount; doors++) {
-                                        
-                    int propertyCount = Convert.ToInt32(Request.Form["wall" + walls + "Door" + doors + "PropertyCount"]);
+
                     string doorType = Request.Form["wall" + walls + "Door" + doors + "type"];
 
                     aDoor = new Door();
@@ -2948,12 +2866,14 @@ namespace SunspaceDealerDesktop
                         
                         CabanaDoor newCabana = (CabanaDoor)aDoor;
 
-                        newCabana.GlassTint = Request.Form["wall" + walls + "Door" + doors + "GlassTint"];
-                        newCabana.HardwareType = Request.Form["wall" + walls + "Door" + doors + "HardwareType"];
-                        newCabana.Hinge = Request.Form["wall" + walls + "Door" + doors + "Hinge"];
-                        newCabana.Swing = Request.Form["wall" + walls + "Door" + doors + "Swing"];
+                        newCabana.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
+                        newCabana.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
                         newCabana.VinylTint = Request.Form["wall" + walls + "Door" + doors + "VinylTint"];
                         newCabana.ScreenType = Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"];
+                        newCabana.GlassTint = Request.Form["wall" + walls + "Door" + doors + "GlassTint"];
+                        newCabana.Hinge = Request.Form["wall" + walls + "Door" + doors + "Hinge"];
+                        newCabana.Swing = Request.Form["wall" + walls + "Door" + doors + "Swing"];
+                        newCabana.HardwareType = Request.Form["wall" + walls + "Door" + doors + "Hardware"];
                     }
                     else if (doorType == "French")
                     {
@@ -2963,12 +2883,12 @@ namespace SunspaceDealerDesktop
 
                         newFrench.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
                         newFrench.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
-                        newFrench.VinylTint = Convert.ToString(Request.Form["wall" + walls + "Door" + doors + "VinylTint"]);
+                        newFrench.VinylTint = Request.Form["wall" + walls + "Door" + doors + "VinylTint"];
                         newFrench.ScreenType = Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"];
                         newFrench.GlassTint = Request.Form["wall" + walls + "Door" + doors + "GlassTint"];
                         newFrench.Swing = Request.Form["wall" + walls + "Door" + doors + "Swing"];
                         newFrench.OperatingDoor = Request.Form["wall" + walls + "Door" + doors + "Operator"];
-                        newFrench.HardwareType = Request.Form["wall" + walls + "Door" + doors + "HardwareType"];
+                        newFrench.HardwareType = Request.Form["wall" + walls + "Door" + doors + "Hardware"];
                     }
                     else if (doorType == "Patio")
                     {
@@ -2999,8 +2919,10 @@ namespace SunspaceDealerDesktop
                     aDoor.FHeight = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "FHeight"]);
                     aDoor.FLength = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "FWidth"]);                    
                     aDoor.Colour = Request.Form["wall" + walls + "Door" + doors + "Colour"];
+                    System.Diagnostics.Debug.WriteLine("This colour is: " + Request.Form["wall" + walls + "Door" + doors + "Colour"]);
+                    aDoor.Kickplate = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Kickplate"]);
 
-                    Session["Door" + doors] = aDoor;
+                    Session["Wall" + walls + "Door" + doors] = aDoor;
                 }
             }
 
