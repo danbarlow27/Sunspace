@@ -386,9 +386,26 @@
                     //no type selection, errors
                 }
 
-                if ($('#<%=txtSoffitLength.ClientID%>').val() == "")
+                if ($('#<%=txtSoffitLength.ClientID%>').val() != "")
                 {
-
+                    if (isNaN($('#<%=txtSoffitLength.ClientID%>').val()))
+                    {                        
+                        document.getElementById('<%=btnQuestion7.ClientID%>').disabled = true;
+                        document.getElementById('pagerSeven').style.display = "none";
+                    }
+                    else
+                    { 
+                        document.getElementById('<%=btnQuestion7.ClientID%>').disabled = false;                       
+                        $('#<%=lblQuestion7PagerSecondAnswer.ClientID%>').text($('#<%=txtSoffitLength.ClientID%>').val());
+                        document.getElementById('pagerSeven').style.display = "inline";
+                        document.getElementById('<%=hidSoffitLength.ClientID%>').value = $('<%=txtSoffitLength.ClientID%>').val();
+                    }
+                }
+                else
+                {
+                    document.getElementById('<%=btnQuestion7.ClientID%>').disabled = true;
+                    document.getElementById('pagerSeven').style.display = "none";
+                    //please enter a soffit length
                 }
             }
             else {
@@ -1379,35 +1396,35 @@
                         </li>          
                     </div>    
                   
-                    <div style="display: none" id="pagerSix">
-                        <li>
-                                <a href="#" data-slide="#slide6" class="slidePanel">
-                                    <asp:Label ID="Label1" runat="server" Text="Prefab floor"></asp:Label>
-                                    <asp:Label ID="lblQuestion6PagerAnswer" runat="server" Text="Question 6 Answer"></asp:Label>
-                                </a>
-                        </li>
-                    </div>
+                <div style="display: none" id="pagerSix">
+                    <li>
+                            <a href="#" data-slide="#slide6" class="slidePanel">
+                                <asp:Label ID="Label1" runat="server" Text="Prefab floor"></asp:Label>
+                                <asp:Label ID="lblQuestion6PagerAnswer" runat="server" Text="Question 6 Answer"></asp:Label>
+                            </a>
+                    </li>
+                </div>
 
-                    <div style="display: none" id="pagerSeven">                
-                        <li>
-                                <a href="#" data-slide="#slide7" class="slidePanel">
-                                    <asp:Label ID="Label3" runat="server" Text="Roof"></asp:Label>
-                                    <asp:Label ID="lblQuestion7PagerAnswer" runat="server" Text="Question 7 Answer"></asp:Label>
-                                </a>
-                        </li>
-                    </div>
+                <div style="display: none" id="pagerSeven">                
+                    <li>
+                            <a href="#" data-slide="#slide7" class="slidePanel">
+                                <asp:Label ID="Label3" runat="server" Text="Roof"></asp:Label>
+                                <asp:Label ID="lblQuestion7PagerAnswer" runat="server" Text="Question 7 Answer"></asp:Label>
+                                <asp:Label ID="lblQuestion7PagerSecondAnswer" runat="server" Text="Question 7 Answer"></asp:Label>
+                            </a>
+                    </li>
+                </div>
 
-                    <div style="display: none" id="pagerEight">
-                        <li>
-                                <a href="#" data-slide="#slide8" class="slidePanel">
-                                    <asp:Label ID="Label5" runat="server" Text="Layout"></asp:Label>
-                                    <asp:Label ID="lblQuestion8PagerAnswer" runat="server" Text="Question 8 Answer"></asp:Label>
-                                </a>
-                        </li>
-                    </div>
-                </ul>    
-            </div> 
-        </div>
+                <div style="display: none" id="pagerEight">
+                    <li>
+                            <a href="#" data-slide="#slide8" class="slidePanel">
+                                <asp:Label ID="Label5" runat="server" Text="Layout"></asp:Label>
+                                <asp:Label ID="lblQuestion8PagerAnswer" runat="server" Text="Question 8 Answer"></asp:Label>
+                            </a>
+                    </li>
+                </div>
+            </ul>    
+        </div> 
     </div>
 
     <%-- Hidden input tags 
@@ -1448,6 +1465,8 @@
     <input id="hidRoofType" type="hidden" runat="server" />
 
     <input id="hidLayoutSelection" type="hidden" runat="server" />
+
+    <input id="hidSoffitLength" type="hidden" runat="server" />
 
     <%-- end hidden divs --%>    
 

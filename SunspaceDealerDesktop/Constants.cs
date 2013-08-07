@@ -77,6 +77,10 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_400_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
 
         public static string[] SCREEN_TYPES = { "No Screen", "Better Vue Insect Screen (Default)", "No See Ums 20 x 20 Mesh", "Solar Insect Screening", "Tuff Screen" };
+
+        public static string[] ACRYLIC_COLOUR = { "Clear", "Bronze", "Solar Cool White", "Heat Stop Cool Blue" };
+
+        public static string[] GUTTER_COLOUR = { "White", "Driftwood", "Bronze"};
         #endregion
 
         #region Size Limits
@@ -282,6 +286,7 @@ namespace SunspaceDealerDesktop
                                                "Driftwood Rigiwall Pebble", "White Rigiwall Stucco", "Driftwood Rigiwall Stucco", "OSB",
                                                "White FRP (Interior Only)", "Driftwood FRP (Interior Only)", "Bronze FRP (Interior Only)"};
         public static string[] ROOF_THICKNESSES = { "3", "4", "6" };
+        public static string[] ROOF_EXTRUSION_TYPE = { "I-Beam", "I-Beam FP", "I-Beam OSB", "I-Beam OSB/OSB", "Pressure Cap", "Pressure Cap FP", "Pressure Cap OSB", "Pressure Cap OSB/OSB" };
         #endregion
 
         #region Floors

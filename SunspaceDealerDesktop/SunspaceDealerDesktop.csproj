@@ -217,6 +217,7 @@
     <Content Include="ProjectPreview.aspx" />
     <Content Include="Scripts\DoorSlideFunctions.js" />
     <Content Include="Scripts\MiniCanvasFunctions.js" />
+    <Content Include="SkylightWizard.aspx" />
     <Content Include="Spoof.aspx" />
     <Content Include="WizardFloors.aspx" />
     <Content Include="WizardWallsAndMods.aspx" />
@@ -393,6 +394,16 @@
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Receiver.cs" />
+    <Compile Include="Roof.cs" />
+    <Compile Include="RoofItem.cs" />
+    <Compile Include="RoofModule.cs" />
+    <Compile Include="RoofWizard.aspx.cs">
+      <DependentUpon>RoofWizard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RoofWizard.aspx.designer.cs">
+      <DependentUpon>RoofWizard.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SavedProjects.aspx.cs">
       <DependentUpon>SavedProjects.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -413,6 +424,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="SkylightWizard.aspx.cs">
+      <DependentUpon>SkylightWizard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SkylightWizard.aspx.designer.cs">
+      <DependentUpon>SkylightWizard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Spoof.aspx.cs">
       <DependentUpon>Spoof.aspx</DependentUpon>
