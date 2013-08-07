@@ -13,6 +13,8 @@
         var PATIO_DOOR_MAX_WIDTH = '<%= Session["PATIO_DOOR_MAX_WIDTH"] %>';
         var PATIO_DOOR_MIN_HEIGHT = '<%= Session["PATIO_DOOR_MIN_HEIGHT"] %>';
         var PATIO_DOOR_MAX_HEIGHT = '<%= Session["PATIO_DOOR_MAX_HEIGHT"] %>';
+        var MIN_WINDOW_WIDTH = '<%= Session["MIN_WINDOW_WIDTH"] %>'
+        var MAX_WINDOW_WIDTH = '<%= Session["MAX_WINDOW_WIDTH"] %>'
     </script>
     <script src="Scripts/DoorSlideFunctions.js"></script>
     <%-- Hidden field populating scripts 
@@ -650,6 +652,8 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
             //}
         }
 
+
+
         /**
         This function calculates the slope (over 12), based on the given heights
         @return slope over 12
@@ -902,9 +906,95 @@ Update [3/8/2013]: most of the problems solved... see below... however some new 
         /************************************************************************************************************************************/
                     /****************                 new function to be written                *******************************/
         /************************************************************************************************************************************/
+
+
+        //do windows have to be precise to eighth of an inch also
+
         function fillWindows() {
 
+            var availableSpaces = new Array();
+            var freeSpaceCounter = 0;
+
+            for (var i = 0; i < walls.length; i++) { //for each wall in the list of wall objects
+                if (coordList[i][4] === "P") { //if it is a proposed wall
+                    if (walls[i].doors.length > 0) { //if there is at least 1 door in the wall
+                        for (var j = 0; j < walls[i].doors.length; j++) {
+                            var freeSpace;
+                            if (walls[i].doors[j].position > 0) {
+                                freeSpace = {
+                                    "wall" : i,
+                                    "start" : walls[i].doors[j].position - 1,
+                                    "end" : walls[i].doors[j].fwidth + 1
+                                };
+                            }
+                            else {
+                                freeSpace = {
+                                    "wall": i,
+                                    "start" : 0,
+                                    "end" : walls[i].doors[j].fwidth + 1
+                                };
+                            }
+                            availableSpaces[freeSpaceCounter] = freeSpace;
+                            freeSpaceCounter++;
+                        }
+                    }
+                }
+            }
+
+            for (var k = 0; k < availableSpaces.length; k++) {
+                var availableSpace = availableSpaces[k].end - availableSpaces[k].start;;
+                var windowSize = MAX_WINDOW_WIDTH;
+                var tryAgain = 1;
+
+                if (availableSpaces[k] >= MIN_WINDOW_WIDTH) { //if there's enough space to fit a min size window
+                    while (!validateWindowSize(availableSpace, windowSize / tryAgain, tryAgain, availableSpaces[k].wall)) { //keep trying until windows fit in the space (with min filler)
+                        tryAgain++; //used to divide the window size by 2 at each try to try smaller window sizes
+                    }
+                }
+
+
+
+            }
         }
+
+        function validateWindowSize(space, size, number, wall) {
+            var window;
+
+            if (size >= MIN_WINDOW_WIDTH) {
+                if (size > space) {
+                    size = size / 2;
+                    validateWindowSize(space, size, number, wall);
+                }
+                else if (size < space) {
+                    while (size < space) {
+                        size = size * number;
+                        number++;
+                        if (size === space) {
+                            validateWindowSize(space, size, number, wall);
+                        }
+                    }
+                }
+                else {
+                    for (var i = 0; i < number; i++) {
+                        var window
+                    }
+                }
+            }
+            else {
+
+            }
+
+
+
+            window = {
+                "wall" : 1,
+                "leftFiller" : 1,
+                "width" : 1,
+                "rightFiller" : 1
+            };
+        }
+
+
         /************************************************************************************************************************************/
         /************************************************************************************************************************************/
         /************************************************************************************************************************************/
