@@ -51,6 +51,8 @@
         var projection = 120; //room projection from the left ... hard coded for testing
         var antiProjection = 120; //room projection from the right ... hard coded for testing
         var roomProjection = 120; //the higher of the two room projections
+        var roomWidth; //the width of the room from the far left to the far right
+        ///need to be calculated
         var soffitLength = '<%= soffitLength %>'//hard coded for testing, will come from the previous pages in the wizard
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
          
