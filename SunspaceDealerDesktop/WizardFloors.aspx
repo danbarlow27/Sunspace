@@ -3,6 +3,7 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
     <script>
+        /****HARD CODED VALUES TO BE PASSED FROM PREVIOUS PAGES****/
         var walls = [];
         walls[4] = {
             "wallId": 4,
@@ -17,13 +18,16 @@
             "length": 150
         }
 
+        /****Line information for walls****/
         var detailsOfAllLines = '<%= (string)Session["coordList"] %>'; //all the coordinates and details of all the lines, coming from the session
         var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/");
         var coordList = [];
         var proposedList = [];
+        //Creating array of lines
         for (var i = 0; i < lineList.length; i++)
             coordList[i] = lineList[i].split(",");
 
+        //Creating array of lines that are proposed
         for (var i = 0; i < coordList.length; i++) {
             if (coordList[i][4] === "P") {
                 proposedList.push(coordList[i]);
@@ -32,10 +36,15 @@
             }
         }
 
+        //Function calls to occur when the document is ready/loaded
         $(document).ready(function () {
             floorTypeDisplay();            
         });
 
+        /**
+        *floorTypeDisplay
+        *This function displays the appropriate fields based on the selected type of floor
+        */
         function floorTypeDisplay() {
             var selectedType = $('#MainContent_ddlFloorType').val();
 
@@ -47,6 +56,10 @@
             }
         }
 
+        /**
+        *findFloorProjection
+        *This function finds the projection of the current sunroom layout
+        */
         function findFloorProjection() {
             var largestDifference = 0;
 
@@ -71,6 +84,10 @@
             return largestDifference;
         }
 
+        /**
+        *findFloorWidth
+        *This function finds the width of the current sunroom layout
+        */
         function findFloorWidth() {
 
             var largestDifference = 0;
@@ -96,8 +113,14 @@
             return largestDifference;
         }
 
+        /**
+        *checkFloors
+        *This function stores all the data into hidden fields and displays
+        *an appropriate message to the pager
+        */
         function checkFloors() {
-
+            
+            //If radio button "Yes" (meaning they want floors) is checked, perform this block
             if ($('#<%=radFloorYes.ClientID%>').is(':checked')) {
                 document.getElementById('<%=hidFloorBoolean.ClientID%>').value = true;
                 document.getElementById('<%=hidFloorType.ClientID%>').value = $('#<%=ddlFloorType.ClientID%>').val();
@@ -112,6 +135,7 @@
                 document.getElementById('pagerOne').style.display = 'inline';
                 document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
             }
+                //If radio button "No" (meaning they don't want floors) is checked, perform this block
             else {
                 document.getElementById('<%=hidFloorBoolean.ClientID%>').value = false;
                 document.getElementById('<%=hidFloorType.ClientID%>').value = '';
@@ -126,7 +150,7 @@
         }
     </script>
 
-    <%-- SLIDES (QUESTIONS)
+    <%-- SLIDES (QUESTION)
     ======================================== --%>
     <div class="slide-window" id="slide-window" >
 
