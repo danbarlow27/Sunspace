@@ -13,6 +13,8 @@
         var PATIO_DOOR_MAX_WIDTH = '<%= Session["PATIO_DOOR_MAX_WIDTH"] %>';
         var PATIO_DOOR_MIN_HEIGHT = '<%= Session["PATIO_DOOR_MIN_HEIGHT"] %>';
         var PATIO_DOOR_MAX_HEIGHT = '<%= Session["PATIO_DOOR_MAX_HEIGHT"] %>';
+        var MODEL_100_200_300_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_100_200_300_TRANSOM_MINIMUM_SIZE"] %>';
+        var MODEL_400_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_400_TRANSOM_MINIMUM_SIZE"] %>';
     </script>
     <script src="Scripts/DoorSlideFunctions.js"></script>
     <%-- Hidden field populating scripts 

@@ -66,9 +66,6 @@ function FramedDoor() {
     this.colour = null;          //White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey
     this.position = null;       //Left, Center, Right, Custom
     this.boxHeader = null;      //Left, Right, Both, None
-    this.transom = null;        //Vinyl, Glass, Solid
-    this.transomVinyl = null;   //Vinyl Tints: Clear, Smoke Grey, Dark Grey, Bronze, Mixed 
-    this.transomGlass = null;   //Glass Tints: Grey, Bronze
 }
 
 //Constructor to hold cabana door specific information
@@ -265,9 +262,6 @@ function createDoorObject(wallNumber, type) {
         "ddlDoorStyle",
         "ddlDoorVinylTint",
         "ddlDoorNumberOfVents",
-        "ddlDoorTransom",
-        "ddlDoorTransomVinyl",
-        "ddlDoorTransomGlass",
         "ddlDoorKickplate",
         "ddlDoorColour",
         "ddlDoorHeight",
@@ -471,41 +465,6 @@ function doorKickplateStyle(type, wallNumber) {
 }
 
 /**
-*doorTransomStyle
-*Door transom style function is triggered when the user selects Vinyl or Glass, 
-*vinyl or glass tint becomes displayed.
-*@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
-*@param wallNumber - holds an integer to know which wall is currently being affected
-*/
-function doorTransomStyle(type, wallNumber) {
-
-    //Get transom drop down value
-    var transomType = document.getElementById('MainContent_ddlDoorTransom' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorTransom' + wallNumber + type).selectedIndex].value;
-
-    //If transomType value is vinyl, perform block
-    if (transomType == 'Vinyl') {
-        //Change transom vinyl row display style to inherit
-        document.getElementById('MainContent_rowDoorTransomVinyl' + wallNumber + type).style.display = 'inherit';
-        //Change transom glass row display style to none
-        document.getElementById('MainContent_rowDoorTransomGlass' + wallNumber + type).style.display = 'none';
-    }
-        //Else if transomType value is glass, perform block
-    else if (transomType == 'Glass') {
-        //Change transom vinyl row display style to none
-        document.getElementById('MainContent_rowDoorTransomVinyl' + wallNumber + type).style.display = 'none';
-        //Change transom glass row display style to inherit
-        document.getElementById('MainContent_rowDoorTransomGlass' + wallNumber + type).style.display = 'inherit';
-    }
-        //Else, perform this block
-    else {
-        //Change transom vinyl row display style to none
-        document.getElementById('MainContent_rowDoorTransomVinyl' + wallNumber + type).style.display = 'none';
-        //Change transom glass row display style to none
-        document.getElementById('MainContent_rowDoorTransomGlass' + wallNumber + type).style.display = 'none';
-    }
-}
-
-/**
 *fillWallWithdoorMods
 *This function is used to fill the wall with as may doorMods as possible, they'll be centered and
 *the ends will be filler
@@ -672,9 +631,6 @@ function typeRowsDisplayed(type, wallNumber) {
     var doorStyleTable = document.getElementById("MainContent_rowDoorStyle" + wallNumber + type);
     var doorVinylTint = document.getElementById("MainContent_rowDoorVinylTint" + wallNumber + type);
     var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallNumber + type);
-    var doorTransom = document.getElementById("MainContent_rowDoorTransom" + wallNumber + type);
-    var doorTransomVinyl = document.getElementById("MainContent_rowDoorTransomVinylTypes" + wallNumber + type);
-    var doorTransomGlass = document.getElementById("MainContent_rowDoorTransomGlassTypes" + wallNumber + type);
     var doorKickplate = document.getElementById("MainContent_rowDoorKickplate" + wallNumber + type);
     var doorKicplateCustom = document.getElementById("MainContent_rowDoorCustomKickplate" + wallNumber + type);
     var doorColour = document.getElementById("MainContent_rowDoorColour" + wallNumber + type);
@@ -716,7 +672,6 @@ function typeRowsDisplayed(type, wallNumber) {
         doorHeight.style.display = "inherit";
         doorWidth.style.display = "inherit";
         doorBoxHeader.style.display = "inherit";
-        doorTransom.style.display = "inherit";
         doorKickplate.style.display = "inherit";
 
         //Cabana Specific                            
@@ -738,7 +693,6 @@ function typeRowsDisplayed(type, wallNumber) {
         doorSwingInChecked.setAttribute("checked", "checked");
 
         doorStyle(type, wallNumber);
-        doorTransomStyle(type, wallNumber);
     }
         //If type is French, display the appropriate fields
     else if (type == "French") {
@@ -750,7 +704,6 @@ function typeRowsDisplayed(type, wallNumber) {
         doorHeight.style.display = "inherit";
         doorWidth.style.display = "inherit";
         doorBoxHeader.style.display = "inherit";
-        doorTransom.style.display = "inherit";
         doorKickplate.style.display = "inherit";
 
         //French specific
@@ -771,7 +724,6 @@ function typeRowsDisplayed(type, wallNumber) {
         doorSwingInChecked.setAttribute("checked", "checked");
 
         doorStyle(type, wallNumber);
-        doorTransomStyle(type, wallNumber);
     }
         //If type is Patio, display the appropriate fields
     else if (type == "Patio") {
@@ -782,7 +734,6 @@ function typeRowsDisplayed(type, wallNumber) {
         doorColour.style.display = "inherit";
         doorHeight.style.display = "inherit";
         doorWidth.style.display = "inherit";
-        doorTransom.style.display = "inherit";
         doorBoxHeader.style.display = "inherit";
 
         //Patio Specifics
@@ -801,7 +752,6 @@ function typeRowsDisplayed(type, wallNumber) {
         doorOperatorLHHChecked.setAttribute("checked", "checked");
 
         doorStyle(type, wallNumber);
-        doorTransomStyle(type, wallNumber);
     }
         //If type is NoDoor, display the appropriate fields
     else if (type == "NoDoor") {
@@ -1015,9 +965,13 @@ function validateDoorParameters(door, wall) {
             return false;
         }
     }
-
-    if (door.fheight > findCurrentWallHeight(door, wall)) {
-        errorMessageArea.innerHTML = "Your " + door.type + " door's height in its current position is higher than the wall. Please try again.";
+    
+    if ((model == "M100" || model == "M200" || model == "M300") && (door.fheight > (findCurrentWallHeight(door, wall) - MODEL_100_200_300_TRANSOM_MINIMUM_SIZE))) {
+        errorMessageArea.innerHTML = "Your " + door.type + " door's height in its current position is higher than the wall minus the transom (" + MODEL_100_200_300_TRANSOM_MINIMUM_SIZE + "). Please try again.";
+        return false;
+    }
+    else if ((model == "M400") && (door.fheight > (findCurrentWallHeight(door, wall) - MODEL_400_TRANSOM_MINIMUM_SIZE))) {
+        errorMessageArea.innerHTML = "Your " + door.type + " door's height in its current position is higher than the wall minus the transom (" + MODEL_400_TRANSOM_MINIMUM_SIZE + "). Please try again.";
         return false;
     }
 

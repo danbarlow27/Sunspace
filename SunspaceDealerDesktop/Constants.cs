@@ -90,6 +90,9 @@ namespace SunspaceDealerDesktop
         public const int PATIO_DOOR_MIN_HEIGHT = 72;    //6'
         public const int PATIO_DOOR_MAX_HEIGHT = 96;    //8'
 
+        public const float MODEL_100_200_300_TRANSOM_MINIMUM_SIZE = 4.125f;
+        public const float MODEL_400_TRANSOM_MINIMUM_SIZE = 5.125f;
+
         public const float SOFT_MIN_WINDOW_SIZE = 30.0F; //Minimum size of a window (soft)
         public const float SOFT_MAX_WINDOW_SIZE = 58.0F; //Maximum size of a window (soft)
 
@@ -214,8 +217,9 @@ namespace SunspaceDealerDesktop
         public static string[] DOOR_MODEL_200_STYLES = { "Vertical Four Track", "Full View", "Full View Colonial" };
         public static string[] DOOR_MODEL_300_STYLES = { "Full View", "Full View Colonial" };
         public static string[] DOOR_MODEL_400_STYLES = { "Half Lite", "Half Lite Venting", "Half Lite with Mini Blinds", "Full View with Mini Blinds" };
-        public static string[] DOOR_MODEL_100_PATIO_STYLES = { "Screen", "Glass" };
-        public static string[] DOOR_MODEL_200_300_400_PATIO_STYLES = { "Glass" };
+        public static string[] DOOR_MODEL_100_PATIO_STYLES = { "Aluminum Storm Screen", "Aluminum Storm Glass" };
+        public static string[] DOOR_MODEL_200_300_PATIO_STYLES = { "Aluminum Storm Glass" };
+        public static string[] DOOR_MODEL_400_PATIO_STYLES = { "Vinyl Guard" };
 
         public static string[] DOOR_GLASS_TINTS = { "Grey", "Bronze", "Clear" };
 
@@ -279,6 +283,8 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Floors
+        public static string[] FLOOR_TYPES = { "Thermadeck", "Alumadeck" };
+
         public static string[] FLOOR_THICKNESSES = { "4.5", "6.5", "8.25" };            
         #endregion
 

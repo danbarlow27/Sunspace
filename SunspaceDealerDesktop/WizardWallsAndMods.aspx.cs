@@ -47,10 +47,12 @@ namespace SunspaceDealerDesktop
             Session["PATIO_DOOR_MIN_WIDTH"] = Constants.PATIO_DOOR_MIN_WIDTH;
             Session["PATIO_DOOR_MAX_HEIGHT"] = Constants.PATIO_DOOR_MAX_HEIGHT;
             Session["PATIO_DOOR_MIN_HEIGHT"] = Constants.PATIO_DOOR_MIN_HEIGHT;
+            Session["MODEL_100_200_300_TRANSOM_MINIMUM_SIZE"] = Constants.MODEL_100_200_300_TRANSOM_MINIMUM_SIZE;
+            Session["MODEL_400_TRANSOM_MINIMUM_SIZE"] = Constants.MODEL_400_TRANSOM_MINIMUM_SIZE;
 
             /***hard coded variables***/
-            Session["model"] = "M400";
-            Session["soffitLength"] = 500F;
+            Session["model"] = "M100";
+            Session["soffitLength"] = 0f;
             /****************diffrent sunroom layouts******************/
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
             //Session["coordList"] = "75,425,150,150,E,S/150,150,150,250,P,W/150,350,250,250,P,S/350,350,250,150,P,E/";
@@ -481,9 +483,9 @@ namespace SunspaceDealerDesktop
                 {
                     if (title == "Patio")
                     {
-                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_400_PATIO_STYLES.Count(); j++)
+                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_PATIO_STYLES.Count(); j++)
                         {
-                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j]));
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_PATIO_STYLES[j]));
                         }
                     }
                     else
@@ -498,9 +500,9 @@ namespace SunspaceDealerDesktop
                 {
                     if (title == "Patio")
                     {
-                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_400_PATIO_STYLES.Count(); j++)
+                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_PATIO_STYLES.Count(); j++)
                         {
-                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j]));
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_PATIO_STYLES[j]));
                         }
                     }
                     else
@@ -515,9 +517,9 @@ namespace SunspaceDealerDesktop
                 {
                     if (title == "Patio")
                     {
-                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_400_PATIO_STYLES.Count(); j++)
+                        for (int j = 0; j < Constants.DOOR_MODEL_400_PATIO_STYLES.Count(); j++)
                         {
-                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j]));
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_400_PATIO_STYLES[j], Constants.DOOR_MODEL_400_PATIO_STYLES[j]));
                         }
                     }
                     else
@@ -578,55 +580,7 @@ namespace SunspaceDealerDesktop
                 doorNumberOfVentsLBL.AssociatedControlID = "ddlDoorNumberOfVents" + i + title;
 
                 #endregion
-
-                #region Table:# Row Door Transom (tblDoorDetails)
-
-                TableRow doorTransomRow = new TableRow();
-                doorTransomRow.ID = "rowDoorTransom" + i + title;
-                doorTransomRow.Attributes.Add("style", "display:none;");
-                TableCell doorTransomLBLCell = new TableCell();
-                TableCell doorTransomDDLCell = new TableCell();
-
-                Label doorTransomLBL = new Label();
-                doorTransomLBL.ID = "lblDoorTransom" + i + title;
-                doorTransomLBL.Text = "Transom Type:";
-
-                DropDownList doorTransomDDL = new DropDownList();
-                doorTransomDDL.ID = "ddlDoorTransom" + i + title;
-                doorTransomDDL.Attributes.Add("onchange", "doorTransomStyle('" + title + "','" + i + "')");
-
-
-                if (currentModel == "M100")
-                {
-                    for (int j = 0; j < Constants.MODEL_100_TRANSOM_TYPES.Count(); j++)
-                    {
-                        doorTransomDDL.Items.Add(new ListItem(Constants.MODEL_100_TRANSOM_TYPES[j], Constants.MODEL_100_TRANSOM_TYPES[j]));
-                    }
-                }
-                else if (currentModel == "M200")
-                {
-                    for (int j = 0; j < Constants.MODEL_200_TRANSOM_TYPES.Count(); j++)
-                    {
-                        doorTransomDDL.Items.Add(new ListItem(Constants.MODEL_200_TRANSOM_TYPES[j], Constants.MODEL_200_TRANSOM_TYPES[j]));
-                    }
-                }
-                else if (currentModel == "M300")
-                {
-                    for (int j = 0; j < Constants.MODEL_300_TRANSOM_TYPES.Count(); j++)
-                    {
-                        doorTransomDDL.Items.Add(new ListItem(Constants.MODEL_300_TRANSOM_TYPES[j], Constants.MODEL_300_TRANSOM_TYPES[j]));
-                    }
-                }
-                else if (currentModel == "M400")
-                {
-                    for (int j = 0; j < Constants.MODEL_400_TRANSOM_TYPES.Count(); j++)
-                    {
-                        doorTransomDDL.Items.Add(new ListItem(Constants.MODEL_400_TRANSOM_TYPES[j], Constants.MODEL_400_TRANSOM_TYPES[j]));
-                    }
-                }
-
-                #endregion
-
+                
                 #region Table:# Row Door Transom Vinyl (tblDoorDetails)
 
                 TableRow doorTransomVinylRow = new TableRow();
@@ -1299,19 +1253,7 @@ namespace SunspaceDealerDesktop
                 doorNumberOfVentsRow.Cells.Add(doorNumberOfVentsDDLCell);
 
                 #endregion
-
-                #region Table:# Row Door Transom Added To Table (tblDoorDetails)
-
-                doorTransomLBLCell.Controls.Add(doorTransomLBL);
-                doorTransomDDLCell.Controls.Add(doorTransomDDL);
-
-                tblDoorDetails.Rows.Add(doorTransomRow);
-
-                doorTransomRow.Cells.Add(doorTransomLBLCell);
-                doorTransomRow.Cells.Add(doorTransomDDLCell);
-
-                #endregion
-
+                
                 #region Table:# Row Door Transom Vinyl Types Added To Table (tblDoorDetails)
 
                 doorTransomVinylTypesLBLCell.Controls.Add(doorTransomVinylLBL);
