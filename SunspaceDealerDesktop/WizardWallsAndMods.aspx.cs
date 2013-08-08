@@ -26,9 +26,6 @@ namespace SunspaceDealerDesktop
         protected string currentModel;
         protected float soffitLength;
 
-        protected const int SUGGESTED_DEFAULT_FILLER = 2;
-        protected const int PREFERRED_DEFAULT_FILLER = 2;
-
         /***hard coded variables***/
         protected string coordList; //to store the string from the session and store it in a local variable for further use                                    
         protected char[] lineDelimiter = { '/' }; //character(s) that seperate lines in a session string variable
@@ -53,6 +50,13 @@ namespace SunspaceDealerDesktop
             /***hard coded variables***/
             Session["model"] = "M100";
             Session["soffitLength"] = 0f;
+            Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
+            Session["MAX_WINDOW_WIDTH"] = Constants.MAX_WINDOW_WIDTH;
+            Session["MIN_WINDOW_WIDTH"] = Constants.MIN_WINDOW_WIDTH;
+
+            /***hard coded variables***/
+            Session["model"] = "M300";
+            Session["soffitLength"] = 0F;
             /****************diffrent sunroom layouts******************/
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
             //Session["coordList"] = "75,425,150,150,E,S/150,150,150,250,P,W/150,350,250,250,P,S/350,350,250,150,P,E/";
@@ -297,7 +301,7 @@ namespace SunspaceDealerDesktop
             txtLeftFiller.ID = "txtWall" + i + "LeftFiller"; //give an appropriate id to the left filler textbox
             txtLeftFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
             txtLeftFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
-            txtLeftFiller.Text = SUGGESTED_DEFAULT_FILLER.ToString();
+            txtLeftFiller.Text = Constants.PREFERRED_DEFAULT_FILLER.ToString();
             txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
             txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
             txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
@@ -306,7 +310,7 @@ namespace SunspaceDealerDesktop
             txtRightFiller.ID = "txtWall" + i + "RightFiller";//give an appropriate id to the right filler textbox
             txtRightFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
             txtRightFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
-            txtRightFiller.Text = SUGGESTED_DEFAULT_FILLER.ToString();
+            txtRightFiller.Text = Constants.PREFERRED_DEFAULT_FILLER.ToString();
             txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");//set its attribute to check question 1 on key up
             txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
             txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
