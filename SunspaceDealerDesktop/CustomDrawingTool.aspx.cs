@@ -58,7 +58,7 @@ namespace SunspaceDealerDesktop
             //Session.Add("testArray", newArray);
 
             //Redirect to test page to see if information is being passed properly
-            Response.Redirect("TestingHiddens.aspx");
+            //Response.Redirect("TestingHiddens.aspx");
         }
     }
 }

@@ -73,6 +73,7 @@
 
         //Wall type enumeration(enumeration)
         var WALL_TYPE = {
+            GABLE: "G",
             EXISTING: "E",  //Existing wall
             PROPOSED: "P"   //Proposed wall
         }
@@ -122,13 +123,13 @@
 
 
         /**** WIZARD VARIABLES ****/
-        var wallType = WALL_TYPE.EXISTING;  //Type of wall currently being drawn, to be determined by wizard
+        var wallType;  //Type of wall currently being drawn, to be determined by wizard
         var standAlone = false;             //Variable to be set by wizard values
-        var gable = false;                  //Variable to hold whether its a gable or not, to come from wizard
+        var gable = true;                  //Variable to hold whether its a gable or not, to come from wizard
 
 
         /**** EVENTS ON LOAD ****/
-        window.onload = setButtonValue(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
+        //window.onload = setButtonValue(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
 
 
         /**** jQuery FUNCTIONS ****/
@@ -137,7 +138,17 @@
         $(document).ready(function () {
             drawGrid(); //Draws the initial grid
             //Set initial text in log section
-            log.innerHTML += "Please draw an existing wall.\n\nPress 'E' to end a line.\n\n";
+            if (gable == true)
+                wallType = WALL_TYPE.GABLE;
+            else
+                wallType = WALL_TYPE.EXISTING;
+
+            setButtonValue();
+
+            if (gable)
+                log.innerHTML += "Please draw a gable post.\n\nPress 'E' to end a line.\n\n";
+            else
+                log.innerHTML += "Please draw an existing wall.\n\nPress 'E' to end a line.\n\n";
         });
 
         //On keypress "e" start new line on the grid
@@ -149,11 +160,22 @@
         //on click event of "Done" button
         function btnDoneOnClick() {
 
+            if (doneButton.value === "Done Gable Post") {
+                if (coordList.length > 0 && coordList[coordList.length - 1].id === WALL_TYPE.GABLE) {
+                    doneButton.value = "Done Existing Walls";
+                    wallType = WALL_TYPE.EXISTING;
+                    startNewWall = true;
+                }
+                else {
+                    //show error message
+                    log.innerHTML = "No gable wall has been drawn, please draw one\n\n";
+                }
+            }
             //if user wants to finish drawing existing walls
-            if (doneButton.value === "Done Existing Walls") {
+            else if (doneButton.value === "Done Existing Walls") {
 
                 //if there are walls drawn and first wall is wall type "E"
-                if (coordList.length > 0 && coordList[0].id === WALL_TYPE.EXISTING) {
+                if (coordList.length > 0 && coordList[coordList.length-1].id === WALL_TYPE.EXISTING) {
                     doneButton.value = "Done Proposed Walls";   //change the name (value) of the button
                     wallType = WALL_TYPE.PROPOSED;              //change wall type                    
                     startNewWall = true;                        //reset click count
@@ -161,15 +183,25 @@
                     //if walltype is not "E", means they have not drawn any existing walls
                 else {
                     //show error message
-                    log.innerHTML = "No existing walls drawn, please draw one\n\n";
+                    log.innerHTML = "No existing walls drawn, please draw at least one\n\n";
                 }
             }
                 //if user wants to finish drawing external (i.e. proposed) walls
             else if (doneButton.value === "Done Proposed Walls") {
 
                 //if its a valid sunroom
-                if (sunroomCompleted()) {
-                    doneButton.value = "Done Drawing";  //change the name (value) of the button                    
+                if (gable == false) {
+                    if (sunroomCompleted()) {
+                        doneButton.value = "Done Drawing";  //change the name (value) of the button                    
+                        wallType = WALL_TYPE.PROPOSED;      //change wall type                    
+                        startNewWall = true;                //reset click count
+                    }
+                }
+                else {
+                    /***********************************
+                    VALIDATION FOR GABLE HERE
+                    ***********************************/
+                    doneButton.value = "Done Drawing";  //change the name (value) of the button
                     wallType = WALL_TYPE.PROPOSED;      //change wall type                    
                     startNewWall = true;                //reset click count
                 }
@@ -199,12 +231,18 @@
         *Clear canvas function; clears canvas of all lines, resets arrays to null
         */
         function clearCanvas() {
+            d3.selectAll("#G").remove(); //remove existing walls
             d3.selectAll("#E").remove(); //remove existing walls
             d3.selectAll("#P").remove(); //remove proposed walls
             startNewWall = true;         //let the user begin another wall anywhere on the grid
             coordList = new Array();     //clear the list of lines
             removed = new Array();       //clear the list of removed lines
-            wallType = (!standAlone) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED; //reset the wall type to default
+            if (gable) {
+                wallType = WALL_TYPE.GABLE;
+            }
+            else {
+                wallType = (!standAlone) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED; //reset the wall type to default
+            }
             setButtonValue();            //set button value
         }
 
@@ -213,8 +251,20 @@
         *Set button value function; sets the text inside btnDone
         */
         function setButtonValue() {
-            doneButton.value = (wallType === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
-                (wallType === WALL_TYPE.PROPOSED) ? "Done Proposed Walls" : "Done Drawing";
+            if (gable == false) {
+                doneButton.value = (wallType === WALL_TYPE.EXISTING) ? "Done Existing Walls" :
+                    (wallType === WALL_TYPE.PROPOSED) ? "Done Proposed Walls" : "Done Drawing";
+            }
+            else {
+                if (wallType == WALL_TYPE.GABLE)
+                    doneButton.value = "Done Gable Post";
+                else if (wallType == WALL_TYPE.EXISTING)
+                    doneButton.value = "Done Existing Walls";
+                else if (wallType == WALL_TYPE.PROPOSED)
+                    doneButton.value = "Done Proposed Walls";
+                else
+                    doneButton.value = "Done Drawing";
+            }
         }
 
         /**
@@ -229,6 +279,7 @@
                 startNewWall = true;
             else { //set the first coordinates of the next line to the last coordinates of the previous line
                 //remove previously drawn walls
+                d3.selectAll("#G").remove();
                 d3.selectAll("#E").remove(); //remove existing walls
                 d3.selectAll("#P").remove(); //remove proposed walls
 
@@ -241,12 +292,19 @@
 
                 //go through the list of lines, set wall type, and draw the lines
                 for (var i = 0; i <= coordList.length - 1; i++) {
-                    wallType = (coordList[i].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED;
+                    wallType = (coordList[i].id === WALL_TYPE.GABLE) ? WALL_TYPE.GABLE :
+                        (coordList[i].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
+                        WALL_TYPE.PROPOSED;
                     drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false);
                 }
 
-                x1 = coordList[coordList.length - 1].x2;    //Sets the first X value of the new line to the second X value of the last line in the coordList array
-                y1 = coordList[coordList.length - 1].y2;    //Sets the first Y value of the new line to the second Y value of the last line in the coordList array
+                if (wallType != WALL_TYPE.GABLE) {
+                    x1 = coordList[coordList.length - 1].x2;    //Sets the first X value of the new line to the second X value of the last line in the coordList array
+                    y1 = coordList[coordList.length - 1].y2;    //Sets the first Y value of the new line to the second Y value of the last line in the coordList array
+                }
+                else {
+                    startNewWall = true;
+                }
             }
 
         }
@@ -261,7 +319,8 @@
             if (removed.length != 0) {
 
                 //Change the wall type based on the id of the last element in the removed array
-                wallType = (removed[removed.length - 1].id === WALL_TYPE.EXISTING)
+                wallType = (removed[removed.length - 1].id === WALL_TYPE.GABLE)
+                    ? WALL_TYPE.GABLE : (removed[removed.length - 1].id === WALL_TYPE.EXISTING)
                     ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED;
 
                 coordList.push(removed[removed.length - 1]); //Add the last item in the removed array to the coordList array
@@ -404,9 +463,6 @@
                 coorx2 = coorx1 + (dY / dX) * (coory2 - coory1);
             }
 
-            //if (!mouseMove)
-            //    console.log(coorx2 + "," + coory2);
-
             //Local variable to store all the line information
             var line = canvas.append("line")
                     .attr("x1", coorx1)
@@ -416,10 +472,18 @@
 
             //alert(wallType);
 
-            //If wall type is existing do following logic
-            if (wallType === WALL_TYPE.EXISTING) {
+            if (wallType === WALL_TYPE.GABLE) {
                 //Make line id E for existing wall                
-                line.attr("id", "E")
+                line.attr("id", WALL_TYPE.GABLE)
+                    //Change the line color to red
+                    .attr("stroke", "green")
+                    //Make stroke width to 2
+                    .attr("stroke-width", 4);
+            }
+            //If wall type is existing do following logic
+            else if (wallType === WALL_TYPE.EXISTING) {
+                //Make line id E for existing wall                
+                line.attr("id", WALL_TYPE.EXISTING)
                     //Change the line color to red
                     .attr("stroke", "red")
                     //Make stroke width to 2
@@ -428,7 +492,7 @@
                 //If wall type is proposed do following logic
             else if (wallType === WALL_TYPE.PROPOSED) {
                 //Make line id P for proposed wall
-                line.attr("id", "P")
+                line.attr("id", WALL_TYPE.PROPOSED)
                     //Change the line color to black
                     .attr("stroke", "black")
                     //Make stroke width to 2
@@ -848,8 +912,10 @@
 
                 //Validation for lines that meet these conditions: non-stand alone, first wall, and are proposed walls.
                 if (!standAlone && validateFirstWall && coordList[coordList.length - 1].id === WALL_TYPE.PROPOSED) {
-                    validateNotStandAlone(false); //Call to validateNotStandAlone to snap first line
-                    validateFirstWall = false;    //Sets validateFirstWall to false since walls to be drawn won't be the first one
+                    if (gable == false) {
+                        validateNotStandAlone(false); //Call to validateNotStandAlone to snap first line
+                        validateFirstWall = false;    //Sets validateFirstWall to false since walls to be drawn won't be the first one
+                    }
                 }
 
                 //Restart the start position for the next line to be drawn
@@ -881,8 +947,7 @@
             if (!startNewWall)
                 drawLine(x1, y1, x2, y2, true);
         });
-
-
+        
         /**
          *EventListner Type: mouseout
          *Event target: svgGrid/document.getElementById("mySunroom")
