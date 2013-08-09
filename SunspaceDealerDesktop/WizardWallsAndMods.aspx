@@ -22,6 +22,8 @@
     <%-- Hidden field populating scripts 
     =================================== --%>
     <script>       
+        //Displaying line information passed from custom drawing tool
+        console.log('<%= (string)Session["lineInfo"] %>');
 
         var detailsOfAllLines = '<%= (string)Session["coordList"] %>'; //all the coordinates and details of all the lines, coming from the session
         var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/"); //a list of individual lines and their coordinates and details 

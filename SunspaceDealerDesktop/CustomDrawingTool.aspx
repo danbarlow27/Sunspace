@@ -73,7 +73,7 @@
 
         //Wall type enumeration(enumeration)
         var WALL_TYPE = {
-            GABLE: "G",
+            GABLE: "G",     //Gable Post (or wall)
             EXISTING: "E",  //Existing wall
             PROPOSED: "P"   //Proposed wall
         }
