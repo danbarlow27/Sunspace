@@ -225,7 +225,6 @@ namespace SunspaceDealerDesktop
         /// <param name="proposedWallCount">used to give appropriate values to the wall name labels</param>
         protected void populateTblProposed(int i, int proposedWallCount)
         {
-            #region Table: Slide 1 Table Rows/Cells and Controls
             TableRow row = new TableRow();//new table to to be appended to the table with all the appropriate fields in it
 
             TableCell cell1 = new TableCell(); //new table cell to store the wall name label
@@ -334,9 +333,6 @@ namespace SunspaceDealerDesktop
             row.Cells.Add(cell5);
             row.Cells.Add(cell6);
             row.Cells.Add(cell7);
-            #endregion
-
-
             
         }
 
