@@ -285,19 +285,46 @@
                         tempAntiProjection = tempAntiProjection + wallSetBackArray[i] * -1;
                         antiProjection = tempAntiProjection;
                     }
-                    //if (tempProjection < lowestProjection) {
-                    //    lowestProjection = tempProjection;
-                    //    antiProjection = highestProjection + (lowestProjection * -1);
-                    //}
                 }
             }
-
-
-
 
             if (antiProjection > projection)
                 return antiProjection;
             else 
+                return projection;
+
+        }
+
+        /**
+        This function is used to calculate the width of the sunroom
+
+        Just started... needs work.
+
+        */
+        function calculateWidth() {
+            var tempWidth = 0; //variable to store each setback
+            //var tempAntiProjection = 0;
+            var highestProjection = 0; //variable to store the highest projection calculated from the left side of the room
+            //var lowestProjection = 0; //variable to store the highest projection calculated from the right side of the room
+            //var overallProjection;
+            for (var i = 0; i < wallSetBackArray.length; i++) { //run through all the setbacks
+                if (wallSetBackArray[i]) { //if its not null (it would be null for existing walls
+                    tempProjection = +tempProjection + +wallSetBackArray[i]; //add the values to temp variable
+                    if (tempProjection > highestProjection) { //determine if the current temp projection is greater than the highest projection calculated
+                        highestProjection = tempProjection; // reset the highest projection
+                        projection = highestProjection;
+                    }
+                    if (wallSetBackArray[i] < 0) {
+                        //alert(antiProjection);
+                        tempAntiProjection = tempAntiProjection + wallSetBackArray[i] * -1;
+                        antiProjection = tempAntiProjection;
+                    }
+                }
+            }
+
+            if (antiProjection > projection)
+                return antiProjection;
+            else
                 return projection;
 
         }
@@ -430,6 +457,13 @@
         }
 
 
+        /**
+        This function is used to populate the wallSoffitArray.
+            It takes the number of wall on which to start applying the soffit and 
+            whether to go forward in the array from that wall, or to go backwards
+        @param count - the wall number at which the soffit starts
+        @param back - true or false, whether to go backwards or forwards from 'count'
+        */
         function populateSoffitArray(count, back) {
 
             wallSoffitArray[count] = soffitLength;
@@ -456,33 +490,9 @@
 
         /*
         This function populates the wall soffit array by determining the orientation of each wall 
-            and checking to see if the soffit length would affect it or not 
-
-
-            ////this function needs more functionality to account for soffit length on diagonal walls 
-                and soffit length that's greater than the length of a wall
-                    (if there a case when soffit length would be greater than wall length,
-                     and span multiple walls???)
-
-            ////note: soffit only affects the first wall and the last wall... 
-                        if they are vertical and perpendicular to the existing walls
-
-
-Dan H:
-"There is no default size and yes a soffit can span multiple walls. When that occurs the first wall is considered no slope and the second wall is slope with soffit.
-Soffit is not limited to first and last wall. The value saved is probably best though of as slopestart... the soffit of the house is, of course, used to determine that slopestart position."
-
-
-
-see "new soffit conundrum" image on desktop for new soffit conundrum... [SOLVED]
-
-Update [3/8/2013]: most of the problems solved... see below... however some new soffit conundrums appeared which need to be dealt with.... 
-                    see diagram in notebook and dropbox for details on the conundrum.
-
-UPDATE [7/8/2013]: NO MORE DIFFERENT SOFFIT LENGTHS... SOFFIT LENGTH ONLY APPLIES TO THE BACK WALL ... THE REST GETS SLOPED DOWN. 
-                    NO PLATEAU SITUATION.
-
-
+            and checking to see if the soffit length would affect it or not
+        
+        This function calls populateSoffitArray with appropriate values, to populate soffit array.
         */
         function determineSoffitLengthOfEachWall() {
 
@@ -511,132 +521,6 @@ UPDATE [7/8/2013]: NO MORE DIFFERENT SOFFIT LENGTHS... SOFFIT LENGTH ONLY APPLIE
                     populateSoffitArray(wallSetBackArray.length - 1, true);
                 }
             }
-
-            //for (var i = 0; i < wallSoffitArray.length; i++) {
-            //    console.log("wall soffit " + i, wallSoffitArray[i]);
-            //    console.log("length: ", wallSoffitArray.length);
-            //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //var firstWallLength = document.getElementById("hidWall" + (existingWallCount + 1) + "Length").value;
-            //var lastWallLength = document.getElementById("hidWall" + (coordList.length - 1) + "Length").value;
-
-            ///*************************************************************************************/
-            ///*************************************************************************************/
-            ///*************************************************************************************/
-            //var firstWallStartPoint = coordList[existingWallCount + 1][2]; // 2 = y1
-            //var lastWallEndPoint = coordList[coordList.length - 1][3]; // 3 = y2
-            ///*************************************************************************************/
-            ///*************************************************************************************/
-            ///*************************************************************************************/
-
-            //for (var i = 0; i < coordList.length; i++) {
-            //    if (i === (existingWallCount + 1) || i === (coordList.length - 1)) { //first proposed wall or last proposed wall
-            //        if (coordList[i][5] === "W" || coordList[i][5] === "E") { //if its vertical and perpendicular to existing wall 
-            //            wallSoffitArray[i] = soffitLength; //set the soffit length
-            //            if (firstWallLength > lastWallLength) //if different lengths
-            //                wallSoffitArray[existingWallCount + 1] += (firstWallLength - lastWallLength); //add the difference to the appropriate wall
-            //            else if (lastWallLength > firstWallLength) //if different lengths
-            //                wallSoffitArray[coordList.length - 1] += (lastWallLength - firstWallLength); //add the difference to the appropriate wall
-            //        }
-            //        else //if they are not vertical perpendicular
-            //            wallSoffitArray[i] = 0; //no soffit
-            //    }
-            //    else //if not first or last proposed wall
-            //        wallSoffitArray[i] = 0; //no soffit
-            //}
-
-
-            //for (var i = 0; i < coordList.length; i++)
-            //    if (coordList[i][4] === "E") { //if existing wall  
-            //        //wallSoffitArray[index] = 0; //slope is unimportant
-            //    }
-            //    else { //if proposed wall
-            //        //get the orientation of the proposed wall
-            //        switch (coordList[i][5]) { //5 = orientation
-            //            case "S": //if south
-            //            case "N": //or north
-            //                wallSoffitArray[i] = 0; //soffit length is unimportant thus zero
-            //                break;
-
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //            case "SW": //or southwest
-            //            case "NW": //or northwest
-            //            case "SE": //or southeast
-            //            case "NE": //or northeast
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //                break;
-            //            case "W": //if west
-            //            case "E": //or
-            //                coordList
-
-            //                
-                                /**********************************************************************************************/
-                                /******************* the following was done to account for multiple ***************************/
-                                /*******************    proposed walls touching existing walls      ***************************/
-                                /*******************    multiple existing walls not relevant atm    ***************************/
-                                /**********************************************************************************************/
-                                //for (var j = 0; j < coordList.length; j++) { //run through all the walls
-                                //    if (coordList[j][4] === "E") { //if there's an existing wall
-                                //        if (coordList[j][2] === coordList[i][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
-                                //            wallSoffitArray[i] = soffitLength; //set the soffit length
-                                //            break; //break out of the loop
-                                //        }
-                                //    }
-                                //}
-                                //break; //break out of the switch
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-
-                                /**********************************************************************************************/
-                                /******************* the following was done to differentiate between ***************************/
-                                /*******************    beginning soffit and ending soffit       ***************************/
-                                /*******************    soffit placement on wall no longer desired    ***************************/
-                                /**********************************************************************************************/
-                                //case "E": //if east
-                                //    for (var j = 0; j < coordList.length; j++) { //run through all the walls
-                                //        if (coordList[j][4] === "E") { //if there's an existing wall
-                                //            if (coordList[j][2] === coordList[i][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
-                                //                wallSoffitArray[i] = -soffitLength; //should probably be positive soffit length, but just to differentiate between beginning soffit and ending soffit
-                                //                break; //break out of the loop
-                                //            }
-                                //        }
-                                //    }
-                                //    break; //break out of the switch
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-                            
-                //}
-            //}
         }
 
 
