@@ -81,13 +81,24 @@
         //Wall facing object(enumeration)
         var WALL_FACING = {
             SOUTH: 0,       //South value 0
-            SOUTH_WEST: 1,  //South West value 0
-            WEST: 2,        //West value 0
-            NORTH_WEST: 3,  //North West value 0
-            NORTH: 4,       //North value 0
-            NORTH_EAST: 5,  //North East value 0
-            EAST: 6,        //East value 0
-            SOUTH_EAST: 7   //South East value 0
+            SOUTH_WEST: 1,  //South West value 1
+            WEST: 2,        //West value 2
+            NORTH_WEST: 3,  //North West value 3
+            NORTH: 4,       //North value 4
+            NORTH_EAST: 5,  //North East value 5
+            EAST: 6,        //East value 6
+            SOUTH_EAST: 7   //South East value 7
+        }
+
+        var WALL_ORIENTATION = {
+            SOUTH: "S",      
+            SOUTH_WEST: "SW", 
+            WEST: "W",        
+            NORTH_WEST: "NW",  
+            NORTH: "N",       
+            NORTH_EAST: "NE", 
+            EAST: "E",        
+            SOUTH_EAST: "SE"
         }
 
         var MIN_NUMBER_OF_WALLS = 3;            //minimum number of walls that makes up a complete sunroom
@@ -201,9 +212,11 @@
                     /***********************************
                     VALIDATION FOR GABLE HERE
                     ***********************************/
-                    doneButton.value = "Done Drawing";  //change the name (value) of the button
-                    wallType = WALL_TYPE.PROPOSED;      //change wall type                    
-                    startNewWall = true;                //reset click count
+                    if (validateGable()) {
+                        doneButton.value = "Done Drawing";  //change the name (value) of the button
+                        wallType = WALL_TYPE.PROPOSED;      //change wall type                    
+                        startNewWall = true;                //reset click count
+                    }
                 }
             }
                 //If logic for passing values to C# (server-side)
@@ -766,6 +779,94 @@
         }
 
         /**
+        *validateGable
+        *Validates gable rooms, only rules that apply are that there has to be 2 parallel lines/walls and
+        *the room must be enclosed
+        *@return - true or false depending on whether the walls meet the conditions of being enclosed and,
+        *at least 2 parallel lines/walls to support the gable
+        */
+        function validateGable() {
+
+            var validLines = 0;         //Variable to determine if all walls are connected or the sunroom is enclosed
+            var goodParallel = false;   //Variable to determine if 2 walls are parallel
+
+            //Loop to set a wall to varify against
+            for (var i = 0; i < coordList.length; i++) {
+                
+                //Setting a line/wall variable to test against
+                var currentLine = coordList[i];
+
+                //Loop through lines/walls to varify against the outer loop one
+                for (var k = 0; k < coordList.length; k++) {
+                    
+                    //If the lines/walls aren't the same, perform this block
+                    if (currentLine != coordList[k]) {
+                        //if the lines/walls start or end coordinates are the same, add one to validLines
+                        if ((currentLine.x1 == coordList[k].x2 && currentLine.y1 == coordList[k].y2) || (currentLine.x1 == coordList[k].x1 && currentLine.y1 == coordList[k].y1)) {
+                            validLines++;
+                        }
+                        //If this function returns true, perform this block
+                        if (validateOppositeWalls(currentLine, coordList[k])) {
+                            //Variable to hold the length of the first line/wall
+                            var lineOneLength = Math.sqrt(Math.pow((currentLine.x2 - currentLine.x1), 2) + Math.pow((currentLine.y2 - currentLine.y1), 2));
+                            //Variable to hold the lenght of the second line/wall
+                            var lineTwoLength = Math.sqrt(Math.pow((coordList[k].x2 - coordList[k].x1), 2) + Math.pow((coordList[k].y2 - coordList[k].y1), 2));
+
+                            //If the length of both lines/walls are the same, set the goodParellel value to true
+                            if (lineOneLength == lineTwoLength) {
+                                goodParallel = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            //If the validLines and length of the coordList array aren't the same, display error and return false
+            //Sunroom is not enclosed
+            if (validLines != coordList.length) {
+                log.innerHTML = "Your gable sunroom must be enclosed. Please try again.";
+                return false;
+            }
+                //Else if no walls are parallel to support the gable, display error and return false
+            else if (goodParallel == false) {
+                log.innerHTML = "Your gable sunroom must have 2 parallel walls to support the roof. Please try again.";
+                return false;
+            }
+
+            return true;
+        }
+
+        /**
+        *validateOppositeWalls
+        *Find intercept function runs through all of the lines in the list, and finds 
+        *    the intercepting point between each line and the last drawn line
+        *@param firstLine - first line to check values against
+        *@param secondLine - second line to check values against
+        *@return - a boolean whether or not the lines are opposites
+        */
+        function validateOppositeWalls(firstLine, secondLine) {
+
+            /**
+            *If any of the coordinates are of opposite values (i.e. East opposite is West, North opposite to South, etc.),
+            *return true
+            */
+            if ((firstLine.orientation == WALL_ORIENTATION.EAST && secondLine.orientation == WALL_ORIENTATION.WEST) || (firstLine.orientation == WALL_ORIENTATION.WEST && secondLine.orientation == WALL_ORIENTATION.EAST)) {
+                return true;
+            }
+            if ((firstLine.orientation == WALL_ORIENTATION.SOUTH && secondLine.orientation == WALL_ORIENTATION.NORTH) || (firstLine.orientation == WALL_ORIENTATION.NORTH && secondLine.orientation == WALL_ORIENTATION.SOUTH)) {
+                return true;
+            }
+            if ((firstLine.orientation == WALL_ORIENTATION.SOUTH_WEST && secondLine.orientation == WALL_ORIENTATION.NORTH_EAST) || (firstLine.orientation == WALL_ORIENTATION.NORTH_EAST && secondLine.orientation == WALL_ORIENTATION.SOUTH_WEST)) {
+                return true;
+            }
+            if ((firstLine.orientation == WALL_ORIENTATION.SOUTH_EAST && secondLine.orientation == WALL_ORIENTATION.NORTH_WEST) || (firstLine.orientation == WALL_ORIENTATION.NORTH_WEST && secondLine.orientation == WALL_ORIENTATION.SOUTH_EAST)) {
+                return true;
+            }
+
+            return false;
+        }
+
+        /**
         *findIntercept
         *Find intercept function runs through all of the lines in the list, and finds 
         *    the intercepting point between each line and the last drawn line
@@ -826,8 +927,7 @@
                 "x2": cx2   //return the ending y coordinate of the line
             };
         }
-
-
+        
         /**
         *snapToGrid
         *Snap to grid function snaps each drawn line to the corners of each cell in the grid;
