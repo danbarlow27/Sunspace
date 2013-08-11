@@ -815,25 +815,25 @@
             }
 
             for (var k = 0; k < availableSpaces.length; k++) {
-                var availableSpace = availableSpaces[k].end - availableSpaces[k].start;;
+                var availableSpace = availableSpaces[k].end - availableSpaces[k].start;
                 var windowSize = MAX_WINDOW_WIDTH;
                 var tryAgain = 1;
 
                 if (availableSpaces[k] >= MIN_MOD_WIDTH) { //if there's enough space to fit a min size window
-                    while (!validateModSize(availableSpace, (windowSize / tryAgain) + 2, tryAgain, availableSpaces[k].wall)) { //keep trying until windows fit in the space (with min filler)
+                    while (!validateModSize(availableSpace, (windowSize / tryAgain) + 2, tryAgain, availableSpaces[k].wall), availableSpaces[k].start) { //keep trying until windows fit in the space (with min filler)
                         tryAgain++; //used to divide the window size by 2 at each try to try smaller window sizes
                     }
                 }
             }
         }
 
-        function validateModSize(space, size, number, wall) {
+        function validateModSize(space, size, number, wall, start) {
             var window;
 
-            if (size >= MIN_MOD_WIDTH) {
+            if (space >= MIN_MOD_WIDTH) {
                 if (size > space) {
                     size = size / 2;
-                    validateWindowSize(space, size, number, wall);
+                    validateWindowSize(space, size, number, wall, start);
                 }
                 else if (size < space) {
                     var tempSize = size;
@@ -842,29 +842,32 @@
                         tempSize = size * multiplier;
                         multiplier++;
                         if (tempSize === space) {
-                            validateWindowSize(space, tempSize, multiplier, wall);
+                            fillMods(space, tempSize, multiplier, wall, 0, start);
                         }
-
+                        else if (tempSize > space) {
+                            validateModSize(space, tempSize, multiplier, wall, start);
+                        }
+                        else if ((space - tempSize) <= MIN_MOD_WIDTH) {
+                            fillMods(space, tempSize, number, wall, space - tempSize, start);
+                            fillFiller();
+                        }
                     }
                 }
                 else { //size === space
-                    for (var i = 0; i < number; i++) {
-                        //var window
-                    }
+                    fillMods(space, tempSize, multiplier, wall, 0, start);
                 }
             }
-            else {
-                //filler
+            else { //space < MIN_MOD_SIZE
+                fillFiller();
             }
+        }
 
+        function fillMods(space, size, number, wall, filler, start) {
 
+        }
 
-            window = {
-                "wall" : 1,
-                "leftFiller" : 1,
-                "width" : 1,
-                "rightFiller" : 1
-            };
+        function fillFiller() {
+
         }
 
 
