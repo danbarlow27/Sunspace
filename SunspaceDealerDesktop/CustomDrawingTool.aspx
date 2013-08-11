@@ -176,6 +176,7 @@
                     doneButton.value = "Done Existing Walls";
                     wallType = WALL_TYPE.EXISTING;
                     startNewWall = true;
+                    log.innerHTML = "";
                 }
                 else {
                     //show error message
@@ -190,6 +191,7 @@
                     doneButton.value = "Done Proposed Walls";   //change the name (value) of the button
                     wallType = WALL_TYPE.PROPOSED;              //change wall type                    
                     startNewWall = true;                        //reset click count
+                    log.innerHTML = "";
                 }
                     //if walltype is not "E", means they have not drawn any existing walls
                 else {
@@ -206,6 +208,7 @@
                         doneButton.value = "Done Drawing";  //change the name (value) of the button                    
                         wallType = WALL_TYPE.PROPOSED;      //change wall type                    
                         startNewWall = true;                //reset click count
+                        log.innerHTML = "";
                     }
                 }
                 else {
@@ -216,6 +219,7 @@
                         doneButton.value = "Done Drawing";  //change the name (value) of the button
                         wallType = WALL_TYPE.PROPOSED;      //change wall type                    
                         startNewWall = true;                //reset click count
+                        log.innerHTML = "";
                     }
                 }
             }
@@ -838,8 +842,7 @@
 
         /**
         *validateOppositeWalls
-        *Find intercept function runs through all of the lines in the list, and finds 
-        *    the intercepting point between each line and the last drawn line
+        *This function determines whether or not the 2 lines passed are of opposite orientation
         *@param firstLine - first line to check values against
         *@param secondLine - second line to check values against
         *@return - a boolean whether or not the lines are opposites
