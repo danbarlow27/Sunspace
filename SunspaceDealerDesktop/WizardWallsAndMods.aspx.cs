@@ -56,15 +56,15 @@ namespace SunspaceDealerDesktop
 
             /***hard coded variables***/
             Session["model"] = "M300";
-            Session["soffitLength"] = 0F;
+            Session["soffitLength"] = 10F;
             /****************diffrent sunroom layouts******************/
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
             //Session["coordList"] = "75,425,150,150,E,S/150,150,150,250,P,W/150,350,250,250,P,S/350,350,250,150,P,E/";
             //Session["coordList"] = "62.5,362.5,162.5,162.5,E,S/362.5,175,162.5,350,E,NW/175,175,350,162.5,E,E/175,262.5,287.5,287.5,P,S/262.5,262.5,287.5,237.5,P,E/262.5,125,237.5,237.5,P,N/125,125,237.5,162.5,P,E/";
             //Session["coordList"] = "50,300,250,250,E,S/300,300,250,25,E,E/175,175,250,375,P,W/175,425,375,375,P,S/425,425,375,125,P,E/425,300,125,125,P,N/";
-            Session["coordList"] = "75,262.5,175,175,E,S/262.5,262.5,175,200,E,W/262.5,425,200,200,E,S/150,150,175,300,P,W/150,350,300,300,P,S/350,350,300,200,P,E/";
+            //Session["coordList"] = "75,262.5,175,175,E,S/262.5,262.5,175,200,E,W/262.5,425,200,200,E,S/150,150,175,300,P,W/150,350,300,300,P,S/350,350,300,200,P,E/";
             //Session["coordList"] = "100,412.5,137.5,137.5,E,S/150,150,137.5,287.5,P,W/150,225,287.5,362.5,P,SW/225,312.5,362.5,362.5,P,S/312,387.5,362.5,287.5,P,SE/387.5,387.5,287.5,137.5,P,E/";
-            //Session["coordList"] = "112.5,350,112.5,112.5,E,S/350,350,112.5,337.5,E,W/175,175,112.5,262.5,P,W/175,350,262.5,262.5,P,S/";
+            Session["coordList"] = "112.5,350,112.5,112.5,E,S/350,350,112.5,337.5,E,W/175,175,112.5,262.5,P,W/175,350,262.5,262.5,P,S/";
             /**********************************************************/
             coordList = (string)Session["coordList"]; //get the string from the session and store it in a local variable for further use                                    
             strWalls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
@@ -225,7 +225,6 @@ namespace SunspaceDealerDesktop
         /// <param name="proposedWallCount">used to give appropriate values to the wall name labels</param>
         protected void populateTblProposed(int i, int proposedWallCount)
         {
-            #region Table: Slide 1 Table Rows/Cells and Controls
             TableRow row = new TableRow();//new table to to be appended to the table with all the appropriate fields in it
 
             TableCell cell1 = new TableCell(); //new table cell to store the wall name label
@@ -334,9 +333,6 @@ namespace SunspaceDealerDesktop
             row.Cells.Add(cell5);
             row.Cells.Add(cell6);
             row.Cells.Add(cell7);
-            #endregion
-
-
             
         }
 

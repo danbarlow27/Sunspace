@@ -81,6 +81,8 @@ function highlightWallsHeight() {
 
     }
 
+
+
     for (var i = 0; i < southWalls.length; i++) {
         for (var j = 0; j < northWalls.length; j++) {
             if (southWalls[i].y2 < northWalls[j].y2) {
