@@ -17,6 +17,8 @@
         var MODEL_400_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_400_TRANSOM_MINIMUM_SIZE"] %>';
         var MIN_WINDOW_WIDTH = '<%= Session["MIN_WINDOW_WIDTH"] %>'
         var MAX_WINDOW_WIDTH = '<%= Session["MAX_WINDOW_WIDTH"] %>'
+        var MIN_MOD_WIDTH = MIN_WINDOW_WIDTH + 2;
+        var MAX_MOD_WIDTH = MAX_WINDOW_WIDTH + 2;
     </script>
     <script src="Scripts/DoorSlideFunctions.js"></script>
     <%-- Hidden field populating scripts 
@@ -817,42 +819,42 @@
                 var windowSize = MAX_WINDOW_WIDTH;
                 var tryAgain = 1;
 
-                if (availableSpaces[k] >= MIN_WINDOW_WIDTH) { //if there's enough space to fit a min size window
-                    while (!validateWindowSize(availableSpace, windowSize / tryAgain, tryAgain, availableSpaces[k].wall)) { //keep trying until windows fit in the space (with min filler)
+                if (availableSpaces[k] >= MIN_MOD_WIDTH) { //if there's enough space to fit a min size window
+                    while (!validateModSize(availableSpace, (windowSize / tryAgain) + 2, tryAgain, availableSpaces[k].wall)) { //keep trying until windows fit in the space (with min filler)
                         tryAgain++; //used to divide the window size by 2 at each try to try smaller window sizes
                     }
                 }
-
-
-
             }
         }
 
-        function validateWindowSize(space, size, number, wall) {
+        function validateModSize(space, size, number, wall) {
             var window;
 
-            if (size >= MIN_WINDOW_WIDTH) {
+            if (size >= MIN_MOD_WIDTH) {
                 if (size > space) {
                     size = size / 2;
                     validateWindowSize(space, size, number, wall);
                 }
                 else if (size < space) {
-                    while (size < space) {
-                        size = size * number;
-                        number++;
-                        if (size === space) {
-                            validateWindowSize(space, size, number, wall);
+                    var tempSize = size;
+                    while (tempSize < space) {
+                        var multiplier = 1;
+                        tempSize = size * multiplier;
+                        multiplier++;
+                        if (tempSize === space) {
+                            validateWindowSize(space, tempSize, multiplier, wall);
                         }
+
                     }
                 }
-                else {
+                else { //size === space
                     for (var i = 0; i < number; i++) {
-                        var window
+                        //var window
                     }
                 }
             }
             else {
-
+                //filler
             }
 
 
