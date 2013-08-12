@@ -48,7 +48,7 @@
                 <li><hr /></li>
 
                 <!--Button to send line information to C#-->
-                <li><asp:Button ID="Button1" CSSClass="btnSubmit" runat="server" Text="Submit Drawing" OnClick="Button1_Click1" style="width:150px"/></li>
+                <li><asp:Button ID="btnSubmitDrawing" CSSClass="btnDisabled" runat="server" Text="Submit Drawing" OnClick="Button1_Click1" style="width:150px"/></li>
 
             </ul>
         </div>
@@ -219,12 +219,14 @@
                         doneButton.value = "Done Drawing";  //change the name (value) of the button
                         wallType = WALL_TYPE.PROPOSED;      //change wall type                    
                         startNewWall = true;                //reset click count
-                        log.innerHTML = "If you are done drawing, please click \"Done Drawing\". \n\nIf you are ready to proceed to the next page click \"Submit Drawing\""";
+                        log.innerHTML = "If you are done drawing, please click \"Done Drawing\". \n\nIf you are ready to proceed to the next page click \"Submit Drawing\"";
                     }
                 }
             }
                 //If logic for passing values to C# (server-side)
             else if (doneButton.value === "Done Drawing") {
+
+                $('#MainContent_btnSubmitDrawing').addClass('btnSubmit');
 
                 var lineInfo = "";  //Variable to hold array/line information to be passed to C# (server-side)
 

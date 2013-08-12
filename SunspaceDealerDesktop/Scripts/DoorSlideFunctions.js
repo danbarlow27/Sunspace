@@ -56,6 +56,13 @@ Array.prototype.insert = function (index, item) {
     this.splice(index, 0, item);
 };
 
+//Mods holds all common information for doors
+function Mods() {
+    this.typeMod = "Door";           //Holds: Door, Window
+    this.mheight = null;
+    this.mwidth = null;
+}
+
 //Framed Door holds all common information for doors
 function FramedDoor() {
     this.type = null;           //Cabana, French, Patio, Open Space (No Door)
@@ -67,6 +74,8 @@ function FramedDoor() {
     this.position = null;       //Left, Center, Right, Custom
     this.boxHeader = null;      //Left, Right, Both, None
 }
+
+FramedDoor.prototype = new Mods();
 
 //Constructor to hold cabana door specific information
 function CabanaDoor() {
@@ -348,6 +357,8 @@ function createDoorObject(wallNumber, type) {
         
     framedDoor.fheight = dimensions.height; //Store frame height into fheight
     framedDoor.fwidth = dimensions.width;   //Store frame width into fwidth
+    framedDoor.mheight = dimensions.height + 2;
+    framedDoor.mwidth = dimensions.width + 2;
 
     /*Insert the door with the appropriate variables based on drop down selected index*/
     if (framedDoor.position === "Left") {
@@ -610,7 +621,7 @@ function totalSpaceLeftInWall(wall) {
     //Loop through all the doors
     for (var wallSpace = 0; wallSpace < wall.doors.length; wallSpace++) {
         //Substract each door from the usable space
-        totalSpace -= wall.doors[wallSpace].fwidth;
+        totalSpace -= wall.doors[wallSpace].mwidth;
     }
 
     //Return the total space remaining
