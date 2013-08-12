@@ -176,7 +176,7 @@
                     doneButton.value = "Done Existing Walls";
                     wallType = WALL_TYPE.EXISTING;
                     startNewWall = true;
-                    log.innerHTML = "";
+                    log.innerHTML = "Please draw your existing wall. \nPress \"E\" to end a line.";
                 }
                 else {
                     //show error message
@@ -191,7 +191,7 @@
                     doneButton.value = "Done Proposed Walls";   //change the name (value) of the button
                     wallType = WALL_TYPE.PROPOSED;              //change wall type                    
                     startNewWall = true;                        //reset click count
-                    log.innerHTML = "";
+                    log.innerHTML = "Please draw your proposed wall. \nPress \"E\" to end a line.";
                 }
                     //if walltype is not "E", means they have not drawn any existing walls
                 else {
@@ -208,7 +208,7 @@
                         doneButton.value = "Done Drawing";  //change the name (value) of the button                    
                         wallType = WALL_TYPE.PROPOSED;      //change wall type                    
                         startNewWall = true;                //reset click count
-                        log.innerHTML = "";
+                        log.innerHTML = "If you are done drawing, please click \"Done Drawing\". \n\nIf you are ready to proceed to the next page click \"Submit Drawing\"";
                     }
                 }
                 else {
@@ -219,7 +219,7 @@
                         doneButton.value = "Done Drawing";  //change the name (value) of the button
                         wallType = WALL_TYPE.PROPOSED;      //change wall type                    
                         startNewWall = true;                //reset click count
-                        log.innerHTML = "";
+                        log.innerHTML = "If you are done drawing, please click \"Done Drawing\". \n\nIf you are ready to proceed to the next page click \"Submit Drawing\""";
                     }
                 }
             }

@@ -28,6 +28,10 @@ for (var i = 0; i < lineList.length; i++) { //draw all the lines with the given 
             
     if(coordList[i][4] == "E") //4 = wall facing
         lineArray[i].attr("stroke", "red"); //if existing wall, make line red
+    else if (coordList[i][4] == "G") {
+        lineArray[i].attr("stroke", "green"); //if existing wall, make line red
+        lineArray[i].attr("stroke-width", 3);
+    }
     else
         lineArray[i].attr("stroke", "black"); //if proposed wall, make line black
 }
