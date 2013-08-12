@@ -581,27 +581,50 @@ function findCurrentWallHeight(door, wall) {
         return (wall.startHeight + (wall.endHeight - wall.startHeight) * ((door.position + door.fwidth) - wall.length) / (0 - wall.length));
 }
 
+///**
+//*insertDoor
+//*This function inserts the current door to the appropriate wall and position
+//*@param doors - holds an array of unsorted doors
+//*@param wall - used to hold the current wall information
+//*/
+//function insertDoor(door, wall) {
+
+//    //Variable to hold the index in which position to store the current door
+//    var position;
+
+//    //Loop to find the right index/position to store the door
+//    for (position = 0; position < wall.doors.length; position++) {
+//        //If the existing door is larger than the new door, break out of the loop
+//        if (wall.doors[position].position > door.position) {
+//            break;
+//        }
+//    }
+
+//    //Insert the door into the index/position at which the loop breaks out
+//    wall.doors.insert(position, door);
+//}
+
 /**
-*insertDoor
-*This function inserts the current door to the appropriate wall and position
-*@param doors - holds an array of unsorted doors
-*@param wall - used to hold the current wall information
+*insertMod (original funtion insertDoor edited by Taha on 8/12/2013)
+*This function inserts a mod to the appropriate wall and position
+*@param mod - the mod to insert 
+*@param wall - the wall in which to insert
 */
-function insertDoor(door, wall) {
+function insertMod(mod, wall) {
 
-    //Variable to hold the index in which position to store the current door
-    var position;
+    //Variable to hold the index in which index to store the current mod
+    var index;
 
-    //Loop to find the right index/position to store the door
-    for (position = 0; position < wall.doors.length; position++) {
+    //Loop to find the right index to store the door
+    for (index = 0; index < wall.mods.mwidth; index++) {
         //If the existing door is larger than the new door, break out of the loop
-        if (wall.doors[position].position > door.position) {
+        if (wall.doors[index].position > door.position) {
             break;
         }
     }
 
     //Insert the door into the index/position at which the loop breaks out
-    wall.doors.insert(position, door);
+    wall.mods.insert(index, mod);
 }
 
 /**

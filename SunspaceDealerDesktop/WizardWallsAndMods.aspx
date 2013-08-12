@@ -22,7 +22,7 @@
 
         //Mods holds all common information for doors
         function Mods() {
-            this.typeMod = null;           //Holds: Door, Window
+            this.typeMod = null;           //Holds: Door, Window, Filler
             this.mheight = null;
             this.mwidth = null;
         }
@@ -204,8 +204,9 @@
                         "id": i,
                         "startHeight": wallStartHeightArray[i - 1],
                         "endHeight": wallEndHeightArray[i - 1],
-                        "doors": [],
-                        "windows": []
+                        //"doors": [],
+                        //"windows": []
+                        "mods" : []
                     };
                     //For loop to get values from first slide controls, which are: Left Filler, Length, Right Filler.
                     //These are repeated for every proposed wall.
@@ -229,9 +230,14 @@
         This function calculates the "setback" of each wall, i.e. the number of inches the current wall adds to the projection.
         This is calculated based on the orientation or facing-direction of the given wall. The value is then stored
         in an array called wallSetBackArray, at the appropriate index.
+
+        Edit [8/12/2013]: This function also has the functionality to determine the width of the sunroom now.
+            New param: width, true or false, based on whether we're trying to calculate width of setback.
+
         @param index - index of the wall on which to calculate setback
+        @param width - true or false, based on whether calculating width or setback.
         */
-        function calculateSetBack(index) {
+        function calculateSetBack(index, width) {
             /*
             SOUTH       :   ZERO
             NORTH       :   ZERO
@@ -249,22 +255,41 @@
             //get the orientation of the given wall
             switch (coordList[index][5]) { //5 = orientation
                 case "S": //if south
+                    if (width) {
+                        return L;
+                        break;
+                    }
                 case "N": //or north
-                    wallSetBackArray[index] = 0; //line is horizontal, setback = 0
+                    if (width)
+                        return -L;
+                    else
+                        wallSetBackArray[index] = 0; //line is horizontal, setback = 0
                     break;
                 case "W": //if west
-                    wallSetBackArray[index] = L; //line is horizontal facing west, setback is the same as the length of wall
+                    if (width)
+                        return 0;
+                    else 
+                        wallSetBackArray[index] = L; //line is horizontal facing west, setback is the same as the length of wall
                     break;
                 case "E": //if east
-                    wallSetBackArray[index] = -L; //similar to west, line is horizontal, facing east, setback is the same value as the length, but in the opposite direction
+                    if (width)
+                        return 0;
+                    else
+                        wallSetBackArray[index] = -L; //similar to west, line is horizontal, facing east, setback is the same value as the length, but in the opposite direction
                     break;
                 case "SW": //if southwest
                 case "NW": //or northwest
-                    wallSetBackArray[index] = Math.sqrt((Math.pow(L, 2)) / 2); //line is diagonal, use the given formula to calculate setback
+                    if (width)
+                        return -(Math.sqrt((Math.pow(L, 2)) / 2));
+                    else
+                        wallSetBackArray[index] = Math.sqrt((Math.pow(L, 2)) / 2); //line is diagonal, use the given formula to calculate setback
                     break;
                 case "SE": //if southeast
                 case "NE": //or northeast
-                    wallSetBackArray[index] = -(Math.sqrt((Math.pow(L, 2)) / 2)); //similar to SW and NW, use the given formula, but the value is negative
+                    if (width)
+                        return Math.sqrt((Math.pow(L, 2)) / 2);
+                    else
+                        wallSetBackArray[index] = -(Math.sqrt((Math.pow(L, 2)) / 2)); //similar to SW and NW, use the given formula, but the value is negative
                     break;
             }
         }
@@ -305,38 +330,24 @@
         }
 
         /**
-        This function is used to calculate the width of the sunroom
-
-        Just started... needs work.
-
+        This function is used to calculate the width of the sunroom using calculateSetBack() function.
+        Once the width is determined it gets stored in the global roomWidth array.
         */
         function calculateWidth() {
             var tempWidth = 0; //variable to store each setback
-            //var tempAntiProjection = 0;
-            var highestProjection = 0; //variable to store the highest projection calculated from the left side of the room
-            //var lowestProjection = 0; //variable to store the highest projection calculated from the right side of the room
-            //var overallProjection;
+            var highestWidth = 0; //variable to store the highest width calculated from the left side of the room
+            
             for (var i = 0; i < wallSetBackArray.length; i++) { //run through all the setbacks
                 if (wallSetBackArray[i]) { //if its not null (it would be null for existing walls
-                    tempProjection = +tempProjection + +wallSetBackArray[i]; //add the values to temp variable
-                    if (tempProjection > highestProjection) { //determine if the current temp projection is greater than the highest projection calculated
-                        highestProjection = tempProjection; // reset the highest projection
-                        projection = highestProjection;
-                    }
-                    if (wallSetBackArray[i] < 0) {
-                        //alert(antiProjection);
-                        tempAntiProjection = tempAntiProjection + wallSetBackArray[i] * -1;
-                        antiProjection = tempAntiProjection;
+                    tempWidth = +tempWidth + calculateSetBack(i, true); //add the values to temp variable
+                    if (tempWidth > highestWidth) { //determine if the current temp projection is greater than the highest projection calculated
+                        highestWidth = tempWidth; // reset the highest projection
                     }
                 }
             }
-
-            if (antiProjection > projection)
-                return antiProjection;
-            else
-                return projection;
-
+            roomWidth = highestWidth;
         }
+
 
         /** 
         This function is used to validate decimal to eighth of an inch. 
@@ -595,7 +606,7 @@
 
                 for (var i = 1; i <= lineList.length; i++) { //populate the hidden fields for each wall
                     if (coordList[i - 1][4] === "P") {
-                        calculateSetBack((i - 1)); //calculate setback of the given wall
+                        calculateSetBack((i - 1), false); //calculate setback of the given wall
                         
                         document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i - 1]; //store wall setback 
                         wallLeftFillerArray[i - 1] = document.getElementById("hidWall" + i + "LeftFiller").value = //store left filler
@@ -615,8 +626,8 @@
                 }
 
                 //store roomProjection in the roomProjection variable and hidden field
-                document.getElementById("MainContent_hidroomProjection").value = roomProjection = calculateProjection(); 
-
+                document.getElementById("MainContent_hidRoomProjection").value = roomProjection = calculateProjection(); 
+                document.getElementById("MainContent_hidRoomWidth").value = roomWidth;
                 determineSoffitLengthOfEachWall(); //calculate and store soffitlength of each wall
 
                 //Set answer on side pager and enable button
@@ -1218,7 +1229,8 @@
     <%-- hiddenFieldsDiv is used to store dynamically generated hidden fields from codebehind --%>
     <div id="hiddenFieldsDiv" runat="server"></div>
     <%-- <input id="hidSoffitLength" type="hidden" runat="server" /> --%>
-    <input id="hidroomProjection" type="hidden" runat="server" />
+    <input id="hidRoomProjection" type="hidden" runat="server" />
+    <input id="hidRoomWidth" type="hidden" runat="server" />
     <input id="hidFrontWallHeight" type="hidden" runat="server" />
     <input id="hidBackWallHeight" type="hidden" runat="server" />
     <input id="hidRoofSlope" type="hidden" runat="server" />
