@@ -56,15 +56,11 @@ Array.prototype.insert = function (index, item) {
     this.splice(index, 0, item);
 };
 
-//Mods holds all common information for doors
-function Mods() {
-    this.typeMod = "Door";           //Holds: Door, Window
-    this.mheight = null;
-    this.mwidth = null;
-}
+
 
 //Framed Door holds all common information for doors
 function FramedDoor() {
+    this.typeMod = "Door";
     this.type = null;           //Cabana, French, Patio, Open Space (No Door)
     this.style = null;          //Full Screen, Vertical Four Track, Full View, Full View Colonial, Half Lite, Half Lite Venting, Full Lite, Half Lite With Mini Blinds, Full View With Mini Blinds
     this.screenOptions = null;  //Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screen, Tuff Screen, No Screen

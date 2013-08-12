@@ -18,7 +18,14 @@
         var MIN_WINDOW_WIDTH = '<%= Session["MIN_WINDOW_WIDTH"] %>'
         var MAX_WINDOW_WIDTH = '<%= Session["MAX_WINDOW_WIDTH"] %>'
         var MIN_MOD_WIDTH = MIN_WINDOW_WIDTH + 2;
-        var MAX_MOD_WIDTH = MAX_WINDOW_WIDTH + 2;        
+        var MAX_MOD_WIDTH = MAX_WINDOW_WIDTH + 2;
+
+        //Mods holds all common information for doors
+        function Mods() {
+            this.typeMod = null;           //Holds: Door, Window
+            this.mheight = null;
+            this.mwidth = null;
+        }
     </script>
     <script src="Scripts/DoorSlideFunctions.js"></script>
     <%-- Hidden field populating scripts 
