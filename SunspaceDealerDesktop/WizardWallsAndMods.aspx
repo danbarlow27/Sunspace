@@ -231,13 +231,9 @@
         This is calculated based on the orientation or facing-direction of the given wall. The value is then stored
         in an array called wallSetBackArray, at the appropriate index.
 
-        Edit [8/12/2013]: This function also has the functionality to determine the width of the sunroom now.
-            New param: width, true or false, based on whether we're trying to calculate width of setback.
-
         @param index - index of the wall on which to calculate setback
-        @param width - true or false, based on whether calculating width or setback.
         */
-        function calculateSetBack(index, width) {
+        function calculateSetBack(index) {
             /*
             SOUTH       :   ZERO
             NORTH       :   ZERO
@@ -255,41 +251,22 @@
             //get the orientation of the given wall
             switch (coordList[index][5]) { //5 = orientation
                 case "S": //if south
-                    if (width) {
-                        return L;
-                        break;
-                    }
                 case "N": //or north
-                    if (width)
-                        return -L;
-                    else
-                        wallSetBackArray[index] = 0; //line is horizontal, setback = 0
+                    wallSetBackArray[index] = 0; //line is horizontal, setback = 0
                     break;
                 case "W": //if west
-                    if (width)
-                        return 0;
-                    else 
-                        wallSetBackArray[index] = L; //line is horizontal facing west, setback is the same as the length of wall
+                    wallSetBackArray[index] = L; //line is horizontal facing west, setback is the same as the length of wall
                     break;
                 case "E": //if east
-                    if (width)
-                        return 0;
-                    else
-                        wallSetBackArray[index] = -L; //similar to west, line is horizontal, facing east, setback is the same value as the length, but in the opposite direction
+                    wallSetBackArray[index] = -L; //similar to west, line is horizontal, facing east, setback is the same value as the length, but in the opposite direction
                     break;
                 case "SW": //if southwest
                 case "NW": //or northwest
-                    if (width)
-                        return -(Math.sqrt((Math.pow(L, 2)) / 2));
-                    else
-                        wallSetBackArray[index] = Math.sqrt((Math.pow(L, 2)) / 2); //line is diagonal, use the given formula to calculate setback
+                    wallSetBackArray[index] = Math.sqrt((Math.pow(L, 2)) / 2); //line is diagonal, use the given formula to calculate setback
                     break;
                 case "SE": //if southeast
                 case "NE": //or northeast
-                    if (width)
-                        return Math.sqrt((Math.pow(L, 2)) / 2);
-                    else
-                        wallSetBackArray[index] = -(Math.sqrt((Math.pow(L, 2)) / 2)); //similar to SW and NW, use the given formula, but the value is negative
+                    wallSetBackArray[index] = -(Math.sqrt((Math.pow(L, 2)) / 2)); //similar to SW and NW, use the given formula, but the value is negative
                     break;
             }
         }
@@ -330,21 +307,61 @@
         }
 
         /**
-        This function is used to calculate the width of the sunroom using calculateSetBack() function.
-        Once the width is determined it gets stored in the global roomWidth array.
+        This function is used to calculate the width of the sunroom using the setback formula.
+        Once the width is determined it gets stored in the global roomWidth variable.
         */
         function calculateWidth() {
             var tempWidth = 0; //variable to store each setback
             var highestWidth = 0; //variable to store the highest width calculated from the left side of the room
-            
-            for (var i = 0; i < wallSetBackArray.length; i++) { //run through all the setbacks
-                if (wallSetBackArray[i]) { //if its not null (it would be null for existing walls
-                    tempWidth = +tempWidth + calculateSetBack(i, true); //add the values to temp variable
+            var width = 0;
+
+            for (var index = 0; index < wallSetBackArray.length; index++) { //run through all the setbacks
+                if (wallSetBackArray[index]) { //if its not null (it would be null for existing walls
+
+                    /*
+                    WEST        :   ZERO
+                    EAST        :   ZERO
+                    SOUTH       :   LENGTH
+                    NORTH       :   NEGATIVE LENGTH
+                    SOUTHEAST   :   (2a^2 = L^2)
+                    NORTHEAST   :   (2a^2 = L^2)            
+                    SOUTHWEST   :   NEGATIVE (2a^2 = L^2)  
+                    NORTHWEST   :   NEGATIVE (2a^2 = L^2) 
+                    */
+
+                    //length of the given wall
+                    var L = +(document.getElementById("MainContent_txtWall" + (index + 1) + "Length").value);
+
+                    //get the orientation of the given wall
+                    switch (coordList[index][5]) { //5 = orientation
+                        case "S": //if south
+                            width = L;
+                            break;
+                        case "N": //or north
+                            width = -L;
+                            break;
+                        case "W": //if west
+                        case "E": //if east
+                            width = 0;
+                            break;
+                        case "SW": //if southwest
+                        case "NW": //or northwest
+                            width = -(Math.sqrt((Math.pow(L, 2)) / 2));
+                            break;
+                        case "SE": //if southeast
+                        case "NE": //or northeast
+                            width = Math.sqrt((Math.pow(L, 2)) / 2);
+                            break;
+                    }
+
+                    tempWidth = +tempWidth + width //add the values to temp variable
+
                     if (tempWidth > highestWidth) { //determine if the current temp projection is greater than the highest projection calculated
                         highestWidth = tempWidth; // reset the highest projection
                     }
                 }
             }
+
             roomWidth = highestWidth;
         }
 
@@ -606,7 +623,7 @@
 
                 for (var i = 1; i <= lineList.length; i++) { //populate the hidden fields for each wall
                     if (coordList[i - 1][4] === "P") {
-                        calculateSetBack((i - 1), false); //calculate setback of the given wall
+                        calculateSetBack((i - 1)); //calculate setback of the given wall
                         
                         document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i - 1]; //store wall setback 
                         wallLeftFillerArray[i - 1] = document.getElementById("hidWall" + i + "LeftFiller").value = //store left filler
