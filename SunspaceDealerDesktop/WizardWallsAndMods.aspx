@@ -869,7 +869,7 @@
                     validateWindowModSize(space, size, number, wall, start);
                 }
                 else if (size < space) {
-                    var tempSize = validateDecimal(size);
+                    var tempSize = validateDecimal(size); //make sure the size is 
                     while (tempSize < space) {
                         var multiplier = 1;
                         tempSize = size * multiplier;
@@ -882,7 +882,6 @@
                         }
                         else if ((space - tempSize) <= MIN_MOD_WIDTH) {
                             fillMods(tempSize, number, wall, space - tempSize, start);
-                            fillFiller();
                         }
                     }
                 }
@@ -891,30 +890,49 @@
                 }
             }
             else { //space < MIN_MOD_SIZE
-                fillFiller();
+                fillFiller(space, wall, start);
             }
         }
 
 
         function fillMods(size, number, wall, filler, start) {
-            
             var mod;
+
+            if (filler > 0)
+                fillFiller(filler / 2, wall, start);
             
             for (var i = 0; i < number; i++) {
                 mod = {
+                    type: "Window",
                     width: size / number,
                     wall: wall,
-                    startHeight: findCurrentWallHeight(start, wall),
-                    endHeight: findCurrentWallHeight(start + (size / number), wall),
-                    position: start
+                    startHeight: findCurrentWallHeight(start + (filler / 2), wall),
+                    endHeight: findCurrentWallHeight(start + (filler / 2) + (size / number), wall),
+                    position: start + (filler / 2)
                 }
                 start = start + (size / number);
 
+
+
+                insertMod(mod, walls[wall]);
             }
+
+            if (filler > 0)
+                fillFiller(filler / 2, wall, start);
         }
 
-        function fillFiller() {
+        function fillFiller(filler, wall, start) {
+            var mod;
 
+            mod = {
+                type: "Filler",
+                width: filler,
+                wall: wall,
+                startHeight: findCurrentWallHeight(start, wall),
+                endHeight: findCurrentWallHeight(start + filler, wall),
+                position: start
+            }
+            insertMod(mod, walls[wall]);
         }
 
 
