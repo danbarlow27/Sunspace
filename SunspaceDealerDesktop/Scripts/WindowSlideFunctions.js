@@ -39,12 +39,15 @@ function fillWindowsMods() {
     for (var k = 0; k < availableSpaces.length; k++) {
         var availableSpace = availableSpaces[k].end - availableSpaces[k].start;
         var windowSize = MAX_WINDOW_WIDTH;
-        var tryAgain = 1;
+        //var tryAgain = 1;
 
-        if (availableSpaces[k] >= MIN_MOD_WIDTH) { //if there's enough space to fit a min size window
-            while (!validateModSize(availableSpace, (windowSize / tryAgain) + 2, tryAgain, availableSpaces[k].wall), availableSpaces[k].start) { //keep trying until windows fit in the space (with min filler)
-                tryAgain++; //used to divide the window size by 2 at each try to try smaller window sizes
-            }
+        //if (availableSpaces[k] >= MIN_MOD_WIDTH) { //if there's enough space to fit a min size window
+        
+        validateWindowModSize(availableSpace, windowSize, 1, availableSpaces[k].wall, availableSpaces[k].start); // call the function to find the appropriate size of windows
+        
+            //while (!validateModSize(availableSpace, (windowSize / tryAgain) + 2, tryAgain, availableSpaces[k].wall), availableSpaces[k].start) { //keep trying until windows fit in the space (with min filler)
+            //    tryAgain++; //used to divide the window size by 2 at each try to try smaller window sizes
+            //}
         }
     }
 }
