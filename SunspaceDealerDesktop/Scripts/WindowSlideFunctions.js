@@ -25,9 +25,67 @@ function ScreenWindow() {
     this.screenType = null;
     this.height = null;
     this.width = null;
-
-    
 }
+
+ScreenWindow.prototype = new Window();
+
+function V4TWindow() {
+    this.type = "V4T";
+    this.vinyl1Tint = null;
+    this.vinyl2Tint = null;
+    this.vinyl3Tint = null;
+    this.vinyl4Tint = null;
+    this.height = null;
+    this.width = null;
+} 
+
+V4TWindow.prototype = new Window();
+
+function H2TWindow() {
+    this.type = "H2T";
+    this.height = null;
+    this.width = null;
+    this.tint = null;
+}
+
+H2TWindow.prototype = new Window();
+
+function FixedVinylWindow() {
+    this.type = "FixedVinyl";
+    this.height = null;
+    this.width = null;
+    this.tint = null;
+}
+
+FixedVinylWindow.prototype = new Window();
+
+function FixedGlassWindow() {
+    this.type = "FixedGlass";
+    this.height = null;
+    this.width = null;
+    this.tint = null;
+}
+
+FixedGlassWindow.prototype = new Window();
+
+function SinglePaneWindow() {
+    this.type = "SinglePane";
+    this.height = null;
+    this.width = null;
+    this.tint = null;
+}
+
+SinglePaneWindow.prototype = new Window();
+
+function DoublePaneWindow() {
+    this.type = "DoublePane";
+    this.height = null;
+    this.width = null;
+    this.tint = null;
+}
+
+DoublePaneWindow.prototype = new Window();
+
 
 
 function fillWindowsMods() {
