@@ -1,9 +1,34 @@
-﻿/************************************************************************************************************************************/
-/****************                 new function to be written                *******************************/
+﻿/************************************************************************************************************************************
+*Author:        Taha Amjad
+*Date:          13/08/2013
+*Description:   
+
+
+
 /************************************************************************************************************************************/
 
 
-//do windows have to be precise to eighth of an inch also
+function Window() {
+    this.typeMod = "Window";
+    this.type = null; //Screen, V4T, H2T, Fixed Vinyl, Fixed Glass, Single Pane, Double Pane [, Open wall, Solid Wall]?
+    this.fWidth = null; //frame width
+    this.fHeight = null; //frame height
+    this.frameColour = null; //White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey
+    this.position = null; //distance from left
+    this.spreaderBar = null; //spreader bar, true or false
+}
+
+Window.prototype = new Mods();
+
+function ScreenWindow() {
+    this.type = "Screen";
+    this.screenType = null;
+    this.height = null;
+    this.width = null;
+
+    
+}
+
 
 function fillWindowsMods() {
 

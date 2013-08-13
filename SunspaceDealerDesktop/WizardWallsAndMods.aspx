@@ -27,17 +27,17 @@
         //Mods holds all common information for doors
         function Mods() {
             this.id = null;
-            this.typeMod = null;           //Holds: Door, Window, Filler
-            this.mStartHeight = null;
-            this.mEndHeight = null;
-            this.mWidth = null;
-            this.wall = null;
-            this.position = null;
-            //this.kneewallType = null;
-            //this.kneewallHeight = null;
-            this.transomType = null;
-            this.transomStartHeight = null;
-            this.transomEndHeight = null;
+            this.typeMod = null;           //Holds: Door, Window
+            this.mStartHeight = null; //start height of the mod
+            this.mEndHeight = null; //end height of the mod
+            this.mWidth = null; //width of the mod
+            this.wall = null; //the wall in belongs in
+            this.position = null; //distance from the left
+            this.transomType = null; //Glass, Vinyl, Solid Wall, Screen
+            this.transomStartHeight = null; // start height of transom
+            this.transomEndHeight = null; //end height of transom
+            this.kneewallPunch = null; // location of the kneewall punch, or false if no kneewall
+            this.headerPunch = null; //location of the header punch
         }
     </script>
     <script src="Scripts/DoorSlideFunctions.js"></script>
