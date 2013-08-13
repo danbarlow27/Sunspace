@@ -49,7 +49,7 @@ namespace SunspaceDealerDesktop
 
             /***hard coded variables***/
             Session["model"] = "M100";
-            Session["soffitLength"] = 0f;
+            Session["soffitLength"] = 0F;
             Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
             Session["MAX_WINDOW_WIDTH"] = Constants.MAX_WINDOW_WIDTH;
             Session["MIN_WINDOW_WIDTH"] = Constants.MIN_WINDOW_WIDTH;
@@ -57,6 +57,10 @@ namespace SunspaceDealerDesktop
             /***hard coded variables***/
             Session["model"] = "M300";
             Session["soffitLength"] = 10F;
+            Session["kneewallType"] = "glass";
+            Session["kneewallHeight"] = 20F;
+            Session["transomType"] = "vinyl";
+            Session["transomHeight"] = 20F;
             /****************diffrent sunroom layouts******************/
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
             //Session["coordList"] = "75,425,150,150,E,S/150,150,150,250,P,W/150,350,250,250,P,S/350,350,250,150,P,E/";

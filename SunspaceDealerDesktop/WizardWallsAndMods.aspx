@@ -19,6 +19,10 @@
         var MAX_WINDOW_WIDTH = '<%= Session["MAX_WINDOW_WIDTH"] %>'
         var MIN_MOD_WIDTH = MIN_WINDOW_WIDTH + 2;
         var MAX_MOD_WIDTH = MAX_WINDOW_WIDTH + 2;
+        var kneewallType = '<%= Session["kneewallType"] %>';
+        var kneewallHeight = '<%= Session["kneewallHeight"] %>';
+        var transomType = '<%= Session["transomType"] %>';
+        var transomHeight = '<%= Session["transomHeight"] %>';
 
         //Mods holds all common information for doors
         function Mods() {
@@ -908,7 +912,11 @@
                     wall: wall,
                     startHeight: findCurrentWallHeight(start + (filler / 2), wall),
                     endHeight: findCurrentWallHeight(start + (filler / 2) + (size / number), wall),
-                    position: start + (filler / 2)
+                    position: start + (filler / 2),
+                    kneewallType: kneewallType,
+                    kneewallHeight: kneewallHeight,
+                    transomType: transomType,
+                    transomHeight: transomHeight
                 }
                 start = start + (size / number);
 
