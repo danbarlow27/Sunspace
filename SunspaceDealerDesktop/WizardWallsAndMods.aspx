@@ -81,7 +81,6 @@
         var antiProjection = 0; //room projection from the right ... hard coded for testing
         var roomProjection = 0; //the higher of the two room projections
         var roomWidth; //the width of the room from the far left to the far right
-        ///need to be calculated
         var soffitLength = '<%= soffitLength %>'//hard coded for testing, will come from the previous pages in the wizard
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
          
@@ -870,7 +869,7 @@
                     validateWindowModSize(space, size, number, wall, start);
                 }
                 else if (size < space) {
-                    var tempSize = size;
+                    var tempSize = validateDecimal(size);
                     while (tempSize < space) {
                         var multiplier = 1;
                         tempSize = size * multiplier;
@@ -910,6 +909,7 @@
                     position: start
                 }
                 start = start + (size / number);
+
             }
         }
 
