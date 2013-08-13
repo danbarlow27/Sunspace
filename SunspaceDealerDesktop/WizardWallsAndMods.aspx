@@ -26,9 +26,17 @@
 
         //Mods holds all common information for doors
         function Mods() {
+            this.id = null;
             this.typeMod = null;           //Holds: Door, Window, Filler
-            this.mheight = null;
-            this.mwidth = null;
+            this.mStartHeight = null;
+            this.mEndHeight = null;
+            this.mWidth = null;
+            this.wall = null;
+            this.position = null;
+            //this.kneewallType = null;
+            //this.kneewallHeight = null;
+            this.transomType = null;
+            this.transomHeight = null;
         }
     </script>
     <script src="Scripts/DoorSlideFunctions.js"></script>
@@ -916,7 +924,8 @@
                     kneewallType: kneewallType,
                     kneewallHeight: kneewallHeight,
                     transomType: transomType,
-                    transomHeight: transomHeight
+                    transomHeight: transomHeight,
+                    window: []
                 }
                 start = start + (size / number);
 
