@@ -36,7 +36,8 @@
             //this.kneewallType = null;
             //this.kneewallHeight = null;
             this.transomType = null;
-            this.transomHeight = null;
+            this.transomStartHeight = null;
+            this.transomEndHeight = null;
         }
     </script>
     <script src="Scripts/DoorSlideFunctions.js"></script>
