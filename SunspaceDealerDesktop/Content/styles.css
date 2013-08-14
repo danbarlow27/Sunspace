@@ -538,17 +538,22 @@ li > .toggleOptions > li {
  * ERROR MESSAGE DISPLAY
  ******************************************/
 
-.lblErrorMessage {
+.lblErrorMessage,
+.txtErrorMessage {
     font-size: .9em;
     font-style: italic;
     line-height: 1em;
     color: #fa0000;
+    background: transparent;
     width: 100%;
     margin-top: 10px;
+    border: 0;
     display: inline-block;
+    resize: none;
 }
 
-.lblErrorMessage:before {
+.lblErrorMessage:before,
+.txtErrorMessage:before {
     content: "* ";
 }
 

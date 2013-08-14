@@ -1265,7 +1265,8 @@
             </div> <%-- end #paging --%>      
         </div>
 
-        <asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label> 
+        <%--<asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label>--%>
+        <textarea id="txtErrorMessage" class="txtErrorMessage" disabled="disabled" rows="5">Oh hello, I am an error message.</textarea>
     </div>
     
 <script src="Scripts/MiniCanvasFunctions.js"></script>
