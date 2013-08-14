@@ -226,6 +226,7 @@
                 //If logic for passing values to C# (server-side)
             else if (doneButton.value === "Done Drawing") {
 
+                $('#MainContent_btnSubmitDrawing').removeClass('btnDisabled');
                 $('#MainContent_btnSubmitDrawing').addClass('btnSubmit');
 
                 var lineInfo = "";  //Variable to hold array/line information to be passed to C# (server-side)
