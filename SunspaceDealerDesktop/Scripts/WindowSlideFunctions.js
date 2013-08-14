@@ -22,7 +22,7 @@ Window.prototype = new Mods();
 
 function ScreenWindow() {
     this.type = "Screen";
-    this.screenType = null;
+    this.screenType = null; //Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screen, Tuff Screen, No Screen
     this.height = null;
     this.width = null;
 }
@@ -31,10 +31,10 @@ ScreenWindow.prototype = new Window();
 
 function V4TWindow() {
     this.type = "V4T";
-    this.vinyl1Tint = null;
-    this.vinyl2Tint = null;
-    this.vinyl3Tint = null;
-    this.vinyl4Tint = null;
+    this.vinyl1Tint = null; //Clear, Smoke Grey, Dark Grey, Bronze
+    this.vinyl2Tint = null; //Clear, Smoke Grey, Dark Grey, Bronze
+    this.vinyl3Tint = null; //Clear, Smoke Grey, Dark Grey, Bronze
+    this.vinyl4Tint = null; //Clear, Smoke Grey, Dark Grey, Bronze
     this.height = null;
     this.width = null;
 } 
@@ -45,7 +45,7 @@ function H2TWindow() {
     this.type = "H2T";
     this.height = null;
     this.width = null;
-    this.tint = null;
+    this.tint = null; //Clear, Smoke Grey, Dark Grey, Bronze 
 }
 
 H2TWindow.prototype = new Window();
@@ -54,7 +54,7 @@ function FixedVinylWindow() {
     this.type = "FixedVinyl";
     this.height = null;
     this.width = null;
-    this.tint = null;
+    this.tint = null; //Clear, Smoke Grey, Dark Grey, Bronze
 }
 
 FixedVinylWindow.prototype = new Window();
@@ -63,7 +63,7 @@ function FixedGlassWindow() {
     this.type = "FixedGlass";
     this.height = null;
     this.width = null;
-    this.tint = null;
+    this.tint = null; //Clear, Grey, Bronze
 }
 
 FixedGlassWindow.prototype = new Window();
@@ -72,7 +72,7 @@ function SinglePaneWindow() {
     this.type = "SinglePane";
     this.height = null;
     this.width = null;
-    this.tint = null;
+    this.tint = null; //Clear, Grey, Bronze
 }
 
 SinglePaneWindow.prototype = new Window();
@@ -81,7 +81,7 @@ function DoublePaneWindow() {
     this.type = "DoublePane";
     this.height = null;
     this.width = null;
-    this.tint = null;
+    this.tint = null; //Clear, Grey, Bronze
 }
 
 DoublePaneWindow.prototype = new Window();
@@ -95,26 +95,29 @@ function fillWindowsMods() {
 
     for (var i = 0; i < walls.length; i++) { //for each wall in the list of wall objects
         if (coordList[i][4] === "P") { //if it is a proposed wall
-            if (walls[i].doors.length > 0) { //if there is at least 1 door in the wall
-                for (var j = 0; j < walls[i].doors.length; j++) {
+            if (walls[i].mods.length > 0) { //if there is at least 1 door in the wall
+                for (var j = 0; j < walls[i].mods.length; j++) {
                     var freeSpace;
-                    if (walls[i].doors[j].position > 0) {
+                    if (walls[i].mods[j].position > 0) {
                         freeSpace = {
                             "wall": i,
-                            "start": walls[i].doors[j].position - 1,
-                            "end": walls[i].doors[j].fwidth + 1
+                            "start": walls[i].mods[j].position - 1,
+                            "end": walls[i].mods[j].fwidth + 1
                         };
                     }
                     else {
                         freeSpace = {
                             "wall": i,
                             "start": 0,
-                            "end": walls[i].doors[j].fwidth + 1
+                            "end": walls[i].mods[j].fwidth + 1
                         };
                     }
                     availableSpaces[freeSpaceCounter] = freeSpace;
                     freeSpaceCounter++;
                 }
+            }
+            else { //no pre-existing mods
+                availableSpaces[0] = { "wall": i, "start": walls[i].leftFiller + 1, "end": walls[i].length - walls[i].rightFiller};
             }
         }
     }
