@@ -19,15 +19,29 @@
         var MAX_WINDOW_WIDTH = '<%= Session["MAX_WINDOW_WIDTH"] %>'
         var MIN_MOD_WIDTH = MIN_WINDOW_WIDTH + 2;
         var MAX_MOD_WIDTH = MAX_WINDOW_WIDTH + 2;
+        var kneewallType = '<%= Session["kneewallType"] %>';
+        var kneewallHeight = '<%= Session["kneewallHeight"] %>';
+        var transomType = '<%= Session["transomType"] %>';
+        var transomHeight = '<%= Session["transomHeight"] %>';
 
         //Mods holds all common information for doors
         function Mods() {
-            this.typeMod = null;           //Holds: Door, Window
-            this.mheight = null;
-            this.mwidth = null;
+            this.id = null;                 //mod id
+            this.typeMod = null;            //Holds: Door, Window
+            this.mStartHeight = null;       //start height of the mod
+            this.mEndHeight = null;         //end height of the mod
+            this.mWidth = null;             //width of the mod
+            this.wall = null;               //the wall in belongs in
+            this.position = null;           //distance from the left
+            this.transomType = null;        //Glass, Vinyl, Solid Wall, Screen
+            this.transomStartHeight = null; //start height of transom
+            this.transomEndHeight = null;   //end height of transom
+            this.kneewallPunch = null;      //location of the kneewall punch, or false if no kneewall
+            this.headerPunch = null;        //location of the header punch
         }
     </script>
     <script src="Scripts/DoorSlideFunctions.js"></script>
+    <script src="Scripts/WindowSlideFunctions.js"></script>
     <%-- Hidden field populating scripts 
     =================================== --%>
     <script>       
@@ -83,7 +97,6 @@
         var antiProjection = 0; //room projection from the right ... hard coded for testing
         var roomProjection = 0; //the higher of the two room projections
         var roomWidth; //the width of the room from the far left to the far right
-        ///need to be calculated
         var soffitLength = '<%= soffitLength %>'//hard coded for testing, will come from the previous pages in the wizard
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
          
@@ -215,8 +228,9 @@
                         "id": i,
                         "startHeight": wallStartHeightArray[i - 1],
                         "endHeight": wallEndHeightArray[i - 1],
-                        "doors": [],
-                        "windows": []
+                        //"doors": [],
+                        //"windows": []
+                        "mods" : []
                     };
                     //For loop to get values from first slide controls, which are: Left Filler, Length, Right Filler.
                     //These are repeated for every proposed wall.
@@ -240,6 +254,7 @@
         This function calculates the "setback" of each wall, i.e. the number of inches the current wall adds to the projection.
         This is calculated based on the orientation or facing-direction of the given wall. The value is then stored
         in an array called wallSetBackArray, at the appropriate index.
+
         @param index - index of the wall on which to calculate setback
         */
         function calculateSetBack(index) {
@@ -280,7 +295,6 @@
             }
         }
 
-
         /**
         This function uses the setbackArray which is already populated by calculateSetBack() function
             to calculate the room projection and antiProjection by simply adding each setback value.
@@ -316,37 +330,62 @@
         }
 
         /**
-        This function is used to calculate the width of the sunroom
-
-        Just started... needs work.
-
+        This function is used to calculate the width of the sunroom using the setback formula.
+        Once the width is determined it gets stored in the global roomWidth variable.
         */
         function calculateWidth() {
             var tempWidth = 0; //variable to store each setback
-            //var tempAntiProjection = 0;
-            var highestProjection = 0; //variable to store the highest projection calculated from the left side of the room
-            //var lowestProjection = 0; //variable to store the highest projection calculated from the right side of the room
-            //var overallProjection;
-            for (var i = 0; i < wallSetBackArray.length; i++) { //run through all the setbacks
-                if (wallSetBackArray[i]) { //if its not null (it would be null for existing walls
-                    tempProjection = +tempProjection + +wallSetBackArray[i]; //add the values to temp variable
-                    if (tempProjection > highestProjection) { //determine if the current temp projection is greater than the highest projection calculated
-                        highestProjection = tempProjection; // reset the highest projection
-                        projection = highestProjection;
+            var highestWidth = 0; //variable to store the highest width calculated from the left side of the room
+            var width = 0;
+
+            for (var index = 0; index < wallSetBackArray.length; index++) { //run through all the setbacks
+                if (wallSetBackArray[index]) { //if its not null (it would be null for existing walls
+
+                    /*
+                    WEST        :   ZERO
+                    EAST        :   ZERO
+                    SOUTH       :   LENGTH
+                    NORTH       :   NEGATIVE LENGTH
+                    SOUTHEAST   :   (2a^2 = L^2)
+                    NORTHEAST   :   (2a^2 = L^2)            
+                    SOUTHWEST   :   NEGATIVE (2a^2 = L^2)  
+                    NORTHWEST   :   NEGATIVE (2a^2 = L^2) 
+                    */
+
+                    //length of the given wall
+                    var L = +(document.getElementById("MainContent_txtWall" + (index + 1) + "Length").value);
+
+                    //get the orientation of the given wall
+                    switch (coordList[index][5]) { //5 = orientation
+                        case "S": //if south
+                            width = L;
+                            break;
+                        case "N": //or north
+                            width = -L;
+                            break;
+                        case "W": //if west
+                        case "E": //if east
+                            width = 0;
+                            break;
+                        case "SW": //if southwest
+                        case "NW": //or northwest
+                            width = -(Math.sqrt((Math.pow(L, 2)) / 2));
+                            break;
+                        case "SE": //if southeast
+                        case "NE": //or northeast
+                            width = Math.sqrt((Math.pow(L, 2)) / 2);
+                            break;
                     }
-                    if (wallSetBackArray[i] < 0) {
-                        //alert(antiProjection);
-                        tempAntiProjection = tempAntiProjection + wallSetBackArray[i] * -1;
-                        antiProjection = tempAntiProjection;
+
+                    tempWidth = +tempWidth + width //add the values to temp variable
+
+                    if (tempWidth > highestWidth) { //determine if the current temp projection is greater than the highest projection calculated
+                        highestWidth = tempWidth; // reset the highest projection
                     }
                 }
             }
 
-            if (antiProjection > projection)
-                return antiProjection;
-            else
-                return projection;
-
+            roomWidth = highestWidth;
         }
 
         /** 
@@ -423,7 +462,7 @@
                             wallEndHeightArray[i] = parseFloat(document.getElementById("hidRightWallHeight").value);
                         }
                     }
-                }                
+                }
             }
             else {
                 var m = parseFloat(document.getElementById("MainContent_txtRoofSlope").value);
@@ -486,18 +525,18 @@
                                     wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]);
                                     break;
                                 case "W": //if west
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) - parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) - parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and length, and subtract it from start height
                                     break;
                                 case "E": //if east
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) + parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) + parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and length, and add it to start height
                                     break;
                                 case "SW": //if southwest
                                 case "SE": //or northwest
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) - parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) - parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and setback, then subtract it from start height 
                                     break;
                                 case "NW": //if southeast
                                 case "NE": //or northeast
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) + parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) + parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and setback, then add it to start height 
                                     break;
                             }
                         }
@@ -505,7 +544,7 @@
                 }
             }
         }
-        
+
         /**
         This function is used to populate the wallSoffitArray.
             It takes the number of wall on which to start applying the soffit and 
@@ -535,8 +574,8 @@
             } while (wallSoffitArray[count] > Math.abs(wallSetBackArray[count])); //continue while the soffit length remaining is greater than next wall's length
 
         }
-        
-        /*
+
+        /**
         This function populates the wall soffit array by determining the orientation of each wall 
             and checking to see if the soffit length would affect it or not
         
@@ -647,8 +686,8 @@
                 }
 
                 //store roomProjection in the roomProjection variable and hidden field
-                document.getElementById("MainContent_hidroomProjection").value = roomProjection = calculateProjection(); 
-
+                document.getElementById("MainContent_hidRoomProjection").value = roomProjection = calculateProjection(); 
+                document.getElementById("MainContent_hidRoomWidth").value = roomWidth;
                 determineSoffitLengthOfEachWall(); //calculate and store soffitlength of each wall
 
                 //Set answer on side pager and enable button
@@ -982,109 +1021,6 @@
             }
         }
 
-
-        /************************************************************************************************************************************/
-                    /****************                 new function to be written                *******************************/
-        /************************************************************************************************************************************/
-
-
-        //do windows have to be precise to eighth of an inch also
-
-        function fillWindows() {
-
-            var availableSpaces = new Array();
-            var freeSpaceCounter = 0;
-
-            for (var i = 0; i < walls.length; i++) { //for each wall in the list of wall objects
-                if (coordList[i][4] === "P") { //if it is a proposed wall
-                    if (walls[i].doors.length > 0) { //if there is at least 1 door in the wall
-                        for (var j = 0; j < walls[i].doors.length; j++) {
-                            var freeSpace;
-                            if (walls[i].doors[j].position > 0) {
-                                freeSpace = {
-                                    "wall" : i,
-                                    "start" : walls[i].doors[j].position - 1,
-                                    "end" : walls[i].doors[j].fwidth + 1
-                                };
-                            }
-                            else {
-                                freeSpace = {
-                                    "wall": i,
-                                    "start" : 0,
-                                    "end" : walls[i].doors[j].fwidth + 1
-                                };
-                            }
-                            availableSpaces[freeSpaceCounter] = freeSpace;
-                            freeSpaceCounter++;
-                        }
-                    }
-                }
-            }
-
-            for (var k = 0; k < availableSpaces.length; k++) {
-                var availableSpace = availableSpaces[k].end - availableSpaces[k].start;
-                var windowSize = MAX_WINDOW_WIDTH;
-                var tryAgain = 1;
-
-                if (availableSpaces[k] >= MIN_MOD_WIDTH) { //if there's enough space to fit a min size window
-                    while (!validateModSize(availableSpace, (windowSize / tryAgain) + 2, tryAgain, availableSpaces[k].wall), availableSpaces[k].start) { //keep trying until windows fit in the space (with min filler)
-                        tryAgain++; //used to divide the window size by 2 at each try to try smaller window sizes
-                    }
-                }
-            }
-        }
-
-        function validateModSize(space, size, number, wall, start) {
-            var window;
-
-            if (space >= MIN_MOD_WIDTH) {
-                if (size > space) {
-                    size = size / 2;
-                    validateWindowSize(space, size, number, wall, start);
-                }
-                else if (size < space) {
-                    var tempSize = size;
-                    while (tempSize < space) {
-                        var multiplier = 1;
-                        tempSize = size * multiplier;
-                        multiplier++;
-                        if (tempSize === space) {
-                            fillMods(space, tempSize, multiplier, wall, 0, start);
-                        }
-                        else if (tempSize > space) {
-                            validateModSize(space, tempSize, multiplier, wall, start);
-                        }
-                        else if ((space - tempSize) <= MIN_MOD_WIDTH) {
-                            fillMods(space, tempSize, number, wall, space - tempSize, start);
-                            fillFiller();
-                        }
-                    }
-                }
-                else { //size === space
-                    fillMods(space, tempSize, multiplier, wall, 0, start);
-                }
-            }
-            else { //space < MIN_MOD_SIZE
-                fillFiller();
-            }
-        }
-
-        function fillMods(space, size, number, wall, filler, start) {
-
-        }
-
-        function fillFiller() {
-
-        }
-
-
-        /************************************************************************************************************************************/
-        /************************************************************************************************************************************/
-        /************************************************************************************************************************************/
-
-
-
-
     </script>
     <%-- End hidden div populating scripts --%>
 
@@ -1340,10 +1276,8 @@
     <%-- hiddenFieldsDiv is used to store dynamically generated hidden fields from codebehind --%>
     <div id="hiddenFieldsDiv" runat="server"></div>
     <%-- <input id="hidSoffitLength" type="hidden" runat="server" /> --%>
-    <input id="hidroomProjection" type="hidden" runat="server" />
-    <%-- <input id="hidFrontWallHeight" type="hidden" runat="server" />
-    <input id="hidBackWallHeight" type="hidden" runat="server" />
-    <input id="hidRoofSlope" type="hidden" runat="server" />--%>
+    <input id="hidRoomProjection" type="hidden" runat="server" />
+    <input id="hidRoomWidth" type="hidden" runat="server" />
 
     <%-- end hidden fields --%>    
 

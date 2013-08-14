@@ -567,21 +567,36 @@ function fillWallWithDoorMods(type, wallNumber) {
 }
 
 /**
-*findCurrentWallHeight
+NOTE: also see findCurrentWallHeight(position, wall)
+*findCurrentWallMinHeight
 *This function finds the height of the wall at any giving point within it.
 *This function is used to ensure a door isn't outside of the limits of the wall.
 *@param doors - holds an array of unsorted doors
 *@param wall - used to hold the current wall information
 *@return - the height at the current position within the current wall
 */
-function findCurrentWallHeight(door, wall) {
+function findCurrentWallMinHeight(door, wall) {
     if (wall.startHeight > wall.endHeight)
         return ((wall.endHeight + (wall.startHeight - wall.endHeight) * ((door.position + door.fwidth) - wall.length) / (0 - wall.length)));
     else
-        return (wall.startHeight + (wall.endHeight - wall.startHeight) * ((door.position + door.fwidth) - wall.length) / (0 - wall.length));
+        return (wall.startHeight + (wall.endHeight - wall.startHeight) * ((door.position) - wall.length) / (0 - wall.length));
 }
 
+
 /**
+*findCurrentWallEndHeight, (original function findCurrentWallHeight, edited by Taha on 8/12/2013)
+*This function finds the height of the wall at any giving point within it.
+*@param position - position at which to check the height 
+*@param wall - the index of the walls array to get the height of the given wall
+*@return - the height at the current position within the current wall
+*/
+function findCurrentWallHeight(position, wall) {
+    return ((walls[wall].endHeight + (walls[wall].startHeight - walls[wall].endHeight) * (position - walls[wall].length) / (0 - walls[wall].length)));
+}
+
+
+/**
+DEPRECATED: see insertMod
 *insertDoor
 *This function inserts the current door to the appropriate wall and position
 *@param doors - holds an array of unsorted doors
@@ -602,6 +617,29 @@ function insertDoor(door, wall) {
 
     //Insert the door into the index/position at which the loop breaks out
     wall.doors.insert(position, door);
+}
+
+/**
+*insertMod (original funtion insertDoor edited by Taha on 8/12/2013)
+*This function inserts a mod to the appropriate wall and position
+*@param mod - the mod to insert 
+*@param wall - the wall in which to insert mod
+*/
+function insertMod(mod, wall) {
+
+    //Variable to hold the index in which index to store the current mod
+    var index;
+
+    //Loop to find the right index to store the door
+    for (index = 0; index < wall.mods.length; index++) {
+        //If the existing door is larger than the new door, break out of the loop
+        if (wall.mods[index].position > mod.position) {
+            break;
+        }
+    }
+
+    //Insert the door into the index/position at which the loop breaks out
+    wall.mods.insert(index, mod);
 }
 
 /**
