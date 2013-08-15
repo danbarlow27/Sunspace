@@ -2349,13 +2349,6 @@ namespace SunspaceDealerDesktop
         
         #region window stuff
 
-        /*
-         * fill all the usable space with largest size windows
-         * if extra usable space left over, divide the window size in 2 and add a window
-         * if some weird size of extra space left over, add filler 
-         */
-
-
         /// <summary>
         /// This method creates radio buttons/dropdowns for window frame colour options for all models 
         /// </summary>
@@ -3164,15 +3157,21 @@ namespace SunspaceDealerDesktop
         {
             RadioButton screenRadio, typeRadio;
             Label screenLabelRadio, screenLabel, typeLabelRadio, typeLabel;
+
             
+
             wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
 
             //RadioButton created for every option
             screenRadio = new RadioButton();
             screenRadio.ID = "radScreen";     //Giving an appropriate id to radio buttons based on current type of window
-            screenRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
-            screenRadio.Checked = (currentModel == "M100") ? true : false; //select/check the radio button if current selection is default value
-            //screenRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
+            
+            if (currentModel == "M100")
+            {
+                screenRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
+                screenRadio.Checked = true;// (currentModel == "M100") ? true : false; //select/check the radio button if current selection is default value
+            }
+                //screenRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
 
             //Label to create clickable area for radio button
             screenLabelRadio = new Label();
@@ -3314,34 +3313,36 @@ namespace SunspaceDealerDesktop
 
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            #region No Screen
+            if (currentModel != "M100")
+            {
+                #region No Screen
 
-            //li tag to hold Window type radio button and all its content
-            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+                //li tag to hold Window type radio button and all its content
+                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
 
-            //Window type radio button
-            typeRadio = new RadioButton();
-            typeRadio.ID = "radNoScreen"; //Adding appropriate id to Window type radio button
-            typeRadio.GroupName = "ScreenRadios";         //Adding group name for all Window types
-            //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+                //Window type radio button
+                typeRadio = new RadioButton();
+                typeRadio.ID = "radNoScreen"; //Adding appropriate id to Window type radio button
+                typeRadio.GroupName = "ScreenRadios";         //Adding group name for all Window types
+                //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
 
-            //Window type radio button label for clickable area
-            typeLabelRadio = new Label();
-            typeLabelRadio.AssociatedControlID = "radNoScreen";  //Tying this label to the radio button
+                //Window type radio button label for clickable area
+                typeLabelRadio = new Label();
+                typeLabelRadio.AssociatedControlID = "radNoScreen";  //Tying this label to the radio button
 
-            //Window type radio button label text
-            typeLabel = new Label();
-            typeLabel.AssociatedControlID = "radNoScreen";    //Tying this label to the radio button
-            typeLabel.Text = "No Screen";
+                //Window type radio button label text
+                typeLabel = new Label();
+                typeLabel.AssociatedControlID = "radNoScreen";    //Tying this label to the radio button
+                typeLabel.Text = "No Screen";
 
 
-            wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+                wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
 
-            #endregion
-
+                #endregion
+            }
             ////////////////////////////////////////////////
 
             wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>"));
