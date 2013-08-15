@@ -37,7 +37,9 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            /****VALIDATION VARIABLES***/
+            /****VALIDATION CONSTANTS***/
+
+            #region DOOR VALIDATION CONSTANTS
             Session["CABANA_MAX_WIDTH"] = Constants.CUSTOM_DOOR_MAX_WIDTH;
             Session["CABANA_MIN_WIDTH"] = Constants.CUSTOM_DOOR_MIN_WIDTH;
             Session["CABANA_MAX_HEIGHT"] = Constants.CUSTOM_DOOR_MAX_HEIGHT;
@@ -48,15 +50,95 @@ namespace SunspaceDealerDesktop
             Session["PATIO_DOOR_MIN_HEIGHT"] = Constants.PATIO_DOOR_MIN_HEIGHT;
             Session["MODEL_100_200_300_TRANSOM_MINIMUM_SIZE"] = Constants.MODEL_100_200_300_TRANSOM_MINIMUM_SIZE;
             Session["MODEL_400_TRANSOM_MINIMUM_SIZE"] = Constants.MODEL_400_TRANSOM_MINIMUM_SIZE;
+            #endregion
+            #region WINDOW VALIDATION CONSTANTS
+
+            #region MIN_WIDTH_WARRANTY
+            //Session["V4T_2V_MIN_WIDTH_WARRANTY"] = Constants.V4T_2V_MIN_WIDTH_WARRANTY;
+            Session["V4T_3V_MIN_WIDTH_WARRANTY"] = Constants.V4T_3V_MIN_WIDTH_WARRANTY;
+            Session["V4T_4V_MIN_WIDTH_WARRANTY"] = Constants.V4T_4V_MIN_WIDTH_WARRANTY;
+            Session["H2T_MIN_WIDTH_WARRANTY"] = Constants.H2T_MIN_WIDTH_WARRANTY;
+            Session["VINYL_LITE_MIN_WIDTH_WARRANTY"] = Constants.VINYL_LITE_MIN_WIDTH_WARRANTY;
+            Session["VINYL_TRAP_MIN_WIDTH_WARRANTY"] = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY;
+
+            Session["DOUBLE_SLIDER_MIN_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_MIN_WIDTH_WARRANTY;
+            Session["DOUBLE_SLIDER_LITE_MIN_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_LITE_MIN_WIDTH_WARRANTY;
+            Session["DOUBLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY;
+
+            Session["SINGLE_SLIDER_MIN_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_MIN_WIDTH_WARRANTY;
+            Session["SINGLE_SLIDER_LITE_MIN_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_LITE_MIN_WIDTH_WARRANTY;
+            Session["SINGLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY;
+
+            Session["SCREEN_MIN_WIDTH_WARRANTY"] = Constants.SCREEN_MIN_WIDTH_WARRANTY;
+            #endregion
+            #region MAX_WIDTH_WARRANTY
+            //Session["V4T_2V_MAX_WIDTH_WARRANTY"] = Constants.V4T_2V_MAX_WIDTH_WARRANTY;
+            Session["V4T_3V_MAX_WIDTH_WARRANTY"] = Constants.V4T_3V_MAX_WIDTH_WARRANTY;
+            Session["V4T_4V_MAX_WIDTH_WARRANTY"] = Constants.V4T_4V_MAX_WIDTH_WARRANTY;
+            Session["H2T_MAX_WIDTH_WARRANTY"] = Constants.H2T_MAX_WIDTH_WARRANTY;
+            Session["VINYL_LITE_MAX_WIDTH_WARRANTY"] = Constants.VINYL_LITE_MAX_WIDTH_WARRANTY;
+            Session["VINYL_TRAP_MAX_WIDTH_WARRANTY"] = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
+
+            Session["DOUBLE_SLIDER_MAX_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_MAX_WIDTH_WARRANTY;
+            Session["DOUBLE_SLIDER_LITE_MAX_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_LITE_MAX_WIDTH_WARRANTY;
+            Session["DOUBLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY;
+
+            Session["SINGLE_SLIDER_MAX_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_MAX_WIDTH_WARRANTY;
+            Session["SINGLE_SLIDER_LITE_MAX_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_LITE_MAX_WIDTH_WARRANTY;
+            Session["SINGLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY;
+
+            Session["SCREEN_MAX_WIDTH_WARRANTY"] = Constants.SCREEN_MAX_WIDTH_WARRANTY;
+            #endregion
+
+            #region MIN_HEIGHT_WARRANTY
+            //Session["V4T_2V_MIN_HEIGHT_WARRANTY"] = Constants.V4T_2V_MIN_HEIGHT_WARRANTY;
+            Session["V4T_3V_MIN_HEIGHT_WARRANTY"] = Constants.V4T_3V_MIN_HEIGHT_WARRANTY;
+            Session["V4T_4V_MIN_HEIGHT_WARRANTY"] = Constants.V4T_4V_MIN_HEIGHT_WARRANTY;
+            Session["H2T_MIN_HEIGHT_WARRANTY"] = Constants.H2T_MIN_HEIGHT_WARRANTY;
+            Session["VINYL_LITE_MIN_HEIGHT_WARRANTY"] = Constants.VINYL_LITE_MIN_HEIGHT_WARRANTY;
+            Session["VINYL_TRAP_MIN_HEIGHT_WARRANTY"] = Constants.VINYL_TRAP_MIN_HEIGHT_WARRANTY;
+
+            Session["DOUBLE_SLIDER_MIN_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_MIN_HEIGHT_WARRANTY;
+            Session["DOUBLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY;
+            Session["DOUBLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY;
+
+            Session["SINGLE_SLIDER_MIN_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_MIN_HEIGHT_WARRANTY;
+            Session["SINGLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY;
+            Session["SINGLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY;
+
+            Session["SCREEN_MIN_HEIGHT_WARRANTY"] = Constants.SCREEN_MIN_HEIGHT_WARRANTY;
+            #endregion
+            #region MAX_HEIGHT_WARRANTY
+            //Session["V4T_2V_MAX_HEIGHT_WARRANTY"] = Constants.V4T_2V_MAX_HEIGHT_WARRANTY;
+            Session["V4T_3V_MAX_HEIGHT_WARRANTY"] = Constants.V4T_3V_MAX_HEIGHT_WARRANTY;
+            Session["V4T_4V_MAX_HEIGHT_WARRANTY"] = Constants.V4T_4V_MAX_HEIGHT_WARRANTY;
+            Session["H2T_MAX_HEIGHT_WARRANTY"] = Constants.H2T_MAX_HEIGHT_WARRANTY;
+            Session["VINYL_LITE_MAX_HEIGHT_WARRANTY"] = Constants.VINYL_LITE_MAX_HEIGHT_WARRANTY;
+            Session["VINYL_TRAP_MAX_HEIGHT_WARRANTY"] = Constants.VINYL_TRAP_MAX_HEIGHT_WARRANTY;
+
+            Session["DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY;
+            Session["DOUBLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY;
+            Session["DOUBLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY;
+
+            Session["SINGLE_SLIDER_MAX_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_MAX_HEIGHT_WARRANTY;
+            Session["SINGLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY;
+            Session["SINGLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY;
+
+            Session["SCREEN_MAX_HEIGHT_WARRANTY"] = Constants.SCREEN_MAX_HEIGHT_WARRANTY;
+            #endregion
+
+            #region SPREADER_BAR_NEEDED
+            Session["V4T_SPREADER_BAR_NEEDED"] = Constants.V4T_SPREADER_BAR_NEEDED;
+            Session["H2T_SPREADER_BAR_NEEDED"] = Constants.H2T_SPREADER_BAR_NEEDED;
+            #endregion
+
+            #endregion
+
+            Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
 
             /***hard coded variables***/
             Session["model"] = "M100";
             Session["soffitLength"] = 0F;
-            Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
-            //Session["MAX_WINDOW_WIDTH"] = Constants.MAX_WINDOW_WIDTH;
-            //Session["MIN_WINDOW_WIDTH"] = Constants.MIN_WINDOW_WIDTH;
-
-            /***hard coded variables***/
             Session["model"] = "M300";
             Session["soffitLength"] = 10F;
             Session["kneewallType"] = "glass";
@@ -3370,51 +3452,46 @@ namespace SunspaceDealerDesktop
             return html; //return the hidden field tags
         }
 
-        protected void getWindowConstants(object sender, EventArgs e)
-        {
+        ///// <summary>
+        ///// This is an event, that is used to dynamically create wall objects with the appropriate details
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //protected void createWallObjects(object sender, EventArgs e)
+        //{
 
-        }
-
-        /// <summary>
-        /// This is an event, that is used to dynamically create wall objects with the appropriate details
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void createWallObjects(object sender, EventArgs e)
-        {
-
-            //there are issues with getting values from dynamically generated hidden fields
-            //hard coded hidden fields work fine...
+        //    //there are issues with getting values from dynamically generated hidden fields
+        //    //hard coded hidden fields work fine...
             
-            //need to dynamically determine slope, and soffit length of each wall and store it in hidden fields
+        //    //need to dynamically determine slope, and soffit length of each wall and store it in hidden fields
 
-            float length, startHeight, endHeight, soffit;//, slope;
-            string orientation, name, type, model;
-            HiddenField wallLength, wallSoffit;
-            for (int i = 0; i < strWalls.Count(); i++)
-            {
-                //find and store the dynamically created hidden fields
-                wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField; //wall length
-                wallSoffit = hiddenFieldsDiv.FindControl("hidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
+        //    float length, startHeight, endHeight, soffit;//, slope;
+        //    string orientation, name, type, model;
+        //    HiddenField wallLength, wallSoffit;
+        //    for (int i = 0; i < strWalls.Count(); i++)
+        //    {
+        //        //find and store the dynamically created hidden fields
+        //        wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField; //wall length
+        //        wallSoffit = hiddenFieldsDiv.FindControl("hidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
 
                 
 
-                //length = wallLength.Value;
-                //startHeight = Convert.ToSingle(hidHeight.Value);
-                //endHeight = Convert.ToSingle(hidFrontWallHeight.Value);
-                //soffit = Convert.ToSingle(wallSoffit.Value);
-               // slope = Convert.ToSingle(hidRoofSlope.Value);
+        //        //length = wallLength.Value;
+        //        //startHeight = Convert.ToSingle(hidHeight.Value);
+        //        //endHeight = Convert.ToSingle(hidFrontWallHeight.Value);
+        //        //soffit = Convert.ToSingle(wallSoffit.Value);
+        //       // slope = Convert.ToSingle(hidRoofSlope.Value);
 
-                orientation = wallDetails[i, 5];
-                name = "wall " + i;
-                type = wallDetails[i, 4];
-                model = currentModel;
+        //        orientation = wallDetails[i, 5];
+        //        name = "wall " + i;
+        //        type = wallDetails[i, 4];
+        //        model = currentModel;
 
-                //string sof = wallSoffit.Value;
-                //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
-                //walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel));
-            }
-        }
+        //        //string sof = wallSoffit.Value;
+        //        //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
+        //        //walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel));
+        //    }
+        //}
 
         protected void btnQuestion4_Click(object sender, EventArgs e)
         {

@@ -361,8 +361,8 @@ namespace SunspaceDealerDesktop
         #endregion
         #region MIN_HEIGHT_WARRANTY
         public static float V4T_2V_MIN_HEIGHT_WARRANTY = 36.0F;
-        public static float V4T_3V_MIN_HEIGHT_WARRANTY = 42.0F;
-        public static float V4T_4V_MIN_HEIGHT_WARRANTY = 42.0F; ///double check this value
+        public static float V4T_3V_MIN_HEIGHT_WARRANTY = 44.0F;
+        public static float V4T_4V_MIN_HEIGHT_WARRANTY = 56.0F; 
         public static float H2T_MIN_HEIGHT_WARRANTY = 24.0F; 
         public static float VINYL_LITE_MIN_HEIGHT_WARRANTY = 4.125F;
         public static float VINYL_TRAP_MIN_HEIGHT_WARRANTY = 4.125F;
@@ -381,17 +381,17 @@ namespace SunspaceDealerDesktop
         public static float V4T_2V_MAX_HEIGHT_BUILDABLE = 114.0F;
         public static float V4T_3V_MAX_HEIGHT_BUILDABLE = 114.0F;
         public static float V4T_4V_MAX_HEIGHT_BUILDABLE = 114.0F;
-        public static float H2T_MAX_HEIGHT_BUILDABLE = 99999.0F; ///double check this value
-        public static float VINYL_LITE_MAX_HEIGHT_BUILDABLE = 99999.0F; ///double check this value
-        public static float VINYL_TRAP_MAX_HEIGHT_BUILDABLE = 99999.0F; ///double check this value
+        public static float H2T_MAX_HEIGHT_BUILDABLE = 108.0F; 
+        public static float VINYL_LITE_MAX_HEIGHT_BUILDABLE = 114.0F;
+        public static float VINYL_TRAP_MAX_HEIGHT_BUILDABLE = 78.0F; 
 
-        public static float DOUBLE_SLIDER_MAX_HEIGHT_BUILDABLE = 99999.0F; ///double check this value
-        public static float DOUBLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE = 99999.0F; ///double check this value
-        public static float DOUBLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE = 99999.0F; ///double check this value
+        public static float DOUBLE_SLIDER_MAX_HEIGHT_BUILDABLE = 78.0F;
+        public static float DOUBLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE = 84.0F;
+        public static float DOUBLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE = 72.0F; 
 
-        public static float SINGLE_SLIDER_MAX_HEIGHT_BUILDABLE = 99999.0F; ///double check this value
-        public static float SINGLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE = 99999.0F; ///double check this value
-        public static float SINGLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE = 99999.0F; ///double check this value
+        public static float SINGLE_SLIDER_MAX_HEIGHT_BUILDABLE = 72.0F; 
+        public static float SINGLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE = 72.0F; 
+        public static float SINGLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE = 72.0F; 
 
         public static float SCREEN_MAX_HEIGHT_BUILDABLE = 96.0F;
         #endregion
@@ -415,22 +415,9 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region SPREADER_BAR_NEEDED
-        public static float V4T_2V_SPREADER_BAR_NEEDED = 36.0F;
-        public static float V4T_3V_SPREADER_BAR_NEEDED = 36.0F;
-        public static float V4T_4V_SPREADER_BAR_NEEDED = 36.0F;
+        public static float V4T_SPREADER_BAR_NEEDED = 36.0F;
         public static float H2T_SPREADER_BAR_NEEDED = 54.0F;
-        public static float VINYL_LITE_SPREADER_BAR_NEEDED = 99999.0F; ///double check this value
-        public static float VINYL_TRAP_SPREADER_BAR_NEEDED = 99999.0F; ///double check this value
-
-        public static float DOUBLE_SLIDER_SPREADER_BAR_NEEDED = 99999.0F; ///double check this value
-        public static float DOUBLE_SLIDER_LITE_SPREADER_BAR_NEEDED = 99999.0F; ///double check this value
-        public static float DOUBLE_SLIDER_TRAP_SPREADER_BAR_NEEDED = 99999.0F; ///double check this value
-
-        public static float SINGLE_SLIDER_SPREADER_BAR_NEEDED = 99999.0F; ///double check this value
-        public static float SINGLE_SLIDER_LITE_SPREADER_BAR_NEEDED = 99999.0F; ///double check this value
-        public static float SINGLE_SLIDER_TRAP_SPREADER_BAR_NEEDED = 99999.0F; ///double check this value
-
-        public static float SCREEN_SPREADER_BAR_NEEDED = 99999.0F; ///double check this value
+        
         #endregion
 
         #endregion

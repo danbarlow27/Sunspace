@@ -508,7 +508,7 @@
             //retrieving it, and adding its values to the dropdowns
             switch (modelNumber.value) {
                 case '100':
-                    var anArray =  <%= model100FramingColoursJ %>;
+                    var anArray =  '<%= model100FramingColoursJ %>';
 
                     for (var i=0;i<anArray.length;i++)
                     {
@@ -518,7 +518,7 @@
                     break;
 
                 case '200':
-                    var anArray =  <%= model200FramingColoursJ %>;
+                    var anArray =  '<%= model200FramingColoursJ %>';
 
                     for (var i=0;i<anArray.length;i++)
                     {
@@ -528,7 +528,7 @@
                     break;
 
                 case '300':
-                    var anArray =  <%= model300FramingColoursJ %>;
+                    var anArray =  '<%= model300FramingColoursJ %>';
 
                     for (var i=0;i<anArray.length;i++)
                     {
@@ -538,7 +538,7 @@
                     break;
 
                 case '400':
-                    var anArray =  <%= model400FramingColoursJ %>;
+                    var anArray =  '<%= model400FramingColoursJ %>';
 
                     for (var i=0;i<anArray.length;i++)
                     {
@@ -601,7 +601,7 @@
             //Like above, types are based on model, and will get the proper variable based on model
             switch (modelNumber.value) {
                 case '100':
-                    var anArray =  <%= model100TransomTypesJ %>;
+                    var anArray =  '<%= model100TransomTypesJ %>';
 
                     for (var i=0;i<anArray.length;i++)
                     {
@@ -611,7 +611,7 @@
                     break;
 
                 case '200':
-                    var anArray =  <%= model200TransomTypesJ %>;
+                    var anArray =  '<%= model200TransomTypesJ %>';
 
                     for (var i=0;i<anArray.length;i++)
                     {
@@ -621,7 +621,7 @@
                     break;
 
                 case '300':
-                    var anArray =  <%= model300TransomTypesJ %>;
+                    var anArray =  '<%= model300TransomTypesJ %>';
 
                     for (var i=0;i<anArray.length;i++)
                     {
@@ -631,7 +631,7 @@
                     break;
 
                 case '400':
-                    var anArray =  <%= model400TransomTypesJ %>;
+                    var anArray =  '<%= model400TransomTypesJ %>';
 
                     for (var i=0;i<anArray.length;i++)
                     {
