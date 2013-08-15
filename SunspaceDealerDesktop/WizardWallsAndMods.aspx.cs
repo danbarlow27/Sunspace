@@ -53,8 +53,8 @@ namespace SunspaceDealerDesktop
             Session["model"] = "M100";
             Session["soffitLength"] = 0F;
             Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
-            Session["MAX_WINDOW_WIDTH"] = Constants.MAX_WINDOW_WIDTH;
-            Session["MIN_WINDOW_WIDTH"] = Constants.MIN_WINDOW_WIDTH;
+            //Session["MAX_WINDOW_WIDTH"] = Constants.MAX_WINDOW_WIDTH;
+            //Session["MIN_WINDOW_WIDTH"] = Constants.MIN_WINDOW_WIDTH;
 
             /***hard coded variables***/
             Session["model"] = "M300";
@@ -2674,9 +2674,9 @@ namespace SunspaceDealerDesktop
 
 
             typeRadio.Checked = (windowTypeId == "V4T" && currentModel == "M200") ? true : //select/check the radio button if current selection is default value
-                (windowTypeId == "SinglePaneHorizontalRollers" && currentModel == "M300") ? true : //select/check the radio button if current selection is default value
-                (windowTypeId == "DoublePaneSingleSlider" && currentModel == "M400") ? true : false; //select/check the radio button if current selection is default value
-            
+                (windowTypeId == "DoubleSlider" && currentModel == "M300") ? true : //select/check the radio button if current selection is default value
+                (windowTypeId == "SingleSlider" && currentModel == "M400") ? true : false; //select/check the radio button if current selection is default value
+
             //screenRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
 
             //Label to create clickable area for radio button
@@ -3009,7 +3009,7 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void model100WindowOptions()
         {
-            screenWindowOptions();
+            screenOptions();
         }
         
         /// <summary>
@@ -3026,12 +3026,12 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void model200WindowOptions()
         {
-            v4tWindowOptions();
-            h2tWindowOptions();
-            fixedVinylWindowOptions();
+            v4tOptions();
+            h2tOptions();
+            fixedVinylOptions();
             openWall();
             solidWall();
-            screenWindowOptions();
+            screenOptions();
 
             windowFramingColourOptions(true, true, true, true, true, true, true, true);
         }
@@ -3048,11 +3048,11 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void model300WindowOptions()
         {            
-            singlePaneHorizontalRollersWindowOptions();
-            fixedGlassWindowOptions();
+            doubleSliderOptions();
+            fixedGlassOptions();
             openWall();
             solidWall();
-            screenWindowOptions();
+            screenOptions();
 
             windowFramingColourOptions(true);
         }
@@ -3068,8 +3068,8 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void model400WindowOptions()
         {
-            doublePaneSingleSliderWindowOptions();
-            fixedGlassWindowOptions();
+            singleSliderOptions();
+            fixedGlassOptions();
             openWall();
             solidWall();
 
@@ -3079,7 +3079,7 @@ namespace SunspaceDealerDesktop
         /// <summary>
         /// screen type (better vue insect screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen)
         /// </summary>
-        protected void screenWindowOptions()
+        protected void screenOptions()
         {
             RadioButton screenRadio, typeRadio;
             Label screenLabelRadio, screenLabel, typeLabelRadio, typeLabel;
@@ -3270,7 +3270,7 @@ namespace SunspaceDealerDesktop
         /// <summary>
         /// - V4T tints (clear, smoke grey, dark grey, bronze, Mixed)
         /// </summary>
-        protected void v4tWindowOptions()
+        protected void v4tOptions()
         {
             tintOptions("V4T", "Vertical 4 Track", false, true, true, true, true);
         }
@@ -3278,41 +3278,41 @@ namespace SunspaceDealerDesktop
         /// <summary>
         /// H2T (vinyl) tints (clear, smoke grey, dark grey, bronze)
         /// </summary>
-        protected void h2tWindowOptions()
+        protected void h2tOptions()
         {
-            tintOptions("H2T", "Horizontal 2 Track [XX]", false, true, true, true);
+            tintOptions("H2T", "Horizontal 2 Track", false, true, true, true);
         }
 
         /// <summary>
         /// fixed window tints (clear, smoke grey, dark grey, bronze)
         /// </summary>
-        protected void fixedVinylWindowOptions()
+        protected void fixedVinylOptions()
         {
-            tintOptions("FixedVinyl", "Fixed Vinyl Windows", false, true, true, true);
+            tintOptions("FixedVinyl", "Fixed Vinyl", false, true, true, true);
         }
 
         /// <summary>
         /// glass tint (grey, bronze, clear)
         /// </summary>
-        protected void singlePaneHorizontalRollersWindowOptions()
+        protected void doubleSliderOptions()
         {
-            tintOptions("SinglePaneHorizontalRollers", "Single Pane Horizontal Rollers [XX]", true, false, false, true);
+            tintOptions("DoubleSlider", "Double Slider", true, false, false, true);
         }
 
         /// <summary>
         /// fixed glass window tints (grey, bronze, clear)
         /// </summary>
-        protected void fixedGlassWindowOptions()
+        protected void fixedGlassOptions()
         {
-            tintOptions("Fixed", "Fixed Window", true, false, false, true);
+            tintOptions("FixedGlass", "Fixed Glass", true, false, false, true);
         }
 
         /// <summary>
         /// glass tint (grey, bronze, clear)
         /// </summary>
-        protected void doublePaneSingleSliderWindowOptions()
+        protected void singleSliderOptions()
         {
-            tintOptions("DoublePaneSingleSlider", "Double Pane Single Slider [XO, OX]", true, false, false, true);
+            tintOptions("SingleSlider", "Single Slider", true, false, false, true);
         }
 
         /// <summary>
@@ -3368,6 +3368,11 @@ namespace SunspaceDealerDesktop
                 
             }
             return html; //return the hidden field tags
+        }
+
+        protected void getWindowConstants(object sender, EventArgs e)
+        {
+
         }
 
         /// <summary>

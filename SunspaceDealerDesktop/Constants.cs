@@ -433,7 +433,6 @@ namespace SunspaceDealerDesktop
         public static float SCREEN_SPREADER_BAR_NEEDED = 99999.0F; ///double check this value
         #endregion
 
-
         #endregion
 
         #region Sunshades
