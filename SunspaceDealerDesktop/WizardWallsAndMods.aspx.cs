@@ -11,7 +11,6 @@ namespace SunspaceDealerDesktop
     public partial class WizardWallsAndMods : System.Web.UI.Page
     {
         protected List<Wall> walls = new List<Wall>();
-
         //ListItems to be used in multiple dropdown lists for decimal points
         //This should eventually be stored in the constants file
         protected ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
