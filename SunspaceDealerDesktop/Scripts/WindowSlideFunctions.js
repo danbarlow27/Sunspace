@@ -28,7 +28,7 @@ Window.prototype = new Mods();
 //    this.width = null;
 //}
 
-ScreenWindow.prototype = new Window();
+//ScreenWindow.prototype = new Window();
 
 function V4TWindow() {
     this.type = "V4T";
@@ -39,14 +39,14 @@ function V4TWindow() {
 
 V4TWindow.prototype = new Window();
 
-function H2TWindow() {
-    this.type = "H2T";
+function HorizontalSliderWindow() {
+    this.type = "HorizontalSlider";
     this.height = null;
     this.width = null;
     this.spreaderBar = null; //spreader bar, true or false
 }
 
-H2TWindow.prototype = new Window();
+HorizontalSliderWindow.prototype = new Window();
 
 function FixedVinylWindow() {
     this.type = "FixedVinyl";
