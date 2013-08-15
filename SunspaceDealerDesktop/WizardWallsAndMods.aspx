@@ -15,8 +15,8 @@
         var PATIO_DOOR_MAX_HEIGHT = '<%= Session["PATIO_DOOR_MAX_HEIGHT"] %>';
         var MODEL_100_200_300_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_100_200_300_TRANSOM_MINIMUM_SIZE"] %>';
         var MODEL_400_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_400_TRANSOM_MINIMUM_SIZE"] %>';
-        //var MIN_WINDOW_WIDTH = '<%= //Session["MIN_WINDOW_WIDTH"] %>'
-        //var MAX_WINDOW_WIDTH = '<%= //Session["MAX_WINDOW_WIDTH"] %>'
+        //var MIN_WINDOW_WIDTH = 
+        //var MAX_WINDOW_WIDTH = 
         //var MIN_MOD_WIDTH = MIN_WINDOW_WIDTH + 2;
         //var MAX_MOD_WIDTH = MAX_WINDOW_WIDTH + 2;
         var kneewallType = '<%= Session["kneewallType"] %>';
