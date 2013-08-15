@@ -57,7 +57,7 @@ namespace SunspaceDealerDesktop
             //Session["V4T_2V_MIN_WIDTH_WARRANTY"] = Constants.V4T_2V_MIN_WIDTH_WARRANTY;
             Session["V4T_3V_MIN_WIDTH_WARRANTY"] = Constants.V4T_3V_MIN_WIDTH_WARRANTY;
             Session["V4T_4V_MIN_WIDTH_WARRANTY"] = Constants.V4T_4V_MIN_WIDTH_WARRANTY;
-            Session["H2T_MIN_WIDTH_WARRANTY"] = Constants.H2T_MIN_WIDTH_WARRANTY;
+            Session["HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY"] = Constants.HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY;
             Session["VINYL_LITE_MIN_WIDTH_WARRANTY"] = Constants.VINYL_LITE_MIN_WIDTH_WARRANTY;
             Session["VINYL_TRAP_MIN_WIDTH_WARRANTY"] = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY;
 
@@ -75,7 +75,7 @@ namespace SunspaceDealerDesktop
             //Session["V4T_2V_MAX_WIDTH_WARRANTY"] = Constants.V4T_2V_MAX_WIDTH_WARRANTY;
             Session["V4T_3V_MAX_WIDTH_WARRANTY"] = Constants.V4T_3V_MAX_WIDTH_WARRANTY;
             Session["V4T_4V_MAX_WIDTH_WARRANTY"] = Constants.V4T_4V_MAX_WIDTH_WARRANTY;
-            Session["H2T_MAX_WIDTH_WARRANTY"] = Constants.H2T_MAX_WIDTH_WARRANTY;
+            Session["HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY"] = Constants.HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY;
             Session["VINYL_LITE_MAX_WIDTH_WARRANTY"] = Constants.VINYL_LITE_MAX_WIDTH_WARRANTY;
             Session["VINYL_TRAP_MAX_WIDTH_WARRANTY"] = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
 
@@ -94,7 +94,7 @@ namespace SunspaceDealerDesktop
             //Session["V4T_2V_MIN_HEIGHT_WARRANTY"] = Constants.V4T_2V_MIN_HEIGHT_WARRANTY;
             Session["V4T_3V_MIN_HEIGHT_WARRANTY"] = Constants.V4T_3V_MIN_HEIGHT_WARRANTY;
             Session["V4T_4V_MIN_HEIGHT_WARRANTY"] = Constants.V4T_4V_MIN_HEIGHT_WARRANTY;
-            Session["H2T_MIN_HEIGHT_WARRANTY"] = Constants.H2T_MIN_HEIGHT_WARRANTY;
+            Session["HORIZONTAL_ROLLER_MIN_HEIGHT_WARRANTY"] = Constants.HORIZONTAL_ROLLER_MIN_HEIGHT_WARRANTY;
             Session["VINYL_LITE_MIN_HEIGHT_WARRANTY"] = Constants.VINYL_LITE_MIN_HEIGHT_WARRANTY;
             Session["VINYL_TRAP_MIN_HEIGHT_WARRANTY"] = Constants.VINYL_TRAP_MIN_HEIGHT_WARRANTY;
 
@@ -112,7 +112,7 @@ namespace SunspaceDealerDesktop
             //Session["V4T_2V_MAX_HEIGHT_WARRANTY"] = Constants.V4T_2V_MAX_HEIGHT_WARRANTY;
             Session["V4T_3V_MAX_HEIGHT_WARRANTY"] = Constants.V4T_3V_MAX_HEIGHT_WARRANTY;
             Session["V4T_4V_MAX_HEIGHT_WARRANTY"] = Constants.V4T_4V_MAX_HEIGHT_WARRANTY;
-            Session["H2T_MAX_HEIGHT_WARRANTY"] = Constants.H2T_MAX_HEIGHT_WARRANTY;
+            Session["HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY"] = Constants.HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY;
             Session["VINYL_LITE_MAX_HEIGHT_WARRANTY"] = Constants.VINYL_LITE_MAX_HEIGHT_WARRANTY;
             Session["VINYL_TRAP_MAX_HEIGHT_WARRANTY"] = Constants.VINYL_TRAP_MAX_HEIGHT_WARRANTY;
 
@@ -129,7 +129,7 @@ namespace SunspaceDealerDesktop
 
             #region SPREADER_BAR_NEEDED
             Session["V4T_SPREADER_BAR_NEEDED"] = Constants.V4T_SPREADER_BAR_NEEDED;
-            Session["H2T_SPREADER_BAR_NEEDED"] = Constants.H2T_SPREADER_BAR_NEEDED;
+            Session["HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED"] = Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED;
             #endregion
 
             #endregion
@@ -3109,7 +3109,7 @@ namespace SunspaceDealerDesktop
         protected void model200WindowOptions()
         {
             v4tOptions();
-            h2tOptions();
+            horizontalRollerOptions();
             fixedVinylOptions();
             openWall();
             solidWall();
@@ -3360,9 +3360,9 @@ namespace SunspaceDealerDesktop
         /// <summary>
         /// H2T (vinyl) tints (clear, smoke grey, dark grey, bronze)
         /// </summary>
-        protected void h2tOptions()
+        protected void horizontalRollerOptions()
         {
-            tintOptions("H2T", "Horizontal 2 Track", false, true, true, true);
+            tintOptions("HorizontalRoller", "Horizontal Roller", false, true, true, true);
         }
 
         /// <summary>
