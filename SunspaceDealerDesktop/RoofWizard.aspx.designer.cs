@@ -76,6 +76,24 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddlThickness;
         
         /// <summary>
+        /// lblStripeColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStripeColour;
+        
+        /// <summary>
+        /// ddlStripeColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlStripeColour;
+        
+        /// <summary>
         /// radAcrylic control.
         /// </summary>
         /// <remarks>
@@ -103,6 +121,24 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblAcrylic;
         
         /// <summary>
+        /// lblAcrylicThickness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAcrylicThickness;
+        
+        /// <summary>
+        /// ddlAcrylicThickness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAcrylicThickness;
+        
+        /// <summary>
         /// lblAcrylicColour control.
         /// </summary>
         /// <remarks>
@@ -119,6 +155,78 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlAcrylicColour;
+        
+        /// <summary>
+        /// radThermadeck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radThermadeck;
+        
+        /// <summary>
+        /// lblThermadeckRadio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblThermadeckRadio;
+        
+        /// <summary>
+        /// lblThermadeck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblThermadeck;
+        
+        /// <summary>
+        /// chkBarrier control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkBarrier;
+        
+        /// <summary>
+        /// lblBarrierCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBarrierCheck;
+        
+        /// <summary>
+        /// lblBarrier control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBarrier;
+        
+        /// <summary>
+        /// lblThermadeckThickness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblThermadeckThickness;
+        
+        /// <summary>
+        /// ddlThermadeckThickness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlThermadeckThickness;
         
         /// <summary>
         /// btnQuestion1 control.
@@ -292,22 +400,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblSkins;
         
         /// <summary>
-        /// lblExtrusionType control.
+        /// lblPanelType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblExtrusionType;
+        protected global::System.Web.UI.WebControls.Label lblPanelType;
         
         /// <summary>
-        /// ddlExtrusionType control.
+        /// ddlPanelType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlExtrusionType;
+        protected global::System.Web.UI.WebControls.DropDownList ddlPanelType;
         
         /// <summary>
         /// lblInteriorRoofSkin control.
@@ -463,6 +571,24 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblGutterPro;
         
         /// <summary>
+        /// lblExtraDownspouts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblExtraDownspouts;
+        
+        /// <summary>
+        /// ddlExtraDownspouts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlExtraDownspouts;
+        
+        /// <summary>
         /// radGutterPresenceNo control.
         /// </summary>
         /// <remarks>
@@ -526,6 +652,15 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidAcrylicColour;
         
         /// <summary>
+        /// hidStripeColour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidStripeColour;
+        
+        /// <summary>
         /// hidProjection control.
         /// </summary>
         /// <remarks>
@@ -553,13 +688,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidOverhang;
         
         /// <summary>
-        /// hidExtrusionType control.
+        /// hidPanelType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidExtrusionType;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidPanelType;
         
         /// <summary>
         /// hidInteriorRoofSkin control.
@@ -614,5 +749,14 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidGutterPro;
+        
+        /// <summary>
+        /// hidExtraDownspouts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidExtraDownspouts;
     }
 }

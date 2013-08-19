@@ -17,6 +17,7 @@ namespace SunspaceDealerDesktop
         private bool gutters;
         private bool gutterPro;
         private string gutterColour;
+        private string stripeColour;
         private int numberSupports;
         private double projection;
         private double width;
@@ -24,7 +25,7 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Constructors
-        Roof()
+        public Roof()
         {
             Type="";
             InteriorSkin="";
@@ -34,28 +35,30 @@ namespace SunspaceDealerDesktop
             Thermadeck=false;
             Gutters=false;
             GutterPro=false;
-            GutterColour="";
+            GutterColour = "";
+            StripeColour = "";
             NumberSupports=0;
             Projection=0;
             Width=0;
             RoofModules = new List<RoofModule>();
         }
 
-        Roof(string sentType, string sentInteriorSkin, string sentExteriorSkin, double sentThickness, bool sentFireProtection, bool sentThermadeck, bool sentGutters, bool sentGutterPro, string sentGutterColour, int sentNumberSupports, double sentProjection, double sentWidth, List<RoofModule> sentModules)
+        public Roof(string sentType, string sentInteriorSkin, string sentExteriorSkin, double sentThickness, bool sentFireProtection, bool sentThermadeck, bool sentGutters, bool sentGutterPro, string sentGutterColour, string sentStripeColour, int sentNumberSupports, double sentProjection, double sentWidth, List<RoofModule> sentModules)
         {
-            type = sentType;
-            interiorSkin = sentInteriorSkin;
-            exteriorSkin = sentExteriorSkin;
-            thickness = sentThickness;
-            fireProtection = sentFireProtection;
-            thermadeck = sentThermadeck;
-            gutters = sentGutters;
-            gutterPro = sentGutterPro;
-            gutterColour = sentGutterColour;
-            numberSupports = sentNumberSupports;
-            projection = sentProjection;
-            width = sentWidth;
-            roofModules = sentModules;
+            Type = sentType;
+            InteriorSkin = sentInteriorSkin;
+            ExteriorSkin = sentExteriorSkin;
+            Thickness = sentThickness;
+            FireProtection = sentFireProtection;
+            Thermadeck = sentThermadeck;
+            Gutters = sentGutters;
+            GutterPro = sentGutterPro;
+            GutterColour = sentGutterColour;
+            StripeColour = sentStripeColour;
+            NumberSupports = sentNumberSupports;
+            Projection = sentProjection;
+            Width = sentWidth;
+            RoofModules = sentModules;
         }
         #endregion
 
@@ -177,6 +180,19 @@ namespace SunspaceDealerDesktop
             set
             {
                 gutterColour = value;
+            }
+        }
+
+        public string StripeColour
+        {
+            get
+            {
+                return stripeColour;
+            }
+
+            set
+            {
+                stripeColour = value;
             }
         }
 

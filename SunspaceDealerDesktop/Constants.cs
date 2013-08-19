@@ -76,6 +76,8 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_300_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
         public static string[] MODEL_400_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
 
+        public static string[] FASCIA_STRIPE_COLOUR = { "No Stripe", "Test1", "Test2"};
+
         public static string[] SCREEN_TYPES = { "No Screen", "Better Vue Insect Screen (Default)", "No See Ums 20 x 20 Mesh", "Solar Insect Screening", "Tuff Screen" };
 
         public static string[] ACRYLIC_COLOUR = { "Clear", "Bronze", "Solar Cool White", "Heat Stop Cool Blue" };
@@ -101,6 +103,15 @@ namespace SunspaceDealerDesktop
         public const float SOFT_MAX_MOD_SIZE = 84.0f; //Maximum size of a mod (soft)
 
         public const float SPREADER_BAR_SIZE = 1.0f; //width of a spreader bar (does not vary)
+
+        public const float ACRYLIC_PANEL_PROJECTION = 23f;
+        public const float ACRYLIC_PANEL_WIDTH = 2f;
+
+        public const float FOAM_PANEL_PROJECTION = 22f;
+        public const float FOAM_PANEL_WIDTH = 4f;
+
+        public const float THERMADECK_PANEL_PROJECTION = 24f;
+        public const float THERMADECK_PANEL_WIDTH = 4f;
         #endregion
 
         #region Countries, States, Provinces
@@ -285,8 +296,14 @@ namespace SunspaceDealerDesktop
                                                "White Cedar Aluminum Woodgrain", "White Cedar Forestex", "White Rigiwall Pebble",
                                                "Driftwood Rigiwall Pebble", "White Rigiwall Stucco", "Driftwood Rigiwall Stucco", "OSB",
                                                "White FRP (Interior Only)", "Driftwood FRP (Interior Only)", "Bronze FRP (Interior Only)"};
-        public static string[] ROOF_THICKNESSES = { "3", "4", "6" };
+
+        public static string[] ROOF_TRADITIONAL_THICKNESSES = { "3", "4", "6" };
+        public static string[] ROOF_THERMADECK_THICKNESSES = { "4.5", "6.5", "8.25" };
+        public static string[] ROOF_ACRYLIC_THICKNESSES = { "1.5" };
+
         public static string[] ROOF_EXTRUSION_TYPE = { "I-Beam", "I-Beam FP", "I-Beam OSB", "I-Beam OSB/OSB", "Pressure Cap", "Pressure Cap FP", "Pressure Cap OSB", "Pressure Cap OSB/OSB" };
+        public const float ROOF_IBEAM_WIDTH = 0.5f;
+        public const float ROOF_PRESSURECAP_WIDTH = 0.625f;
         #endregion
 
         #region Floors
