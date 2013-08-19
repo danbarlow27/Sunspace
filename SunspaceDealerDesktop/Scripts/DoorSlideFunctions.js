@@ -153,8 +153,8 @@ function addDoor(wallNumber, type) {
         return;
     }
 
-    //Call to insertDoor to place the valid door in its respective place
-    insertDoor(door, walls[wallNumber]);
+    //Call to insertMod to place the valid door in its respective place
+    insertMod(door, walls[wallNumber]);
 
     //Display appropriate message and controls within the pager
     updateDoorPager(walls[wallNumber]);
@@ -382,7 +382,7 @@ function createDoorObject(wallNumber, type) {
 function deleteDoor(doorToDelete, type, wallNumber) {
 
     //Removes object at specified index
-    walls[wallNumber].doors.splice(doorToDelete - 1, 1);
+    walls[wallNumber].mods.splice(doorToDelete - 1, 1);
 
     //Used to redisplay the appropriate space left in the wall
     var space = totalSpaceLeftInWall(walls[wallNumber]);
@@ -400,7 +400,7 @@ function deleteDoor(doorToDelete, type, wallNumber) {
 function deleteDoorFill(type, wallNumber) {
 
     //Reset specific wall's doors array to a new blank array
-    walls[wallNumber].doors = [];
+    walls[wallNumber].mods = [];
 
     //Call to updateDoorPager to display appropriate values within the pager
     updateDoorPager(walls[wallNumber]);
@@ -513,7 +513,7 @@ function fillWallWithDoorMods(type, wallNumber) {
     for (var i = 0; i < amountOfDoors; i++) {
         var newDoor = $.extend(true, {}, door);
         newDoor.position = currentPosition;
-        insertDoor(newDoor, walls[wallNumber]);
+        insertMod(newDoor, walls[wallNumber]);
         currentPosition += door.fwidth;
     }
 
@@ -575,52 +575,15 @@ NOTE: also see findCurrentWallHeight(position, wall)
 *@param wall - used to hold the current wall information
 *@return - the height at the current position within the current wall
 */
-function findCurrentWallMinHeight(door, wall) {
+function findCurrentWallHeight(door, wall) {
     if (wall.startHeight > wall.endHeight)
         return ((wall.endHeight + (wall.startHeight - wall.endHeight) * ((door.position + door.fwidth) - wall.length) / (0 - wall.length)));
     else
         return (wall.startHeight + (wall.endHeight - wall.startHeight) * ((door.position) - wall.length) / (0 - wall.length));
 }
 
-
 /**
-*findCurrentWallEndHeight, (original function findCurrentWallHeight, edited by Taha on 8/12/2013)
-*This function finds the height of the wall at any giving point within it.
-*@param position - position at which to check the height 
-*@param wall - the index of the walls array to get the height of the given wall
-*@return - the height at the current position within the current wall
-*/
-function findCurrentWallHeight(position, wall) {
-    return ((walls[wall].endHeight + (walls[wall].startHeight - walls[wall].endHeight) * (position - walls[wall].length) / (0 - walls[wall].length)));
-}
-
-
-/**
-DEPRECATED: see insertMod
-*insertDoor
-*This function inserts the current door to the appropriate wall and position
-*@param doors - holds an array of unsorted doors
-*@param wall - used to hold the current wall information
-*/
-function insertDoor(door, wall) {
-
-    //Variable to hold the index in which position to store the current door
-    var position;
-
-    //Loop to find the right index/position to store the door
-    for (position = 0; position < wall.doors.length; position++) {
-        //If the existing door is larger than the new door, break out of the loop
-        if (wall.doors[position].position > door.position) {
-            break;
-        }
-    }
-
-    //Insert the door into the index/position at which the loop breaks out
-    wall.doors.insert(position, door);
-}
-
-/**
-*insertMod (original funtion insertDoor edited by Taha on 8/12/2013)
+*insertMod (original funtion insertMod edited by Taha on 8/12/2013)
 *This function inserts a mod to the appropriate wall and position
 *@param mod - the mod to insert 
 *@param wall - the wall in which to insert mod
@@ -653,9 +616,9 @@ function totalSpaceLeftInWall(wall) {
     var totalSpace = wall.length - wall.leftFiller - wall.rightFiller;
 
     //Loop through all the doors
-    for (var wallSpace = 0; wallSpace < wall.doors.length; wallSpace++) {
+    for (var wallSpace = 0; wallSpace < wall.mods.length; wallSpace++) {
         //Substract each door from the usable space
-        totalSpace -= wall.doors[wallSpace].mwidth;
+        totalSpace -= wall.mods[wallSpace].mwidth;
     }
 
     //Return the total space remaining
@@ -833,7 +796,7 @@ function updateDoorPager(wall) {
     $("#MainContent_lblQuestion3DoorsInfoWallAnswer" + wall.id).empty();
 
     //If there is a door, perform this block
-    if (wall.doors.length > 0) {
+    if (wall.mods.length > 0) {
 
         //Block to add content to the pager
         $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wall.id).text(space);
@@ -843,27 +806,27 @@ function updateDoorPager(wall) {
         pagerTextAnswer.setAttribute("style", "display:block");
         pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerHTML).substr(14, 2) + " Doors";
 
-        for (var childControls = 1; childControls <= wall.doors.length ; childControls++) {
+        for (var childControls = 1; childControls <= wall.mods.length ; childControls++) {
             //Rename controls and their attributes
             /****DELETE BUTTON CREATION ADDITION****/
             var deleteButton = document.createElement("input");
-            deleteButton.id = "btnDeleteDoor" + childControls + wall.doors[childControls - 1].type + "Wall" + wall.id;
+            deleteButton.id = "btnDeleteDoor" + childControls + wall.mods[childControls - 1].type + "Wall" + wall.id;
             deleteButton.setAttribute("type", "button");
             deleteButton.setAttribute("value", "X");
-            deleteButton.setAttribute("onclick", "deleteDoor(\"" + childControls + "\", \"" + wall.doors[childControls - 1].type + "\", \"" + wall.id + "\")");
+            deleteButton.setAttribute("onclick", "deleteDoor(\"" + childControls + "\", \"" + wall.mods[childControls - 1].type + "\", \"" + wall.id + "\")");
             deleteButton.setAttribute("class", "btnSubmit");
             deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
 
             /****LABEL FOR DELETE BUTTON****/
             var labelForButton = document.createElement("label");
-            labelForButton.id = "lblDeleteDoor" + childControls + wall.doors[childControls - 1].type + "Wall" + wall.id;
-            labelForButton.setAttribute("for", "btnDeleteDoor" + childControls + wall.doors[childControls - 1].type + "Wall" + wall.id);
-            labelForButton.innerHTML = "Door " + childControls + " " + wall.doors[childControls - 1].type + " added";
+            labelForButton.id = "lblDeleteDoor" + childControls + wall.mods[childControls - 1].type + "Wall" + wall.id;
+            labelForButton.setAttribute("for", "btnDeleteDoor" + childControls + wall.mods[childControls - 1].type + "Wall" + wall.id);
+            labelForButton.innerHTML = "Door " + childControls + " " + wall.mods[childControls - 1].type + " added";
 
             /****BR LABEL FOR DELETE BUTTON****/
             var labelBreakLineForButton = document.createElement("label");
-            labelBreakLineForButton.id = "lblDeleteDoorBR" + childControls + wall.doors[childControls - 1].type + "Wall" + wall.id;
-            labelBreakLineForButton.setAttribute("for", "btnDeleteDoor" + childControls + wall.doors[childControls - 1].type + "Wall" + wall.id);
+            labelBreakLineForButton.id = "lblDeleteDoorBR" + childControls + wall.mods[childControls - 1].type + "Wall" + wall.id;
+            labelBreakLineForButton.setAttribute("for", "btnDeleteDoor" + childControls + wall.mods[childControls - 1].type + "Wall" + wall.id);
             labelBreakLineForButton.innerHTML = "<br/>";
 
             /****APPENDING ALL CONTROLS TO PARENT CONTROL****/
@@ -908,24 +871,24 @@ function validateDoor(door, wall) {
 
     //Variable to hold the index of which door is being overlapped
     var index;
-
+    
     //Loop to find the right index to display
-    for (index = 0; index < wall.doors.length; index++) {
-        if (wall.doors[index].position > door.position) {
+    for (index = 0; index < wall.mods.length; index++) {
+        if (wall.mods[index].position > door.position) {
             break;
         }
     }
 
-    //If the index value is smaller than the wall.doors arrays length
+    //If the index value is smaller than the wall.mods arrays length
     //and this door is overlapping the door after it, display the appropriate message
-    if (index < wall.doors.length && (door.position + door.fwidth) > wall.doors[index].position) {
+    if (index < wall.mods.length && (door.position + door.fwidth) > wall.mods[index].position) {
         errorMessageArea.innerHTML = "The door you're trying to insert is overlapping door " + (index + 1) + ". Please try again.";
         return false;
     }
 
     //If the index value is larger than the zero
     //and this door is overlapping the door before it, display the appropriate message
-    if (index > 0 && door.position < (wall.doors[index - 1].position + wall.doors[index - 1].fwidth)) {
+    if (index > 0 && door.position < (wall.mods[index - 1].position + wall.mods[index - 1].fwidth)) {
         errorMessageArea.innerHTML = "The door you're trying to insert is overlapping door " + index + ". Please try again.";
         return false;
     }
@@ -1011,12 +974,12 @@ function validateDoorParameters(door, wall) {
         }
     }
     
-    if ((model == "M100" || model == "M200" || model == "M300") && (door.fheight > (findCurrentWallHeight(door, wall) - MODEL_100_200_300_TRANSOM_MINIMUM_SIZE))) {
-        errorMessageArea.innerHTML = "Your " + door.type + " door's height in its current position is higher than the wall minus the transom (" + MODEL_100_200_300_TRANSOM_MINIMUM_SIZE + "). Please try again.";
+    if ((model == "M100" || model == "M200" || model == "M300") && (door.fheight > (findCurrentWallHeight(door, wall)))) {
+        errorMessageArea.innerHTML = "Your " + door.type + " door's height in its current position is higher than the wall . Please try again.";
         return false;
     }
-    else if ((model == "M400") && (door.fheight > (findCurrentWallHeight(door, wall) - MODEL_400_TRANSOM_MINIMUM_SIZE))) {
-        errorMessageArea.innerHTML = "Your " + door.type + " door's height in its current position is higher than the wall minus the transom (" + MODEL_400_TRANSOM_MINIMUM_SIZE + "). Please try again.";
+    else if ((model == "M400") && (door.fheight > (findCurrentWallHeight(door, wall)))) {
+        errorMessageArea.innerHTML = "Your " + door.type + " door's height in its current position is higher than the wall. Please try again.";
         return false;
     }
 
@@ -1037,7 +1000,7 @@ function validateDoorFill(door, wall) {
         return false;
     }
 
-    if (wall.doors.length > 0) {
+    if (wall.mods.length > 0) {
         errorMessageArea.innerHTML = "Fill cannot be used on a wall with existing doors. Please empty the wall first.";
         return false;
     }
