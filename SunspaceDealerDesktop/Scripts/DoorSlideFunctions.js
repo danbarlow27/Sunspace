@@ -42,7 +42,7 @@ var errorMessageArea;
 
 //Setting the appropriate value to errorMessageArea when the document is ready (or loaded)
 $(document).ready(function () {
-    errorMessageArea = document.getElementById('MainContent_lblErrorMessage');
+    errorMessageArea = document.getElementById('txtErrorMessage');
 });
 
 /******************************************CONSTRUCTORS AND PROTOTYPES******************************************/
