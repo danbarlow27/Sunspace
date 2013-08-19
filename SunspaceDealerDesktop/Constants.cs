@@ -268,9 +268,158 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_300_WINDOW_TYPES = { "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
         public static string[] MODEL_400_WINDOW_TYPES = { "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
 
+        #region MIN_WIDTH_BUILDABLE
+        public static float V4T_2V_MIN_WIDTH_BUILDABLE = 12.0F;
+        public static float V4T_3V_MIN_WIDTH_BUILDABLE = 12.0F;
+        public static float V4T_4V_MIN_WIDTH_BUILDABLE = 12.0F;
+        public static float HORIZONTAL_ROLLER_MIN_WIDTH_BUILDABLE = 18.0F;
+        public static float VINYL_LITE_MIN_WIDTH_BUILDABLE = 4.125F;
+        public static float VINYL_TRAP_MIN_WIDTH_BUILDABLE = 4.125F;
 
-        public static float MIN_WINDOW_WIDTH = 30.0F; //NEED TO DOUBLE CHECK THIS VALUE
-        public static float MAX_WINDOW_WIDTH = 58.0F; //NEED TO DOUBLE CHECK THIS VALUE
+        public static float DOUBLE_SLIDER_MIN_WIDTH_BUILDABLE = 24.0F;
+        public static float DOUBLE_SLIDER_LITE_MIN_WIDTH_BUILDABLE = 5.125F;
+        public static float DOUBLE_SLIDER_TRAP_MIN_WIDTH_BUILDABLE = 5.125F;
+
+        public static float SINGLE_SLIDER_MIN_WIDTH_BUILDABLE = 24.0F;
+        public static float SINGLE_SLIDER_LITE_MIN_WIDTH_BUILDABLE = 8.0F;
+        public static float SINGLE_SLIDER_TRAP_MIN_WIDTH_BUILDABLE = 8.0F;
+
+        public static float SCREEN_MIN_WIDTH_BUILDABLE = 4.125F;
+        #endregion
+        #region MIN_WIDTH_WARRANTY
+        public static float V4T_2V_MIN_WIDTH_WARRANTY = 24.0F;
+        public static float V4T_3V_MIN_WIDTH_WARRANTY = 24.0F;
+        public static float V4T_4V_MIN_WIDTH_WARRANTY = 24.0F;
+        public static float HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY = 24.0F;
+        public static float VINYL_LITE_MIN_WIDTH_WARRANTY = 4.125F;
+        public static float VINYL_TRAP_MIN_WIDTH_WARRANTY = 4.125F;
+
+        public static float DOUBLE_SLIDER_MIN_WIDTH_WARRANTY = 24.0F;
+        public static float DOUBLE_SLIDER_LITE_MIN_WIDTH_WARRANTY = 5.125F;
+        public static float DOUBLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY = 5.125F;
+
+        public static float SINGLE_SLIDER_MIN_WIDTH_WARRANTY = 24.0F;
+        public static float SINGLE_SLIDER_LITE_MIN_WIDTH_WARRANTY = 8.0F;
+        public static float SINGLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY = 8.0F;
+
+        public static float SCREEN_MIN_WIDTH_WARRANTY = 4.125F;
+        #endregion
+        #region MAX_WIDTH_BUILDABLE
+        public static float V4T_2V_MAX_WIDTH_BUILDABLE = 66.0F;
+        public static float V4T_3V_MAX_WIDTH_BUILDABLE = 66.0F;
+        public static float V4T_4V_MAX_WIDTH_BUILDABLE = 66.0F;
+        public static float HORIZONTAL_ROLLER_MAX_WIDTH_BUILDABLE = 192.0F;
+        public static float VINYL_LITE_MAX_WIDTH_BUILDABLE = 192.0F;
+        public static float VINYL_TRAP_MAX_WIDTH_BUILDABLE = 192.0F;
+
+        public static float DOUBLE_SLIDER_MAX_WIDTH_BUILDABLE = 72.0F;
+        public static float DOUBLE_SLIDER_LITE_MAX_WIDTH_BUILDABLE = 96.0F;
+        public static float DOUBLE_SLIDER_TRAP_MAX_WIDTH_BUILDABLE = 96.0F;
+
+        public static float SINGLE_SLIDER_MAX_WIDTH_BUILDABLE = 66.0F;
+        public static float SINGLE_SLIDER_LITE_MAX_WIDTH_BUILDABLE = 96.0F;
+        public static float SINGLE_SLIDER_TRAP_MAX_WIDTH_BUILDABLE = 96.0F;
+
+        public static float SCREEN_MAX_WIDTH_BUILDABLE = 96.0F;
+        #endregion
+        #region MAX_WIDTH_WARRANTY
+        public static float V4T_2V_MAX_WIDTH_WARRANTY = 54.0F;
+        public static float V4T_3V_MAX_WIDTH_WARRANTY = 54.0F;
+        public static float V4T_4V_MAX_WIDTH_WARRANTY = 54.0F;
+        public static float HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY = 114.0F;
+        public static float VINYL_LITE_MAX_WIDTH_WARRANTY = 114.0F;
+        public static float VINYL_TRAP_MAX_WIDTH_WARRANTY = 102.0F;
+
+        public static float DOUBLE_SLIDER_MAX_WIDTH_WARRANTY = 78.0F;
+        public static float DOUBLE_SLIDER_LITE_MAX_WIDTH_WARRANTY = 96.0F;
+        public static float DOUBLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY = 96.0F;
+
+        public static float SINGLE_SLIDER_MAX_WIDTH_WARRANTY = 66.0F;
+        public static float SINGLE_SLIDER_LITE_MAX_WIDTH_WARRANTY = 96.0F;
+        public static float SINGLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY = 96.0F;
+
+        public static float SCREEN_MAX_WIDTH_WARRANTY = 84.0F;
+        #endregion
+
+        #region MIN_HEIGHT_BUILDABLE
+        public static float V4T_2V_MIN_HEIGHT_BUILDABLE = 18.0F;
+        public static float V4T_3V_MIN_HEIGHT_BUILDABLE = 18.0F;
+        public static float V4T_4V_MIN_HEIGHT_BUILDABLE = 44.0F;
+        public static float HORIZONTAL_ROLLER_MIN_HEIGHT_BUILDABLE = 18.0F;
+        public static float VINYL_LITE_MIN_HEIGHT_BUILDABLE = 4.125F;
+        public static float VINYL_TRAP_MIN_HEIGHT_BUILDABLE = 4.125F;
+
+        public static float DOUBLE_SLIDER_MIN_HEIGHT_BUILDABLE = 18.0F;
+        public static float DOUBLE_SLIDER_LITE_MIN_HEIGHT_BUILDABLE = 6.5F;
+        public static float DOUBLE_SLIDER_TRAP_MIN_HEIGHT_BUILDABLE = 4.125F;
+
+        public static float SINGLE_SLIDER_MIN_HEIGHT_BUILDABLE = 12.0F;
+        public static float SINGLE_SLIDER_LITE_MIN_HEIGHT_BUILDABLE = 8.0F;
+        public static float SINGLE_SLIDER_TRAP_MIN_HEIGHT_BUILDABLE = 8.0F;
+
+        public static float SCREEN_MIN_HEIGHT_BUILDABLE = 4.125F;
+        #endregion
+        #region MIN_HEIGHT_WARRANTY
+        public static float V4T_2V_MIN_HEIGHT_WARRANTY = 36.0F;
+        public static float V4T_3V_MIN_HEIGHT_WARRANTY = 44.0F;
+        public static float V4T_4V_MIN_HEIGHT_WARRANTY = 56.0F; 
+        public static float HORIZONTAL_ROLLER_MIN_HEIGHT_WARRANTY = 24.0F; 
+        public static float VINYL_LITE_MIN_HEIGHT_WARRANTY = 4.125F;
+        public static float VINYL_TRAP_MIN_HEIGHT_WARRANTY = 4.125F;
+
+        public static float DOUBLE_SLIDER_MIN_HEIGHT_WARRANTY = 24.0F;
+        public static float DOUBLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY = 6.5F;
+        public static float DOUBLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY = 4.125F;
+
+        public static float SINGLE_SLIDER_MIN_HEIGHT_WARRANTY = 30.0F;
+        public static float SINGLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY = 8.0F;
+        public static float SINGLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY = 8.0F;
+
+        public static float SCREEN_MIN_HEIGHT_WARRANTY = 4.125F;
+        #endregion
+        #region MAX_HEIGHT_BUILDABLE
+        public static float V4T_2V_MAX_HEIGHT_BUILDABLE = 114.0F;
+        public static float V4T_3V_MAX_HEIGHT_BUILDABLE = 114.0F;
+        public static float V4T_4V_MAX_HEIGHT_BUILDABLE = 114.0F;
+        public static float HORIZONTAL_ROLLER_MAX_HEIGHT_BUILDABLE = 108.0F; 
+        public static float VINYL_LITE_MAX_HEIGHT_BUILDABLE = 114.0F;
+        public static float VINYL_TRAP_MAX_HEIGHT_BUILDABLE = 78.0F; 
+
+        public static float DOUBLE_SLIDER_MAX_HEIGHT_BUILDABLE = 78.0F;
+        public static float DOUBLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE = 84.0F;
+        public static float DOUBLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE = 72.0F; 
+
+        public static float SINGLE_SLIDER_MAX_HEIGHT_BUILDABLE = 72.0F; 
+        public static float SINGLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE = 72.0F; 
+        public static float SINGLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE = 72.0F; 
+
+        public static float SCREEN_MAX_HEIGHT_BUILDABLE = 96.0F;
+        #endregion
+        #region MAX_HEIGHT_WARRANTY
+        public static float V4T_2V_MAX_HEIGHT_WARRANTY = 102.0F;
+        public static float V4T_3V_MAX_HEIGHT_WARRANTY = 102.0F;
+        public static float V4T_4V_MAX_HEIGHT_WARRANTY = 102.0F;
+        public static float HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY = 114.0F;
+        public static float VINYL_LITE_MAX_HEIGHT_WARRANTY = 114.0F;
+        public static float VINYL_TRAP_MAX_HEIGHT_WARRANTY = 78.0F;
+
+        public static float DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY = 78.0F;
+        public static float DOUBLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY = 72.0F;
+        public static float DOUBLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY = 72.0F;
+
+        public static float SINGLE_SLIDER_MAX_HEIGHT_WARRANTY = 66.0F;
+        public static float SINGLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY = 60.0F;
+        public static float SINGLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY = 72.0F;
+
+        public static float SCREEN_MAX_HEIGHT_WARRANTY = 84.0F;
+        #endregion
+
+        #region SPREADER_BAR_NEEDED
+        public static float V4T_SPREADER_BAR_NEEDED = 36.0F;
+        public static float HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED = 54.0F;
+        
+        #endregion
+
         #endregion
 
         #region Sunshades

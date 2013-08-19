@@ -15,46 +15,43 @@ function Window() {
     this.fHeight = null; //frame height
     this.frameColour = null; //White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey
     this.position = null; //distance from left
-    this.spreaderBar = null; //spreader bar, true or false
+    this.tint = null; //Clear, Smoke Grey, Dark Grey, Bronze 
+    this.screenType = null; //Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screen, Tuff Screen, No Screen 
 }
 
 Window.prototype = new Mods();
 
-function ScreenWindow() {
-    this.type = "Screen";
-    this.screenType = null; //Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screen, Tuff Screen, No Screen
-    this.height = null;
-    this.width = null;
-}
+//screen window = open wall mod with screen groove
+//function ScreenWindow() {
+//    this.type = "Screen";
+//    this.height = null;
+//    this.width = null;
+//}
 
-ScreenWindow.prototype = new Window();
+//ScreenWindow.prototype = new Window();
 
 function V4TWindow() {
     this.type = "V4T";
-    this.vinyl1Tint = null; //Clear, Smoke Grey, Dark Grey, Bronze
-    this.vinyl2Tint = null; //Clear, Smoke Grey, Dark Grey, Bronze
-    this.vinyl3Tint = null; //Clear, Smoke Grey, Dark Grey, Bronze
-    this.vinyl4Tint = null; //Clear, Smoke Grey, Dark Grey, Bronze
     this.height = null;
     this.width = null;
+    this.spreaderBar = null; //spreader bar, true or false
 } 
 
 V4TWindow.prototype = new Window();
 
-function H2TWindow() {
-    this.type = "H2T";
+function HorizontalSliderWindow() {
+    this.type = "HorizontalSlider";
     this.height = null;
     this.width = null;
-    this.tint = null; //Clear, Smoke Grey, Dark Grey, Bronze 
+    this.spreaderBar = null; //spreader bar, true or false
 }
 
-H2TWindow.prototype = new Window();
+HorizontalSliderWindow.prototype = new Window();
 
 function FixedVinylWindow() {
     this.type = "FixedVinyl";
     this.height = null;
     this.width = null;
-    this.tint = null; //Clear, Smoke Grey, Dark Grey, Bronze
 }
 
 FixedVinylWindow.prototype = new Window();
@@ -63,28 +60,25 @@ function FixedGlassWindow() {
     this.type = "FixedGlass";
     this.height = null;
     this.width = null;
-    this.tint = null; //Clear, Grey, Bronze
 }
 
 FixedGlassWindow.prototype = new Window();
 
-function SinglePaneWindow() {
-    this.type = "SinglePane";
+function DoubleSliderWindow() {
+    this.type = "DoubleSlider";
     this.height = null;
     this.width = null;
-    this.tint = null; //Clear, Grey, Bronze
 }
 
-SinglePaneWindow.prototype = new Window();
+DoubleSliderWindow.prototype = new Window();
 
-function DoublePaneWindow() {
-    this.type = "DoublePane";
+function SingleSliderWindow() {
+    this.type = "SingleSlider";
     this.height = null;
     this.width = null;
-    this.tint = null; //Clear, Grey, Bronze
 }
 
-DoublePaneWindow.prototype = new Window();
+SingleSliderWindow.prototype = new Window();
 
 
 

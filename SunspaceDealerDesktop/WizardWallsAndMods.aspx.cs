@@ -11,7 +11,6 @@ namespace SunspaceDealerDesktop
     public partial class WizardWallsAndMods : System.Web.UI.Page
     {
         protected List<Wall> walls = new List<Wall>();
-
         //ListItems to be used in multiple dropdown lists for decimal points
         //This should eventually be stored in the constants file
         protected ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
@@ -37,7 +36,9 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            /****VALIDATION VARIABLES***/
+            /****VALIDATION CONSTANTS***/
+
+            #region DOOR VALIDATION CONSTANTS
             Session["CABANA_MAX_WIDTH"] = Constants.CUSTOM_DOOR_MAX_WIDTH;
             Session["CABANA_MIN_WIDTH"] = Constants.CUSTOM_DOOR_MIN_WIDTH;
             Session["CABANA_MAX_HEIGHT"] = Constants.CUSTOM_DOOR_MAX_HEIGHT;
@@ -48,15 +49,95 @@ namespace SunspaceDealerDesktop
             Session["PATIO_DOOR_MIN_HEIGHT"] = Constants.PATIO_DOOR_MIN_HEIGHT;
             Session["MODEL_100_200_300_TRANSOM_MINIMUM_SIZE"] = Constants.MODEL_100_200_300_TRANSOM_MINIMUM_SIZE;
             Session["MODEL_400_TRANSOM_MINIMUM_SIZE"] = Constants.MODEL_400_TRANSOM_MINIMUM_SIZE;
+            #endregion
+            #region WINDOW VALIDATION CONSTANTS
+
+            #region MIN_WIDTH_WARRANTY
+            //Session["V4T_2V_MIN_WIDTH_WARRANTY"] = Constants.V4T_2V_MIN_WIDTH_WARRANTY;
+            Session["V4T_3V_MIN_WIDTH_WARRANTY"] = Constants.V4T_3V_MIN_WIDTH_WARRANTY;
+            Session["V4T_4V_MIN_WIDTH_WARRANTY"] = Constants.V4T_4V_MIN_WIDTH_WARRANTY;
+            Session["HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY"] = Constants.HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY;
+            Session["VINYL_LITE_MIN_WIDTH_WARRANTY"] = Constants.VINYL_LITE_MIN_WIDTH_WARRANTY;
+            Session["VINYL_TRAP_MIN_WIDTH_WARRANTY"] = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY;
+
+            Session["DOUBLE_SLIDER_MIN_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_MIN_WIDTH_WARRANTY;
+            Session["DOUBLE_SLIDER_LITE_MIN_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_LITE_MIN_WIDTH_WARRANTY;
+            Session["DOUBLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY;
+
+            Session["SINGLE_SLIDER_MIN_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_MIN_WIDTH_WARRANTY;
+            Session["SINGLE_SLIDER_LITE_MIN_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_LITE_MIN_WIDTH_WARRANTY;
+            Session["SINGLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY;
+
+            Session["SCREEN_MIN_WIDTH_WARRANTY"] = Constants.SCREEN_MIN_WIDTH_WARRANTY;
+            #endregion
+            #region MAX_WIDTH_WARRANTY
+            //Session["V4T_2V_MAX_WIDTH_WARRANTY"] = Constants.V4T_2V_MAX_WIDTH_WARRANTY;
+            Session["V4T_3V_MAX_WIDTH_WARRANTY"] = Constants.V4T_3V_MAX_WIDTH_WARRANTY;
+            Session["V4T_4V_MAX_WIDTH_WARRANTY"] = Constants.V4T_4V_MAX_WIDTH_WARRANTY;
+            Session["HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY"] = Constants.HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY;
+            Session["VINYL_LITE_MAX_WIDTH_WARRANTY"] = Constants.VINYL_LITE_MAX_WIDTH_WARRANTY;
+            Session["VINYL_TRAP_MAX_WIDTH_WARRANTY"] = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
+
+            Session["DOUBLE_SLIDER_MAX_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_MAX_WIDTH_WARRANTY;
+            Session["DOUBLE_SLIDER_LITE_MAX_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_LITE_MAX_WIDTH_WARRANTY;
+            Session["DOUBLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY;
+
+            Session["SINGLE_SLIDER_MAX_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_MAX_WIDTH_WARRANTY;
+            Session["SINGLE_SLIDER_LITE_MAX_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_LITE_MAX_WIDTH_WARRANTY;
+            Session["SINGLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY;
+
+            Session["SCREEN_MAX_WIDTH_WARRANTY"] = Constants.SCREEN_MAX_WIDTH_WARRANTY;
+            #endregion
+
+            #region MIN_HEIGHT_WARRANTY
+            //Session["V4T_2V_MIN_HEIGHT_WARRANTY"] = Constants.V4T_2V_MIN_HEIGHT_WARRANTY;
+            Session["V4T_3V_MIN_HEIGHT_WARRANTY"] = Constants.V4T_3V_MIN_HEIGHT_WARRANTY;
+            Session["V4T_4V_MIN_HEIGHT_WARRANTY"] = Constants.V4T_4V_MIN_HEIGHT_WARRANTY;
+            Session["HORIZONTAL_ROLLER_MIN_HEIGHT_WARRANTY"] = Constants.HORIZONTAL_ROLLER_MIN_HEIGHT_WARRANTY;
+            Session["VINYL_LITE_MIN_HEIGHT_WARRANTY"] = Constants.VINYL_LITE_MIN_HEIGHT_WARRANTY;
+            Session["VINYL_TRAP_MIN_HEIGHT_WARRANTY"] = Constants.VINYL_TRAP_MIN_HEIGHT_WARRANTY;
+
+            Session["DOUBLE_SLIDER_MIN_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_MIN_HEIGHT_WARRANTY;
+            Session["DOUBLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY;
+            Session["DOUBLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY;
+
+            Session["SINGLE_SLIDER_MIN_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_MIN_HEIGHT_WARRANTY;
+            Session["SINGLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY;
+            Session["SINGLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY;
+
+            Session["SCREEN_MIN_HEIGHT_WARRANTY"] = Constants.SCREEN_MIN_HEIGHT_WARRANTY;
+            #endregion
+            #region MAX_HEIGHT_WARRANTY
+            //Session["V4T_2V_MAX_HEIGHT_WARRANTY"] = Constants.V4T_2V_MAX_HEIGHT_WARRANTY;
+            Session["V4T_3V_MAX_HEIGHT_WARRANTY"] = Constants.V4T_3V_MAX_HEIGHT_WARRANTY;
+            Session["V4T_4V_MAX_HEIGHT_WARRANTY"] = Constants.V4T_4V_MAX_HEIGHT_WARRANTY;
+            Session["HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY"] = Constants.HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY;
+            Session["VINYL_LITE_MAX_HEIGHT_WARRANTY"] = Constants.VINYL_LITE_MAX_HEIGHT_WARRANTY;
+            Session["VINYL_TRAP_MAX_HEIGHT_WARRANTY"] = Constants.VINYL_TRAP_MAX_HEIGHT_WARRANTY;
+
+            Session["DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY;
+            Session["DOUBLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY;
+            Session["DOUBLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY;
+
+            Session["SINGLE_SLIDER_MAX_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_MAX_HEIGHT_WARRANTY;
+            Session["SINGLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY;
+            Session["SINGLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY;
+
+            Session["SCREEN_MAX_HEIGHT_WARRANTY"] = Constants.SCREEN_MAX_HEIGHT_WARRANTY;
+            #endregion
+
+            #region SPREADER_BAR_NEEDED
+            Session["V4T_SPREADER_BAR_NEEDED"] = Constants.V4T_SPREADER_BAR_NEEDED;
+            Session["HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED"] = Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED;
+            #endregion
+
+            #endregion
+
+            Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
 
             /***hard coded variables***/
             Session["model"] = "M100";
             Session["soffitLength"] = 0F;
-            Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
-            Session["MAX_WINDOW_WIDTH"] = Constants.MAX_WINDOW_WIDTH;
-            Session["MIN_WINDOW_WIDTH"] = Constants.MIN_WINDOW_WIDTH;
-
-            /***hard coded variables***/
             Session["model"] = "M300";
             Session["soffitLength"] = 10F;
             Session["kneewallType"] = "glass";
@@ -2268,13 +2349,6 @@ namespace SunspaceDealerDesktop
         
         #region window stuff
 
-        /*
-         * fill all the usable space with largest size windows
-         * if extra usable space left over, divide the window size in 2 and add a window
-         * if some weird size of extra space left over, add filler 
-         */
-
-
         /// <summary>
         /// This method creates radio buttons/dropdowns for window frame colour options for all models 
         /// </summary>
@@ -2674,9 +2748,9 @@ namespace SunspaceDealerDesktop
 
 
             typeRadio.Checked = (windowTypeId == "V4T" && currentModel == "M200") ? true : //select/check the radio button if current selection is default value
-                (windowTypeId == "SinglePaneHorizontalRollers" && currentModel == "M300") ? true : //select/check the radio button if current selection is default value
-                (windowTypeId == "DoublePaneSingleSlider" && currentModel == "M400") ? true : false; //select/check the radio button if current selection is default value
-            
+                (windowTypeId == "DoubleSlider" && currentModel == "M300") ? true : //select/check the radio button if current selection is default value
+                (windowTypeId == "SingleSlider" && currentModel == "M400") ? true : false; //select/check the radio button if current selection is default value
+
             //screenRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
 
             //Label to create clickable area for radio button
@@ -3009,7 +3083,7 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void model100WindowOptions()
         {
-            screenWindowOptions();
+            screenOptions();
         }
         
         /// <summary>
@@ -3026,12 +3100,12 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void model200WindowOptions()
         {
-            v4tWindowOptions();
-            h2tWindowOptions();
-            fixedVinylWindowOptions();
+            v4tOptions();
+            horizontalRollerOptions();
+            fixedVinylOptions();
             openWall();
             solidWall();
-            screenWindowOptions();
+            screenOptions();
 
             windowFramingColourOptions(true, true, true, true, true, true, true, true);
         }
@@ -3048,11 +3122,11 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void model300WindowOptions()
         {            
-            singlePaneHorizontalRollersWindowOptions();
-            fixedGlassWindowOptions();
+            doubleSliderOptions();
+            fixedGlassOptions();
             openWall();
             solidWall();
-            screenWindowOptions();
+            screenOptions();
 
             windowFramingColourOptions(true);
         }
@@ -3068,8 +3142,8 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void model400WindowOptions()
         {
-            doublePaneSingleSliderWindowOptions();
-            fixedGlassWindowOptions();
+            singleSliderOptions();
+            fixedGlassOptions();
             openWall();
             solidWall();
 
@@ -3079,19 +3153,25 @@ namespace SunspaceDealerDesktop
         /// <summary>
         /// screen type (better vue insect screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen)
         /// </summary>
-        protected void screenWindowOptions()
+        protected void screenOptions()
         {
             RadioButton screenRadio, typeRadio;
             Label screenLabelRadio, screenLabel, typeLabelRadio, typeLabel;
+
             
+
             wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
 
             //RadioButton created for every option
             screenRadio = new RadioButton();
             screenRadio.ID = "radScreen";     //Giving an appropriate id to radio buttons based on current type of window
-            screenRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
-            screenRadio.Checked = (currentModel == "M100") ? true : false; //select/check the radio button if current selection is default value
-            //screenRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
+            
+            if (currentModel == "M100")
+            {
+                screenRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
+                screenRadio.Checked = true;// (currentModel == "M100") ? true : false; //select/check the radio button if current selection is default value
+            }
+                //screenRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
 
             //Label to create clickable area for radio button
             screenLabelRadio = new Label();
@@ -3233,34 +3313,36 @@ namespace SunspaceDealerDesktop
 
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            #region No Screen
+            if (currentModel != "M100")
+            {
+                #region No Screen
 
-            //li tag to hold Window type radio button and all its content
-            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+                //li tag to hold Window type radio button and all its content
+                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
 
-            //Window type radio button
-            typeRadio = new RadioButton();
-            typeRadio.ID = "radNoScreen"; //Adding appropriate id to Window type radio button
-            typeRadio.GroupName = "ScreenRadios";         //Adding group name for all Window types
-            //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+                //Window type radio button
+                typeRadio = new RadioButton();
+                typeRadio.ID = "radNoScreen"; //Adding appropriate id to Window type radio button
+                typeRadio.GroupName = "ScreenRadios";         //Adding group name for all Window types
+                //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
 
-            //Window type radio button label for clickable area
-            typeLabelRadio = new Label();
-            typeLabelRadio.AssociatedControlID = "radNoScreen";  //Tying this label to the radio button
+                //Window type radio button label for clickable area
+                typeLabelRadio = new Label();
+                typeLabelRadio.AssociatedControlID = "radNoScreen";  //Tying this label to the radio button
 
-            //Window type radio button label text
-            typeLabel = new Label();
-            typeLabel.AssociatedControlID = "radNoScreen";    //Tying this label to the radio button
-            typeLabel.Text = "No Screen";
+                //Window type radio button label text
+                typeLabel = new Label();
+                typeLabel.AssociatedControlID = "radNoScreen";    //Tying this label to the radio button
+                typeLabel.Text = "No Screen";
 
 
-            wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+                wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
 
-            #endregion
-
+                #endregion
+            }
             ////////////////////////////////////////////////
 
             wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>"));
@@ -3270,7 +3352,7 @@ namespace SunspaceDealerDesktop
         /// <summary>
         /// - V4T tints (clear, smoke grey, dark grey, bronze, Mixed)
         /// </summary>
-        protected void v4tWindowOptions()
+        protected void v4tOptions()
         {
             tintOptions("V4T", "Vertical 4 Track", false, true, true, true, true);
         }
@@ -3278,41 +3360,41 @@ namespace SunspaceDealerDesktop
         /// <summary>
         /// H2T (vinyl) tints (clear, smoke grey, dark grey, bronze)
         /// </summary>
-        protected void h2tWindowOptions()
+        protected void horizontalRollerOptions()
         {
-            tintOptions("H2T", "Horizontal 2 Track [XX]", false, true, true, true);
+            tintOptions("HorizontalRoller", "Horizontal Roller", false, true, true, true);
         }
 
         /// <summary>
         /// fixed window tints (clear, smoke grey, dark grey, bronze)
         /// </summary>
-        protected void fixedVinylWindowOptions()
+        protected void fixedVinylOptions()
         {
-            tintOptions("FixedVinyl", "Fixed Vinyl Windows", false, true, true, true);
+            tintOptions("FixedVinyl", "Fixed Vinyl", false, true, true, true);
         }
 
         /// <summary>
         /// glass tint (grey, bronze, clear)
         /// </summary>
-        protected void singlePaneHorizontalRollersWindowOptions()
+        protected void doubleSliderOptions()
         {
-            tintOptions("SinglePaneHorizontalRollers", "Single Pane Horizontal Rollers [XX]", true, false, false, true);
+            tintOptions("DoubleSlider", "Double Slider", true, false, false, true);
         }
 
         /// <summary>
         /// fixed glass window tints (grey, bronze, clear)
         /// </summary>
-        protected void fixedGlassWindowOptions()
+        protected void fixedGlassOptions()
         {
-            tintOptions("Fixed", "Fixed Window", true, false, false, true);
+            tintOptions("FixedGlass", "Fixed Glass", true, false, false, true);
         }
 
         /// <summary>
         /// glass tint (grey, bronze, clear)
         /// </summary>
-        protected void doublePaneSingleSliderWindowOptions()
+        protected void singleSliderOptions()
         {
-            tintOptions("DoublePaneSingleSlider", "Double Pane Single Slider [XO, OX]", true, false, false, true);
+            tintOptions("SingleSlider", "Single Slider", true, false, false, true);
         }
 
         /// <summary>
@@ -3370,46 +3452,46 @@ namespace SunspaceDealerDesktop
             return html; //return the hidden field tags
         }
 
-        /// <summary>
-        /// This is an event, that is used to dynamically create wall objects with the appropriate details
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void createWallObjects(object sender, EventArgs e)
-        {
+        ///// <summary>
+        ///// This is an event, that is used to dynamically create wall objects with the appropriate details
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //protected void createWallObjects(object sender, EventArgs e)
+        //{
 
-            //there are issues with getting values from dynamically generated hidden fields
-            //hard coded hidden fields work fine...
+        //    //there are issues with getting values from dynamically generated hidden fields
+        //    //hard coded hidden fields work fine...
             
-            //need to dynamically determine slope, and soffit length of each wall and store it in hidden fields
+        //    //need to dynamically determine slope, and soffit length of each wall and store it in hidden fields
 
-            float length, startHeight, endHeight, soffit;//, slope;
-            string orientation, name, type, model;
-            HiddenField wallLength, wallSoffit;
-            for (int i = 0; i < strWalls.Count(); i++)
-            {
-                //find and store the dynamically created hidden fields
-                wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField; //wall length
-                wallSoffit = hiddenFieldsDiv.FindControl("hidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
+        //    float length, startHeight, endHeight, soffit;//, slope;
+        //    string orientation, name, type, model;
+        //    HiddenField wallLength, wallSoffit;
+        //    for (int i = 0; i < strWalls.Count(); i++)
+        //    {
+        //        //find and store the dynamically created hidden fields
+        //        wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField; //wall length
+        //        wallSoffit = hiddenFieldsDiv.FindControl("hidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
 
                 
 
-                //length = wallLength.Value;
-                //startHeight = Convert.ToSingle(hidHeight.Value);
-                //endHeight = Convert.ToSingle(hidFrontWallHeight.Value);
-                //soffit = Convert.ToSingle(wallSoffit.Value);
-               // slope = Convert.ToSingle(hidRoofSlope.Value);
+        //        //length = wallLength.Value;
+        //        //startHeight = Convert.ToSingle(hidHeight.Value);
+        //        //endHeight = Convert.ToSingle(hidFrontWallHeight.Value);
+        //        //soffit = Convert.ToSingle(wallSoffit.Value);
+        //       // slope = Convert.ToSingle(hidRoofSlope.Value);
 
-                orientation = wallDetails[i, 5];
-                name = "wall " + i;
-                type = wallDetails[i, 4];
-                model = currentModel;
+        //        orientation = wallDetails[i, 5];
+        //        name = "wall " + i;
+        //        type = wallDetails[i, 4];
+        //        model = currentModel;
 
-                //string sof = wallSoffit.Value;
-                //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
-                //walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel));
-            }
-        }
+        //        //string sof = wallSoffit.Value;
+        //        //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
+        //        //walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel));
+        //    }
+        //}
 
         protected void btnQuestion4_Click(object sender, EventArgs e)
         {

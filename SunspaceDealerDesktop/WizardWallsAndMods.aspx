@@ -15,15 +15,15 @@
         var PATIO_DOOR_MAX_HEIGHT = '<%= Session["PATIO_DOOR_MAX_HEIGHT"] %>';
         var MODEL_100_200_300_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_100_200_300_TRANSOM_MINIMUM_SIZE"] %>';
         var MODEL_400_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_400_TRANSOM_MINIMUM_SIZE"] %>';
-        var MIN_WINDOW_WIDTH = '<%= Session["MIN_WINDOW_WIDTH"] %>'
-        var MAX_WINDOW_WIDTH = '<%= Session["MAX_WINDOW_WIDTH"] %>'
-        var MIN_MOD_WIDTH = MIN_WINDOW_WIDTH + 2;
-        var MAX_MOD_WIDTH = MAX_WINDOW_WIDTH + 2;
+        //var MIN_WINDOW_WIDTH = 
+        //var MAX_WINDOW_WIDTH = 
+        //var MIN_MOD_WIDTH = MIN_WINDOW_WIDTH + 2;
+        //var MAX_MOD_WIDTH = MAX_WINDOW_WIDTH + 2;
         var kneewallType = '<%= Session["kneewallType"] %>';
         var kneewallHeight = '<%= Session["kneewallHeight"] %>';
         var transomType = '<%= Session["transomType"] %>';
         var transomHeight = '<%= Session["transomHeight"] %>';
-
+        
         //Mods holds all common information for doors
         function Mods() {
             this.id = null;                 //mod id
@@ -1265,7 +1265,8 @@
             </div> <%-- end #paging --%>      
         </div>
 
-        <asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label> 
+        <%--<asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label>--%>
+        <textarea id="txtErrorMessage" class="txtErrorMessage" disabled="disabled" rows="5">Oh hello, I am an error message.</textarea>
     </div>
     
 <script src="Scripts/MiniCanvasFunctions.js"></script>
