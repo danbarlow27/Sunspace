@@ -581,9 +581,12 @@ namespace SunspaceDealerDesktop
             {
                 ddl100RoofExteriorSkin.Items.Add(new ListItem(Constants.ROOF_EXTERIOR_SKIN_TYPES[i], Constants.ROOF_EXTERIOR_SKIN_TYPES[i]));
             }
-            for (int i = 0; i < Constants.ROOF_THICKNESSES.Count(); i++)
+
+            //todo javascript to change thicknesses based on type
+
+            for (int i = 0; i < Constants.ROOF_TRADITIONAL_THICKNESSES.Count(); i++)
             {
-                ddl100RoofThickness.Items.Add(new ListItem(Constants.ROOF_THICKNESSES[i], Constants.ROOF_THICKNESSES[i]));
+                ddl100RoofThickness.Items.Add(new ListItem(Constants.ROOF_TRADITIONAL_THICKNESSES[i], Constants.ROOF_TRADITIONAL_THICKNESSES[i]));
             }
             #endregion
             #region 200
@@ -599,9 +602,13 @@ namespace SunspaceDealerDesktop
             {
                 ddl200RoofExteriorSkin.Items.Add(new ListItem(Constants.ROOF_EXTERIOR_SKIN_TYPES[i], Constants.ROOF_EXTERIOR_SKIN_TYPES[i]));
             }
-            for (int i = 0; i < Constants.ROOF_THICKNESSES.Count(); i++)
+
+
+            //todo javascript to change thicknesses based on type
+
+            for (int i = 0; i < Constants.ROOF_TRADITIONAL_THICKNESSES.Count(); i++)
             {
-                ddl200RoofThickness.Items.Add(new ListItem(Constants.ROOF_THICKNESSES[i], Constants.ROOF_THICKNESSES[i]));
+                ddl200RoofThickness.Items.Add(new ListItem(Constants.ROOF_TRADITIONAL_THICKNESSES[i], Constants.ROOF_TRADITIONAL_THICKNESSES[i]));
             }
             #endregion
             #region 300
@@ -617,9 +624,12 @@ namespace SunspaceDealerDesktop
             {
                 ddl300RoofExteriorSkin.Items.Add(new ListItem(Constants.ROOF_EXTERIOR_SKIN_TYPES[i], Constants.ROOF_EXTERIOR_SKIN_TYPES[i]));
             }
-            for (int i = 0; i < Constants.ROOF_THICKNESSES.Count(); i++)
+
+
+            //todo javascript to change thicknesses based on type
+            for (int i = 0; i < Constants.ROOF_TRADITIONAL_THICKNESSES.Count(); i++)
             {
-                ddl300RoofThickness.Items.Add(new ListItem(Constants.ROOF_THICKNESSES[i], Constants.ROOF_THICKNESSES[i]));
+                ddl300RoofThickness.Items.Add(new ListItem(Constants.ROOF_TRADITIONAL_THICKNESSES[i], Constants.ROOF_TRADITIONAL_THICKNESSES[i]));
             }
             #endregion
             #region 400
@@ -635,9 +645,11 @@ namespace SunspaceDealerDesktop
             {
                 ddl400RoofExteriorSkin.Items.Add(new ListItem(Constants.ROOF_EXTERIOR_SKIN_TYPES[i], Constants.ROOF_EXTERIOR_SKIN_TYPES[i]));
             }
-            for (int i = 0; i < Constants.ROOF_THICKNESSES.Count(); i++)
+
+            //todo javascript to change thicknesses based on type
+            for (int i = 0; i < Constants.ROOF_TRADITIONAL_THICKNESSES.Count(); i++)
             {
-                ddl400RoofThickness.Items.Add(new ListItem(Constants.ROOF_THICKNESSES[i], Constants.ROOF_THICKNESSES[i]));
+                ddl400RoofThickness.Items.Add(new ListItem(Constants.ROOF_TRADITIONAL_THICKNESSES[i], Constants.ROOF_TRADITIONAL_THICKNESSES[i]));
             }
             #endregion
             #endregion

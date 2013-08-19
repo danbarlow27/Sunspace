@@ -15,15 +15,6 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Check roof type, position 26
-            string[] gableCheck = (string[])Session["newProjectArray"];
-            if (gableCheck[26] == "Dealer Gable" || gableCheck[26] == "Sunspace Gable")
-            {
-                FOAM_PANEL_PROJECTION += FOAM_PANEL_PROJECTION;
-                ACRYLIC_PANEL_PROJECTION += ACRYLIC_PANEL_PROJECTION;
-                THERMADECK_PANEL_PROJECTION += THERMADECK_PANEL_PROJECTION;
-            }
-
             if (!IsPostBack)
             {
                 //Temporary session declarations
@@ -127,6 +118,15 @@ namespace SunspaceDealerDesktop
                     ddlStripeColour.Items.Add(new ListItem(Constants.FASCIA_STRIPE_COLOUR[i], Constants.FASCIA_STRIPE_COLOUR[i]));
                 }
                 #endregion
+            }
+
+            //Check roof type, position 26
+            string[] gableCheck = (string[])Session["newProjectArray"];
+            if (gableCheck[26] == "Dealer Gable" || gableCheck[26] == "Sunspace Gable")
+            {
+                FOAM_PANEL_PROJECTION += FOAM_PANEL_PROJECTION;
+                ACRYLIC_PANEL_PROJECTION += ACRYLIC_PANEL_PROJECTION;
+                THERMADECK_PANEL_PROJECTION += THERMADECK_PANEL_PROJECTION;
             }
         }
 
