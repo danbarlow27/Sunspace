@@ -28,6 +28,10 @@ for (var i = 0; i < lineList.length; i++) { //draw all the lines with the given 
             
     if(coordList[i][4] == "E") //4 = wall facing
         lineArray[i].attr("stroke", "red"); //if existing wall, make line red
+    else if (coordList[i][4] == "G") {
+        lineArray[i].attr("stroke", "green"); //if existing wall, make line red
+        lineArray[i].attr("stroke-width", 3);
+    }
     else
         lineArray[i].attr("stroke", "black"); //if proposed wall, make line black
 }
@@ -51,6 +55,10 @@ function resetWalls() {
         lineArray[i].attr("stroke-width", "2"); //make them default thickness
         if (coordList[i][4] == "E") //4 = wall facing
             lineArray[i].attr("stroke", "red"); //if existing wall, make red
+        else if (coordList[i][4] == "G") {
+            lineArray[i].attr("stroke", "green"); //if existing wall, make line red
+            lineArray[i].attr("stroke-width", 3);
+        }
         else
             lineArray[i].attr("stroke", "black"); //if proposed wall, make black
     }
@@ -80,6 +88,8 @@ function highlightWallsHeight() {
             northWalls.push({ "y2": lineArray[i].attr("y2"), "number": i, "type": coordList[i][4] }); //populate north walls array.. 4 = wall type
 
     }
+
+
 
     for (var i = 0; i < southWalls.length; i++) {
         for (var j = 0; j < northWalls.length; j++) {
@@ -127,6 +137,49 @@ function highlightWallsHeight() {
         highlightFrontPoint(); //highlight front point
     }
 
+}
+
+String.prototype.contains = function (stringToFind) { return this.indexOf(stringToFind) != -1; };
+
+function highlightWallsHeightGable() {
+    var controlString = document.activeElement.id;
+    var indexToUse;
+
+    if (controlString.contains("Left")) {
+        for (var i = 0; i < lineList.length; i++) {
+            if (coordList[i][4] == "P" && (coordList[i][0] == coordList[i][1])) {
+                for (var k = 0; k < lineList.length; k++) {
+                    if (coordList[i] != coordList[k] && coordList[i][0] < coordList[k][0]) {
+                        indexToUse = i;
+                    }
+                }
+            }
+        }        
+    }
+    else if (controlString.contains("Right")) {
+        for (var i = 0; i < lineList.length; i++) {
+            if (coordList[i][4] == "P" && (coordList[i][0] == coordList[i][1])) {
+                for (var k = 0; k < lineList.length; k++) {
+                    if (coordList[i] != coordList[k] && coordList[i][0] > coordList[k][0]) {
+                        indexToUse = i;
+                    }
+                }
+            }
+        }
+    }
+    else if (controlString.contains("Gable")) {
+        for (var i = 0; i < lineList.length; i++) {
+            if (coordList[i][4] == "G" && (coordList[i][0] != coordList[i][1])) {
+                for (var k = 0; k < lineList.length; k++) {
+                    if (coordList[i] != coordList[k] && coordList[i][0] > coordList[k][0]) {
+                        indexToUse = i;
+                    }
+                }
+            }
+        }
+    }
+    lineArray[indexToUse].attr("stroke", "cyan");
+    lineArray[indexToUse].attr("stroke-width", "5");
 }
 
 ///**

@@ -13,13 +13,42 @@
         var PATIO_DOOR_MAX_WIDTH = '<%= Session["PATIO_DOOR_MAX_WIDTH"] %>';
         var PATIO_DOOR_MIN_HEIGHT = '<%= Session["PATIO_DOOR_MIN_HEIGHT"] %>';
         var PATIO_DOOR_MAX_HEIGHT = '<%= Session["PATIO_DOOR_MAX_HEIGHT"] %>';
-        var MIN_WINDOW_WIDTH = '<%= Session["MIN_WINDOW_WIDTH"] %>'
-        var MAX_WINDOW_WIDTH = '<%= Session["MAX_WINDOW_WIDTH"] %>'
+        var MODEL_100_200_300_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_100_200_300_TRANSOM_MINIMUM_SIZE"] %>';
+        var MODEL_400_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_400_TRANSOM_MINIMUM_SIZE"] %>';
+        //var MIN_WINDOW_WIDTH = 
+        //var MAX_WINDOW_WIDTH = 
+        //var MIN_MOD_WIDTH = MIN_WINDOW_WIDTH + 2;
+        //var MAX_MOD_WIDTH = MAX_WINDOW_WIDTH + 2;
+        var kneewallType = '<%= Session["kneewallType"] %>';
+        var kneewallHeight = '<%= Session["kneewallHeight"] %>';
+        var transomType = '<%= Session["transomType"] %>';
+        var transomHeight = '<%= Session["transomHeight"] %>';
+        
+        //Mods holds all common information for doors
+        function Mods() {
+            this.id = null;                 //mod id
+            this.typeMod = null;            //Holds: Door, Window
+            this.mStartHeight = null;       //start height of the mod
+            this.mEndHeight = null;         //end height of the mod
+            this.mWidth = null;             //width of the mod
+            this.wall = null;               //the wall in belongs in
+            this.position = null;           //distance from the left
+            this.transomType = null;        //Glass, Vinyl, Solid Wall, Screen
+            this.transomStartHeight = null; //start height of transom
+            this.transomEndHeight = null;   //end height of transom
+            this.kneewallPunch = null;      //location of the kneewall punch, or false if no kneewall
+            this.headerPunch = null;        //location of the header punch
+        }
     </script>
     <script src="Scripts/DoorSlideFunctions.js"></script>
+    <script src="Scripts/WindowSlideFunctions.js"></script>
     <%-- Hidden field populating scripts 
     =================================== --%>
     <script>       
+        //Displaying line information passed from custom drawing tool
+        console.log('<%= (string)Session["lineInfo"] %>');
+
+        var gable = '<%= Session["isGable"] %>';
 
         var detailsOfAllLines = '<%= (string)Session["coordList"] %>'; //all the coordinates and details of all the lines, coming from the session
         var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/"); //a list of individual lines and their coordinates and details 
@@ -36,7 +65,23 @@
         var wallStartHeightArray = new Array(); //array to store start height of each wall
         var wallEndHeightArray = new Array(); //array to store end height of each wall        
 
+        var southWalls = new Array(); //array to store all the south facing walls 
+        var northWalls = new Array(); //array to store all the north facing walls
         var backWall = "south"; //index of the back wall to determine wall heights
+        for (var i = 0; i < lineList.length; i++) { //run through the list of walls
+            if (coordList[i][5] == "S") //5 = orientation... if the orientation is south
+                southWalls.push({ "y2": coordList[i][3], "number": i, "type": coordList[i][4] }); //populate south walls array.. 4 = wall type
+            else if (coordList[i][5] == "N") //5 = orientation... if the orientation is north
+                northWalls.push({ "y2": coordList[i][3], "number": i, "type": coordList[i][4] }); //populate north walls array.. 4 = wall type
+        }
+        for (var i = 0; i < southWalls.length; i++) {
+            for (var j = 0; j < northWalls.length; j++) {
+                if (southWalls[i].y2 < northWalls[j].y2) 
+                    backWall = "south";
+                else 
+                    backWall = "north";
+            }
+        }
         var backWallIndex = 0;
 
         var existingWallCount = 0;
@@ -48,11 +93,10 @@
                 proposedWallCount++
         }               
 
-        var projection = 120; //room projection from the left ... hard coded for testing
-        var antiProjection = 120; //room projection from the right ... hard coded for testing
-        var roomProjection = 120; //the higher of the two room projections
+        var projection = 0; //room projection from the left ... hard coded for testing
+        var antiProjection = 0; //room projection from the right ... hard coded for testing
+        var roomProjection = 0; //the higher of the two room projections
         var roomWidth; //the width of the room from the far left to the far right
-        ///need to be calculated
         var soffitLength = '<%= soffitLength %>'//hard coded for testing, will come from the previous pages in the wizard
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
          
@@ -73,9 +117,18 @@
         *Adding onclick events to next question buttons
         */
         $(document).ready(function () {
-            $('#MainContent_btnQuestion2').click(determineStartAndEndHeightOfEachWall);
+            //$('#MainContent_btnQuestion2').click(determineStartAndEndHeightOfEachWall(gable));
             $('#MainContent_btnQuestion2').click(loadWallData);
             $('#MainContent_btnQuestion4').click(submitData);
+
+            $('#MainContent_txtWall1Length').val('20');
+            $('#MainContent_txtWall3Length').val('120');
+            $('#MainContent_txtWall4Length').val('50');
+            $('#MainContent_txtWall5Length').val('50');
+            $('#MainContent_txtWall6Length').val('12');
+            $('#MainContent_txtLeftWallHeight').val('60');
+            $('#MainContent_txtRightWallHeight').val('60');
+            $('#MainContent_txtGablePostHeight').val('12');
         });
 
         /**
@@ -175,8 +228,9 @@
                         "id": i,
                         "startHeight": wallStartHeightArray[i - 1],
                         "endHeight": wallEndHeightArray[i - 1],
-                        "doors": [],
-                        "windows": []
+                        //"doors": [],
+                        //"windows": []
+                        "mods" : []
                     };
                     //For loop to get values from first slide controls, which are: Left Filler, Length, Right Filler.
                     //These are repeated for every proposed wall.
@@ -200,6 +254,7 @@
         This function calculates the "setback" of each wall, i.e. the number of inches the current wall adds to the projection.
         This is calculated based on the orientation or facing-direction of the given wall. The value is then stored
         in an array called wallSetBackArray, at the appropriate index.
+
         @param index - index of the wall on which to calculate setback
         */
         function calculateSetBack(index) {
@@ -240,7 +295,6 @@
             }
         }
 
-
         /**
         This function uses the setbackArray which is already populated by calculateSetBack() function
             to calculate the room projection and antiProjection by simply adding each setback value.
@@ -249,6 +303,7 @@
         */
         function calculateProjection() {
             var tempProjection = 0; //variable to store each setback
+            var tempAntiProjection = 0;
             var highestProjection = 0; //variable to store the highest projection calculated from the left side of the room
             var lowestProjection = 0; //variable to store the highest projection calculated from the right side of the room
             //var overallProjection;
@@ -257,21 +312,80 @@
                     tempProjection = +tempProjection + +wallSetBackArray[i]; //add the values to temp variable
                     if (tempProjection > highestProjection) { //determine if the current temp projection is greater than the highest projection calculated
                         highestProjection = tempProjection; // reset the highest projection
+                        projection = highestProjection;
                     }
-                    if (tempProjection < lowestProjection) {
-                        lowestProjection = tempProjection;
+                    if (wallSetBackArray[i] < 0) {
+                        //alert(antiProjection);
+                        tempAntiProjection = tempAntiProjection + wallSetBackArray[i] * -1;
+                        antiProjection = tempAntiProjection;
                     }
                 }
             }
-
-            projection = highestProjection;
-            antiProjection = highestProjection + (lowestProjection * -1);
 
             if (antiProjection > projection)
                 return antiProjection;
             else 
                 return projection;
 
+        }
+
+        /**
+        This function is used to calculate the width of the sunroom using the setback formula.
+        Once the width is determined it gets stored in the global roomWidth variable.
+        */
+        function calculateWidth() {
+            var tempWidth = 0; //variable to store each setback
+            var highestWidth = 0; //variable to store the highest width calculated from the left side of the room
+            var width = 0;
+
+            for (var index = 0; index < wallSetBackArray.length; index++) { //run through all the setbacks
+                if (wallSetBackArray[index]) { //if its not null (it would be null for existing walls
+
+                    /*
+                    WEST        :   ZERO
+                    EAST        :   ZERO
+                    SOUTH       :   LENGTH
+                    NORTH       :   NEGATIVE LENGTH
+                    SOUTHEAST   :   (2a^2 = L^2)
+                    NORTHEAST   :   (2a^2 = L^2)            
+                    SOUTHWEST   :   NEGATIVE (2a^2 = L^2)  
+                    NORTHWEST   :   NEGATIVE (2a^2 = L^2) 
+                    */
+
+                    //length of the given wall
+                    var L = +(document.getElementById("MainContent_txtWall" + (index + 1) + "Length").value);
+
+                    //get the orientation of the given wall
+                    switch (coordList[index][5]) { //5 = orientation
+                        case "S": //if south
+                            width = L;
+                            break;
+                        case "N": //or north
+                            width = -L;
+                            break;
+                        case "W": //if west
+                        case "E": //if east
+                            width = 0;
+                            break;
+                        case "SW": //if southwest
+                        case "NW": //or northwest
+                            width = -(Math.sqrt((Math.pow(L, 2)) / 2));
+                            break;
+                        case "SE": //if southeast
+                        case "NE": //or northeast
+                            width = Math.sqrt((Math.pow(L, 2)) / 2);
+                            break;
+                    }
+
+                    tempWidth = +tempWidth + width //add the values to temp variable
+
+                    if (tempWidth > highestWidth) { //determine if the current temp projection is greater than the highest projection calculated
+                        highestWidth = tempWidth; // reset the highest projection
+                    }
+                }
+            }
+
+            roomWidth = highestWidth;
         }
 
         /** 
@@ -318,119 +432,154 @@
             goes from wall 1 to the end setting start and end heights of each wall, or goes from the last
             wall to the first, setting end and start height of each wall (going backwards).
         */
-        function determineStartAndEndHeightOfEachWall() {
+        function determineStartAndEndHeightOfEachWall(gable) {
 
-            m = parseFloat(document.getElementById("MainContent_txtRoofSlope").value);
+            if (gable == "True") {
 
-            if (backWall === "north") { //if back wall is a north facing wall, i.e. is not existing wall 
-                wallStartHeightArray[backWallIndex] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
-                wallEndHeightArray[backWallIndex] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
-                
-                for (var i = (backWallIndex - 1); i >= 0; i--) { //0 = index of first wall
+                var proposedCount = 0;
 
-
-                    if (coordList[i][4] === "E") { //existing wall
-                        //if (coordList[i][5] === "S") {
-
-                        ///this is assuming that back wall is an existing wall...
-                        wallStartHeightArray[i] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
-                        wallEndHeightArray[i] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
-                        //}
-
+                for (var i = 0; i < coordList.length; i++) {
+                    if (coordList[i][4] === "G") {
+                        wallStartHeightArray[i] = parseFloat(document.getElementById("hidGableWallHeight").value);
+                        wallEndHeightArray[i] = parseFloat(document.getElementById("hidGableWallHeight").value);
                     }
-                    else { //proposed wall
-
-                        wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i + 1]);
-
-                        switch (coordList[i][5]) {
-                            case "S": //if south
-                            case "N": //or north
-                                wallStartHeightArray[i] = parseFloat(wallEndtHeightArray[i]);
-                                break;
-                            case "W": //if west
-                                wallStartHeightArray[i] = parseFloat(wallEndHeightArray[i]) - parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
-                                break;
-                            case "E": //if east
-                                wallStartHeightArray[i] = parseFloat(wallEndHeightArray[i]) + parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
-                                break;
-                            case "SW": //if southwest
-                            case "SE": //or northwest
-                                wallStartHeightArray[i] = parseFloat(wallEndHeightArray[i]) - parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
-                                break;
-                            case "NW": //if southeast
-                            case "NE": //or northeast
-                                wallStartHeightArray[i] = parseFloat(wallEndHeightArray[i]) + parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
-                                break;
+                    else if (coordList[i][4] === "P") {
+                        proposedCount++;
+                        if (proposedCount == 1) {
+                            wallStartHeightArray[i] = parseFloat(document.getElementById("hidLeftWallHeight").value);
+                            wallEndHeightArray[i] = parseFloat(document.getElementById("hidLeftWallHeight").value);
+                        }
+                        else if (proposedCount == 2) {
+                            wallStartHeightArray[i] = parseFloat(document.getElementById("hidLeftWallHeight").value);
+                            wallEndHeightArray[i] = parseFloat(document.getElementById("hidGableWallHeight").value);
+                        }
+                        else if (proposedCount == 3) {
+                            wallStartHeightArray[i] = parseFloat(document.getElementById("hidGableWallHeight").value);
+                            wallEndHeightArray[i] = parseFloat(document.getElementById("hidRightWallHeight").value);
+                        }
+                        else if (proposedCount == 4) {
+                            wallStartHeightArray[i] = parseFloat(document.getElementById("hidRightWallHeight").value);
+                            wallEndHeightArray[i] = parseFloat(document.getElementById("hidRightWallHeight").value);
                         }
                     }
                 }
             }
-            else if (backWall === "south") { //if backwall is a south facing wall.. i.e. is existing
-                for (var i = 0; i < coordList.length; i++) {
-                    if (coordList[i][4] === "E") { //existing wall
-                        wallStartHeightArray[i] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
-                        wallEndHeightArray[i] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
+            else {
+                var m = parseFloat(document.getElementById("MainContent_txtRoofSlope").value);
+
+                if (backWall === "north") { //if back wall is a north facing wall, i.e. is not existing wall 
+                    wallStartHeightArray[backWallIndex] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
+                    wallEndHeightArray[backWallIndex] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
+
+                    for (var i = (backWallIndex - 1) ; i >= 0; i--) { //0 = index of first wall
+
+                        if (coordList[i][4] === "E") { //existing wall
+                            //if (coordList[i][5] === "S") {
+
+                            ///this is assuming that back wall is an existing wall...
+                            wallStartHeightArray[i] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
+                            wallEndHeightArray[i] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
+                            //}
+                        }
+                        else { //proposed wall
+
+                            wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i + 1]);
+
+                            switch (coordList[i][5]) {
+                                case "S": //if south
+                                case "N": //or north
+                                    wallStartHeightArray[i] = parseFloat(wallEndtHeightArray[i]);
+                                    break;
+                                case "W": //if west
+                                    wallStartHeightArray[i] = parseFloat(wallEndHeightArray[i]) - parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
+                                    break;
+                                case "E": //if east
+                                    wallStartHeightArray[i] = parseFloat(wallEndHeightArray[i]) + parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
+                                    break;
+                                case "SW": //if southwest
+                                case "SE": //or northwest
+                                    wallStartHeightArray[i] = parseFloat(wallEndHeightArray[i]) - parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
+                                    break;
+                                case "NW": //if southeast
+                                case "NE": //or northeast
+                                    wallStartHeightArray[i] = parseFloat(wallEndHeightArray[i]) + parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
+                                    break;
+                            }
+                        }
                     }
-                    else { //proposed wall
-                    //if (coordList[i][4] === "P") {
+                }
+                else if (backWall === "south") { //if backwall is a south facing wall.. i.e. is existing
+                    for (var i = 0; i < coordList.length; i++) {
+                        if (coordList[i][4] === "E") { //existing wall
+                            wallStartHeightArray[i] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
+                            wallEndHeightArray[i] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
+                        }
+                        else { //proposed wall
+                            //if (coordList[i][4] === "P") {
 
-                        wallStartHeightArray[i] = parseFloat(wallEndHeightArray[i - 1]);
+                            wallStartHeightArray[i] = parseFloat(wallEndHeightArray[i - 1]);
 
-                        switch (coordList[i][5]) {
-                            case "S": //if south
-                            case "N": //or north
-                                wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]);
-                                break;
-                            case "W": //if west
-                                wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) - parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and subtract it from start height
-                                break;
-                            case "E": //if east
-                                wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) + parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and length, and add it to start height
-                                break;
-                            case "SW": //if southwest
-                            case "SE": //or northwest
-                                wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) - parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then subtract it from start height 
-                                break;
-                            case "NW": //if southeast
-                            case "NE": //or northeast
-                                wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) + parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN).toFixed(2)); //determine rise based on slope and setback, then add it to start height 
-                                break;
+                            switch (coordList[i][5]) {
+                                case "S": //if south
+                                case "N": //or north
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]);
+                                    break;
+                                case "W": //if west
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) - parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and length, and subtract it from start height
+                                    break;
+                                case "E": //if east
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) + parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and length, and add it to start height
+                                    break;
+                                case "SW": //if southwest
+                                case "SE": //or northwest
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) - parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and setback, then subtract it from start height 
+                                    break;
+                                case "NW": //if southeast
+                                case "NE": //or northeast
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) + parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and setback, then add it to start height 
+                                    break;
+                            }
                         }
                     }
                 }
             }
         }
 
+        /**
+        This function is used to populate the wallSoffitArray.
+            It takes the number of wall on which to start applying the soffit and 
+            whether to go forward in the array from that wall, or to go backwards
+        @param count - the wall number at which the soffit starts
+        @param back - true or false, whether to go backwards or forwards from 'count'
+        */
+        function populateSoffitArray(count, back) {
 
-        /*
+            wallSoffitArray[count] = soffitLength;
+
+            do {
+                if (wallSoffitArray[count] > Math.abs(wallSetBackArray[count])) { //if the length of the left soffit is greater than the (first) proposed wall length
+                    wallSoffitArray[count] = Math.abs(wallSetBackArray[count]); //set the element of left soffit array to length of the proposed wall
+                    if (back) {
+                        wallSoffitArray[count - 1] = parseFloat(soffitLength) - parseFloat(Math.abs(wallSetBackArray[count])); //subtract the length of the proposed wall from soffit length
+                        count--;
+                    }
+                    else {
+                        wallSoffitArray[count + 1] = parseFloat(soffitLength) - parseFloat(Math.abs(wallSetBackArray[count])); //subtract the length of the proposed wall from soffit length
+                        count++;
+                    }
+                }
+                else //if the length of the left soffit is the same or less than proposed wall length
+                    wallSoffitArray[count] = soffitLength; //set the element of the left soffit array to length of the left soffit
+
+            } while (wallSoffitArray[count] > Math.abs(wallSetBackArray[count])); //continue while the soffit length remaining is greater than next wall's length
+
+        }
+
+        /**
         This function populates the wall soffit array by determining the orientation of each wall 
-            and checking to see if the soffit length would affect it or not 
-
-
-            ////this function needs more functionality to account for soffit length on diagonal walls 
-                and soffit length that's greater than the length of a wall
-                    (if there a case when soffit length would be greater than wall length,
-                     and span multiple walls???)
-
-            ////note: soffit only affects the first wall and the last wall... 
-                        if they are vertical and perpendicular to the existing walls
-
-
-Dan H:
-"There is no default size and yes a soffit can span multiple walls. When that occurs the first wall is considered no slope and the second wall is slope with soffit.
-Soffit is not limited to first and last wall. The value saved is probably best though of as slopestart... the soffit of the house is, of course, used to determine that slopestart position."
-
-
-
-see "new soffit conundrum" image on desktop for new soffit conundrum... [SOLVED]
-
-Update [3/8/2013]: most of the problems solved... see below... however some new soffit conundrums appeared which need to be dealt with.... 
-                    see diagram in notebook and dropbox for details on the conundrum.
-
-UPDATE [7/8/2013]: NO MORE DIFFERENT SOFFIT LENGTHS... SOFFIT LENGTH ONLY APPLIES TO THE BACK WALL ... THE REST GETS SLOPED DOWN. 
-                    NO PLATEAU SITUATION.
-
-
+            and checking to see if the soffit length would affect it or not
+        
+        This function calls populateSoffitArray with appropriate values, to populate soffit array.
         */
         function determineSoffitLengthOfEachWall() {
 
@@ -445,236 +594,30 @@ UPDATE [7/8/2013]: NO MORE DIFFERENT SOFFIT LENGTHS... SOFFIT LENGTH ONLY APPLIE
                 SOFFIT-LEFT = SOFFIT-RIGHT
             */
             
-            var soffitLeft = 0, soffitRight = 0, roofLength = 0;
-            var soffitLeftArray = new Array();
-            var soffitRightArray = new Array();
-            var iLeft = 0;
-            var iRight = 0;
-            var length;
-
-            if (projection > antiProjection) {
-                soffitRight = soffitLength;
-                roofLength = antiProjection - soffitRight;
-                soffitLeft = projection - roofLength;
-            }
-            else if (projection < antiProjection) {
-                soffitLeft = soffitLength;
-                roofLength = projection - soffitLeft;
-                soffitRight = antiProjection - roofLength;
-            }
-            else { //projection === antiProjection
-                soffitLeft = soffitRight = soffitLength;
-            }
-
-            //console.log("roof length:", roofLength);
-            //console.log("soffit left:", soffitLeft);
-            //console.log("soffit right:", soffitRight);
-
-
-
-            //console.log("Left soffit:", soffitLeft);
-            //console.log("Right soffit:", soffitRight);
-
-            soffitLeftArray[0] = soffitLeft;
-            soffitRightArray[0] = soffitRight;
-
-            //determine how many walls the left soffit spans
-            do {
-                //console.log("DO left soffit array:", soffitLeftArray[iLeft]);
-                //console.log("DO wall length:", wallLengthArray[existingWallCount + iLeft]);
-                //console.log("count:", existingWallCount + iLeft);
-                //console.log("iLeft:", iLeft);
-
-                if (soffitLeftArray[iLeft] > wallSetBackArray[existingWallCount + iLeft]) { //if the length of the left soffit is greater than the (first) proposed wall length
-                    soffitLeftArray[iLeft] = wallSetBackArray[existingWallCount + iLeft]; //set the element of left soffit array to length of the proposed wall
-                    soffitLeftArray[iLeft + 1] = parseFloat(soffitLeft) - parseFloat(wallSetBackArray[existingWallCount + iLeft]); //subtract the length of the proposed wall from soffit length
-                    iLeft++; //increment the counter
-                }
-                else //if the length of the left soffit is the same or less than proposed wall length
-                    soffitLeftArray[iLeft] = soffitLeft; //set the element of the left soffit array to length of the left soffit
-
-                //console.log("iLeft:", iLeft);
-                //console.log("DO left soffit array TWO:", soffitLeftArray[iLeft]);
-
-            } while (iLeft > 0 && soffitLeftArray[iLeft] > Math.abs(wallSetBackArray[existingWallCount + iLeft])); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
-
-            //determine how many walls the right soffit spans
-            do {
-
-                //console.log("DO right soffit array:", soffitRightArray[iRight]);
-                //console.log("DO wall length:", wallLengthArray[wallLengthArray.length - 1 - iRight]);
-                //console.log("count:", wallLengthArray.length - 1 - iRight);
-                //console.log("iRight:", iRight);
-                if (soffitRightArray[iRight] > wallSetBackArray[wallSetBackArray.length - 1 - iRight]) { //if the length of the right soffit is greater than the (last) proposed wall length
-                    soffitRightArray[iRight] = wallSetBackArray[wallSetBackArray.length - 1 - iRight]; //set the element of right soffit array to length of the proposed wall
-                    soffitRightArray[iRight + 1] = parseFloat(soffitRight) - parseFloat(wallSetBackArray[wallSetBackArray.length - 1 - iRight]); //subtract the length of the proposed wall from soffit length
-                                                                                                                    //set the remaining soffit length to the next element of the right soffit array
-                    iRight++; //increment the counter
-                }
-                else //if the length of the right soffit is the same or less than proposed wall length
-                    soffitRightArray[iRight] = soffitRight;  //set the element of the right soffit array to length of the right soffit
-            } while (iRight > 0 && soffitRightArray[iRight] > Math.abs([wallSetBackArray.length - 1 - iRight])); //continue while the counter is greater than 0 and the soffit length remaining is greater than next wall's length
-
-
-            //for (var i = 0; i < soffitLeftArray.length; i++)
-            //    console.log("left soffit array:", soffitLeftArray[i]);
-            //for (var i = 0; i < soffitRightArray.length; i++)
-            //    console.log("right soffit array:", soffitRightArray[i]);
-
+           
             for (var i = 0; i < coordList.length; i++)
                 wallSoffitArray[i] = 0;
 
-            for (var i = 0; i < soffitLeftArray.length; i++) {
-                wallSoffitArray[existingWallCount + i] = soffitLeftArray[i];
-                //console.log(soffitLeftArray[i]);
+            if (backWall === "south") {
+                if (projection > antiProjection)
+                    populateSoffitArray(existingWallCount, false);
+                else if (projection < antiProjection)
+                    populateSoffitArray(wallSetBackArray.length - 1, true);
+                else { //projection === antiProjection
+                    populateSoffitArray(existingWallCount, false);
+                    populateSoffitArray(wallSetBackArray.length - 1, true);
+                }
             }
-
-            for (var i = 0; i < soffitRightArray.length; i++) {
-                wallSoffitArray[wallSoffitArray.length - 1 - i] = soffitRightArray[i];
-                //console.log(soffitRightArray[i]);
-            }
-
-            for (var i = 0; i < wallSoffitArray.length; i++) {
-                console.log("wall soffit " + i, wallSoffitArray[i]);
-                console.log("length: ", wallSoffitArray.length);
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //var firstWallLength = document.getElementById("hidWall" + (existingWallCount + 1) + "Length").value;
-            //var lastWallLength = document.getElementById("hidWall" + (coordList.length - 1) + "Length").value;
-
-            ///*************************************************************************************/
-            ///*************************************************************************************/
-            ///*************************************************************************************/
-            //var firstWallStartPoint = coordList[existingWallCount + 1][2]; // 2 = y1
-            //var lastWallEndPoint = coordList[coordList.length - 1][3]; // 3 = y2
-            ///*************************************************************************************/
-            ///*************************************************************************************/
-            ///*************************************************************************************/
-
-            //for (var i = 0; i < coordList.length; i++) {
-            //    if (i === (existingWallCount + 1) || i === (coordList.length - 1)) { //first proposed wall or last proposed wall
-            //        if (coordList[i][5] === "W" || coordList[i][5] === "E") { //if its vertical and perpendicular to existing wall 
-            //            wallSoffitArray[i] = soffitLength; //set the soffit length
-            //            if (firstWallLength > lastWallLength) //if different lengths
-            //                wallSoffitArray[existingWallCount + 1] += (firstWallLength - lastWallLength); //add the difference to the appropriate wall
-            //            else if (lastWallLength > firstWallLength) //if different lengths
-            //                wallSoffitArray[coordList.length - 1] += (lastWallLength - firstWallLength); //add the difference to the appropriate wall
-            //        }
-            //        else //if they are not vertical perpendicular
-            //            wallSoffitArray[i] = 0; //no soffit
-            //    }
-            //    else //if not first or last proposed wall
-            //        wallSoffitArray[i] = 0; //no soffit
-            //}
-
-
-            //for (var i = 0; i < coordList.length; i++)
-            //    if (coordList[i][4] === "E") { //if existing wall  
-            //        //wallSoffitArray[index] = 0; //slope is unimportant
-            //    }
-            //    else { //if proposed wall
-            //        //get the orientation of the proposed wall
-            //        switch (coordList[i][5]) { //5 = orientation
-            //            case "S": //if south
-            //            case "N": //or north
-            //                wallSoffitArray[i] = 0; //soffit length is unimportant thus zero
-            //                break;
-
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //            case "SW": //or southwest
-            //            case "NW": //or northwest
-            //            case "SE": //or southeast
-            //            case "NE": //or northeast
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //                /**********************************************************************************************/
-            //                break;
-            //            case "W": //if west
-            //            case "E": //or
-            //                coordList
-
-            //                
-                                /**********************************************************************************************/
-                                /******************* the following was done to account for multiple ***************************/
-                                /*******************    proposed walls touching existing walls      ***************************/
-                                /*******************    multiple existing walls not relevant atm    ***************************/
-                                /**********************************************************************************************/
-                                //for (var j = 0; j < coordList.length; j++) { //run through all the walls
-                                //    if (coordList[j][4] === "E") { //if there's an existing wall
-                                //        if (coordList[j][2] === coordList[i][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
-                                //            wallSoffitArray[i] = soffitLength; //set the soffit length
-                                //            break; //break out of the loop
-                                //        }
-                                //    }
-                                //}
-                                //break; //break out of the switch
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-
-                                /**********************************************************************************************/
-                                /******************* the following was done to differentiate between ***************************/
-                                /*******************    beginning soffit and ending soffit       ***************************/
-                                /*******************    soffit placement on wall no longer desired    ***************************/
-                                /**********************************************************************************************/
-                                //case "E": //if east
-                                //    for (var j = 0; j < coordList.length; j++) { //run through all the walls
-                                //        if (coordList[j][4] === "E") { //if there's an existing wall
-                                //            if (coordList[j][2] === coordList[i][2]) {  ///y1 = y1, check if the coordinates match, i.e. proposed line is touching the existing line
-                                //                wallSoffitArray[i] = -soffitLength; //should probably be positive soffit length, but just to differentiate between beginning soffit and ending soffit
-                                //                break; //break out of the loop
-                                //            }
-                                //        }
-                                //    }
-                                //    break; //break out of the switch
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-                                /**********************************************************************************************/
-                            
-                //}
-            //}
         }
-
-
 
         /**
         This function calculates the slope (over 12), based on the given heights
         @return slope over 12
         */
-        function calculateSlope() {
+        function calculateSlope(backWallHeight, frontWallHeight) {
             var rise; //m = ((rise * run)/(roomProjection - soffitLength)) slope over 12
-            var backWallHeight, frontWallHeight;
 
-            backWallHeight = +(document.getElementById("MainContent_txtBackWallHeight").value) + +(document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value);
-            frontWallHeight = +(document.getElementById("MainContent_txtFrontWallHeight").value) + +(document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value);
-
-            rise = backWallHeight - frontWallHeight;
+            rise = parseFloat(backWallHeight) - parseFloat(frontWallHeight);
 
             return (((rise * RUN) / (roomProjection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
         }
@@ -683,10 +626,10 @@ UPDATE [7/8/2013]: NO MORE DIFFERENT SOFFIT LENGTHS... SOFFIT LENGTH ONLY APPLIE
         This function calculates the rise based on the slope (over 12) and one of the heights
         @return rise (from the slope equation)
         */
-        function calculateRise() {
+        function calculateRise(side) {
             var m;    //m = ((rise * run)/(roomProjection - soffitLength)) slope over 12
 
-            m = +(document.getElementById("MainContent_txtRoofSlope").value); //get the slope from the textbox
+            m = +(document.getElementById("MainContent_txt" + side + "RoofSlope").value); //get the slope from the textbox
 
             return ((((roomProjection - soffitLength) * m) / RUN).toFixed(2)); //rise, rounded to 2 decimal places
         }
@@ -706,7 +649,7 @@ UPDATE [7/8/2013]: NO MORE DIFFERENT SOFFIT LENGTHS... SOFFIT LENGTH ONLY APPLIE
 
             //run through all the textboxes and check if the values in there are valid numbers
             for (var i = 1; i <= lineList.length; i++) {
-                if (coordList[i - 1][4] === "P") {
+                if (coordList[i - 1][4] === "P" || coordList[i - 1][4] === "G") {
                     if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) //if invalid numbers
                         || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0 //zero should be changed to MIN_WALL_LENGTH
                         || isNaN(document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value)
@@ -721,11 +664,10 @@ UPDATE [7/8/2013]: NO MORE DIFFERENT SOFFIT LENGTHS... SOFFIT LENGTH ONLY APPLIE
 
             if (isValid) { //if everything is valid
 
-
                 for (var i = 1; i <= lineList.length; i++) { //populate the hidden fields for each wall
-                    if (coordList[i - 1][4] === "P") {
+                    if (coordList[i - 1][4] === "P" || coordList[i - 1][4] === "G") {
                         calculateSetBack((i - 1)); //calculate setback of the given wall
-                        
+
                         document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i - 1]; //store wall setback 
                         wallLeftFillerArray[i - 1] = document.getElementById("hidWall" + i + "LeftFiller").value = //store left filler
                             +(document.getElementById("MainContent_txtWall" + i + "LeftFiller").value) + //textbox value
@@ -737,19 +679,19 @@ UPDATE [7/8/2013]: NO MORE DIFFERENT SOFFIT LENGTHS... SOFFIT LENGTH ONLY APPLIE
                             +(document.getElementById("MainContent_txtWall" + i + "RightFiller").value) + //textbox value
                             +(document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").selectedIndex].value); //dropdown value
                         document.getElementById("hidWall" + i + "SoffitLength").value = wallSoffitArray[i - 1];//store wall soffitlength
-                        answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value; //store the values in the answer variable to be displayed
+                        answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value + "<br/>"; //store the values in the answer variable to be displayed
                   
                     }
 
                 }
 
-                //determineSoffitLengthOfEachWall(); //calculate and store soffitlength of each wall
-
                 //store roomProjection in the roomProjection variable and hidden field
-                document.getElementById("MainContent_hidroomProjection").value = roomProjection = calculateProjection(); 
+                document.getElementById("MainContent_hidRoomProjection").value = roomProjection = calculateProjection(); 
+                document.getElementById("MainContent_hidRoomWidth").value = roomWidth;
+                determineSoffitLengthOfEachWall(); //calculate and store soffitlength of each wall
 
                 //Set answer on side pager and enable button
-                $('#MainContent_lblWallLengthsAnswer').text(answer);
+                $('#MainContent_lblWallLengthsAnswer').html(answer);
                 document.getElementById('pagerOne').style.display = "inline";
                 document.getElementById('MainContent_btnQuestion1').disabled = false;
             }
@@ -769,247 +711,315 @@ UPDATE [7/8/2013]: NO MORE DIFFERENT SOFFIT LENGTHS... SOFFIT LENGTH ONLY APPLIE
         Depending on the user selection of the radio button, it also calculates the slope, or one of the heights 
             by calling the appropriate functions
         */
-        function checkQuestion2() {
+        function checkQuestion2(isGable) {
             //alert("here i am, rock you like a hurricane"); //i'll leave that in there for shenanigans
             //disable 'next slide' button until after validation (this is currently enabled for debugging purposes)
             //document.getElementById('MainContent_btnQuestion1').disabled = false;
             //document.getElementById('MainContent_btnQuestion2').disabled = false;
             //document.getElementById('MainContent_btnQuestion3').disabled = false;
 
-            var isValid = true; //to do valid input or invalid input logic
+            var isValid = false; //to do valid input or invalid input logic
             var answer = ""; //answer to be displayed on the side panel
-            
-            //if user wants to auto calculate the slope
-            if (document.getElementById("MainContent_radAutoRoofSlope").checked) {
-                //we have front wall height and back wall height, calculate slope
-                if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value) //if the other textbox values are valid
-                    && document.getElementById("MainContent_txtBackWallHeight").value > 0
-                    && !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
-                    && document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
-                    
-                    isValid = true; //valid is true
-                    
-                    document.getElementById("MainContent_txtRoofSlope").value = calculateSlope(); //output the slope to the appropriate textbox
+            var slope;
 
-                }
-                else //if textbox values are not valid
-                    isValid = false; //valid is false
-            }
-            //the user wants to auto calculate front height
-            else if (document.getElementById("MainContent_radAutoFrontWallHeight").checked) {
-                //we have back wall height and slope, calculate front wall height
-                if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value) //if the other textbox values are valid
-                    && document.getElementById("MainContent_txtBackWallHeight").value > 0
-                    && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
-                    && document.getElementById("MainContent_txtRoofSlope").value > 0) {
+            if (isGable == "True") {
 
-                    var frontHeight; //to store calculated frontwall height
-                    var newFrontHeight; //to store the correctred front wall height
-                    var rise; //to store the calculated rise from the slope equation
+                //if user wants to auto calculate the slope
+                if (document.getElementById("MainContent_radAutoRoofSlope").checked) {
+                    //we have front wall height and back wall height, calculate slope
+                    if (!isNaN(document.getElementById("MainContent_txtLeftWallHeight").value) //if the other textbox values are valid
+                        && document.getElementById("MainContent_txtLeftWallHeight").value > 0
+                        && !isNaN(document.getElementById("MainContent_txtRightWallHeight").value)
+                        && document.getElementById("MainContent_txtRightWallHeight").value > 0
+                        && !isNaN(document.getElementById("MainContent_txtGablePostHeight").value)
+                        && document.getElementById("MainContent_txtGablePostHeight").value > 0) {
 
-                    isValid = true; //valid is true
+                        isValid = true;
 
-                    rise = calculateRise(); //calculate and store rise
-                    
-                    //calculate frontwall height by subtracting rise from the backwall height
-                    frontHeight = +(document.getElementById("MainContent_txtBackWallHeight").value + document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value) - +rise;
+                        var gablePostHeight = parseFloat(document.getElementById("MainContent_txtGablePostHeight").value) + parseFloat($("#MainContent_gablePostInchSpecificDDL").val());
+                        var frontLeftWallHeight = parseFloat(document.getElementById("MainContent_txtLeftWallHeight").value) + parseFloat($("#MainContent_leftWallInchSpecificDDL").val());
+                        var frontRightWallHeight = parseFloat(document.getElementById("MainContent_txtRightWallHeight").value) + parseFloat($("#MainContent_rightWallInchSpecificDDL").val());
 
-                    //calculate new front wall height with the valid eighth inch decimal
-                    newFrontHeight = validateDecimal(frontHeight);
+                        document.getElementById("MainContent_txtLeftRoofSlope").value = calculateSlope(gablePostHeight, frontLeftWallHeight); //output the slope to the appropriate textbox
+                        document.getElementById("MainContent_txtRightRoofSlope").value = calculateSlope(gablePostHeight, frontRightWallHeight); //output the slope to the appropriate textbox
+                        
+                        //store the values in the appropriate hidden fields
+                        document.getElementById("hidLeftWallHeight").value =
+                            parseFloat(document.getElementById("MainContent_txtLeftWallHeight").value) + parseFloat($("#MainContent_leftWallInchSpecificDDL").val());
+                        document.getElementById("hidRightWallHeight").value =
+                            parseFloat(document.getElementById("MainContent_txtRightWallHeight").value) + parseFloat($("#MainContent_rightWallInchSpecificDDL").val());
+                        document.getElementById("hidGableWallHeight").value =
+                            parseFloat(document.getElementById("MainContent_txtGablePostHeight").value) + parseFloat($("#MainContent_gablePostInchSpecificDDL").val());
+                        document.getElementById("hidLeftRoofSlope").value = parseFloat(document.getElementById("MainContent_txtLeftRoofSlope").value);
+                        document.getElementById("hidRightRoofSlope").value = parseFloat(document.getElementById("MainContent_txtRightRoofSlope").value);                        
 
-                    //output the whole number of the new front wall height to the textbox
-                    document.getElementById("MainContent_txtFrontWallHeight").value = newFrontHeight[0];
-
-                    //select the decimal value of the new front wall height in the dropdown list
-                    for (var i = 0; i < document.getElementById("MainContent_ddlFrontInchFractions").length - 1 ; i++) { //run through each element of the dropdown
-                        if ((newFrontHeight[1] += '') == ("0" + document.getElementById("MainContent_ddlFrontInchFractions").options[i].value)) //if the value in the dropdown list matches the decimal value
-                            document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex = i; //select the index of that value
                     }
-
-                    //check if the old front wall height and the new front wall height are different
-                    if (frontHeight != (+newFrontHeight[0] + +newFrontHeight[1])) //if they are different
-                        document.getElementById("MainContent_txtRoofSlope").value = calculateSlope(); //recalculate the slope based on the new front wall height
                 }
-                else //other textbox values are not valid
-                    isValid = false; //valid is false
-            }
-            //the user wants to auto calculate back wall height
-            else if (document.getElementById("MainContent_radAutoBackWallHeight").checked) {
-                //we have front wall height and slope, calculate back wall height
-                if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value) //check if other textbox values are valid
-                    && document.getElementById("MainContent_txtFrontWallHeight").value > 0
-                    && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
-                    && document.getElementById("MainContent_txtRoofSlope").value > 0) {
+                    //the user wants to auto calculate front height
+                else if (document.getElementById("MainContent_radAutoLeftWallHeight").checked) {
+                    //we have back wall height and slope, calculate front wall height
+                    if (!isNaN(document.getElementById("MainContent_txtLeftRoofSlope").value)
+                        && document.getElementById("MainContent_txtLeftRoofSlope").value > 0
+                        && !isNaN(document.getElementById("MainContent_txtGablePostHeight").value)
+                        && document.getElementById("MainContent_txtGablePostHeight").value > 0) {
 
-                    var backHeight; //to store calculated backwall height
-                    var newBackHeight; //to store corrected back wall height
-                    var rise; //to store rise from the slope equation
+                        var backHeight; //to store calculated frontwall height
+                        var newBackHeight; //to store the correctred front wall height
+                        var rise; //to store the calculated rise from the slope equation
 
-                    isValid = true; //valid is true
+                        rise = calculateRise("Left"); //calculate and store rise
 
-                    rise = calculateRise(); //calculate and store rise
+                        //calculate frontwall height by subtracting rise from the backwall height
+                        backHeight = parseFloat(document.getElementById("MainContent_txtGablePostHeight").value) + parseFloat($("#MainContent_gablePostInchSpecificDDL").val()) - parseFloat(rise);
 
-                    //calculate the backwall height by adding the rise to the front wall height
-                    backHeight = +(document.getElementById("MainContent_txtFrontWallHeight").value + document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value) + +rise;
+                        //calculate new front wall height with the valid eighth inch decimal
+                        newBackHeight = validateDecimal(backHeight);
 
-                    //calculate new back wall height with valid eighth inch decimal
-                    newBackHeight = validateDecimal(backHeight);
+                        //output the whole number of the new front wall height to the textbox
+                        document.getElementById("MainContent_txtLeftWallHeight").value = newBackHeight[0];
 
-                    //output the whole number of the new back wall height to the textbox
-                    document.getElementById("MainContent_txtBackWallHeight").value = newBackHeight[0];
-
-                    //select the decimal value of the new back wall height in the dropdown list
-                    for (var i = 0; i < document.getElementById("MainContent_ddlBackInchFractions").length - 1 ; i++) { //run through each element of the dropdown
-                        if ((newBackHeight[1] += '') == ("0" + document.getElementById("MainContent_ddlBacktInchFractions").options[i].value)) //if the value in the dropdown list matches the decimal value
-                            document.getElementById("MainContent_ddlBackInchFractions").selectedIndex = i; //select the index of that value
-                    }
-
-                    //check if the old back wall height and the new back wall height are different
-                    if (backHeight != (+newBackHeight[0] + +newBackHeight[1])) //if they are different
-                        document.getElementById("MainContent_txtRoofSlope").value = calculateSlope(); //recalculate the slope based on the new back wall height
-
-                }
-                else //value in the other textboxes are not valid
-                    isValid = false; //valid is false
-            }
-
-            //if the calculated slope is invalid, i.e. negative or zero
-            if (document.getElementById("MainContent_txtRoofSlope").value <= 0)
-                isValid = false; //valid is false
-            else //if the slope is valid
-                isValid = true; //valid is true
-            
-            if (isValid) { //if all is valid
-                //store the values in the appropriate hidden fields
-                document.getElementById("MainContent_hidBackWallHeight").value =
-                    +(document.getElementById("MainContent_txtBackWallHeight").value) +
-                    +(document.getElementById("MainContent_ddlBackInchFractions").options[document.getElementById("MainContent_ddlBackInchFractions").selectedIndex].value);
-                document.getElementById("MainContent_hidFrontWallHeight").value =
-                    +(document.getElementById("MainContent_txtFrontWallHeight").value) +
-                    +(document.getElementById("MainContent_ddlFrontInchFractions").options[document.getElementById("MainContent_ddlFrontInchFractions").selectedIndex].value);
-                document.getElementById("MainContent_hidRoofSlope").value = +(document.getElementById("MainContent_txtRoofSlope").value);
-
-                //store the values in the answer variable to be displayed on the side panel
-                answer += "Back Wall: " + document.getElementById("MainContent_hidBackWallHeight").value;
-                answer += "Front Wall: " + document.getElementById("MainContent_hidFrontWallHeight").value;
-                answer += "Roof Slope: " + document.getElementById("MainContent_hidRoofSlope").value;
-
-                //display the answer on the side panel
-                $('#MainContent_lblWallHeightsAnswer').text(answer);
-                document.getElementById('pagerTwo').style.display = "inline";
-                document.getElementById('MainContent_btnQuestion2').disabled = false;   
-            }
-            else {
-                //error styling or something
-                //Set answer on side pager and enable button
-                $('#MainContent_lblWallHeightsAnswer').text("Invalid Input");
-                document.getElementById('pagerTwo').style.display = "inline";
-                document.getElementById('MainContent_btnQuestion2').disabled = false;
-            }
-            return false;
-        }
-        
-        
-
-
-        /************************************************************************************************************************************/
-                    /****************                 new function to be written                *******************************/
-        /************************************************************************************************************************************/
-
-
-        //do windows have to be precise to eighth of an inch also
-
-        function fillWindows() {
-
-            var availableSpaces = new Array();
-            var freeSpaceCounter = 0;
-
-            for (var i = 0; i < walls.length; i++) { //for each wall in the list of wall objects
-                if (coordList[i][4] === "P") { //if it is a proposed wall
-                    if (walls[i].doors.length > 0) { //if there is at least 1 door in the wall
-                        for (var j = 0; j < walls[i].doors.length; j++) {
-                            var freeSpace;
-                            if (walls[i].doors[j].position > 0) {
-                                freeSpace = {
-                                    "wall" : i,
-                                    "start" : walls[i].doors[j].position - 1,
-                                    "end" : walls[i].doors[j].fwidth + 1
-                                };
-                            }
-                            else {
-                                freeSpace = {
-                                    "wall": i,
-                                    "start" : 0,
-                                    "end" : walls[i].doors[j].fwidth + 1
-                                };
-                            }
-                            availableSpaces[freeSpaceCounter] = freeSpace;
-                            freeSpaceCounter++;
+                        //select the decimal value of the new front wall height in the dropdown list
+                        for (var i = 0; i < document.getElementById("MainContent_leftWallInchSpecificDDL").length - 1 ; i++) { //run through each element of the dropdown
+                            if ((newBackHeight[1] += '') == ("0" + document.getElementById("MainContent_leftWallInchSpecificDDL").options[i].value)) //if the value in the dropdown list matches the decimal value
+                                document.getElementById("MainContent_leftWallInchSpecificDDL").selectedIndex = i; //select the index of that value
                         }
+
+                        slope = calculateSlope(newBackHeight, backHeight);
+                        //check if the old front wall height and the new front wall height are different
+                        if (backHeight != (+newBackHeight[0] + +newBackHeight[1])) //if they are different
+                            document.getElementById("MainContent_txtLeftRoofSlope").value = slope; //recalculate the slope based on the new front wall height4
+                        
+                        //if the calculated slope is valid
+                        if (slope >= 0)
+                            isValid = true;
+
+                        console.log(isValid);
+
+                        //store the values in the appropriate hidden fields
+                        document.getElementById("hidLeftWallHeight").value =
+                            parseFloat(document.getElementById("MainContent_txtLeftWallHeight").value) + parseFloat($("#MainContent_leftWallInchSpecificDDL").val());
+                        document.getElementById("hidRightWallHeight").value =
+                            parseFloat(document.getElementById("MainContent_txtRightWallHeight").value) + parseFloat($("#MainContent_rightWallInchSpecificDDL").val());
+                        document.getElementById("hidGableWallHeight").value =
+                            parseFloat(document.getElementById("MainContent_txtGablePostHeight").value) + parseFloat($("#MainContent_gablePostInchSpecificDDL").val());
+                        document.getElementById("hidLeftRoofSlope").value = parseFloat(document.getElementById("MainContent_txtLeftRoofSlope").value);
+                        document.getElementById("hidRightRoofSlope").value = parseFloat(document.getElementById("MainContent_txtRightRoofSlope").value);
                     }
                 }
-            }
+                    //the user wants to auto calculate back wall height
+                else if (document.getElementById("MainContent_radAutoRightWallHeight").checked) {
+                    //we have front wall height and slope, calculate back wall height
+                    if (!isNaN(document.getElementById("MainContent_txtRightRoofSlope").value)
+                        && document.getElementById("MainContent_txtRightRoofSlope").value > 0
+                        && !isNaN(document.getElementById("MainContent_txtGablePostHeight").value)
+                        && document.getElementById("MainContent_txtGablePostHeight").value > 0) {
 
-            for (var k = 0; k < availableSpaces.length; k++) {
-                var availableSpace = availableSpaces[k].end - availableSpaces[k].start;;
-                var windowSize = MAX_WINDOW_WIDTH;
-                var tryAgain = 1;
+                        var backHeight; //to store calculated backwall height
+                        var newBackHeight; //to store corrected back wall height
+                        var rise; //to store rise from the slope equation
 
-                if (availableSpaces[k] >= MIN_WINDOW_WIDTH) { //if there's enough space to fit a min size window
-                    while (!validateWindowSize(availableSpace, windowSize / tryAgain, tryAgain, availableSpaces[k].wall)) { //keep trying until windows fit in the space (with min filler)
-                        tryAgain++; //used to divide the window size by 2 at each try to try smaller window sizes
-                    }
-                }
+                        rise = calculateRise("Right"); //calculate and store rise
 
+                        //calculate frontwall height by subtracting rise from the backwall height
+                        backHeight = parseFloat(document.getElementById("MainContent_txtGablePostHeight").value) + parseFloat($("#MainContent_gablePostInchSpecificDDL").val()) - parseFloat(rise);
 
+                        //calculate new front wall height with the valid eighth inch decimal
+                        newBackHeight = validateDecimal(backHeight);
 
-            }
-        }
+                        //output the whole number of the new front wall height to the textbox
+                        document.getElementById("MainContent_txtRightWallHeight").value = newBackHeight[0];
 
-        function validateWindowSize(space, size, number, wall) {
-            var window;
-
-            if (size >= MIN_WINDOW_WIDTH) {
-                if (size > space) {
-                    size = size / 2;
-                    validateWindowSize(space, size, number, wall);
-                }
-                else if (size < space) {
-                    while (size < space) {
-                        size = size * number;
-                        number++;
-                        if (size === space) {
-                            validateWindowSize(space, size, number, wall);
+                        //select the decimal value of the new front wall height in the dropdown list
+                        for (var i = 0; i < document.getElementById("MainContent_rightWallInchSpecificDDL").length - 1 ; i++) { //run through each element of the dropdown
+                            if ((newBackHeight[1] += '') == ("0" + document.getElementById("MainContent_rightWallInchSpecificDDL").options[i].value)) //if the value in the dropdown list matches the decimal value
+                                document.getElementById("MainContent_rightWallInchSpecificDDL").selectedIndex = i; //select the index of that value
                         }
+
+                        slope = calculateSlope(newBackHeight, backHeight);
+                        //check if the old front wall height and the new front wall height are different
+                        if (backHeight != (+newBackHeight[0] + +newBackHeight[1])) //if they are different
+                            document.getElementById("MainContent_txtRightRoofSlope").value = slope; //recalculate the slope based on the new front wall height4
+
+                        //if the calculated slope is valid
+                        if (slope >= 0)
+                            isValid = true;
+
+                        //store the values in the appropriate hidden fields
+                        document.getElementById("hidLeftWallHeight").value =
+                            parseFloat(document.getElementById("MainContent_txtLeftWallHeight").value) + parseFloat($("#MainContent_leftWallInchSpecificDDL").val());
+                        document.getElementById("hidRightWallHeight").value =
+                            parseFloat(document.getElementById("MainContent_txtRightWallHeight").value) + parseFloat($("#MainContent_rightWallInchSpecificDDL").val());
+                        document.getElementById("hidGableWallHeight").value =
+                            parseFloat(document.getElementById("MainContent_txtGablePostHeight").value) + parseFloat($("#MainContent_gablePostInchSpecificDDL").val());
+                        document.getElementById("hidLeftRoofSlope").value = parseFloat(document.getElementById("MainContent_txtLeftRoofSlope").value);
+                        document.getElementById("hidRightRoofSlope").value = parseFloat(document.getElementById("MainContent_txtRightRoofSlope").value);
+
                     }
+                }                
+
+                if (isValid) { //if all is valid        
+
+                    //store the values in the answer variable to be displayed on the side panel
+                    answer += "Left Wall: " + document.getElementById("hidLeftWallHeight").value + "<br/>";
+                    answer += "Right Wall: " + document.getElementById("hidRightWallHeight").value + "<br/>";
+                    answer += "Gable Wall: " + document.getElementById("hidGableWallHeight").value + "<br/>";
+                    answer += "Left Roof Slope: " + document.getElementById("hidLeftRoofSlope").value + "<br/>";
+                    answer += "Right Roof Slope: " + document.getElementById("hidRightRoofSlope").value + "<br/>";
+
+                    //display the answer on the side panel
+                    $('#MainContent_lblWallHeightsAnswer').html(answer);
+                    document.getElementById('pagerTwo').style.display = "inline";
+                    document.getElementById('MainContent_btnQuestion2').disabled = false;
                 }
                 else {
-                    for (var i = 0; i < number; i++) {
-                        var window
-                    }
+                    //error styling or something
+                    //Set answer on side pager and enable button
+                    $('#MainContent_lblWallHeightsAnswer').text("Invalid Input");
+                    document.getElementById('pagerTwo').style.display = "inline";
+                    document.getElementById('MainContent_btnQuestion2').disabled = false;
                 }
             }
             else {
+                //if user wants to auto calculate the slope
+                if (document.getElementById("MainContent_radAutoRoofSlope").checked) {
+                    //we have front wall height and back wall height, calculate slope
+                    if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value) //if the other textbox values are valid
+                        && document.getElementById("MainContent_txtBackWallHeight").value > 0
+                        && !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                        && document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
 
+                        isValid = true; //valid is true
+
+                        var backWallHeight = parseFloat(document.getElementById("MainContent_txtBackWallHeight").value) + parseFloat($("#MainContent_backWallInchSpecificDDL").val());
+                        var frontWallHeight = parseFloat(document.getElementById("MainContent_txtFrontWallHeight").value) + parseFloat($("#MainContent_frontWallInchSpecificDDL").val());
+
+                        document.getElementById("MainContent_txtRoofSlope").value = calculateSlope(backWallHeight, frontWallHeight); //output the slope to the appropriate textbox
+
+                    }
+                }
+                    //the user wants to auto calculate front height
+                else if (document.getElementById("MainContent_radAutoFrontWallHeight").checked) {
+                    //we have back wall height and slope, calculate front wall height
+                    if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value) //if the other textbox values are valid
+                        && document.getElementById("MainContent_txtBackWallHeight").value > 0
+                        && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                        && document.getElementById("MainContent_txtRoofSlope").value > 0) {
+
+                        var frontHeight; //to store calculated frontwall height
+                        var newFrontHeight; //to store the correctred front wall height
+                        var rise; //to store the calculated rise from the slope equation
+
+                        isValid = true; //valid is true
+
+                        rise = calculateRise(""); //calculate and store rise
+
+                        //calculate frontwall height by subtracting rise from the backwall height
+                        frontHeight = parseFloat(document.getElementById("MainContent_txtBackWallHeight").value) + parseFloat($("#MainContent_backWallInchSpecificDDL").val()) - parseFloat(rise);
+
+                        //calculate new front wall height with the valid eighth inch decimal
+                        newFrontHeight = validateDecimal(frontHeight);
+
+                        //output the whole number of the new front wall height to the textbox
+                        document.getElementById("MainContent_txtFrontWallHeight").value = newFrontHeight[0];
+
+                        //select the decimal value of the new front wall height in the dropdown list
+                        for (var i = 0; i < document.getElementById("MainContent_frontWallInchSpecificDDL").length - 1 ; i++) { //run through each element of the dropdown
+                            if ((newFrontHeight[1] += '') == ("0" + document.getElementById("MainContent_frontWallInchSpecificDDL").options[i].value)) //if the value in the dropdown list matches the decimal value
+                                document.getElementById("MainContent_frontWallInchSpecificDDL").selectedIndex = i; //select the index of that value
+                        }
+
+                        //check if the old front wall height and the new front wall height are different
+                        if (frontHeight != (+newFrontHeight[0] + +newFrontHeight[1])) //if they are different
+                            document.getElementById("MainContent_txtRoofSlope").value = calculateSlope(); //recalculate the slope based on the new front wall height
+                    }
+                }
+                    //the user wants to auto calculate back wall height
+                else if (document.getElementById("MainContent_radAutoBackWallHeight").checked) {
+                    //we have front wall height and slope, calculate back wall height
+                    if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value) //check if other textbox values are valid
+                        && document.getElementById("MainContent_txtFrontWallHeight").value > 0
+                        && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                        && document.getElementById("MainContent_txtRoofSlope").value > 0) {
+
+                        var backHeight; //to store calculated backwall height
+                        var newBackHeight; //to store corrected back wall height
+                        var rise; //to store rise from the slope equation
+
+                        isValid = true; //valid is true
+
+                        rise = calculateRise(); //calculate and store rise
+
+                        //calculate the backwall height by adding the rise to the front wall height
+                        backHeight = parseFloat(document.getElementById("MainContent_txtFrontWallHeight").value) + parseFloat($("#MainContent_frontWallInchSpecificDDL").val()) + parseFloat(rise);
+
+                        //calculate new back wall height with valid eighth inch decimal
+                        newBackHeight = validateDecimal(backHeight);
+
+                        //output the whole number of the new back wall height to the textbox
+                        document.getElementById("MainContent_txtBackWallHeight").value = newBackHeight[0];
+
+                        //select the decimal value of the new back wall height in the dropdown list
+                        for (var i = 0; i < document.getElementById("MainContent_backWallInchSpecificDDL").length - 1 ; i++) { //run through each element of the dropdown
+                            if ((newBackHeight[1] += '') == ("0" + document.getElementById("MainContent_backWallInchSpecificDDL").options[i].value)) //if the value in the dropdown list matches the decimal value
+                                document.getElementById("MainContent_backWallInchSpecificDDL").selectedIndex = i; //select the index of that value
+                        }
+
+                        //check if the old back wall height and the new back wall height are different
+                        if (backHeight != (+newBackHeight[0] + +newBackHeight[1])) //if they are different
+                            document.getElementById("MainContent_txtRoofSlope").value = calculateSlope(); //recalculate the slope based on the new back wall height
+
+                    }
+                }
+
+                //if the calculated slope is invalid, i.e. negative or zero
+                if (document.getElementById("MainContent_txtRoofSlope").value >= 0)
+                    isValid = true; //valid is false
+
+                if (isValid) { //if all is valid
+                    //store the values in the appropriate hidden fields
+                    document.getElementById("MainContent_hidBackWallHeight").value =
+                        parseFloat(document.getElementById("MainContent_txtBackWallHeight").value) + parseFloat($("#MainContent_backWallInchSpecificDDL").val());
+                    document.getElementById("MainContent_hidFrontWallHeight").value =
+                        parseFloat(document.getElementById("MainContent_txtFrontWallHeight").value) + parseFloat($("#MainContent_frontWallInchSpecificDDL").val());
+                    document.getElementById("MainContent_hidRoofSlope").value = parseFloat(document.getElementById("MainContent_txtRoofSlope").value);
+
+                    //store the values in the answer variable to be displayed on the side panel
+                    answer += "Back Wall: " + document.getElementById("MainContent_hidBackWallHeight").value;
+                    answer += "Front Wall: " + document.getElementById("MainContent_hidFrontWallHeight").value;
+                    answer += "Roof Slope: " + document.getElementById("MainContent_hidRoofSlope").value;
+
+                    //display the answer on the side panel
+                    $('#MainContent_lblWallHeightsAnswer').text(answer);
+                    document.getElementById('pagerTwo').style.display = "inline";
+                    document.getElementById('MainContent_btnQuestion2').disabled = false;
+                }
+                else {
+                    //error styling or something
+                    //Set answer on side pager and enable button
+                    $('#MainContent_lblWallHeightsAnswer').text("Invalid Input");
+                    document.getElementById('pagerTwo').style.display = "inline";
+                    document.getElementById('MainContent_btnQuestion2').disabled = false;
+                }
             }
-
-
-
-            window = {
-                "wall" : 1,
-                "leftFiller" : 1,
-                "width" : 1,
-                "rightFiller" : 1
-            };
+            return isValid;
         }
+        
+        function sameWallHeight() {
 
+            if ($('#MainContent_chkAutoWalls').prop('checked')) {
+                if ($('#MainContent_txtLeftWallHeight').val() == "") {
+                    $('#MainContent_txtLeftWallHeight').val($('#MainContent_txtRightWallHeight').val());
+                }
+                else {
+                    $('#MainContent_txtRightWallHeight').val($('#MainContent_txtLeftWallHeight').val());
+                }
 
-        /************************************************************************************************************************************/
-        /************************************************************************************************************************************/
-        /************************************************************************************************************************************/
-
-
-
+                $('#MainContent_txtRightWallHeight').attr('disabled', 'disabled');
+            }
+            else {
+                $('#MainContent_txtRightWallHeight').removeAttr('disabled');
+            }
+        }
 
     </script>
     <%-- End hidden div populating scripts --%>
@@ -1101,85 +1111,7 @@ UPDATE [7/8/2013]: NO MORE DIFFERENT SOFFIT LENGTHS... SOFFIT LENGTH ONLY APPLIE
                                     <%-- table contains textboxes, dropdowns, and radio buttons for user input --%>
                                     <asp:Table ID="tblWallHeights" runat="server">
 
-                                        <%-- row 1: backwall height --%>
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <%-- label for back wall height --%>
-                                                <asp:Label ID="lblBackWallHeight" AssociatedControlID="txtBackWallHeight" runat="server" Text="Back Wall Height:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <%-- textbox for backwall height whole numbers --%>
-                                                <asp:TextBox ID="txtBackWallHeight" CssClass="txtField txtInput"  OnChange="checkQuestion2()" onblur="resetWalls()" OnFocus="highlightWallsHeight()" runat="server" MaxLength="3"></asp:TextBox>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <%-- placeholder for the dropdown list for the decimal values for back wall height 
-                                                    dynamically added in codebehind--%>
-                                                <asp:PlaceHolder ID="phBackHeights" runat="server" />
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <%-- radio button to auto calculate back wall height based on the given user input --%>
-                                                <asp:RadioButton ID="radAutoBackWallHeight" GroupName="autoPopulate" runat="server" OnClick="checkQuestion2()" />
-                                                <asp:Label ID="lblAutoBackWallHeightRadio" AssociatedControlID="radAutoBackWallHeight" runat="server"></asp:Label>
-                                                <asp:Label ID="lblAutoBackWallHeight" AssociatedControlID="radAutoBackWallHeight" runat="server" Text="Auto Populate"></asp:Label>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-                                        <%-- end of row 1 --%>
-                                        <%-- row 2: frontwall height --%>
-                                        <asp:TableRow>
-                                            
-                                            <asp:TableCell>
-                                                <%-- label for front wall height --%>
-                                                <asp:Label ID="lblFrontWallHeight" AssociatedControlID="txtFrontWallHeight" runat="server" Text="Front Wall Height:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <%-- textbox for front wall height whole numbers --%>
-                                                <asp:TextBox ID="txtFrontWallHeight" CssClass="txtField txtInput"  OnChange="checkQuestion2()" onblur="resetWalls()" OnFocus="highlightWallsHeight()" runat="server" MaxLength="3"></asp:TextBox>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <%-- placeholder for the dropdown list for the decimal values for front wall height
-                                                    dynamically added in codebehind --%>
-                                                <asp:PlaceHolder ID="phFrontHeights" runat="server" />
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <%-- radio button to auto calculate front wall height based on the given user input --%>
-                                                <asp:RadioButton ID="radAutoFrontWallHeight" GroupName="autoPopulate" runat="server" OnClick="checkQuestion2()" />
-                                                <asp:Label ID="lblAutoFrontWallHeightRadio" AssociatedControlID="radAutoFrontWallHeight" runat="server"></asp:Label>
-                                                <asp:Label ID="lblAutoFrontWallHeight" AssociatedControlID="radAutoFrontWallHeight" runat="server" Text="Auto Populate"></asp:Label>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-                                        <%-- end of row 2 --%>
-                                        <%-- row 3: roof slope --%>
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <%-- label for roof slope --%>
-                                                <asp:Label ID="lblRoofSlope" AssociatedControlID="txtRoofSlope" runat="server" Text="Roof Slope:"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <%-- textbox for roof slope whole numbers --%>
-                                                <asp:TextBox ID="txtRoofSlope" CssClass="txtField txtInput" onkeyup="checkQuestion2()" OnChange="checkQuestion2()" runat="server" MaxLength="6"></asp:TextBox>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <%-- label to emphasize that its not actual slope, its slope over 12 --%>
-                                                <asp:Label ID="lblSlopeOver12" runat="server" Text="/ 12"></asp:Label>
-                                            </asp:TableCell>
-
-                                            <asp:TableCell>
-                                                <%-- radio button to auto calculate roof slope based on the given user input --%>
-                                                <asp:RadioButton ID="radAutoRoofSlope" GroupName="autoPopulate" runat="server" OnClick="checkQuestion2()" Checked="true"/>
-                                                <asp:Label ID="lblAutoRoofSlopeRadio" AssociatedControlID="radAutoRoofSlope" runat="server"></asp:Label>
-                                                <asp:Label ID="lblAutoRoofSlope" AssociatedControlID="radAutoRoofSlope" runat="server" Text="Auto Populate"></asp:Label>
-                                            </asp:TableCell>
-
-                                        </asp:TableRow>
-                                        <%-- end of row 3 --%>
+                                       
                                     </asp:Table>
                                     <%-- end of heights table --%>
                                 </li>
@@ -1187,7 +1119,7 @@ UPDATE [7/8/2013]: NO MORE DIFFERENT SOFFIT LENGTHS... SOFFIT LENGTH ONLY APPLIE
                         </div> <%-- end .toggleContent --%>
 
                 <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion2" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion2" OnClientClick="determineStartAndEndHeightOfEachWall(gable)" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide2 --%>
@@ -1333,7 +1265,8 @@ UPDATE [7/8/2013]: NO MORE DIFFERENT SOFFIT LENGTHS... SOFFIT LENGTH ONLY APPLIE
             </div> <%-- end #paging --%>      
         </div>
 
-        <asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label> 
+        <%--<asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label>--%>
+        <textarea id="txtErrorMessage" class="txtErrorMessage" disabled="disabled" rows="5">Oh hello, I am an error message.</textarea>
     </div>
     
 <script src="Scripts/MiniCanvasFunctions.js"></script>
@@ -1344,10 +1277,8 @@ UPDATE [7/8/2013]: NO MORE DIFFERENT SOFFIT LENGTHS... SOFFIT LENGTH ONLY APPLIE
     <%-- hiddenFieldsDiv is used to store dynamically generated hidden fields from codebehind --%>
     <div id="hiddenFieldsDiv" runat="server"></div>
     <%-- <input id="hidSoffitLength" type="hidden" runat="server" /> --%>
-    <input id="hidroomProjection" type="hidden" runat="server" />
-    <input id="hidFrontWallHeight" type="hidden" runat="server" />
-    <input id="hidBackWallHeight" type="hidden" runat="server" />
-    <input id="hidRoofSlope" type="hidden" runat="server" />
+    <input id="hidRoomProjection" type="hidden" runat="server" />
+    <input id="hidRoomWidth" type="hidden" runat="server" />
 
     <%-- end hidden fields --%>    
 

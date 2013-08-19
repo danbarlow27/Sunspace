@@ -78,25 +78,25 @@
                     document.getElementById('<%=btnQuestion2.ClientID%>').disabled = false;
                     document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = false;
                 }
-            }
-            else {
-                if ($('#<%=txtOverhangLength.ClientID%>').val() == "") {
+}
+else {
+    if ($('#<%=txtOverhangLength.ClientID%>').val() == "") {
                     //please enter a valid number
                     document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
-                    document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
-                }
-                else if (isNaN($('#<%=txtOverhangLength.ClientID%>').val())) {
-                    //please enter a valid number
-                    document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
+        document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
+    }
+    else if (isNaN($('#<%=txtOverhangLength.ClientID%>').val())) {
+        //please enter a valid number
+        document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
                     document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
                 }
                 else {
                     document.getElementById('<%=btnQuestion2.ClientID%>').disabled = false;
                     document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = false;
                 }
-            }
+        }
 
-            document.getElementById("<%=hidProjection.ClientID%>").value = $('#<%=txtProjection.ClientID%>').val();
+        document.getElementById("<%=hidProjection.ClientID%>").value = $('#<%=txtProjection.ClientID%>').val();
             document.getElementById("<%=hidWidth.ClientID%>").value = $('#<%=txtWidth.ClientID%>').val();
             document.getElementById("<%=hidOverhang.ClientID%>").value = $('#<%=txtOverhangLength.ClientID%>').val();
         }
