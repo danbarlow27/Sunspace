@@ -136,33 +136,33 @@ function validateWindowModSize(space/*, size, number, wall, start*/) {
     var MAX_MOD_WIDTH = 35;
     var windowCounter = 0;
     var finalWindowSize = 0;
-    var totalSpace = space;
+    var spaceRemaining = space;
 
-    while (space >= MIN_MOD_WIDTH) {
-        if (space > MAX_MOD_WIDTH) {
-            space = space - MAX_MOD_WIDTH;
+    while (spaceRemaining >= MIN_MOD_WIDTH) {
+        if (spaceRemaining >= MAX_MOD_WIDTH) {
+            spaceRemaining -= MAX_MOD_WIDTH;
             windowCounter++;
-            alert("space (" + space + ") > max: " + windowCounter);
         }
-        else if (space < MAX_MOD_WIDTH && space > MIN_MOD_WIDTH) {
-            space = 0;
+        else if (spaceRemaining < MAX_MOD_WIDTH && spaceRemaining > MIN_MOD_WIDTH) {
+            spaceRemaining = 0;
             windowCounter++;
-            alert("space (" + space + ") < max && space > min: " + windowCounter);
         }
-        else if (space == MIN_MOD_WIDTH) {
-            space = space - MIN_MOD_WIDTH;
+        else if (spaceRemaining == MIN_MOD_WIDTH) {
+            spaceRemaining = 0;
             windowCounter++;
-            alert("space (" + space + ") == min: " + windowCounter);
         }
     }
 
-    //spread non-filler space evenly between all windows needed
-    finalWindowSize = (totalSpace - space) / windowCounter;
+    if (spaceRemaining > 0) {
+        windowCounter++;
+        finalWindowSize = space / windowCounter;
+        spaceRemaining = 0;
+    }
+    else {
+        finalWindowSize = space / windowCounter;
+    }
 
-    //add remaining space to filler
-    //fillFiller(space, wall, start);
-
-    alert("Sizes: " + finalWindowSize + ", Filler Remaining: " + space);
+    alert("Sizes: " + finalWindowSize + ", NumberOfWindows: " + windowCounter + ", Filler Remaining: " + spaceRemaining);
 
 
     //if (space >= MIN_MOD_WIDTH) {
