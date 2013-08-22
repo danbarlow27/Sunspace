@@ -10,7 +10,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-    <input type="button" onclick="validateWindowModSize(45)" runat="server" />
+    <input type="button" onclick="validateWindowModSize(137)" runat="server" />
     </div>
     </form>
 </body>

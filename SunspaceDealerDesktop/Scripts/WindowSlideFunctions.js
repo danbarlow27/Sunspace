@@ -153,12 +153,20 @@ function validateWindowModSize(space/*, size, number, wall, start*/) {
         }
     }
 
-    if (spaceRemaining > 0) {
+    if (spaceRemaining > 0 && windowCounter > 0) {
         windowCounter++;
+        finalWindowSize = space / windowCounter;
+        spaceRemaining = 0;
     }
-
-    finalWindowSize = space / windowCounter;
-    spaceRemaining = 0;
+    else if (spaceRemaining > 0 && windowCounter == 0) {
+        //add spaceRemaining to filler
+        //fillFiller(space, wall, start);
+        //spaceRemaining = 0;
+    }
+    else {
+        finalWindowSize = space / windowCounter;
+        spaceRemaining = 0;
+    }
 
     alert("Sizes: " + finalWindowSize + ", NumberOfWindows: " + windowCounter + ", Filler Remaining: " + spaceRemaining);
 
