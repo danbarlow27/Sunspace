@@ -155,12 +155,10 @@ function validateWindowModSize(space/*, size, number, wall, start*/) {
 
     if (spaceRemaining > 0) {
         windowCounter++;
-        finalWindowSize = space / windowCounter;
-        spaceRemaining = 0;
     }
-    else {
-        finalWindowSize = space / windowCounter;
-    }
+
+    finalWindowSize = space / windowCounter;
+    spaceRemaining = 0;
 
     alert("Sizes: " + finalWindowSize + ", NumberOfWindows: " + windowCounter + ", Filler Remaining: " + spaceRemaining);
 
