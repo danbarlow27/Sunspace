@@ -1266,7 +1266,7 @@
         </div>
 
         <%--<asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label>--%>
-        <textarea id="txtErrorMessage" class="txtErrorMessage" disabled="disabled" rows="5">Oh hello, I am an error message.</textarea>
+        <textarea id="txtErrorMessage" class="txtErrorMessage" disabled="disabled" rows="5"></textarea>
     </div>
     
 <script src="Scripts/MiniCanvasFunctions.js"></script>
