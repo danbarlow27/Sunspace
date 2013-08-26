@@ -138,7 +138,6 @@
         var standAlone = false;             //Variable to be set by wizard values
         var gable = true;                  //Variable to hold whether its a gable or not, to come from wizard
 
-
         /**** EVENTS ON LOAD ****/
         //window.onload = setButtonValue(); //load the default text on the "Done" button depending on whether the user chose standAlone or not
 
@@ -149,6 +148,13 @@
         $(document).ready(function () {
             drawGrid(); //Draws the initial grid
             //Set initial text in log section
+            
+            //check if user selected a dealer gable or not
+            if ('<%= gableStyle %>' == "Dealer Gable")
+                gable = true;
+            else
+                gable = false;
+
             if (gable == true)
                 wallType = WALL_TYPE.GABLE;
             else

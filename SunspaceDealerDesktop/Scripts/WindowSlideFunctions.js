@@ -131,37 +131,75 @@ function fillWindowsMods() {
         }
     }
 
-function validateWindowModSize(space, size, number, wall, start) {
+function validateWindowModSize(space/*, size, number, wall, start*/) {
+    var MIN_MOD_WIDTH = 12;
+    var MAX_MOD_WIDTH = 35;
+    var windowCounter = 0;
+    var finalWindowSize = 0;
+    var spaceRemaining = space;
 
-    if (space >= MIN_MOD_WIDTH) {
-        if (size > space) {
-            size = size / 2;
-            validateWindowModSize(space, size, number, wall, start);
+    while (spaceRemaining >= MIN_MOD_WIDTH) {
+        if (spaceRemaining >= MAX_MOD_WIDTH) {
+            spaceRemaining -= MAX_MOD_WIDTH;
+            windowCounter++;
         }
-        else if (size < space) {
-            var tempSize = validateDecimal(size); //make sure the size is 
-            while (tempSize < space) {
-                var multiplier = 1;
-                tempSize = size * multiplier;
-                multiplier++;
-                if (tempSize === space) {
-                    fillMods(tempSize, multiplier, wall, 0, start);
-                }
-                else if (tempSize > space) {
-                    validateWindowModSize(space, tempSize, multiplier, wall, start);
-                }
-                else if ((space - tempSize) <= MIN_MOD_WIDTH) {
-                    fillMods(tempSize, number, wall, space - tempSize, start);
-                }
-            }
+        else if (spaceRemaining < MAX_MOD_WIDTH && spaceRemaining > MIN_MOD_WIDTH) {
+            spaceRemaining = 0;
+            windowCounter++;
         }
-        else { //size === space
-            fillMods(tempSize, multiplier, wall, 0, start);
+        else if (spaceRemaining == MIN_MOD_WIDTH) {
+            spaceRemaining = 0;
+            windowCounter++;
         }
     }
-    else { //space < MIN_MOD_SIZE
-        fillFiller(space, wall, start);
+
+    if (spaceRemaining > 0 && windowCounter > 0) {
+        windowCounter++;
+        finalWindowSize = space / windowCounter;
+        spaceRemaining = 0;
     }
+    else if (spaceRemaining > 0 && windowCounter == 0) {
+        //add spaceRemaining to filler
+        //fillFiller(space, wall, start);
+        //spaceRemaining = 0;
+    }
+    else {
+        finalWindowSize = space / windowCounter;
+        spaceRemaining = 0;
+    }
+
+    alert("Sizes: " + finalWindowSize + ", NumberOfWindows: " + windowCounter + ", Filler Remaining: " + spaceRemaining);
+
+
+    //if (space >= MIN_MOD_WIDTH) {
+    //    if (size > space) {
+    //        size = size / 2;
+    //        validateWindowModSize(space, size, number, wall, start);
+    //    }
+    //    else if (size < space) {
+    //        var tempSize = validateDecimal(size); //make sure the size is 
+    //        while (tempSize < space) {
+    //            var multiplier = 1;
+    //            tempSize = size * multiplier;
+    //            multiplier++;
+    //            if (tempSize === space) {
+    //                fillMods(tempSize, multiplier, wall, 0, start);
+    //            }
+    //            else if (tempSize > space) {
+    //                validateWindowModSize(space, tempSize, multiplier, wall, start);
+    //            }
+    //            else if ((space - tempSize) <= MIN_MOD_WIDTH) {
+    //                fillMods(tempSize, number, wall, space - tempSize, start);
+    //            }
+    //        }
+    //    }
+    //    else { //size === space
+    //        fillMods(tempSize, multiplier, wall, 0, start);
+    //    }
+    //}
+    //else { //space < MIN_MOD_SIZE
+    //    fillFiller(space, wall, start);
+    //}
 }
 
 
