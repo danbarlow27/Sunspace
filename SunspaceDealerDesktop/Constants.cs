@@ -107,14 +107,17 @@ namespace SunspaceDealerDesktop
 
         public const float SPREADER_BAR_SIZE = 1.0f; //width of a spreader bar (does not vary)
 
-        public const float ACRYLIC_PANEL_PROJECTION = 23f;
-        public const float ACRYLIC_PANEL_WIDTH = 2f;
+        public const float ACRYLIC_PANEL_PROJECTION = 276f;
+        public const float ACRYLIC_PANEL_WIDTH = 24f;
 
-        public const float FOAM_PANEL_PROJECTION = 22f;
-        public const float FOAM_PANEL_WIDTH = 4f;
+        public const float FOAM_PANEL_PROJECTION = 264f;
+        public const float FOAM_PANEL_WIDTH = 48f;
 
-        public const float THERMADECK_PANEL_PROJECTION = 24f;
-        public const float THERMADECK_PANEL_WIDTH = 4f;
+        public const float THERMADECK_PANEL_PROJECTION = 288f;
+        public const float THERMADECK_PANEL_WIDTH = 48f;
+
+        public const float SKYLIGHT_PROJECTION = 12f;
+        public const float SKYLIGHT_WIDTH = 12f;
         #endregion
 
         #region Countries, States, Provinces

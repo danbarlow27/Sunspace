@@ -136,12 +136,12 @@ namespace SunspaceDealerDesktop
             string[] newProjectArray = (string[])Session["newProjectArray"];
 
             //Get room projection and width from session and set our roofs projection and width to those
-            double roofProjection = Convert.ToDouble(Session["sunroomProjection"]);
-            double roofWidth = Convert.ToDouble(Session["sunroomWidth"]);
+            float roofProjection = Convert.ToSingle(Session["sunroomProjection"]);
+            float roofWidth = Convert.ToSingle(Session["sunroomWidth"]);
 
             //We also get slope of room, and soffit length
-            double roofSlope = Convert.ToDouble(Session["roofSlope"]);
-            double soffitLength = Convert.ToDouble(Session["soffitLength"]);            
+            float roofSlope = Convert.ToSingle(Session["roofSlope"]);
+            float soffitLength = Convert.ToSingle(Session["soffitLength"]);            
 
             #region Gable System
             //if gable, we need two studio roof systems and additional logic
@@ -151,17 +151,17 @@ namespace SunspaceDealerDesktop
                 if (hidProjection.Value != "")
                 {
                     //However, if its smaller than the room, we need to throw an error
-                    if (Convert.ToDouble(hidProjection.Value) >= roofProjection)
+                    if (Convert.ToSingle(hidProjection.Value) >= roofProjection)
                     {
                         //Since its valid, just set our sizes to the specified
-                        roofProjection = Convert.ToDouble(hidProjection.Value);
-                        roofWidth = Convert.ToDouble(hidWidth.Value);
+                        roofProjection = Convert.ToSingle(hidProjection.Value);
+                        roofWidth = Convert.ToSingle(hidWidth.Value);
                     }
                 }
                 //standalone overhangs are really easy, but since an overhang is not the same axis as the gable roof's projection we need some math
                 else if (Session["isStandalone"].ToString() == "true")
                 {
-                    double overhangAmount = Convert.ToDouble(hidOverhang.Value)*2; //*2 because two sides to each dimension
+                    float overhangAmount = Convert.ToSingle(hidOverhang.Value)*2; //*2 because two sides to each dimension
 
                     roofWidth += overhangAmount;
 
@@ -169,7 +169,7 @@ namespace SunspaceDealerDesktop
                     //giving us 2a^2 = c^2, or below, where overhangAmount is c^2
 
                     //We leave it as 2a as they're both part of the same roof projection
-                    overhangAmount = Math.Sqrt(Math.Pow(overhangAmount, 2));
+                    overhangAmount = (float)Math.Sqrt(Math.Pow(overhangAmount, 2));
                     roofProjection += overhangAmount;
                 }
                 else
@@ -212,8 +212,10 @@ namespace SunspaceDealerDesktop
                 }
 
                 //changeme hardcoded supports to 0
-                Roof aRoof = new Roof("Studio", hidInteriorRoofSkin.Value, hidExteriorRoofSkin.Value, Convert.ToDouble(hidThickness.Value), isFireProtected, isThermadeck, hasGutters, gutterPro, hidGutterColour.Value, hidStripeColour.Value, 0, roofProjection, roofWidth, aModuleList);
+                Roof aRoof = new Roof("Studio", hidInteriorRoofSkin.Value, hidExteriorRoofSkin.Value, Convert.ToSingle(hidThickness.Value), isFireProtected, isThermadeck, hasGutters, gutterPro, hidGutterColour.Value, hidStripeColour.Value, 0, roofProjection, roofWidth, aModuleList);
                 Session.Add("completedRoof", aRoof);
+
+                Response.Redirect("SkylightWizard.aspx");
             }
             #endregion
 
@@ -225,26 +227,26 @@ namespace SunspaceDealerDesktop
                 if (hidProjection.Value != "")
                 {
                     //However, if its smaller than the room, we need to throw an error
-                    if (Convert.ToDouble(hidProjection.Value) >= roofProjection)
+                    if (Convert.ToSingle(hidProjection.Value) >= roofProjection)
                     {
                         //Since its valid, just set our sizes to the specified
-                        roofProjection = Convert.ToDouble(hidProjection.Value);
-                        roofWidth = Convert.ToDouble(hidWidth.Value);
+                        roofProjection = Convert.ToSingle(hidProjection.Value);
+                        roofWidth = Convert.ToSingle(hidWidth.Value);
                     }
                 }
                 //standalone overhangs are really easy, Since roofs are a square, we have 4 sides, so we add one 'overhang' per side. Consequently this is two 'overhangs' to projection and width
                 else if (Session["isStandalone"].ToString() == "true")
                 {
                     //Subtract soffit length as that will be the true start point of the roof
-                    roofProjection -= Convert.ToDouble(Session["soffitLength"]);
+                    roofProjection -= Convert.ToSingle(Session["soffitLength"]);
 
-                    roofProjection += (Convert.ToDouble(hidOverhang.Value) * 2);
-                    roofWidth += (Convert.ToDouble(hidOverhang.Value) * 2);
+                    roofProjection += (Convert.ToSingle(hidOverhang.Value) * 2);
+                    roofWidth += (Convert.ToSingle(hidOverhang.Value) * 2);
                 }
                 else
                 {
                     //Subtract soffit length as that will be the true start point of the roof
-                    roofProjection -= Convert.ToDouble(Session["soffitLength"]);
+                    roofProjection -= Convert.ToSingle(Session["soffitLength"]);
 
                     //N, S will add one overhang to projection each
                     //E, W, will add one overhang to width each
@@ -257,11 +259,11 @@ namespace SunspaceDealerDesktop
                         {
                             if (listOfWalls[i].Orientation == "N" || listOfWalls[i].Orientation == "S")
                             {
-                                roofProjection += Convert.ToDouble(hidOverhang.Value);
+                                roofProjection += Convert.ToSingle(hidOverhang.Value);
                             }
                             else if (listOfWalls[i].Orientation == "E" || listOfWalls[i].Orientation == "W")
                             {
-                                roofWidth += Convert.ToDouble(hidOverhang.Value);
+                                roofWidth += Convert.ToSingle(hidOverhang.Value);
                             }
                             else if (listOfWalls[i].Orientation == "NE")
                             {
@@ -269,12 +271,12 @@ namespace SunspaceDealerDesktop
                                 if (listOfWalls[i + 1].Orientation == "SE")
                                 {
                                     //if NE+SE corner, only add once to width
-                                    roofWidth += Convert.ToDouble(hidOverhang.Value);
+                                    roofWidth += Convert.ToSingle(hidOverhang.Value);
                                 }
                                 if (listOfWalls[i + 1].Orientation == "NW")
                                 {
                                     //if NE+NW corner, only add once to projection
-                                    roofProjection += Convert.ToDouble(hidOverhang.Value);
+                                    roofProjection += Convert.ToSingle(hidOverhang.Value);
                                 }
                             }
                             else if (listOfWalls[i].Orientation == "SE")
@@ -283,12 +285,12 @@ namespace SunspaceDealerDesktop
                                 if (listOfWalls[i + 1].Orientation == "NE")
                                 {
                                     //if NE+SE corner, only add once to width
-                                    roofWidth += Convert.ToDouble(hidOverhang.Value);
+                                    roofWidth += Convert.ToSingle(hidOverhang.Value);
                                 }
                                 if (listOfWalls[i + 1].Orientation == "SW")
                                 {
                                     //if SE+SW corner, only add once to projection
-                                    roofProjection += Convert.ToDouble(hidOverhang.Value);
+                                    roofProjection += Convert.ToSingle(hidOverhang.Value);
                                 }
                             }
                             else if (listOfWalls[i].Orientation == "SW")
@@ -297,12 +299,12 @@ namespace SunspaceDealerDesktop
                                 if (listOfWalls[i + 1].Orientation == "SE")
                                 {
                                     //if SE+SW corner, only add once to projection
-                                    roofProjection += Convert.ToDouble(hidOverhang.Value);
+                                    roofProjection += Convert.ToSingle(hidOverhang.Value);
                                 }
                                 if (listOfWalls[i + 1].Orientation == "NW")
                                 {
                                     //if SW+NW  corner, only add once to width
-                                    roofWidth += Convert.ToDouble(hidOverhang.Value);
+                                    roofWidth += Convert.ToSingle(hidOverhang.Value);
                                 }
                             }
                             else if (listOfWalls[i].Orientation == "NW")
@@ -311,12 +313,12 @@ namespace SunspaceDealerDesktop
                                 if (listOfWalls[i + 1].Orientation == "NE")
                                 {
                                     //if NE+NW corner, only add once to projection
-                                    roofProjection += Convert.ToDouble(hidOverhang.Value);
+                                    roofProjection += Convert.ToSingle(hidOverhang.Value);
                                 }
                                 if (listOfWalls[i + 1].Orientation == "SW")
                                 {
                                     //if SW+NW  corner, only add once to width
-                                    roofWidth += Convert.ToDouble(hidOverhang.Value);
+                                    roofWidth += Convert.ToSingle(hidOverhang.Value);
                                 }
                             }
                         }
@@ -362,19 +364,19 @@ namespace SunspaceDealerDesktop
                 }
 
                 //changeme hardcoded supports to 0
-                Roof aRoof = new Roof("Studio", hidInteriorRoofSkin.Value, hidExteriorRoofSkin.Value, Convert.ToDouble(hidThickness.Value), isFireProtected, isThermadeck, hasGutters, gutterPro, hidGutterColour.Value, hidStripeColour.Value, 0, roofProjection, roofWidth, aModuleList);
+                Roof aRoof = new Roof("Studio", hidInteriorRoofSkin.Value, hidExteriorRoofSkin.Value, Convert.ToSingle(hidThickness.Value), isFireProtected, isThermadeck, hasGutters, gutterPro, hidGutterColour.Value, hidStripeColour.Value, 0, roofProjection, roofWidth, aModuleList);
                 Session.Add("completedRoof", aRoof);
             }
             #endregion
         }
 
-        protected RoofModule buildStudioRoofModule(double roofProjection, double roofWidth)
+        protected RoofModule buildStudioRoofModule(float roofProjection, float roofWidth)
         {
             //Variables that will be used to build the roof
-            double panelWidth;
+            float panelWidth;
             string panelType;
             string panelBeamType;
-            double panelBeamWidth;
+            float panelBeamWidth;
 
             //set PanelBeamType based on the ddlPanelType value: ie I-beam or pressure cap
             if (hidPanelType.Value.Contains("I-Beam"))
@@ -414,7 +416,7 @@ namespace SunspaceDealerDesktop
             }
 
             //build roof objects
-            double numberOfPanels = Math.Ceiling(roofWidth / panelWidth); //If it requires 'part' of a panel, that is essentially another panel, just cut. Cut will be handled later.
+            float numberOfPanels = (float)Math.Ceiling(roofWidth / panelWidth); //If it requires 'part' of a panel, that is essentially another panel, just cut. Cut will be handled later.
 
             //lets start making a list of roof items
             List<RoofItem> itemList = new List<RoofItem>();
@@ -427,7 +429,7 @@ namespace SunspaceDealerDesktop
                 //loop adding seperator then panels, minus one iteration because one panel is already added
                 for (int i = 0; i < (numberOfPanels - 1); i++)
                 {
-                    itemList.Add(new RoofItem(panelBeamType, roofProjection, (double)panelBeamWidth));
+                    itemList.Add(new RoofItem(panelBeamType, roofProjection, (float)panelBeamWidth));
                     itemList.Add(new RoofItem(panelType, roofProjection, panelWidth));
                 }
             }
@@ -439,7 +441,7 @@ namespace SunspaceDealerDesktop
                     itemList.Add(new RoofItem(panelType, roofProjection, panelWidth));
                 }
             }
-            double itemWidthTotal = 0;
+            float itemWidthTotal = 0;
 
             //Total width of items
             for (int i = 0; i < itemList.Count; i++)
@@ -469,13 +471,13 @@ namespace SunspaceDealerDesktop
             return aModule;
         }
 
-        protected List<RoofModule> buildGableRoofModule(double roofProjection, double roofWidth)
+        protected List<RoofModule> buildGableRoofModule(float roofProjection, float roofWidth)
         {
             //Variables that will be used to build the roof
-            double panelWidth;
+            float panelWidth;
             string panelType;
             string panelBeamType;
-            double panelBeamWidth;
+            float panelBeamWidth;
 
             //set PanelBeamType based on the ddlPanelType value: ie I-beam or pressure cap
             if (hidPanelType.Value.Contains("I-Beam"))
@@ -515,7 +517,7 @@ namespace SunspaceDealerDesktop
             }
 
             //build roof objects
-            double numberOfPanels = Math.Ceiling(roofWidth / panelWidth); //If it requires 'part' of a panel, that is essentially another panel, just cut. Cut will be handled later.
+            float numberOfPanels = (float)Math.Ceiling(roofWidth / panelWidth); //If it requires 'part' of a panel, that is essentially another panel, just cut. Cut will be handled later.
                         
             //lets start making a list of roof items
             List<RoofItem> itemList = new List<RoofItem>();
@@ -529,7 +531,7 @@ namespace SunspaceDealerDesktop
                 //loop adding seperator then panels, minus one iteration because one panel is already added
                 for (int i = 0; i < (numberOfPanels - 1); i++)
                 {
-                    itemList.Add(new RoofItem(panelBeamType, roofProjection/2, (double)panelBeamWidth));
+                    itemList.Add(new RoofItem(panelBeamType, roofProjection/2, (float)panelBeamWidth));
                     itemList.Add(new RoofItem(panelType, roofProjection/2, panelWidth));
                 }
             }
@@ -541,7 +543,7 @@ namespace SunspaceDealerDesktop
                     itemList.Add(new RoofItem(panelType, roofProjection/2, panelWidth));
                 }
             }
-            double itemWidthTotal = 0;
+            float itemWidthTotal = 0;
 
             //Total width of items
             for (int i = 0; i < itemList.Count; i++)
