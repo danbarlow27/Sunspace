@@ -251,7 +251,7 @@ namespace SunspaceDealerDesktop
             ddlInchFractions.Items.Add(lst78);
             ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
 
-            lblWallNumber.Text = "Wall " + existingWallCount + " : "; //output wall name/number to the label
+            lblWallNumber.Text = "Existing Wall " + existingWallCount + " : "; //output wall name/number to the label
     
             ddlInchFractions.ID = "ddlWall" + i + "InchFractions"; //give an appropriate id to dropdown list
             lblWallNumber.ID = "lblWall" + i + "Length"; //give an appropriate id to the label
@@ -269,7 +269,7 @@ namespace SunspaceDealerDesktop
             cell2.Controls.Add(txtWallLength); //append the textbox to cell 2
             cell3.Controls.Add(ddlInchFractions); //append the dropdown to cell 3
             
-            //tblExistingWalls.Rows.Add(row); //append the row to the existing walls table
+            tblExistingWalls.Rows.Add(row); //append the row to the existing walls table
 
             //append all the cells to the row
             row.Cells.Add(cell1); 
