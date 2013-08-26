@@ -253,78 +253,25 @@ namespace SunspaceDealerDesktop
                     //NE, NW, SE, SW will add one overhang to projection AND width, each.
                     List<Wall> listOfWalls = (List<Wall>)Session["listOfWalls"];
 
+                    roofProjection += (Convert.ToSingle(hidOverhang.Value) * 2);
+                    roofWidth += (Convert.ToSingle(hidOverhang.Value) * 2);
+
                     for (int i = 0; i < listOfWalls.Count; i++)
                     {
-                        try
+                        if (listOfWalls[i].WallType == "Existing")
                         {
-                            if (listOfWalls[i].Orientation == "N" || listOfWalls[i].Orientation == "S")
+                            if (listOfWalls[i].Orientation == "S")
                             {
-                                roofProjection += Convert.ToSingle(hidOverhang.Value);
+                                roofProjection -= (Convert.ToSingle(hidOverhang.Value));
                             }
-                            else if (listOfWalls[i].Orientation == "E" || listOfWalls[i].Orientation == "W")
+                            else if (listOfWalls[i].Orientation == "E")
                             {
-                                roofWidth += Convert.ToSingle(hidOverhang.Value);
+                                roofWidth -= (Convert.ToSingle(hidOverhang.Value));
                             }
-                            else if (listOfWalls[i].Orientation == "NE")
+                            else if (listOfWalls[i].Orientation == "W")
                             {
-                                //If next wall is angled we need special rules
-                                if (listOfWalls[i + 1].Orientation == "SE")
-                                {
-                                    //if NE+SE corner, only add once to width
-                                    roofWidth += Convert.ToSingle(hidOverhang.Value);
-                                }
-                                if (listOfWalls[i + 1].Orientation == "NW")
-                                {
-                                    //if NE+NW corner, only add once to projection
-                                    roofProjection += Convert.ToSingle(hidOverhang.Value);
-                                }
+                                roofWidth -= (Convert.ToSingle(hidOverhang.Value));
                             }
-                            else if (listOfWalls[i].Orientation == "SE")
-                            {
-                                //If next wall is angled we need special rules
-                                if (listOfWalls[i + 1].Orientation == "NE")
-                                {
-                                    //if NE+SE corner, only add once to width
-                                    roofWidth += Convert.ToSingle(hidOverhang.Value);
-                                }
-                                if (listOfWalls[i + 1].Orientation == "SW")
-                                {
-                                    //if SE+SW corner, only add once to projection
-                                    roofProjection += Convert.ToSingle(hidOverhang.Value);
-                                }
-                            }
-                            else if (listOfWalls[i].Orientation == "SW")
-                            {
-                                //If next wall is angled we need special rules
-                                if (listOfWalls[i + 1].Orientation == "SE")
-                                {
-                                    //if SE+SW corner, only add once to projection
-                                    roofProjection += Convert.ToSingle(hidOverhang.Value);
-                                }
-                                if (listOfWalls[i + 1].Orientation == "NW")
-                                {
-                                    //if SW+NW  corner, only add once to width
-                                    roofWidth += Convert.ToSingle(hidOverhang.Value);
-                                }
-                            }
-                            else if (listOfWalls[i].Orientation == "NW")
-                            {
-                                //If next wall is angled we need special rules
-                                if (listOfWalls[i + 1].Orientation == "NE")
-                                {
-                                    //if NE+NW corner, only add once to projection
-                                    roofProjection += Convert.ToSingle(hidOverhang.Value);
-                                }
-                                if (listOfWalls[i + 1].Orientation == "SW")
-                                {
-                                    //if SW+NW  corner, only add once to width
-                                    roofWidth += Convert.ToSingle(hidOverhang.Value);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-
                         }
                     }
                 }
