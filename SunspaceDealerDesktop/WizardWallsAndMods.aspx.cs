@@ -167,7 +167,7 @@ namespace SunspaceDealerDesktop
             wallDetails = new string[strWalls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
             currentModel = (string)Session["model"];
             soffitLength = (float)Session["soffitLength"];
-            //int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
+            int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
             int displayedWallCount = 0; //used to determine how many proposed walls are in a drawing
 
             //populate the array with all the wall details for each wall
@@ -191,11 +191,11 @@ namespace SunspaceDealerDesktop
             
             for (int i = 1; i <= strWalls.Count(); i++) //for each wall in walls 
             {
-                //if (wallDetails[i - 1, 4] == "E") //wall type is existing
-                //{
-                //    existingWallCount++; //increment the existing wall counter
-                //    //populateTblExisting(i, existingWallCount); //populate the existing walls table on slide 1
-                //}
+                if (wallDetails[i - 1, 4] == "E") //wall type is existing
+                {
+                    existingWallCount++; //increment the existing wall counter
+                    populateTblExisting(i, existingWallCount); //populate the existing walls table on slide 1
+                }
                 //else //wall type is proposed
                 if (wallDetails[i - 1, 4] == "P")
                 {
@@ -225,6 +225,7 @@ namespace SunspaceDealerDesktop
         /// </summary>
         /// <param name="i">index of the given wall, used to give appropriate ID's to input fields</param>
         /// <param name="existingWallCount">used to give appropriate values to the wall name labels</param>
+         */
         protected void populateTblExisting(int i, int existingWallCount)
         {
             TableRow row = new TableRow(); //new table to to be appended to the table with all the appropriate fields in it
@@ -275,7 +276,6 @@ namespace SunspaceDealerDesktop
             row.Cells.Add(cell2);
             row.Cells.Add(cell3);
         }
-         */ 
 
 
         /// <summary>

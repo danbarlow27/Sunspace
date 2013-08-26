@@ -1045,21 +1045,21 @@
                     number of rows in the 2 tables below are added dynamically in the codebehind--%>
                 <div id="tableWallLengths" class="tblWallLengths" runat="server" >
                     <%-- first table for existing walls, only contains input fields for lengths --%>
-                    <%--<asp:Table ID="tblExistingWalls" runat="server">
-                        <asp:TableRow>--%>
+                    <asp:Table ID="tblExistingWalls" runat="server">
+                        <asp:TableRow>
                             <%-- table headings --%>
-                           <%-- <asp:TableHeaderCell >
+                           <asp:TableHeaderCell >
                                 Existing Walls
                             </asp:TableHeaderCell>
                         </asp:TableRow>
                         <asp:TableRow>
-                            <asp:TableCell></asp:TableCell>--%>
+                            <asp:TableCell></asp:TableCell>
                             <%-- column headings --%>
-                            <%--<asp:TableCell ColumnSpan="6" >
+                            <asp:TableCell ColumnSpan="6" >
                                 Length
                             </asp:TableCell>
                         </asp:TableRow>
-                    </asp:Table>--%>
+                    </asp:Table>
                     <%-- end of existing walls table --%>
                     
                     <%-- second table for proposed walls, contains input fields for lengths, as well as left and right fillers --%>

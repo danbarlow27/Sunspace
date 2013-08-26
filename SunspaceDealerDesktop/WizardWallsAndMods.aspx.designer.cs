@@ -31,6 +31,15 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tableWallLengths;
         
         /// <summary>
+        /// tblExistingWalls control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table tblExistingWalls;
+        
+        /// <summary>
         /// tblProposedWalls control.
         /// </summary>
         /// <remarks>
