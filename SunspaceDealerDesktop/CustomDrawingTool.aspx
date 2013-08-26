@@ -33,6 +33,9 @@
         <!--Div tag to hold canvas/grid buttons-->
         <div id="buttons" style="width:20%; text-align:center; float:left; margin-right: 20px;">
             <ul>
+                <!--Radio Button for standalone or not-->
+                <li></li>
+
                 <!--Undo button to undo the last line drawn-->
                 <li><input class="btnSubmit" type="button" value ="Undo" onclick="undo(true)" style="width:150px"/></li>
 

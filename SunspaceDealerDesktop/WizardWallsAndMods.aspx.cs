@@ -162,7 +162,7 @@ namespace SunspaceDealerDesktop
             //GABLE EXAMPLE BELOW
             Session["coordList"] = "200,275,300,300,G,S/100,375,150,150,E,S/100,100,150,300,P,W/100,200,300,300,P,S/275,375,300,300,P,S/375,375,300,150,P,E/";
             /**********************************************************/
-            coordList = (string)Session["coordList"]; //get the string from the session and store it in a local variable for further use                                    
+            coordList = (string)Session["lineInfo"]; //get the string from the session and store it in a local variable for further use                                    
             strWalls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
             wallDetails = new string[strWalls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
             currentModel = (string)Session["model"];
