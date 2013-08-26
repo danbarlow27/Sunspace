@@ -50,7 +50,7 @@
 
         var gable = '<%= Session["isGable"] %>';
 
-        var detailsOfAllLines = '<%= (string)Session["coordList"] %>'; //all the coordinates and details of all the lines, coming from the session
+        var detailsOfAllLines = '<%= (string)Session["lineInfo"] %>'; //all the coordinates and details of all the lines, coming from the session
         var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/"); //a list of individual lines and their coordinates and details 
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
         for (var i = 0; i < lineList.length; i++) 
