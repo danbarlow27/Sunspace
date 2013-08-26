@@ -218,6 +218,7 @@
     <Content Include="RoofWizard.aspx" />
     <Content Include="Scripts\DoorSlideFunctions.js" />
     <Content Include="Scripts\MiniCanvasFunctions.js" />
+    <Content Include="Scripts\WindowSlideFunctions.js" />
     <Content Include="SkylightWizard.aspx" />
     <Content Include="Spoof.aspx" />
     <Content Include="WizardFloors.aspx" />

@@ -14,19 +14,39 @@
                 document.getElementById('<%=hidSystem.ClientID%>').value = "Traditional";
                 document.getElementById('<%=hidThickness.ClientID%>').value = $('#<%=ddlThickness.ClientID%>').val();
                 document.getElementById('<%=hidAcrylicColour.ClientID%>').value = "";
+                document.getElementById('<%=hidStripeColour.ClientID%>').value = $('#<%=ddlThickness.ClientID%>').val();
                 $('#<%=btnQuestion2.ClientID%>').show();
                 $('#<%=btnQuestion2SkipNext.ClientID%>').hide();
             }
-            else {
+            else if ($('#<%=radAcrylic.ClientID%>').is(':checked')) {
                 document.getElementById('<%=hidSystem.ClientID%>').value = "Acrylic";
                 document.getElementById('<%=hidAcrylicColour.ClientID%>').value = $('#<%=ddlAcrylicColour.ClientID%>').val();
-                document.getElementById('<%=hidThickness.ClientID%>').value = "";
+                document.getElementById('<%=hidThickness.ClientID%>').value = $('#<%=ddlAcrylicThickness.ClientID%>').val();
+                $('#<%=btnQuestion2.ClientID%>').hide();
+                $('#<%=btnQuestion2SkipNext.ClientID%>').show();
+            }
+            else {
+                document.getElementById('<%=hidSystem.ClientID%>').value = "Thermadeck";
+                document.getElementById('<%=hidAcrylicColour.ClientID%>').value = "";
+                document.getElementById('<%=hidThickness.ClientID%>').value = $('#<%=ddlThermadeckThickness.ClientID%>').val();
                 $('#<%=btnQuestion2.ClientID%>').hide();
                 $('#<%=btnQuestion2SkipNext.ClientID%>').show();
             }
         }
 
         function roofWizardCheckQuestion2() {
+            var maxProjection;
+
+            if ($('#<%=radTraditional.ClientID%>').is(':checked')) {
+                maxProjection = <%= FOAM_PANEL_PROJECTION %>;
+            }
+            else if ($('#<%=radAcrylic.ClientID%>').is(':checked')) {
+                maxProjection = <%= ACRYLIC_PANEL_PROJECTION %>;
+            }
+            else {
+                maxProjection = <%= THERMADECK_PANEL_PROJECTION %>;
+            }
+
             if ($('#<%=radManualYes.ClientID%>').is(':checked')) {
                 if ($('#<%=txtProjection.ClientID%>').val() == "") {
                     //please enter a valid number
@@ -34,6 +54,12 @@
                     document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
                 }
                 else if (isNaN($('#<%=txtProjection.ClientID%>').val())) {
+                    //please enter a valid number
+                    document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
+                    document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
+                }
+                else if ($('#<%=txtProjection.ClientID%>').val() <=0 || $('#<%=txtProjection.ClientID%>').val() > maxProjection)
+                {                    
                     //please enter a valid number
                     document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
                     document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
@@ -52,32 +78,32 @@
                     document.getElementById('<%=btnQuestion2.ClientID%>').disabled = false;
                     document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = false;
                 }
-            }
-            else {
-                if ($('#<%=txtOverhangLength.ClientID%>').val() == "") {
+}
+else {
+    if ($('#<%=txtOverhangLength.ClientID%>').val() == "") {
                     //please enter a valid number
                     document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
-                    document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
-                }
-                else if (isNaN($('#<%=txtOverhangLength.ClientID%>').val())) {
-                    //please enter a valid number
-                    document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
+        document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
+    }
+    else if (isNaN($('#<%=txtOverhangLength.ClientID%>').val())) {
+        //please enter a valid number
+        document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
                     document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
                 }
                 else {
                     document.getElementById('<%=btnQuestion2.ClientID%>').disabled = false;
                     document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = false;
                 }
-            }
+        }
 
-            document.getElementById("<%=hidProjection.ClientID%>").value = $('#<%=txtProjection.ClientID%>').val();
+        document.getElementById("<%=hidProjection.ClientID%>").value = $('#<%=txtProjection.ClientID%>').val();
             document.getElementById("<%=hidWidth.ClientID%>").value = $('#<%=txtWidth.ClientID%>').val();
             document.getElementById("<%=hidOverhang.ClientID%>").value = $('#<%=txtOverhangLength.ClientID%>').val();
         }
 
         function roofWizardCheckQuestion3() {
             //move to hidden interior/exterior
-            document.getElementById("<%=hidExtrusionType.ClientID%>").value = $('#<%=ddlExtrusionType.ClientID%>').val();
+            document.getElementById("<%=hidPanelType.ClientID%>").value = $('#<%=ddlPanelType.ClientID%>').val();
             document.getElementById("<%=hidInteriorRoofSkin.ClientID%>").value = $('#<%=ddlInteriorRoofSkin.ClientID%>').val();
             document.getElementById("<%=hidExteriorRoofSkin.ClientID%>").value = $('#<%=ddlExteriorRoofSkin.ClientID%>').val();
         }
@@ -105,6 +131,8 @@
             else {
                 document.getElementById("<%=hidGutterPro.ClientID%>").value = "No";
             }
+            
+            document.getElementById("<%=hidGutterPro.ClientID%>").value = $('#<%=ddlExtraDownspouts.ClientID%>').val();
         }
     </script>
 
@@ -133,6 +161,10 @@
                                     <asp:Label ID="lblThickness" runat="server" Text="Panel Thickness:"></asp:Label>
                                     <asp:DropDownList ID="ddlThickness" runat="server" OnChange="roofWizardCheckQuestion1()"></asp:DropDownList>
                                 </li>
+                                <li>
+                                    <asp:Label ID="lblStripeColour" runat="server" Text="Stripe Colour:"></asp:Label>
+                                    <asp:DropDownList ID="ddlStripeColour" runat="server" OnChange="roofWizardCheckQuestion1()"></asp:DropDownList>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -145,8 +177,32 @@
                         <div class="toggleContent">
                             <ul>
                                 <li>
+                                    <asp:Label ID="lblAcrylicThickness" runat="server" Text="Panel Thickness:"></asp:Label>
+                                    <asp:DropDownList ID="ddlAcrylicThickness" runat="server" OnChange="roofWizardCheckQuestion1()"></asp:DropDownList>
+                                </li>
+                                <li>
                                     <asp:Label ID="lblAcrylicColour" runat="server" Text="Acrylic Colour:"></asp:Label>
                                     <asp:DropDownList ID="ddlAcrylicColour" runat="server" OnChange ="roofWizardCheckQuestion1()"></asp:DropDownList>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <asp:RadioButton ID="radThermadeck" GroupName="question1" runat="server" OnClick="roofWizardCheckQuestion1()" />
+                        <asp:Label ID="lblThermadeckRadio" AssociatedControlID="radThermadeck" runat="server"></asp:Label>
+                        <asp:Label ID="lblThermadeck" AssociatedControlID="radThermadeck" runat="server" Text="Thermadeck System"></asp:Label>
+
+                        <%--Thermadeck-only options --%>
+                        <div class="toggleContent">
+                            <ul>
+                                <li>
+                                    <asp:CheckBox ID="chkBarrier" runat="server" OnClick="roofWizardCheckQuestion1()" />
+                                    <asp:Label ID="lblBarrierCheck" runat="server" AssociatedControlID="chkBarrier"></asp:Label>
+                                    <asp:Label ID="lblBarrier" runat="server" AssociatedControlID="chkBarrier" Text="Metal Vapour Barrier" ToolTip="A metal vapour barrier in a thermadeck system has increased fire protection."></asp:Label>
+                                </li>
+                                <li>
+                                    <asp:Label ID="lblThermadeckThickness" runat="server" Text="Panel Thickness:"></asp:Label>
+                                    <asp:DropDownList ID="ddlThermadeckThickness" runat="server" OnChange="roofWizardCheckQuestion1()"></asp:DropDownList>
                                 </li>
                             </ul>
                         </div>
@@ -176,10 +232,10 @@
                                     <asp:Label ID="lblCustomDimensionWarning" runat="server" Text="If you would like an overhang, please include that in your dimensions."></asp:Label>
                                     <br /><br />
                                     <asp:Label ID="lblProjection" runat="server" Text="Projection:" ToolTip="In a studio roof system, projection is the length of the roof along the slope. That is, from the highest point to the lowest point of the roof, is the projection.  In a gable system, it is from the low point, to the peak, to the opposite side's low point."></asp:Label>
-                                    <asp:TextBox ID="txtProjection" runat="server" onkeyup="roofWizardCheckQuestion1()"></asp:TextBox>
+                                    <asp:TextBox ID="txtProjection" runat="server" onkeyup="roofWizardCheckQuestion2()"></asp:TextBox>
                                     <br /><br />
                                     <asp:Label ID="lblWidth" runat="server" Text="Width:" ToolTip="The width of the roof is the dimension that is perpendicular to projection. On a studio system, it is along either top or bottom, while on a gable it is across bottom distances and peak distance, all equal."></asp:Label>
-                                    <asp:TextBox ID="txtWidth" runat="server" onkeyup="roofWizardCheckQuestion1()"></asp:TextBox>
+                                    <asp:TextBox ID="txtWidth" runat="server" onkeyup="roofWizardCheckQuestion2()"></asp:TextBox>
                                 </li>
                             </ul>
                         </div>
@@ -215,8 +271,8 @@
 
                 <ul class="toggleOptions">
                     <li>
-                        <asp:Label ID="lblExtrusionType" runat="server" Text="Extrusion Type:"></asp:Label>
-                        <asp:DropDownList ID="ddlExtrusionType" runat="server" OnChange="roofWizardCheckQuestion3()"></asp:DropDownList>
+                        <asp:Label ID="lblPanelType" runat="server" Text="Panel Type:"></asp:Label>
+                        <asp:DropDownList ID="ddlPanelType" runat="server" OnChange="roofWizardCheckQuestion3()"></asp:DropDownList>
                     </li>
                     <li>
                         <asp:Label ID="lblInteriorRoofSkin" runat="server" Text="Interior Skin:"></asp:Label>
@@ -251,14 +307,18 @@
                         <div class="toggleContent">
                             <ul>
                                 <li>
-                                    <asp:CheckBox ID="chkGutterRemove" runat="server" OnClick="roofWizardCheckQuestion4()" ToolTip="If checked, this will make the gutter inclusive in current roof dimensions, removing from overhang, rather than adding the dimensions of the gutter." />
-                                    <asp:Label ID="lblGutterRemoveCheck" AssociatedControlID="chkGutterRemove" runat="server"></asp:Label>
-                                    <asp:Label ID="lblGutterRemove" AssociatedControlID="chkGutterRemove" runat="server" Text="Remove from overhang to fit"></asp:Label>
+                                    <asp:CheckBox ID="chkGutterRemove" runat="server" OnClick="roofWizardCheckQuestion4()" />
+                                    <asp:Label ID="lblGutterRemoveCheck" AssociatedControlID="chkGutterRemove" runat="server" ></asp:Label>
+                                    <asp:Label ID="lblGutterRemove" AssociatedControlID="chkGutterRemove" runat="server" Text="Build into overhang" ToolTip="If checked, this will make the gutter inclusive in current roof dimensions, removing from overhang, rather than adding the dimensions of the gutter."></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:CheckBox ID="chkGutterPro" runat="server" OnClick="roofWizardCheckQuestion4()" ToolTip="GutterPro is an addition to the gutter with the intent to keep out leaves and other blockage"/>
+                                    <asp:CheckBox ID="chkGutterPro" runat="server" OnClick="roofWizardCheckQuestion4()" />
                                     <asp:Label ID="lblGutterProCheck" AssociatedControlID="chkGutterPro" runat="server"></asp:Label>
-                                    <asp:Label ID="lblGutterPro" AssociatedControlID="chkGutterPro" runat="server" Text="Gutter pro gutters"></asp:Label>
+                                    <asp:Label ID="lblGutterPro" AssociatedControlID="chkGutterPro" runat="server" Text="Gutter pro gutters" ToolTip="GutterPro is an addition to the gutter with the intent to keep out leaves and other blockage" ></asp:Label>
+                                </li>
+                                <li>
+                                    <asp:Label ID="lblExtraDownspouts" runat="server" Text="Extra downspouts:"></asp:Label>
+                                    <asp:DropDownList ID="ddlExtraDownspouts" runat="server" OnChange="roofWizardCheckQuestion4()" />
                                 </li>
                             </ul>
                         </div>
@@ -278,12 +338,13 @@
     <input id="hidSystem" type="hidden" runat="server" />
     <input id="hidThickness" type="hidden" runat="server" />
     <input id="hidAcrylicColour" type="hidden" runat="server" />
+    <input id="hidStripeColour" type="hidden" runat="server" />
 
     <input id="hidProjection" type="hidden" runat="server" />
     <input id="hidWidth" type="hidden" runat="server" />
     <input id="hidOverhang" type="hidden" runat="server" />
     
-    <input id="hidExtrusionType" type="hidden" runat="server" />
+    <input id="hidPanelType" type="hidden" runat="server" />
     <input id="hidInteriorRoofSkin" type="hidden" runat="server" />
     <input id="hidExteriorRoofSkin" type="hidden" runat="server" />
     
@@ -291,4 +352,5 @@
     <input id="hidGutterPresence" type="hidden" runat="server" />
     <input id="hidGutterRemove" type="hidden" runat="server" />
     <input id="hidGutterPro" type="hidden" runat="server" />
+    <input id="hidExtraDownspouts" type="hidden" runat="server" />
 </asp:Content>

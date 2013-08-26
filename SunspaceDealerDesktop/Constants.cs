@@ -76,6 +76,8 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_300_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
         public static string[] MODEL_400_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
 
+        public static string[] FASCIA_STRIPE_COLOUR = { "No Stripe", "Test1", "Test2"};
+
         public static string[] SCREEN_TYPES = { "No Screen", "Better Vue Insect Screen (Default)", "No See Ums 20 x 20 Mesh", "Solar Insect Screening", "Tuff Screen" };
 
         public static string[] ACRYLIC_COLOUR = { "Clear", "Bronze", "Solar Cool White", "Heat Stop Cool Blue" };
@@ -94,6 +96,9 @@ namespace SunspaceDealerDesktop
         public const int PATIO_DOOR_MIN_HEIGHT = 72;    //6'
         public const int PATIO_DOOR_MAX_HEIGHT = 96;    //8'
 
+        public const float MODEL_100_200_300_TRANSOM_MINIMUM_SIZE = 4.125f;
+        public const float MODEL_400_TRANSOM_MINIMUM_SIZE = 5.125f;
+
         public const float SOFT_MIN_WINDOW_SIZE = 30.0F; //Minimum size of a window (soft)
         public const float SOFT_MAX_WINDOW_SIZE = 58.0F; //Maximum size of a window (soft)
 
@@ -101,6 +106,18 @@ namespace SunspaceDealerDesktop
         public const float SOFT_MAX_MOD_SIZE = 84.0f; //Maximum size of a mod (soft)
 
         public const float SPREADER_BAR_SIZE = 1.0f; //width of a spreader bar (does not vary)
+
+        public const float ACRYLIC_PANEL_PROJECTION = 276f;
+        public const float ACRYLIC_PANEL_WIDTH = 24f;
+
+        public const float FOAM_PANEL_PROJECTION = 264f;
+        public const float FOAM_PANEL_WIDTH = 48f;
+
+        public const float THERMADECK_PANEL_PROJECTION = 288f;
+        public const float THERMADECK_PANEL_WIDTH = 48f;
+
+        public const float SKYLIGHT_PROJECTION = 12f;
+        public const float SKYLIGHT_WIDTH = 12f;
         #endregion
 
         #region Countries, States, Provinces
@@ -224,8 +241,9 @@ namespace SunspaceDealerDesktop
         public static string[] DOOR_MODEL_200_STYLES = { "Vertical Four Track", "Full View", "Full View Colonial" };
         public static string[] DOOR_MODEL_300_STYLES = { "Full View", "Full View Colonial" };
         public static string[] DOOR_MODEL_400_STYLES = { "Half Lite", "Half Lite Venting", "Half Lite with Mini Blinds", "Full View with Mini Blinds" };
-        public static string[] DOOR_MODEL_100_PATIO_STYLES = { "Screen", "Glass" };
-        public static string[] DOOR_MODEL_200_300_400_PATIO_STYLES = { "Glass" };
+        public static string[] DOOR_MODEL_100_PATIO_STYLES = { "Aluminum Storm Screen", "Aluminum Storm Glass" };
+        public static string[] DOOR_MODEL_200_300_PATIO_STYLES = { "Aluminum Storm Glass" };
+        public static string[] DOOR_MODEL_400_PATIO_STYLES = { "Vinyl Guard" };
 
         public static string[] DOOR_GLASS_TINTS = { "Grey", "Bronze", "Clear" };
 
@@ -264,9 +282,158 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_300_WINDOW_TYPES = { "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
         public static string[] MODEL_400_WINDOW_TYPES = { "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
 
+        #region MIN_WIDTH_BUILDABLE
+        public static float V4T_2V_MIN_WIDTH_BUILDABLE = 12.0F;
+        public static float V4T_3V_MIN_WIDTH_BUILDABLE = 12.0F;
+        public static float V4T_4V_MIN_WIDTH_BUILDABLE = 12.0F;
+        public static float HORIZONTAL_ROLLER_MIN_WIDTH_BUILDABLE = 18.0F;
+        public static float VINYL_LITE_MIN_WIDTH_BUILDABLE = 4.125F;
+        public static float VINYL_TRAP_MIN_WIDTH_BUILDABLE = 4.125F;
 
-        public static float MIN_WINDOW_WIDTH = 30.0F; //NEED TO DOUBLE CHECK THIS VALUE
-        public static float MAX_WINDOW_WIDTH = 58.0F; //NEED TO DOUBLE CHECK THIS VALUE
+        public static float DOUBLE_SLIDER_MIN_WIDTH_BUILDABLE = 24.0F;
+        public static float DOUBLE_SLIDER_LITE_MIN_WIDTH_BUILDABLE = 5.125F;
+        public static float DOUBLE_SLIDER_TRAP_MIN_WIDTH_BUILDABLE = 5.125F;
+
+        public static float SINGLE_SLIDER_MIN_WIDTH_BUILDABLE = 24.0F;
+        public static float SINGLE_SLIDER_LITE_MIN_WIDTH_BUILDABLE = 8.0F;
+        public static float SINGLE_SLIDER_TRAP_MIN_WIDTH_BUILDABLE = 8.0F;
+
+        public static float SCREEN_MIN_WIDTH_BUILDABLE = 4.125F;
+        #endregion
+        #region MIN_WIDTH_WARRANTY
+        public static float V4T_2V_MIN_WIDTH_WARRANTY = 24.0F;
+        public static float V4T_3V_MIN_WIDTH_WARRANTY = 24.0F;
+        public static float V4T_4V_MIN_WIDTH_WARRANTY = 24.0F;
+        public static float HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY = 24.0F;
+        public static float VINYL_LITE_MIN_WIDTH_WARRANTY = 4.125F;
+        public static float VINYL_TRAP_MIN_WIDTH_WARRANTY = 4.125F;
+
+        public static float DOUBLE_SLIDER_MIN_WIDTH_WARRANTY = 24.0F;
+        public static float DOUBLE_SLIDER_LITE_MIN_WIDTH_WARRANTY = 5.125F;
+        public static float DOUBLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY = 5.125F;
+
+        public static float SINGLE_SLIDER_MIN_WIDTH_WARRANTY = 24.0F;
+        public static float SINGLE_SLIDER_LITE_MIN_WIDTH_WARRANTY = 8.0F;
+        public static float SINGLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY = 8.0F;
+
+        public static float SCREEN_MIN_WIDTH_WARRANTY = 4.125F;
+        #endregion
+        #region MAX_WIDTH_BUILDABLE
+        public static float V4T_2V_MAX_WIDTH_BUILDABLE = 66.0F;
+        public static float V4T_3V_MAX_WIDTH_BUILDABLE = 66.0F;
+        public static float V4T_4V_MAX_WIDTH_BUILDABLE = 66.0F;
+        public static float HORIZONTAL_ROLLER_MAX_WIDTH_BUILDABLE = 192.0F;
+        public static float VINYL_LITE_MAX_WIDTH_BUILDABLE = 192.0F;
+        public static float VINYL_TRAP_MAX_WIDTH_BUILDABLE = 192.0F;
+
+        public static float DOUBLE_SLIDER_MAX_WIDTH_BUILDABLE = 72.0F;
+        public static float DOUBLE_SLIDER_LITE_MAX_WIDTH_BUILDABLE = 96.0F;
+        public static float DOUBLE_SLIDER_TRAP_MAX_WIDTH_BUILDABLE = 96.0F;
+
+        public static float SINGLE_SLIDER_MAX_WIDTH_BUILDABLE = 66.0F;
+        public static float SINGLE_SLIDER_LITE_MAX_WIDTH_BUILDABLE = 96.0F;
+        public static float SINGLE_SLIDER_TRAP_MAX_WIDTH_BUILDABLE = 96.0F;
+
+        public static float SCREEN_MAX_WIDTH_BUILDABLE = 96.0F;
+        #endregion
+        #region MAX_WIDTH_WARRANTY
+        public static float V4T_2V_MAX_WIDTH_WARRANTY = 54.0F;
+        public static float V4T_3V_MAX_WIDTH_WARRANTY = 54.0F;
+        public static float V4T_4V_MAX_WIDTH_WARRANTY = 54.0F;
+        public static float HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY = 114.0F;
+        public static float VINYL_LITE_MAX_WIDTH_WARRANTY = 114.0F;
+        public static float VINYL_TRAP_MAX_WIDTH_WARRANTY = 102.0F;
+
+        public static float DOUBLE_SLIDER_MAX_WIDTH_WARRANTY = 78.0F;
+        public static float DOUBLE_SLIDER_LITE_MAX_WIDTH_WARRANTY = 96.0F;
+        public static float DOUBLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY = 96.0F;
+
+        public static float SINGLE_SLIDER_MAX_WIDTH_WARRANTY = 66.0F;
+        public static float SINGLE_SLIDER_LITE_MAX_WIDTH_WARRANTY = 96.0F;
+        public static float SINGLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY = 96.0F;
+
+        public static float SCREEN_MAX_WIDTH_WARRANTY = 84.0F;
+        #endregion
+
+        #region MIN_HEIGHT_BUILDABLE
+        public static float V4T_2V_MIN_HEIGHT_BUILDABLE = 18.0F;
+        public static float V4T_3V_MIN_HEIGHT_BUILDABLE = 18.0F;
+        public static float V4T_4V_MIN_HEIGHT_BUILDABLE = 44.0F;
+        public static float HORIZONTAL_ROLLER_MIN_HEIGHT_BUILDABLE = 18.0F;
+        public static float VINYL_LITE_MIN_HEIGHT_BUILDABLE = 4.125F;
+        public static float VINYL_TRAP_MIN_HEIGHT_BUILDABLE = 4.125F;
+
+        public static float DOUBLE_SLIDER_MIN_HEIGHT_BUILDABLE = 18.0F;
+        public static float DOUBLE_SLIDER_LITE_MIN_HEIGHT_BUILDABLE = 6.5F;
+        public static float DOUBLE_SLIDER_TRAP_MIN_HEIGHT_BUILDABLE = 4.125F;
+
+        public static float SINGLE_SLIDER_MIN_HEIGHT_BUILDABLE = 12.0F;
+        public static float SINGLE_SLIDER_LITE_MIN_HEIGHT_BUILDABLE = 8.0F;
+        public static float SINGLE_SLIDER_TRAP_MIN_HEIGHT_BUILDABLE = 8.0F;
+
+        public static float SCREEN_MIN_HEIGHT_BUILDABLE = 4.125F;
+        #endregion
+        #region MIN_HEIGHT_WARRANTY
+        public static float V4T_2V_MIN_HEIGHT_WARRANTY = 36.0F;
+        public static float V4T_3V_MIN_HEIGHT_WARRANTY = 44.0F;
+        public static float V4T_4V_MIN_HEIGHT_WARRANTY = 56.0F; 
+        public static float HORIZONTAL_ROLLER_MIN_HEIGHT_WARRANTY = 24.0F; 
+        public static float VINYL_LITE_MIN_HEIGHT_WARRANTY = 4.125F;
+        public static float VINYL_TRAP_MIN_HEIGHT_WARRANTY = 4.125F;
+
+        public static float DOUBLE_SLIDER_MIN_HEIGHT_WARRANTY = 24.0F;
+        public static float DOUBLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY = 6.5F;
+        public static float DOUBLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY = 4.125F;
+
+        public static float SINGLE_SLIDER_MIN_HEIGHT_WARRANTY = 30.0F;
+        public static float SINGLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY = 8.0F;
+        public static float SINGLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY = 8.0F;
+
+        public static float SCREEN_MIN_HEIGHT_WARRANTY = 4.125F;
+        #endregion
+        #region MAX_HEIGHT_BUILDABLE
+        public static float V4T_2V_MAX_HEIGHT_BUILDABLE = 114.0F;
+        public static float V4T_3V_MAX_HEIGHT_BUILDABLE = 114.0F;
+        public static float V4T_4V_MAX_HEIGHT_BUILDABLE = 114.0F;
+        public static float HORIZONTAL_ROLLER_MAX_HEIGHT_BUILDABLE = 108.0F; 
+        public static float VINYL_LITE_MAX_HEIGHT_BUILDABLE = 114.0F;
+        public static float VINYL_TRAP_MAX_HEIGHT_BUILDABLE = 78.0F; 
+
+        public static float DOUBLE_SLIDER_MAX_HEIGHT_BUILDABLE = 78.0F;
+        public static float DOUBLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE = 84.0F;
+        public static float DOUBLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE = 72.0F; 
+
+        public static float SINGLE_SLIDER_MAX_HEIGHT_BUILDABLE = 72.0F; 
+        public static float SINGLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE = 72.0F; 
+        public static float SINGLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE = 72.0F; 
+
+        public static float SCREEN_MAX_HEIGHT_BUILDABLE = 96.0F;
+        #endregion
+        #region MAX_HEIGHT_WARRANTY
+        public static float V4T_2V_MAX_HEIGHT_WARRANTY = 102.0F;
+        public static float V4T_3V_MAX_HEIGHT_WARRANTY = 102.0F;
+        public static float V4T_4V_MAX_HEIGHT_WARRANTY = 102.0F;
+        public static float HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY = 114.0F;
+        public static float VINYL_LITE_MAX_HEIGHT_WARRANTY = 114.0F;
+        public static float VINYL_TRAP_MAX_HEIGHT_WARRANTY = 78.0F;
+
+        public static float DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY = 78.0F;
+        public static float DOUBLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY = 72.0F;
+        public static float DOUBLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY = 72.0F;
+
+        public static float SINGLE_SLIDER_MAX_HEIGHT_WARRANTY = 66.0F;
+        public static float SINGLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY = 60.0F;
+        public static float SINGLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY = 72.0F;
+
+        public static float SCREEN_MAX_HEIGHT_WARRANTY = 84.0F;
+        #endregion
+
+        #region SPREADER_BAR_NEEDED
+        public static float V4T_SPREADER_BAR_NEEDED = 36.0F;
+        public static float HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED = 54.0F;
+        
+        #endregion
+
         #endregion
 
         #region Sunshades
@@ -285,11 +452,19 @@ namespace SunspaceDealerDesktop
                                                "White Cedar Aluminum Woodgrain", "White Cedar Forestex", "White Rigiwall Pebble",
                                                "Driftwood Rigiwall Pebble", "White Rigiwall Stucco", "Driftwood Rigiwall Stucco", "OSB",
                                                "White FRP (Interior Only)", "Driftwood FRP (Interior Only)", "Bronze FRP (Interior Only)"};
-        public static string[] ROOF_THICKNESSES = { "3", "4", "6" };
+
+        public static string[] ROOF_TRADITIONAL_THICKNESSES = { "3", "4", "6" };
+        public static string[] ROOF_THERMADECK_THICKNESSES = { "4.5", "6.5", "8.25" };
+        public static string[] ROOF_ACRYLIC_THICKNESSES = { "1.5" };
+
         public static string[] ROOF_EXTRUSION_TYPE = { "I-Beam", "I-Beam FP", "I-Beam OSB", "I-Beam OSB/OSB", "Pressure Cap", "Pressure Cap FP", "Pressure Cap OSB", "Pressure Cap OSB/OSB" };
+        public const float ROOF_IBEAM_WIDTH = 0.5f;
+        public const float ROOF_PRESSURECAP_WIDTH = 0.625f;
         #endregion
 
         #region Floors
+        public static string[] FLOOR_TYPES = { "Thermadeck", "Alumadeck" };
+
         public static string[] FLOOR_THICKNESSES = { "4.5", "6.5", "8.25" };            
         #endregion
 

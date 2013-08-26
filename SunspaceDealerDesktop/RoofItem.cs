@@ -9,8 +9,8 @@ namespace SunspaceDealerDesktop
     {
         #region Attributes
         private string itemType; //Receiver, Awning Track, I-Beam, Pressure Cap I-Beam, Foam Panel, Acrylic Panel, T-Bar
-        private double projection;
-        private double width;
+        private float projection;
+        private float width;
         #endregion
 
         #region Constructors
@@ -21,7 +21,7 @@ namespace SunspaceDealerDesktop
             Width = 0;
         }
 
-        public RoofItem(string sentItemType, double sentProjection, double sentWidth)
+        public RoofItem(string sentItemType, float sentProjection, float sentWidth)
         {
             ItemType = sentItemType;
             Projection = sentProjection;
@@ -44,7 +44,7 @@ namespace SunspaceDealerDesktop
                 itemType = value;
             }
         }
-        public double Projection
+        public float Projection
         {
             get
             {
@@ -55,7 +55,7 @@ namespace SunspaceDealerDesktop
                 projection = value;
             }
         }
-        public double Width
+        public float Width
         {
             get
             {

@@ -601,7 +601,7 @@
             //Like above, types are based on model, and will get the proper variable based on model
             switch (modelNumber.value) {
                 case '100':
-                    var anArray =  <%= model100TransomTypesJ %>;
+                    var anArray = <%= model100TransomTypesJ %>;
 
                     for (var i=0;i<anArray.length;i++)
                     {

@@ -42,7 +42,7 @@ var errorMessageArea;
 
 //Setting the appropriate value to errorMessageArea when the document is ready (or loaded)
 $(document).ready(function () {
-    errorMessageArea = document.getElementById('MainContent_lblErrorMessage');
+    errorMessageArea = document.getElementById('txtErrorMessage');
 });
 
 /******************************************CONSTRUCTORS AND PROTOTYPES******************************************/
@@ -56,8 +56,11 @@ Array.prototype.insert = function (index, item) {
     this.splice(index, 0, item);
 };
 
+
+
 //Framed Door holds all common information for doors
 function FramedDoor() {
+    this.typeMod = "Door";
     this.type = null;           //Cabana, French, Patio, Open Space (No Door)
     this.style = null;          //Full Screen, Vertical Four Track, Full View, Full View Colonial, Half Lite, Half Lite Venting, Full Lite, Half Lite With Mini Blinds, Full View With Mini Blinds
     this.screenOptions = null;  //Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screen, Tuff Screen, No Screen
@@ -66,10 +69,9 @@ function FramedDoor() {
     this.colour = null;          //White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey
     this.position = null;       //Left, Center, Right, Custom
     this.boxHeader = null;      //Left, Right, Both, None
-    this.transom = null;        //Vinyl, Glass, Solid
-    this.transomVinyl = null;   //Vinyl Tints: Clear, Smoke Grey, Dark Grey, Bronze, Mixed 
-    this.transomGlass = null;   //Glass Tints: Grey, Bronze
 }
+
+FramedDoor.prototype = new Mods();
 
 //Constructor to hold cabana door specific information
 function CabanaDoor() {
@@ -151,8 +153,8 @@ function addDoor(wallNumber, type) {
         return;
     }
 
-    //Call to insertDoor to place the valid door in its respective place
-    insertDoor(door, walls[wallNumber]);
+    //Call to insertMod to place the valid door in its respective place
+    insertMod(door, walls[wallNumber]);
 
     //Display appropriate message and controls within the pager
     updateDoorPager(walls[wallNumber]);
@@ -265,9 +267,6 @@ function createDoorObject(wallNumber, type) {
         "ddlDoorStyle",
         "ddlDoorVinylTint",
         "ddlDoorNumberOfVents",
-        "ddlDoorTransom",
-        "ddlDoorTransomVinyl",
-        "ddlDoorTransomGlass",
         "ddlDoorKickplate",
         "ddlDoorColour",
         "ddlDoorHeight",
@@ -354,6 +353,8 @@ function createDoorObject(wallNumber, type) {
         
     framedDoor.fheight = dimensions.height; //Store frame height into fheight
     framedDoor.fwidth = dimensions.width;   //Store frame width into fwidth
+    framedDoor.mheight = dimensions.height + 2;
+    framedDoor.mwidth = dimensions.width + 2;
 
     /*Insert the door with the appropriate variables based on drop down selected index*/
     if (framedDoor.position === "Left") {
@@ -381,7 +382,7 @@ function createDoorObject(wallNumber, type) {
 function deleteDoor(doorToDelete, type, wallNumber) {
 
     //Removes object at specified index
-    walls[wallNumber].doors.splice(doorToDelete - 1, 1);
+    walls[wallNumber].mods.splice(doorToDelete - 1, 1);
 
     //Used to redisplay the appropriate space left in the wall
     var space = totalSpaceLeftInWall(walls[wallNumber]);
@@ -399,7 +400,7 @@ function deleteDoor(doorToDelete, type, wallNumber) {
 function deleteDoorFill(type, wallNumber) {
 
     //Reset specific wall's doors array to a new blank array
-    walls[wallNumber].doors = [];
+    walls[wallNumber].mods = [];
 
     //Call to updateDoorPager to display appropriate values within the pager
     updateDoorPager(walls[wallNumber]);
@@ -471,41 +472,6 @@ function doorKickplateStyle(type, wallNumber) {
 }
 
 /**
-*doorTransomStyle
-*Door transom style function is triggered when the user selects Vinyl or Glass, 
-*vinyl or glass tint becomes displayed.
-*@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
-*@param wallNumber - holds an integer to know which wall is currently being affected
-*/
-function doorTransomStyle(type, wallNumber) {
-
-    //Get transom drop down value
-    var transomType = document.getElementById('MainContent_ddlDoorTransom' + wallNumber + type).options[document.getElementById('MainContent_ddlDoorTransom' + wallNumber + type).selectedIndex].value;
-
-    //If transomType value is vinyl, perform block
-    if (transomType == 'Vinyl') {
-        //Change transom vinyl row display style to inherit
-        document.getElementById('MainContent_rowDoorTransomVinyl' + wallNumber + type).style.display = 'inherit';
-        //Change transom glass row display style to none
-        document.getElementById('MainContent_rowDoorTransomGlass' + wallNumber + type).style.display = 'none';
-    }
-        //Else if transomType value is glass, perform block
-    else if (transomType == 'Glass') {
-        //Change transom vinyl row display style to none
-        document.getElementById('MainContent_rowDoorTransomVinyl' + wallNumber + type).style.display = 'none';
-        //Change transom glass row display style to inherit
-        document.getElementById('MainContent_rowDoorTransomGlass' + wallNumber + type).style.display = 'inherit';
-    }
-        //Else, perform this block
-    else {
-        //Change transom vinyl row display style to none
-        document.getElementById('MainContent_rowDoorTransomVinyl' + wallNumber + type).style.display = 'none';
-        //Change transom glass row display style to none
-        document.getElementById('MainContent_rowDoorTransomGlass' + wallNumber + type).style.display = 'none';
-    }
-}
-
-/**
 *fillWallWithdoorMods
 *This function is used to fill the wall with as may doorMods as possible, they'll be centered and
 *the ends will be filler
@@ -547,7 +513,7 @@ function fillWallWithDoorMods(type, wallNumber) {
     for (var i = 0; i < amountOfDoors; i++) {
         var newDoor = $.extend(true, {}, door);
         newDoor.position = currentPosition;
-        insertDoor(newDoor, walls[wallNumber]);
+        insertMod(newDoor, walls[wallNumber]);
         currentPosition += door.fwidth;
     }
 
@@ -601,7 +567,8 @@ function fillWallWithDoorMods(type, wallNumber) {
 }
 
 /**
-*findCurrentWallHeight
+NOTE: also see findCurrentWallHeight(position, wall)
+*findCurrentWallMinHeight
 *This function finds the height of the wall at any giving point within it.
 *This function is used to ensure a door isn't outside of the limits of the wall.
 *@param doors - holds an array of unsorted doors
@@ -612,30 +579,30 @@ function findCurrentWallHeight(door, wall) {
     if (wall.startHeight > wall.endHeight)
         return ((wall.endHeight + (wall.startHeight - wall.endHeight) * ((door.position + door.fwidth) - wall.length) / (0 - wall.length)));
     else
-        return (wall.startHeight + (wall.endHeight - wall.startHeight) * ((door.position + door.fwidth) - wall.length) / (0 - wall.length));
+        return (wall.startHeight + (wall.endHeight - wall.startHeight) * ((door.position) - wall.length) / (0 - wall.length));
 }
 
 /**
-*insertDoor
-*This function inserts the current door to the appropriate wall and position
-*@param doors - holds an array of unsorted doors
-*@param wall - used to hold the current wall information
+*insertMod (original funtion insertMod edited by Taha on 8/12/2013)
+*This function inserts a mod to the appropriate wall and position
+*@param mod - the mod to insert 
+*@param wall - the wall in which to insert mod
 */
-function insertDoor(door, wall) {
+function insertMod(mod, wall) {
 
-    //Variable to hold the index in which position to store the current door
-    var position;
+    //Variable to hold the index in which index to store the current mod
+    var index;
 
-    //Loop to find the right index/position to store the door
-    for (position = 0; position < wall.doors.length; position++) {
+    //Loop to find the right index to store the door
+    for (index = 0; index < wall.mods.length; index++) {
         //If the existing door is larger than the new door, break out of the loop
-        if (wall.doors[position].position > door.position) {
+        if (wall.mods[index].position > mod.position) {
             break;
         }
     }
 
     //Insert the door into the index/position at which the loop breaks out
-    wall.doors.insert(position, door);
+    wall.mods.insert(index, mod);
 }
 
 /**
@@ -649,9 +616,9 @@ function totalSpaceLeftInWall(wall) {
     var totalSpace = wall.length - wall.leftFiller - wall.rightFiller;
 
     //Loop through all the doors
-    for (var wallSpace = 0; wallSpace < wall.doors.length; wallSpace++) {
+    for (var wallSpace = 0; wallSpace < wall.mods.length; wallSpace++) {
         //Substract each door from the usable space
-        totalSpace -= wall.doors[wallSpace].fwidth;
+        totalSpace -= wall.mods[wallSpace].mwidth;
     }
 
     //Return the total space remaining
@@ -672,9 +639,6 @@ function typeRowsDisplayed(type, wallNumber) {
     var doorStyleTable = document.getElementById("MainContent_rowDoorStyle" + wallNumber + type);
     var doorVinylTint = document.getElementById("MainContent_rowDoorVinylTint" + wallNumber + type);
     var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + wallNumber + type);
-    var doorTransom = document.getElementById("MainContent_rowDoorTransom" + wallNumber + type);
-    var doorTransomVinyl = document.getElementById("MainContent_rowDoorTransomVinylTypes" + wallNumber + type);
-    var doorTransomGlass = document.getElementById("MainContent_rowDoorTransomGlassTypes" + wallNumber + type);
     var doorKickplate = document.getElementById("MainContent_rowDoorKickplate" + wallNumber + type);
     var doorKicplateCustom = document.getElementById("MainContent_rowDoorCustomKickplate" + wallNumber + type);
     var doorColour = document.getElementById("MainContent_rowDoorColour" + wallNumber + type);
@@ -716,7 +680,6 @@ function typeRowsDisplayed(type, wallNumber) {
         doorHeight.style.display = "inherit";
         doorWidth.style.display = "inherit";
         doorBoxHeader.style.display = "inherit";
-        doorTransom.style.display = "inherit";
         doorKickplate.style.display = "inherit";
 
         //Cabana Specific                            
@@ -738,7 +701,6 @@ function typeRowsDisplayed(type, wallNumber) {
         doorSwingInChecked.setAttribute("checked", "checked");
 
         doorStyle(type, wallNumber);
-        doorTransomStyle(type, wallNumber);
     }
         //If type is French, display the appropriate fields
     else if (type == "French") {
@@ -750,7 +712,6 @@ function typeRowsDisplayed(type, wallNumber) {
         doorHeight.style.display = "inherit";
         doorWidth.style.display = "inherit";
         doorBoxHeader.style.display = "inherit";
-        doorTransom.style.display = "inherit";
         doorKickplate.style.display = "inherit";
 
         //French specific
@@ -771,7 +732,6 @@ function typeRowsDisplayed(type, wallNumber) {
         doorSwingInChecked.setAttribute("checked", "checked");
 
         doorStyle(type, wallNumber);
-        doorTransomStyle(type, wallNumber);
     }
         //If type is Patio, display the appropriate fields
     else if (type == "Patio") {
@@ -782,7 +742,6 @@ function typeRowsDisplayed(type, wallNumber) {
         doorColour.style.display = "inherit";
         doorHeight.style.display = "inherit";
         doorWidth.style.display = "inherit";
-        doorTransom.style.display = "inherit";
         doorBoxHeader.style.display = "inherit";
 
         //Patio Specifics
@@ -801,7 +760,6 @@ function typeRowsDisplayed(type, wallNumber) {
         doorOperatorLHHChecked.setAttribute("checked", "checked");
 
         doorStyle(type, wallNumber);
-        doorTransomStyle(type, wallNumber);
     }
         //If type is NoDoor, display the appropriate fields
     else if (type == "NoDoor") {
@@ -838,7 +796,7 @@ function updateDoorPager(wall) {
     $("#MainContent_lblQuestion3DoorsInfoWallAnswer" + wall.id).empty();
 
     //If there is a door, perform this block
-    if (wall.doors.length > 0) {
+    if (wall.mods.length > 0) {
 
         //Block to add content to the pager
         $("#MainContent_lblQuestion3SpaceInfoWallAnswer" + wall.id).text(space);
@@ -848,27 +806,27 @@ function updateDoorPager(wall) {
         pagerTextAnswer.setAttribute("style", "display:block");
         pagerTextDoor.innerHTML = "Wall " + (proposedWall.innerHTML).substr(14, 2) + " Doors";
 
-        for (var childControls = 1; childControls <= wall.doors.length ; childControls++) {
+        for (var childControls = 1; childControls <= wall.mods.length ; childControls++) {
             //Rename controls and their attributes
             /****DELETE BUTTON CREATION ADDITION****/
             var deleteButton = document.createElement("input");
-            deleteButton.id = "btnDeleteDoor" + childControls + wall.doors[childControls - 1].type + "Wall" + wall.id;
+            deleteButton.id = "btnDeleteDoor" + childControls + wall.mods[childControls - 1].type + "Wall" + wall.id;
             deleteButton.setAttribute("type", "button");
             deleteButton.setAttribute("value", "X");
-            deleteButton.setAttribute("onclick", "deleteDoor(\"" + childControls + "\", \"" + wall.doors[childControls - 1].type + "\", \"" + wall.id + "\")");
+            deleteButton.setAttribute("onclick", "deleteDoor(\"" + childControls + "\", \"" + wall.mods[childControls - 1].type + "\", \"" + wall.id + "\")");
             deleteButton.setAttribute("class", "btnSubmit");
             deleteButton.setAttribute("style", "width:24px; height:24px; vertical-align:middle;");
 
             /****LABEL FOR DELETE BUTTON****/
             var labelForButton = document.createElement("label");
-            labelForButton.id = "lblDeleteDoor" + childControls + wall.doors[childControls - 1].type + "Wall" + wall.id;
-            labelForButton.setAttribute("for", "btnDeleteDoor" + childControls + wall.doors[childControls - 1].type + "Wall" + wall.id);
-            labelForButton.innerHTML = "Door " + childControls + " " + wall.doors[childControls - 1].type + " added";
+            labelForButton.id = "lblDeleteDoor" + childControls + wall.mods[childControls - 1].type + "Wall" + wall.id;
+            labelForButton.setAttribute("for", "btnDeleteDoor" + childControls + wall.mods[childControls - 1].type + "Wall" + wall.id);
+            labelForButton.innerHTML = "Door " + childControls + " " + wall.mods[childControls - 1].type + " added";
 
             /****BR LABEL FOR DELETE BUTTON****/
             var labelBreakLineForButton = document.createElement("label");
-            labelBreakLineForButton.id = "lblDeleteDoorBR" + childControls + wall.doors[childControls - 1].type + "Wall" + wall.id;
-            labelBreakLineForButton.setAttribute("for", "btnDeleteDoor" + childControls + wall.doors[childControls - 1].type + "Wall" + wall.id);
+            labelBreakLineForButton.id = "lblDeleteDoorBR" + childControls + wall.mods[childControls - 1].type + "Wall" + wall.id;
+            labelBreakLineForButton.setAttribute("for", "btnDeleteDoor" + childControls + wall.mods[childControls - 1].type + "Wall" + wall.id);
             labelBreakLineForButton.innerHTML = "<br/>";
 
             /****APPENDING ALL CONTROLS TO PARENT CONTROL****/
@@ -913,24 +871,24 @@ function validateDoor(door, wall) {
 
     //Variable to hold the index of which door is being overlapped
     var index;
-
+    
     //Loop to find the right index to display
-    for (index = 0; index < wall.doors.length; index++) {
-        if (wall.doors[index].position > door.position) {
+    for (index = 0; index < wall.mods.length; index++) {
+        if (wall.mods[index].position > door.position) {
             break;
         }
     }
 
-    //If the index value is smaller than the wall.doors arrays length
+    //If the index value is smaller than the wall.mods arrays length
     //and this door is overlapping the door after it, display the appropriate message
-    if (index < wall.doors.length && (door.position + door.fwidth) > wall.doors[index].position) {
+    if (index < wall.mods.length && (door.position + door.fwidth) > wall.mods[index].position) {
         errorMessageArea.innerHTML = "The door you're trying to insert is overlapping door " + (index + 1) + ". Please try again.";
         return false;
     }
 
     //If the index value is larger than the zero
     //and this door is overlapping the door before it, display the appropriate message
-    if (index > 0 && door.position < (wall.doors[index - 1].position + wall.doors[index - 1].fwidth)) {
+    if (index > 0 && door.position < (wall.mods[index - 1].position + wall.mods[index - 1].fwidth)) {
         errorMessageArea.innerHTML = "The door you're trying to insert is overlapping door " + index + ". Please try again.";
         return false;
     }
@@ -1015,8 +973,12 @@ function validateDoorParameters(door, wall) {
             return false;
         }
     }
-
-    if (door.fheight > findCurrentWallHeight(door, wall)) {
+    
+    if ((model == "M100" || model == "M200" || model == "M300") && (door.fheight > (findCurrentWallHeight(door, wall)))) {
+        errorMessageArea.innerHTML = "Your " + door.type + " door's height in its current position is higher than the wall . Please try again.";
+        return false;
+    }
+    else if ((model == "M400") && (door.fheight > (findCurrentWallHeight(door, wall)))) {
         errorMessageArea.innerHTML = "Your " + door.type + " door's height in its current position is higher than the wall. Please try again.";
         return false;
     }
@@ -1038,7 +1000,7 @@ function validateDoorFill(door, wall) {
         return false;
     }
 
-    if (wall.doors.length > 0) {
+    if (wall.mods.length > 0) {
         errorMessageArea.innerHTML = "Fill cannot be used on a wall with existing doors. Please empty the wall first.";
         return false;
     }

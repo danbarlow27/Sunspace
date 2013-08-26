@@ -11,7 +11,6 @@ namespace SunspaceDealerDesktop
     public partial class WizardWallsAndMods : System.Web.UI.Page
     {
         protected List<Wall> walls = new List<Wall>();
-
         //ListItems to be used in multiple dropdown lists for decimal points
         //This should eventually be stored in the constants file
         protected ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
@@ -33,9 +32,20 @@ namespace SunspaceDealerDesktop
         protected string[] strWalls; //to split the string received from session and store it into an array of strings with individual line details
         protected string[,] wallDetails; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
 
+        DropDownList ddlInFrac = new DropDownList(); //a dropdown list for length inch fractions
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            /****VALIDATION VARIABLES***/
+            if (Session["loggedIn"] == null)
+            {
+                //uncomment me when login functionality is working
+                Response.Redirect("Login.aspx");
+                //Session.Add("loggedIn", "userA");
+            }
+
+            /****VALIDATION CONSTANTS***/
+
+            #region DOOR VALIDATION CONSTANTS
             Session["CABANA_MAX_WIDTH"] = Constants.CUSTOM_DOOR_MAX_WIDTH;
             Session["CABANA_MIN_WIDTH"] = Constants.CUSTOM_DOOR_MIN_WIDTH;
             Session["CABANA_MAX_HEIGHT"] = Constants.CUSTOM_DOOR_MAX_HEIGHT;
@@ -44,22 +54,113 @@ namespace SunspaceDealerDesktop
             Session["PATIO_DOOR_MIN_WIDTH"] = Constants.PATIO_DOOR_MIN_WIDTH;
             Session["PATIO_DOOR_MAX_HEIGHT"] = Constants.PATIO_DOOR_MAX_HEIGHT;
             Session["PATIO_DOOR_MIN_HEIGHT"] = Constants.PATIO_DOOR_MIN_HEIGHT;
+            Session["MODEL_100_200_300_TRANSOM_MINIMUM_SIZE"] = Constants.MODEL_100_200_300_TRANSOM_MINIMUM_SIZE;
+            Session["MODEL_400_TRANSOM_MINIMUM_SIZE"] = Constants.MODEL_400_TRANSOM_MINIMUM_SIZE;
+            #endregion
+            #region WINDOW VALIDATION CONSTANTS
+
+            #region MIN_WIDTH_WARRANTY
+            //Session["V4T_2V_MIN_WIDTH_WARRANTY"] = Constants.V4T_2V_MIN_WIDTH_WARRANTY;
+            Session["V4T_3V_MIN_WIDTH_WARRANTY"] = Constants.V4T_3V_MIN_WIDTH_WARRANTY;
+            Session["V4T_4V_MIN_WIDTH_WARRANTY"] = Constants.V4T_4V_MIN_WIDTH_WARRANTY;
+            Session["HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY"] = Constants.HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY;
+            Session["VINYL_LITE_MIN_WIDTH_WARRANTY"] = Constants.VINYL_LITE_MIN_WIDTH_WARRANTY;
+            Session["VINYL_TRAP_MIN_WIDTH_WARRANTY"] = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY;
+
+            Session["DOUBLE_SLIDER_MIN_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_MIN_WIDTH_WARRANTY;
+            Session["DOUBLE_SLIDER_LITE_MIN_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_LITE_MIN_WIDTH_WARRANTY;
+            Session["DOUBLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY;
+
+            Session["SINGLE_SLIDER_MIN_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_MIN_WIDTH_WARRANTY;
+            Session["SINGLE_SLIDER_LITE_MIN_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_LITE_MIN_WIDTH_WARRANTY;
+            Session["SINGLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY;
+
+            Session["SCREEN_MIN_WIDTH_WARRANTY"] = Constants.SCREEN_MIN_WIDTH_WARRANTY;
+            #endregion
+            #region MAX_WIDTH_WARRANTY
+            //Session["V4T_2V_MAX_WIDTH_WARRANTY"] = Constants.V4T_2V_MAX_WIDTH_WARRANTY;
+            Session["V4T_3V_MAX_WIDTH_WARRANTY"] = Constants.V4T_3V_MAX_WIDTH_WARRANTY;
+            Session["V4T_4V_MAX_WIDTH_WARRANTY"] = Constants.V4T_4V_MAX_WIDTH_WARRANTY;
+            Session["HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY"] = Constants.HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY;
+            Session["VINYL_LITE_MAX_WIDTH_WARRANTY"] = Constants.VINYL_LITE_MAX_WIDTH_WARRANTY;
+            Session["VINYL_TRAP_MAX_WIDTH_WARRANTY"] = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
+
+            Session["DOUBLE_SLIDER_MAX_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_MAX_WIDTH_WARRANTY;
+            Session["DOUBLE_SLIDER_LITE_MAX_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_LITE_MAX_WIDTH_WARRANTY;
+            Session["DOUBLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY"] = Constants.DOUBLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY;
+
+            Session["SINGLE_SLIDER_MAX_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_MAX_WIDTH_WARRANTY;
+            Session["SINGLE_SLIDER_LITE_MAX_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_LITE_MAX_WIDTH_WARRANTY;
+            Session["SINGLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY"] = Constants.SINGLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY;
+
+            Session["SCREEN_MAX_WIDTH_WARRANTY"] = Constants.SCREEN_MAX_WIDTH_WARRANTY;
+            #endregion
+
+            #region MIN_HEIGHT_WARRANTY
+            //Session["V4T_2V_MIN_HEIGHT_WARRANTY"] = Constants.V4T_2V_MIN_HEIGHT_WARRANTY;
+            Session["V4T_3V_MIN_HEIGHT_WARRANTY"] = Constants.V4T_3V_MIN_HEIGHT_WARRANTY;
+            Session["V4T_4V_MIN_HEIGHT_WARRANTY"] = Constants.V4T_4V_MIN_HEIGHT_WARRANTY;
+            Session["HORIZONTAL_ROLLER_MIN_HEIGHT_WARRANTY"] = Constants.HORIZONTAL_ROLLER_MIN_HEIGHT_WARRANTY;
+            Session["VINYL_LITE_MIN_HEIGHT_WARRANTY"] = Constants.VINYL_LITE_MIN_HEIGHT_WARRANTY;
+            Session["VINYL_TRAP_MIN_HEIGHT_WARRANTY"] = Constants.VINYL_TRAP_MIN_HEIGHT_WARRANTY;
+
+            Session["DOUBLE_SLIDER_MIN_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_MIN_HEIGHT_WARRANTY;
+            Session["DOUBLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY;
+            Session["DOUBLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY;
+
+            Session["SINGLE_SLIDER_MIN_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_MIN_HEIGHT_WARRANTY;
+            Session["SINGLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY;
+            Session["SINGLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY;
+
+            Session["SCREEN_MIN_HEIGHT_WARRANTY"] = Constants.SCREEN_MIN_HEIGHT_WARRANTY;
+            #endregion
+            #region MAX_HEIGHT_WARRANTY
+            //Session["V4T_2V_MAX_HEIGHT_WARRANTY"] = Constants.V4T_2V_MAX_HEIGHT_WARRANTY;
+            Session["V4T_3V_MAX_HEIGHT_WARRANTY"] = Constants.V4T_3V_MAX_HEIGHT_WARRANTY;
+            Session["V4T_4V_MAX_HEIGHT_WARRANTY"] = Constants.V4T_4V_MAX_HEIGHT_WARRANTY;
+            Session["HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY"] = Constants.HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY;
+            Session["VINYL_LITE_MAX_HEIGHT_WARRANTY"] = Constants.VINYL_LITE_MAX_HEIGHT_WARRANTY;
+            Session["VINYL_TRAP_MAX_HEIGHT_WARRANTY"] = Constants.VINYL_TRAP_MAX_HEIGHT_WARRANTY;
+
+            Session["DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY;
+            Session["DOUBLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY;
+            Session["DOUBLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY"] = Constants.DOUBLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY;
+
+            Session["SINGLE_SLIDER_MAX_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_MAX_HEIGHT_WARRANTY;
+            Session["SINGLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY;
+            Session["SINGLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY"] = Constants.SINGLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY;
+
+            Session["SCREEN_MAX_HEIGHT_WARRANTY"] = Constants.SCREEN_MAX_HEIGHT_WARRANTY;
+            #endregion
+
+            #region SPREADER_BAR_NEEDED
+            Session["V4T_SPREADER_BAR_NEEDED"] = Constants.V4T_SPREADER_BAR_NEEDED;
+            Session["HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED"] = Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED;
+            #endregion
+
+            #endregion
+
             Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
-            Session["MAX_WINDOW_WIDTH"] = Constants.MAX_WINDOW_WIDTH;
-            Session["MIN_WINDOW_WIDTH"] = Constants.MIN_WINDOW_WIDTH;
 
             /***hard coded variables***/
-            Session["model"] = "M300";
+            Session["model"] = "M100";
             Session["soffitLength"] = 0F;
-
+            Session["model"] = "M300";
+            Session["soffitLength"] = 10F;
+            Session["kneewallType"] = "glass";
+            Session["kneewallHeight"] = 20F;
+            Session["transomType"] = "vinyl";
+            Session["transomHeight"] = 20F;
             /****************diffrent sunroom layouts******************/
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
             //Session["coordList"] = "75,425,150,150,E,S/150,150,150,250,P,W/150,350,250,250,P,S/350,350,250,150,P,E/";
             //Session["coordList"] = "62.5,362.5,162.5,162.5,E,S/362.5,175,162.5,350,E,NW/175,175,350,162.5,E,E/175,262.5,287.5,287.5,P,S/262.5,262.5,287.5,237.5,P,E/262.5,125,237.5,237.5,P,N/125,125,237.5,162.5,P,E/";
             //Session["coordList"] = "50,300,250,250,E,S/300,300,250,25,E,E/175,175,250,375,P,W/175,425,375,375,P,S/425,425,375,125,P,E/425,300,125,125,P,N/";
-            Session["coordList"] = "75,262.5,175,175,E,S/262.5,262.5,175,200,E,W/262.5,425,200,200,E,S/150,150,175,300,P,W/150,350,300,300,P,S/350,350,300,200,P,E/";
+            //Session["coordList"] = "75,262.5,175,175,E,S/262.5,262.5,175,200,E,W/262.5,425,200,200,E,S/150,150,175,300,P,W/150,350,300,300,P,S/350,350,300,200,P,E/";
             //Session["coordList"] = "100,412.5,137.5,137.5,E,S/150,150,137.5,287.5,P,W/150,225,287.5,362.5,P,SW/225,312.5,362.5,362.5,P,S/312,387.5,362.5,287.5,P,SE/387.5,387.5,287.5,137.5,P,E/";
             //Session["coordList"] = "112.5,350,112.5,112.5,E,S/350,350,112.5,337.5,E,W/175,175,112.5,262.5,P,W/175,350,262.5,262.5,P,S/";
+            //GABLE EXAMPLE BELOW
+            Session["coordList"] = "200,275,300,300,G,S/100,375,150,150,E,S/100,100,150,300,P,W/100,200,300,300,P,S/275,375,300,300,P,S/375,375,300,150,P,E/";
             /**********************************************************/
             coordList = (string)Session["coordList"]; //get the string from the session and store it in a local variable for further use                                    
             strWalls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
@@ -67,7 +168,7 @@ namespace SunspaceDealerDesktop
             currentModel = (string)Session["model"];
             soffitLength = (float)Session["soffitLength"];
             //int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
-            int proposedWallCount = 0; //used to determine how many proposed walls are in a drawing
+            int displayedWallCount = 0; //used to determine how many proposed walls are in a drawing
 
             //populate the array with all the wall details for each wall
             /***************************************************************************/
@@ -86,47 +187,6 @@ namespace SunspaceDealerDesktop
             
             hiddenFieldsDiv.InnerHtml = createHiddenFields(strWalls.Count()); //create hidden fields on page load dynamically, pass it number of walls
 
-            #region DropDownList Section
-            DropDownList ddlInFrac = new DropDownList(); //a dropdown list for length inch fractions
-            DropDownList ddlInFracBackWall = new DropDownList(); //a dropdown list for back wall inch fractions
-            DropDownList ddlInFracFrontWall = new DropDownList(); //a dropdown list for front wall inch fractions
-
-            //add all the inch fraction list items to the lengths dropdown list 
-            ddlInFrac.Items.Add(lst0);
-            ddlInFrac.Items.Add(lst18);
-            ddlInFrac.Items.Add(lst14);
-            ddlInFrac.Items.Add(lst38);
-            ddlInFrac.Items.Add(lst12);
-            ddlInFrac.Items.Add(lst58);
-            ddlInFrac.Items.Add(lst34);
-            ddlInFrac.Items.Add(lst78);
-            
-            //add all the inch fraction list items to the back wall dropdown list 
-            ddlInFracBackWall.Items.Add(lst0); 
-            ddlInFracBackWall.Items.Add(lst18);
-            ddlInFracBackWall.Items.Add(lst14);
-            ddlInFracBackWall.Items.Add(lst38);
-            ddlInFracBackWall.Items.Add(lst12);
-            ddlInFracBackWall.Items.Add(lst58);
-            ddlInFracBackWall.Items.Add(lst34);
-            ddlInFracBackWall.Items.Add(lst78);
-            ddlInFracBackWall.ID = "ddlBackInchFractions"; //give the dropdown list an ID
-            ddlInFracBackWall.Attributes.Add("onchange", "checkQuestion2()"); //set its attributes to validate question2 when its changed
-            phBackHeights.Controls.Add(ddlInFracBackWall); //add it to the placeholder field in the table
-
-            //add all the inch fraction list items to the front wall dropdown list
-            ddlInFracFrontWall.Items.Add(lst0);
-            ddlInFracFrontWall.Items.Add(lst18);
-            ddlInFracFrontWall.Items.Add(lst14);
-            ddlInFracFrontWall.Items.Add(lst38);
-            ddlInFracFrontWall.Items.Add(lst12);
-            ddlInFracFrontWall.Items.Add(lst58);
-            ddlInFracFrontWall.Items.Add(lst34);
-            ddlInFracFrontWall.Items.Add(lst78);
-            ddlInFracFrontWall.ID = "ddlFrontInchFractions"; //give the dropdown list an ID
-            ddlInFracFrontWall.Attributes.Add("onchange", "checkQuestion2()"); //set its attributes to validate question2 when its changed
-            phFrontHeights.Controls.Add(ddlInFracFrontWall);//add it to the placeholder field in the table
-            #endregion
 
             
             for (int i = 1; i <= strWalls.Count(); i++) //for each wall in walls 
@@ -139,11 +199,18 @@ namespace SunspaceDealerDesktop
                 //else //wall type is proposed
                 if (wallDetails[i - 1, 4] == "P")
                 {
-                    proposedWallCount++; //increment the proposed wall counter
-                    populateTblProposed(i, proposedWallCount); //populate the proposed walls table on slide 1
-                    populateWallDoorOptions(i, proposedWallCount); //populate slide 3 with appropriate proposed wall door options
+                    displayedWallCount++; //increment the proposed wall counter
+                    populateTblProposed(i, displayedWallCount); //populate the proposed walls table on slide 1                    
+                    populateWallDoorOptions(i, displayedWallCount); //populate slide 3 with appropriate proposed wall door options
+                }
+                else if (wallDetails[i - 1, 4] == "G")
+                {
+                    Session["isGable"] = true;
+                    populateTblProposedGable(i, displayedWallCount); //populate the gable post table on slide 1
                 }
             }
+
+            populateTblWallHeights();
 
             //do the windows stuff
             windowOptions();
@@ -217,10 +284,9 @@ namespace SunspaceDealerDesktop
         ///     and gives each input field appropriate values
         /// </summary>
         /// <param name="i">index of the given wall, used to give appropriate ID's to input fields</param>
-        /// <param name="proposedWallCount">used to give appropriate values to the wall name labels</param>
-        protected void populateTblProposed(int i, int proposedWallCount)
+        /// <param name="displayedWallCount">used to give appropriate values to the wall name labels</param>
+        protected void populateTblProposed(int i, int displayedWallCount)
         {
-            #region Table: Slide 1 Table Rows/Cells and Controls
             TableRow row = new TableRow();//new table to to be appended to the table with all the appropriate fields in it
 
             TableCell cell1 = new TableCell(); //new table cell to store the wall name label
@@ -276,7 +342,7 @@ namespace SunspaceDealerDesktop
             ddlRightInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
 
 
-            lblWallNumber.Text = "Wall " + proposedWallCount + " : "; //output wall name/number to the label
+            lblWallNumber.Text = "Wall " + displayedWallCount + " : "; //output wall name/number to the label
 
             ddlInchFractions.ID = "ddlWall" + i + "InchFractions"; //give an appropriate id to dropdown list for length
             lblWallNumber.ID = "lblWall" + i + "Length"; //give an appropriate id to label
@@ -296,7 +362,11 @@ namespace SunspaceDealerDesktop
             txtLeftFiller.ID = "txtWall" + i + "LeftFiller"; //give an appropriate id to the left filler textbox
             txtLeftFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
             txtLeftFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
+<<<<<<< HEAD
             //txtLeftFiller.Text = SUGGESTED_DEFAULT_FILLER.ToString();
+=======
+            txtLeftFiller.Text = Constants.PREFERRED_DEFAULT_FILLER.ToString();
+>>>>>>> 6dc575a53b3bb2bf11f4ad4bd7327466263b9874
             txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
             txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
             txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
@@ -305,7 +375,11 @@ namespace SunspaceDealerDesktop
             txtRightFiller.ID = "txtWall" + i + "RightFiller";//give an appropriate id to the right filler textbox
             txtRightFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
             txtRightFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
+<<<<<<< HEAD
             //txtRightFiller.Text = SUGGESTED_DEFAULT_FILLER.ToString();
+=======
+            txtRightFiller.Text = Constants.PREFERRED_DEFAULT_FILLER.ToString();
+>>>>>>> 6dc575a53b3bb2bf11f4ad4bd7327466263b9874
             txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");//set its attribute to check question 1 on key up
             txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
             txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
@@ -329,10 +403,661 @@ namespace SunspaceDealerDesktop
             row.Cells.Add(cell5);
             row.Cells.Add(cell6);
             row.Cells.Add(cell7);
-            #endregion
-
-
             
+        }
+
+        protected void populateTblProposedGable(int i, int displayedWallCount)
+        {
+            TableRow row = new TableRow();//new table to to be appended to the table with all the appropriate fields in it
+
+            TableCell cell1 = new TableCell(); //new table cell to store the wall name label
+            TableCell cell2 = new TableCell();//new table cell to store the textbox for left filler
+            TableCell cell3 = new TableCell();//new table cell to store the dropdown list for left filler inch fractions
+            TableCell cell4 = new TableCell();//new table cell to store the textbox length
+            TableCell cell5 = new TableCell();//new table cell to store the dropdown list for length
+            TableCell cell6 = new TableCell();//new table cell to store the textbox for right filler
+            TableCell cell7 = new TableCell();//new table cell to store the dropdown list for right filler inch fractions
+
+            Label lblWallNumber = new Label(); //new label to display the wall name/number
+
+            TextBox txtWallLength = new TextBox(); //new textbox for user input for length
+            TextBox txtLeftFiller = new TextBox(); //new textbox for user input for left filler
+            TextBox txtRightFiller = new TextBox();//new textbox for user input for right filler
+
+            DropDownList ddlInchFractions = new DropDownList(); //new dropdown list for length inch fractions
+            DropDownList ddlLeftInchFractions = new DropDownList(); //new dropdown list for left filler inch fractions
+            DropDownList ddlRightInchFractions = new DropDownList();//new dropdown list for right filler inch fractions
+
+          
+            //add the inch fraction list items to the dropdown list
+            ddlInchFractions.Items.Add(lst0);
+            ddlInchFractions.Items.Add(lst18);
+            ddlInchFractions.Items.Add(lst14);
+            ddlInchFractions.Items.Add(lst38);
+            ddlInchFractions.Items.Add(lst12);
+            ddlInchFractions.Items.Add(lst58);
+            ddlInchFractions.Items.Add(lst34);
+            ddlInchFractions.Items.Add(lst78);
+            ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
+
+            //add the inch fraction list items to the dropdown list
+            ddlLeftInchFractions.Items.Add(lst0);
+            ddlLeftInchFractions.Items.Add(lst18);
+            ddlLeftInchFractions.Items.Add(lst14);
+            ddlLeftInchFractions.Items.Add(lst38);
+            ddlLeftInchFractions.Items.Add(lst12);
+            ddlLeftInchFractions.Items.Add(lst58);
+            ddlLeftInchFractions.Items.Add(lst34);
+            ddlLeftInchFractions.Items.Add(lst78);
+            ddlLeftInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
+
+            //add the inch fraction list items to the dropdown list
+            ddlRightInchFractions.Items.Add(lst0);
+            ddlRightInchFractions.Items.Add(lst18);
+            ddlRightInchFractions.Items.Add(lst14);
+            ddlRightInchFractions.Items.Add(lst38);
+            ddlRightInchFractions.Items.Add(lst12);
+            ddlRightInchFractions.Items.Add(lst58);
+            ddlRightInchFractions.Items.Add(lst34);
+            ddlRightInchFractions.Items.Add(lst78);
+            ddlRightInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
+
+
+            lblWallNumber.Text = "Wall " + displayedWallCount + " (Gable Post): "; //output wall name/number to the label
+
+            ddlInchFractions.ID = "ddlWall" + i + "InchFractions"; //give an appropriate id to dropdown list for length
+            lblWallNumber.ID = "lblWall" + i + "Length"; //give an appropriate id to label
+            lblWallNumber.AssociatedControlID = "txtWall" + i + "Length"; //set the label's associated control id
+
+            txtWallLength.ID = "txtWall" + i + "Length"; //give an appropriate id to the textbox
+            txtWallLength.CssClass = "txtField txtLengthInput"; //give the textbox a css class
+            txtWallLength.MaxLength = 3; //give the textbox a max length of 3 to prevent invalid input
+            txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
+            txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+            txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
+            txtWallLength.Attributes.Add("onblur", "resetWalls()");//set its attribute to reset walls on blur
+
+            ddlLeftInchFractions.ID = "ddlWall" + i + "LeftInchFractions"; //give an appropriate id to dropdown list for left filler
+            ddlRightInchFractions.ID = "ddlWall" + i + "RightInchFractions";//give an appropriate id to dropdown list for right filler
+
+            txtLeftFiller.ID = "txtWall" + i + "LeftFiller"; //give an appropriate id to the left filler textbox
+            txtLeftFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
+            txtLeftFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
+            txtLeftFiller.Text = "0";
+            txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
+            txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+            txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
+            txtLeftFiller.Attributes.Add("onblur", "resetWalls()");//set its attribute to reset walls on blur
+
+            txtRightFiller.ID = "txtWall" + i + "RightFiller";//give an appropriate id to the right filler textbox
+            txtRightFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
+            txtRightFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
+            txtRightFiller.Text = "0";
+            txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");//set its attribute to check question 1 on key up
+            txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+            txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
+            txtRightFiller.Attributes.Add("onblur", "resetWalls()");//set its attribute to check reset walls on blur            
+
+            cell1.Controls.Add(lblWallNumber); //append the wall number/name label to cell 1
+            cell2.Controls.Add(txtLeftFiller); //append the left filler textbox in cell 2
+            cell3.Controls.Add(ddlLeftInchFractions); //append the left filler dropdown list in cell 3
+            cell4.Controls.Add(txtWallLength); //append the wall length textbox in cell 4
+            cell5.Controls.Add(ddlInchFractions); //append the wall length dropdown list in cell 5
+            cell6.Controls.Add(txtRightFiller); //append the right filler textbox in cell 6
+            cell7.Controls.Add(ddlRightInchFractions); //append the right filler dropdown list in cell 7
+
+            tblProposedWalls.Rows.Add(row); //append the row to the proposed walls table
+
+            //append all the cells to the row
+            row.Cells.Add(cell1); 
+            row.Cells.Add(cell2);
+            row.Cells.Add(cell3);
+            row.Cells.Add(cell4);
+            row.Cells.Add(cell5);
+            row.Cells.Add(cell6);
+            row.Cells.Add(cell7);
+            
+        }
+
+        protected void populateTblWallHeights()
+        {
+            bool isGable = false;
+
+            for (int i = 1; i <= strWalls.Count(); i++) //for each wall in walls 
+            {
+                if (wallDetails[i - 1, 4] == "G")
+                {
+                    isGable = true;
+                    break;
+                }
+            }
+
+            if (isGable)
+            {
+
+                #region Table Row # Left Wall Height
+                TableRow leftWallHeightRow = new TableRow();
+                TableCell leftWallLabelCell = new TableCell();
+                TableCell leftWallTextboxCell = new TableCell();
+                TableCell leftWallDropDownInchesCell = new TableCell();
+                TableCell leftWallRadioAutoFillCell = new TableCell();
+
+                Label leftWallLabel = new Label();
+                leftWallLabel.ID = "lblLeftWallHeight";
+                leftWallLabel.Text = "Left Wall Height:";
+
+                TextBox leftWallTextbox = new TextBox();
+                leftWallTextbox.ID = "txtLeftWallHeight";
+                leftWallTextbox.CssClass = "txtField txtInput";
+                leftWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                leftWallTextbox.Attributes.Add("onblur", "resetWalls()");
+                leftWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
+                leftWallTextbox.MaxLength = 3;
+
+                DropDownList leftWallInchSpecific = new DropDownList();
+                leftWallInchSpecific.ID = "leftWallInchSpecificDDL";
+                leftWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+                leftWallInchSpecific.Items.Add(lst0);
+                leftWallInchSpecific.Items.Add(lst18);
+                leftWallInchSpecific.Items.Add(lst14);
+                leftWallInchSpecific.Items.Add(lst38);
+                leftWallInchSpecific.Items.Add(lst12);
+                leftWallInchSpecific.Items.Add(lst58);
+                leftWallInchSpecific.Items.Add(lst34);
+                leftWallInchSpecific.Items.Add(lst78);
+
+                RadioButton leftWallRadioAutoFill = new RadioButton();
+                leftWallRadioAutoFill.ID = "radAutoLeftWallHeight";
+                leftWallRadioAutoFill.GroupName = "wallHeightsSlopes";
+
+                Label leftWallRadioLabel = new Label();
+                leftWallRadioLabel.ID = "lblRadioLeftWallClickable";
+                leftWallRadioLabel.AssociatedControlID = "radAutoLeftWallHeight";
+
+                Label leftWallRadioTextLabel = new Label();
+                leftWallRadioTextLabel.ID = "lblRadioLeftWallText";
+                leftWallRadioTextLabel.AssociatedControlID = "radAutoLeftWallHeight";
+                leftWallRadioTextLabel.Text = "Auto Populate";
+
+                leftWallLabel.AssociatedControlID = "txtLeftWallHeight";
+                #endregion
+
+                #region Table Row # Right Wall Height
+                TableRow rightWallHeightRow = new TableRow();
+                TableCell rightWallLabelCell = new TableCell();
+                TableCell rightWallTextboxCell = new TableCell();
+                TableCell rightWallDropDownInchesCell = new TableCell();
+                TableCell rightWallRadioAutoFillCell = new TableCell();
+
+                Label rightWallLabel = new Label();
+                rightWallLabel.ID = "lblRightWallHeight";
+                rightWallLabel.Text = "Right Wall Height:";
+
+                TextBox rightWallTextbox = new TextBox();
+                rightWallTextbox.ID = "txtRightWallHeight";
+                rightWallTextbox.CssClass = "txtField txtInput";
+                rightWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                rightWallTextbox.Attributes.Add("onblur", "resetWalls()");
+                rightWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
+                rightWallTextbox.ID = "txtRightWallHeight";
+                rightWallTextbox.MaxLength = 3;
+
+                DropDownList rightWallInchSpecific = new DropDownList();
+                rightWallInchSpecific.ID = "rightWallInchSpecificDDL";
+                rightWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+                rightWallInchSpecific.Items.Add(lst0);
+                rightWallInchSpecific.Items.Add(lst18);
+                rightWallInchSpecific.Items.Add(lst14);
+                rightWallInchSpecific.Items.Add(lst38);
+                rightWallInchSpecific.Items.Add(lst12);
+                rightWallInchSpecific.Items.Add(lst58);
+                rightWallInchSpecific.Items.Add(lst34);
+                rightWallInchSpecific.Items.Add(lst78);
+
+                RadioButton rightWallRadioAutoFill = new RadioButton();
+                rightWallRadioAutoFill.ID = "radAutoRightWallHeight";
+                rightWallRadioAutoFill.GroupName = "wallHeightsSlopes";
+
+                Label rightWallRadioLabel = new Label();
+                rightWallRadioLabel.ID = "lblRadioRightWallClickable";
+                rightWallRadioLabel.AssociatedControlID = "radAutoRightWallHeight";
+
+                Label rightWallRadioTextLabel = new Label();
+                rightWallRadioTextLabel.ID = "lblRadioRightWallText";
+                rightWallRadioTextLabel.AssociatedControlID = "radAutoRightWallHeight";
+                rightWallRadioTextLabel.Text = "Auto Populate";
+
+                rightWallLabel.AssociatedControlID = "txtRightWallHeight";
+                #endregion
+
+                #region Table Row # Gable Post Height
+                TableRow gablePostHeightRow = new TableRow();
+                TableCell gablePostLabelCell = new TableCell();
+                TableCell gablePostTextboxCell = new TableCell();
+                TableCell gablePostDropDownInchesCell = new TableCell();
+                TableCell gablePostRadioAutoFillCell = new TableCell();
+
+                Label gablePostLabel = new Label();
+                gablePostLabel.ID = "lblGablePostHeight";
+                gablePostLabel.Text = "Gable Post Height:";
+
+                TextBox gablePostTextbox = new TextBox();
+                gablePostTextbox.ID = "txtGablePostHeight";
+                gablePostTextbox.CssClass = "txtField txtInput";
+                gablePostTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                gablePostTextbox.Attributes.Add("onblur", "resetWalls()");
+                gablePostTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
+                gablePostTextbox.ID = "txtGablePostHeight";
+                gablePostTextbox.MaxLength = 3;
+
+                DropDownList gablePostInchSpecific = new DropDownList();
+                gablePostInchSpecific.ID = "gablePostInchSpecificDDL";
+                gablePostInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+                gablePostInchSpecific.Items.Add(lst0);
+                gablePostInchSpecific.Items.Add(lst18);
+                gablePostInchSpecific.Items.Add(lst14);
+                gablePostInchSpecific.Items.Add(lst38);
+                gablePostInchSpecific.Items.Add(lst12);
+                gablePostInchSpecific.Items.Add(lst58);
+                gablePostInchSpecific.Items.Add(lst34);
+                gablePostInchSpecific.Items.Add(lst78);
+
+                RadioButton gablePostRadioAutoFill = new RadioButton();
+                gablePostRadioAutoFill.ID = "radAutoGablePostHeight";
+                gablePostRadioAutoFill.GroupName = "wallHeightsSlopes";
+
+                Label gablePostRadioLabel = new Label();
+                gablePostRadioLabel.ID = "lblRadioGablePostClickable";
+                gablePostRadioLabel.AssociatedControlID = "radAutoGablePostHeight";
+
+                Label gablePostRadioTextLabel = new Label();
+                gablePostRadioTextLabel.ID = "lblRadioGablePostText";
+                gablePostRadioTextLabel.AssociatedControlID = "radAutoGablePostHeight";
+                gablePostRadioTextLabel.Text = "Auto Populate";
+
+                gablePostLabel.AssociatedControlID = "txtGablePostHeight";
+                #endregion
+
+                #region Table Row # Left Roof Slope
+                TableRow leftRoofSlopeRow = new TableRow();
+                TableCell leftRoofSlopeLabelCell = new TableCell();
+                TableCell leftRoofSlopeTextboxCell = new TableCell();
+                TableCell leftRoofSlopeRunLabelCell = new TableCell();
+                TableCell leftRoofSlopeRadioAutoFillCell = new TableCell();
+                leftRoofSlopeRadioAutoFillCell.RowSpan = 2;
+
+                Label leftRoofSlopeLabel = new Label();
+                leftRoofSlopeLabel.ID = "lblLeftRoofSlope";
+                leftRoofSlopeLabel.Text = "Left Roof Slope:";
+
+                TextBox leftRoofSlopeTextbox = new TextBox();
+                leftRoofSlopeTextbox.ID = "txtLeftRoofSlope";
+                leftRoofSlopeTextbox.CssClass = "txtField txtInput";
+                leftRoofSlopeTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                leftRoofSlopeTextbox.Attributes.Add("onblur", "resetWalls()");
+                leftRoofSlopeTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
+                leftRoofSlopeTextbox.MaxLength = 6;
+
+                Label leftRoofSlopeRunLabel = new Label();
+                leftRoofSlopeRunLabel.ID = "lblLeftRoofRunSlope";
+                leftRoofSlopeRunLabel.Text = "/12";
+
+                RadioButton leftRoofSlopeRadioAutoFill = new RadioButton();
+                leftRoofSlopeRadioAutoFill.ID = "radAutoRoofSlope";
+                leftRoofSlopeRadioAutoFill.GroupName = "wallHeightsSlopes";
+                leftRoofSlopeRadioAutoFill.Checked = true;
+
+                Label leftRoofSlopeRadioLabel = new Label();
+                leftRoofSlopeRadioLabel.ID = "lblRadioRoofSlopeClickable";
+                leftRoofSlopeRadioLabel.AssociatedControlID = "radAutoRoofSlope";
+
+                Label leftRoofSlopeRadioTextLabel = new Label();
+                leftRoofSlopeRadioTextLabel.ID = "lblRadioRoofSlopeText";
+                leftRoofSlopeRadioTextLabel.AssociatedControlID = "radAutoRoofSlope";
+                leftRoofSlopeRadioTextLabel.Text = "Auto Populate";
+
+                leftRoofSlopeLabel.AssociatedControlID = "txtLeftRoofSlope";
+                #endregion
+
+                #region Table Row # Right Roof Slope
+                TableRow rightRoofSlopeRow = new TableRow();
+                TableCell rightRoofSlopeLabelCell = new TableCell();
+                TableCell rightRoofSlopeTextboxCell = new TableCell();
+                TableCell rightRoofSlopeRunLabelCell = new TableCell();
+                TableCell rightRoofSlopeRadioAutoFillCell = new TableCell();
+
+                Label rightRoofSlopeLabel = new Label();
+                rightRoofSlopeLabel.ID = "lblRightRoofSlope";
+                rightRoofSlopeLabel.Text = "Right Roof Slope:";
+
+                TextBox rightRoofSlopeTextbox = new TextBox();
+                rightRoofSlopeTextbox.ID = "txtRightRoofSlope";
+                rightRoofSlopeTextbox.CssClass = "txtField txtInput";
+                rightRoofSlopeTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                rightRoofSlopeTextbox.Attributes.Add("onblur", "resetWalls()");
+                rightRoofSlopeTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
+                rightRoofSlopeTextbox.MaxLength = 6;
+
+                Label rightRoofSlopeRunLabel = new Label();
+                rightRoofSlopeRunLabel.ID = "lblRightRoofRunSlope";
+                rightRoofSlopeRunLabel.Text = "/12";
+
+                rightRoofSlopeLabel.AssociatedControlID = "txtRightRoofSlope";
+                #endregion
+
+                #region Table Row # Side Walls Same Height
+                TableRow sideWallsRow = new TableRow();
+                TableCell sideWallsLabelCell = new TableCell();
+                TableCell sideWallsCheckAutoHeightCell = new TableCell();
+
+                Label sideWallsLabel = new Label();
+                sideWallsLabel.ID = "lblSideWalls";
+                sideWallsLabel.Text = "Side Walls Same Height:";
+
+                CheckBox sideWallsAutoHeight = new CheckBox();
+                sideWallsAutoHeight.ID = "chkAutoWalls";
+                sideWallsAutoHeight.Checked = false;
+                sideWallsAutoHeight.Attributes.Add("onclick", "sameWallHeight()");
+
+                Label sideWallsCheckLabel = new Label();
+                sideWallsCheckLabel.ID = "lblCheckWallsSAmeClickable";
+                sideWallsCheckLabel.AssociatedControlID = "chkAutoWalls";
+
+                //Label sideWallsTextLabel = new Label();
+                //sideWallsTextLabel.ID = "lblCheckWallsSameText";
+                //sideWallsTextLabel.AssociatedControlID = "chkAutoWalls";
+                //sideWallsTextLabel.Text = "Side Walls Same Height:";
+                #endregion
+
+
+                #region Table Row # Back Wall Height Added
+                leftWallLabelCell.Controls.Add(leftWallLabel);
+                leftWallTextboxCell.Controls.Add(leftWallTextbox);
+                leftWallDropDownInchesCell.Controls.Add(leftWallInchSpecific);
+                leftWallRadioAutoFillCell.Controls.Add(leftWallRadioAutoFill);
+                leftWallRadioAutoFillCell.Controls.Add(leftWallRadioLabel);
+                leftWallRadioAutoFillCell.Controls.Add(leftWallRadioTextLabel);
+
+                tblWallHeights.Rows.Add(leftWallHeightRow);
+
+                leftWallHeightRow.Cells.Add(leftWallLabelCell);
+                leftWallHeightRow.Cells.Add(leftWallTextboxCell);
+                leftWallHeightRow.Cells.Add(leftWallDropDownInchesCell);
+                leftWallHeightRow.Cells.Add(leftWallRadioAutoFillCell);
+                #endregion
+
+                #region Table Row # Front Wall Height Added
+                rightWallLabelCell.Controls.Add(rightWallLabel);
+                rightWallTextboxCell.Controls.Add(rightWallTextbox);
+                rightWallDropDownInchesCell.Controls.Add(rightWallInchSpecific);
+                rightWallRadioAutoFillCell.Controls.Add(rightWallRadioAutoFill);
+                rightWallRadioAutoFillCell.Controls.Add(rightWallRadioLabel);
+                rightWallRadioAutoFillCell.Controls.Add(rightWallRadioTextLabel);
+
+                tblWallHeights.Rows.Add(rightWallHeightRow);
+
+                rightWallHeightRow.Cells.Add(rightWallLabelCell);
+                rightWallHeightRow.Cells.Add(rightWallTextboxCell);
+                rightWallHeightRow.Cells.Add(rightWallDropDownInchesCell);
+                rightWallHeightRow.Cells.Add(rightWallRadioAutoFillCell);
+                #endregion
+
+                #region Table Row # Gable Post Height Added
+                gablePostLabelCell.Controls.Add(gablePostLabel);
+                gablePostTextboxCell.Controls.Add(gablePostTextbox);
+                gablePostDropDownInchesCell.Controls.Add(gablePostInchSpecific);
+                gablePostRadioAutoFillCell.Controls.Add(gablePostRadioAutoFill);
+                gablePostRadioAutoFillCell.Controls.Add(gablePostRadioLabel);
+                gablePostRadioAutoFillCell.Controls.Add(gablePostRadioTextLabel);
+
+                tblWallHeights.Rows.Add(gablePostHeightRow);
+
+                gablePostHeightRow.Cells.Add(gablePostLabelCell);
+                gablePostHeightRow.Cells.Add(gablePostTextboxCell);
+                gablePostHeightRow.Cells.Add(gablePostDropDownInchesCell);
+                gablePostHeightRow.Cells.Add(gablePostRadioAutoFillCell);
+                #endregion
+
+                #region Table Row # Left Roof Slope Added
+                leftRoofSlopeLabelCell.Controls.Add(leftRoofSlopeLabel);
+                leftRoofSlopeTextboxCell.Controls.Add(leftRoofSlopeTextbox);
+                leftRoofSlopeRunLabelCell.Controls.Add(leftRoofSlopeRunLabel);
+                leftRoofSlopeRadioAutoFillCell.Controls.Add(leftRoofSlopeRadioAutoFill);
+                leftRoofSlopeRadioAutoFillCell.Controls.Add(leftRoofSlopeRadioLabel);
+                leftRoofSlopeRadioAutoFillCell.Controls.Add(leftRoofSlopeRadioTextLabel);
+
+                tblWallHeights.Rows.Add(leftRoofSlopeRow);
+
+                leftRoofSlopeRow.Cells.Add(leftRoofSlopeLabelCell);
+                leftRoofSlopeRow.Cells.Add(leftRoofSlopeTextboxCell);
+                leftRoofSlopeRow.Cells.Add(leftRoofSlopeRunLabelCell);
+                leftRoofSlopeRow.Cells.Add(leftRoofSlopeRadioAutoFillCell);
+                #endregion
+
+                #region Table Row # Right Roof Slope Added
+                rightRoofSlopeLabelCell.Controls.Add(rightRoofSlopeLabel);
+                rightRoofSlopeTextboxCell.Controls.Add(rightRoofSlopeTextbox);
+                rightRoofSlopeRunLabelCell.Controls.Add(rightRoofSlopeRunLabel);
+
+                tblWallHeights.Rows.Add(rightRoofSlopeRow);
+
+                rightRoofSlopeRow.Cells.Add(rightRoofSlopeLabelCell);
+                rightRoofSlopeRow.Cells.Add(rightRoofSlopeTextboxCell);
+                rightRoofSlopeRow.Cells.Add(rightRoofSlopeRunLabelCell);
+                #endregion
+
+                #region Table Row # Side Walls Same Height
+                sideWallsLabelCell.Controls.Add(sideWallsLabel);
+                sideWallsCheckAutoHeightCell.Controls.Add(sideWallsAutoHeight);
+                sideWallsCheckAutoHeightCell.Controls.Add(sideWallsCheckLabel);
+                //sideWallsCheckAutoHeightCell.Controls.Add(sideWallsTextLabel);
+
+                tblWallHeights.Rows.Add(sideWallsRow);
+
+                sideWallsRow.Cells.Add(sideWallsLabelCell);
+                sideWallsRow.Cells.Add(sideWallsCheckAutoHeightCell);
+                #endregion
+
+                string hiddenString = "";
+                hiddenString += "<input id=\"hidLeftWallHeight\" type=\"hidden\" runat=\"server\" />";
+                hiddenString += "<input id=\"hidRightWallHeight\" type=\"hidden\" runat=\"server\" />";
+                hiddenString += "<input id=\"hidGableWallHeight\" type=\"hidden\" runat=\"server\" />";
+                hiddenString += "<input id=\"hidLeftRoofSlope\" type=\"hidden\" runat=\"server\" />";
+                hiddenString += "<input id=\"hidRightRoofSlope\" type=\"hidden\" runat=\"server\" />";
+
+                hiddenFieldsDiv.InnerHtml += hiddenString;
+            }
+            else {
+                #region Table Row # Back Wall Height
+                TableRow backWallHeightRow = new TableRow();
+                TableCell backWallLabelCell = new TableCell();
+                TableCell backWallTextboxCell = new TableCell();
+                TableCell backWallDropDownInchesCell = new TableCell();
+                TableCell backWallRadioAutoFillCell = new TableCell();
+
+                Label backWallLabel = new Label();
+                backWallLabel.ID = "lblBackWallHeight";
+                backWallLabel.Text = "Back Wall Height:";
+
+                TextBox backWallTextbox = new TextBox();
+                backWallTextbox.ID = "txtBackWallHeight";
+                backWallTextbox.CssClass = "txtField txtInput";
+                backWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                backWallTextbox.Attributes.Add("onblur", "resetWalls()");
+                backWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
+                backWallTextbox.MaxLength = 3;
+
+                DropDownList backWallInchSpecific = new DropDownList();
+                backWallInchSpecific.ID = "backWallInchSpecificDDL";
+                backWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+                backWallInchSpecific.Items.Add(lst0);
+                backWallInchSpecific.Items.Add(lst18);
+                backWallInchSpecific.Items.Add(lst14);
+                backWallInchSpecific.Items.Add(lst38);
+                backWallInchSpecific.Items.Add(lst12);
+                backWallInchSpecific.Items.Add(lst58);
+                backWallInchSpecific.Items.Add(lst34);
+                backWallInchSpecific.Items.Add(lst78);
+
+                RadioButton backWallRadioAutoFill = new RadioButton();
+                backWallRadioAutoFill.ID = "radAutoBackWallHeight";
+                backWallRadioAutoFill.GroupName = "wallHeightsSlopes";
+
+                Label backWallRadioLabel = new Label();
+                backWallRadioLabel.ID = "lblRadioBackWallClickable";
+                backWallRadioLabel.AssociatedControlID = "radAutoBackWallHeight";
+
+                Label backWallRadioTextLabel = new Label();
+                backWallRadioTextLabel.ID = "lblRadioBackWallText";
+                backWallRadioTextLabel.AssociatedControlID = "radAutoBackWallHeight";
+                backWallRadioTextLabel.Text = "Auto Populate";
+
+                backWallLabel.AssociatedControlID = "txtBackWallHeight";
+                #endregion
+
+                #region Table Row # Front Wall Height
+                TableRow frontWallHeightRow = new TableRow();
+                TableCell frontWallLabelCell = new TableCell();
+                TableCell frontWallTextboxCell = new TableCell();
+                TableCell frontWallDropDownInchesCell = new TableCell();
+                TableCell frontWallRadioAutoFillCell = new TableCell();
+
+                Label frontWallLabel = new Label();
+                frontWallLabel.ID = "lblFrontWallHeight";
+                frontWallLabel.Text = "Front Wall Height:";
+
+                TextBox frontWallTextbox = new TextBox();
+                frontWallTextbox.ID = "txtFrontWallHeight";
+                frontWallTextbox.CssClass = "txtField txtInput";
+                frontWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                frontWallTextbox.Attributes.Add("onblur", "resetWalls()");
+                frontWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
+                frontWallTextbox.MaxLength = 3;
+
+                DropDownList frontWallInchSpecific = new DropDownList();
+                frontWallInchSpecific.ID = "frontWallInchSpecificDDL";
+                frontWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+                frontWallInchSpecific.Items.Add(lst0);
+                frontWallInchSpecific.Items.Add(lst18);
+                frontWallInchSpecific.Items.Add(lst14);
+                frontWallInchSpecific.Items.Add(lst38);
+                frontWallInchSpecific.Items.Add(lst12);
+                frontWallInchSpecific.Items.Add(lst58);
+                frontWallInchSpecific.Items.Add(lst34);
+                frontWallInchSpecific.Items.Add(lst78);
+
+                RadioButton frontWallRadioAutoFill = new RadioButton();
+                frontWallRadioAutoFill.ID = "radAutoFrontWallHeight";
+                frontWallRadioAutoFill.GroupName = "wallHeightsSlopes";
+
+                Label frontWallRadioLabel = new Label();
+                frontWallRadioLabel.ID = "lblRadioFrontWallClickable";
+                frontWallRadioLabel.AssociatedControlID = "radAutoFrontWallHeight";
+
+                Label frontWallRadioTextLabel = new Label();
+                frontWallRadioTextLabel.ID = "lblRadioFrontWallText";
+                frontWallRadioTextLabel.AssociatedControlID = "radAutoFrontWallHeight";
+                frontWallRadioTextLabel.Text = "Auto Populate";
+
+                frontWallLabel.AssociatedControlID = "txtFrontWallHeight";
+                #endregion
+
+                #region Table Row # Wall Slope
+                TableRow roofSlopeRow = new TableRow();
+                TableCell roofSlopeLabelCell = new TableCell();
+                TableCell roofSlopeTextboxCell = new TableCell();
+                TableCell roofSlopeRunLabelCell = new TableCell();
+                TableCell roofSlopeRadioAutoFillCell = new TableCell();
+
+                Label roofSlopeLabel = new Label();
+                roofSlopeLabel.ID = "lblRoofSlope";
+                roofSlopeLabel.Text = "Roof Slope:";
+
+                TextBox roofSlopeTextbox = new TextBox();
+                roofSlopeTextbox.ID = "txtRoofSlope";
+                roofSlopeTextbox.CssClass = "txtField txtInput";
+                roofSlopeTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                roofSlopeTextbox.Attributes.Add("onblur", "resetWalls()");
+                roofSlopeTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
+                frontWallTextbox.MaxLength = 6;
+
+                Label roofSlopeRunLabel = new Label();
+                roofSlopeRunLabel.ID = "lblWallRunSlope";
+                roofSlopeRunLabel.Text = "/12";
+
+                RadioButton roofSlopeRadioAutoFill = new RadioButton();
+                roofSlopeRadioAutoFill.ID = "radAutoRoofSlope";
+                roofSlopeRadioAutoFill.GroupName = "wallHeightsSlopes";
+                roofSlopeRadioAutoFill.Checked = true;
+
+                Label roofSlopeRadioLabel = new Label();
+                roofSlopeRadioLabel.ID = "lblRadioRoofSlopeClickable";
+                roofSlopeRadioLabel.AssociatedControlID = "radAutoRoofSlope";
+
+                Label roofSlopeRadioTextLabel = new Label();
+                roofSlopeRadioTextLabel.ID = "lblRadioRoofSlopeText";
+                roofSlopeRadioTextLabel.AssociatedControlID = "radAutoRoofSlope";
+                roofSlopeRadioTextLabel.Text = "Auto Populate";
+
+                roofSlopeLabel.AssociatedControlID = "txtRoofSlope";
+                #endregion
+
+
+                #region Table Row # Back Wall Height Added
+                backWallLabelCell.Controls.Add(backWallLabel);
+                backWallTextboxCell.Controls.Add(backWallTextbox);
+                backWallDropDownInchesCell.Controls.Add(backWallInchSpecific);
+                backWallRadioAutoFillCell.Controls.Add(backWallRadioAutoFill);
+                backWallRadioAutoFillCell.Controls.Add(backWallRadioLabel);
+                backWallRadioAutoFillCell.Controls.Add(backWallRadioTextLabel);
+
+                tblWallHeights.Rows.Add(backWallHeightRow);
+
+                backWallHeightRow.Cells.Add(backWallLabelCell);
+                backWallHeightRow.Cells.Add(backWallTextboxCell);
+                backWallHeightRow.Cells.Add(backWallDropDownInchesCell);
+                backWallHeightRow.Cells.Add(backWallRadioAutoFillCell);
+                #endregion
+
+                #region Table Row # Front Wall Height Added
+                frontWallLabelCell.Controls.Add(frontWallLabel);
+                frontWallTextboxCell.Controls.Add(frontWallTextbox);
+                frontWallDropDownInchesCell.Controls.Add(frontWallInchSpecific);
+                frontWallRadioAutoFillCell.Controls.Add(frontWallRadioAutoFill);
+                frontWallRadioAutoFillCell.Controls.Add(frontWallRadioLabel);
+                frontWallRadioAutoFillCell.Controls.Add(frontWallRadioTextLabel);
+
+                tblWallHeights.Rows.Add(frontWallHeightRow);
+
+                frontWallHeightRow.Cells.Add(frontWallLabelCell);
+                frontWallHeightRow.Cells.Add(frontWallTextboxCell);
+                frontWallHeightRow.Cells.Add(frontWallDropDownInchesCell);
+                frontWallHeightRow.Cells.Add(frontWallRadioAutoFillCell);
+                #endregion
+
+                #region Table Row # Wall Slope Added
+                roofSlopeLabelCell.Controls.Add(roofSlopeLabel);
+                roofSlopeTextboxCell.Controls.Add(roofSlopeTextbox);
+                roofSlopeRunLabelCell.Controls.Add(roofSlopeRunLabel);
+                roofSlopeRadioAutoFillCell.Controls.Add(roofSlopeRadioAutoFill);
+                roofSlopeRadioAutoFillCell.Controls.Add(roofSlopeRadioLabel);
+                roofSlopeRadioAutoFillCell.Controls.Add(roofSlopeRadioTextLabel);
+
+                tblWallHeights.Rows.Add(roofSlopeRow);
+
+                roofSlopeRow.Cells.Add(roofSlopeLabelCell);
+                roofSlopeRow.Cells.Add(roofSlopeTextboxCell);
+                roofSlopeRow.Cells.Add(roofSlopeRunLabelCell);
+                roofSlopeRow.Cells.Add(roofSlopeRadioAutoFillCell);
+                #endregion
+
+                string hiddenString = "";
+                hiddenString += "<input id=\"hidFrontWallHeight\" type=\"hidden\" runat=\"server\" />";
+                hiddenString += "<input id=\"hidBackWallHeight\" type=\"hidden\" runat=\"server\" />";
+                hiddenString += "<input id=\"hidRoofSlope\" type=\"hidden\" runat=\"server\" />";
+
+                hiddenFieldsDiv.InnerHtml += hiddenString;
+            }
         }
 
         protected void populateWallDoorOptions(int i, int proposedWallCount)
@@ -482,9 +1207,9 @@ namespace SunspaceDealerDesktop
                 {
                     if (title == "Patio")
                     {
-                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_400_PATIO_STYLES.Count(); j++)
+                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_PATIO_STYLES.Count(); j++)
                         {
-                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j]));
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_PATIO_STYLES[j]));
                         }
                     }
                     else
@@ -499,9 +1224,9 @@ namespace SunspaceDealerDesktop
                 {
                     if (title == "Patio")
                     {
-                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_400_PATIO_STYLES.Count(); j++)
+                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_PATIO_STYLES.Count(); j++)
                         {
-                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j]));
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_PATIO_STYLES[j]));
                         }
                     }
                     else
@@ -516,9 +1241,9 @@ namespace SunspaceDealerDesktop
                 {
                     if (title == "Patio")
                     {
-                        for (int j = 0; j < Constants.DOOR_MODEL_200_300_400_PATIO_STYLES.Count(); j++)
+                        for (int j = 0; j < Constants.DOOR_MODEL_400_PATIO_STYLES.Count(); j++)
                         {
-                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_400_PATIO_STYLES[j]));
+                            doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_400_PATIO_STYLES[j], Constants.DOOR_MODEL_400_PATIO_STYLES[j]));
                         }
                     }
                     else
@@ -579,55 +1304,7 @@ namespace SunspaceDealerDesktop
                 doorNumberOfVentsLBL.AssociatedControlID = "ddlDoorNumberOfVents" + i + title;
 
                 #endregion
-
-                #region Table:# Row Door Transom (tblDoorDetails)
-
-                TableRow doorTransomRow = new TableRow();
-                doorTransomRow.ID = "rowDoorTransom" + i + title;
-                doorTransomRow.Attributes.Add("style", "display:none;");
-                TableCell doorTransomLBLCell = new TableCell();
-                TableCell doorTransomDDLCell = new TableCell();
-
-                Label doorTransomLBL = new Label();
-                doorTransomLBL.ID = "lblDoorTransom" + i + title;
-                doorTransomLBL.Text = "Transom Type:";
-
-                DropDownList doorTransomDDL = new DropDownList();
-                doorTransomDDL.ID = "ddlDoorTransom" + i + title;
-                doorTransomDDL.Attributes.Add("onchange", "doorTransomStyle('" + title + "','" + i + "')");
-
-
-                if (currentModel == "M100")
-                {
-                    for (int j = 0; j < Constants.MODEL_100_TRANSOM_TYPES.Count(); j++)
-                    {
-                        doorTransomDDL.Items.Add(new ListItem(Constants.MODEL_100_TRANSOM_TYPES[j], Constants.MODEL_100_TRANSOM_TYPES[j]));
-                    }
-                }
-                else if (currentModel == "M200")
-                {
-                    for (int j = 0; j < Constants.MODEL_200_TRANSOM_TYPES.Count(); j++)
-                    {
-                        doorTransomDDL.Items.Add(new ListItem(Constants.MODEL_200_TRANSOM_TYPES[j], Constants.MODEL_200_TRANSOM_TYPES[j]));
-                    }
-                }
-                else if (currentModel == "M300")
-                {
-                    for (int j = 0; j < Constants.MODEL_300_TRANSOM_TYPES.Count(); j++)
-                    {
-                        doorTransomDDL.Items.Add(new ListItem(Constants.MODEL_300_TRANSOM_TYPES[j], Constants.MODEL_300_TRANSOM_TYPES[j]));
-                    }
-                }
-                else if (currentModel == "M400")
-                {
-                    for (int j = 0; j < Constants.MODEL_400_TRANSOM_TYPES.Count(); j++)
-                    {
-                        doorTransomDDL.Items.Add(new ListItem(Constants.MODEL_400_TRANSOM_TYPES[j], Constants.MODEL_400_TRANSOM_TYPES[j]));
-                    }
-                }
-
-                #endregion
-
+                
                 #region Table:# Row Door Transom Vinyl (tblDoorDetails)
 
                 TableRow doorTransomVinylRow = new TableRow();
@@ -1300,19 +1977,7 @@ namespace SunspaceDealerDesktop
                 doorNumberOfVentsRow.Cells.Add(doorNumberOfVentsDDLCell);
 
                 #endregion
-
-                #region Table:# Row Door Transom Added To Table (tblDoorDetails)
-
-                doorTransomLBLCell.Controls.Add(doorTransomLBL);
-                doorTransomDDLCell.Controls.Add(doorTransomDDL);
-
-                tblDoorDetails.Rows.Add(doorTransomRow);
-
-                doorTransomRow.Cells.Add(doorTransomLBLCell);
-                doorTransomRow.Cells.Add(doorTransomDDLCell);
-
-                #endregion
-
+                
                 #region Table:# Row Door Transom Vinyl Types Added To Table (tblDoorDetails)
 
                 doorTransomVinylTypesLBLCell.Controls.Add(doorTransomVinylLBL);
@@ -1696,15 +2361,8 @@ namespace SunspaceDealerDesktop
 
             #endregion
         }
-
+        
         #region window stuff
-
-        /*
-         * fill all the usable space with largest size windows
-         * if extra usable space left over, divide the window size in 2 and add a window
-         * if some weird size of extra space left over, add filler 
-         */
-
 
         /// <summary>
         /// This method creates radio buttons/dropdowns for window frame colour options for all models 
@@ -2105,9 +2763,9 @@ namespace SunspaceDealerDesktop
 
 
             typeRadio.Checked = (windowTypeId == "V4T" && currentModel == "M200") ? true : //select/check the radio button if current selection is default value
-                (windowTypeId == "SinglePaneHorizontalRollers" && currentModel == "M300") ? true : //select/check the radio button if current selection is default value
-                (windowTypeId == "DoublePaneSingleSlider" && currentModel == "M400") ? true : false; //select/check the radio button if current selection is default value
-            
+                (windowTypeId == "DoubleSlider" && currentModel == "M300") ? true : //select/check the radio button if current selection is default value
+                (windowTypeId == "SingleSlider" && currentModel == "M400") ? true : false; //select/check the radio button if current selection is default value
+
             //screenRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
 
             //Label to create clickable area for radio button
@@ -2440,7 +3098,7 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void model100WindowOptions()
         {
-            screenWindowOptions();
+            screenOptions();
         }
         
         /// <summary>
@@ -2457,12 +3115,12 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void model200WindowOptions()
         {
-            v4tWindowOptions();
-            h2tWindowOptions();
-            fixedVinylWindowOptions();
+            v4tOptions();
+            horizontalRollerOptions();
+            fixedVinylOptions();
             openWall();
             solidWall();
-            screenWindowOptions();
+            screenOptions();
 
             windowFramingColourOptions(true, true, true, true, true, true, true, true);
         }
@@ -2479,11 +3137,11 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void model300WindowOptions()
         {            
-            singlePaneHorizontalRollersWindowOptions();
-            fixedGlassWindowOptions();
+            doubleSliderOptions();
+            fixedGlassOptions();
             openWall();
             solidWall();
-            screenWindowOptions();
+            screenOptions();
 
             windowFramingColourOptions(true);
         }
@@ -2499,8 +3157,8 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void model400WindowOptions()
         {
-            doublePaneSingleSliderWindowOptions();
-            fixedGlassWindowOptions();
+            singleSliderOptions();
+            fixedGlassOptions();
             openWall();
             solidWall();
 
@@ -2510,19 +3168,25 @@ namespace SunspaceDealerDesktop
         /// <summary>
         /// screen type (better vue insect screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen)
         /// </summary>
-        protected void screenWindowOptions()
+        protected void screenOptions()
         {
             RadioButton screenRadio, typeRadio;
             Label screenLabelRadio, screenLabel, typeLabelRadio, typeLabel;
+
             
+
             wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
 
             //RadioButton created for every option
             screenRadio = new RadioButton();
             screenRadio.ID = "radScreen";     //Giving an appropriate id to radio buttons based on current type of window
-            screenRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
-            screenRadio.Checked = (currentModel == "M100") ? true : false; //select/check the radio button if current selection is default value
-            //screenRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
+            
+            if (currentModel == "M100")
+            {
+                screenRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
+                screenRadio.Checked = true;// (currentModel == "M100") ? true : false; //select/check the radio button if current selection is default value
+            }
+                //screenRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
 
             //Label to create clickable area for radio button
             screenLabelRadio = new Label();
@@ -2664,34 +3328,36 @@ namespace SunspaceDealerDesktop
 
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            #region No Screen
+            if (currentModel != "M100")
+            {
+                #region No Screen
 
-            //li tag to hold Window type radio button and all its content
-            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+                //li tag to hold Window type radio button and all its content
+                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
 
-            //Window type radio button
-            typeRadio = new RadioButton();
-            typeRadio.ID = "radNoScreen"; //Adding appropriate id to Window type radio button
-            typeRadio.GroupName = "ScreenRadios";         //Adding group name for all Window types
-            //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+                //Window type radio button
+                typeRadio = new RadioButton();
+                typeRadio.ID = "radNoScreen"; //Adding appropriate id to Window type radio button
+                typeRadio.GroupName = "ScreenRadios";         //Adding group name for all Window types
+                //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
 
-            //Window type radio button label for clickable area
-            typeLabelRadio = new Label();
-            typeLabelRadio.AssociatedControlID = "radNoScreen";  //Tying this label to the radio button
+                //Window type radio button label for clickable area
+                typeLabelRadio = new Label();
+                typeLabelRadio.AssociatedControlID = "radNoScreen";  //Tying this label to the radio button
 
-            //Window type radio button label text
-            typeLabel = new Label();
-            typeLabel.AssociatedControlID = "radNoScreen";    //Tying this label to the radio button
-            typeLabel.Text = "No Screen";
+                //Window type radio button label text
+                typeLabel = new Label();
+                typeLabel.AssociatedControlID = "radNoScreen";    //Tying this label to the radio button
+                typeLabel.Text = "No Screen";
 
 
-            wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+                wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
+                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
 
-            #endregion
-
+                #endregion
+            }
             ////////////////////////////////////////////////
 
             wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>"));
@@ -2701,7 +3367,7 @@ namespace SunspaceDealerDesktop
         /// <summary>
         /// - V4T tints (clear, smoke grey, dark grey, bronze, Mixed)
         /// </summary>
-        protected void v4tWindowOptions()
+        protected void v4tOptions()
         {
             tintOptions("V4T", "Vertical 4 Track", false, true, true, true, true);
         }
@@ -2709,41 +3375,41 @@ namespace SunspaceDealerDesktop
         /// <summary>
         /// H2T (vinyl) tints (clear, smoke grey, dark grey, bronze)
         /// </summary>
-        protected void h2tWindowOptions()
+        protected void horizontalRollerOptions()
         {
-            tintOptions("H2T", "Horizontal 2 Track [XX]", false, true, true, true);
+            tintOptions("HorizontalRoller", "Horizontal Roller", false, true, true, true);
         }
 
         /// <summary>
         /// fixed window tints (clear, smoke grey, dark grey, bronze)
         /// </summary>
-        protected void fixedVinylWindowOptions()
+        protected void fixedVinylOptions()
         {
-            tintOptions("FixedVinyl", "Fixed Vinyl Windows", false, true, true, true);
+            tintOptions("FixedVinyl", "Fixed Vinyl", false, true, true, true);
         }
 
         /// <summary>
         /// glass tint (grey, bronze, clear)
         /// </summary>
-        protected void singlePaneHorizontalRollersWindowOptions()
+        protected void doubleSliderOptions()
         {
-            tintOptions("SinglePaneHorizontalRollers", "Single Pane Horizontal Rollers [XX]", true, false, false, true);
+            tintOptions("DoubleSlider", "Double Slider", true, false, false, true);
         }
 
         /// <summary>
         /// fixed glass window tints (grey, bronze, clear)
         /// </summary>
-        protected void fixedGlassWindowOptions()
+        protected void fixedGlassOptions()
         {
-            tintOptions("Fixed", "Fixed Window", true, false, false, true);
+            tintOptions("FixedGlass", "Fixed Glass", true, false, false, true);
         }
 
         /// <summary>
         /// glass tint (grey, bronze, clear)
         /// </summary>
-        protected void doublePaneSingleSliderWindowOptions()
+        protected void singleSliderOptions()
         {
-            tintOptions("DoublePaneSingleSlider", "Double Pane Single Slider [XO, OX]", true, false, false, true);
+            tintOptions("SingleSlider", "Single Slider", true, false, false, true);
         }
 
         /// <summary>
@@ -2785,62 +3451,62 @@ namespace SunspaceDealerDesktop
                 html += "<input id=\"hidWall" + i + "Length\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall length
                 html += "<input id=\"hidWall" + i + "RightFiller\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall right filler
                 html += "<input id=\"hidWall" + i + "SoffitLength\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall soffit length
+                html += "<input id=\"hidWall" + i + "Slope\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall slope
 
 
-
-                html += "<div id=\"hidWall" + i + "Length\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall length
-                html += "<div id=\"hidWall" + i + "LeftFiller\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall left filler
-                html += "<div id=\"hidWall" + i + "RightFiller\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall right filler
-                html += "<div id=\"hidWall" + i + "SetBack\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall setback
-                html += "<div id=\"hidWall" + i + "SoffitLength\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall soffit length
-                html += "<div id=\"hidWall" + i + "StartHeight\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall start height
-                html += "<div id=\"hidWall" + i + "EndHeight\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall end height
+                //html += "<div id=\"hidWall" + i + "Length\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall length
+                //html += "<div id=\"hidWall" + i + "LeftFiller\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall left filler
+                //html += "<div id=\"hidWall" + i + "RightFiller\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall right filler
+                //html += "<div id=\"hidWall" + i + "SetBack\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall setback
+                //html += "<div id=\"hidWall" + i + "SoffitLength\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall soffit length
+                //html += "<div id=\"hidWall" + i + "StartHeight\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall start height
+                //html += "<div id=\"hidWall" + i + "EndHeight\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall end height
                 //html += "<input id=\"hidWall" + i + "Slope\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall slope
                 
             }
             return html; //return the hidden field tags
         }
 
-        /// <summary>
-        /// This is an event, that is used to dynamically create wall objects with the appropriate details
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void createWallObjects(object sender, EventArgs e)
-        {
+        ///// <summary>
+        ///// This is an event, that is used to dynamically create wall objects with the appropriate details
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //protected void createWallObjects(object sender, EventArgs e)
+        //{
 
-            //there are issues with getting values from dynamically generated hidden fields
-            //hard coded hidden fields work fine...
+        //    //there are issues with getting values from dynamically generated hidden fields
+        //    //hard coded hidden fields work fine...
             
-            //need to dynamically determine slope, and soffit length of each wall and store it in hidden fields
+        //    //need to dynamically determine slope, and soffit length of each wall and store it in hidden fields
 
-            float length, startHeight, endHeight, soffit;//, slope;
-            string orientation, name, type, model;
-            HiddenField wallLength, wallSoffit;
-            for (int i = 0; i < strWalls.Count(); i++)
-            {
-                //find and store the dynamically created hidden fields
-                wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField; //wall length
-                wallSoffit = hiddenFieldsDiv.FindControl("hidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
+        //    float length, startHeight, endHeight, soffit;//, slope;
+        //    string orientation, name, type, model;
+        //    HiddenField wallLength, wallSoffit;
+        //    for (int i = 0; i < strWalls.Count(); i++)
+        //    {
+        //        //find and store the dynamically created hidden fields
+        //        wallLength = hiddenFieldsDiv.FindControl("hidWall" + i + "Length") as HiddenField; //wall length
+        //        wallSoffit = hiddenFieldsDiv.FindControl("hidWall" + i + "SoffitLength") as HiddenField; //wall soffit length
 
                 
 
-                //length = wallLength.Value;
-                //startHeight = Convert.ToSingle(hidHeight.Value);
-                //endHeight = Convert.ToSingle(hidFrontWallHeight.Value);
-                //soffit = Convert.ToSingle(wallSoffit.Value);
-               // slope = Convert.ToSingle(hidRoofSlope.Value);
+        //        //length = wallLength.Value;
+        //        //startHeight = Convert.ToSingle(hidHeight.Value);
+        //        //endHeight = Convert.ToSingle(hidFrontWallHeight.Value);
+        //        //soffit = Convert.ToSingle(wallSoffit.Value);
+        //       // slope = Convert.ToSingle(hidRoofSlope.Value);
 
-                orientation = wallDetails[i, 5];
-                name = "wall " + i;
-                type = wallDetails[i, 4];
-                model = currentModel;
+        //        orientation = wallDetails[i, 5];
+        //        name = "wall " + i;
+        //        type = wallDetails[i, 4];
+        //        model = currentModel;
 
-                //string sof = wallSoffit.Value;
-                //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
-                walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel));
-            }
-        }
+        //        //string sof = wallSoffit.Value;
+        //        //create a wall object with the appropriate values in the fields and attributes of it and add it to the walls list
+        //        //walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel));
+        //    }
+        //}
 
         protected void btnQuestion4_Click(object sender, EventArgs e)
         {

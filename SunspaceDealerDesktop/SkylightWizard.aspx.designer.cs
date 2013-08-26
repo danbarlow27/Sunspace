@@ -13,67 +13,22 @@ namespace SunspaceDealerDesktop {
     public partial class SkylightWizard {
         
         /// <summary>
-        /// lblAsk control.
+        /// lblTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAsk;
+        protected global::System.Web.UI.WebControls.Label lblTitle;
         
         /// <summary>
-        /// radSkylightsYes control.
+        /// panelOptionPlaceholder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radSkylightsYes;
-        
-        /// <summary>
-        /// lblSkylightsYesRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSkylightsYesRadio;
-        
-        /// <summary>
-        /// lblSkylightsYes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSkylightsYes;
-        
-        /// <summary>
-        /// radSkylightsNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radSkylightsNo;
-        
-        /// <summary>
-        /// lblSkylightsNoRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSkylightsNoRadio;
-        
-        /// <summary>
-        /// lblSkylightsNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSkylightsNo;
+        protected global::System.Web.UI.WebControls.PlaceHolder panelOptionPlaceholder;
         
         /// <summary>
         /// btnQuestion1 control.
@@ -83,5 +38,14 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnQuestion1;
+        
+        /// <summary>
+        /// hiddenInputPlaceholder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder hiddenInputPlaceholder;
     }
 }
