@@ -250,18 +250,8 @@
             }
 
             //similar checks as above for transom, update hidden values
-            if (document.getElementById("<%=txtTransomHeight.ClientID%>").value != "" &&
-                document.getElementById("<%=ddlTransomType.ClientID%>").value != "") {
-
-                //if not a number, its invalid, otherwise move to hidden fields
-                if (isNaN(document.getElementById("<%=txtTransomHeight.ClientID%>").value)) {
-                    console.log("Invalid transom height");
-                }
-                else {
-                    document.getElementById("<%=hidTransomHeight.ClientID%>").value = document.getElementById("<%=txtTransomHeight.ClientID%>").value;
-                    document.getElementById("<%=hidTransomType.ClientID%>").value = document.getElementById("<%=ddlTransomType.ClientID%>").value;
-                }
-
+            if (document.getElementById("<%=ddlTransomType.ClientID%>").value != "") {
+                document.getElementById("<%=hidTransomType.ClientID%>").value = document.getElementById("<%=ddlTransomType.ClientID%>").value;
             }
             else {
                 optionChecksPassed = false;
@@ -1063,19 +1053,7 @@
                                     <asp:Table runat="server">
                                         <asp:TableRow>
                                             <asp:TableCell>
-                                                <asp:Label ID="lblTransomHeight" AssociatedControlID="txtTransomHeight" runat="server" Text="Height:" />
-                                            </asp:TableCell>
-                                            <asp:TableCell>
-                                                <asp:TextBox ID="txtTransomHeight" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" runat="server" />
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblTransomType" AssociatedControlID="txtTransomHeight" runat="server" Text="Type:" />
-                                            </asp:TableCell>
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlTransomType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                                Type: <asp:DropDownList ID="ddlTransomType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
                                     </asp:Table>
