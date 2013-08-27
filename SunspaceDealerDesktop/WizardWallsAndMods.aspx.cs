@@ -179,6 +179,8 @@ namespace SunspaceDealerDesktop
             /********************All of this can go to the page where ******************/
             /********************the coordList string is concatenated!******************/
             /***************************************************************************/
+            int hiddenDivWallRequirementNumber = 0;
+
             for (int i = 0; i < strWalls.Count(); i++) //run through all the walls in the array
             {
                 string[] tempDetails = strWalls[i].Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the given wall string into its individual detail items and store it in temporary array
@@ -188,11 +190,7 @@ namespace SunspaceDealerDesktop
                     wallDetails[i, j] = tempDetails[j]; //store it in the appropriate spot for the appropriate line in the wallDetails array 
                 }
             }
-            
-            hiddenFieldsDiv.InnerHtml = createHiddenFields(strWalls.Count()); //create hidden fields on page load dynamically, pass it number of walls
-
-
-            
+                                    
             for (int i = 1; i <= strWalls.Count(); i++) //for each wall in walls 
             {
                 //if (wallDetails[i - 1, 4] == "E") //wall type is existing
@@ -203,17 +201,21 @@ namespace SunspaceDealerDesktop
                 //else //wall type is proposed
                 if (wallDetails[i - 1, 4] == "P")
                 {
+                    hiddenDivWallRequirementNumber++;
                     displayedWallCount++; //increment the proposed wall counter
                     populateTblProposed(i, displayedWallCount); //populate the proposed walls table on slide 1                    
                     populateWallDoorOptions(i, displayedWallCount); //populate slide 3 with appropriate proposed wall door options
                 }
                 else if (wallDetails[i - 1, 4] == "G")
                 {
+                    hiddenDivWallRequirementNumber++;
                     Session["isGable"] = true;
                     populateTblProposedGable(i, displayedWallCount); //populate the gable post table on slide 1
                 }
             }
 
+            hiddenFieldsDiv.InnerHtml = createHiddenFields(strWalls.Count()); //create hidden fields on page load dynamically, pass it number of walls
+            
             populateTblWallHeights();
 
             //do the windows stuff

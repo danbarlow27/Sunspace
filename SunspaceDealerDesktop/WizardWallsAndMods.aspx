@@ -664,7 +664,9 @@
 
             if (isValid) { //if everything is valid
 
+                var existingWallCount=0;
                 for (var i = 1; i <= lineList.length; i++) { //populate the hidden fields for each wall
+                    
                     if (coordList[i - 1][4] === "P" || coordList[i - 1][4] === "G") {
                         calculateSetBack((i - 1)); //calculate setback of the given wall
 
@@ -679,10 +681,12 @@
                             +(document.getElementById("MainContent_txtWall" + i + "RightFiller").value) + //textbox value
                             +(document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").selectedIndex].value); //dropdown value
                         document.getElementById("hidWall" + i + "SoffitLength").value = wallSoffitArray[i - 1];//store wall soffitlength
-                        answer += "Wall " + i + ": " + document.getElementById("hidWall" + i + "Length").value + "<br/>"; //store the values in the answer variable to be displayed
+                        answer += "Wall " + (i-existingWallCount) + ": " + document.getElementById("hidWall" + i + "Length").value + "<br/>"; //store the values in the answer variable to be displayed
                   
                     }
-
+                    else{
+                        existingWallCount++;
+                    }
                 }
 
                 //store roomProjection in the roomProjection variable and hidden field
@@ -702,7 +706,8 @@
                 document.getElementById('pagerOne').style.display = "inline";
                 document.getElementById('MainContent_btnQuestion1').disabled = false;
             }
-
+            
+            checkRoofPanels();
             return false;
         }
 
