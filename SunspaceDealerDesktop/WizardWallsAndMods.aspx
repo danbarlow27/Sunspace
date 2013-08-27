@@ -619,7 +619,7 @@
 
             rise = parseFloat(backWallHeight) - parseFloat(frontWallHeight);
 
-            return (((rise * RUN) / (roomProjection - soffitLength)).toFixed(2));  //slope over 12, rounded to 2 decimal places
+            return ((rise / (roomProjection - soffitLength)) * 12).toFixed(2);  //slope over 12, rounded to 2 decimal places
         }
         
         /**
@@ -977,19 +977,19 @@
 
                 if (isValid) { //if all is valid
                     //store the values in the appropriate hidden fields
-                    document.getElementById("MainContent_hidBackWallHeight").value =
-                        parseFloat(document.getElementById("MainContent_txtBackWallHeight").value) + parseFloat($("#MainContent_backWallInchSpecificDDL").val());
-                    document.getElementById("MainContent_hidFrontWallHeight").value =
+                    document.getElementById("hidBackWallHeight").value =
+                        parseFloat($("#MainContent_txtBackWallHeight").val()) + parseFloat($("#MainContent_backWallInchSpecificDDL").val());
+                    document.getElementById("hidFrontWallHeight").value =
                         parseFloat(document.getElementById("MainContent_txtFrontWallHeight").value) + parseFloat($("#MainContent_frontWallInchSpecificDDL").val());
-                    document.getElementById("MainContent_hidRoofSlope").value = parseFloat(document.getElementById("MainContent_txtRoofSlope").value);
+                    document.getElementById("hidRoofSlope").value = parseFloat(document.getElementById("MainContent_txtRoofSlope").value);
 
                     //store the values in the answer variable to be displayed on the side panel
-                    answer += "Back Wall: " + document.getElementById("MainContent_hidBackWallHeight").value;
-                    answer += "Front Wall: " + document.getElementById("MainContent_hidFrontWallHeight").value;
-                    answer += "Roof Slope: " + document.getElementById("MainContent_hidRoofSlope").value;
+                    answer += "Back Wall: " + document.getElementById("hidBackWallHeight").value;
+                    answer += "<br/>Front Wall: " + document.getElementById("hidFrontWallHeight").value;
+                    answer += "<br/>Roof Slope: " + document.getElementById("hidRoofSlope").value;
 
                     //display the answer on the side panel
-                    $('#MainContent_lblWallHeightsAnswer').text(answer);
+                    $('#MainContent_lblWallHeightsAnswer').html(answer);
                     document.getElementById('pagerTwo').style.display = "inline";
                     document.getElementById('MainContent_btnQuestion2').disabled = false;
                 }
@@ -1001,9 +1001,36 @@
                     document.getElementById('MainContent_btnQuestion2').disabled = false;
                 }
             }
+
+            checkRoofPanels();
+
             return isValid;
         }
         
+        function checkRoofPanels() {
+            document.getElementById("<%=txtErrorMessage.ClientID%>").value = ""
+            var checkRoofSlope = (document.getElementById("MainContent_txtRoofSlope").value)/RUN;
+            var checkRoofProjection = roomProjection - soffitLength;
+            var roofRise = checkRoofSlope * checkRoofProjection;
+
+            var roofPanelProjection = Math.sqrt(Math.pow(roofRise,2) + Math.pow(checkRoofProjection, 2));
+            
+            console.log(roofPanelProjection + " " + <%=FOAM_PANEL_PROJECTION%>);
+
+            if (roofPanelProjection > <%=FOAM_PANEL_PROJECTION%>)
+            {
+                document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have foam panels with this projection\n";
+            }
+            if (roofPanelProjection > <%=ACRYLIC_PANEL_PROJECTION%>)
+            {
+                document.getElementById("<%=txtErrorMessage.ClientID%>").value += "You may not have acrylic panels with this projection\n";
+            }
+            if (roofPanelProjection > <%=THERMADECK_PANEL_PROJECTION%>)
+            {
+                document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have a roof with this projection\n";
+            }
+        }
+
         function sameWallHeight() {
 
             if ($('#MainContent_chkAutoWalls').prop('checked')) {
@@ -1266,7 +1293,7 @@
         </div>
 
         <%--<asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label>--%>
-        <textarea id="txtErrorMessage" class="txtErrorMessage" disabled="disabled" rows="5"></textarea>
+        <textarea id="txtErrorMessage" class="txtErrorMessage" disabled="disabled" rows="5" runat="server"></textarea>
     </div>
     
 <script src="Scripts/MiniCanvasFunctions.js"></script>
