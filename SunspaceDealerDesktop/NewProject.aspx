@@ -709,7 +709,7 @@
         function toggleMirrored(){
             if ($('#<%=chkMirrored.ClientID%>').is(':checked'))
             {
-
+                document.getElementById
             }
             else
             {
