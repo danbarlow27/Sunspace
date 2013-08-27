@@ -23,6 +23,9 @@ namespace SunspaceDealerDesktop
         public string model300TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_300_TRANSOM_TYPES);
         public string model400TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_400_TRANSOM_TYPES);
 
+        public string usStatesJ = new JavaScriptSerializer().Serialize(Constants.STATE_LIST);
+        public string canProvJ = new JavaScriptSerializer().Serialize(Constants.PROVINCE_LIST);
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["loggedIn"] == null)
@@ -44,6 +47,11 @@ namespace SunspaceDealerDesktop
             if (ddlCustomerCountry.SelectedValue == "CAN")
             {
                 ddlCustomerProvState.Items.Clear();
+                lblCustomerZip.Visible = false;
+                txtCustomerZip.Visible = false;
+
+                lblCustomerPostal.Visible = true;
+                txtCustomerPostal.Visible = true;
                 //Add provinces to the province/state ddl
                 for (int i = 0; i < Constants.PROVINCE_LIST.Count; i++)
                 {
@@ -53,6 +61,11 @@ namespace SunspaceDealerDesktop
             else
             {
                 ddlCustomerProvState.Items.Clear();
+                lblCustomerPostal.Visible = false;
+                txtCustomerPostal.Visible = false;
+
+                lblCustomerZip.Visible = true;
+                txtCustomerZip.Visible = true;
                 //Add states to the province/state ddl
                 for (int i = 0; i < Constants.STATE_LIST.Count; i++)
                 {

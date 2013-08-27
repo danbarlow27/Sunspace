@@ -8,6 +8,7 @@
             //changeme when component ordering is put into place
             window.location.replace("Home.aspx");
         }
+        
         function newProjectCheckQuestion1() {
             console.log("onkeyup slide1");
             document.getElementById('<%=txtErrorMessage.ClientID%>').value = "";
@@ -53,17 +54,35 @@
                     document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer City is required.\n";
                 }
 
-                //same troubles as before, checking .value.length
-                var zipCode = document.getElementById("<%=hidZip.ClientID%>").value;
-
-                //if zip code is not valid numeric, or it is not 5 digits, it is not valid
-                if (document.getElementById("<%=txtCustomerZip.ClientID%>").value == "")
+                //check zipcode
+                if (document.getElementById("<%=ddlCustomerCountry.ClientID%>").value == "Canada")
                 {
-                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Zip Code is required.\n";
+                    var zipCode = document.getElementById("<%=hidZip.ClientID%>").value;
+
+                    //if zip code is not valid numeric, or it is not 5 digits, it is not valid
+                    if (document.getElementById("<%=txtCustomerZip.ClientID%>").value == "")
+                    {
+                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Zip Code is required.\n";
+                    }
+                    else if (isNaN(zipCode) || zipCode.length < 5) {
+                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Zip Code you entered is not valid.\n";
+                    }
                 }
-                else if (isNaN(zipCode) || zipCode.length < 5) {
-                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The zip code you entered is not valid.\n";
-                }
+
+                //check postal code
+                if (document.getElementById("<%=ddlCustomerCountry.ClientID%>").value == "United States")
+                {
+                    var postalCode = document.getElementById("<%=hidPostal.ClientID%>").value;
+
+                    //if zip code is not valid numeric, or it is not 5 digits, it is not valid
+                    if (document.getElementById("<%=txtCustomerPostal.ClientID%>").value == "")
+                    {
+                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Postal Code is required.\n";
+                    }
+                    else if (isNaN(postalCode) || postalCode.length < 5) {
+                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Postal Code you entered is not valid.\n";
+                    }
+            }
 
                 //check to see if email is valid
                 if (document.getElementById("<%=txtCustomerEmail.ClientID%>").value == "")
@@ -112,6 +131,7 @@
                     document.getElementById("<%=txtCustomerAddress.ClientID%>").value == "" &&
                     document.getElementById("<%=txtCustomerCity.ClientID%>").value == "" &&
                     document.getElementById("<%=txtCustomerZip.ClientID%>").value == "" &&
+                    document.getElementById("<%=txtCustomerPostal.ClientID%>").value == "" &&
                     document.getElementById("<%=txtCustomerPhone.ClientID%>").value == "" &&
                     document.getElementById("<%=txtCustomerEmail.ClientID%>").value == "") {
 
@@ -134,6 +154,7 @@
                 document.getElementById("<%=hidAddress.ClientID%>").value = "";
                 document.getElementById("<%=hidCity.ClientID%>").value = "";
                 document.getElementById("<%=hidZip.ClientID%>").value = "";
+                document.getElementById("<%=hidPostal.ClientID%>").value = "";
                 document.getElementById("<%=hidPhone.ClientID%>").value = "";
                 $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("");
 
@@ -734,6 +755,16 @@
 
                                             <asp:TableCell>
                                                 <asp:TextBox ID="txtCustomerZip" CssClass="txtField txtZipPhone" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="5"></asp:TextBox>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblCustomerPostal" AssociatedControlID="txtCustomerPostal" runat="server" Text="Postal Code:"></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtCustomerPostal" CssClass="txtField txtZipPhone" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="6"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -1418,6 +1449,7 @@
     <input id="hidProvState" type="hidden" runat="server" />
     <input id="hidCity" type="hidden" runat="server" />
     <input id="hidZip" type="hidden" runat="server" />
+    <input id="hidPostal" type="hidden" runat="server" />
     <input id="hidPhone" type="hidden" runat="server" />
     <input id="hidCell" type="hidden" runat="server" />
     <input id="hidEmail" type="hidden" runat="server" />

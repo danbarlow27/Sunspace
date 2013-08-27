@@ -184,6 +184,24 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txtCustomerZip;
         
         /// <summary>
+        /// lblCustomerPostal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCustomerPostal;
+        
+        /// <summary>
+        /// txtCustomerPostal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCustomerPostal;
+        
+        /// <summary>
         /// lblCustomerEmail control.
         /// </summary>
         /// <remarks>
@@ -2090,6 +2108,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidZip;
+        
+        /// <summary>
+        /// hidPostal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidPostal;
         
         /// <summary>
         /// hidPhone control.

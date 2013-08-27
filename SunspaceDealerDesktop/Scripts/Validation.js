@@ -43,3 +43,14 @@ function validatePhone(input)
 
         return errorMsg;
 }
+
+function checkPostalCode(postalCode) {
+    if (postalCode.search(/^([A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$)/) != -1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
