@@ -20,47 +20,65 @@ namespace SunspaceDealerDesktop
                 //Temporary session declarations
                 string[] tempArray = new String[27];
                 tempArray[26] = "Studio";
+                tempArray[26] = "Dealer Gable";
                 Session.Add("newProjectArray", tempArray);
-                Session.Add("sunroomProjection", 120);
-                Session.Add("sunroomWidth", 120);
-                Session.Add("roofSlope", 10);
+                Session.Add("sunroomProjection", 101.86576858656);
+                Session.Add("sunroomWidth", 100);
+                Session.Add("roofSlope", 1.2);
                 Session.Add("soffitLength", 0);
                 Session.Add("isStandalone", "false");
 
                 //Create a temporary fake list of walls, will use a [ shape, W/S/E walls going from 120 backwall to 110 front wall, 120 projection, 120 width, to match other fake variables
                 List<Wall> aListOfWalls = new List<Wall>();
 
+                //Wall aWall = new Wall();
+                //aWall.Length = 100;
+                //aWall.StartHeight = 120;
+                //aWall.EndHeight = 110;
+                //aWall.Orientation = "W";
+
+                //aListOfWalls.Add(aWall);
+
+                //aWall = new Wall();
+                //aWall.Length = 100;
+                //aWall.StartHeight = 110;
+                //aWall.EndHeight = 110;
+                //aWall.Orientation = "S";
+
+                //aListOfWalls.Add(aWall);
+
+                //aWall = new Wall();
+                //aWall.Length = 100;
+                //aWall.StartHeight = 110;
+                //aWall.EndHeight = 120;
+                //aWall.Orientation = "E";
+
+                //aListOfWalls.Add(aWall);
+
                 Wall aWall = new Wall();
-                aWall.Length = 120;
-                aWall.StartHeight = 120;
-                aWall.EndHeight = 110;
+                aWall.Length = 100;
+                aWall.StartHeight = 100;
+                aWall.EndHeight = 100;
                 aWall.Orientation = "W";
 
                 aListOfWalls.Add(aWall);
 
                 aWall = new Wall();
-                aWall.Length = 120;
-                aWall.StartHeight = 110;
-                aWall.EndHeight = 110;
-                aWall.Orientation = "SW";
+                aWall.Length = 100;
+                aWall.StartHeight = 100;
+                aWall.EndHeight = 100;
+                aWall.Orientation = "S";
 
                 aListOfWalls.Add(aWall);
 
                 aWall = new Wall();
-                aWall.Length = 120;
-                aWall.StartHeight = 110;
-                aWall.EndHeight = 110;
-                aWall.Orientation = "SE";
-
-                aListOfWalls.Add(aWall);
-
-                aWall = new Wall();
-                aWall.Length = 120;
-                aWall.StartHeight = 110;
-                aWall.EndHeight = 120;
+                aWall.Length = 100;
+                aWall.StartHeight = 100;
+                aWall.EndHeight = 100;
                 aWall.Orientation = "E";
 
                 aListOfWalls.Add(aWall);
+
                 Session.Add("listOfWalls", aListOfWalls);
                 //slope
                 //enter an overhang #
@@ -146,7 +164,7 @@ namespace SunspaceDealerDesktop
             #region Gable System
             //if gable, we need two studio roof systems and additional logic
             if (newProjectArray[26] == "Dealer Gable" || newProjectArray[26] == "Sunspace Gable")
-            {
+            {            
                 //If they've entered manual dimensions, we don't need to calculate overhang
                 if (hidProjection.Value != "")
                 {
@@ -157,34 +175,30 @@ namespace SunspaceDealerDesktop
                         roofProjection = Convert.ToSingle(hidProjection.Value);
                         roofWidth = Convert.ToSingle(hidWidth.Value);
                     }
-                }
-                //standalone overhangs are really easy, but since an overhang is not the same axis as the gable roof's projection we need some math
-                else if (Session["isStandalone"].ToString() == "true")
-                {
-                    float overhangAmount = Convert.ToSingle(hidOverhang.Value)*2; //*2 because two sides to each dimension
-
-                    roofWidth += overhangAmount;
-
-                    //Pythagorean Theorum with overhang being the run, c^2. Will be evenly split to both sides of the roof projection
-                    //giving us 2a^2 = c^2, or below, where overhangAmount is c^2
-
-                    //We leave it as 2a as they're both part of the same roof projection
-                    overhangAmount = (float)Math.Sqrt(Math.Pow(overhangAmount, 2));
-                    roofProjection += overhangAmount;
-                }
+                }    
                 else
                 {
-                    //todo, non-standalone gable roof                    
+                    roofProjection += (Convert.ToSingle(hidOverhang.Value) * 2);
+                    roofWidth += (Convert.ToSingle(hidOverhang.Value) * 2);
                 }
 
+                //Convert the room projection into actual roof projection
+                roofProjection = (float)Math.Sqrt(Math.Pow(2*roofProjection, 2));
+                roofProjection /= 2; //divide by 2 for each part of a gable
+
+                //Convert to nearest eighth inch
+                roofProjection *= 8;
+                int intRoofProjection = Convert.ToInt32(roofProjection);
+                roofProjection = intRoofProjection / 8f;
+                roofProjection *= 2; //remultiply to get whole projection
+
                 //Now that we have roof rojection and width, add it to session.
-                Session.Add("roofProjection", roofProjection);
+                Session.Add("roofProjection", (roofProjection));
                 Session.Add("roofWidth", roofWidth);
                 lblTest.Text = roofProjection.ToString() + " by " + roofWidth.ToString();
 
                 //A studio roof will only have one list entry, while a gable will have two
-                List<RoofModule> aModuleList = new List<RoofModule>();
-                List<RoofModule> gableModules = buildGableRoofModule(roofProjection, roofWidth);
+                List<RoofModule> gableModules = buildGableRoofModule((roofProjection), roofWidth);
 
                 bool isFireProtected = false;
                 bool isThermadeck = false;
@@ -212,10 +226,10 @@ namespace SunspaceDealerDesktop
                 }
 
                 //changeme hardcoded supports to 0
-                Roof aRoof = new Roof("Studio", hidInteriorRoofSkin.Value, hidExteriorRoofSkin.Value, Convert.ToSingle(hidThickness.Value), isFireProtected, isThermadeck, hasGutters, gutterPro, hidGutterColour.Value, hidStripeColour.Value, 0, roofProjection, roofWidth, aModuleList);
+                Roof aRoof = new Roof("Dealer Gable", hidInteriorRoofSkin.Value, hidExteriorRoofSkin.Value, Convert.ToSingle(hidThickness.Value), isFireProtected, isThermadeck, hasGutters, gutterPro, hidGutterColour.Value, hidStripeColour.Value, 0, roofProjection, roofWidth, gableModules);
                 Session.Add("completedRoof", aRoof);
 
-                Response.Redirect("SkylightWizard.aspx");
+                Response.Redirect("RoofTesting.aspx");
             }
             #endregion
 
@@ -223,6 +237,9 @@ namespace SunspaceDealerDesktop
             //studio system
             else
             {
+                //Subtract soffit length as that will be the true start point of the roof
+                roofProjection -= Convert.ToSingle(Session["soffitLength"]);
+
                 //If they've entered manual dimensions, we don't need to calculate overhang
                 if (hidProjection.Value != "")
                 {
@@ -234,47 +251,22 @@ namespace SunspaceDealerDesktop
                         roofWidth = Convert.ToSingle(hidWidth.Value);
                     }
                 }
-                //standalone overhangs are really easy, Since roofs are a square, we have 4 sides, so we add one 'overhang' per side. Consequently this is two 'overhangs' to projection and width
-                else if (Session["isStandalone"].ToString() == "true")
-                {
-                    //Subtract soffit length as that will be the true start point of the roof
-                    roofProjection -= Convert.ToSingle(Session["soffitLength"]);
-
-                    roofProjection += (Convert.ToSingle(hidOverhang.Value) * 2);
-                    roofWidth += (Convert.ToSingle(hidOverhang.Value) * 2);
-                }
                 else
                 {
-                    //Subtract soffit length as that will be the true start point of the roof
-                    roofProjection -= Convert.ToSingle(Session["soffitLength"]);
-
-                    //N, S will add one overhang to projection each
-                    //E, W, will add one overhang to width each
-                    //NE, NW, SE, SW will add one overhang to projection AND width, each.
-                    List<Wall> listOfWalls = (List<Wall>)Session["listOfWalls"];
-
                     roofProjection += (Convert.ToSingle(hidOverhang.Value) * 2);
                     roofWidth += (Convert.ToSingle(hidOverhang.Value) * 2);
-
-                    for (int i = 0; i < listOfWalls.Count; i++)
-                    {
-                        if (listOfWalls[i].WallType == "Existing")
-                        {
-                            if (listOfWalls[i].Orientation == "S")
-                            {
-                                roofProjection -= (Convert.ToSingle(hidOverhang.Value));
-                            }
-                            else if (listOfWalls[i].Orientation == "E")
-                            {
-                                roofWidth -= (Convert.ToSingle(hidOverhang.Value));
-                            }
-                            else if (listOfWalls[i].Orientation == "W")
-                            {
-                                roofWidth -= (Convert.ToSingle(hidOverhang.Value));
-                            }
-                        }
-                    }
                 }
+            
+                //Convert the room projection into actual roof projection
+                float actualSlope = (Convert.ToSingle(Session["roofSlope"])) / 12;
+                float roofRise = actualSlope * roofProjection;
+
+                roofProjection = (float)Math.Sqrt(Math.Pow(roofRise,2) + Math.Pow(roofProjection, 2));
+
+                //Convert to nearest eighth inch
+                roofProjection *= 8;
+                int intRoofProjection = Convert.ToInt32(roofProjection);
+                roofProjection = intRoofProjection/8f;
 
                 //Now that we have roof rojection and width, add it to session.
                 Session.Add("roofProjection", roofProjection);
@@ -313,6 +305,8 @@ namespace SunspaceDealerDesktop
                 //changeme hardcoded supports to 0
                 Roof aRoof = new Roof("Studio", hidInteriorRoofSkin.Value, hidExteriorRoofSkin.Value, Convert.ToSingle(hidThickness.Value), isFireProtected, isThermadeck, hasGutters, gutterPro, hidGutterColour.Value, hidStripeColour.Value, 0, roofProjection, roofWidth, aModuleList);
                 Session.Add("completedRoof", aRoof);
+
+                Response.Redirect("RoofTesting.aspx");
             }
             #endregion
         }
@@ -468,18 +462,19 @@ namespace SunspaceDealerDesktop
                         
             //lets start making a list of roof items
             List<RoofItem> itemList = new List<RoofItem>();
+            List<RoofItem> gableList = new List<RoofItem>();
 
             if (hidSystem.Value != "Thermadeck")
             {
                 //Add the first panel, because if we loop adding panel+seperator, we will end with one extra
                 //We use roofProjection/2 for the following, because this is just one side of the gable roof, thus half the projection
-                itemList.Add(new RoofItem(panelType, roofProjection/2, panelWidth));
+                itemList.Add(new RoofItem(panelType, roofProjection / 2, panelWidth));
 
                 //loop adding seperator then panels, minus one iteration because one panel is already added
                 for (int i = 0; i < (numberOfPanels - 1); i++)
                 {
                     itemList.Add(new RoofItem(panelBeamType, roofProjection/2, (float)panelBeamWidth));
-                    itemList.Add(new RoofItem(panelType, roofProjection/2, panelWidth));
+                    itemList.Add(new RoofItem(panelType, roofProjection / 2, panelWidth));
                 }
             }
             //if it is thermadeck
@@ -487,7 +482,7 @@ namespace SunspaceDealerDesktop
             {
                 for (int i = 0; i < numberOfPanels; i++)
                 {
-                    itemList.Add(new RoofItem(panelType, roofProjection/2, panelWidth));
+                    itemList.Add(new RoofItem(panelType, roofProjection / 2, panelWidth));
                 }
             }
             float itemWidthTotal = 0;
@@ -515,19 +510,19 @@ namespace SunspaceDealerDesktop
                 panelExteriorSkin = "OSB";
                 panelInteriorSkin = "OSB";
             }
-            RoofModule aModule = new RoofModule(roofProjection, roofWidth, panelInteriorSkin, panelExteriorSkin, itemList);
-            RoofModule aSecondModule = new RoofModule();
+
+            List<RoofModule> moduleList = new List<RoofModule>();
+            RoofModule aModule = new RoofModule(roofProjection / 2, roofWidth, panelInteriorSkin, panelExteriorSkin, itemList);
+            moduleList.Add(aModule);
 
             //We make a second module with the reverse roof items, because the gable is mirrored on the other side
-            //Count-1, because if 15 items, that's 0-14
-            for (int i = aModule.RoofItems.Count-1; i >= 0; i--)
+            for (int i = (itemList.Count - 1); i >= 0; i--)
             {
-                aSecondModule.RoofItems.Add(aModule.RoofItems[i]);
+                gableList.Add(itemList[i]);
             }
 
-            //Add both modules to a list, and return said list
-            List<RoofModule> moduleList = new List<RoofModule>();
-            moduleList.Add(aModule);
+            RoofModule aSecondModule = new RoofModule(roofProjection / 2, roofWidth, panelInteriorSkin, panelExteriorSkin, gableList);
+
             moduleList.Add(aSecondModule);
 
             return moduleList;

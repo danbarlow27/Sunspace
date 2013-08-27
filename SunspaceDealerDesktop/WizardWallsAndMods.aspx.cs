@@ -191,11 +191,11 @@ namespace SunspaceDealerDesktop
             
             for (int i = 1; i <= strWalls.Count(); i++) //for each wall in walls 
             {
-                if (wallDetails[i - 1, 4] == "E") //wall type is existing
-                {
-                    existingWallCount++; //increment the existing wall counter
-                    populateTblExisting(i, existingWallCount); //populate the existing walls table on slide 1
-                }
+                //if (wallDetails[i - 1, 4] == "E") //wall type is existing
+                //{
+                //    existingWallCount++; //increment the existing wall counter
+                //    populateTblExisting(i, existingWallCount); //populate the existing walls table on slide 1
+                //}
                 //else //wall type is proposed
                 if (wallDetails[i - 1, 4] == "P")
                 {
@@ -226,56 +226,56 @@ namespace SunspaceDealerDesktop
         /// <param name="i">index of the given wall, used to give appropriate ID's to input fields</param>
         /// <param name="existingWallCount">used to give appropriate values to the wall name labels</param>
          */
-        protected void populateTblExisting(int i, int existingWallCount)
-        {
-            TableRow row = new TableRow(); //new table to to be appended to the table with all the appropriate fields in it
+        //protected void populateTblExisting(int i, int existingWallCount)
+        //{
+        //    TableRow row = new TableRow(); //new table to to be appended to the table with all the appropriate fields in it
             
-            TableCell cell1 = new TableCell(); //new table cell to store the wall name label
-            TableCell cell2 = new TableCell(); //new table cell to store the textbox
-            TableCell cell3 = new TableCell(); //new table cell to store the dropdown list
+        //    TableCell cell1 = new TableCell(); //new table cell to store the wall name label
+        //    TableCell cell2 = new TableCell(); //new table cell to store the textbox
+        //    TableCell cell3 = new TableCell(); //new table cell to store the dropdown list
             
-            Label lblWallNumber = new Label(); //new label to display the wall name/number
+        //    Label lblWallNumber = new Label(); //new label to display the wall name/number
 
-            TextBox txtWallLength = new TextBox(); //new textbox for user input for length
+        //    TextBox txtWallLength = new TextBox(); //new textbox for user input for length
             
-            DropDownList ddlInchFractions = new DropDownList(); //new dropdown list for length inch fractions
+        //    DropDownList ddlInchFractions = new DropDownList(); //new dropdown list for length inch fractions
 
-            //add the inch fraction list items to the dropdown list
-            ddlInchFractions.Items.Add(lst0);
-            ddlInchFractions.Items.Add(lst18);
-            ddlInchFractions.Items.Add(lst14);
-            ddlInchFractions.Items.Add(lst38);
-            ddlInchFractions.Items.Add(lst12);
-            ddlInchFractions.Items.Add(lst58);
-            ddlInchFractions.Items.Add(lst34);
-            ddlInchFractions.Items.Add(lst78);
-            ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
+        //    //add the inch fraction list items to the dropdown list
+        //    ddlInchFractions.Items.Add(lst0);
+        //    ddlInchFractions.Items.Add(lst18);
+        //    ddlInchFractions.Items.Add(lst14);
+        //    ddlInchFractions.Items.Add(lst38);
+        //    ddlInchFractions.Items.Add(lst12);
+        //    ddlInchFractions.Items.Add(lst58);
+        //    ddlInchFractions.Items.Add(lst34);
+        //    ddlInchFractions.Items.Add(lst78);
+        //    ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
 
-            lblWallNumber.Text = "Existing Wall " + existingWallCount + " : "; //output wall name/number to the label
+        //    lblWallNumber.Text = "Existing Wall " + existingWallCount + " : "; //output wall name/number to the label
     
-            ddlInchFractions.ID = "ddlWall" + i + "InchFractions"; //give an appropriate id to dropdown list
-            lblWallNumber.ID = "lblWall" + i + "Length"; //give an appropriate id to the label
-            lblWallNumber.AssociatedControlID = "txtWall" + i + "Length"; //set the label's associated control id
+        //    ddlInchFractions.ID = "ddlWall" + i + "InchFractions"; //give an appropriate id to dropdown list
+        //    lblWallNumber.ID = "lblWall" + i + "Length"; //give an appropriate id to the label
+        //    lblWallNumber.AssociatedControlID = "txtWall" + i + "Length"; //set the label's associated control id
 
-            txtWallLength.ID = "txtWall" + i + "Length"; //give an appropriate id to the textbox
-            txtWallLength.CssClass = "txtField txtLengthInput"; //give the textbox a css class
-            txtWallLength.MaxLength = 3; //set the max length of the textbox to prevent invalid input
-            txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
-            txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
-            txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()"); //set its attribute to highlight walls on focus
-            txtWallLength.Attributes.Add("onblur", "resetWalls()"); //set its attribute to reset walls on blur
+        //    txtWallLength.ID = "txtWall" + i + "Length"; //give an appropriate id to the textbox
+        //    txtWallLength.CssClass = "txtField txtLengthInput"; //give the textbox a css class
+        //    txtWallLength.MaxLength = 3; //set the max length of the textbox to prevent invalid input
+        //    txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
+        //    txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+        //    txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()"); //set its attribute to highlight walls on focus
+        //    txtWallLength.Attributes.Add("onblur", "resetWalls()"); //set its attribute to reset walls on blur
 
-            cell1.Controls.Add(lblWallNumber); //append the label to cell 1
-            cell2.Controls.Add(txtWallLength); //append the textbox to cell 2
-            cell3.Controls.Add(ddlInchFractions); //append the dropdown to cell 3
+        //    cell1.Controls.Add(lblWallNumber); //append the label to cell 1
+        //    cell2.Controls.Add(txtWallLength); //append the textbox to cell 2
+        //    cell3.Controls.Add(ddlInchFractions); //append the dropdown to cell 3
             
-            tblExistingWalls.Rows.Add(row); //append the row to the existing walls table
+        //    tblExistingWalls.Rows.Add(row); //append the row to the existing walls table
 
-            //append all the cells to the row
-            row.Cells.Add(cell1); 
-            row.Cells.Add(cell2);
-            row.Cells.Add(cell3);
-        }
+        //    //append all the cells to the row
+        //    row.Cells.Add(cell1); 
+        //    row.Cells.Add(cell2);
+        //    row.Cells.Add(cell3);
+        //}
 
 
         /// <summary>
@@ -3584,6 +3584,8 @@ namespace SunspaceDealerDesktop
                 }
             }
 
+            Session.Add("sunroomProjection", hidRoomProjection.Value);
+            Session.Add("sunroomWidth", hidRoomWidth.Value);
             Response.Redirect("TestingHiddens.aspx");
 
         }
