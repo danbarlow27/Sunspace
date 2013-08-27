@@ -709,7 +709,13 @@
         function toggleMirrored(){
             if ($('#<%=chkMirrored.ClientID%>').is(':checked'))
             {
+                var theImage;
 
+                if ($('#<%=radPreset4.ClientID%>'.is(':checked')))
+                {
+                    theImage = document.getElementById("<%=imbPreset4.ClientID%>");
+                    theImage.setAttribute("ImageUrl", "./images/layout/Preset4M.png");
+                }
             }
             else
             {
