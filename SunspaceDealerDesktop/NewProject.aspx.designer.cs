@@ -1840,6 +1840,33 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Image imbPresetC1;
         
         /// <summary>
+        /// chkMirrored control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkMirrored;
+        
+        /// <summary>
+        /// lblMirroredCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMirroredCheck;
+        
+        /// <summary>
+        /// lblMirrored control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMirrored;
+        
+        /// <summary>
         /// btnQuestion8 control.
         /// </summary>
         /// <remarks>

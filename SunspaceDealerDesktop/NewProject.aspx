@@ -705,6 +705,17 @@
             console.log(re.test(anEmail).toString());
             return re.test(anEmail);
         }
+
+        function toggleMirrored(){
+            if ($('#<%=chkMirrored.ClientID%>').is(':checked'))
+            {
+
+            }
+            else
+            {
+
+            }
+        }
     </script>
 
     <div class="slide-window"  >
@@ -1373,6 +1384,11 @@
                         </asp:Table>         
                     </li>
 
+                    <asp:CheckBox ID="chkMirrored" runat="server" onclick="toggleMirrored()" />
+                    <asp:Label ID="lblMirroredCheck" AssociatedControlID="chkMirrored" runat="server"></asp:Label>
+                    <asp:Label ID="lblMirrored" AssociatedControlID="chkMirrored" Text="Mirror images left to right" runat="server">
+
+                    </asp:Label>
                     <asp:Button ID="btnQuestion8" Enabled="false" CssClass="btnSubmit float-right slidePanel" Text="Confirm all selections" runat="server" OnClientClick="newProjectCheckQuestion8()" OnClick="btnLayout_Click"/>
 
                 </ul>
