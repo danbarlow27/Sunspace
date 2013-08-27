@@ -20,7 +20,6 @@ namespace SunspaceDealerDesktop
 
             //Set error text to the session value, which may be blank
             lblError.Text = Session["loginErrorMessage"].ToString();
-
             txtUsername.Focus();
         }
 
