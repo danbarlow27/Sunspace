@@ -24,7 +24,9 @@ namespace SunspaceDealerDesktop
         public string model400TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_400_TRANSOM_TYPES);
 
         public string usStatesJ = new JavaScriptSerializer().Serialize(Constants.STATE_LIST);
+        public string usCodesJ = new JavaScriptSerializer().Serialize(Constants.STATE_CODES);
         public string canProvJ = new JavaScriptSerializer().Serialize(Constants.PROVINCE_LIST);
+        public string canCodesJ = new JavaScriptSerializer().Serialize(Constants.PROVINCE_CODES);
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -44,34 +46,24 @@ namespace SunspaceDealerDesktop
                 }
             }
 
-            if (ddlCustomerCountry.SelectedValue == "CAN")
-            {
-                ddlCustomerProvState.Items.Clear();
-                lblCustomerZip.Visible = false;
-                txtCustomerZip.Visible = false;
-
-                lblCustomerPostal.Visible = true;
-                txtCustomerPostal.Visible = true;
-                //Add provinces to the province/state ddl
-                for (int i = 0; i < Constants.PROVINCE_LIST.Count; i++)
-                {
-                    ddlCustomerProvState.Items.Add(Constants.PROVINCE_LIST[i]);
-                }
-            }
-            else
-            {
-                ddlCustomerProvState.Items.Clear();
-                lblCustomerPostal.Visible = false;
-                txtCustomerPostal.Visible = false;
-
-                lblCustomerZip.Visible = true;
-                txtCustomerZip.Visible = true;
-                //Add states to the province/state ddl
-                for (int i = 0; i < Constants.STATE_LIST.Count; i++)
-                {
-                    ddlCustomerProvState.Items.Add(Constants.STATE_LIST[i]);
-                }
-            }
+            //if (ddlCustomerCountry.SelectedValue == "CAN")
+            //{
+            //    ddlCustomerProvState.Items.Clear();
+            //    //Add provinces to the province/state ddl
+            //    for (int i = 0; i < Constants.PROVINCE_LIST.Count; i++)
+            //    {
+            //        ddlCustomerProvState.Items.Add(Constants.PROVINCE_LIST[i]);
+            //    }
+            //}
+            //else
+            //{
+            //    ddlCustomerProvState.Items.Clear();
+            //    //Add states to the province/state ddl
+            //    for (int i = 0; i < Constants.STATE_LIST.Count; i++)
+            //    {
+            //        ddlCustomerProvState.Items.Add(Constants.STATE_LIST[i]);
+            //    }
+            //}
 
             //Only on first load
             if (!IsPostBack)
