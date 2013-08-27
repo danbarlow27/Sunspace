@@ -46,6 +46,7 @@ namespace SunspaceDealerDesktop
                 if (dvUsers.Count == 0)
                 {
                     Session["loginErrorMessage"] = "Username or password invalid.";
+                    lblError.Text = Session["loginErrorMessage"].ToString();
                 }
                 else
                 {

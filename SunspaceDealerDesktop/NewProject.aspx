@@ -249,60 +249,35 @@
         }
 
         function newProjectCheckQuestion4() {
+            document.getElementById("<%=txtErrorMessage.ClientID%>").value = "";
             document.getElementById('<%=btnQuestion4.ClientID%>').disabled = true;
-            //overall error check boolean
-            var optionChecksPassed = true;
 
             //Only run validation if a number is entered and values selected
-            if (document.getElementById("<%=txtKneewallHeight.ClientID%>").value != "" &&
-                document.getElementById("<%=ddlKneewallType.ClientID%>").value != "") {
+            if (document.getElementById("<%=txtKneewallHeight.ClientID%>").value != "") {
 
                 //only requirement on height at this moment is that it is a valid number
                 if (isNaN(document.getElementById("<%=txtKneewallHeight.ClientID%>").value)) {
                     //kneewall height error handling
-                    optionChecksPassed = false;
-                }
-                else {
-                    //by default, preferences will populate a selected value, but as long as a number is entered, and
-                    //dropdowns have a selected value, its valid, set check bool to true, update hidden values
-                    document.getElementById("<%=hidKneewallHeight.ClientID%>").value = document.getElementById("<%=txtKneewallHeight.ClientID%>").value;
-                    document.getElementById("<%=hidKneewallType.ClientID%>").value = document.getElementById("<%=ddlKneewallType.ClientID%>").value;
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "The kneewall height you entered is not a valid number.";
                 }
             }
             else {
-                optionChecksPassed = false;
-                //kneewall errors
+                document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You must enter a kneewall height to proceed.";
             }
+            
+            
 
-            //similar checks as above for transom, update hidden values
-            if (document.getElementById("<%=ddlTransomType.ClientID%>").value != "") {
+            //if everything was valid it will say =true, so enable button and update pager
+            if (document.getElementById("<%=txtErrorMessage.ClientID%>").value == "") {
                 document.getElementById("<%=hidTransomType.ClientID%>").value = document.getElementById("<%=ddlTransomType.ClientID%>").value;
-            }
-            else {
-                optionChecksPassed = false;
-                //transom error styling
-            }
-
-            //make sure skins and colours are selected, update hidden values
-            if (document.getElementById("<%=ddlFramingColour.ClientID%>").value != "" &&
-                document.getElementById("<%=ddlInteriorColour.ClientID%>").value != "" &&
-                document.getElementById("<%=ddlInteriorSkin.ClientID%>").value != "" &&
-                document.getElementById("<%=ddlExteriorColour.ClientID%>").value != "" &&
-                document.getElementById("<%=ddlExteriorSkin.ClientID%>").value != "") {
-
                 document.getElementById("<%=hidFramingColour.ClientID%>").value = document.getElementById("<%=ddlFramingColour.ClientID%>").value;
                 document.getElementById("<%=hidInteriorColour.ClientID%>").value = document.getElementById("<%=ddlInteriorColour.ClientID%>").value;
                 document.getElementById("<%=hidInteriorSkin.ClientID%>").value = document.getElementById("<%=ddlInteriorSkin.ClientID%>").value;
                 document.getElementById("<%=hidExteriorColour.ClientID%>").value = document.getElementById("<%=ddlExteriorColour.ClientID%>").value;
                 document.getElementById("<%=hidExteriorSkin.ClientID%>").value = document.getElementById("<%=ddlExteriorSkin.ClientID%>").value;
-            }
-            else {
-                optionChecksPassed = false;
-                //framing error styling
-            }
+                document.getElementById("<%=hidKneewallHeight.ClientID%>").value = document.getElementById("<%=txtKneewallHeight.ClientID%>").value;
+                document.getElementById("<%=hidKneewallType.ClientID%>").value = document.getElementById("<%=ddlKneewallType.ClientID%>").value;
 
-            //if everything was valid it will say =true, so enable button and update pager
-            if (optionChecksPassed) {
                 document.getElementById('<%=btnQuestion4.ClientID%>').disabled = false;
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').disabled = false;
                 $('#<%=lblQuestion4PagerAnswer.ClientID%>').text("Entry Complete");
@@ -319,6 +294,7 @@
         }
 
         function newProjectCheckQuestion5() {
+            document.getElementById("<%=txtErrorMessage.ClientID%>").value = "";
             document.getElementById('<%=btnQuestion5.ClientID%>').disabled = true;
 
             //confirm that an answer is selected, and update hidden values, and pager as needed
@@ -365,6 +341,7 @@
         }
 
         function newProjectCheckQuestion7() {
+            document.getElementById("<%=txtErrorMessage.ClientID%>").value = "";
             document.getElementById('<%=btnQuestion7.ClientID%>').disabled = true;
 
             //confirm that an answer is selected, and update hidden values, and pager as needed
@@ -407,6 +384,7 @@
                     {                        
                         document.getElementById('<%=btnQuestion7.ClientID%>').disabled = true;
                         document.getElementById('pagerSeven').style.display = "none";
+                        document.getElementById("<%=txtErrorMessage.ClientID%>").value += "The soffit length you entered is not a valid number.";
                     }
                     else
                     { 
@@ -420,11 +398,8 @@
                 {
                     document.getElementById('<%=btnQuestion7.ClientID%>').disabled = true;
                     document.getElementById('pagerSeven').style.display = "none";
-                    //please enter a soffit length
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "Please enter a soffit length (enter 0 for no soffit).";
                 }
-            }
-            else {
-                //no selection, errors
             }
 
             return false;
