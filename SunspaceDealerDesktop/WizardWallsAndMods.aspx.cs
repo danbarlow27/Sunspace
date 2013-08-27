@@ -10,6 +10,10 @@ namespace SunspaceDealerDesktop
 {
     public partial class WizardWallsAndMods : System.Web.UI.Page
     {
+        public const float FOAM_PANEL_PROJECTION = 264f;
+        public const float ACRYLIC_PANEL_PROJECTION = 276f;
+        public const float THERMADECK_PANEL_PROJECTION = 288f;
+
         protected List<Wall> walls = new List<Wall>();
         //ListItems to be used in multiple dropdown lists for decimal points
         //This should eventually be stored in the constants file
