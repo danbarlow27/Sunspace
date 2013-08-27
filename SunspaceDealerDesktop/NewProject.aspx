@@ -152,6 +152,7 @@
 
         function newProjectCheckQuestion2() {
             console.log("onkeyup slide2");
+            document.getElementById('<%=txtErrorMessage.ClientID%>').value = "";
             //disable 'next slide' button until after validation
             document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
 
@@ -167,13 +168,13 @@
             }
             else {
                 //error styling or something
+                document.getElementById('<%=txtErrorMessage.ClientID%>').value = "You must enter a project name in order to proceed.";
             }
             return false;
         }
 
         function newProjectCheckQuestion3() {
             document.getElementById('<%=btnQuestion3.ClientID%>').disabled = true;
-
             //if they pick sunroom
             if ($('#<%=radProjectSunroom.ClientID%>').is(':checked')) {
                 //They check one of 4 model types
