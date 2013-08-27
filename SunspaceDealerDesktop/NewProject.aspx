@@ -10,6 +10,7 @@
         }
         function newProjectCheckQuestion1() {
             console.log("onkeyup slide1");
+            document.getElementById('<%=txtErrorMessage.ClientID%>').value = "";
             //disable 'next slide' button until after validation
             document.getElementById('<%=btnQuestion1.ClientID%>').disabled = true;
             //if they select new customer
@@ -30,76 +31,99 @@
                 document.getElementById("<%=hidEmail.ClientID%>").value = $('#<%=txtCustomerEmail.ClientID%>').val();
                 //blank out existing
                 document.getElementById("<%=hidExisting.ClientID%>").value = "";
+
                 
-                //Make sure the text boxes aren't blank before manually checking zip/postal and phone
-                if (document.getElementById("<%=hidFirstName.ClientID%>").value != "" &&
-                    document.getElementById("<%=hidLastName.ClientID%>").value != "" &&
-                    document.getElementById("<%=hidAddress.ClientID%>").value != "" &&
-                    document.getElementById("<%=hidCity.ClientID%>").value != "" &&
-                    document.getElementById("<%=hidEmail.ClientID%>").value != "") {
+                if (document.getElementById("<%=txtCustomerFirstName.ClientID%>").value == "")
+                {
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer First Name is required.\n";
+                }
 
-                    //having troubles checking .value.length, so setting .value into a variable
-                    var lengthCheck = document.getElementById("<%=hidPhone.ClientID%>").value;
+                if (document.getElementById("<%=txtCustomerLastName.ClientID%>").value == "")
+                {
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Last Name is required.\n";
+                }
 
-                    //only check if a full 10digit number is entered
-                    if (lengthCheck.length == 10) {
-                        //validatePhone function returns an error message, blank if valid
-                        var validPhone = validatePhone(document.getElementById("<%=hidPhone.ClientID%>").value);
-                    }
+                if (document.getElementById("<%=txtCustomerAddress.ClientID%>").value == "")
+                {
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Address is required.\n";
+                }
 
-                    //having troubles checking .value.length, so setting .value into a variable
-                    var lengthCheck = document.getElementById("<%=hidCell.ClientID%>").value;
+                if (document.getElementById("<%=txtCustomerCity.ClientID%>").value == "")
+                {
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer City is required.\n";
+                }
 
-                    //only check if a full 10digit number is entered
-                    if (lengthCheck.length == 10) {
-                        //validatePhone function returns an error message, blank if valid
-                        var validCell = validatePhone(document.getElementById("<%=hidCell.ClientID%>").value);
-                    }
+                //same troubles as before, checking .value.length
+                var zipCode = document.getElementById("<%=hidZip.ClientID%>").value;
 
-                    //same troubles as before, checking .value.length
-                    var zipCode = document.getElementById("<%=hidZip.ClientID%>").value;
-                    var isValid = true;
+                //if zip code is not valid numeric, or it is not 5 digits, it is not valid
+                if (document.getElementById("<%=txtCustomerZip.ClientID%>").value == "")
+                {
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Zip Code is required.\n";
+                }
+                else if (isNaN(zipCode) || zipCode.length < 5) {
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The zip code you entered is not valid.\n";
+                }
 
-                    //if zip code is not valid numeric, or it is not 5 digits, it is not valid
-                    if (!isNaN(zipCode) && zipCode.length == 5) {
-                        
-                    }
-                    else {
-                        isValid = false;
-                    }
+                //check to see if email is valid
+                if (document.getElementById("<%=txtCustomerEmail.ClientID%>").value == "")
+                {
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Email is required.\n";
+                }
+                else if (emailValidation() == false)
+                {
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Customer Email you entered is not valid.\n";
+                }
 
-                    //only fully valid if no error message was returned
-                    if (validPhone == "") {
-                    }
-                    else {
-                        //invalid phone
-                        isValid = false;
-                    }
-                    
-                    //only fully valid if no error message was returned
-                    if (validCell == "") {
-                    }
-                    else {
-                        //invalid phone
-                        isValid = false;
-                    }
+                //having troubles checking .value.length, so setting .value into a variable
+                var lengthCheck = document.getElementById("<%=txtCustomerPhone.ClientID%>").value;
 
-                    //check to see if email is valid
-                    if (emailValidation() == false)
+                //only check if a full 10digit number is entered
+                if (lengthCheck.length == 10) {
+                    //validatePhone function returns an error message, blank if valid
+                    var validPhone = validatePhone(document.getElementById("<%=txtCustomerPhone.ClientID%>").value);
+
+                    if (validPhone != "")
                     {
-                        isValid = false;
-                    }
-
-                    //isValid remains true if nothing became false
-                    if (isValid == true) {
-                        //Set answer to 'new' on side pager and enable button
-                        $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("New");
-                        document.getElementById('pagerOne').style.display = "inline";
-                        document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
+                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += validPhone;
                     }
                 }
-                else {
-                    //error styling or something
+                else if (document.getElementById("<%=txtCustomerPhone.ClientID%>").value == "")
+                {
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Phone is required.\n";
+                }
+
+                //having troubles checking .value.length, so setting .value into a variable
+                var lengthCheck = document.getElementById("<%=hidCell.ClientID%>").value;
+
+                //only check if a full 10digit number is entered
+                if (lengthCheck.length == 10) {
+                    //validatePhone function returns an error message, blank if valid
+                    var validCell = validatePhone(document.getElementById("<%=hidCell.ClientID%>").value);
+
+                    if (validCell != "")
+                    {
+                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += validCell;
+                    }
+                }
+
+                if (document.getElementById("<%=txtCustomerFirstName.ClientID%>").value == "" &&
+                    document.getElementById("<%=txtCustomerLastName.ClientID%>").value == "" &&
+                    document.getElementById("<%=txtCustomerAddress.ClientID%>").value == "" &&
+                    document.getElementById("<%=txtCustomerCity.ClientID%>").value == "" &&
+                    document.getElementById("<%=txtCustomerZip.ClientID%>").value == "" &&
+                    document.getElementById("<%=txtCustomerPhone.ClientID%>").value == "" &&
+                    document.getElementById("<%=txtCustomerEmail.ClientID%>").value == "") {
+
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value = "You must make the required entries in order to proceed.";
+                }
+
+                //isValid remains true if nothing became false
+                if (document.getElementById('<%=txtErrorMessage.ClientID%>').value == "") {
+                    //Set answer to 'new' on side pager and enable button
+                    $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("New");
+                    document.getElementById('pagerOne').style.display = "inline";
+                    document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
                 }
             }
                 //if they select existing customer
@@ -1402,7 +1426,10 @@
                     </li>
                 </div>
             </ul>    
-        </div> 
+            </div> 
+        </div>
+
+        <textarea id="txtErrorMessage" class="txtErrorMessage" disabled="disabled" rows="5" runat="server"></textarea>
     </div>
 
     <%-- Hidden input tags 
