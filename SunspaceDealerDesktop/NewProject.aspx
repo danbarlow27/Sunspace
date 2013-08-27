@@ -707,19 +707,48 @@
         }
 
         function toggleMirrored(){
+            var theImage;
+
             if ($('#<%=chkMirrored.ClientID%>').is(':checked'))
             {
-                var theImage;
+                theImage = document.getElementById("<%=imbPreset4.ClientID%>");
+                theImage.setAttribute("src", "./images/layout/Preset4M.png");
 
-                if ($('#<%=radPreset4.ClientID%>'.is(':checked')))
-                {
-                    theImage = document.getElementById("<%=imbPreset4.ClientID%>");
-                    theImage.setAttribute("ImageUrl", "./images/layout/Preset4M.png");
-                }
+                theImage = document.getElementById("<%=imbPreset5.ClientID%>");
+                theImage.setAttribute("src", "./images/layout/Preset5M.png");
+
+                theImage = document.getElementById("<%=imbPreset6.ClientID%>");
+                theImage.setAttribute("src", "./images/layout/Preset6M.png");
+
+                theImage = document.getElementById("<%=imbPreset7.ClientID%>");
+                theImage.setAttribute("src", "./images/layout/Preset7M.png");
+
+                theImage = document.getElementById("<%=imbPreset8.ClientID%>");
+                theImage.setAttribute("src", "./images/layout/Preset8M.png");
+
+                theImage = document.getElementById("<%=imbPreset9.ClientID%>");
+                theImage.setAttribute("src", "./images/layout/Preset9M.png");
             }
             else
             {
+                var theImage;
+                theImage = document.getElementById("<%=imbPreset4.ClientID%>");
+                theImage.setAttribute("src", "./images/layout/Preset4.png");
 
+                theImage = document.getElementById("<%=imbPreset5.ClientID%>");
+                theImage.setAttribute("src", "./images/layout/Preset5.png");
+
+                theImage = document.getElementById("<%=imbPreset6.ClientID%>");
+                theImage.setAttribute("src", "./images/layout/Preset6.png");
+
+                theImage = document.getElementById("<%=imbPreset7.ClientID%>");
+                theImage.setAttribute("src", "./images/layout/Preset7.png");
+
+                theImage = document.getElementById("<%=imbPreset8.ClientID%>");
+                theImage.setAttribute("src", "./images/layout/Preset8.png");
+
+                theImage = document.getElementById("<%=imbPreset9.ClientID%>");
+                theImage.setAttribute("src", "./images/layout/Preset9.png");
             }
         }
     </script>

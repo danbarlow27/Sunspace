@@ -197,11 +197,17 @@
     <Content Include="Images\layout\Preset2.png" />
     <Content Include="Images\layout\Preset3.png" />
     <Content Include="Images\layout\Preset4.png" />
+    <Content Include="Images\layout\Preset4M.png" />
     <Content Include="Images\layout\Preset5.png" />
+    <Content Include="Images\layout\Preset5M.png" />
     <Content Include="Images\layout\Preset6.png" />
+    <Content Include="Images\layout\Preset6M.png" />
     <Content Include="Images\layout\Preset7.png" />
+    <Content Include="Images\layout\Preset7M.png" />
     <Content Include="Images\layout\Preset8.png" />
+    <Content Include="Images\layout\Preset8M.png" />
     <Content Include="Images\layout\Preset9.png" />
+    <Content Include="Images\layout\Preset9M.png" />
     <Content Include="Images\layout\PresetC1.png" />
     <Content Include="Images\layout\PresetS1.png" />
     <Content Include="Preferences.aspx" />
