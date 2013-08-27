@@ -48,6 +48,10 @@
                 <!--Done button which ends the current operations (i.e. Done Existing Walls, Done Proposed Walls, Done Drawing)-->
                 <li><input id="btnDone" class="btnSubmit" type="button" value ="" onclick="btnDoneOnClick()" style="width:150px"/></li>
 
+                <li><asp:CheckBox id="chkStandalone" runat="server" onclick="standaloneToggle()" />
+                    <asp:Label ID="lblStandaloneCheck" AssociatedControlID="chkStandalone" runat="server"></asp:Label>
+                    <asp:Label ID="lblStandalone" AssociatedControlID ="chkStandalone" Text="Standalone Sunroom" runat="server"></asp:Label>
+                </li>
                 <li><hr /></li>
 
                 <!--Button to send line information to C#-->
@@ -72,6 +76,7 @@
     
     <script>
 
+        var standAlone;
         /**************** CONSTANTS ****************/
 
         //Wall type enumeration(enumeration)
@@ -151,7 +156,8 @@
         $(document).ready(function () {
             drawGrid(); //Draws the initial grid
             //Set initial text in log section
-            
+            document.getElementById("MainContent_btnSubmitDrawing").disabled = true;
+
             //check if user selected a dealer gable or not
             if ('<%= gableStyle %>' == "Dealer Gable")
                 gable = true;
@@ -194,9 +200,15 @@
             }
             //if user wants to finish drawing existing walls
             else if (doneButton.value === "Done Existing Walls") {
-
                 //if there are walls drawn and first wall is wall type "E"
                 if (coordList.length > 0 && coordList[coordList.length-1].id === WALL_TYPE.EXISTING) {
+                    doneButton.value = "Done Proposed Walls";   //change the name (value) of the button
+                    wallType = WALL_TYPE.PROPOSED;              //change wall type                    
+                    startNewWall = true;                        //reset click count
+                    log.innerHTML = "Please draw your proposed wall. \nPress \"E\" to end a line.";
+                }
+                    //if 0 walls drawn, and standalone is checked, its valid
+                else if (standAlone == true) {
                     doneButton.value = "Done Proposed Walls";   //change the name (value) of the button
                     wallType = WALL_TYPE.PROPOSED;              //change wall type                    
                     startNewWall = true;                        //reset click count
@@ -213,6 +225,7 @@
 
                 //if its a valid sunroom
                 if (gable == false) {
+                    console.log('Calling Completed');
                     if (sunroomCompleted()) {
                         doneButton.value = "Done Drawing";  //change the name (value) of the button                    
                         wallType = WALL_TYPE.PROPOSED;      //change wall type                    
@@ -237,6 +250,7 @@
 
                 $('#MainContent_btnSubmitDrawing').removeClass('btnDisabled');
                 $('#MainContent_btnSubmitDrawing').addClass('btnSubmit');
+                document.getElementById("MainContent_btnSubmitDrawing").disabled = false;
 
                 var lineInfo = "";  //Variable to hold array/line information to be passed to C# (server-side)
 
@@ -670,12 +684,15 @@
             //Variable to say whether or not the sunroom is valid
             var isValid = false;
             //If logic to see that at least 1 wall exist
+
+            console.log("Standalone: " + standAlone);
+
             if (coordList.length < MIN_NUMBER_OF_WALLS) {
                 //Error message to tell the user there current error
                 log.innerHTML = "A complete sunroom must be enclosed (3 walls minimum). Please try again!\n\n";
             }
                 //Else if to check for standAlone rooms and if the room is closed
-            else if (standAlone && coordList[coordList.length - 1].attr("x2") != coordList[0].x1) {
+            else if (standAlone && coordList[coordList.length - 1].x2 != coordList[0].x1) {
                 //Alert to tell the user there current error
                 log.innerHTML = "A stand-alone sunroom must end at the start of the starting wall. Please try again!\n\n";
             }
@@ -1074,5 +1091,15 @@
             d3.selectAll("#mouseMoveLine").remove();
         });
 
+        function standaloneToggle(){
+            if ($('#<%=chkStandalone.ClientID%>').is(':checked')) {
+                standAlone = true;
+                clearCanvas();
+            }
+            else {
+                standAlone = false;
+                clearCanvas();
+            }
+        }
     </script>
 </asp:Content>

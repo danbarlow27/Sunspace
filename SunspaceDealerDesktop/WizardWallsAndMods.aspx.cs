@@ -882,7 +882,7 @@ namespace SunspaceDealerDesktop
                 backWallTextbox.CssClass = "txtField txtInput";
                 backWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
                 backWallTextbox.Attributes.Add("onblur", "resetWalls()");
-                backWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
+                //backWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
                 backWallTextbox.MaxLength = 3;
 
                 DropDownList backWallInchSpecific = new DropDownList();
@@ -929,7 +929,7 @@ namespace SunspaceDealerDesktop
                 frontWallTextbox.CssClass = "txtField txtInput";
                 frontWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
                 frontWallTextbox.Attributes.Add("onblur", "resetWalls()");
-                frontWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
+                //frontWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
                 frontWallTextbox.MaxLength = 3;
 
                 DropDownList frontWallInchSpecific = new DropDownList();
@@ -976,7 +976,7 @@ namespace SunspaceDealerDesktop
                 roofSlopeTextbox.CssClass = "txtField txtInput";
                 roofSlopeTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
                 roofSlopeTextbox.Attributes.Add("onblur", "resetWalls()");
-                roofSlopeTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
+                //roofSlopeTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
                 frontWallTextbox.MaxLength = 6;
 
                 Label roofSlopeRunLabel = new Label();

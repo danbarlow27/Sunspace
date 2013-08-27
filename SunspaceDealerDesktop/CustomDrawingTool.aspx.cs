@@ -17,9 +17,11 @@ namespace SunspaceDealerDesktop
     public partial class CustomDrawingTool : Page
     {
         public string gableStyle;
+        public bool isStandalone;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            isStandalone = false;
             if (Session["loggedIn"] == null)
             {
                 //uncomment me when login functionality is working

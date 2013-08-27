@@ -13,6 +13,33 @@ namespace SunspaceDealerDesktop {
     public partial class CustomDrawingTool {
         
         /// <summary>
+        /// chkStandalone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkStandalone;
+        
+        /// <summary>
+        /// lblStandaloneCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStandaloneCheck;
+        
+        /// <summary>
+        /// lblStandalone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStandalone;
+        
+        /// <summary>
         /// btnSubmitDrawing control.
         /// </summary>
         /// <remarks>
