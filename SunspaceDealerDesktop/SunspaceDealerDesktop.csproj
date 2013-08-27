@@ -215,6 +215,7 @@
     <Content Include="packages.config" />
     <Content Include="Content\fonts\Shanti-Regular.ttf" />
     <Content Include="ProjectPreview.aspx" />
+    <Content Include="RoofTesting.aspx" />
     <Content Include="RoofWizard.aspx" />
     <Content Include="Scripts\DoorSlideFunctions.js" />
     <Content Include="Scripts\MiniCanvasFunctions.js" />
@@ -399,6 +400,13 @@
     <Compile Include="Roof.cs" />
     <Compile Include="RoofItem.cs" />
     <Compile Include="RoofModule.cs" />
+    <Compile Include="RoofTesting.aspx.cs">
+      <DependentUpon>RoofTesting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RoofTesting.aspx.designer.cs">
+      <DependentUpon>RoofTesting.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RoofWizard.aspx.cs">
       <DependentUpon>RoofWizard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
