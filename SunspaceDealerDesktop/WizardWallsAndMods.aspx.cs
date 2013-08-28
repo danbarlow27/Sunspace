@@ -147,14 +147,14 @@ namespace SunspaceDealerDesktop
             Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
 
             /***hard coded variables***/
-            Session["model"] = "M100";
-            Session["soffitLength"] = 0F;
-            Session["model"] = "M300";
-            Session["soffitLength"] = 10F;
-            Session["kneewallType"] = "glass";
-            Session["kneewallHeight"] = 20F;
-            Session["transomType"] = "vinyl";
-            Session["transomHeight"] = 20F;
+            //Session["model"] = "M100";
+            //Session["soffitLength"] = 0F;
+            //Session["model"] = "M300";
+            //Session["soffitLength"] = 10F;
+            //Session["kneewallType"] = "glass";
+            //Session["kneewallHeight"] = 20F;
+            //Session["transomType"] = "vinyl";
+            //Session["transomHeight"] = 20F;
             /****************diffrent sunroom layouts******************/
             //Session["coordList"] = "112.5,387.5,150,150,E,S/200,200,150,287.5,P,W/200,337.5,287.5,150,P,SE/";
             //Session["coordList"] = "75,425,150,150,E,S/150,150,150,250,P,W/150,350,250,250,P,S/350,350,250,150,P,E/";
@@ -164,13 +164,13 @@ namespace SunspaceDealerDesktop
             //Session["coordList"] = "100,412.5,137.5,137.5,E,S/150,150,137.5,287.5,P,W/150,225,287.5,362.5,P,SW/225,312.5,362.5,362.5,P,S/312,387.5,362.5,287.5,P,SE/387.5,387.5,287.5,137.5,P,E/";
             //Session["coordList"] = "112.5,350,112.5,112.5,E,S/350,350,112.5,337.5,E,W/175,175,112.5,262.5,P,W/175,350,262.5,262.5,P,S/";
             //GABLE EXAMPLE BELOW
-            Session["coordList"] = "200,275,300,300,G,S/100,375,150,150,E,S/100,100,150,300,P,W/100,200,300,300,P,S/275,375,300,300,P,S/375,375,300,150,P,E/";
+            //Session["coordList"] = "200,275,300,300,G,S/100,375,150,150,E,S/100,100,150,300,P,W/100,200,300,300,P,S/275,375,300,300,P,S/375,375,300,150,P,E/";
             /**********************************************************/
             coordList = (string)Session["lineInfo"]; //get the string from the session and store it in a local variable for further use                                    
             strWalls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
             wallDetails = new string[strWalls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
             currentModel = (string)Session["model"];
-            soffitLength = (float)Session["soffitLength"];
+            soffitLength = Convert.ToSingle(Session["soffitLength"]);
             int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
             int displayedWallCount = 0; //used to determine how many proposed walls are in a drawing
 

@@ -1501,7 +1501,7 @@
                             <a href="#" data-slide="#slide7" class="slidePanel">
                                 <asp:Label ID="Label3" runat="server" Text="Roof"></asp:Label>
                                 <asp:Label ID="lblQuestion7PagerAnswer" runat="server" Text="Question 7 Answer"></asp:Label>
-                                <asp:Label ID="lblQuestion7PagerSecondAnswer" runat="server" Text="Question 7 Answer"></asp:Label>
+                                <asp:Label ID="lblQuestion7PagerSecondAnswer" runat="server" Text=""></asp:Label>
                             </a>
                     </li>
                 </div>
