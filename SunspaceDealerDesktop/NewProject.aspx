@@ -791,7 +791,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerFirstName" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="25"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerFirstName" onkeydown="return (event.keyCode!=13);" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="25"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -801,7 +801,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerLastName" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="25"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerLastName" onkeydown="return (event.keyCode!=13);" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="25"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -811,7 +811,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerAddress" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="50"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerAddress" onkeydown="return (event.keyCode!=13);" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="50"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -831,7 +831,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerCity" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="30"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerCity" onkeydown="return (event.keyCode!=13);" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="30"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -841,7 +841,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerZip" CssClass="txtField txtZipPhone" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="5"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerZip" onkeydown="return (event.keyCode!=13);" CssClass="txtField txtZipPhone" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="5"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -851,7 +851,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerEmail" CssClass="txtField" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="50"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerEmail" onkeydown="return (event.keyCode!=13);" CssClass="txtField" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="50"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -861,7 +861,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerPhone" CssClass="txtField txtZipPhone" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="10"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerPhone" onkeydown="return (event.keyCode!=13);" CssClass="txtField txtZipPhone" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="10"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -871,7 +871,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtCustomerCell" CssClass="txtField txtZipPhone" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="10"></asp:TextBox>
+                                                <asp:TextBox ID="txtCustomerCell" onkeydown="return (event.keyCode!=13);" CssClass="txtField txtZipPhone" onkeyup="newProjectCheckQuestion1()" OnChange="newProjectCheckQuestion1()" runat="server" MaxLength="10"></asp:TextBox>
                                             </asp:TableCell>
                                         </asp:TableRow>
                                     </asp:Table>
@@ -919,7 +919,7 @@
                                 </asp:TableCell>
 
                                 <asp:TableCell>
-                                    <asp:TextBox ID="txtProjectName" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion2()" runat="server" MaxLength="50"></asp:TextBox>
+                                    <asp:TextBox ID="txtProjectName" onkeydown="return (event.keyCode!=13);" CssClass="txtField txtInput" onkeyup="newProjectCheckQuestion2()" runat="server" MaxLength="50"></asp:TextBox>
                                 </asp:TableCell>
                             </asp:TableRow>
                         </asp:Table>
@@ -1128,7 +1128,7 @@
                                                 <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height:" />
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtKneewallHeight" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" runat="server" MaxLength="3" />
+                                                <asp:TextBox ID="txtKneewallHeight" onkeydown="return (event.keyCode!=13);" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" runat="server" MaxLength="3" />
                                             </asp:TableCell>                                         
                                         </asp:TableRow>
 
@@ -1316,7 +1316,7 @@
                                     <asp:Label ID="lblSunspaceGable" AssociatedControlID="radSunspaceGable" runat="server" Text="Sunspace gable"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:TextBox ID="txtSoffitLength" onkeyup="newProjectCheckQuestion7()" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtSoffitLength" onkeydown="return (event.keyCode!=13);" onkeyup="newProjectCheckQuestion7()" runat="server"></asp:TextBox>
                                     <asp:Label ID="lblSoffitLength" runat="server" Text="Soffit Length:"></asp:Label>
                                 </li>
                             </ul>
