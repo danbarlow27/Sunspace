@@ -194,22 +194,100 @@ namespace SunspaceDealerDesktop
             newProjectArray[26] = hidRoofType.Value.ToString();
             newProjectArray[27] = hidLayoutSelection.Value.ToString();
 
+            Session.Add("model", hidModelNumber.Value.ToString());
+            Session.Add("kneewallType", hidKneewallType.Value.ToString());
+            Session.Add("kneewallHeight", hidKneewallHeight.Value.ToString());
+            Session.Add("transomType", hidTransomType.Value.ToString());
+            Session.Add("transomHeight", hidTransomHeight.Value.ToString());
+
             Session.Add("newProjectArray", newProjectArray);
-            Session.Add("soffitLength", hidSoffitLength.Value.ToString());
+
+            if (hidRoof.Value.ToString() == "No")
+            {
+                Session.Add("soffitLength", 0);
+            }
+            else
+            {
+                Session.Add("soffitLength", hidSoffitLength.Value.ToString());
+            }
 
             //If custom is selected, send to drawing tool
             if (hidLayoutSelection.Value.ToString() == "Custom")
             {
                 Response.Redirect("CustomDrawingTool.aspx");
             }
-            //if sunroom or walls, send to wall building page
-            else if (hidProjectType.Value.ToString() == "Sunroom" || hidProjectType.Value.ToString() == "Walls")
-            {
-                Response.Redirect("WizardWallsAndMods.aspx");
-            }
             else
             {
-                //Should never get here, some type of session error has occurred.
+                if (hidLayoutSelection.Value.ToString() == "1")
+                {
+                    Session.Add("lineInfo", "0,500,50,50,E,S/25,25,50,325,P,W/25,475,325,325,P,S/475,475,325,50,P,E/");
+                }
+                else if (hidLayoutSelection.Value.ToString() == "2")
+                {
+                    Session.Add("lineInfo", "0,500,50,50,E,S/25,25,50,325,P,W/25,100,325,400,P,SW/100,400,400,400,P,S/400,475,400,325,P,SE/475,475,325,50,P,E/");
+                }
+                else if (hidLayoutSelection.Value.ToString() == "3")
+                {
+                    Session.Add("lineInfo", "0,500,50,50,E,S/25,25,50,350,P,W/25,75,350,350,P,S/75,150,350,425,P,SW/150,350,425,425,P,S/350,425,425,350,P,SE/425,475,350,350,P,S/475,475,350,50,P,E/");
+                }
+                else if (hidLayoutSelection.Value.ToString() == "4")
+                {
+                    Session.Add("lineInfo", "0,450,50,50,E,S/450,450,50,450,E,W/50,50,50,400,P,W/50,450,400,400,P,S/");
+                }
+                else if (hidLayoutSelection.Value.ToString() == "5")
+                {
+                    Session.Add("lineInfo", "150,150,0,125,E,W/150,500,125,125,E,S/150,50,75,75,P,N/50,50,75,400,P,W/50,450,400,400,P,S/450,450,400,125,P,E/");
+                }
+                else if (hidLayoutSelection.Value.ToString() == "6")
+                {
+                    Session.Add("lineInfo", "0,500,50,50,E,S/450,450,50,400,P,W/450,150,400,400,P,N/150,150,400,350,P,E/150,50,350,350,P,N/50,50,350,50,P,E/");
+                }
+                else if (hidLayoutSelection.Value.ToString() == "7")
+                {
+                    Session.Add("lineInfo", "0,450,50,50,E,S/450,450,50,500,E,W/50,50,50,375,P,W/50,125,375,450,P,SW/125,450,450,450,P,S/");
+                }
+                else if (hidLayoutSelection.Value.ToString() == "8")
+                {
+                    Session.Add("lineInfo", "150,150,0,100,E,W/150,500,100,100,E,S/150,50,50,50,P,N/50,50,50,350,P,W/50,100,350,400,P,SW/100,450,400,400,P,S/450,450,400,100,P,E/");
+                }
+                else if (hidLayoutSelection.Value.ToString() == "9")
+                {
+                    Session.Add("lineInfo", "350,350,0,100,E,W/350,0,100,100,E,N/350,450,50,50,P,S/450,450,50,400,P,W/450,150,400,400,P,N/150,150,400,350,P,E/150,50,350,350,P,N/50,50,350,100,P,E/");
+                }
+                else if (hidLayoutSelection.Value.ToString() == "10")
+                {
+                    Session.Add("lineInfo", "50,450,50,50,P,S/450,450,50,450,P,W/450,50,450,450,P,N/50,50,450,50,P,E/");
+                } 
+                
+                if (chkMirrored.Checked == true)
+                {
+                    if (hidLayoutSelection.Value.ToString() == "4")
+                    {
+                        Session.Add("lineInfo", "500,50,50,50,E,N/50,50,50,450,E,W/450,450,50,400,P,W/450,50,400,400,P,N/");
+                    }
+                    else if (hidLayoutSelection.Value.ToString() == "5")
+                    {
+                        Session.Add("lineInfo", "350,350,0,125,E,W/350,0,125,125,E,N/350,450,75,75,P,S/450,450,75,400,P,W/450,50,400,400,P,N/50,50,400,125,P,E/");
+                    }
+                    else if (hidLayoutSelection.Value.ToString() == "6")
+                    {
+                        Session.Add("lineInfo", "0,500,50,50,E,S/50,50,50,400,P,W/50,350,400,400,P,S/350,350,400,350,P,E/350,450,350,350,P,S/450,450,350,50,P,E/");
+                    }
+                    else if (hidLayoutSelection.Value.ToString() == "7")
+                    {
+                        Session.Add("lineInfo", "500,50,50,50,E,N/50,50,50,500,E,W/450,450,50,375,P,W/450,375,375,450,P,NW/375,50,450,450,P,N/");
+                    }
+                    else if (hidLayoutSelection.Value.ToString() == "8")
+                    {
+                        Session.Add("lineInfo", "350,350,0,100,E,W/350,0,100,100,E,N/350,450,50,50,P,S/450,450,50,350,P,W/450,400,350,400,P,NW/400,50,400,400,P,N/50,50,400,100,P,E/");
+                    }
+                    else if (hidLayoutSelection.Value.ToString() == "9")
+                    {
+                        Session.Add("lineInfo", "150,150,0,100,E,W/150,500,100,100,E,S/150,50,50,50,P,N/50,50,50,400,P,W/50,350,400,400,P,S/350,350,400,350,P,E/350,450,350,350,P,S/450,450,350,100,P,E/ ");
+                    }
+                }
+
+                Response.Redirect("WizardWallsAndMods.aspx");
             }
         }
 

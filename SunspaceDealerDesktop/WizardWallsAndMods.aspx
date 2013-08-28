@@ -121,14 +121,14 @@
             $('#MainContent_btnQuestion2').click(loadWallData);
             $('#MainContent_btnQuestion4').click(submitData);
 
-            $('#MainContent_txtWall1Length').val('20');
-            $('#MainContent_txtWall3Length').val('120');
-            $('#MainContent_txtWall4Length').val('50');
-            $('#MainContent_txtWall5Length').val('50');
-            $('#MainContent_txtWall6Length').val('12');
-            $('#MainContent_txtLeftWallHeight').val('60');
-            $('#MainContent_txtRightWallHeight').val('60');
-            $('#MainContent_txtGablePostHeight').val('12');
+            //$('#MainContent_txtWall1Length').val('20');
+            //$('#MainContent_txtWall3Length').val('120');
+            //$('#MainContent_txtWall4Length').val('50');
+            //$('#MainContent_txtWall5Length').val('50');
+            //$('#MainContent_txtWall6Length').val('12');
+            //$('#MainContent_txtLeftWallHeight').val('60');
+            //$('#MainContent_txtRightWallHeight').val('60');
+            //$('#MainContent_txtGablePostHeight').val('12');
         });
 
         /**
