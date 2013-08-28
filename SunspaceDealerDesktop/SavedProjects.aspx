@@ -5,7 +5,7 @@
     <%-- SEARCH FIELD
     ======================================== --%>
     <div class="search">
-        <asp:TextBox ID="txtSearch" class="txtField txtSearch float-left" placeholder="Search Projects" runat="server"></asp:TextBox>
+        <asp:TextBox ID="txtSearch" onkeydown="return (event.keyCode!=13);" class="txtField txtSearch float-left" placeholder="Search Projects" runat="server"></asp:TextBox>
         <asp:Button ID="btnSearch" class="btnSubmit btnSearch" runat="server" Text="Search" />
     </div>
 
