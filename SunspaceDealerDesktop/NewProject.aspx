@@ -453,7 +453,7 @@
                         document.getElementById('<%=btnQuestion7.ClientID%>').disabled = false;                       
                         $('#<%=lblQuestion7PagerSecondAnswer.ClientID%>').text($('#<%=txtSoffitLength.ClientID%>').val());
                         document.getElementById('pagerSeven').style.display = "inline";
-                        document.getElementById('<%=hidSoffitLength.ClientID%>').value = $('<%=txtSoffitLength.ClientID%>').val();
+                        document.getElementById('<%=hidSoffitLength.ClientID%>').value = $('#<%=txtSoffitLength.ClientID%>').val();
                     }
                 }
                 else
