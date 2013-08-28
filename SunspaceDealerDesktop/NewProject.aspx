@@ -421,6 +421,10 @@
                     document.getElementById('pagerSeven').style.display = "inline";
                     document.getElementById("<%=hidRoof.ClientID%>").value = "Yes";
                     document.getElementById("<%=hidRoofType.ClientID%>").value = "Studio";
+
+                    //draw studio
+
+                    //hide gable
                 }
                 else if ($('#<%=radDealerGable.ClientID%>').is(':checked')) {
                     document.getElementById('<%=btnQuestion7.ClientID%>').disabled = false;
@@ -428,6 +432,10 @@
                     document.getElementById('pagerSeven').style.display = "inline";
                     document.getElementById("<%=hidRoof.ClientID%>").value = "Yes";
                     document.getElementById("<%=hidRoofType.ClientID%>").value = "Dealer Gable";
+
+                    //draw gable 
+
+                    //hide studio
                 }
                 else if ($('#<%=radSunspaceGable.ClientID%>').is(':checked')) {
                     document.getElementById('<%=btnQuestion7.ClientID%>').disabled = false;
@@ -435,6 +443,10 @@
                     document.getElementById('pagerSeven').style.display = "inline";
                     document.getElementById("<%=hidRoof.ClientID%>").value = "Yes";
                     document.getElementById("<%=hidRoofType.ClientID%>").value = "Sunspace Gable";
+
+                    //draw gable 
+
+                    //hide studio
                 }
                 else {
                     //no type selection, errors

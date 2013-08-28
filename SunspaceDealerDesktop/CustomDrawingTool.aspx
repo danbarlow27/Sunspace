@@ -833,11 +833,13 @@
                     
                     //If the lines/walls aren't the same, perform this block
                     if (currentLine != coordList[k]) {
+                        console.log(currentLine.id);
+                        console.log("currentLineX1: " + currentLine.x1 + ", currentLineX2: " + currentLine.x2 + ", currentLineY1: " + currentLine.y1 + ", currentLineY2: " + currentLine.y2);
+                        console.log("coordListKX1: " + coordList[k].x1 + ", coordListKX2: " + coordList[k].x2 + ", coordListKY1: " + coordList[k].y1 + ", coordListKY2: " + coordList[k].y2);
+                        
                         //if the lines/walls start or end coordinates are the same, add one to validLines
-                        if ((currentLine.x1 >= coordList[k].x2 && currentLine.y1 >= coordList[k].y2) || (currentLine.x1 >= coordList[k].x1 && currentLine.y1 >= coordList[k].y1)) {
-                            validLines++;
-                        }
-                        else if ((currentLine.x1 >= coordList[k].x1 && currentLine.x1 <= coordList[k].x2) || (currentLine.xy1 >= coordList[k].y1 && currentLine.y1 <= coordList[k].y2)) {
+                        if ((currentLine.x1 == coordList[k].x2 && currentLine.y1 == coordList[k].y2) || (currentLine.x1 == coordList[k].x1 && currentLine.y1 == coordList[k].y1)
+                            || (currentLine.x1 < coordList[k].x1 ) || (currentLine.y2 > coordList[k].y2 )) {
                             validLines++;
                         }
                         //If this function returns true, perform this block
