@@ -16,6 +16,7 @@ namespace SunspaceWizard
 
         protected void Page_Init(object sender, EventArgs e)
         {
+            Page.Form.DefaultButton = "";
             // The code below helps to protect against XSRF attacks
             var requestCookie = Request.Cookies[AntiXsrfTokenKey];
             Guid requestCookieGuidValue;
@@ -67,7 +68,7 @@ namespace SunspaceWizard
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Page.Form.DefaultButton = "";
         }
 
         protected void btnMainNavLogout_Click(object sender, EventArgs e)

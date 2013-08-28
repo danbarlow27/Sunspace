@@ -33,8 +33,11 @@
         <!--Div tag to hold canvas/grid buttons-->
         <div id="buttons" style="width:20%; text-align:center; float:left; margin-right: 20px;">
             <ul>
-                <!--Radio Button for standalone or not-->
-                <li></li>
+                <!--Checkbox for standalone or not-->
+                <li><asp:CheckBox id="chkStandalone" runat="server" onclick="standaloneToggle()" />
+                    <asp:Label ID="lblStandaloneCheck" AssociatedControlID="chkStandalone" runat="server"></asp:Label>
+                    <asp:Label ID="lblStandalone" AssociatedControlID ="chkStandalone" Text="Standalone Sunroom" runat="server"></asp:Label>
+                </li>
 
                 <!--Undo button to undo the last line drawn-->
                 <li><input class="btnSubmit" type="button" value ="Undo" onclick="undo(true)" style="width:150px"/></li>
@@ -48,10 +51,6 @@
                 <!--Done button which ends the current operations (i.e. Done Existing Walls, Done Proposed Walls, Done Drawing)-->
                 <li><input id="btnDone" class="btnSubmit" type="button" value ="" onclick="btnDoneOnClick()" style="width:150px"/></li>
 
-                <li><asp:CheckBox id="chkStandalone" runat="server" onclick="standaloneToggle()" />
-                    <asp:Label ID="lblStandaloneCheck" AssociatedControlID="chkStandalone" runat="server"></asp:Label>
-                    <asp:Label ID="lblStandalone" AssociatedControlID ="chkStandalone" Text="Standalone Sunroom" runat="server"></asp:Label>
-                </li>
                 <li><hr /></li>
 
                 <!--Button to send line information to C#-->
