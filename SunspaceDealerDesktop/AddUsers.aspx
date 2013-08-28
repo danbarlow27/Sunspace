@@ -112,29 +112,29 @@
     <!-- This div will be used to hide user type selection for non sunspace users -->
     <div id="DealerAdminDiv" runat="server">
         <asp:Label ID="lblDealershipName" runat="server" Text="Dealership Name:"></asp:Label>
-        <asp:TextBox ID="txtDealershipName" runat="server"></asp:TextBox>
+        <asp:TextBox ID="txtDealershipName" runat="server" onkeydown="return (event.keyCode!=13);" ></asp:TextBox>
         <br /><br />
         <asp:Label ID="lblCountry" runat="server" Text="Country:"></asp:Label>
         <asp:DropDownList ID="ddlCountry" runat="server" ></asp:DropDownList>
         <br /><br />
         <asp:Label ID="lblMultiplier" runat="server" Text="Multiplier: "></asp:Label>
-        <asp:TextBox ID="txtMultiplier" runat="server" onkeyup="validateInput()"></asp:TextBox>
+        <asp:TextBox ID="txtMultiplier" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="validateInput()"></asp:TextBox>
         <br /><br />
     </div>
     <asp:Label ID="lblLogin" runat="server" Text="Login:"></asp:Label>
-    <asp:TextBox ID="txtLogin" runat="server"></asp:TextBox>
+    <asp:TextBox ID="txtLogin" runat="server" onkeydown="return (event.keyCode!=13);" ></asp:TextBox>
     <br /><br />
     <asp:Label ID="lblPassword" runat="server" Text="Password:"></asp:Label>
-    <asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
+    <asp:TextBox ID="txtPassword" runat="server" onkeydown="return (event.keyCode!=13);" ></asp:TextBox>
     <br /><br />
     <asp:Label ID="lblEmail" runat="server" Text="Email:"></asp:Label>
-    <asp:TextBox ID="txtEmail" runat="server" onkeyup="validateInput()"></asp:TextBox>
+    <asp:TextBox ID="txtEmail" runat="server" onkeyup="validateInput()" onkeydown="return (event.keyCode!=13);" ></asp:TextBox>
     <br /><br />
     <asp:Label ID="lblFirstName" runat="server" Text="First Name:"></asp:Label>
-    <asp:TextBox ID="txtFirstName" runat="server"></asp:TextBox>
+    <asp:TextBox ID="txtFirstName" runat="server" onkeydown="return (event.keyCode!=13);" ></asp:TextBox>
     <br /><br />
     <asp:Label ID="lblLastName" runat="server" Text="Last Name:"></asp:Label>
-    <asp:TextBox ID="txtLastName" runat="server"></asp:TextBox>
+    <asp:TextBox ID="txtLastName" runat="server" onkeydown="return (event.keyCode!=13);" ></asp:TextBox>
     <br /><br />
     <asp:Button id="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" UseSubmitBehavior="false" />
     <asp:SqlDataSource ID="sdsUsers" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [users]"></asp:SqlDataSource>

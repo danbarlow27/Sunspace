@@ -232,10 +232,10 @@ else {
                                     <asp:Label ID="lblCustomDimensionWarning" runat="server" Text="If you would like an overhang, please include that in your dimensions."></asp:Label>
                                     <br /><br />
                                     <asp:Label ID="lblProjection" runat="server" Text="Projection:" ToolTip="This entry is for the projection of the room itself with whatever overhang you desire directly off of the room."></asp:Label>
-                                    <asp:TextBox ID="txtProjection" runat="server" onkeyup="roofWizardCheckQuestion2()"></asp:TextBox>
+                                    <asp:TextBox ID="txtProjection" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="roofWizardCheckQuestion2()"></asp:TextBox>
                                     <br /><br />
                                     <asp:Label ID="lblWidth" runat="server" Text="Width:" ToolTip="The width of the roof is the dimension that is perpendicular to projection. On a studio system, it is along either top or bottom, while on a gable it is across bottom distances and peak distance, all equal."></asp:Label>
-                                    <asp:TextBox ID="txtWidth" runat="server" onkeyup="roofWizardCheckQuestion2()"></asp:TextBox>
+                                    <asp:TextBox ID="txtWidth" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="roofWizardCheckQuestion2()"></asp:TextBox>
                                 </li>
                             </ul>
                         </div>
@@ -250,7 +250,7 @@ else {
                             <ul>
                                 <li>                                    
                                     <asp:Label ID="lblOverhangLength" runat="server" Text="Overhang Length"></asp:Label>
-                                    <asp:TextBox ID="txtOverhangLength" runat="server" onkeyup="roofWizardCheckQuestion2()"></asp:TextBox>
+                                    <asp:TextBox ID="txtOverhangLength" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="roofWizardCheckQuestion2()"></asp:TextBox>
                                     <br />
                                     <asp:Label ID="lblOverhangWarning" runat="server" Text="Enter 0 for no overhang"></asp:Label>
                                 </li>

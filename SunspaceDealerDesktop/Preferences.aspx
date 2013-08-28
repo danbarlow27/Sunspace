@@ -550,13 +550,13 @@
                                                             <li>
                                                                 <%-- Default Filler Option --%>
                                                                 <asp:Label ID="lbl100DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
-                                                                <asp:TextBox ID="txt100DefaultFiller" runat="server" CssClass="txtLengthInput" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                <asp:TextBox ID="txt100DefaultFiller" runat="server" CssClass="txtLengthInput" onkeydown="return (event.keyCode!=13);" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                                 <asp:DropDownList ID="ddl100DefaultFiller" runat="server"></asp:DropDownList>
                                                             </li>                                                            
                                                             <li>
                                                                 <%-- Markup --%>
                                                                 <asp:Label ID="lbl100Markup" runat="server" Text="Markup:"></asp:Label>
-                                                                <asp:TextBox ID="txt100Markup" runat="server" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                <asp:TextBox ID="txt100Markup" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                             </li>  
                                                             <li>
                                                                 <%-- Wall Colours --%>
@@ -791,7 +791,7 @@
                                                                                 <li>
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl100KneewallHeight" runat="server" Text="Kneewall Height:"></asp:Label>
-                                                                                    <asp:TextBox ID="txt100KneewallHeight" runat="server" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                                    <asp:TextBox ID="txt100KneewallHeight" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                                                     <asp:DropDownList ID="ddl100KneewallHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
@@ -821,7 +821,7 @@
                                                                                 <li>
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl100TransomHeight" runat="server" Text="Transom Height:"></asp:Label>
-                                                                                    <asp:TextBox ID="txt100TransomHeight" runat="server" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                                    <asp:TextBox ID="txt100TransomHeight" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                                                     <asp:DropDownList ID="ddl100TransomHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
@@ -885,13 +885,13 @@
                                                             <li>
                                                                 <%-- Default Filler Option --%>
                                                                 <asp:Label ID="lbl200DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
-                                                                <asp:TextBox ID="txt200DefaultFiller" runat="server" CssClass="txtLengthInput" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                <asp:TextBox ID="txt200DefaultFiller" runat="server" onkeydown="return (event.keyCode!=13);" CssClass="txtLengthInput" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                                 <asp:DropDownList ID="ddl200DefaultFiller" runat="server"></asp:DropDownList>
                                                             </li>                                                            
                                                             <li>
                                                                 <%-- Markup --%>
                                                                 <asp:Label ID="lbl200Markup" runat="server" Text="Markup:"></asp:Label>
-                                                                <asp:TextBox ID="txt200Markup" runat="server" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                <asp:TextBox ID="txt200Markup" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                             </li> 
                                                             <li>
                                                                 <%-- Wall Colours --%>
@@ -1130,7 +1130,7 @@
                                                                                 <li>
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl200KneewallHeight" runat="server" Text="Kneewall Height:"></asp:Label>
-                                                                                    <asp:TextBox ID="txt200KneewallHeight" runat="server" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                                    <asp:TextBox ID="txt200KneewallHeight" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                                                     <asp:DropDownList ID="ddl200KneewallHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
@@ -1160,7 +1160,7 @@
                                                                                 <li>
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl200TransomHeight" runat="server" Text="Transom Height:"></asp:Label>
-                                                                                    <asp:TextBox ID="txt200TransomHeight" runat="server" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                                    <asp:TextBox ID="txt200TransomHeight" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                                                     <asp:DropDownList ID="ddl200TransomHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
@@ -1225,13 +1225,13 @@
                                                             <li>
                                                                 <%-- Default Filler Option --%>
                                                                 <asp:Label ID="lbl300DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
-                                                                <asp:TextBox ID="txt300DefaultFiller" runat="server" CssClass="txtLengthInput" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                <asp:TextBox ID="txt300DefaultFiller" runat="server" onkeydown="return (event.keyCode!=13);" CssClass="txtLengthInput" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                                 <asp:DropDownList ID="ddl300DefaultFiller" runat="server"></asp:DropDownList>
                                                             </li>                                                            
                                                             <li>
                                                                 <%-- Markup --%>
                                                                 <asp:Label ID="lbl300Markup" runat="server" Text="Markup:"></asp:Label>
-                                                                <asp:TextBox ID="txt300Markup" runat="server" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                <asp:TextBox ID="txt300Markup" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                             </li> 
                                                             <li>
                                                                 <%-- Wall Colours --%>
@@ -1470,7 +1470,7 @@
                                                                                 <li>
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl300KneewallHeight" runat="server" Text="Kneewall Height:"></asp:Label>
-                                                                                    <asp:TextBox ID="txt300KneewallHeight" runat="server" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                                    <asp:TextBox ID="txt300KneewallHeight" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                                                     <asp:DropDownList ID="ddl300KneewallHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
@@ -1500,7 +1500,7 @@
                                                                                 <li>
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl300TransomHeight" runat="server" Text="Transom Height:"></asp:Label>
-                                                                                    <asp:TextBox ID="txt300TransomHeight" runat="server" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                                    <asp:TextBox ID="txt300TransomHeight" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                                                     <asp:DropDownList ID="ddl300TransomHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
@@ -1565,13 +1565,13 @@
                                                             <li>
                                                                 <%-- Default Filler Option --%>
                                                                 <asp:Label ID="lbl400DefaultFiller" runat="server" Text="Default Filler: "></asp:Label>
-                                                                <asp:TextBox ID="txt400DefaultFiller" runat="server" CssClass="txtLengthInput" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                <asp:TextBox ID="txt400DefaultFiller" runat="server" CssClass="txtLengthInput" onkeydown="return (event.keyCode!=13);" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                                 <asp:DropDownList ID="ddl400DefaultFiller" runat="server"></asp:DropDownList>
                                                             </li>                                                            
                                                             <li>
                                                                 <%-- Markup --%>
                                                                 <asp:Label ID="lbl400Markup" runat="server" Text="Markup:"></asp:Label>
-                                                                <asp:TextBox ID="txt400Markup" runat="server" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                <asp:TextBox ID="txt400Markup" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                             </li> 
                                                             <li>
                                                                 <%-- Wall Colours --%>
@@ -1810,7 +1810,7 @@
                                                                                 <li>
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl400KneewallHeight" runat="server" Text="Kneewall Height:"></asp:Label>
-                                                                                    <asp:TextBox ID="txt400KneewallHeight" runat="server" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                                    <asp:TextBox ID="txt400KneewallHeight" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                                                     <asp:DropDownList ID="ddl400KneewallHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
@@ -1840,7 +1840,7 @@
                                                                                 <li>
                                                                                     <%-- Height --%>
                                                                                     <asp:Label ID="lbl400TransomHeight" runat="server" Text="Transom Height:"></asp:Label>
-                                                                                    <asp:TextBox ID="txt400TransomHeight" runat="server" onkeyup="ValidateNumericInput()"></asp:TextBox>
+                                                                                    <asp:TextBox ID="txt400TransomHeight" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="ValidateNumericInput()"></asp:TextBox>
                                                                                     <asp:DropDownList ID="ddl400TransomHeight" runat="server"></asp:DropDownList>
                                                                                 </li>
                                                                                 <li>
@@ -1904,7 +1904,7 @@
                             <ul>
                                 <li>                                        
                                     <asp:Label ID="lblCompanyNameInput" runat="server" Text="Company Name Input: "></asp:Label>
-                                    <asp:TextBox ID="txtCompanyNameInput" CssClass="txtField txtInput" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtCompanyNameInput" onkeydown="return (event.keyCode!=13);" CssClass="txtField txtInput" runat="server"></asp:TextBox>
                                 </li>
                             </ul>
                         </div>

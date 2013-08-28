@@ -527,7 +527,7 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Floors
-        public static string[] FLOOR_TYPES = { "Thermadeck", "Alumadeck" };
+        public static string[] FLOOR_TYPES = { "Thermadeck"/*, "Alumadeck" */};
 
         public static string[] FLOOR_THICKNESSES = { "4.5", "6.5", "8.25" };            
         #endregion

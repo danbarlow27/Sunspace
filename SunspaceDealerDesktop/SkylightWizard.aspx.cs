@@ -122,6 +122,7 @@ namespace SunspaceDealerDesktop
                         TextBox txtFanBeam = new TextBox();
                         txtFanBeam.ID = "txtFanBeam" + panelsProcessed;
                         txtFanBeam.Attributes.Add("onkeyup", "skylightWizardCheckQuestion1()");
+                        txtFanBeam.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                         panelOptionPlaceholder.Controls.Add(txtFanBeam);
 
                         Button btnFanBeamCenter = new Button();
@@ -161,6 +162,7 @@ namespace SunspaceDealerDesktop
                         TextBox txtSkylight = new TextBox();
                         txtSkylight.ID = "txtSkylight" + panelsProcessed;
                         txtSkylight.Attributes.Add("onkeyup", "skylightWizardCheckQuestion1()");
+                        txtSkylight.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                         panelOptionPlaceholder.Controls.Add(txtSkylight);
 
                         Button btnSkylightCenter = new Button();
