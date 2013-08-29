@@ -798,8 +798,6 @@
                         if (slope >= 0)
                             isValid = true;
 
-                        console.log(isValid);
-
                         //store the values in the appropriate hidden fields
                         document.getElementById("hidLeftWallHeight").value =
                             parseFloat(document.getElementById("MainContent_txtLeftWallHeight").value) + parseFloat($("#MainContent_leftWallInchSpecificDDL").val());
@@ -1020,8 +1018,6 @@
 
             var roofPanelProjection = Math.sqrt(Math.pow(roofRise,2) + Math.pow(checkRoofProjection, 2));
             
-            console.log(roofPanelProjection + " " + <%=FOAM_PANEL_PROJECTION%>);
-
             if (roofPanelProjection > <%=FOAM_PANEL_PROJECTION%>)
             {
                 document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have foam panels with this projection\n";
@@ -1053,46 +1049,23 @@
             }
         }
 
-        function kyleTester() {
+        function WindowPreparation() {
             for (var i=1;i<=lineList.length;i++)
             {
-                ////Create variable wall to hold hold the current walls id and various properties
-                //var wall = {
-                //    "id": i,
-                //    "startHeight": wallStartHeightArray[i - 1],
-                //    "endHeight": wallEndHeightArray[i - 1],
-                //    //"doors": [],
-                //    //"windows": []
-                //    "mods" : []
-                //};
-
                 if (coordList[i - 1][4] == "P")
                 {
-                    console.log("Proposed Wall " + i);
-
-                    for (var j=0;j<=walls[i].mods.length;j++)
+                    console.log("this is a proposed wall");
+                    if(walls[i].mods.length > 0)
                     {
-                        console.log("boxHeader: " + walls[i].mods[j].boxHeader);
-                        console.log("colour: " + walls[i].mods[j].colour);
-                        console.log("fheight: " + walls[i].mods[j].fheight);
-                        console.log("fwidth: " + walls[i].mods[j].fwidth);
-                        console.log("glassTint: " + walls[i].mods[j].glassTint);
-                        console.log("hardware: " + walls[i].mods[j].hardware);
-                        console.log("height: " + walls[i].mods[j].height);
-                        console.log("hinge: " + walls[i].mods[j].hinge);
-                        console.log("kickplate: " + walls[i].mods[j].kickplate);
-                        console.log("mheight: " + walls[i].mods[j].mheight);
-                        console.log("mwidth: " + walls[i].mods[j].mwidth);
-                        console.log("numberOfVents: " + walls[i].mods[j].numberOfVents);
-                        console.log("position: " + walls[i].mods[j].position);
-                        console.log("screenOptions: " + walls[i].mods[j].screenOptions);
-                        console.log("style: " + walls[i].mods[j].style);
-                        console.log("swing: " + walls[i].mods[j].swing);
-                        console.log("type: " + walls[i].mods[j].type);
-                        console.log("vinylTint: " + walls[i].mods[j].vinylTint);
-                        console.log("width: " + walls[i].mods[j].width);
+                        console.log("this wall has " + walls[i].mods.length + " doors");
+                        for (var j=0;j<=walls[i].mods.length-1;j++)
+                        {
+                            console.log("validating door position");
+                            var tempArray = validateDecimal(walls[i].mods[j].position);
+                            walls[i].mods[j].position = parseFloat(tempArray[0]) + parseFloat(tempArray[1]);
+                        }
                     }
-                    console.log("----------------------------------");
+                    console.log("--------");
                 }
             }
         }
@@ -1211,7 +1184,7 @@
                     <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" OnClientClick="WindowPreparation()"/>
 
             </div>
             <%-- end #slide3 --%>
@@ -1229,7 +1202,6 @@
                     <asp:PlaceHolder ID="wallWindowOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnTester" Enabled="true" runat="server" Text="test" UseSubmitBehavior="false" OnClientClick="kyleTester()" />
                 <asp:Button ID="btnQuestion4" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Submit" OnClick="btnQuestion4_Click" />
 
             </div>
