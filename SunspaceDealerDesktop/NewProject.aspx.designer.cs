@@ -1624,6 +1624,15 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Image imbPreset3;
         
         /// <summary>
+        /// tbcPreset4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TableCell tbcPreset4;
+        
+        /// <summary>
         /// radPreset4 control.
         /// </summary>
         /// <remarks>
@@ -1703,6 +1712,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imbPreset6;
+        
+        /// <summary>
+        /// tbcPreset7 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TableCell tbcPreset7;
         
         /// <summary>
         /// radPreset7 control.

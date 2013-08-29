@@ -141,6 +141,7 @@ OpenSpaceDoor.prototype = new FramedDoor();
 */
 function addDoor(wallNumber, type) {
 
+    console.log("just before creating door");
     //Call to createDoorObject function to create the appropriate door object based on type
     var door = createDoorObject(wallNumber, type);
 
@@ -240,7 +241,7 @@ function customDimension(wallNumber, type, dimension) {
 ***************RADIO BUTTON VALUES NOT STORING PROPERLY, TO BE FIXED***************
 */
 function createDoorObject(wallNumber, type) {
-
+    console.log("Creating door");
     //Object variable to hold the current door being built
     var framedDoor;
 
@@ -364,9 +365,9 @@ function createDoorObject(wallNumber, type) {
         framedDoor.position = walls[wallNumber].length - framedDoor.fwidth - walls[wallNumber].rightFiller;
     }
     else if (framedDoor.position === "Center") {
-        framedDoor.position = walls[wallNumber].length / 2 - framedDoor.fwidth / 2;
+        framedDoor.position = validateDecimal(walls[wallNumber].length / 2 - framedDoor.fwidth / 2);
     }
-
+    console.log(framedDoor.position);
     //Return framedDoor object
     return framedDoor;
 }

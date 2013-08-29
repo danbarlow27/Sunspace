@@ -243,22 +243,22 @@
                 //update pager, enable button, and update hidden value
                 //corresponding to selected model #
                 if ($('#<%=radSunroomModel100.ClientID%>').is(':checked')) {
-                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "100";
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "M100";
                     document.getElementById('pagerThree').style.display = "inline";
                     document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
                 }
                 else if ($('#<%=radSunroomModel200.ClientID%>').is(':checked')) {
-                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "200";
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "M200";
                     document.getElementById('pagerThree').style.display = "inline";
                     document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
                 }
                 else if ($('#<%=radSunroomModel300.ClientID%>').is(':checked')) {
-                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "300";
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "M300";
                     document.getElementById('pagerThree').style.display = "inline";
                     document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
                 }
                 else if ($('#<%=radSunroomModel400.ClientID%>').is(':checked')) {
-                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "400";
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "M400";
                     document.getElementById('pagerThree').style.display = "inline";
                     document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
                 }
@@ -277,22 +277,22 @@
                 //update pager, enable button, and update hidden value
                 //corresponding to selected model #
                 if ($('#<%=radWallsModel100.ClientID%>').is(':checked')) {
-                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "100";
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "M100";
                     document.getElementById('pagerThree').style.display = "inline";
                     document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
                 }
                 else if ($('#<%=radWallsModel200.ClientID%>').is(':checked')) {
-                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "200";
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "M200";
                     document.getElementById('pagerThree').style.display = "inline";
                     document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
                 }
                 else if ($('#<%=radWallsModel300.ClientID%>').is(':checked')) {
-                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "300";
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "M300";
                     document.getElementById('pagerThree').style.display = "inline";
                     document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
                 }
                 else if ($('#<%=radWallsModel400.ClientID%>').is(':checked')) {
-                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "400";
+                    document.getElementById("<%=hidModelNumber.ClientID%>").value = "M400";
                     document.getElementById('pagerThree').style.display = "inline";
                     document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
                 }                
@@ -421,6 +421,38 @@
                     document.getElementById('pagerSeven').style.display = "inline";
                     document.getElementById("<%=hidRoof.ClientID%>").value = "Yes";
                     document.getElementById("<%=hidRoofType.ClientID%>").value = "Studio";
+
+                    //unhide studio-only
+                    document.getElementById('<%=tbcPreset4.ClientID%>').style.display = "block";
+                    document.getElementById('<%=tbcPreset7.ClientID%>').style.display = "block";
+
+                    //set to studio images
+                    if ($('#<%=chkMirrored.ClientID%>').is(':checked'))
+                    {
+                        document.getElementById("<%=imbPreset1.ClientID%>").setAttribute("src", "./images/layout/Preset1.png");
+                        document.getElementById("<%=imbPreset2.ClientID%>").setAttribute("src", "./images/layout/Preset2.png");
+                        document.getElementById("<%=imbPreset3.ClientID%>").setAttribute("src", "./images/layout/Preset3.png");
+                        document.getElementById("<%=imbPreset4.ClientID%>").setAttribute("src", "./images/layout/Preset4M.png");
+                        document.getElementById("<%=imbPreset5.ClientID%>").setAttribute("src", "./images/layout/Preset5M.png");
+                        document.getElementById("<%=imbPreset6.ClientID%>").setAttribute("src", "./images/layout/Preset6M.png");
+                        document.getElementById("<%=imbPreset7.ClientID%>").setAttribute("src", "./images/layout/Preset7M.png");
+                        document.getElementById("<%=imbPreset8.ClientID%>").setAttribute("src", "./images/layout/Preset8M.png");
+                        document.getElementById("<%=imbPreset9.ClientID%>").setAttribute("src", "./images/layout/Preset9M.png");
+                        document.getElementById("<%=imbPreset10.ClientID%>").setAttribute("src", "./images/layout/Preset10.png");
+                    }
+                    else
+                    {                      
+                        document.getElementById("<%=imbPreset1.ClientID%>").setAttribute("src", "./images/layout/Preset1.png");
+                        document.getElementById("<%=imbPreset2.ClientID%>").setAttribute("src", "./images/layout/Preset2.png");
+                        document.getElementById("<%=imbPreset3.ClientID%>").setAttribute("src", "./images/layout/Preset3.png");
+                        document.getElementById("<%=imbPreset4.ClientID%>").setAttribute("src", "./images/layout/Preset4.png");
+                        document.getElementById("<%=imbPreset5.ClientID%>").setAttribute("src", "./images/layout/Preset5.png");
+                        document.getElementById("<%=imbPreset6.ClientID%>").setAttribute("src", "./images/layout/Preset6.png");
+                        document.getElementById("<%=imbPreset7.ClientID%>").setAttribute("src", "./images/layout/Preset7.png");
+                        document.getElementById("<%=imbPreset8.ClientID%>").setAttribute("src", "./images/layout/Preset8.png");
+                        document.getElementById("<%=imbPreset9.ClientID%>").setAttribute("src", "./images/layout/Preset9.png");
+                        document.getElementById("<%=imbPreset10.ClientID%>").setAttribute("src", "./images/layout/Preset10.png");
+                    }
                 }
                 else if ($('#<%=radDealerGable.ClientID%>').is(':checked')) {
                     document.getElementById('<%=btnQuestion7.ClientID%>').disabled = false;
@@ -428,6 +460,38 @@
                     document.getElementById('pagerSeven').style.display = "inline";
                     document.getElementById("<%=hidRoof.ClientID%>").value = "Yes";
                     document.getElementById("<%=hidRoofType.ClientID%>").value = "Dealer Gable";
+
+                    //hide studio-only
+                    document.getElementById('<%=tbcPreset4.ClientID%>').style.display = "none";                    
+                    document.getElementById('<%=tbcPreset7.ClientID%>').style.display = "none";
+
+                    //set to gable images
+                    if ($('#<%=chkMirrored.ClientID%>').is(':checked'))
+                    {
+                        document.getElementById("<%=imbPreset1.ClientID%>").setAttribute("src", "./images/layout/Preset1.png");
+                        document.getElementById("<%=imbPreset2.ClientID%>").setAttribute("src", "./images/layout/Preset2.png");
+                        document.getElementById("<%=imbPreset3.ClientID%>").setAttribute("src", "./images/layout/Preset3.png");
+                        document.getElementById("<%=imbPreset4.ClientID%>").setAttribute("src", "./images/layout/Preset4M.png");
+                        document.getElementById("<%=imbPreset5.ClientID%>").setAttribute("src", "./images/layout/Preset5MG.png");
+                        document.getElementById("<%=imbPreset6.ClientID%>").setAttribute("src", "./images/layout/Preset6MG.png");
+                        document.getElementById("<%=imbPreset7.ClientID%>").setAttribute("src", "./images/layout/Preset7M.png");
+                        document.getElementById("<%=imbPreset8.ClientID%>").setAttribute("src", "./images/layout/Preset8MG.png");
+                        document.getElementById("<%=imbPreset9.ClientID%>").setAttribute("src", "./images/layout/Preset9MG.png");
+                        document.getElementById("<%=imbPreset10.ClientID%>").setAttribute("src", "./images/layout/Preset10.png");
+                    }
+                    else
+                    {                        
+                        document.getElementById("<%=imbPreset1.ClientID%>").setAttribute("src", "./images/layout/Preset1G.png");
+                        document.getElementById("<%=imbPreset2.ClientID%>").setAttribute("src", "./images/layout/Preset2G.png");
+                        document.getElementById("<%=imbPreset3.ClientID%>").setAttribute("src", "./images/layout/Preset3G.png");
+                        document.getElementById("<%=imbPreset4.ClientID%>").setAttribute("src", "./images/layout/Preset4.png");
+                        document.getElementById("<%=imbPreset5.ClientID%>").setAttribute("src", "./images/layout/Preset5G.png");
+                        document.getElementById("<%=imbPreset6.ClientID%>").setAttribute("src", "./images/layout/Preset6G.png");
+                        document.getElementById("<%=imbPreset7.ClientID%>").setAttribute("src", "./images/layout/Preset7.png");
+                        document.getElementById("<%=imbPreset8.ClientID%>").setAttribute("src", "./images/layout/Preset8G.png");
+                        document.getElementById("<%=imbPreset9.ClientID%>").setAttribute("src", "./images/layout/Preset9G.png");
+                        document.getElementById("<%=imbPreset10.ClientID%>").setAttribute("src", "./images/layout/Preset10G.png");
+                    }
                 }
                 else if ($('#<%=radSunspaceGable.ClientID%>').is(':checked')) {
                     document.getElementById('<%=btnQuestion7.ClientID%>').disabled = false;
@@ -435,6 +499,38 @@
                     document.getElementById('pagerSeven').style.display = "inline";
                     document.getElementById("<%=hidRoof.ClientID%>").value = "Yes";
                     document.getElementById("<%=hidRoofType.ClientID%>").value = "Sunspace Gable";
+
+                    //hide studio-only
+                    document.getElementById('<%=tbcPreset4.ClientID%>').style.display = "none";                    
+                    document.getElementById('<%=tbcPreset7.ClientID%>').style.display = "none";
+                    
+                    //set to gable images
+                    if ($('#<%=chkMirrored.ClientID%>').is(':checked'))
+                    {
+                        document.getElementById("<%=imbPreset1.ClientID%>").setAttribute("src", "./images/layout/Preset1.png");
+                        document.getElementById("<%=imbPreset2.ClientID%>").setAttribute("src", "./images/layout/Preset2.png");
+                        document.getElementById("<%=imbPreset3.ClientID%>").setAttribute("src", "./images/layout/Preset3.png");
+                        document.getElementById("<%=imbPreset4.ClientID%>").setAttribute("src", "./images/layout/Preset4M.png");
+                        document.getElementById("<%=imbPreset5.ClientID%>").setAttribute("src", "./images/layout/Preset5MG.png");
+                        document.getElementById("<%=imbPreset6.ClientID%>").setAttribute("src", "./images/layout/Preset6MG.png");
+                        document.getElementById("<%=imbPreset7.ClientID%>").setAttribute("src", "./images/layout/Preset7M.png");
+                        document.getElementById("<%=imbPreset8.ClientID%>").setAttribute("src", "./images/layout/Preset8MG.png");
+                        document.getElementById("<%=imbPreset9.ClientID%>").setAttribute("src", "./images/layout/Preset9MG.png");
+                        document.getElementById("<%=imbPreset10.ClientID%>").setAttribute("src", "./images/layout/Preset10.png");
+                    }
+                    else
+                    {                      
+                        document.getElementById("<%=imbPreset1.ClientID%>").setAttribute("src", "./images/layout/Preset1G.png");
+                        document.getElementById("<%=imbPreset2.ClientID%>").setAttribute("src", "./images/layout/Preset2G.png");
+                        document.getElementById("<%=imbPreset3.ClientID%>").setAttribute("src", "./images/layout/Preset3G.png");
+                        document.getElementById("<%=imbPreset4.ClientID%>").setAttribute("src", "./images/layout/Preset4.png");
+                        document.getElementById("<%=imbPreset5.ClientID%>").setAttribute("src", "./images/layout/Preset5G.png");
+                        document.getElementById("<%=imbPreset6.ClientID%>").setAttribute("src", "./images/layout/Preset6G.png");
+                        document.getElementById("<%=imbPreset7.ClientID%>").setAttribute("src", "./images/layout/Preset7.png");
+                        document.getElementById("<%=imbPreset8.ClientID%>").setAttribute("src", "./images/layout/Preset8G.png");
+                        document.getElementById("<%=imbPreset9.ClientID%>").setAttribute("src", "./images/layout/Preset9G.png");
+                        document.getElementById("<%=imbPreset10.ClientID%>").setAttribute("src", "./images/layout/Preset10G.png");
+                    }
                 }
                 else {
                     //no type selection, errors
@@ -559,7 +655,7 @@
             //Depending on model number we'll have different colours, so we use the corresponding serialized variable for that model's colours
             //retrieving it, and adding its values to the dropdowns
             switch (modelNumber.value) {
-                case '100':
+                case 'M100':
                     var anArray =  <%= model100FramingColoursJ %>;
 
                     for (var i=0;i<anArray.length;i++)
@@ -569,7 +665,7 @@
                     }
                     break;
 
-                case '200':
+                case 'M200':
                     var anArray =  <%= model200FramingColoursJ %>;
 
                     for (var i=0;i<anArray.length;i++)
@@ -579,7 +675,7 @@
                     }                    
                     break;
 
-                case '300':
+                case 'M300':
                     var anArray =  <%= model300FramingColoursJ %>;
 
                     for (var i=0;i<anArray.length;i++)
@@ -589,7 +685,7 @@
                     }                    
                     break;
 
-                case '400':
+                case 'M400':
                     var anArray =  <%= model400FramingColoursJ %>;
 
                     for (var i=0;i<anArray.length;i++)
@@ -652,7 +748,7 @@
 
             //Like above, types are based on model, and will get the proper variable based on model
             switch (modelNumber.value) {
-                case '100':
+                case 'M100':
                     var anArray = <%= model100TransomTypesJ %>;
 
                     for (var i=0;i<anArray.length;i++)
@@ -662,7 +758,7 @@
                     }
                     break;
 
-                case '200':
+                case 'M200':
                     var anArray =  <%= model200TransomTypesJ %>;
 
                     for (var i=0;i<anArray.length;i++)
@@ -672,7 +768,7 @@
                     }                    
                     break;
 
-                case '300':
+                case 'M300':
                     var anArray =  <%= model300TransomTypesJ %>;
 
                     for (var i=0;i<anArray.length;i++)
@@ -682,7 +778,7 @@
                     }                    
                     break;
 
-                case '400':
+                case 'M400':
                     var anArray =  <%= model400TransomTypesJ %>;
 
                     for (var i=0;i<anArray.length;i++)
@@ -711,44 +807,93 @@
 
             if ($('#<%=chkMirrored.ClientID%>').is(':checked'))
             {
-                theImage = document.getElementById("<%=imbPreset4.ClientID%>");
-                theImage.setAttribute("src", "./images/layout/Preset4M.png");
+                if ($('#<%=radDealerGable.ClientID%>').is(':checked') || $('#<%=radSunspaceGable.ClientID%>').is(':checked'))
+                {                    
+                    console.log("mirrored sungable");
+                    theImage = document.getElementById("<%=imbPreset4.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset4M.png");
 
-                theImage = document.getElementById("<%=imbPreset5.ClientID%>");
-                theImage.setAttribute("src", "./images/layout/Preset5M.png");
+                    theImage = document.getElementById("<%=imbPreset5.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset5MG.png");
 
-                theImage = document.getElementById("<%=imbPreset6.ClientID%>");
-                theImage.setAttribute("src", "./images/layout/Preset6M.png");
+                    theImage = document.getElementById("<%=imbPreset6.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset6MG.png");
 
-                theImage = document.getElementById("<%=imbPreset7.ClientID%>");
-                theImage.setAttribute("src", "./images/layout/Preset7M.png");
+                    theImage = document.getElementById("<%=imbPreset7.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset7M.png");
 
-                theImage = document.getElementById("<%=imbPreset8.ClientID%>");
-                theImage.setAttribute("src", "./images/layout/Preset8M.png");
+                    theImage = document.getElementById("<%=imbPreset8.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset8MG.png");
 
-                theImage = document.getElementById("<%=imbPreset9.ClientID%>");
-                theImage.setAttribute("src", "./images/layout/Preset9M.png");
+                    theImage = document.getElementById("<%=imbPreset9.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset9MG.png");
+                }
+                else
+                {                    
+                    console.log("mirrored studio");
+                    theImage = document.getElementById("<%=imbPreset4.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset4M.png");
+
+                    theImage = document.getElementById("<%=imbPreset5.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset5M.png");
+
+                    theImage = document.getElementById("<%=imbPreset6.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset6M.png");
+
+                    theImage = document.getElementById("<%=imbPreset7.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset7M.png");
+
+                    theImage = document.getElementById("<%=imbPreset8.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset8M.png");
+
+                    theImage = document.getElementById("<%=imbPreset9.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset9M.png");
+                }
             }
             else
             {
-                var theImage;
-                theImage = document.getElementById("<%=imbPreset4.ClientID%>");
-                theImage.setAttribute("src", "./images/layout/Preset4.png");
+                if ($('#<%=radDealerGable.ClientID%>').is(':checked') || $('#<%=radSunspaceGable.ClientID%>').is(':checked'))
+                {
+                    console.log("normal sungable");
+                    theImage = document.getElementById("<%=imbPreset4.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset4.png");
 
-                theImage = document.getElementById("<%=imbPreset5.ClientID%>");
-                theImage.setAttribute("src", "./images/layout/Preset5.png");
+                    theImage = document.getElementById("<%=imbPreset5.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset5G.png");
 
-                theImage = document.getElementById("<%=imbPreset6.ClientID%>");
-                theImage.setAttribute("src", "./images/layout/Preset6.png");
+                    theImage = document.getElementById("<%=imbPreset6.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset6G.png");
 
-                theImage = document.getElementById("<%=imbPreset7.ClientID%>");
-                theImage.setAttribute("src", "./images/layout/Preset7.png");
+                    theImage = document.getElementById("<%=imbPreset7.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset7.png");
 
-                theImage = document.getElementById("<%=imbPreset8.ClientID%>");
-                theImage.setAttribute("src", "./images/layout/Preset8.png");
+                    theImage = document.getElementById("<%=imbPreset8.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset8G.png");
 
-                theImage = document.getElementById("<%=imbPreset9.ClientID%>");
-                theImage.setAttribute("src", "./images/layout/Preset9.png");
+                    theImage = document.getElementById("<%=imbPreset9.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset9G.png");
+                }
+                else
+                {      
+                    console.log("normal studio");              
+                    theImage = document.getElementById("<%=imbPreset4.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset4.png");
+
+                    theImage = document.getElementById("<%=imbPreset5.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset5.png");
+
+                    theImage = document.getElementById("<%=imbPreset6.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset6.png");
+
+                    theImage = document.getElementById("<%=imbPreset7.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset7.png");
+
+                    theImage = document.getElementById("<%=imbPreset8.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset8.png");
+
+                    theImage = document.getElementById("<%=imbPreset9.ClientID%>");
+                    theImage.setAttribute("src", "./images/layout/Preset9.png");
+                }
             }
         }
     </script>
@@ -1364,7 +1509,7 @@
                             </asp:TableRow>
 
                             <asp:TableRow>
-                                <asp:TableCell>
+                                <asp:TableCell ID="tbcPreset4" runat="server">
                                     <asp:RadioButton ID="radPreset4" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
                                     <asp:Label ID="lblPreset4Radio" AssociatedControlID="radPreset4" runat="server"></asp:Label>
                                     <asp:Image ID="imbPreset4" GroupName="layout" AssociatedControlID="radPreset4" AlternateText="missing preset image" ImageUrl="./images/layout/Preset4.png" runat="server" />  
@@ -1384,7 +1529,7 @@
                             </asp:TableRow>
 
                             <asp:TableRow>
-                                <asp:TableCell>
+                                <asp:TableCell ID="tbcPreset7" runat="server">
                                     <asp:RadioButton ID="radPreset7" OnClick="newProjectCheckQuestion8()" GroupName="layout" runat="server" />                        
                                     <asp:Label ID="lblPreset7Radio" AssociatedControlID="radPreset7" runat="server"></asp:Label>
                                     <asp:Image ID="imbPreset7" GroupName="layout" AssociatedControlID="radPreset7" AlternateText="missing preset image" ImageUrl="./images/layout/Preset7.png" runat="server" />  
