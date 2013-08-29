@@ -49,6 +49,15 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Button btnSubmitDrawing;
         
         /// <summary>
+        /// chkShowMe control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkShowMe;
+        
+        /// <summary>
         /// hiddenVar control.
         /// </summary>
         /// <remarks>

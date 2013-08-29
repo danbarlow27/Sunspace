@@ -56,6 +56,8 @@
                 <!--Button to send line information to C#-->
                 <li><asp:Button ID="btnSubmitDrawing" CSSClass="btnDisabled" runat="server" Text="Submit Drawing" OnClick="Button1_Click1" style="width:150px"/></li>
 
+                <li><asp:CheckBox ID="chkShowMe" runat="server" Text="Show Me" OnCheckChanged="validateGable()" /></li>
+
             </ul>
         </div>
 
@@ -72,7 +74,7 @@
     <!--Hidden input field to hold concatenated string of line information to be passed to C#-->
     <input type="hidden" id="hiddenVar" runat="server" />
     <!--ASP button for testing, to be removed-->
-    
+    <script src="Scripts/Validation.js"></script>
     <script>
 
         var standAlone;
@@ -818,126 +820,187 @@
         *at least 2 parallel lines/walls to support the gable
         */
         function validateGable() {
-
-            var gablesDrawn = 0; // number of gable posts drawn. must be 1, max of 2 at end of validation
-            var valid = 0; //must end up equal to amount of lines in coordlist
-            var proposedTouchingGable = 0; // must be equal to (2 * number of gables drawn) at end of validation
-            var proposedTouchingExisting = 0; // must be 2 at end of validation
-
             for (var i = 0; i < coordList.length; i++)
             {
                 var currentLine = coordList[i];
-                var proposedTouches = 0; // whenever this variable equals 2, break the secondary loop
-                var existingTouches = 0; // whenever this variable equals 2, break the secondary loop
-                var gableTouches = 0; // must be 2 for each gable drawn at end of secondary loop
+                console.log("%c Current Line: " + i + ", Direction: " + findLineDirection(currentLine) + "\n", "color: #bada55");
 
                 for (var j = 0; j < coordList.length; j++)
                 {
                     if (currentLine != coordList[j])
                     {
-                        if (currentLine.id == "E")
-                        {
-                            if (coordList[j].id == "E")
-                            {
-                                if ((currentLine.x1 == coordList[j].x2 && currentLine.y1 == coordList[j].y2) ||
-                                    (currentLine.x2 == coordList[j].x1 && currentLine.y2 == coordList[j].y1)) 
-                                {
-                                    existingTouches++;
-                                    valid++;
-                                }
-                            }
-                            else if (coordList[j].id == "P")
-                            {
-                                if (currentLine.x1 == currentLine.x2) //current wall is vertical
-                                {
-                                    if (coordList[j].y1 == coordList[j].y2)
-                                    {
-                                        if (coordList[j].y1 >= currentLine.y1 && coordList[j].y2 <= currentLine.y2)
-                                        {
-                                            valid++;
-                                            existingTouches++;
-                                            break;
-                                        }
-                                    }
-                                }
-                                else if (currentLine.y1 == currentLine.y2) //current wall is horizontal
-                                {
-                                    if (coordList[j].x1 == coordList[j].x2)
-                                    {
-                                        if (coordList[j].x1 >= currentLine.y1 && coordList.x2 <= currentLine.y2)
-                                        {
-                                            valid++;
-                                            existingTouches++;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        else if (currentLine.id == "P")
-                        {
-                            if (coordList[j].id == "E")
-                            {
-                                if (currentLine.x1 == currentLine.x2) //current wall is vertical
-                                {
-                                    if (coordList[j].y1 == coordList[j].y2) {
-                                        if (coordList[j].y1 >= currentLine.y1 && coordList[j].y2 <= currentLine.y2) {
-                                            proposedTouchingExisting++;
-                                        }
-                                    }
-                                }
-                                else if (currentLine.y1 == currentLine.y2) //current wall is horizontal
-                                {
-                                    if (coordList[j].x1 == coordList[j].x2) {
-                                        if (coordList[j].x1 >= currentLine.y1 && coordList.x2 <= currentLine.y2) {
-                                            proposedTouchingExisting++;
-                                        }
-                                    }
-                                }
-                            }
-                            else if (coordList[j].id == "P")
-                            {
-                                if ((currentLine.x1 == coordList[j].x2 && currentLine.y1 == coordList[j].y2) ||
-                                    (currentLine.x2 == coordList[j].x1 && currentLine.y2 == coordList[j].y1))
-                                {
-                                    //find slope of lines, if equal it is an error, that's one wall not two silly pants
-                                    if (((currentLine.y2 - currentLine.y1) / (currentLine.x2 - currentLine.x1)) == ((coordList[j].y2 - coordList[j].y1) / (coordList[j].x2 - coordList[j].x1)))
-                                    {
-                                        //this is an error, write out a fancy error message
-                                    }
-                                    else
-                                    {
-                                        proposedTouches++;
-
-                                        if (proposedTouches == 2)
-                                        {
-                                            valid++;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            else if (coordList[j].id == "G")
-                            {
-                                if ((currentLine.x1 == coordList[j].x2 && currentLine.y1 == coordList[j].y2) ||
-                                    (currentLine.x2 == coordList[j].x1 && currentLine.y2 == coordList[j].y1))
-                                {
-                                    if ((currentLine.y1 == currentLine.y2) && (coordList[j].y1 == coordList[j].y2))
-                                    {
-                                        proposedTouches++;
-
-                                        if (proposedTouches == 2) {
-                                            valid++;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        console.log("CoordListLine: " + j + ", Direction: " + findLineDirection(coordList[j]) + "\n");
+                        var showMe = findLinesTouch(currentLine, coordList[j]);
+                        console.log(showMe);
                     }
                 }
             }
+            //var gablesDrawn = 0; // number of gable posts drawn. must be 1, max of 2 at end of validation
+            //var valid = 0; //must end up equal to amount of lines in coordlist
+            //var proposedTouchingGable = 0; // must be equal to (2 * number of gables drawn) at end of validation
+            //var proposedTouchingExisting = 0; // must be 2 at end of validation
 
+            //for (var i = 0; i < coordList.length; i++)
+            //{
+            //    var currentLine = coordList[i];
+            //    var proposedTouches = 0; // whenever this variable equals 2, break the secondary loop
+            //    var existingTouches = 0; // whenever this variable equals 2, break the secondary loop
+            //    var gableTouches = 0; // must be 2 for each gable drawn at end of secondary loop
+
+            //    for (var j = 0; j < coordList.length; j++)
+            //    {
+            //        if (currentLine != coordList[j])
+            //        {
+            //            if (currentLine.id == "E") //current wall is existing
+            //            {
+            //                if (coordList[j].id == "E") //next wall is existing
+            //                {
+            //                    if ((currentLine.x1 == coordList[j].x2 && currentLine.y1 == coordList[j].y2) ||
+            //                        (currentLine.x2 == coordList[j].x1 && currentLine.y2 == coordList[j].y1)) 
+            //                    {
+            //                        existingTouches++;
+            //                        valid++;
+            //                    }
+            //                }
+            //                else if (coordList[j].id == "P") //next wall is proposed
+            //                {
+            //                    if (currentLine.x1 == currentLine.x2) //current wall is vertical
+            //                    {
+            //                        if (coordList[j].y1 == coordList[j].y2) //this proposed wall is horizontal
+            //                        {
+            //                            if (coordList[j].y1 >= currentLine.y1 && coordList[j].y2 <= currentLine.y2) //this proposed wall touches somewhere on the existing wall
+            //                            {
+            //                                valid++;
+            //                                existingTouches++;
+            //                                break;
+            //                            }
+            //                        }
+            //                    }
+            //                    else if (currentLine.y1 == currentLine.y2) //current wall is horizontal
+            //                    {
+            //                        if (coordList[j].x1 == coordList[j].x2) //this proposed wall is vertical
+            //                        {
+            //                            if (coordList[j].x1 >= currentLine.x1 && coordList.x2 <= currentLine.x2) //this proposed wall touches somewhere on the existing wall
+            //                            {
+            //                                valid++;
+            //                                existingTouches++;
+            //                                break;
+            //                            }
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //            else if (currentLine.id == "P") //current wall is proposed
+            //            {
+            //                if (coordList[j].id == "E") //next wall is existing
+            //                {
+            //                    if (currentLine.x1 == currentLine.x2) //current wall is vertical
+            //                    {
+            //                        if (coordList[j].y1 == coordList[j].y2) //next wall is horizontal
+            //                        {
+            //                            //what direction did they
+            //                            //does the proposed wall touch anywhere on this existing wall?
+            //                            if ((currentLine.y1 == coordList[j].y1 || currentLine.y2 == coordList[j].y1) && (currentLine.x1 >= coordList[j].x1 && currentLine.x2 <= coordList[j].x2))
+            //                            {
+            //                                proposedTouchingExisting++;
+            //                            }
+            //                        }
+            //                    }
+            //                    else if (currentLine.y1 == currentLine.y2) //current wall is horizontal
+            //                    {
+            //                        if (coordList[j].x1 == coordList[j].x2) //next wall is vertical
+            //                        {
+            //                            //does the proposed wall touch anywhere on this existing wall?
+            //                            if ((currentLine.x1 == coordList[j].x1 || currentLine.x2 == coordList[j].x1) && (currentLine.y1 >= coordList[j].y1 && currentLine.y2 <= coordList[j].y2))
+            //                            {
+            //                                proposedTouchingExisting++;
+            //                            }
+            //                        }
+            //                    }
+            //                }
+            //                else if (coordList[j].id == "P") //next wall is proposed
+            //                {
+            //                    //do these proposed walls meet?
+            //                    if ((currentLine.x1 == coordList[j].x2 && currentLine.y1 == coordList[j].y2) ||
+            //                        (currentLine.x2 == coordList[j].x1 && currentLine.y2 == coordList[j].y1))
+            //                    {
+            //                        //find slope of lines, if equal it is an error, that's one wall not two silly pants
+            //                        if (((currentLine.y2 - currentLine.y1) / (currentLine.x2 - currentLine.x1)) == ((coordList[j].y2 - coordList[j].y1) / (coordList[j].x2 - coordList[j].x1)))
+            //                        {
+            //                            //this is an error, write out a fancy error message
+            //                            log.innerHTML += "error: two equal proposed slopes<br/>";
+            //                        }
+            //                        else
+            //                        {
+            //                            proposedTouches++;
+
+            //                            if (proposedTouches == 2)
+            //                            {
+            //                                valid++;
+            //                                break;
+            //                            }
+            //                        }
+            //                    }
+            //                }
+            //                else if (coordList[j].id == "G")
+            //                {
+            //                    //does currentline touch this gable?
+            //                    if ((currentLine.x1 == coordList[j].x2 && currentLine.y1 == coordList[j].y2) ||
+            //                        (currentLine.x2 == coordList[j].x1 && currentLine.y2 == coordList[j].y1))
+            //                    {
+            //                        //if gable is horizontal then proposed must also be horizontal
+            //                        if ((currentLine.y1 == currentLine.y2) && (coordList[j].y1 == coordList[j].y2))
+            //                        {
+            //                            proposedTouches++;
+
+            //                            if (proposedTouches == 2)
+            //                            {
+            //                                valid++;
+            //                                break;
+            //                            }
+            //                        }
+            //                        //if gable is vertical, proposed still has to be horizontal
+            //                        else if ((currentLine.x1 == currentLine.x2) && (coordList[j].y1 == coordList[j].y2))
+            //                        {
+            //                            proposedTouches++;
+
+            //                            if (proposedTouches == 2)
+            //                            {
+            //                                valid++;
+            //                                break;
+            //                            }
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //            else if (currentLine.id == "G")
+            //            {
+            //                if (coordList[j].id == "E")
+            //                {
+            //                    //does this gable attach to the end of an existing wall?
+            //                    if ((currentLine.x1 == coordList[j].x2 && currentLine.y1 == coordList[j].y2) ||
+            //                        (currentLine.x2 == coordList[j].x1 && currentLine.y2 == coordList[j].y1))
+            //                    {
+            //                        log.innerHTML += "error: gable is attached to the end of an existing wall.<br/>";
+            //                    }
+            //                    else if (currentLine.x1 == currentLine.x2) //this gable wall is vertical
+            //                    {
+            //                        if (coordList[j].y1 == coordList[j].y2) //this existing wall is horizontal
+            //                        {
+            //                            if (coordList[j].y1 >= currentLine.y1 && coordList[j].y2 <= currentLine.y2)  //this gable wall touches somewhere on the existing wall
+            //                            {
+
+            //                            }
+            //                        }
+            //                    }
+
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+
+            // ******************************************* PATS STUFF ****************************************************
             //var validLines = 0;         //Variable to determine if all walls are connected or the sunroom is enclosed
             //var goodParallel = false;   //Variable to determine if 2 walls are parallel
 
