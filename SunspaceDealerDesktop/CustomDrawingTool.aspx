@@ -819,58 +819,177 @@
         */
         function validateGable() {
 
-            var validLines = 0;         //Variable to determine if all walls are connected or the sunroom is enclosed
-            var goodParallel = false;   //Variable to determine if 2 walls are parallel
+            var gablesDrawn = 0; // number of gable posts drawn. must be 1, max of 2 at end of validation
+            var valid = 0; //must end up equal to amount of lines in coordlist
+            var proposedTouchingGable = 0; // must be equal to (2 * number of gables drawn) at end of validation
+            var proposedTouchingExisting = 0; // must be 2 at end of validation
 
-            //Loop to set a wall to varify against
-            for (var i = 0; i < coordList.length; i++) {
-                
-                //Setting a line/wall variable to test against
+            for (var i = 0; i < coordList.length; i++)
+            {
                 var currentLine = coordList[i];
+                var proposedTouches = 0; // whenever this variable equals 2, break the secondary loop
+                var existingTouches = 0; // whenever this variable equals 2, break the secondary loop
+                var gableTouches = 0; // must be 2 for each gable drawn at end of secondary loop
 
-                //Loop through lines/walls to varify against the outer loop one
-                for (var k = 0; k < coordList.length; k++) {
-                    
-                    //If the lines/walls aren't the same, perform this block
-                    if (currentLine != coordList[k]) {
-                        console.log(currentLine.id);
-                        console.log("currentLineX1: " + currentLine.x1 + ", currentLineX2: " + currentLine.x2 + ", currentLineY1: " + currentLine.y1 + ", currentLineY2: " + currentLine.y2);
-                        console.log("coordListKX1: " + coordList[k].x1 + ", coordListKX2: " + coordList[k].x2 + ", coordListKY1: " + coordList[k].y1 + ", coordListKY2: " + coordList[k].y2);
-                        
-                        //if the lines/walls start or end coordinates are the same, add one to validLines
-                        if ((currentLine.x1 == coordList[k].x2 && currentLine.y1 == coordList[k].y2) || (currentLine.x1 == coordList[k].x1 && currentLine.y1 == coordList[k].y1)
-                            || (currentLine.x1 < coordList[k].x1 ) || (currentLine.y2 > coordList[k].y2 )) {
-                            validLines++;
+                for (var j = 0; j < coordList.length; j++)
+                {
+                    if (currentLine != coordList[j])
+                    {
+                        if (currentLine.id == "E")
+                        {
+                            if (coordList[j].id == "E")
+                            {
+                                if ((currentLine.x1 == coordList[j].x2 && currentLine.y1 == coordList[j].y2) ||
+                                    (currentLine.x2 == coordList[j].x1 && currentLine.y2 == coordList[j].y1)) 
+                                {
+                                    existingTouches++;
+                                    valid++;
+                                }
+                            }
+                            else if (coordList[j].id == "P")
+                            {
+                                if (currentLine.x1 == currentLine.x2) //current wall is vertical
+                                {
+                                    if (coordList[j].y1 == coordList[j].y2)
+                                    {
+                                        if (coordList[j].y1 >= currentLine.y1 && coordList[j].y2 <= currentLine.y2)
+                                        {
+                                            valid++;
+                                            existingTouches++;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if (currentLine.y1 == currentLine.y2) //current wall is horizontal
+                                {
+                                    if (coordList[j].x1 == coordList[j].x2)
+                                    {
+                                        if (coordList[j].x1 >= currentLine.y1 && coordList.x2 <= currentLine.y2)
+                                        {
+                                            valid++;
+                                            existingTouches++;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
                         }
-                        //If this function returns true, perform this block
-                        if (validateOppositeWalls(currentLine, coordList[k])) {
-                            //Variable to hold the length of the first line/wall
-                            var lineOneLength = Math.sqrt(Math.pow((currentLine.x2 - currentLine.x1), 2) + Math.pow((currentLine.y2 - currentLine.y1), 2));
-                            //Variable to hold the lenght of the second line/wall
-                            var lineTwoLength = Math.sqrt(Math.pow((coordList[k].x2 - coordList[k].x1), 2) + Math.pow((coordList[k].y2 - coordList[k].y1), 2));
+                        else if (currentLine.id == "P")
+                        {
+                            if (coordList[j].id == "E")
+                            {
+                                if (currentLine.x1 == currentLine.x2) //current wall is vertical
+                                {
+                                    if (coordList[j].y1 == coordList[j].y2) {
+                                        if (coordList[j].y1 >= currentLine.y1 && coordList[j].y2 <= currentLine.y2) {
+                                            proposedTouchingExisting++;
+                                        }
+                                    }
+                                }
+                                else if (currentLine.y1 == currentLine.y2) //current wall is horizontal
+                                {
+                                    if (coordList[j].x1 == coordList[j].x2) {
+                                        if (coordList[j].x1 >= currentLine.y1 && coordList.x2 <= currentLine.y2) {
+                                            proposedTouchingExisting++;
+                                        }
+                                    }
+                                }
+                            }
+                            else if (coordList[j].id == "P")
+                            {
+                                if ((currentLine.x1 == coordList[j].x2 && currentLine.y1 == coordList[j].y2) ||
+                                    (currentLine.x2 == coordList[j].x1 && currentLine.y2 == coordList[j].y1))
+                                {
+                                    //find slope of lines, if equal it is an error, that's one wall not two silly pants
+                                    if (((currentLine.y2 - currentLine.y1) / (currentLine.x2 - currentLine.x1)) == ((coordList[j].y2 - coordList[j].y1) / (coordList[j].x2 - coordList[j].x1)))
+                                    {
+                                        //this is an error, write out a fancy error message
+                                    }
+                                    else
+                                    {
+                                        proposedTouches++;
 
-                            //If the length of both lines/walls are the same, set the goodParellel value to true
-                            if (lineOneLength == lineTwoLength) {
-                                goodParallel = true;
+                                        if (proposedTouches == 2)
+                                        {
+                                            valid++;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            else if (coordList[j].id == "G")
+                            {
+                                if ((currentLine.x1 == coordList[j].x2 && currentLine.y1 == coordList[j].y2) ||
+                                    (currentLine.x2 == coordList[j].x1 && currentLine.y2 == coordList[j].y1))
+                                {
+                                    if ((currentLine.y1 == currentLine.y2) && (coordList[j].y1 == coordList[j].y2))
+                                    {
+                                        proposedTouches++;
+
+                                        if (proposedTouches == 2) {
+                                            valid++;
+                                            break;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
 
-            //If the validLines and length of the coordList array aren't the same, display error and return false
-            //Sunroom is not enclosed
-            if (validLines != coordList.length) {
-                log.innerHTML = "Your gable sunroom must be enclosed. Please try again.";
-                return false;
-            }
-                //Else if no walls are parallel to support the gable, display error and return false
-            else if (goodParallel == false) {
-                log.innerHTML = "Your gable sunroom must have 2 parallel walls to support the roof. Please try again.";
-                return false;
-            }
+            //var validLines = 0;         //Variable to determine if all walls are connected or the sunroom is enclosed
+            //var goodParallel = false;   //Variable to determine if 2 walls are parallel
 
-            return true;
+            ////Loop to set a wall to varify against
+            //for (var i = 0; i < coordList.length; i++) {
+                
+            //    //Setting a line/wall variable to test against
+            //    var currentLine = coordList[i];
+
+            //    //Loop through lines/walls to varify against the outer loop one
+            //    for (var k = 0; k < coordList.length; k++) {
+                    
+            //        //If the lines/walls aren't the same, perform this block
+            //        if (currentLine != coordList[k]) {
+            //            console.log(currentLine.id);
+            //            console.log("currentLineX1: " + currentLine.x1 + ", currentLineX2: " + currentLine.x2 + ", currentLineY1: " + currentLine.y1 + ", currentLineY2: " + currentLine.y2);
+            //            console.log("coordListKX1: " + coordList[k].x1 + ", coordListKX2: " + coordList[k].x2 + ", coordListKY1: " + coordList[k].y1 + ", coordListKY2: " + coordList[k].y2);
+                        
+            //            //if the lines/walls start or end coordinates are the same, add one to validLines
+            //            if ((currentLine.x1 == coordList[k].x2 && currentLine.y1 == coordList[k].y2) || (currentLine.x1 == coordList[k].x1 && currentLine.y1 == coordList[k].y1)
+            //                || (currentLine.x1 < coordList[k].x1 ) || (currentLine.y2 > coordList[k].y2 )) {
+            //                validLines++;
+            //            }
+            //            //If this function returns true, perform this block
+            //            if (validateOppositeWalls(currentLine, coordList[k])) {
+            //                //Variable to hold the length of the first line/wall
+            //                var lineOneLength = Math.sqrt(Math.pow((currentLine.x2 - currentLine.x1), 2) + Math.pow((currentLine.y2 - currentLine.y1), 2));
+            //                //Variable to hold the lenght of the second line/wall
+            //                var lineTwoLength = Math.sqrt(Math.pow((coordList[k].x2 - coordList[k].x1), 2) + Math.pow((coordList[k].y2 - coordList[k].y1), 2));
+
+            //                //If the length of both lines/walls are the same, set the goodParellel value to true
+            //                if (lineOneLength == lineTwoLength) {
+            //                    goodParallel = true;
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+
+            ////If the validLines and length of the coordList array aren't the same, display error and return false
+            ////Sunroom is not enclosed
+            //if (validLines != coordList.length) {
+            //    log.innerHTML = "Your gable sunroom must be enclosed. Please try again.";
+            //    return false;
+            //}
+            //    //Else if no walls are parallel to support the gable, display error and return false
+            //else if (goodParallel == false) {
+            //    log.innerHTML = "Your gable sunroom must have 2 parallel walls to support the roof. Please try again.";
+            //    return false;
+            //}
+
+            //return true;
         }
 
         /**
