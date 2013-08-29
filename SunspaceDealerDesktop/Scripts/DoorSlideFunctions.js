@@ -364,7 +364,7 @@ function createDoorObject(wallNumber, type) {
         framedDoor.position = walls[wallNumber].length - framedDoor.fwidth - walls[wallNumber].rightFiller;
     }
     else if (framedDoor.position === "Center") {
-        framedDoor.position = walls[wallNumber].length / 2 - framedDoor.fwidth / 2;
+        framedDoor.position = validateDecimal(walls[wallNumber].length / 2 - framedDoor.fwidth / 2);
     }
 
     //Return framedDoor object

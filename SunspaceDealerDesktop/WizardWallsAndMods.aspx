@@ -433,7 +433,7 @@
             wall to the first, setting end and start height of each wall (going backwards).
         */
         function determineStartAndEndHeightOfEachWall(gable) {
-
+            document.getElementById();
             if (gable == "True") {
 
                 var proposedCount = 0;
@@ -468,8 +468,8 @@
                 var m = parseFloat(document.getElementById("MainContent_txtRoofSlope").value);
 
                 if (backWall === "north") { //if back wall is a north facing wall, i.e. is not existing wall 
-                    wallStartHeightArray[backWallIndex] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
-                    wallEndHeightArray[backWallIndex] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
+                    wallStartHeightArray[backWallIndex] = parseFloat(document.getElementById("hidBackWallHeight").value);
+                    wallEndHeightArray[backWallIndex] = parseFloat(document.getElementById("hidBackWallHeight").value);
 
                     for (var i = (backWallIndex - 1) ; i >= 0; i--) { //0 = index of first wall
 
@@ -477,8 +477,8 @@
                             //if (coordList[i][5] === "S") {
 
                             ///this is assuming that back wall is an existing wall...
-                            wallStartHeightArray[i] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
-                            wallEndHeightArray[i] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
+                            wallStartHeightArray[i] = parseFloat(document.getElementById("hidBackWallHeight").value);
+                            wallEndHeightArray[i] = parseFloat(document.getElementById("hidBackWallHeight").value);
                             //}
                         }
                         else { //proposed wall
@@ -511,8 +511,8 @@
                 else if (backWall === "south") { //if backwall is a south facing wall.. i.e. is existing
                     for (var i = 0; i < coordList.length; i++) {
                         if (coordList[i][4] === "E") { //existing wall
-                            wallStartHeightArray[i] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
-                            wallEndHeightArray[i] = parseFloat(document.getElementById("MainContent_hidBackWallHeight").value);
+                            wallStartHeightArray[i] = parseFloat(document.getElementById("hidBackWallHeight").value);
+                            wallEndHeightArray[i] = parseFloat(document.getElementById("hidBackWallHeight").value);
                         }
                         else { //proposed wall
                             //if (coordList[i][4] === "P") {
@@ -1053,6 +1053,49 @@
             }
         }
 
+        function kyleTester() {
+            for (var i=1;i<=lineList.length;i++)
+            {
+                ////Create variable wall to hold hold the current walls id and various properties
+                //var wall = {
+                //    "id": i,
+                //    "startHeight": wallStartHeightArray[i - 1],
+                //    "endHeight": wallEndHeightArray[i - 1],
+                //    //"doors": [],
+                //    //"windows": []
+                //    "mods" : []
+                //};
+
+                if (coordList[i - 1][4] == "P")
+                {
+                    console.log("Proposed Wall " + i);
+
+                    for (var j=0;j<=walls[i].mods.length;j++)
+                    {
+                        console.log("boxHeader: " + walls[i].mods[j].boxHeader);
+                        console.log("colour: " + walls[i].mods[j].colour);
+                        console.log("fheight: " + walls[i].mods[j].fheight);
+                        console.log("fwidth: " + walls[i].mods[j].fwidth);
+                        console.log("glassTint: " + walls[i].mods[j].glassTint);
+                        console.log("hardware: " + walls[i].mods[j].hardware);
+                        console.log("height: " + walls[i].mods[j].height);
+                        console.log("hinge: " + walls[i].mods[j].hinge);
+                        console.log("kickplate: " + walls[i].mods[j].kickplate);
+                        console.log("mheight: " + walls[i].mods[j].mheight);
+                        console.log("mwidth: " + walls[i].mods[j].mwidth);
+                        console.log("numberOfVents: " + walls[i].mods[j].numberOfVents);
+                        console.log("position: " + walls[i].mods[j].position);
+                        console.log("screenOptions: " + walls[i].mods[j].screenOptions);
+                        console.log("style: " + walls[i].mods[j].style);
+                        console.log("swing: " + walls[i].mods[j].swing);
+                        console.log("type: " + walls[i].mods[j].type);
+                        console.log("vinylTint: " + walls[i].mods[j].vinylTint);
+                        console.log("width: " + walls[i].mods[j].width);
+                    }
+                    console.log("----------------------------------");
+                }
+            }
+        }
     </script>
     <%-- End hidden div populating scripts --%>
 
@@ -1186,6 +1229,7 @@
                     <asp:PlaceHolder ID="wallWindowOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
+                <asp:Button ID="btnTester" Enabled="true" runat="server" Text="test" UseSubmitBehavior="false" OnClientClick="kyleTester()" />
                 <asp:Button ID="btnQuestion4" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Submit" OnClick="btnQuestion4_Click" />
 
             </div>
