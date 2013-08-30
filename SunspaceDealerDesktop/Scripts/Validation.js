@@ -109,13 +109,15 @@ function findLinesTouch(firstLine, secondLine)
                 return "(down)(left)(mid)(end)";
             }
             else if ((parseFloat(secondLine.x1) == parseFloat(firstLine.x1) || parseFloat(secondLine.x2) == parseFloat(firstLine.x1)) &&
-                ((parseFloat(secondLine.y1) == parseFloat(firstLine.y1) || parseFloat(secondLine.y2) == parseFloat(firstLine.y1)) || (parseFloat(secondLine.y1) == parseFloat(firstLine.y2) || parseFloat(secondLine.y2) == parseFloat(firstLine.y2))))
+                ((parseFloat(secondLine.y1) == parseFloat(firstLine.y1) || parseFloat(secondLine.y2) == parseFloat(firstLine.y1)) ||
+                (parseFloat(secondLine.y1) == parseFloat(firstLine.y2) || parseFloat(secondLine.y2) == parseFloat(firstLine.y2))))
             {
                 return "(down)(left)(end)(end)";
             }
-            else if ()
+            else if ((parseFloat(secondLine.y1) == parseFloat(firstLine.y1) || parseFloat(secondLine.y2) == parseFloat(firstLine.y2)) &&
+                (parseFloat(firstLine.x1) < parseFloat(secondLine.x1) && parseFloat(firstLine.x2) > parseFloat(secondLine.x2)))
             {
-
+                return "(down)(left)(end)(mid)";
             }
             else
             {
@@ -130,9 +132,15 @@ function findLinesTouch(firstLine, secondLine)
                 return "(down)(right)(mid)(end)";
             }
             else if ((parseFloat(secondLine.x1) == parseFloat(firstLine.x1) || parseFloat(secondLine.x2) == parseFloat(firstLine.x1)) &&
-                ((parseFloat(secondLine.y1) == parseFloat(firstLine.y1) || parseFloat(secondLine.y2) == parseFloat(firstLine.y1)) || (parseFloat(secondLine.y1) == parseFloat(firstLine.y2) || parseFloat(secondLine.y2) == parseFloat(firstLine.y2))))
+                ((parseFloat(secondLine.y1) == parseFloat(firstLine.y1) || parseFloat(secondLine.y2) == parseFloat(firstLine.y1)) ||
+                (parseFloat(secondLine.y1) == parseFloat(firstLine.y2) || parseFloat(secondLine.y2) == parseFloat(firstLine.y2))))
             {
                 return "(down)(right)(end)(end)";
+            }
+            else if ((parseFloat(secondLine.y1) == parseFloat(firstLine.y1) || parseFloat(secondLine.y2) == parseFloat(firstLine.y2)) &&
+                (parseFloat(firstLine.x1) > parseFloat(secondLine.x1) && parseFloat(firstLine.x2) < parseFloat(secondLine.x2)))
+            {
+                return "(down)(left)(end)(mid)";
             }
             else
             {
@@ -141,18 +149,22 @@ function findLinesTouch(firstLine, secondLine)
         }
         else if (findLineDirection(secondLine) == "upRight")//
         {
-            if ((parseFloat(secondLine.x1) == parseFloat(firstLine.x1) || parseFloat(secondLine.x2) == parseFloat(firstLine.x1)) && 
-                ((parseFloat(secondLine.y1) == parseFloat(firstLine.y1) || parseFloat(secondLine.y2) == parseFloat(firstLine.y1)) || (parseFloat(secondLine.y1) == parseFloat(firstLine.y2) || parseFloat(secondLine.y2) == parseFloat(firstLine.y2))))
+            if ((parseFloat(secondLine.x1) == parseFloat(firstLine.x1) || parseFloat(secondLine.x2) == parseFloat(firstLine.x1)) &&
+                ((parseFloat(secondLine.x2) == parseFloat(firstLine.x1) && parseFloat(secondLine.y2) == parseFloat(firstLine.y1)) ||
+                (parseFloat(secondLine.x2) == parseFloat(firstLine.x2) && parseFloat(secondLine.y2) == parseFloat(firstLine.y2)) ||
+                (parseFloat(secondLine.x1) == parseFloat(firstLine.x1) && parseFloat(secondLine.y1) == parseFloat(firstLine.y1)) ||
+                (parseFloat(secondLine.x1) == parseFloat(firstLine.x2) && parseFloat(secondLine.y1) == parseFloat(firstLine.y2))))
             {
                 return "(down)(upRight)(end)(end)";
             }
             else if ((parseFloat(secondLine.x1) == parseFloat(firstLine.x1) || parseFloat(secondLine.x2) == parseFloat(firstLine.x1)) &&
-                (parseFloat(secondLine.y1) < parseFloat(firstLine.y1) && parseFloat(secondLine.y2) > parseFloat(firstLine.y2)))
+                (parseFloat(secondLine.y1) > parseFloat(firstLine.y1) && parseFloat(secondLine.y1) < parseFloat(firstLine.y2)))
             {
                 return "(down)(upRight)(mid)(end)";
             }
             else if ((parseFloat(firstLine.x1) > parseFloat(secondLine.x1) && parseFloat(firstLine.x2) < parseFloat(secondLine.x2)) &&
-                ((parseFloat(secondLine.y1) - (parseFloat(firstLine.x2) - parseFloat(secondLine.x1))) == parseFloat(firstLine.y2) || (parseFloat(secondLine.y1) - (parseFloat(firstLine.x2) - parseFloat(secondLine.x1))) == parseFloat(firstLine.y1)))
+                ((parseFloat(secondLine.y1) - (parseFloat(firstLine.x2) - parseFloat(secondLine.x1))) == parseFloat(firstLine.y2) ||
+                (parseFloat(secondLine.y1) - (parseFloat(firstLine.x2) - parseFloat(secondLine.x1))) == parseFloat(firstLine.y1)))
             {
                 return "(down)(upRight)(end)(mid)";
             }
@@ -161,51 +173,85 @@ function findLinesTouch(firstLine, secondLine)
                 return "";
             }
         }
-        else if (findLineDirection(secondLine) == "downRight") //
-        {
-            if ((parseFloat(secondLine.y1) == parseFloat(firstLine.y1) || parseFloat(secondLine.y2) == parseFloat(firstLine.y1)) || (parseFloat(secondLine.y1) == parseFloat(firstLine.y2) || parseFloat(secondLine.y2) == parseFloat(firstLine.y2)))
-            {
-                return "(down)(downRight)(end)(end)";
-            }
-            else if (parseFloat(secondLine.y1) < parseFloat(firstLine.y1) && parseFloat(secondLine.y2) > parseFloat(firstLine.y2))
-            {
-                return "(down)(downRight)(mid)(end)";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        else if (findLineDirection(secondLine) == "upLeft") //
-        {
-            if ((parseFloat(secondLine.y1) == parseFloat(firstLine.y1) || parseFloat(secondLine.y2) == parseFloat(firstLine.y1)) || (parseFloat(secondLine.y1) == parseFloat(firstLine.y2) || parseFloat(secondLine.y2) == parseFloat(firstLine.y2)))
-            {
-                return "(down)(upLeft)(end)(end)";
-            }
-            else if (parseFloat(secondLine.y1) > parseFloat(firstLine.y1) && parseFloat(secondLine.y2) < parseFloat(firstLine.y2))
-            {
-                return "(down)(upLeft)(mid)(end)";
-            }
-            else
-            {
-                return "";
-            }
-        }
         else if (findLineDirection(secondLine) == "downLeft") //
         {
-            if ((parseFloat(secondLine.y1) == parseFloat(firstLine.y1) || parseFloat(secondLine.y2) == parseFloat(firstLine.y1)) || (parseFloat(secondLine.y1) == parseFloat(firstLine.y2) || parseFloat(secondLine.y2) == parseFloat(firstLine.y2)))
+            if ((parseFloat(secondLine.x1) == parseFloat(firstLine.x1) || parseFloat(secondLine.x2) == parseFloat(firstLine.x1)) &&
+                ((parseFloat(secondLine.x2) == parseFloat(firstLine.x1) && parseFloat(secondLine.y2) == parseFloat(firstLine.y1)) ||
+                (parseFloat(secondLine.x2) == parseFloat(firstLine.x2) && parseFloat(secondLine.y2) == parseFloat(firstLine.y2)) ||
+                (parseFloat(secondLine.x1) == parseFloat(firstLine.x1) && parseFloat(secondLine.y1) == parseFloat(firstLine.y1)) ||
+                (parseFloat(secondLine.x1) == parseFloat(firstLine.x2) && parseFloat(secondLine.y1) == parseFloat(firstLine.y2))))
             {
                 return "(down)(downLeft)(end)(end)";
             }
-            else if (parseFloat(secondLine.y1) > parseFloat(firstLine.y1) && parseFloat(secondLine.y2) < parseFloat(firstLine.y2))
+            else if ((parseFloat(secondLine.x1) == parseFloat(firstLine.x1) || parseFloat(secondLine.x2) == parseFloat(firstLine.x1)) &&
+                (parseFloat(secondLine.y1) > parseFloat(firstLine.y1) && parseFloat(secondLine.y1) < parseFloat(firstLine.y2)))
             {
                 return "(down)(downLeft)(mid)(end)";
+            }
+            else if ((parseFloat(secondLine.x1) > parseFloat(firstLine.x1) && parseFloat(secondLine.x2) < parseFloat(firstLine.x2)) &&
+                ((parseFloat(secondLine.y2) - (parseFloat(firstLine.x1) - parseFloat(secondLine.x2)) == parseFloat(firstLine.y1)) ||
+                (parseFloat(secondLine.y2) - (parseFloat(firstLine.x1) - parseFloat(secondLine.x2)) == parseFloat(firstLine.y2))))
+            {
+                return "(down)(downLeft)(end)(mid)";
             }
             else
             {
                 return "";
             }
         }
+        else if (findLineDirection(secondLine) == "downRight") //
+        {
+            if ((parseFloat(secondLine.x1) == parseFloat(firstLine.x1) || parseFloat(secondLine.x2) == parseFloat(firstLine.x1)) &&
+                ((parseFloat(secondLine.x2) == parseFloat(firstLine.x1) && parseFloat(secondLine.y2) == parseFloat(firstLine.y1)) ||
+                (parseFloat(secondLine.x2) == parseFloat(firstLine.x2) && parseFloat(secondLine.y2) == parseFloat(firstLine.y2)) ||
+                (parseFloat(secondLine.x1) == parseFloat(firstLine.x1) && parseFloat(secondLine.y1) == parseFloat(firstLine.y1)) ||
+                (parseFloat(secondLine.x1) == parseFloat(firstLine.x2) && parseFloat(secondLine.y1) == parseFloat(firstLine.y2))))
+            {
+                return "(down)(downRight)(end)(end)";
+            }
+            else if ((parseFloat(secondLine.x1) == parseFloat(firstLine.x1) || parseFloat(secondLine.x2) == parseFloat(firstLine.x1)) && 
+                ((parseFloat(secondLine.y2) > parseFloat(firstLine.y1) && parseFloat(secondLine.y2) < parseFloat(firstLine.y2)) ||
+                (parseFloat(secondLine.y1) > parseFloat(firstLine.y1) && parseFloat(secondLine.y1) < parseFloat(firstLine.y2))))
+            {
+                return "(down)(downRight)(mid)(end)";
+            }
+            else if ((parseFloat(firstLine.x1) > parseFloat(secondLine.x1) && parseFloat(firstLine.x2) < parseFloat(secondLine.x2)) &&
+                ((parseFloat(firstLine.y2) + (parseFloat(secondLine.x2) - parseFloat(firstLine.x2))) == parseFloat(secondLine.y2) ||
+                (parseFloat(firstLine.y1) + (parseFloat(secondLine.x2) - parseFloat(firstLine.x2))) == parseFloat(secondLine.y2)))
+            {
+                return "(down)(downRight)(end)(mid)";
+            }
+            else
+            {
+                return "";
+            }
+        }
+        else if (findLineDirection(secondLine) == "upLeft") // ***********
+        {
+            if ((parseFloat(secondLine.x1) == parseFloat(firstLine.x1) || parseFloat(secondLine.x2) == parseFloat(firstLine.x1)) &&
+                ((parseFloat(secondLine.x2) == parseFloat(firstLine.x1) && parseFloat(secondLine.y2) == parseFloat(firstLine.y1)) ||
+                (parseFloat(secondLine.x2) == parseFloat(firstLine.x2) && parseFloat(secondLine.y2) == parseFloat(firstLine.y2)) ||
+                (parseFloat(secondLine.x1) == parseFloat(firstLine.x1) && parseFloat(secondLine.y1) == parseFloat(firstLine.y1)) ||
+                (parseFloat(secondLine.x1) == parseFloat(firstLine.x2) && parseFloat(secondLine.y1) == parseFloat(firstLine.y2))))
+            {
+                return "(down)(upLeft)(end)(end)";
+            }
+            else if ((parseFloat(secondLine.x1) == parseFloat(firstLine.x1) || parseFloat(secondLine.x2) == parseFloat(firstLine.x1)) &&
+                ((parseFloat(secondLine.y1) > parseFloat(firstLine.y1) && parseFloat(secondLine.y1) < parseFloat(firstLine.y2)) ||
+                (parseFloat(secondLine.y2) > parseFloat(firstLine.y1) && parseFloat(secondLine.y2) < parseFloat(firstLine.y2))))
+            {
+                return "(down)(upLeft)(mid)(end)";
+            }
+            else if ((parseFloat(firstLine.x1) > parseFloat(secondLine.x1) && parseFloat(firstLine.x2) < parseFloat(secondLine.x2)) &&
+                (parseFloat(firstLine.y1) - (parseFloat(firstLine.x1) - parseFloat(secondLine.x2)) == parseFloat(secondLine.y2) ||
+                (parseFloat(firstLine.y2) + (parseFloat(firstLine.x1) - parseFloat(secondLine.x2)) == parseFloat(secondLine.y2))))
+            {
+                return "(down)(upLeft)(end)(mid)";
+            }
+            else {
+                return "";
+            }
+        }        
     }
     else if (findLineDirection(firstLine) == "up") //
     {
