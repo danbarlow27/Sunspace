@@ -56,8 +56,6 @@
                 <!--Button to send line information to C#-->
                 <li><asp:Button ID="btnSubmitDrawing" CSSClass="btnDisabled" runat="server" Text="Submit Drawing" OnClick="Button1_Click1" style="width:150px"/></li>
 
-                <li><asp:CheckBox ID="chkShowMe" runat="server" Text="Show Me" OnCheckChanged="validateGable()" /></li>
-
             </ul>
         </div>
 
