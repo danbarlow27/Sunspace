@@ -1068,7 +1068,7 @@
 
         function wallPreviewSlidePrep()
         {
-            return true;
+
         }
     </script>
     <%-- End hidden div populating scripts --%>
@@ -1203,7 +1203,7 @@
                     <asp:PlaceHolder ID="wallWindowOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>  
                  
-                <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" OnClick=""/>     
+                <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" OnClientClick="wallPreviewSlidePrep()"/>     
             </div>
             <%-- end #slide4 --%>
 
