@@ -223,6 +223,7 @@ namespace SunspaceDealerDesktop
             //do the windows stuff
             windowOptions();
 
+            populatePreviewSlide();
         }
 
         /*
@@ -3199,10 +3200,10 @@ namespace SunspaceDealerDesktop
             //RadioButton created for every option
             screenRadio = new RadioButton();
             screenRadio.ID = "radScreen";     //Giving an appropriate id to radio buttons based on current type of window
+            screenRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
             
             if (currentModel == "M100")
             {
-                screenRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
                 screenRadio.Checked = true;// (currentModel == "M100") ? true : false; //select/check the radio button if current selection is default value
             }
                 //screenRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
@@ -3526,8 +3527,7 @@ namespace SunspaceDealerDesktop
         //        //walls.Add(new Wall(Convert.ToSingle(wallLength.Value), wallDetails[i, 5], "Wall" + i, wallDetails[i, 4], Convert.ToSingle(hidBackWallHeight.Value), Convert.ToSingle(hidBackWallHeight.Value), /*Convert.ToSingle(wallSoffit.Value)*/ 0F, currentModel));
         //    }
         //}
-
-        protected void btnQuestion4_Click(object sender, EventArgs e)
+        protected void btnSubmit_Click(object sender, EventArgs e)
         {
 
             int wallCount = Convert.ToInt32(Request.Form["wallCount"]);
@@ -3615,6 +3615,11 @@ namespace SunspaceDealerDesktop
             Session.Add("sunroomWidth", hidRoomWidth.Value);
             Response.Redirect("TestingHiddens.aspx");
 
+        }
+
+        protected void populatePreviewSlide()
+        {
+            wallPreviewPlaceholder.Controls.Add(new LiteralControl("<div><p>ass</p></div>"));
         }
     }
 }

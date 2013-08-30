@@ -1054,20 +1054,21 @@
             {
                 if (coordList[i - 1][4] == "P")
                 {
-                    console.log("this is a proposed wall");
                     if(walls[i].mods.length > 0)
                     {
-                        console.log("this wall has " + walls[i].mods.length + " doors");
                         for (var j=0;j<=walls[i].mods.length-1;j++)
                         {
-                            console.log("validating door position");
                             var tempArray = validateDecimal(walls[i].mods[j].position);
                             walls[i].mods[j].position = parseFloat(tempArray[0]) + parseFloat(tempArray[1]);
                         }
                     }
-                    console.log("--------");
                 }
             }
+        }
+
+        function wallPreviewSlidePrep()
+        {
+            return true;
         }
     </script>
     <%-- End hidden div populating scripts --%>
@@ -1172,6 +1173,7 @@
             </div> 
             <%-- end #slide2 --%>
 
+
              <%-- QUESTION 3 - DOOR OPTIONS/DETAILS
             ======================================== --%>
 
@@ -1192,7 +1194,6 @@
 
              <%-- QUESTION 4 - WINDOW OPTIONS/DETAILS
             ======================================== --%>
-
             <div id="slide4" class="slide">
                 <h1>
                     <asp:Label ID="lblWindowDetails" runat="server" Text="Window Details"></asp:Label>
@@ -1200,14 +1201,28 @@
                               
                 <ul class="toggleOptions">
                     <asp:PlaceHolder ID="wallWindowOptions" runat="server"></asp:PlaceHolder>                    
-                </ul>            
-
-                <asp:Button ID="btnQuestion4" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Submit" OnClick="btnQuestion4_Click" />
-
+                </ul>  
+                 
+                <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" OnClick=""/>     
             </div>
             <%-- end #slide4 --%>
 
 
+            <%-- QUESTION 5 - WALL PREVIEW PAGE
+            ======================================== --%>
+            <div id="slide5" class="slide">
+                <h1>
+                    <asp:Label ID="lblWallPreview" runat="server" Text="Wall Preview:"></asp:Label>
+                </h1>        
+                              
+                <ul class="toggleOptions">
+                    <asp:PlaceHolder ID="wallPreviewPlaceholder" runat="server"></asp:PlaceHolder>                    
+                </ul> 
+
+                <asp:Button ID="btnSubmit" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
+
+            </div>
+            <%-- end #slide5 --%>
 
         </div> <%-- end .slide-wrapper --%>
 
@@ -1274,7 +1289,7 @@
                         </li>
                     </div>
 
-     <%--               <div style="display: none" id="pagerFive">
+                   <div style="display: none" id="pagerFive">
                         <li>
                                 <a href="#" data-slide="#slide5" class="slidePanel">
                                     <asp:Label ID="Label31" runat="server" Text="Foam protection"></asp:Label>
@@ -1283,7 +1298,7 @@
                         </li>          
                     </div>    
                   
-                    <div style="display: none" id="pagerSix">
+                    <%-- <div style="display: none" id="pagerSix">
                         <li>
                                 <a href="#" data-slide="#slide6" class="slidePanel">
                                     <asp:Label ID="Label1" runat="server" Text="Prefab floor"></asp:Label>
