@@ -3619,7 +3619,25 @@ namespace SunspaceDealerDesktop
 
         protected void populatePreviewSlide()
         {
-            wallPreviewPlaceholder.Controls.Add(new LiteralControl("<div><p>ass</p></div>"));
+            wallPreviewPlaceholder.Controls.Add(new LiteralControl("<div class=\"toggleContent\">"));
+            wallPreviewPlaceholder.Controls.Add(new LiteralControl("<ul>"));
+            wallPreviewPlaceholder.Controls.Add(new LiteralControl("<li>"));
+            wallPreviewPlaceholder.Controls.Add(new LiteralControl("<h3>Wall details with current settings:</h3>"));
+            //Add a line for each wall
+            for (int i = 0; i < strWalls.Length; i++)
+            {
+                Label wallNumber = new Label();
+                wallNumber.Text = "Wall: " + (i+1);
+                wallPreviewPlaceholder.Controls.Add(wallNumber);
+
+                Label outputArea = new Label();
+                outputArea.ID = "lblOutputArea" + (i + 1);
+                outputArea.Text = "Default";
+                wallPreviewPlaceholder.Controls.Add(outputArea);
+            }
+
+            wallPreviewPlaceholder.Controls.Add(new LiteralControl("</ul>"));
+            wallPreviewPlaceholder.Controls.Add(new LiteralControl("</li>"));
         }
     }
 }

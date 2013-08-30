@@ -119,7 +119,7 @@
         $(document).ready(function () {
             //$('#MainContent_btnQuestion2').click(determineStartAndEndHeightOfEachWall(gable));
             $('#MainContent_btnQuestion2').click(loadWallData);
-            $('#MainContent_btnQuestion4').click(submitData);
+            $('#MainContent_btnSubmit').click(submitData);
 
             //$('#MainContent_txtWall1Length').val('20');
             //$('#MainContent_txtWall3Length').val('120');
@@ -1048,8 +1048,23 @@
                 $('#MainContent_txtRightWallHeight').removeAttr('disabled');
             }
         }
+        
+        //loop for each line
+        //add to array each usable area ie:
+        //40
+        //20,20
+        //40
+        //use usable area function
+        //set labels 
+        function WindowPreparation()
+        {
+            var wallModLocations = new Array();
+            var wallAreaArray = new Array();
+            for (var i = 0; i < lineList.length; i++) {
+                wallModLocations[i] = new Array();
+                wallAreaArray[i] = new Array();
+            }
 
-        function WindowPreparation() {
             for (var i=1;i<=lineList.length;i++)
             {
                 if (coordList[i - 1][4] == "P")
@@ -1060,15 +1075,37 @@
                         {
                             var tempArray = validateDecimal(walls[i].mods[j].position);
                             walls[i].mods[j].position = parseFloat(tempArray[0]) + parseFloat(tempArray[1]);
+                            
+                            wallModLocations[i-1][j]=walls[i].mods[j].position;
                         }
+                    }
+                    else
+                    {
+                        wallModLocations[i-1][0]="";
                     }
                 }
             }
-        }
 
-        function wallPreviewSlidePrep()
-        {
+            //wallModLocations array at this point has an array of locations of mods
+            //Turn this into an array of areas
+            for(var i = 1; i <= wallModLocations.length; i++) {
+                var wallModLocation = wallModLocations[i-1];
 
+                for (var j=0;j<wallModLocation.length;j++)
+                {       
+                    //if blank, its a full empty wall
+                    if (wallModLocation[j] = "")
+                    {
+
+                    }
+                    //not blank means it has a mod so we'll need two locations in the array entry
+                    else
+                    {
+
+                    }
+                    console.log(wallModLocation[j]);
+                }
+            }
         }
     </script>
     <%-- End hidden div populating scripts --%>
@@ -1186,7 +1223,7 @@
                     <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" OnClientClick="WindowPreparation()"/>
+                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question"/>
 
             </div>
             <%-- end #slide3 --%>
@@ -1203,7 +1240,7 @@
                     <asp:PlaceHolder ID="wallWindowOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>  
                  
-                <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" OnClientClick="wallPreviewSlidePrep()"/>     
+                <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" OnClientClick="WindowPreparation();return false;"/>     
             </div>
             <%-- end #slide4 --%>
 
