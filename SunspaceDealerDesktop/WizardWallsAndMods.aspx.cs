@@ -223,7 +223,10 @@ namespace SunspaceDealerDesktop
             //do the windows stuff
             windowOptions();
 
-            populatePreviewSlide();
+            if (!IsPostBack)
+            {
+                populatePreviewSlide();
+            }
         }
 
         /*
@@ -3466,23 +3469,16 @@ namespace SunspaceDealerDesktop
 
             for (int i = 1; i <= number; i++) //run through this loop as many times as the number of hidden fields to create
             {
-                html += "<input id=\"hidWall" + i + "SetBack\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall setback
-                html += "<input id=\"hidWall" + i + "LeftFiller\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall left filler
-                html += "<input id=\"hidWall" + i + "Length\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall length
-                html += "<input id=\"hidWall" + i + "RightFiller\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall right filler
-                html += "<input id=\"hidWall" + i + "SoffitLength\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall soffit length
-                html += "<input id=\"hidWall" + i + "Slope\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall slope
-
-
-                //html += "<div id=\"hidWall" + i + "Length\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall length
-                //html += "<div id=\"hidWall" + i + "LeftFiller\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall left filler
-                //html += "<div id=\"hidWall" + i + "RightFiller\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall right filler
-                //html += "<div id=\"hidWall" + i + "SetBack\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall setback
-                //html += "<div id=\"hidWall" + i + "SoffitLength\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall soffit length
-                //html += "<div id=\"hidWall" + i + "StartHeight\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall start height
-                //html += "<div id=\"hidWall" + i + "EndHeight\" style=\"display: none;\" runat=\"server\" />"; //hidden field for wall end height
-                //html += "<input id=\"hidWall" + i + "Slope\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall slope
-                
+                html += "<input id=\"hidWall" + i + "SetBack\" type=\"hidden\" runat=\"server\" name=\"hidWall" + i + "SetBack\" />"; //hidden field for wall setback
+                html += "<input id=\"hidWall" + i + "LeftFiller\" type=\"hidden\" runat=\"server\" name=\"hidWall" + i + "LeftFiller\" />"; //hidden field for wall left filler
+                html += "<input id=\"hidWall" + i + "Length\" type=\"hidden\" runat=\"server\" name=\"hidWall" + i + "Length\" />"; //hidden field for wall length
+                html += "<input id=\"hidWall" + i + "RightFiller\" type=\"hidden\" runat=\"server\" name=\"hidWall" + i + "RightFiller\" />"; //hidden field for wall right filler
+                html += "<input id=\"hidWall" + i + "SoffitLength\" type=\"hidden\" runat=\"server\" name=\"hidWall" + i + "SoffitLength\" />"; //hidden field for wall soffit length
+                html += "<input id=\"hidWall" + i + "StartHeight\" type=\"hidden\" runat=\"server\" name=\"hidWall" + i + "StartHeight\" />"; //hidden field for wall start height
+                html += "<input id=\"hidWall" + i + "EndHeight\" type=\"hidden\" runat=\"server\" name=\"hidWall" + i + "EndHeight\" />"; //hidden field for wall end height
+                html += "<input id=\"hidWall" + i + "Orientation\" type=\"hidden\" runat=\"server\" name=\"hidWall" + i + "Orientation\" />"; //hidden field for wall Orientation
+                html += "<input id=\"hidWall" + i + "DoorCount\" type=\"hidden\" runat=\"server\" name=\"hidWall" + i + "DoorCount\" />"; //hidden field for wall Orientation
+                //html += "<input id=\"hidWall" + i + "Slope\" type=\"hidden\" runat=\"server\" />"; //hidden field for wall slope                
             }
             return html; //return the hidden field tags
         }
@@ -3529,115 +3525,195 @@ namespace SunspaceDealerDesktop
         //}
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
+            //Create objects
+            List<Wall> listOfWalls = new List<Wall>();
 
-            int wallCount = Convert.ToInt32(Request.Form["wallCount"]);
-            int wallStartIndex = Convert.ToInt32(Request.Form["wallStartIndex"]);
+            int existingWallCount = 0;
 
-            for (int walls = wallStartIndex; walls <= wallCount; walls++) {
+            for (int i = 1; i <= strWalls.Length; i++)
+            {
+                //if blank its an existing wall, so skip it
+                if (Request.Form["hidWall" + i + "Length"] != "")
+                {
+                    Wall aWall = new Wall();
+                    aWall.Length = float.Parse(Request.Form["hidWall" + i + "Length"]);
+                    aWall.Orientation = Request.Form["hidWall" + i + "Orientation"];
+                    aWall.Name = "Wall " + (i-existingWallCount);
+                    aWall.WallType = "Proposed";
+                    aWall.ModelType = currentModel;
+                    aWall.StartHeight = float.Parse(Request.Form["hidWall" + i + "StartHeight"]);
+                    aWall.EndHeight = float.Parse(Request.Form["hidWall" + i + "EndHeight"]);
+                    aWall.SoffitLength = float.Parse(Request.Form["hidWall" + i + "SoffitLength"]);
+                    aWall.GablePeak = 0;
 
-                int doorCount = Convert.ToInt32(Request.Form["wall" + walls + "DoorCount"]);
-                Session["Wall" + walls + "DoorCount" + walls] = Request.Form["wall" + walls + "DoorCount"];
-                Door aDoor;
-
-                for (int doors = 0; doors < doorCount; doors++) {
-
-                    string doorType = Request.Form["wall" + walls + "Door" + doors + "type"];
-
-                    aDoor = new Door();
-
-                    if (doorType == "Cabana")
-                    {
-                        aDoor = new CabanaDoor();
-                        
-                        CabanaDoor newCabana = (CabanaDoor)aDoor;
-
-                        newCabana.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
-                        newCabana.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
-                        newCabana.VinylTint = Request.Form["wall" + walls + "Door" + doors + "VinylTint"];
-                        newCabana.ScreenType = Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"];
-                        newCabana.GlassTint = Request.Form["wall" + walls + "Door" + doors + "GlassTint"];
-                        newCabana.Hinge = Request.Form["wall" + walls + "Door" + doors + "Hinge"];
-                        newCabana.Swing = Request.Form["wall" + walls + "Door" + doors + "Swing"];
-                        newCabana.HardwareType = Request.Form["wall" + walls + "Door" + doors + "Hardware"];
-                    }
-                    else if (doorType == "French")
-                    {
-                        aDoor = new FrenchDoor();
-
-                        FrenchDoor newFrench = (FrenchDoor)aDoor;
-
-                        newFrench.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
-                        newFrench.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
-                        newFrench.VinylTint = Request.Form["wall" + walls + "Door" + doors + "VinylTint"];
-                        newFrench.ScreenType = Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"];
-                        newFrench.GlassTint = Request.Form["wall" + walls + "Door" + doors + "GlassTint"];
-                        newFrench.Swing = Request.Form["wall" + walls + "Door" + doors + "Swing"];
-                        newFrench.OperatingDoor = Request.Form["wall" + walls + "Door" + doors + "Operator"];
-                        newFrench.HardwareType = Request.Form["wall" + walls + "Door" + doors + "Hardware"];
-                    }
-                    else if (doorType == "Patio")
-                    {
-                        aDoor = new PatioDoor();
-
-                        PatioDoor newPatio = (PatioDoor)aDoor;
-
-                        newPatio.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
-                        newPatio.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
-                        newPatio.ScreenType = Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"];
-                        newPatio.GlassTint = Request.Form["wall" + walls + "Door" + doors + "GlassTint"];
-                        newPatio.MovingDoor = Request.Form["wall" + walls + "Door" + doors + "Operator"];
-                    }
-                    else
-                    {
-                        aDoor = new OpenSpaceDoor();
-
-                        OpenSpaceDoor newOpenSpace = (OpenSpaceDoor)aDoor;
-
-                        newOpenSpace.Height = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Height"]);
-                        newOpenSpace.Length = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Width"]);
-                    }
-
-                    //Load all properties
-                    aDoor.DoorType = doorType;
-                    aDoor.DoorStyle = Request.Form["wall" + walls + "Door" + doors + "Style"];
-                    aDoor.ScreenType = Request.Form["wall" + walls + "Door" + doors + "ScreenOptions"];
-                    aDoor.FHeight = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "FHeight"]);
-                    aDoor.FLength = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "FWidth"]);                    
-                    aDoor.Colour = Request.Form["wall" + walls + "Door" + doors + "Colour"];
-                    System.Diagnostics.Debug.WriteLine("This colour is: " + Request.Form["wall" + walls + "Door" + doors + "Colour"]);
-                    aDoor.Kickplate = Convert.ToSingle(Request.Form["wall" + walls + "Door" + doors + "Kickplate"]);
-
-                    Session["Wall" + walls + "Door" + doors] = aDoor;
+                    listOfWalls.Add(aWall);
+                    //firstItemIndex,lastItemIndex handled below
+                    //totalCornerLength,totalReceiverLength unhandled
+                    //linearItems handled below
+                }
+                else
+                {
+                    existingWallCount++;
                 }
             }
 
+            //Get from hiddens
+            //put hidden window info into list for convenience
+            List<String> hidWindowInfo = new List<String>();
+
+            for (int i = 0; i < strWalls.Length; i++)
+            {
+                List<Object> linearItems = new List<Object>();
+
+                if (wallDetails[i, 4] == "P")
+                {
+                    //if it has doors, do logic w/ doors, otherwise just directly go to window creation
+                    if (Int32.Parse(Request.Form["hidWall" + i + "DoorCount"]) > 0)
+                    {
+                        //If the first door position is equal to left filler, it has no workable area before it, so handle this door first.
+                        if (float.Parse(Request.Form["hidWall" + i + "Door" + 1 + "position"]) == float.Parse(Request.Form["hidWall" + i + "LeftFiller"]))
+                        {
+                            if (Request.Form["hidWall" + i + "Door" + 1 + "type"] == "Cabana")
+                            {
+                                linearItems.Add(getCabanaDoorFromForm(i, 1));
+                            }
+                            else if (Request.Form["hidWall" + i + "Door" + 1 + "type"] == "French")
+                            {
+                                linearItems.Add(getFrenchDoorFromForm(i, 1));
+                            }
+                            else if (Request.Form["hidWall" + i + "Door" + 1 + "type"] == "Patio")
+                            {
+                                linearItems.Add(getPatioDoorFromForm(i, 1));
+                            }
+                            else //NoDoor
+                            {
+                                //linearItems.Add(getNoDoorFromForm(i, 1));
+                            }
+                        }
+                        //We've checked first position, so now we must be in a workable area, meaning the only patterns we'll
+                        //ever get from this point are workable->end and workable->door
+                    }
+                    else
+                    {
+                        hidWindowInfo.Add(Request.Form["hidWall" + i + "WindowInfo"]);
+                    }
+                }
+
+                listOfWalls[i].LinearItems = linearItems;
+            }
+
+            //Add objects to session
+            //Forward to next page
             Session.Add("sunroomProjection", hidRoomProjection.Value);
             Session.Add("sunroomWidth", hidRoomWidth.Value);
-            Response.Redirect("TestingHiddens.aspx");
+            Response.Redirect("RoofWizard.aspx");
 
+        }
+
+        protected CabanaDoor getCabanaDoorFromForm(int i, int j)
+        {
+            CabanaDoor aDoor = new CabanaDoor();
+            //base attributes
+            aDoor.DoorType = "Cabana";
+            aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
+            aDoor.ScreenType = ""; //CHANGEME
+            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
+            aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
+            aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
+            aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
+
+            //cabana attributes
+            aDoor.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "height"]);
+            aDoor.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "width"]);
+            aDoor.VinylTint = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
+            aDoor.ScreenType = ""; //CHANGEME
+            aDoor.Hinge = Request.Form["hidWall" + i + "Door" + j + "hinge"];
+            aDoor.Swing = Request.Form["hidWall" + i + "Door" + j + "swing"];
+            aDoor.HardwareType = Request.Form["hidWall" + i + "Door" + j + "hardware"];
+
+            return aDoor;
+        }
+
+        protected FrenchDoor getFrenchDoorFromForm(int i, int j)
+        {
+            FrenchDoor aDoor = new FrenchDoor();
+            //base attributes
+            aDoor.DoorType = "Cabana";
+            aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
+            aDoor.ScreenType = ""; //CHANGEME
+            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
+            aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
+            aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
+            aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
+
+            //cabana attributes
+            aDoor.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "height"]);
+            aDoor.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "width"]);
+            aDoor.VinylTint = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
+            aDoor.ScreenType = ""; //CHANGEME
+            //aDoor.Hinge = Request.Form["hidWall" + i + "Door" + j + "hinge"];
+            aDoor.Swing = Request.Form["hidWall" + i + "Door" + j + "swing"];
+            aDoor.HardwareType = Request.Form["hidWall" + i + "Door" + j + "hardware"];
+
+            return aDoor;
+        }
+
+        protected PatioDoor getPatioDoorFromForm(int i, int j)
+        {
+            PatioDoor aDoor = new PatioDoor();
+            //base attributes
+            aDoor.DoorType = "Cabana";
+            aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
+            aDoor.ScreenType = ""; //CHANGEME
+            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
+            aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
+            aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
+            aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
+
+            //cabana attributes
+            aDoor.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "height"]);
+            aDoor.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "width"]);
+            //aDoor.VinylTint = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
+            aDoor.ScreenType = ""; //CHANGEME
+            //aDoor.Hinge = Request.Form["hidWall" + i + "Door" + j + "hinge"];
+            //aDoor.Swing = Request.Form["hidWall" + i + "Door" + j + "swing"];
+            //aDoor.HardwareType = Request.Form["hidWall" + i + "Door" + j + "hardware"];
+
+            return aDoor;
         }
 
         protected void populatePreviewSlide()
         {
-            wallPreviewPlaceholder.Controls.Add(new LiteralControl("<div class=\"toggleContent\">"));
-            wallPreviewPlaceholder.Controls.Add(new LiteralControl("<ul>"));
-            wallPreviewPlaceholder.Controls.Add(new LiteralControl("<li>"));
-            wallPreviewPlaceholder.Controls.Add(new LiteralControl("<h3>Wall details with current settings:</h3>"));
+            //wallPreviewPlaceholder.Controls.Add(new LiteralControl("<h3>Wall details with current settings:</h3>"));
             //Add a line for each wall
+            int wallCount = 0;
+
             for (int i = 0; i < strWalls.Length; i++)
             {
-                Label wallNumber = new Label();
-                wallNumber.Text = "Wall: " + (i+1);
-                wallPreviewPlaceholder.Controls.Add(wallNumber);
+                //CHANGE THIS BASED ON COMMA SPLIT
+                if (wallDetails[i, 4] == "P")
+                {
+                    wallPreviewPlaceholder.Controls.Add(new LiteralControl("<li>"));
+                    Label wallNumber = new Label();
+                    wallNumber.Text = "Wall: " + (wallCount + 1);
+                    wallNumber.ID = "lblPreviewPrefix" + wallCount;
+                    wallPreviewPlaceholder.Controls.Add(wallNumber);
 
-                Label outputArea = new Label();
-                outputArea.ID = "lblOutputArea" + (i + 1);
-                outputArea.Text = "Default";
-                wallPreviewPlaceholder.Controls.Add(outputArea);
+                    Label outputArea = new Label();
+                    outputArea.ID = "lblOutputArea" + (wallCount);
+                    outputArea.Text = "Default";
+                    outputArea.Attributes.Add("runat", "server");
+                    outputArea.AssociatedControlID = "lblPreviewPrefix" + wallCount;
+                    wallPreviewPlaceholder.Controls.Add(outputArea);
+                    wallPreviewPlaceholder.Controls.Add(new LiteralControl("</li>"));
+
+                    //now create hidden fields for each
+                    hiddenWallInfo.InnerHtml += "<input id=\"hidWall" + wallCount + "WindowInfo\" type=\"hidden\" runat=\"server\" name=\"hidWall" + wallCount + "WindowInfo\"/>";
+
+                    wallCount++;
+                }
             }
 
-            wallPreviewPlaceholder.Controls.Add(new LiteralControl("</ul>"));
-            wallPreviewPlaceholder.Controls.Add(new LiteralControl("</li>"));
         }
     }
 }
