@@ -1058,54 +1058,133 @@
         //set labels 
         function WindowPreparation()
         {
-            var wallModLocations = new Array();
+            var currentLocation=0;
+            var modLocation=0;
+            var areaPositionCounter=0;
+            var wallPositionCounter=0;
+
             var wallAreaArray = new Array();
             for (var i = 0; i < lineList.length; i++) {
-                wallModLocations[i] = new Array();
                 wallAreaArray[i] = new Array();
             }
 
             for (var i=1;i<=lineList.length;i++)
             {
+                currentLocation=0;
+                modLocation=0;
+                areaPositionCounter=0;
+
                 if (coordList[i - 1][4] == "P")
                 {
                     if(walls[i].mods.length > 0)
                     {
-                        for (var j=0;j<=walls[i].mods.length-1;j++)
-                        {
-                            var tempArray = validateDecimal(walls[i].mods[j].position);
-                            walls[i].mods[j].position = parseFloat(tempArray[0]) + parseFloat(tempArray[1]);
-                            
-                            wallModLocations[i-1][j]=walls[i].mods[j].position;
+                        for (var j=0;j<=walls[i].mods.length;j++)
+                        {   
+                            console.log("current: " + currentLocation);
+                            try
+                            {
+                                //modLocation = parseFloat(walls[i].mods[j].position[0]) + parseFloat(walls[i].mods[j].position[1]);
+
+                                ////if NaN, it had no decimal
+                                //if (isNaN(modLocation))
+                                //{                                
+                                    modLocation = parseFloat(walls[i].mods[j].position);
+                                //}
+
+                               // console.log("asdf " + modLocation + ".");
+                            }
+                            catch (err)
+                            {
+                                console.log("Mod list end");
+                                //if caught, that means the last mod has been passed, and we're in the last usable area   
+                                //we subtract current location from total length to get last usable area, then remove filler
+                                wallAreaArray[wallPositionCounter][areaPositionCounter] = walls[i].length - currentLocation - walls[i].rightFiller;
+                                //New current location is equal to ending position of mod (start+width)
+                                currentLocation = walls[i].length;
+                                break;
+                            }   
+
+                            //if the mod is at the start of the wall, we have no usable area at the start, so increase currentLocation
+                            if(modLocation == walls[i].leftFiller)
+                            {
+                                console.log("1st");
+                                //New current location is equal to ending position of mod (start+width)
+                                currentLocation = walls[i].leftFiller + walls[i].mods[j].mwidth;
+                            }
+                                //If this is the first mod in the wall, and it's not located at the start, we have a workable area first
+                            else if(currentLocation == 0)
+                            {
+                                console.log("2nd");
+                                //Since its from start of wall to first mod, the size of the first usable area is equal to
+                                //the position of the first mod in the wall. We then subtract left filler, as its first workable area
+                                wallAreaArray[wallPositionCounter][areaPositionCounter] = modLocation - walls[i].leftFiller;
+
+                                //New current location is equal to ending position of mod (start+width)
+                                currentLocation = modLocation + parseFloat(walls[i].mods[j].mwidth);
+                                areaPositionCounter++;
+                            }
+                                //it isn't at the start
+                            else if (currentLocation > 0)
+                            {
+                                console.log("3rd");
+                                wallAreaArray[wallPositionCounter][areaPositionCounter] = modLocation - currentLocation;
+
+                                //New current location is equal to ending position of mod (start+width)
+                                currentLocation = modLocation + parseFloat(walls[i].mods[j].mwidth);
+                                areaPositionCounter++;
+                            }
                         }
+
+                        //if it doesn't get in any other block, the mods are done and this is the last usable area to 
+                        //the furthest right, so we'll do what we need
+                        if (currentLocation != walls[i].length)
+                        {
+                            wallAreaArray[wallPositionCounter][areaPositionCounter] = walls[i].length - currentLocation;
+                            //console.log(walls[i].mods[j]);
+                        }
+
+                        //if last element of array is zero, remove it
+                        if (wallAreaArray[wallPositionCounter][wallAreaArray[wallPositionCounter].length-1] == 0)
+                        {
+                            wallAreaArray[wallPositionCounter].pop();
+                        }
+
+                        //THIS IS NOW HANDLED IN CATCH BLOCK ABOVE
+                        ////now that we're done the mod loop, we subtract right filler from the final usable area (which will always be there)
+                        //wallAreaArray[wallPositionCounter][wallAreaArray[wallPositionCounter].length-1] -= 2;
+
+                        //if (wallAreaArray[wallPositionCounter][wallAreaArray[wallPositionCaddDoorounter].length-1] == 0)
+                        //{
+                        //    wallAreaArray[wallPositionCounter][wallAreaArray[wallPositionCounter].length-1] = null;
+                        //}
                     }
                     else
                     {
-                        wallModLocations[i-1][0]="";
+                        wallAreaArray[wallPositionCounter][0] = walls[i].length - walls[i].leftFiller - walls[i].rightFiller;
                     }
+                    wallPositionCounter++;
                 }
             }
 
-            //wallModLocations array at this point has an array of locations of mods
-            //Turn this into an array of areas
-            for(var i = 1; i <= wallModLocations.length; i++) {
-                var wallModLocation = wallModLocations[i-1];
-
-                for (var j=0;j<wallModLocation.length;j++)
-                {       
-                    //if blank, its a full empty wall
-                    if (wallModLocation[j] = "")
-                    {
-
-                    }
-                    //not blank means it has a mod so we'll need two locations in the array entry
-                    else
-                    {
-
-                    }
-                    console.log(wallModLocation[j]);
+            //We have an array of usable area, now we get information about window generation for confirmation
+            for (var i=0;i<wallAreaArray.length-existingWallCount;i++)
+            {
+                console.log("");
+                for (var j=0;j<wallAreaArray[i].length;j++)
+                {
+                    document.getElementById("MainContent_lblOutputArea" + i).innerHTML += validateWindowModSize(wallAreaArray[i][j]) + "<br/>";
                 }
             }
+
+            ////check the usable area array in console
+            //for (var i=0;i<wallAreaArray.length-existingWallCount;i++)
+            //{
+            //    console.log("Proposed " + (i+1) + ":");
+            //    for (var j=0;j<wallAreaArray[i].length;j++)
+            //    {
+            //        console.log(wallAreaArray[i][j]);
+            //    }
+            //}
         }
     </script>
     <%-- End hidden div populating scripts --%>

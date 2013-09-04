@@ -168,7 +168,7 @@ function validateWindowModSize(space/*, size, number, wall, start*/) {
         spaceRemaining = 0;
     }
 
-    alert("Sizes: " + finalWindowSize + ", NumberOfWindows: " + windowCounter + ", Filler Remaining: " + spaceRemaining);
+    return ("Sizes: " + finalWindowSize + ", NumberOfWindows: " + windowCounter + ", Filler Remaining: " + spaceRemaining);
 
 
     //if (space >= MIN_MOD_WIDTH) {

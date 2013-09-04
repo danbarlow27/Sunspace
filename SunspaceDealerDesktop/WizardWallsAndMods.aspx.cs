@@ -3619,24 +3619,31 @@ namespace SunspaceDealerDesktop
 
         protected void populatePreviewSlide()
         {
-            wallPreviewPlaceholder.Controls.Add(new LiteralControl("<div class=\"toggleContent\">"));
-            wallPreviewPlaceholder.Controls.Add(new LiteralControl("<ul>"));
             wallPreviewPlaceholder.Controls.Add(new LiteralControl("<li>"));
             wallPreviewPlaceholder.Controls.Add(new LiteralControl("<h3>Wall details with current settings:</h3>"));
             //Add a line for each wall
+            int wallCount = 0;
+
             for (int i = 0; i < strWalls.Length; i++)
             {
-                Label wallNumber = new Label();
-                wallNumber.Text = "Wall: " + (i+1);
-                wallPreviewPlaceholder.Controls.Add(wallNumber);
+                //CHANGE THIS BASED ON COMMA SPLIT
+                //if (strWalls[i].Substring(4,1) == "P")
+                //{
+                    Label wallNumber = new Label();
+                    wallNumber.Text = "Wall: " + (wallCount + 1);
+                    wallNumber.ID = "lblPreviewPrefix" + wallCount;
+                    wallPreviewPlaceholder.Controls.Add(wallNumber);
 
-                Label outputArea = new Label();
-                outputArea.ID = "lblOutputArea" + (i + 1);
-                outputArea.Text = "Default";
-                wallPreviewPlaceholder.Controls.Add(outputArea);
+                    Label outputArea = new Label();
+                    outputArea.ID = "lblOutputArea" + (wallCount);
+                    outputArea.Text = "Default";
+                    outputArea.Attributes.Add("runat", "server");
+                    outputArea.AssociatedControlID = "lblPreviewPrefix" + wallCount;
+                    wallPreviewPlaceholder.Controls.Add(outputArea);
+                    wallCount++;
+                //}
             }
 
-            wallPreviewPlaceholder.Controls.Add(new LiteralControl("</ul>"));
             wallPreviewPlaceholder.Controls.Add(new LiteralControl("</li>"));
         }
     }
