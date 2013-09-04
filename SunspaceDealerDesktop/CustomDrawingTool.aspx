@@ -821,14 +821,15 @@
             for (var i = 0; i < coordList.length; i++)
             {
                 var currentLine = coordList[i];
-                console.log("%c Current Line: " + i + ", Direction: " + findLineDirection(currentLine) + "\n", "color: #bada55");
+                console.log("%c Current Line: " + i + ",\n", "color: #bada55");
 
                 for (var j = 0; j < coordList.length; j++)
                 {
                     if (currentLine != coordList[j])
                     {
-                        console.log("CoordListLine: " + j + ", Direction: " + findLineDirection(coordList[j]) + "\n");
-                        var showMe = findLinesTouch(currentLine, coordList[j]);
+                        console.log("CoordListLine: " + j + ",\n");
+                        var showMe = findLineEndTouch(currentLine, coordList[j]);
+                        showMe = findLinePerpendicularTouch(currentLine, coordList[j]);
                         console.log(showMe);
                     }
                 }
