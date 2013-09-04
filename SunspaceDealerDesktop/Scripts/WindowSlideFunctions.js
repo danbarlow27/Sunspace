@@ -138,37 +138,54 @@ function validateWindowModSize(space/*, size, number, wall, start*/) {
     var finalWindowSize = 0;
     var spaceRemaining = space;
 
-    while (spaceRemaining >= MIN_MOD_WIDTH) {
-        if (spaceRemaining >= MAX_MOD_WIDTH) {
+    while (spaceRemaining >= MIN_MOD_WIDTH)
+    {
+        if (spaceRemaining >= MAX_MOD_WIDTH)
+        {
             spaceRemaining -= MAX_MOD_WIDTH;
             windowCounter++;
         }
-        else if (spaceRemaining < MAX_MOD_WIDTH && spaceRemaining > MIN_MOD_WIDTH) {
+        else if (spaceRemaining < MAX_MOD_WIDTH && spaceRemaining > MIN_MOD_WIDTH)
+        {
             spaceRemaining = 0;
             windowCounter++;
         }
-        else if (spaceRemaining == MIN_MOD_WIDTH) {
+        else if (spaceRemaining == MIN_MOD_WIDTH)
+        {
             spaceRemaining = 0;
             windowCounter++;
         }
     }
 
-    if (spaceRemaining > 0 && windowCounter > 0) {
+    if (spaceRemaining > 0 && windowCounter > 0)
+    {
+        //Should never get here? will always hit one of the spaceRemaining=0 above
         windowCounter++;
         finalWindowSize = space / windowCounter;
         spaceRemaining = 0;
     }
-    else if (spaceRemaining > 0 && windowCounter == 0) {
+    else if (spaceRemaining > 0 && windowCounter == 0)
+    {
+        //Should never get here? will always hit one of the spaceRemaining=0 above
         //add spaceRemaining to filler
         //fillFiller(space, wall, start);
         //spaceRemaining = 0;
     }
-    else {
+    else
+    {
         finalWindowSize = space / windowCounter;
         spaceRemaining = 0;
     }
+    
+    var roundedWindowSizeArray = validateDecimal(finalWindowSize);
+    var roundedWindowSize = parseFloat(roundedWindowSizeArray[0]) + parseFloat(roundedWindowSizeArray[1]);
 
-    return ("Sizes: " + finalWindowSize + ", NumberOfWindows: " + windowCounter + ", Filler Remaining: " + spaceRemaining);
+    //Set space remaining equal to amount lost via rounding
+    spaceRemaining = finalWindowSize - roundedWindowSize;
+
+    //Need to return space * windowcounter, since we lost that amount PER WINDOW
+    var anArray = new Array(roundedWindowSize, windowCounter, spaceRemaining * windowCounter);
+    return (anArray);
 
 
     //if (space >= MIN_MOD_WIDTH) {
