@@ -3587,7 +3587,7 @@ namespace SunspaceDealerDesktop
                             }
                             else //NoDoor
                             {
-                                //linearItems.Add(getNoDoorFromForm(i, 1));
+                                linearItems.Add(getNoDoorFromForm(i, 1));
                             }
                         }
                         //We've checked first position, so now we must be in a workable area, meaning the only patterns we'll
@@ -3621,10 +3621,11 @@ namespace SunspaceDealerDesktop
             aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
             aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
             aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
-
+            
             //cabana attributes
             aDoor.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "height"]);
             aDoor.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "width"]);
+            aDoor.GlassTint = Request.Form["hidWall" + i + "Door" + j + "glassTint"];
             aDoor.VinylTint = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
             aDoor.ScreenType = ""; //CHANGEME
             aDoor.Hinge = Request.Form["hidWall" + i + "Door" + j + "hinge"];
@@ -3638,7 +3639,7 @@ namespace SunspaceDealerDesktop
         {
             FrenchDoor aDoor = new FrenchDoor();
             //base attributes
-            aDoor.DoorType = "Cabana";
+            aDoor.DoorType = "French";
             aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
             aDoor.ScreenType = ""; //CHANGEME
             aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
@@ -3646,12 +3647,13 @@ namespace SunspaceDealerDesktop
             aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
             aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
 
-            //cabana attributes
+            //french attributes
             aDoor.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "height"]);
             aDoor.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "width"]);
+            aDoor.GlassTint = Request.Form["hidWall" + i + "Door" + j + "glassTint"];
             aDoor.VinylTint = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
             aDoor.ScreenType = ""; //CHANGEME
-            //aDoor.Hinge = Request.Form["hidWall" + i + "Door" + j + "hinge"];
+            aDoor.OperatingDoor = Request.Form["hidWall" + i + "Door" + j + "operator"];
             aDoor.Swing = Request.Form["hidWall" + i + "Door" + j + "swing"];
             aDoor.HardwareType = Request.Form["hidWall" + i + "Door" + j + "hardware"];
 
@@ -3662,22 +3664,36 @@ namespace SunspaceDealerDesktop
         {
             PatioDoor aDoor = new PatioDoor();
             //base attributes
-            aDoor.DoorType = "Cabana";
+            aDoor.DoorType = "Patio";
             aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
             aDoor.ScreenType = ""; //CHANGEME
             aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
             aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
             aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
             aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
-
-            //cabana attributes
+            
+            //patio attributes
             aDoor.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "height"]);
             aDoor.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "width"]);
+            aDoor.GlassTint = Request.Form["hidWall" + i + "Door" + j + "glassTint"];
             //aDoor.VinylTint = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
             aDoor.ScreenType = ""; //CHANGEME
+            aDoor.OperatingDoor = Request.Form["hidWall" + i + "Door" + j + "operator"];
             //aDoor.Hinge = Request.Form["hidWall" + i + "Door" + j + "hinge"];
             //aDoor.Swing = Request.Form["hidWall" + i + "Door" + j + "swing"];
             //aDoor.HardwareType = Request.Form["hidWall" + i + "Door" + j + "hardware"];
+
+            return aDoor;
+        }
+
+        protected Door getNoDoorFromForm(int i, int j)
+        {
+            Door aDoor = new Door();
+            //base attributes
+            aDoor.DoorType = "NoDoor";
+            aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
+            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
+            aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
 
             return aDoor;
         }
