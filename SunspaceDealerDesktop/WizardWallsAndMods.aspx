@@ -15,6 +15,8 @@
         var PATIO_DOOR_MAX_HEIGHT = '<%= Session["PATIO_DOOR_MAX_HEIGHT"] %>';
         var MODEL_100_200_300_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_100_200_300_TRANSOM_MINIMUM_SIZE"] %>';
         var MODEL_400_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_400_TRANSOM_MINIMUM_SIZE"] %>';
+        var BOXHEADER_LENGTH = <%= BOXHEADER_LENGTH %>;
+        var BOXHEADER_RECEIVER_LENGTH = <%= BOXHEADER_RECEIVER_LENGTH %>;
         //var MIN_WINDOW_WIDTH = 
         //var MAX_WINDOW_WIDTH = 
         //var MIN_MOD_WIDTH = MIN_WINDOW_WIDTH + 2;
@@ -1083,56 +1085,103 @@
                             //console.log("current: " + currentLocation);
                             try
                             {
-                                //modLocation = parseFloat(walls[i].mods[j].position[0]) + parseFloat(walls[i].mods[j].position[1]);
-
-                                ////if NaN, it had no decimal
-                                //if (isNaN(modLocation))
-                                //{                                
-                                    modLocation = parseFloat(walls[i].mods[j].position);
-                                //}
-
-                               // console.log("asdf " + modLocation + ".");
+                                //Try to reference the mod's position, if it fails, there is no mod, so we must have finished them all                              
+                                modLocation = parseFloat(walls[i].mods[j].position);
                             }
                             catch (err)
                             {
-                                //console.log("Mod list end");
                                 //if caught, that means the last mod has been passed, and we're in the last usable area   
                                 //we subtract current location from total length to get last usable area, then remove filler
                                 wallAreaArray[wallPositionCounter][areaPositionCounter] = walls[i].length - currentLocation - walls[i].rightFiller;
                                 //New current location is equal to ending position of mod (start+width)
                                 currentLocation = walls[i].length;
+
+                                if (walls[i].mods[j-1].boxHeader == "Right" || walls[i].mods[j-1].boxHeader == "Both")
+                                {
+                                    console.log("Final mod has right or both boxheader, decrease area");
+                                    wallAreaArray[wallPositionCounter][areaPositionCounter] -= BOXHEADER_LENGTH;
+                                }
                                 break;
                             }   
 
                             //if the mod is at the start of the wall, we have no usable area at the start, so increase currentLocation
-                            if(modLocation == walls[i].leftFiller)
+                            if (walls[i].mods[j].boxHeader == "Left" || walls[i].mods[j].boxHeader == "Both")
                             {
-                                //console.log("1st");
-                                //New current location is equal to ending position of mod (start+width)
-                                currentLocation = walls[i].leftFiller + walls[i].mods[j].mwidth;
+                                console.log("Left or both boxheader");
+                                if(modLocation == walls[i].leftFiller + BOXHEADER_LENGTH)
+                                {
+                                    console.log("Left flush");
+                                    //New current location is equal to ending position of mod (start+width)
+                                    currentLocation = walls[i].leftFiller + walls[i].mods[j].mwidth + BOXHEADER_LENGTH;
+
+                                    if (walls[i].mods[j].boxHeader == "Right" || walls[i].mods[j].boxHeader == "Both")
+                                    {
+                                        console.log("Right or both boxheader, increasing location from " + currentLocation + " to " + (currentLocation+BOXHEADER_LENGTH));
+                                        currentLocation += BOXHEADER_LENGTH;
+                                    }
+                                }
                             }
-                                //If this is the first mod in the wall, and it's not located at the start, we have a workable area first
-                            else if(currentLocation == 0)
+                            else
                             {
-                                //console.log("2nd");
+                                console.log("Right or no boxheader");
+                                if(modLocation == walls[i].leftFiller)
+                                {
+                                    console.log("Left flush");
+                                    //New current location is equal to ending position of mod (start+width)
+                                    currentLocation = walls[i].leftFiller + walls[i].mods[j].mwidth;
+
+                                    if (walls[i].mods[j].boxHeader == "Right" || walls[i].mods[j].boxHeader == "Both")
+                                    {
+                                        console.log("Right or both boxheader, increasing location from " + currentLocation + " to " + (currentLocation+BOXHEADER_LENGTH));
+                                        currentLocation += BOXHEADER_LENGTH;
+                                    }
+                                }
+                            }
+                                
+                            //If this is the first mod in the wall, and it's not located at the start, we have a workable area first
+                            if(currentLocation == 0)
+                            {
+                                console.log("2nd");
                                 //Since its from start of wall to first mod, the size of the first usable area is equal to
                                 //the position of the first mod in the wall. We then subtract left filler, as its first workable area
-                                wallAreaArray[wallPositionCounter][areaPositionCounter] = modLocation - walls[i].leftFiller;
 
+                                wallAreaArray[wallPositionCounter][areaPositionCounter] = modLocation - walls[i].leftFiller;
+                                
                                 //New current location is equal to ending position of mod (start+width)
                                 currentLocation = modLocation + parseFloat(walls[i].mods[j].mwidth);
+
+                                if (walls[i].mods[j].boxHeader == "Left" || walls[i].mods[j].boxHeader == "Both")
+                                {
+                                    console.log("First mod, not left flush, decreasing size of area from " + wallAreaArray[wallPositionCounter][areaPositionCounter] + " to " + (wallAreaArray[wallPositionCounter][areaPositionCounter] - BOXHEADER_LENGTH));
+                                    wallAreaArray[wallPositionCounter][areaPositionCounter] -= BOXHEADER_LENGTH;
+                                }
+
+                                if (walls[i].mods[j].boxHeader == "Right" || walls[i].mods[j].boxHeader == "Both")
+                                {
+                                    console.log("Right or both boxheader, increasing location from " + currentLocation + " to " + (currentLocation+BOXHEADER_LENGTH));
+                                }
+                                
                                 areaPositionCounter++;
                             }
-                                //it isn't at the start
-                            else if (currentLocation > 0)
+                                //it isn't at the start and is not immediately following a left flush door
+                            else if (currentLocation > 0 && currentLocation < modLocation)
                             {
-                                //console.log("3rd");
+                                console.log("3rd");
                                 wallAreaArray[wallPositionCounter][areaPositionCounter] = modLocation - currentLocation;
 
                                 //New current location is equal to ending position of mod (start+width)
                                 currentLocation = modLocation + parseFloat(walls[i].mods[j].mwidth);
+
+                                if (walls[i].mods[j].boxHeader == "Left" || walls[i].mods[j].boxHeader == "Both")
+                                {
+                                    console.log("Left or both boxheader found, decreasing size from " + wallAreaArray[wallPositionCounter][areaPositionCounter] + " to " + (wallAreaArray[wallPositionCounter][areaPositionCounter] - BOXHEADER_LENGTH));
+                                    wallAreaArray[wallPositionCounter][areaPositionCounter] -= BOXHEADER_LENGTH;
+                                }
+
                                 areaPositionCounter++;
                             }
+
+                            console.log("");
                         }
 
                         //if it doesn't get in any other block, the mods are done and this is the last usable area to 
@@ -1163,6 +1212,7 @@
                         wallAreaArray[wallPositionCounter][0] = walls[i].length - walls[i].leftFiller - walls[i].rightFiller;
                     }
                     wallPositionCounter++;
+                    console.log(".");
                 }
             }
 
@@ -1170,17 +1220,19 @@
             for (var i=0;i<wallAreaArray.length-existingWallCount;i++)
             {
                 document.getElementById("MainContent_lblOutputArea" + i).innerHTML = "";
+                var html = "";
                 //console.log("");
                 for (var j=0;j<wallAreaArray[i].length;j++)
                 {
                     var validatedWindow = validateWindowModSize(wallAreaArray[i][j]);
                     document.getElementById("MainContent_lblOutputArea" + i).innerHTML += "Sizes: " + validatedWindow[0] + ", Number of windows: " + validatedWindow[1] + ", Remaining filler: " + validatedWindow[2] + "<br/>";
-                    document.getElementById("hidWall" + i + "WindowInfo").value += validatedWindow[0] + "," + validatedWindow[1] + "," + validatedWindow[2] + ",";
+                    html = "<input id=\"hidWall" + (i+1+existingWallCount) + "WindowInfo" + (j+1) + "\" type=\"hidden\" name=\"hidWall" + (i+1+existingWallCount) + "WindowInfo" + (j+1) + "\"/>";
+                    document.getElementById("MainContent_hiddenFieldsDiv").innerHTML += html;
+                    document.getElementById("hidWall" + (i+1+existingWallCount) + "WindowInfo" + (j+1)).value += validatedWindow[0] + "," + validatedWindow[1] + "," + validatedWindow[2] + ",";
                 }
             }
 
             //Now move all other required data into hidden fields.
-            var wallCounter=1;
             for (var i=1;i<=lineList.length;i++)
             {
                 if (coordList[i - 1][4] == "P")
@@ -1197,140 +1249,139 @@
                             if (walls[i].mods[j].type == "Cabana")
                             {                         
                                 var html = "";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "boxHeader\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "boxHeader\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "colour\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "colour\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "fheight\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "fheight\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "fwidth\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "fwidth\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "glassTint\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "glassTint\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "hardware\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "hardware\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "height\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "height\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "hinge\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "hinge\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "kickplate\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "kickplate\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "mheight\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "mheight\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "mwidth\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "mwidth\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "numberOfVents\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "numberOfVents\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "position\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "position\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "style\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "style\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "swing\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "swing\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "type\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "type\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "vinylTint\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "vinylTint\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "width\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "colour\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "colour\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fheight\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fheight\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fwidth\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fwidth\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "glassTint\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "glassTint\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "hardware\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "hardware\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "height\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "height\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "hinge\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "hinge\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "kickplate\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "kickplate\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "mheight\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "mheight\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "mwidth\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "mwidth\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "numberOfVents\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "numberOfVents\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "position\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "position\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "style\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "style\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "swing\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "swing\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "type\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "type\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "vinylTint\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "vinylTint\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "width\" >";
                                 document.getElementById("MainContent_hiddenFieldsDiv").innerHTML += html;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "glassTint").value = walls[i].mods[j].glassTint;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "hardware").value = walls[i].mods[j].hardware;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "height").value = walls[i].mods[j].height;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "hinge").value = walls[i].mods[j].hinge;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "kickplate").value = walls[i].mods[j].kickplate;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "mheight").value = walls[i].mods[j].mheight;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "mwidth").value = walls[i].mods[j].mwidth;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "numberOfVents").value = walls[i].mods[j].numberOfVents;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "position").value = walls[i].mods[j].position;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "style").value = walls[i].mods[j].style;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "swing").value = walls[i].mods[j].swing;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "vinylTint").value = walls[i].mods[j].vinylTint;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "width").value = walls[i].mods[j].width;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "glassTint").value = walls[i].mods[j].glassTint;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "hardware").value = walls[i].mods[j].hardware;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "height").value = walls[i].mods[j].height;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "hinge").value = walls[i].mods[j].hinge;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "kickplate").value = walls[i].mods[j].kickplate;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "mheight").value = walls[i].mods[j].mheight;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "mwidth").value = walls[i].mods[j].mwidth;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "numberOfVents").value = walls[i].mods[j].numberOfVents;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "position").value = walls[i].mods[j].position;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "style").value = walls[i].mods[j].style;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "swing").value = walls[i].mods[j].swing;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "vinylTint").value = walls[i].mods[j].vinylTint;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "width").value = walls[i].mods[j].width;
                             }
                             else if (walls[i].mods[j].type == "French")
                             {
                                 var html = "";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "boxHeader\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "boxHeader\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "colour\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "colour\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "fheight\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "fheight\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "fwidth\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "fwidth\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "glassTint\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "glassTint\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "hardware\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "hardware\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "height\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "height\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "kickplate\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "kickplate\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "mheight\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "mheight\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "mwidth\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "mwidth\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "numberOfVents\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "numberOfVents\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "operator\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "operator\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "position\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "position\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "style\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "style\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "swing\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "swing\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "type\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "type\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "vinylTint\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "vinylTint\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "width\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "colour\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "colour\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fheight\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fheight\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fwidth\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fwidth\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "glassTint\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "glassTint\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "hardware\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "hardware\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "height\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "height\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "kickplate\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "kickplate\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "mheight\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "mheight\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "mwidth\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "mwidth\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "numberOfVents\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "numberOfVents\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "operator\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "operator\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "position\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "position\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "style\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "style\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "swing\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "swing\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "type\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "type\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "vinylTint\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "vinylTint\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "width\" >";
                                 document.getElementById("MainContent_hiddenFieldsDiv").innerHTML += html;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "glassTint").value = walls[i].mods[j].glassTint;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "hardware").value = walls[i].mods[j].hardware;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "height").value = walls[i].mods[j].height;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "kickplate").value = walls[i].mods[j].kickplate;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "mheight").value = walls[i].mods[j].mheight;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "mwidth").value = walls[i].mods[j].mwidth;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "numberOfVents").value = walls[i].mods[j].numberOfVents;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "operator").value = walls[i].mods[j].operator;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "position").value = walls[i].mods[j].position;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "style").value = walls[i].mods[j].style;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "swing").value = walls[i].mods[j].swing;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "vinylTint").value = walls[i].mods[j].vinylTint;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "width").value = walls[i].mods[j].width;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "glassTint").value = walls[i].mods[j].glassTint;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "hardware").value = walls[i].mods[j].hardware;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "height").value = walls[i].mods[j].height;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "kickplate").value = walls[i].mods[j].kickplate;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "mheight").value = walls[i].mods[j].mheight;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "mwidth").value = walls[i].mods[j].mwidth;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "numberOfVents").value = walls[i].mods[j].numberOfVents;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "operator").value = walls[i].mods[j].operator;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "position").value = walls[i].mods[j].position;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "style").value = walls[i].mods[j].style;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "swing").value = walls[i].mods[j].swing;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "vinylTint").value = walls[i].mods[j].vinylTint;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "width").value = walls[i].mods[j].width;
                             }
                             else if (walls[i].mods[j].type == "Patio")
                             {
                                 var html = "";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "boxHeader\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "boxHeader\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "colour\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "colour\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "fheight\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "fheight\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "fwidth\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "fwidth\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "glassTint\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "glassTint\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "height\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "height\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "mheight\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "mheight\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "mwidth\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "mwidth\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "operator\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "operator\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "position\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "position\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "style\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "style\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "type\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "type\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "width\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "colour\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "colour\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fheight\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fheight\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fwidth\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fwidth\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "glassTint\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "glassTint\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "height\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "height\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "mheight\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "mheight\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "mwidth\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "mwidth\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "operator\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "operator\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "position\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "position\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "style\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "style\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "type\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "type\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "width\" >";
                                 document.getElementById("MainContent_hiddenFieldsDiv").innerHTML += html;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "glassTint").value = walls[i].mods[j].glassTint;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "height").value = walls[i].mods[j].height;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "mheight").value = walls[i].mods[j].mheight;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "mwidth").value = walls[i].mods[j].mwidth;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "operator").value = walls[i].mods[j].operator;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "position").value = walls[i].mods[j].position;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "style").value = walls[i].mods[j].style;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "width").value = walls[i].mods[j].width;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "glassTint").value = walls[i].mods[j].glassTint;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "height").value = walls[i].mods[j].height;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "mheight").value = walls[i].mods[j].mheight;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "mwidth").value = walls[i].mods[j].mwidth;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "operator").value = walls[i].mods[j].operator;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "position").value = walls[i].mods[j].position;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "style").value = walls[i].mods[j].style;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "width").value = walls[i].mods[j].width;
                             }
                             else //NoDoor
                             {
                                 var html = "";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "fheight\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "fheight\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "fwidth\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "fwidth\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "height\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "height\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "mheight\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "mheight\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "mwidth\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "mwidth\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "position\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "position\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "type\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "type\" >";
-                                html += "<input id=\"hidWall" + wallCounter + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + wallCounter + "Door" + (j+1) + "width\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fheight\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fheight\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fwidth\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fwidth\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "height\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "height\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "mheight\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "mheight\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "mwidth\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "mwidth\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "position\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "position\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "type\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "type\" >";
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "width\" >";
                                 document.getElementById("MainContent_hiddenFieldsDiv").innerHTML += html;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "height").value = walls[i].mods[j].height;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "mheight").value = walls[i].mods[j].mheight;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "mwidth").value = walls[i].mods[j].mwidth;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "position").value = walls[i].mods[j].position;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
-                                document.getElementById("hidWall" + wallCounter + "Door" + (j+1) + "width").value = walls[i].mods[j].width;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "height").value = walls[i].mods[j].height;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "mheight").value = walls[i].mods[j].mheight;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "mwidth").value = walls[i].mods[j].mwidth;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "position").value = walls[i].mods[j].position;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "width").value = walls[i].mods[j].width;
                             }
                         }
                     }
-                    wallCounter++;
                 }
             }
 

@@ -263,6 +263,11 @@ namespace SunspaceDealerDesktop
         public static string[] SUNSPACE_POSITIONS = { "Owner", "IT Specialist", "CSR" };
         #endregion
 
+        #region Boxheaders
+        public const float BOXHEADER_LENGTH = 3.25f;
+        public const float BOXHEADER_RECEIVER_LENGTH = 4.25f;
+        #endregion
+
         #region Walls
         public static string[] WALL_TYPE =
         {

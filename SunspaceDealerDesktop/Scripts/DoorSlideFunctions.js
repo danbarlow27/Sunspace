@@ -356,10 +356,20 @@ function createDoorObject(wallNumber, type) {
 
     /*Insert the door with the appropriate variables based on drop down selected index*/
     if (framedDoor.position === "Left") {
-        framedDoor.position = walls[wallNumber].leftFiller;
+        if (framedDoor.boxHeader == "Left" || framedDoor.boxHeader == "Both") {
+            framedDoor.position = walls[wallNumber].leftFiller + BOXHEADER_LENGTH;
+        }
+        else {
+            framedDoor.position = walls[wallNumber].leftFiller + BOXHEADER_LENGTH;
+        }
     }
     else if (framedDoor.position === "Right") {
-        framedDoor.position = walls[wallNumber].length - framedDoor.mwidth - walls[wallNumber].rightFiller;
+        if (framedDoor.boxHeader == "Right" || framedDoor.boxHeader == "Both") {
+            framedDoor.position = walls[wallNumber].length - framedDoor.mwidth - walls[wallNumber].rightFiller - BOXHEADER_LENGTH;
+        }
+        else {
+            framedDoor.position = walls[wallNumber].length - framedDoor.mwidth - walls[wallNumber].rightFiller;
+        }
     }
     else if (framedDoor.position === "Center") {
         framedDoor.position = validateDecimal(walls[wallNumber].length / 2 - framedDoor.mwidth / 2);

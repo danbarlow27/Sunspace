@@ -13,6 +13,8 @@ namespace SunspaceDealerDesktop
         public const float FOAM_PANEL_PROJECTION = 264f;
         public const float ACRYLIC_PANEL_PROJECTION = 276f;
         public const float THERMADECK_PANEL_PROJECTION = 288f;
+        public const float BOXHEADER_LENGTH = Constants.BOXHEADER_LENGTH;
+        public const float BOXHEADER_RECEIVER_LENGTH = Constants.BOXHEADER_RECEIVER_LENGTH;
 
         protected List<Wall> walls = new List<Wall>();
         //ListItems to be used in multiple dropdown lists for decimal points
@@ -3556,16 +3558,15 @@ namespace SunspaceDealerDesktop
                     existingWallCount++;
                 }
             }
-
-            //Get from hiddens
-            //put hidden window info into list for convenience
-            List<String> hidWindowInfo = new List<String>();
-
-            for (int i = 0; i < strWalls.Length; i++)
+            
+            //Loop for each wall
+            int linearPosition = 0;
+            for (int i = 1; i <= strWalls.Length; i++)
             {
+                //A list of linear items to be added to each wall
                 List<Object> linearItems = new List<Object>();
 
-                if (wallDetails[i, 4] == "P")
+                if (wallDetails[i-1, 4] == "P")
                 {
                     //if it has doors, do logic w/ doors, otherwise just directly go to window creation
                     if (Int32.Parse(Request.Form["hidWall" + i + "DoorCount"]) > 0)
@@ -3573,33 +3574,53 @@ namespace SunspaceDealerDesktop
                         //If the first door position is equal to left filler, it has no workable area before it, so handle this door first.
                         if (float.Parse(Request.Form["hidWall" + i + "Door" + 1 + "position"]) == float.Parse(Request.Form["hidWall" + i + "LeftFiller"]))
                         {
-                            if (Request.Form["hidWall" + i + "Door" + 1 + "type"] == "Cabana")
+                            //Since the door is at the start, we repeat the pattern door->area
+                            //loop for each door
+                            for (int j=1;j<=Int32.Parse(Request.Form["hidWall" + i + "DoorCount"]);j++)
                             {
-                                linearItems.Add(getCabanaDoorFromForm(i, 1));
-                            }
-                            else if (Request.Form["hidWall" + i + "Door" + 1 + "type"] == "French")
-                            {
-                                linearItems.Add(getFrenchDoorFromForm(i, 1));
-                            }
-                            else if (Request.Form["hidWall" + i + "Door" + 1 + "type"] == "Patio")
-                            {
-                                linearItems.Add(getPatioDoorFromForm(i, 1));
-                            }
-                            else //NoDoor
-                            {
-                                linearItems.Add(getNoDoorFromForm(i, 1));
+                                //Add door
+                                if (Request.Form["hidWall" + i + "Door" + j + "type"] == "Cabana")
+                                {
+                                    linearItems.Add(getCabanaDoorFromForm(i,j));
+                                }
+                                else if (Request.Form["hidWall" + i + "Door" + j + "type"] == "French")
+                                {
+                                    linearItems.Add(getFrenchDoorFromForm(i,j));
+                                }
+                                else if (Request.Form["hidWall" + i + "Door" + j + "type"] == "Patio")
+                                {
+                                    linearItems.Add(getPatioDoorFromForm(i,j));
+                                }
+                                else //nodoor
+                                {
+                                    linearItems.Add(getNoDoorFromForm(i,j));
+                                }
+                                //Add Area
+                                char[] areaStringDelimeter = { ',' };
+                                string areaString = Request.Form["hidWall" + i + "WindowInfo" + j];
+                                string[] areaInfo = areaString.Split(areaStringDelimeter, StringSplitOptions.RemoveEmptyEntries);
+
+                                //loop for 'number of windows'
+                                //for (int j = 0; j <= Int32.Parse(areaInfo[1]); j++)
+                                //{
+
+                                //}
                             }
                         }
-                        //We've checked first position, so now we must be in a workable area, meaning the only patterns we'll
-                        //ever get from this point are workable->end and workable->door
+                        else
+                        {
+                            //Since the door is not at the start, we repeat the pattern area->door
+                            //loop for each door
+                            for (int j=1;j<=Int32.Parse(Request.Form["hidWall" + i + "DoorCount"]);j++)
+                            {
+                            
+                            }
+                        }
                     }
-                    else
-                    {
-                        hidWindowInfo.Add(Request.Form["hidWall" + i + "WindowInfo"]);
-                    }
+                    //Now that we have all the linear items, we add to each wall
+                    listOfWalls[linearPosition].LinearItems = linearItems;
+                    linearPosition++;
                 }
-
-                listOfWalls[i].LinearItems = linearItems;
             }
 
             //Add objects to session
