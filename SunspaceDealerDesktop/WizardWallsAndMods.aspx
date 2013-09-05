@@ -1385,6 +1385,25 @@
                 }
             }
 
+            //Move window properties to hidden fields
+            //document.getElementById("hidWindowType");
+            //document.getElementById("hidWindowColour");
+            /*
+
+            MainContent_radV4T
+                colour
+                if mixed
+                    4 vent colours
+            MainContent_radHorizontalRoller
+                colour
+            MainContent_radFixedVinyl
+                colour
+            MainContent_radOpenWall
+            MainContent_radSolidWall
+            MainContent_radScreen
+
+
+            */
             ////check the usable area array in console
             //for (var i=0;i<wallAreaArray.length-existingWallCount;i++)
             //{
@@ -1669,6 +1688,8 @@
     <%-- <input id="hidSoffitLength" type="hidden" runat="server" /> --%>
     <input id="hidRoomProjection" type="hidden" runat="server" />
     <input id="hidRoomWidth" type="hidden" runat="server" />
+    <input id="hidWindowType" type="hidden" runat="server" />
+    <input id="hidWindowColour" type="hidden" runat="server" />
 
     <%-- end hidden fields --%>    
 

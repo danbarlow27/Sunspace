@@ -12,9 +12,20 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Constructors
-        public BoxHeader()
+        /// <summary>
+        /// Instantiate a new boxHeader at constant lengths, based on true/false whether or not it is a boxHeader/Receiever piece.
+        /// </summary>
+        /// <param name="receiever">true if this is a boxHeader receiever, otherwise false.</param>
+        public BoxHeader(bool receiever)
         {
-            length = 3.25f;
+            if (receiever == true)
+            {
+                Length = Constants.BOXHEADER_RECEIVER_LENGTH;
+            }
+            else
+            {
+                Length = Constants.BOXHEADER_LENGTH;
+            }
         }
         #endregion
 

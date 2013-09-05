@@ -3578,6 +3578,10 @@ namespace SunspaceDealerDesktop
                             //loop for each door
                             for (int j=1;j<=Int32.Parse(Request.Form["hidWall" + i + "DoorCount"]);j++)
                             {
+                                if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Left" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
+                                {
+                                    linearItems.Add(new BoxHeader(false));
+                                }
                                 //Add door
                                 if (Request.Form["hidWall" + i + "Door" + j + "type"] == "Cabana")
                                 {
@@ -3595,16 +3599,22 @@ namespace SunspaceDealerDesktop
                                 {
                                     linearItems.Add(getNoDoorFromForm(i,j));
                                 }
+                                if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Right" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
+                                {
+                                    linearItems.Add(new BoxHeader(false));
+                                }
                                 //Add Area
                                 char[] areaStringDelimeter = { ',' };
                                 string areaString = Request.Form["hidWall" + i + "WindowInfo" + j];
                                 string[] areaInfo = areaString.Split(areaStringDelimeter, StringSplitOptions.RemoveEmptyEntries);
 
                                 //loop for 'number of windows'
-                                //for (int j = 0; j <= Int32.Parse(areaInfo[1]); j++)
-                                //{
-
-                                //}
+                                for (int j = 0; j <= Int32.Parse(areaInfo[1]); j++)
+                                {
+                                    Window aWindow = new Window();
+                                    //aWindow.FrameColour = 
+                                    //linearItems.Add();
+                                }
                             }
                         }
                         else

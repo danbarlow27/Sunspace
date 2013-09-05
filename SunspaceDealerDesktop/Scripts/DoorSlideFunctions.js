@@ -360,7 +360,7 @@ function createDoorObject(wallNumber, type) {
             framedDoor.position = walls[wallNumber].leftFiller + BOXHEADER_LENGTH;
         }
         else {
-            framedDoor.position = walls[wallNumber].leftFiller + BOXHEADER_LENGTH;
+            framedDoor.position = walls[wallNumber].leftFiller;
         }
     }
     else if (framedDoor.position === "Right") {
@@ -626,6 +626,13 @@ function totalSpaceLeftInWall(wall) {
     for (var wallSpace = 0; wallSpace < wall.mods.length; wallSpace++) {
         //Substract each door from the usable space
         totalSpace -= wall.mods[wallSpace].mwidth;
+
+        if (wall.mods[wallSpace].boxHeader == "Left" || wall.mods[wallSpace].boxHeader == "Right") {
+            totalSpace -= BOXHEADER_LENGTH;
+        }
+        else if (wall.mods[wallSpace].boxHeader == "Both") {
+            totalSpace -= BOXHEADER_LENGTH;
+        }
     }
 
     //Return the total space remaining
@@ -863,17 +870,35 @@ function updateDoorPager(wall) {
 function validateDoor(door, wall) {   
     //If the door's position is smaller than the left filler,
     //the door isn't within the usable space
-    if (door.position < wall.leftFiller) {
-        //Error message
-        errorMessageArea.innerHTML = "Your door position is overlapping the left filler, or is a negative value. Please try again.";
-        return false;
+    if (door.boxHeader == "Left" || door.boxHeader == "Both") {
+        if (door.position < (wall.leftFiller+BOXHEADER_LENGTH)) {
+            //Error message
+            errorMessageArea.innerHTML = "Your door position is overlapping the left filler, or is a negative value. Please try again.";
+            return false;
+        }
+    }
+    else {        
+        if (door.position < wall.leftFiller) {
+            //Error message
+            errorMessageArea.innerHTML = "Your door position is overlapping the left filler, or is a negative value. Please try again.";
+            return false;
+        }
     }
         //Else if the door's position plus its length is larger than the right fillers position,
-        //the door isn't within the usable space
-    else if ((door.position + door.fwidth) > (wall.length - wall.rightFiller)) {
-        //Error message
-        errorMessageArea.innerHTML = "Your door position is overlapping the right filler, or larger than the wall length. Please try again.";
-        return false;
+    //the door isn't within the usable space
+    if (door.boxHeader == "Right" || door.boxHeader == "Both") {
+        if ((door.position + door.fwidth + BOXHEADER_LENGTH) > (wall.length - wall.rightFiller)) {
+            //Error message
+            errorMessageArea.innerHTML = "Your door position is overlapping the right filler, or larger than the wall length. Please try again.";
+            return false;
+        }
+    }
+    else {
+        if ((door.position + door.fwidth) > (wall.length - wall.rightFiller)) {
+            //Error message
+            errorMessageArea.innerHTML = "Your door position is overlapping the right filler, or larger than the wall length. Please try again.";
+            return false;
+        }
     }
 
     //Variable to hold the index of which door is being overlapped
