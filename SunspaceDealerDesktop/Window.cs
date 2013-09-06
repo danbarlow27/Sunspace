@@ -13,7 +13,8 @@ namespace SunspaceDealerDesktop
         private int moduleIndex;
         private string windowType;
         private string screenType;
-        private float height;
+        private float startHeight;
+        private float endHeight;
         private float length;
         private string frameColour;
         private bool spreaderBar;
@@ -29,7 +30,8 @@ namespace SunspaceDealerDesktop
             ModuleIndex = 0;
             WindowType = "";
             ScreenType = "";
-            Height = 0.0f;
+            StartHeight = 0.0f;
+            EndHeight = 0.0f;
             Length = 0.0f;
             FrameColour = "";
             SpreaderBar = false;
@@ -88,15 +90,27 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public float Height
+        public float StartHeight
         {
             get
             {
-                return height;
+                return startHeight;
             }
             set
             {
-                height = value;
+                startHeight = value;
+            }
+        }
+
+        public float EndHeight
+        {
+            get
+            {
+                return endHeight;
+            }
+            set
+            {
+                endHeight = value;
             }
         }
 

@@ -16,7 +16,7 @@ namespace SunspaceDealerDesktop
         private float height;
         private float length;
         private string sex; //MM MF FM FF
-        List<Object> modularItems = new List<Object>();
+        List<ModuleItem> modularItems = new List<ModuleItem>();
 
         #endregion
 
@@ -63,7 +63,7 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public List<Object> ModularItems
+        public List<ModuleItem> ModularItems
         {
             get
             {

@@ -383,6 +383,7 @@
 
                     if (tempWidth > highestWidth) { //determine if the current temp projection is greater than the highest projection calculated
                         highestWidth = tempWidth; // reset the highest projection
+                        console.log(highestWidth);
                     }
                 }
             }
@@ -693,6 +694,7 @@
 
                 //store roomProjection in the roomProjection variable and hidden field
                 document.getElementById("MainContent_hidRoomProjection").value = roomProjection = calculateProjection(); 
+                calculateWidth();
                 document.getElementById("MainContent_hidRoomWidth").value = roomWidth;
                 determineSoffitLengthOfEachWall(); //calculate and store soffitlength of each wall
 
@@ -1391,77 +1393,77 @@
             if ($('#MainContent_radV4T').is(':checked')) 
             {
                 //move v4t
-                document.getElementById("hidWindowType").value = "Vertical 4 Track";
+                document.getElementById("<%=hidWindowType.ClientID%>").value = "Vertical 4 Track";
 
                 //check colours
                 if ($('#MainContent_radV4TClear').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "CCCC";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "CCCC";
                 }
                 if ($('#MainContent_radV4TSmokeGrey').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "SSSS";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "SSSS";
                 }
                 if ($('#MainContent_radV4TDarkGrey').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "DDDD";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "DDDD";
                 }
                 if ($('#MainContent_radV4TBronze').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "BBBB";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "BBBB";
                 }
                 if ($('#MainContent_radV4TMixed').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "";
-                    document.getElementById("hidWindowColour").value += document.getElementById("MainContent_ddlV4TVinylTint1").value;
-                    document.getElementById("hidWindowColour").value += document.getElementById("MainContent_ddlV4TVinylTint2").value;
-                    document.getElementById("hidWindowColour").value += document.getElementById("MainContent_ddlV4TVinylTint3").value;
-                    document.getElementById("hidWindowColour").value += document.getElementById("MainContent_ddlV4TVinylTint4").value;
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value += document.getElementById("MainContent_ddlV4TVinylTint1").value;
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value += document.getElementById("MainContent_ddlV4TVinylTint2").value;
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value += document.getElementById("MainContent_ddlV4TVinylTint3").value;
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value += document.getElementById("MainContent_ddlV4TVinylTint4").value;
                 }
             }
             else if ($('#MainContent_radHorizontalRoller').is(':checked')) 
             {                
                 //move v4t
-                document.getElementById("hidWindowType").value = "Horizontal Roller";
+                document.getElementById("<%=hidWindowType.ClientID%>").value = "Horizontal Roller";
 
                 //check colours
                 if ($('#MainContent_radHorizontalRollerClear').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Clear";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Clear";
                 }
                 if ($('#MainContent_radHorizontalRollerSmokeGrey').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Smoke Grey";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Smoke Grey";
                 }
                 if ($('#MainContent_radHorizontalRollerDarkGrey').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Dark Grey";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Dark Grey";
                 }
                 if ($('#MainContent_radHorizontalRollerBronze').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Bronze";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Bronze";
                 }
             }
             else if ($('#MainContent_radFixedVinyl').is(':checked')) 
             {
                 //move v4t
-                document.getElementById("hidWindowType").value = "Fixed Vinyl";
+                document.getElementById("<%=hidWindowType.ClientID%>").value = "Fixed Vinyl";
                 //check colours
                 if ($('#MainContent_radFixedVinylClear').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Clear";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Clear";
                 }
                 if ($('#MainContent_radFixedVinylSmokeGrey').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Smoke Grey";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Smoke Grey";
                 }
                 if ($('#MainContent_radFixedVinylDarkGrey').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Dark Grey";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Dark Grey";
                 }
                 if ($('#MainContent_radFixedVinylBronze').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Bronze";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Bronze";
                 }
             }
             else if ($('#MainContent_radOpenWall').is(':checked')) 
@@ -1475,37 +1477,37 @@
             else if ($('#MainContent_radSingleSlider').is(':checked')) 
             {
                 //move v4t
-                document.getElementById("hidWindowType").value = "Single Slider";
+                document.getElementById("<%=hidWindowType.ClientID%>").value = "Single Slider";
                 //check colours
                 if ($('#MainContent_radSingleSliderClear').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Clear";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Clear";
                 }
                 if ($('#MainContent_radSingleSliderGrey').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Grey";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Grey";
                 }
                 if ($('#MainContent_radSingleSliderBronze').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Bronze";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Bronze";
                 }
             }
             else if ($('#MainContent_radDoubleSlider').is(':checked')) 
             {
                 //move v4t
-                document.getElementById("hidWindowType").value = "Horizontal 2 Track";
+                document.getElementById("<%=hidWindowType.ClientID%>").value = "Horizontal 2 Track";
                 //check colours
                 if ($('#MainContent_radDoubleSliderClear').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Clear";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Clear";
                 }
                 if ($('#MainContent_radDoubleSliderGrey').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Grey";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Grey";
                 }
                 if ($('#MainContent_radDoubleSliderBronze').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Bronze";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Bronze";
                 }
             }
             else if ($('#MainContent_radFixedGlass').is(':checked')) 
@@ -1513,85 +1515,85 @@
                 //move v4t
                 if ('<%=currentModel%>' == "M400")
                 {
-                    document.getElementById("hidWindowType").value = "Fixed Glass 3\"";
+                    document.getElementById("<%=hidWindowType.ClientID%>").value = "Fixed Glass 3\"";
                 }
                 else
                 {
-                    document.getElementById("hidWindowType").value = "Fixed Glass 2\"";
+                    document.getElementById("<%=hidWindowType.ClientID%>").value = "Fixed Glass 2\"";
                 }
 
                 //check colours
                 if ($('#MainContent_radFixedGlassClear').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Clear";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Clear";
                 }
                 if ($('#MainContent_radFixedGlassGrey').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Grey";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Grey";
                 }
                 if ($('#MainContent_radFixedGlassBronze').is(':checked'))
                 {
-                    document.getElementById("hidWindowColour").value = "Bronze";
+                    document.getElementById("<%=hidWindowColour.ClientID%>").value = "Bronze";
                 }
             }
             else if ($('#MainContent_radScreen').is(':checked')) 
             {
                 //move v4t
-                document.getElementById("hidWindowType").value = "Screen";
+                document.getElementById("<%=hidWindowType.ClientID%>").value = "Screen";
                 //check colours
                 if ($('#MainContent_radBetterVueInsectScreen').is(':checked'))
                 {
-                    document.getElementById("hidScreenType").value = "Better Vue Insect Screen (Default)";
+                    document.getElementById("<%=hidScreenType.ClientID%>").value = "Better Vue Insect Screen (Default)";
                 }
                 if ($('#MainContent_radNoSeeUms20x20Mesh').is(':checked'))
                 {
-                    document.getElementById("hidScreenType").value = "No See Ums 20 x 20 Mesh";
+                    document.getElementById("<%=hidScreenType.ClientID%>").value = "No See Ums 20 x 20 Mesh";
                 }
                 if ($('#MainContent_radSolarInsectScreening').is(':checked'))
                 {
-                    document.getElementById("hidScreenType").value = "Solar Insect Screening";
+                    document.getElementById("<%=hidScreenType.ClientID%>").value = "Solar Insect Screening";
                 }
                 if ($('#MainContent_radToughScreen').is(':checked'))
                 {
-                    document.getElementById("hidScreenType").value = "Tuff Screen";
+                    document.getElementById("<%=hidScreenType.ClientID%>").value = "Tuff Screen";
                 }
                 if ($('#MainContent_radNoScreen').is(':checked'))
                 {
-                    document.getElementById("hidScreenType").value = "No Screen";
+                    document.getElementById("<%=hidScreenType.ClientID%>").value = "No Screen";
                 }
             }
 
             if ($('#MainContent_radFrameBronze').is(':checked'))
             {
-                document.getElementById("hidWindowFramingColour").value = "Bronze";
+                document.getElementById("<%=hidWindowFramingColour.ClientID%>").value = "Bronze";
             }
             else if ($('#MainContent_radFrameWhite').is(':checked'))
             {
-                document.getElementById("hidWindowFramingColour").value = "White";
+                document.getElementById("<%=hidWindowFramingColour.ClientID%>").value = "White";
             }
             else if ($('#MainContent_radFrameDriftwood').is(':checked'))
             {
-                document.getElementById("hidWindowFramingColour").value = "Driftwood";
+                document.getElementById("<%=hidWindowFramingColour.ClientID%>").value = "Driftwood";
             }
             else if ($('#MainContent_radFrameGrey').is(':checked'))
             {
-                document.getElementById("hidWindowFramingColour").value = "Grey";
+                document.getElementById("<%=hidWindowFramingColour.ClientID%>").value = "Grey";
             }
             else if ($('#MainContent_radFrameGreen').is(':checked'))
             {
-                document.getElementById("hidWindowFramingColour").value = "Green";
+                document.getElementById("<%=hidWindowFramingColour.ClientID%>").value = "Green";
             }
             else if ($('#MainContent_radFrameIvory').is(':checked'))
             {
-                document.getElementById("hidWindowFramingColour").value = "Ivory";
+                document.getElementById("<%=hidWindowFramingColour.ClientID%>").value = "Ivory";
             }
             else if ($('#MainContent_radFrameCherrywood').is(':checked'))
             {
-                document.getElementById("hidWindowFramingColour").value = "Cherrywood";
+                document.getElementById("<%=hidWindowFramingColour.ClientID%>").value = "Cherrywood";
             }
             else if ($('#MainContent_radFrameBlack').is(':checked'))
             {
-                document.getElementById("hidWindowFramingColour").value = "Black";
+                document.getElementById("<%=hidWindowFramingColour.ClientID%>").value = "Black";
             }
             
             ////check the usable area array in console

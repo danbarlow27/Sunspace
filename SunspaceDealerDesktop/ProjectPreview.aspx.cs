@@ -18,31 +18,31 @@ namespace SunspaceDealerDesktop
                 Session.Add("loggedIn", "userA");
             }
             
-            List<Wall> sentWalls = new List<Wall>();
-            sentWalls.Add(new Wall());
-            sentWalls[0].Length=240f;
+            //List<Wall> sentWalls = new List<Wall>();
+            //sentWalls.Add(new Wall());
+            //sentWalls[0].Length=240f;
 
-            Receiver leftReceiver = new Receiver(1f);
-            Receiver rightReceiver = new Receiver(1f);
-            Filler leftFiller = new Filler(1f);
-            Filler rightFiller = new Filler(1f);
-            List<Object> listOfDoors = new List<Object>();
+            //Receiver leftReceiver = new Receiver(1f);
+            //Receiver rightReceiver = new Receiver(1f);
+            //Filler leftFiller = new Filler(1f);
+            //Filler rightFiller = new Filler(1f);
+            //List<Object> listOfDoors = new List<Object>();
             
-            Mod aMod = new Mod();
-            List<Object> modularItems = aMod.ModularItems;
-            modularItems.Add(new Door());
-            listOfDoors.Add(aMod);
+            //Mod aMod = new Mod();
+            //List<Object> modularItems = aMod.ModularItems;
+            //modularItems.Add(new Door());
+            //listOfDoors.Add(aMod);
 
 
-            aMod = new Mod();
-            modularItems = aMod.ModularItems;
-            modularItems.Add(new Door());
-            listOfDoors.Add(aMod);
+            //aMod = new Mod();
+            //modularItems = aMod.ModularItems;
+            //modularItems.Add(new Door());
+            //listOfDoors.Add(aMod);
 
-            aMod = new Mod();
-            modularItems = aMod.ModularItems;
-            modularItems.Add(new Door());
-            listOfDoors.Add(aMod);
+            //aMod = new Mod();
+            //modularItems = aMod.ModularItems;
+            //modularItems.Add(new Door());
+            //listOfDoors.Add(aMod);
 
         }
     }

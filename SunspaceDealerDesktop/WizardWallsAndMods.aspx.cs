@@ -3568,69 +3568,125 @@ namespace SunspaceDealerDesktop
 
                 if (wallDetails[i-1, 4] == "P")
                 {
+                    float wallStartHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "StartHeight"]));
+                    float wallEndHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "EndHeight"]));
+                    float wallLeftFiller = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "LeftFiller"]));
+                    float wallRightFiller = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "RightFiller"]));
+                    float wallDoorCount = Int32.Parse(Request.Form["hidWall" + i + "DoorCount"]);
+
                     //if it has doors, do logic w/ doors, otherwise just directly go to window creation
-                    if (Int32.Parse(Request.Form["hidWall" + i + "DoorCount"]) > 0)
+                    if (wallDoorCount > 0)
                     {
-                        //If the first door position is equal to left filler, it has no workable area before it, so handle this door first.
-                        if (float.Parse(Request.Form["hidWall" + i + "Door" + 1 + "position"]) == float.Parse(Request.Form["hidWall" + i + "LeftFiller"]))
+                        //loop for each door
+                        for (int j = 1; j <= wallDoorCount; j++)
                         {
-                            //Since the door is at the start, we repeat the pattern door->area
-                            //loop for each door
-                            for (int j=1;j<=Int32.Parse(Request.Form["hidWall" + i + "DoorCount"]);j++)
+                            if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Left" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
                             {
-                                if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Left" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
-                                {
-                                    linearItems.Add(new BoxHeader(false));
-                                }
-                                //Add door
-                                if (Request.Form["hidWall" + i + "Door" + j + "type"] == "Cabana")
-                                {
-                                    linearItems.Add(getCabanaDoorFromForm(i,j));
-                                }
-                                else if (Request.Form["hidWall" + i + "Door" + j + "type"] == "French")
-                                {
-                                    linearItems.Add(getFrenchDoorFromForm(i,j));
-                                }
-                                else if (Request.Form["hidWall" + i + "Door" + j + "type"] == "Patio")
-                                {
-                                    linearItems.Add(getPatioDoorFromForm(i,j));
-                                }
-                                else //nodoor
-                                {
-                                    linearItems.Add(getNoDoorFromForm(i,j));
-                                }
-                                if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Right" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
-                                {
-                                    linearItems.Add(new BoxHeader(false));
-                                }
-                                //Add Area
-                                char[] areaStringDelimeter = { ',' };
-                                string areaString = Request.Form["hidWall" + i + "WindowInfo" + j];
-                                string[] areaInfo = areaString.Split(areaStringDelimeter, StringSplitOptions.RemoveEmptyEntries);
-
-                                //loop for 'number of windows'
-                                //for (int j = 0; j <= Int32.Parse(areaInfo[1]); j++)
-                                //{
-                                //    Mod aMod = new Mod();
-
-                                //}
+                                BoxHeader aBoxHeader = new BoxHeader(false);
+                                aBoxHeader.Width = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight,
+                                    float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]) - aBoxHeader.Length,
+                                    float.Parse(Request.Form["hidWall" + i + "Length"]));
+                                linearItems.Add(aBoxHeader);
                             }
-                        }
-                        else
-                        {
-                            //Since the door is not at the start, we repeat the pattern area->door
-                            //loop for each door
-                            for (int j=1;j<=Int32.Parse(Request.Form["hidWall" + i + "DoorCount"]);j++)
+                            //Add door
+                            if (Request.Form["hidWall" + i + "Door" + j + "type"] == "Cabana")
                             {
-                            
+                                Mod aMod = new Mod();
+                                aMod.ModType = Constants.MOD_TYPE_DOOR;
+                                aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mLength"]);
+                                aMod.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mHeight"]);
+                                aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
+                                //private bool sunshade;
+                                List<Object> modularItems = new List<Object>();
+                                modularItems.Add(getCabanaDoorFromForm(i, j));
+
+                                //The height of the wall at mod end and mod start
+                                float modStartHeight=GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
+                                float modEndHeight=GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation+aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
+
+                                //If mod height is less than wall height at start or end of mod, we have space above we need to fill
+                                if (aMod.Height < modStartHeight
+                                    ||
+                                    aMod.Height < modEndHeight)
+                                {
+                                    //Unsloped
+                                    if (modStartHeight == modEndHeight)
+                                    {
+                                        //square window
+                                    }
+                                    else
+                                    {
+                                        //trap/triangle
+                                    }
+                                }
                             }
-                        }
+                            else if (Request.Form["hidWall" + i + "Door" + j + "type"] == "French")
+                            {
+                                Mod aMod = new Mod();
+                                aMod.ModType = Constants.MOD_TYPE_DOOR;
+                                aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mLength"]);
+                                aMod.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mHeight"]);
+                                aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
+                                //private bool sunshade;
+                                List<Object> modularItems = new List<Object>();
+                                modularItems.Add(getFrenchDoorFromForm(i, j));
+                            }
+                            else if (Request.Form["hidWall" + i + "Door" + j + "type"] == "Patio")
+                            {
+                                Mod aMod = new Mod();
+                                aMod.ModType = Constants.MOD_TYPE_DOOR;
+                                aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mLength"]);
+                                aMod.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mHeight"]);
+                                aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
+                                //private bool sunshade;
+                                List<Object> modularItems = new List<Object>();
+                                modularItems.Add(getPatioDoorFromForm(i, j));
+                            }
+                            else //nodoor
+                            {
+                                Mod aMod = new Mod();
+                                aMod.ModType = Constants.MOD_TYPE_DOOR;
+                                aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mLength"]);
+                                aMod.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mHeight"]);
+                                aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
+                                //private bool sunshade;
+                                List<Object> modularItems = new List<Object>();
+                                modularItems.Add(getNoDoorFromForm(i, j));
+                            }
+
+                            if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Right" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
+                            {
+                                BoxHeader aBoxHeader = new BoxHeader(false);
+                                aBoxHeader.Width = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight,
+                                    float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]) - aBoxHeader.Length,
+                                    float.Parse(Request.Form["hidWall" + i + "Length"]));
+                                linearItems.Add(aBoxHeader);
+                            }                                
+                        }                        
                     }
                     //Now that we have all the linear items, we add to each wall
                     listOfWalls[linearPosition].LinearItems = linearItems;
                     linearPosition++;
                 }
             }
+
+            ////Add Area
+            //char[] areaStringDelimeter = { ',' };
+            //string areaString = Request.Form["hidWall" + i + "WindowInfo" + j];
+            //string[] areaInfo = areaString.Split(areaStringDelimeter, StringSplitOptions.RemoveEmptyEntries);
+
+            //Mod aMod = new Mod();
+            //aMod.ModType = "Window";
+            ////Height of the mod will be the minimum height for now, CHANGEME
+            //aMod.Height = Math.Min(float.Parse(Request.Form["hidWall" + i + "StartHeight"]), float.Parse(Request.Form["hidWall" + i + "EndHeight"]));
+            //aMod.Length = float.Parse(areaInfo[2]);
+
+            ////loop for 'number of windows'
+            //for (int k = 0; k <= Int32.Parse(areaInfo[1]); k++)
+            //{
+            //    List<Object> aModItems = new List<Object>();
+            //    Window aWindow = new Window();
+            //}
 
             //Add objects to session
             //Forward to next page
@@ -3643,13 +3699,16 @@ namespace SunspaceDealerDesktop
         protected CabanaDoor getCabanaDoorFromForm(int i, int j)
         {
             CabanaDoor aDoor = new CabanaDoor();
+            //moduleitem attributes
+            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
+            aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
+            aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
+            aDoor.ItemType = "Door";
+
             //base attributes
             aDoor.DoorType = "Cabana";
             aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
             aDoor.ScreenType = ""; //CHANGEME
-            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
-            aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
-            aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
             aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
             
             //cabana attributes
@@ -3668,13 +3727,16 @@ namespace SunspaceDealerDesktop
         protected FrenchDoor getFrenchDoorFromForm(int i, int j)
         {
             FrenchDoor aDoor = new FrenchDoor();
+            //moduleitem attributes
+            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
+            aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
+            aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
+            aDoor.ItemType = "Door";
+
             //base attributes
             aDoor.DoorType = "French";
             aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
             aDoor.ScreenType = ""; //CHANGEME
-            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
-            aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
-            aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
             aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
 
             //french attributes
@@ -3693,13 +3755,16 @@ namespace SunspaceDealerDesktop
         protected PatioDoor getPatioDoorFromForm(int i, int j)
         {
             PatioDoor aDoor = new PatioDoor();
+            //moduleitem attributes
+            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
+            aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
+            aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
+            aDoor.ItemType = "Door";
+
             //base attributes
             aDoor.DoorType = "Patio";
             aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
             aDoor.ScreenType = ""; //CHANGEME
-            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
-            aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
-            aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
             aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
             
             //patio attributes
@@ -3719,11 +3784,14 @@ namespace SunspaceDealerDesktop
         protected Door getNoDoorFromForm(int i, int j)
         {
             Door aDoor = new Door();
+            //moduleitem attributes
+            aDoor.ItemType = "Door";
+            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
+            aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
+
             //base attributes
             aDoor.DoorType = "NoDoor";
             aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
-            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
-            aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
 
             return aDoor;
         }

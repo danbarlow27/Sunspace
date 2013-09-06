@@ -5,16 +5,13 @@ using System.Web;
 
 namespace SunspaceDealerDesktop
 {
-    public class Door
+    public class Door : ModuleItem
     {
         #region Attributes
         private int itemIndex = 0;          //LinearItems Array Index (stored value: 1)
         private string doorType = null;     //Door type: Cabana, French, Patio, NoDoor (stored value: Cabana)
         private string doorStyle = null;    //Door style: Full View, Vertical Four Track, Full View Colonial, etc... (stored value: Full View)
         private string screenType = null;   //Door screen type: Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen (stored value: Better Vue Insect Screen)
-        private float fHeight = 0f;         //Door height including frame: 79.125" (stored value: 79.125)
-        private float fLength = 0f;         //Door lenth including frame: 32.125" (stored value: 32.125)
-        private string colour = null;       //Door colour: White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey (stored value: White)
         private float kickplate = 0f;       //Door kickplate height: 6" (stored value: 6)
         #endregion
 
@@ -35,7 +32,7 @@ namespace SunspaceDealerDesktop
                 itemIndex = value;
             }
         }
-        public String DoorType
+        public string DoorType
         {
             get
             {
@@ -47,7 +44,7 @@ namespace SunspaceDealerDesktop
                 doorType = value;
             }
         }              
-        public String DoorStyle
+        public string DoorStyle
         {
             get
             {
@@ -69,42 +66,6 @@ namespace SunspaceDealerDesktop
             set
             {
                 screenType = value;
-            }
-        }
-        public float FHeight
-        {
-            get
-            {
-                return fHeight;
-            }
-
-            set
-            {
-                fHeight = value;
-            }
-        }
-        public float FLength
-        {
-            get
-            {
-                return fLength;
-            }
-
-            set
-            {
-                fLength = value;
-            }
-        }
-        public string Colour
-        {
-            get
-            {
-                return colour;
-            }
-
-            set
-            {
-                colour = value;
             }
         }
         public float Kickplate

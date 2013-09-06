@@ -122,5 +122,34 @@ namespace SunspaceDealerDesktop
             }
             return sb.ToString();
         }
+
+        /// <summary>
+        /// This function will take data regarding specifications of a wall and calculate the height of the wall at a given position
+        /// along the wall.
+        /// </summary>
+        /// <param name="startHeight">The starting height of the wall.</param>
+        /// <param name="endHeight">The ending height of the wall</param>
+        /// <param name="sentPosition">The distance from the start (start height side) the position is located</param>
+        /// <param name="wallLength">The total length of this wall</param>
+        /// <returns>The height of the wall at the specified sent position</returns>
+        public static float getHeightAtPosition(float startHeight, float endHeight, float sentPosition, float wallLength)
+        {
+            float returnValue = 0f;
+
+            if (startHeight == endHeight)
+            {
+                returnValue = startHeight;
+            }
+            else
+            {
+                //slope = rise/run
+                //rise = start-end
+                //slope == (start-end)/wallLength
+                //height at position = start height + (difference = slope*position)
+                returnValue = startHeight + (((endHeight - startHeight) / wallLength) * sentPosition);
+            }
+
+            return returnValue;
+        }
     }
 }
