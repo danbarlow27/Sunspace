@@ -3609,12 +3609,11 @@ namespace SunspaceDealerDesktop
                                 string[] areaInfo = areaString.Split(areaStringDelimeter, StringSplitOptions.RemoveEmptyEntries);
 
                                 //loop for 'number of windows'
-                                for (int j = 0; j <= Int32.Parse(areaInfo[1]); j++)
-                                {
-                                    Window aWindow = new Window();
-                                    //aWindow.FrameColour = 
-                                    //linearItems.Add();
-                                }
+                                //for (int j = 0; j <= Int32.Parse(areaInfo[1]); j++)
+                                //{
+                                //    Mod aMod = new Mod();
+
+                                //}
                             }
                         }
                         else

@@ -1388,22 +1388,212 @@
             //Move window properties to hidden fields
             //document.getElementById("hidWindowType");
             //document.getElementById("hidWindowColour");
-            /*
+            if ($('#MainContent_radV4T').is(':checked')) 
+            {
+                //move v4t
+                document.getElementById("hidWindowType").value = "Vertical 4 Track";
 
-            MainContent_radV4T
-                colour
-                if mixed
-                    4 vent colours
-            MainContent_radHorizontalRoller
-                colour
-            MainContent_radFixedVinyl
-                colour
-            MainContent_radOpenWall
-            MainContent_radSolidWall
-            MainContent_radScreen
+                //check colours
+                if ($('#MainContent_radV4TClear').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "CCCC";
+                }
+                if ($('#MainContent_radV4TSmokeGrey').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "SSSS";
+                }
+                if ($('#MainContent_radV4TDarkGrey').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "DDDD";
+                }
+                if ($('#MainContent_radV4TBronze').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "BBBB";
+                }
+                if ($('#MainContent_radV4TMixed').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "";
+                    document.getElementById("hidWindowColour").value += document.getElementById("MainContent_ddlV4TVinylTint1").value;
+                    document.getElementById("hidWindowColour").value += document.getElementById("MainContent_ddlV4TVinylTint2").value;
+                    document.getElementById("hidWindowColour").value += document.getElementById("MainContent_ddlV4TVinylTint3").value;
+                    document.getElementById("hidWindowColour").value += document.getElementById("MainContent_ddlV4TVinylTint4").value;
+                }
+            }
+            else if ($('#MainContent_radHorizontalRoller').is(':checked')) 
+            {                
+                //move v4t
+                document.getElementById("hidWindowType").value = "Horizontal Roller";
 
+                //check colours
+                if ($('#MainContent_radHorizontalRollerClear').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Clear";
+                }
+                if ($('#MainContent_radHorizontalRollerSmokeGrey').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Smoke Grey";
+                }
+                if ($('#MainContent_radHorizontalRollerDarkGrey').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Dark Grey";
+                }
+                if ($('#MainContent_radHorizontalRollerBronze').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Bronze";
+                }
+            }
+            else if ($('#MainContent_radFixedVinyl').is(':checked')) 
+            {
+                //move v4t
+                document.getElementById("hidWindowType").value = "Fixed Vinyl";
+                //check colours
+                if ($('#MainContent_radFixedVinylClear').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Clear";
+                }
+                if ($('#MainContent_radFixedVinylSmokeGrey').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Smoke Grey";
+                }
+                if ($('#MainContent_radFixedVinylDarkGrey').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Dark Grey";
+                }
+                if ($('#MainContent_radFixedVinylBronze').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Bronze";
+                }
+            }
+            else if ($('#MainContent_radOpenWall').is(':checked')) 
+            {
 
-            */
+            }
+            else if ($('#MainContent_radSolidWall').is(':checked')) 
+            {
+
+            }
+            else if ($('#MainContent_radSingleSlider').is(':checked')) 
+            {
+                //move v4t
+                document.getElementById("hidWindowType").value = "Single Slider";
+                //check colours
+                if ($('#MainContent_radSingleSliderClear').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Clear";
+                }
+                if ($('#MainContent_radSingleSliderGrey').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Grey";
+                }
+                if ($('#MainContent_radSingleSliderBronze').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Bronze";
+                }
+            }
+            else if ($('#MainContent_radDoubleSlider').is(':checked')) 
+            {
+                //move v4t
+                document.getElementById("hidWindowType").value = "Horizontal 2 Track";
+                //check colours
+                if ($('#MainContent_radDoubleSliderClear').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Clear";
+                }
+                if ($('#MainContent_radDoubleSliderGrey').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Grey";
+                }
+                if ($('#MainContent_radDoubleSliderBronze').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Bronze";
+                }
+            }
+            else if ($('#MainContent_radFixedGlass').is(':checked')) 
+            {
+                //move v4t
+                if ('<%=currentModel%>' == "M400")
+                {
+                    document.getElementById("hidWindowType").value = "Fixed Glass 3\"";
+                }
+                else
+                {
+                    document.getElementById("hidWindowType").value = "Fixed Glass 2\"";
+                }
+
+                //check colours
+                if ($('#MainContent_radFixedGlassClear').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Clear";
+                }
+                if ($('#MainContent_radFixedGlassGrey').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Grey";
+                }
+                if ($('#MainContent_radFixedGlassBronze').is(':checked'))
+                {
+                    document.getElementById("hidWindowColour").value = "Bronze";
+                }
+            }
+            else if ($('#MainContent_radScreen').is(':checked')) 
+            {
+                //move v4t
+                document.getElementById("hidWindowType").value = "Screen";
+                //check colours
+                if ($('#MainContent_radBetterVueInsectScreen').is(':checked'))
+                {
+                    document.getElementById("hidScreenType").value = "Better Vue Insect Screen (Default)";
+                }
+                if ($('#MainContent_radNoSeeUms20x20Mesh').is(':checked'))
+                {
+                    document.getElementById("hidScreenType").value = "No See Ums 20 x 20 Mesh";
+                }
+                if ($('#MainContent_radSolarInsectScreening').is(':checked'))
+                {
+                    document.getElementById("hidScreenType").value = "Solar Insect Screening";
+                }
+                if ($('#MainContent_radToughScreen').is(':checked'))
+                {
+                    document.getElementById("hidScreenType").value = "Tuff Screen";
+                }
+                if ($('#MainContent_radNoScreen').is(':checked'))
+                {
+                    document.getElementById("hidScreenType").value = "No Screen";
+                }
+            }
+
+            if ($('#MainContent_radFrameBronze').is(':checked'))
+            {
+                document.getElementById("hidWindowFramingColour").value = "Bronze";
+            }
+            else if ($('#MainContent_radFrameWhite').is(':checked'))
+            {
+                document.getElementById("hidWindowFramingColour").value = "White";
+            }
+            else if ($('#MainContent_radFrameDriftwood').is(':checked'))
+            {
+                document.getElementById("hidWindowFramingColour").value = "Driftwood";
+            }
+            else if ($('#MainContent_radFrameGrey').is(':checked'))
+            {
+                document.getElementById("hidWindowFramingColour").value = "Grey";
+            }
+            else if ($('#MainContent_radFrameGreen').is(':checked'))
+            {
+                document.getElementById("hidWindowFramingColour").value = "Green";
+            }
+            else if ($('#MainContent_radFrameIvory').is(':checked'))
+            {
+                document.getElementById("hidWindowFramingColour").value = "Ivory";
+            }
+            else if ($('#MainContent_radFrameCherrywood').is(':checked'))
+            {
+                document.getElementById("hidWindowFramingColour").value = "Cherrywood";
+            }
+            else if ($('#MainContent_radFrameBlack').is(':checked'))
+            {
+                document.getElementById("hidWindowFramingColour").value = "Black";
+            }
+            
             ////check the usable area array in console
             //for (var i=0;i<wallAreaArray.length-existingWallCount;i++)
             //{
@@ -1690,6 +1880,8 @@
     <input id="hidRoomWidth" type="hidden" runat="server" />
     <input id="hidWindowType" type="hidden" runat="server" />
     <input id="hidWindowColour" type="hidden" runat="server" />
+    <input id="hidWindowFramingColour" type="hidden" runat="server" />
+    <input id="hidScreenType" type="hidden" runat="server" />
 
     <%-- end hidden fields --%>    
 
