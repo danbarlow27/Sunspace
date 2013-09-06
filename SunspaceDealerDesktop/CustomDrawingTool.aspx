@@ -130,7 +130,7 @@
 
 
         /**** ARRAY VARIABLES ****/
-        var removed = new Array();      //an array of removed lines, for use in "redo" function
+        //var removed = new Array();      //an array of removed lines, for use in "redo" function
         var coordList = new Array();    //an array of lines drawn
 
 
@@ -282,7 +282,7 @@
             d3.selectAll("#P").remove(); //remove proposed walls
             startNewWall = true;         //let the user begin another wall anywhere on the grid
             coordList = new Array();     //clear the list of lines
-            removed = new Array();       //clear the list of removed lines
+            //removed = new Array();       //clear the list of removed lines
             if (gable) {
                 wallType = WALL_TYPE.GABLE;
                 log.innerHTML = "Please draw a gable post.\n\nPress 'E' to end a line.\n\n";
