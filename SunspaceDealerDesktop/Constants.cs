@@ -555,5 +555,10 @@ namespace SunspaceDealerDesktop
             //transom vinyl tints by model
             //frame colours by model, is it the same as above?
         #endregion
+
+        #region Mods
+        public const string MOD_TYPE_DOOR = "Door";
+        public const string MOD_TYPE_WINDOW = "Window";
+        #endregion
     }
 }
