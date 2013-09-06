@@ -1080,6 +1080,7 @@
             else
             {
                 log.innerHTML = "Your stuff is valid, congrats bro guy!";
+                return true;
             }
 
             if (!$('#<%=chkStandalone.ClientID%>').is(':checked'))
