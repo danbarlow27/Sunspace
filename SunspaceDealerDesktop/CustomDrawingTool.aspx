@@ -897,7 +897,11 @@
                                 if (findLineEndTouch(currentLine, coordList[j]) || findLinePerpendicularTouch(currentLine, coordList[j])) 
                                 {
                                     existingTouches++;
-                                    valid++;
+                                    if (existingTouches == 2) {
+                                        valid++;
+                                        existingTouches = 0;
+                                        break;
+                                    }
                                 }
                             }
                             else if (coordList[j].id == "P") //next wall is proposed
