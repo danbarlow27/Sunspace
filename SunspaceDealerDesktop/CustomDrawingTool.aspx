@@ -835,8 +835,14 @@
 
                 for (var j = 0; j < coordList.length; j++)
                 {
+
                     if (currentLine != coordList[j])
                     {
+                        console.log("\n\nCurrentWall:" + currentLine.id + ", Axis:" + findLineAxis(currentLine)
+                        + "\ncoordList[j]Wall:" + coordList[j].id + ", Axis:" + findLineAxis(coordList[j]));
+
+                        console.log("EndToEnd:" + findLineEndTouch(currentLine, coordList[j]) + ", perpend:" + findLinePerpendicularTouch(currentLine, coordList[j]));
+
                         if (currentLine.id == "E") //current wall is existing
                         {
                             if (coordList[j].id == "E") //next wall is existing
@@ -888,6 +894,14 @@
                                     if (findLineEndTouch(currentLine, coordList[j]) || findLinePerpendicularTouch(currentLine, coordList[j]))
                                     {
                                         proposedTouchingExisting++;
+                                        proposedTouches++;
+
+                                        if (parseInt(proposedTouches) == 2)
+                                        {
+                                            proposedTouches = 0;
+                                            valid++;
+                                            break;
+                                        }
                                     }
                                 }
                                 else if (findLineAxis(currentLine) == "H" && findLineAxis(coordList[j]) == "V") //current wall is horizontal, existing wall is vertical
@@ -896,6 +910,14 @@
                                     if (findLineEndTouch(currentLine, coordList[j]) || findLinePerpendicularTouch(currentLine, coordList[j]))
                                     {
                                         proposedTouchingExisting++;
+                                        proposedTouches++;
+
+                                        if (parseInt(proposedTouches) == 2)
+                                        {
+                                            proposedTouches = 0;
+                                            valid++;
+                                            break;
+                                        }
                                     }
                                 }
                                 else if (findLineAxis(currentLine) == "D" && findLineAxis(coordList[j]) == "D") //current and existing walls are both diagonals
@@ -903,6 +925,14 @@
                                     if (findLinePerpendicularTouch(currentLine, coordList[j])) //this proposed wall touches somewhere on the existing wall
                                     {
                                         proposedTouchingExisting++;
+                                        proposedTouches++;
+
+                                        if (parseInt(proposedTouches) == 2)
+                                        {
+                                            proposedTouches = 0;
+                                            valid++;
+                                            break;
+                                        }
                                     }
                                 }
                             }
@@ -912,12 +942,14 @@
                                 if (findLineEndTouch(currentLine, coordList[j]))
                                 {
                                     //find slope of lines, if equal it is an error, that's one wall not two silly pants
-                                    if (!((parseFloat(currentLine.y2) - parseFloat(currentLine.y1)) / (parseFloat(currentLine.x2) - parseFloat(currentLine.x1))) == 
+                                    if (((parseFloat(currentLine.y2) - parseFloat(currentLine.y1)) / (parseFloat(currentLine.x2) - parseFloat(currentLine.x1))) != 
                                         ((parseFloat(coordList[j].y2) - parseFloat(coordList[j].y1)) / (parseFloat(coordList[j].x2) - parseFloat(coordList[j].x1))))
                                     {
                                         proposedTouches++;
 
-                                        if (parseInt(proposedTouches) == 2) {
+                                        if (parseInt(proposedTouches) == 2)
+                                        {
+                                            proposedTouches = 0;
                                             valid++;
                                             break;
                                         }
@@ -936,6 +968,7 @@
 
                                         if (parseInt(proposedTouches) == 2)
                                         {
+                                            proposedTouches = 0;
                                             valid++;
                                             break;
                                         }
@@ -947,6 +980,7 @@
 
                                         if (parseInt(proposedTouches) == 2)
                                         {
+                                            proposedTouches = 0;
                                             valid++;
                                             break;
                                         }
@@ -968,6 +1002,7 @@
 
                                         if (parseInt(gableTouches) == 2)
                                         {
+                                            gableTouches = 0;
                                             valid++;
                                             break;
                                         }
@@ -977,6 +1012,8 @@
                         }
                     }
                 }
+
+                console.log(valid);
             }
 
             for (var i = 0; i < coordList.length; i++)
@@ -987,19 +1024,13 @@
                 }
             }
 
-            if (parseInt(valid) != (coordList.length + 1))
+            if (parseInt(valid) != coordList.length)
             {
                 log.innerHTML += "Your walls do not attach in a valid way.<br/>";
             }
-
-            if (parseInt(existingTouches) == 0)
+            else
             {
-                log.innerHTML += "Your existing walls do not connect to enough other walls.<br/>";
-            }
-
-            if (parseInt(proposedTouches) < 2)
-            {
-                log.innerHTML += "Your proposed walls do not connect to enough other walls.<br/>";
+                log.innerHTML = "Your stuff is valid, congrats bro guy!";
             }
 
             if (parseInt(proposedTouchingExisting) != 2)
@@ -1017,7 +1048,7 @@
             }
             else
             {
-                if ((parseInt(proposedTouchingGable) != (2 * parseInt(gablesDrawn))) || (parseInt(gableTouches) != (2 * parseInt(gablesDrawn))))
+                if (parseInt(proposedTouchingGable) != (2 * parseInt(gablesDrawn)))
                 {
                     log.innerHTML += "Your gable posts do not have the required number of proposed walls touching.<br/>";
                 }
