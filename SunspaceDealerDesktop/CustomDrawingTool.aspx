@@ -40,13 +40,13 @@
                 </li>
 
                 <!--Undo button to undo the last line drawn-->
-                <li><input class="btnSubmit" type="button" value ="Undo" onclick="undo(true)" style="width:150px"/></li>
+               <%-- <li><input id="btnUndo" class="btnDisabled" type="button" value ="Undo" onclick="undo(true)" style="width:150px" disabled/></li>--%>
 
                 <!--Redo button to redo the last line drawn-->
-                <li><input class="btnSubmit" type="button" value ="Redo" onclick="redo()" style="width:150px"/></li>
+                <!-- <li><input id="btnRedo" class="btnSubmit" type="button" value ="Redo" onclick="redo()" style="width:150px"/></li> -->
 
                 <!--Clear Canvas button which clears the current canvas-->
-                <li><input class="btnSubmit" type="button" value ="Clear Canvas" onclick ="clearCanvas()" style="width:150px"/></li>
+                <li><input id="btnClear" class="btnDisabled" type="button" value ="Clear Canvas" onclick ="clearCanvas()" style="width:150px" disabled/></li>
 
                 <!--Done button which ends the current operations (i.e. Done Existing Walls, Done Proposed Walls, Done Drawing)-->
                 <li><input id="btnDone" class="btnSubmit" type="button" value ="" onclick="btnDoneOnClick()" style="width:150px"/></li>
@@ -186,11 +186,22 @@
         function btnDoneOnClick() {
 
             if (doneButton.value === "Done Gable Post") {
-                if (coordList.length > 0 && coordList[coordList.length - 1].id === WALL_TYPE.GABLE) {
-                    doneButton.value = "Done Existing Walls";
-                    wallType = WALL_TYPE.EXISTING;
-                    startNewWall = true;
-                    log.innerHTML = "Please draw your existing wall. \nPress \"E\" to end a line.";
+                if (coordList.length > 0 && coordList[coordList.length - 1].id === WALL_TYPE.GABLE)
+                {
+                    if ($('#<%=chkStandalone.ClientID%>').is(':checked'))
+                    {
+                        doneButton.value = "Done Proposed Walls";   //change the name (value) of the button
+                        wallType = WALL_TYPE.PROPOSED;              //change wall type                    
+                        startNewWall = true;                        //reset click count
+                        log.innerHTML = "Please draw your proposed wall. \nPress \"E\" to end a line.";
+                    }
+                    else
+                    {
+                        doneButton.value = "Done Existing Walls";
+                        wallType = WALL_TYPE.EXISTING;
+                        startNewWall = true;
+                        log.innerHTML = "Please draw your existing wall. \nPress \"E\" to end a line.";
+                    }
                 }
                 else {
                     //show error message
@@ -201,13 +212,6 @@
             else if (doneButton.value === "Done Existing Walls") {
                 //if there are walls drawn and first wall is wall type "E"
                 if (coordList.length > 0 && coordList[coordList.length-1].id === WALL_TYPE.EXISTING) {
-                    doneButton.value = "Done Proposed Walls";   //change the name (value) of the button
-                    wallType = WALL_TYPE.PROPOSED;              //change wall type                    
-                    startNewWall = true;                        //reset click count
-                    log.innerHTML = "Please draw your proposed wall. \nPress \"E\" to end a line.";
-                }
-                    //if 0 walls drawn, and standalone is checked, its valid
-                else if (standAlone == true) {
                     doneButton.value = "Done Proposed Walls";   //change the name (value) of the button
                     wallType = WALL_TYPE.PROPOSED;              //change wall type                    
                     startNewWall = true;                        //reset click count
@@ -281,11 +285,19 @@
             removed = new Array();       //clear the list of removed lines
             if (gable) {
                 wallType = WALL_TYPE.GABLE;
+                log.innerHTML = "Please draw a gable post.\n\nPress 'E' to end a line.\n\n";
             }
             else {
                 wallType = (!standAlone) ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED; //reset the wall type to default
+                log.innerHTML += "Please draw an existing wall.\n\nPress 'E' to end a line.\n\n";
             }
             setButtonValue();            //set button value
+            //document.getElementById("btnUndo").disabled = true;
+            document.getElementById("btnClear").disabled = true;
+            //$('#btnUndo').addClass('btnDisabled');
+            //$('#btnUndo').removeClass('btnSubmit');
+            $('#btnClear').addClass('btnDisabled');
+            $('#btnClear').removeClass('btnSubmit');
         }
 
         /**
@@ -314,70 +326,91 @@
         *Undo function; removes last line drawn
         *@param toBeRemoved - true or false whether we want to add the last element to the removed line list
         */
-        function undo(addToRemovedList) {
+        //function undo(addToRemovedList) {
 
-            //if last line is removed, enable user to draw a line anywhere
-            if (coordList.length === 0)
-                startNewWall = true;
-            else { //set the first coordinates of the next line to the last coordinates of the previous line
-                //remove previously drawn walls
-                d3.selectAll("#G").remove();
-                d3.selectAll("#E").remove(); //remove existing walls
-                d3.selectAll("#P").remove(); //remove proposed walls
+        //    //if last line is removed, enable user to draw a line anywhere
+        //    if (coordList.length === 0)
+        //        startNewWall = true;
+        //    else { //set the first coordinates of the next line to the last coordinates of the previous line
+        //        //remove previously drawn walls
+        //        d3.selectAll("#G").remove();
+        //        d3.selectAll("#E").remove(); //remove existing walls
+        //        d3.selectAll("#P").remove(); //remove proposed walls
 
-                //if the element needs to be added to the removed list
-                if (addToRemovedList)
-                    removed.push(coordList[coordList.length - 1]); //push it
+        //        //if the element needs to be added to the removed list
+        //        if (addToRemovedList)
+        //            removed.push(coordList[coordList.length - 1]); //push it
 
-                setButtonValue();   //set the appropriate button value                
-                coordList.pop();    //delete last line from the list
+                           
+        //        coordList.pop();    //delete last line from the list
+        //        console.log(coordList.length);
+        //        if (coordList.length != null)
+        //        {
+        //        //go through the list of lines, set wall type, and draw the lines
+        //            for (var i = 0; i <= coordList.length - 1; i++) {
+        //                wallType = (coordList[i].id === WALL_TYPE.GABLE) ? WALL_TYPE.GABLE :
+        //                    (coordList[i].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
+        //                    WALL_TYPE.PROPOSED;
+        //                drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false);
+        //            }
 
-                //go through the list of lines, set wall type, and draw the lines
-                for (var i = 0; i <= coordList.length - 1; i++) {
-                    wallType = (coordList[i].id === WALL_TYPE.GABLE) ? WALL_TYPE.GABLE :
-                        (coordList[i].id === WALL_TYPE.EXISTING) ? WALL_TYPE.EXISTING :
-                        WALL_TYPE.PROPOSED;
-                    drawLine(coordList[i].x1, coordList[i].y1, coordList[i].x2, coordList[i].y2, false);
-                }
+        //            if (wallType != WALL_TYPE.GABLE)
+        //            {
+        //                if (coordList.length > 0)
+        //                {
+        //                    coordList[coordList.length].x1 = coordList[coordList.length - 1].x2;    //Sets the first X value of the new line to the second X value of the last line in the coordList array
+        //                    coordList[coordList.length].y1 = coordList[coordList.length - 1].y2;    //Sets the first Y value of the new line to the second Y value of the last line in the coordList array
+        //                }
+        //                else
+        //                {
+        //                    coordList[0].id = WALL_TYPE.GABLE;
+        //                    doneButton.value = "Done Gable Post";
+        //                    log.innerHTML += "Please draw a gable post.\n\nPress 'E' to end a line.\n\n";
+        //                    startNewWall = true;
+        //                    document.getElementById("btnUndo").disabled = true;
+        //                    document.getElementById("btnClear").disabled = true;
+        //                    $('#btnUndo').addClass('btnDisabled');
+        //                    $('#btnUndo').removeClass('btnSubmit');
+        //                    $('#btnClear').addClass('btnDisabled');
+        //                    $('#btnClear').removeClass('btnSubmit');
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            startNewWall = true;
+        //        }
+        //        setButtonValue();   //set the appropriate button value
+        //    }
+        //}
 
-                if (wallType != WALL_TYPE.GABLE) {
-                    x1 = coordList[coordList.length - 1].x2;    //Sets the first X value of the new line to the second X value of the last line in the coordList array
-                    y1 = coordList[coordList.length - 1].y2;    //Sets the first Y value of the new line to the second Y value of the last line in the coordList array
-                }
-                else {
-                    startNewWall = true;
-                }
-            }
+        ///**
+        //*redo
+        //*Redo function; redraws the last line undone
+        //*/
+        //function redo() {
 
-        }
+        //    //If an item exist within the removed array proceed with logic
+        //    if (removed.length != 0) {
 
-        /**
-        *redo
-        *Redo function; redraws the last line undone
-        */
-        function redo() {
+        //        //Change the wall type based on the id of the last element in the removed array
+        //        wallType = (removed[removed.length - 1].id === WALL_TYPE.GABLE)
+        //            ? WALL_TYPE.GABLE : (removed[removed.length - 1].id === WALL_TYPE.EXISTING)
+        //            ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED;
 
-            //If an item exist within the removed array proceed with logic
-            if (removed.length != 0) {
+        //        coordList.push(removed[removed.length - 1]); //Add the last item in the removed array to the coordList array
+        //        removed.pop(); //Remove the last item in the removed array
 
-                //Change the wall type based on the id of the last element in the removed array
-                wallType = (removed[removed.length - 1].id === WALL_TYPE.GABLE)
-                    ? WALL_TYPE.GABLE : (removed[removed.length - 1].id === WALL_TYPE.EXISTING)
-                    ? WALL_TYPE.EXISTING : WALL_TYPE.PROPOSED;
+        //        //Draw the last element in the coordList array
+        //        drawLine(coordList[coordList.length - 1].x1, coordList[coordList.length - 1].y1, coordList[coordList.length - 1].x2, coordList[coordList.length - 1].y2, false);
 
-                coordList.push(removed[removed.length - 1]); //Add the last item in the removed array to the coordList array
-                removed.pop(); //Remove the last item in the removed array
+        //        //Set the initial coordinates to the x2 and y2 coordinates of the last element in the coordList array
+        //        coordList[coordList.length - 1].x1 = coordList[coordList.length - 1].x2;    //Sets the first X value of the new line to the second X value of the last line in the coordList array
+        //        coordList[coordList.length - 1].y1 = coordList[coordList.length - 1].y2;    //Sets the first Y value of the new line to the second Y value of the last line in the coordList array
 
-                //Draw the last element in the coordList array
-                drawLine(coordList[coordList.length - 1].x1, coordList[coordList.length - 1].y1, coordList[coordList.length - 1].x2, coordList[coordList.length - 1].y2, false);
-
-                //Set the initial coordinates to the x2 and y2 coordinates of the last element in the coordList array
-                x1 = coordList[coordList.length - 1].x2;    //Sets the first X value of the new line to the second X value of the last line in the coordList array
-                y1 = coordList[coordList.length - 1].y2;    //Sets the first Y value of the new line to the second Y value of the last line in the coordList array
-
-                setButtonValue(); //Call setButtonValue function to set the button text
-            }
-        }
+        //        setButtonValue(); //Call setButtonValue function to set the button text
+        //    }
+        //}
 
         /**
         *drawGrid
@@ -544,6 +577,20 @@
             //If logic to change line id on mousemove event, if mouseMove is true
             if (mouseMove)
                 line.attr("id", "mouseMoveLine");
+
+            //if (document.getElementById("btnUndo").disabled == true)
+            //{
+            //    document.getElementById("btnUndo").disabled = false;
+            //    $('#btnUndo').addClass('btnSubmit');
+            //    $('#btnUndo').removeClass('btnDisabled');
+            //}
+
+            if (document.getElementById("btnClear").disabled == true)
+            {
+                document.getElementById("btnClear").disabled = false;
+                $('#btnClear').addClass('btnSubmit');
+                $('#btnClear').removeClass('btnDisabled');
+            }
 
             //Return the line
             return line;
@@ -1012,8 +1059,6 @@
                         }
                     }
                 }
-
-                console.log(valid);
             }
 
             for (var i = 0; i < coordList.length; i++)
@@ -1026,31 +1071,34 @@
 
             if (parseInt(valid) != coordList.length)
             {
-                log.innerHTML += "Your walls do not attach in a valid way.<br/>";
+                log.innerHTML += "Your walls do not attach in a valid way.\n";
             }
             else
             {
                 log.innerHTML = "Your stuff is valid, congrats bro guy!";
             }
 
-            if (parseInt(proposedTouchingExisting) != 2)
+            if (!$('#<%=chkStandalone.ClientID%>').is(':checked'))
             {
-                log.innerHTML += "You require two proposed walls that attach to existing walls.<br/>";
+                if (parseInt(proposedTouchingExisting) != 2)
+                {
+                    log.innerHTML += "You require two proposed walls that attach to existing walls.\n";
+                }
             }
             
             if (parseInt(gablesDrawn) == 0)
             {
-                log.innerHTML += "You have not drawn any gable posts.<br/>";
+                log.innerHTML += "You have not drawn any gable posts.\n";
             }
             else if (parseInt(gablesDrawn) > 2)
             {
-                log.innerHTML += "You have drawn too many gable posts.<br/>";
+                log.innerHTML += "You have drawn too many gable posts.\n";
             }
             else
             {
                 if (parseInt(proposedTouchingGable) != (2 * parseInt(gablesDrawn)))
                 {
-                    log.innerHTML += "Your gable posts do not have the required number of proposed walls touching.<br/>";
+                    log.innerHTML += "Your gable posts do not have the required number of proposed walls touching.\n";
                 }
             }
 
