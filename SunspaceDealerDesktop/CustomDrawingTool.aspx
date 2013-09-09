@@ -228,12 +228,15 @@
 
                 //if its a valid sunroom
                 if (gable == false) {
-                    console.log('Calling Completed');
-                    if (sunroomCompleted()) {
-                        doneButton.value = "Done Drawing";  //change the name (value) of the button                    
-                        wallType = WALL_TYPE.PROPOSED;      //change wall type                    
-                        startNewWall = true;                //reset click count
-                        log.innerHTML = "If you are done drawing, please click \"Done Drawing\". \n\nIf you are ready to proceed to the next page click \"Submit Drawing\"";
+                    if (validateStudio())
+                    {
+                        console.log('Calling Completed');
+                        if (sunroomCompleted()) {
+                            doneButton.value = "Done Drawing";  //change the name (value) of the button                    
+                            wallType = WALL_TYPE.PROPOSED;      //change wall type                    
+                            startNewWall = true;                //reset click count
+                            log.innerHTML = "If you are done drawing, please click \"Done Drawing\". \n\nIf you are ready to proceed to the next page click \"Submit Drawing\"";
+                        }
                     }
                 }
                 else {
@@ -281,6 +284,8 @@
         *Clear canvas function; clears canvas of all lines, resets arrays to null
         */
         function clearCanvas() {
+            log.innerHTML = "";
+
             d3.selectAll("#G").remove(); //remove existing walls
             d3.selectAll("#E").remove(); //remove existing walls
             d3.selectAll("#P").remove(); //remove proposed walls
@@ -772,8 +777,157 @@
         *@param lastWall - passes true or false whether the line being verified is the last wall
         *@return isValid - true or false depending on whether the wall is drawn properly or not
         */
-        function validateNotStandAlone(lastWall) {
+        function validateStudio()
+        {
+            log.innerHTML = "";
 
+            var valid = 0; //must end up equal to amount of lines in coordlist
+            var proposedTouchingExisting = 0; // must be 2 at end of validation
+
+            for (var i = 0; i < coordList.length; i++) {
+                var currentLine = coordList[i];
+                var proposedTouches = 0; // whenever this variable equals 2, break the secondary loop
+                var existingTouches = 0; // whenever this variable equals 2, break the secondary loop
+
+                for (var j = 0; j < coordList.length; j++) {
+
+                    if (currentLine != coordList[j]) {
+                        if (currentLine.id == "E") //current wall is existing
+                        {
+                            if (coordList[j].id == "E") //next wall is existing
+                            {
+                                if (findLineEndTouch(currentLine, coordList[j]) || findLinePerpendicularTouch(currentLine, coordList[j])) {
+                                    existingTouches++;
+                                    if (existingTouches == 2) {
+                                        valid++;
+                                        existingTouches = 0;
+                                        break;
+                                    }
+                                }
+                            }
+                            else if (coordList[j].id == "P") //next wall is proposed
+                            {
+                                if (findLineAxis(currentLine) == "V" && findLineAxis(coordList[j]) == "H") //current wall is vertical, proposed wall is horizontal
+                                {
+                                    if (findLineEndTouch(currentLine, coordList[j]) || findLinePerpendicularTouch(currentLine, coordList[j])) //this proposed wall touches somewhere on the existing wall
+                                    {
+                                        valid++;
+                                        existingTouches++;
+                                        break;
+                                    }
+                                }
+                                else if (findLineAxis(currentLine) == "H" && findLineAxis(coordList[j]) == "V") //current wall is horizontal, proposed wall is vertical
+                                {
+                                    if (findLineEndTouch(currentLine, coordList[j]) || findLinePerpendicularTouch(currentLine, coordList[j])) //this proposed wall touches somewhere on the existing wall
+                                    {
+                                        valid++;
+                                        existingTouches++;
+                                        break;
+                                    }
+                                }
+                                else if (findLineAxis(currentLine) == "D" && findLineAxis(coordList[j]) == "D") //current and proposed walls are both diagonals
+                                {
+                                    if (findLineEndTouch(currentLine, coordList[j]) || findLinePerpendicularTouch(currentLine, coordList[j])) //this proposed wall touches somewhere on the existing wall
+                                    {
+                                        valid++;
+                                        existingTouches++;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else if (currentLine.id == "P") //current wall is proposed
+                        {
+                            if (coordList[j].id == "E") //next wall is existing
+                            {
+                                if (findLineAxis(currentLine) == "V" && findLineAxis(coordList[j]) == "H") //current wall is vertical, existing wall is horizontal
+                                {
+                                    //does the proposed wall touch anywhere on this existing wall?
+                                    if (findLineEndTouch(currentLine, coordList[j]) || findLinePerpendicularTouch(currentLine, coordList[j])) {
+                                        proposedTouchingExisting++;
+                                        proposedTouches++;
+
+                                        if (parseInt(proposedTouches) == 2) {
+                                            proposedTouches = 0;
+                                            valid++;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if (findLineAxis(currentLine) == "H" && findLineAxis(coordList[j]) == "V") //current wall is horizontal, existing wall is vertical
+                                {
+                                    //does the proposed wall touch anywhere on this existing wall?
+                                    if (findLineEndTouch(currentLine, coordList[j]) || findLinePerpendicularTouch(currentLine, coordList[j])) {
+                                        proposedTouchingExisting++;
+                                        proposedTouches++;
+
+                                        if (parseInt(proposedTouches) == 2) {
+                                            proposedTouches = 0;
+                                            valid++;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if (findLineAxis(currentLine) == "D" && findLineAxis(coordList[j]) == "D") //current and existing walls are both diagonals
+                                {
+                                    if (findLinePerpendicularTouch(currentLine, coordList[j])) //this proposed wall touches somewhere on the existing wall
+                                    {
+                                        proposedTouchingExisting++;
+                                        proposedTouches++;
+
+                                        if (parseInt(proposedTouches) == 2) {
+                                            proposedTouches = 0;
+                                            valid++;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            else if (coordList[j].id == "P") //next wall is proposed
+                            {
+                                //do these proposed walls meet?
+                                if (findLineEndTouch(currentLine, coordList[j])) {
+                                    //find slope of lines, if equal it is an error, that's one wall not two silly pants
+                                    if (((parseFloat(currentLine.y2) - parseFloat(currentLine.y1)) / (parseFloat(currentLine.x2) - parseFloat(currentLine.x1))) !=
+                                        ((parseFloat(coordList[j].y2) - parseFloat(coordList[j].y1)) / (parseFloat(coordList[j].x2) - parseFloat(coordList[j].x1)))) {
+                                        proposedTouches++;
+
+                                        if (parseInt(proposedTouches) == 2) {
+                                            proposedTouches = 0;
+                                            valid++;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (parseInt(valid) != coordList.length) {
+                log.innerHTML += "Your walls do not attach in a valid way.\n\n";
+            }
+
+            if (!$('#<%=chkStandalone.ClientID%>').is(':checked')) {
+                if (parseInt(proposedTouchingExisting) != 2) {
+                    log.innerHTML += "You require two proposed walls that attach to existing walls at 90 degree angles.\n\n";
+                }
+            }
+
+            if (log.innerHTML == "")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        function validateNotStandAlone(lastWall)
+        {
+            
             //Array of calculated distances to determine the shortest distance
             var distanceBetweenLines = new Array();
 
@@ -841,7 +995,7 @@
                 undo(false);    //Call to undo function
 
                 if (lastWall) {
-                    //Sraw the snapped line
+                    //Draw the snapped line
                     var line = drawLine(intercept.x1, intercept.y1, distanceBetweenLines[shortestDistanceWallNumber].x, distanceBetweenLines[shortestDistanceWallNumber].y, false);
                 }
                 else {
@@ -898,11 +1052,6 @@
 
                     if (currentLine != coordList[j])
                     {
-                        console.log("\n\nCurrentWall:" + currentLine.id + ", Axis:" + findLineAxis(currentLine)
-                        + "\ncoordList[j]Wall:" + coordList[j].id + ", Axis:" + findLineAxis(coordList[j]));
-
-                        console.log("EndToEnd:" + findLineEndTouch(currentLine, coordList[j]) + ", perpend:" + findLinePerpendicularTouch(currentLine, coordList[j]));
-
                         if (currentLine.id == "E") //current wall is existing
                         {
                             if (coordList[j].id == "E") //next wall is existing
@@ -1097,7 +1246,7 @@
             {
                 if (parseInt(proposedTouchingExisting) != 2)
                 {
-                    log.innerHTML += "You require two proposed walls that attach to existing walls.\n\n";
+                    log.innerHTML += "You require two proposed walls that attach to existing walls at 90 degree angles.\n\n";
                 }
             }
             
@@ -1113,13 +1262,13 @@
             {
                 if (parseInt(proposedTouchingGable) != (2 * parseInt(gablesDrawn)))
                 {
-                    log.innerHTML += "Your gable posts do not have the required number of proposed walls touching.\n\n";
+                    log.innerHTML += "Your gable posts do not have the required number of proposed walls touching horizontally.\n\n";
                 }
             }
 
             if (goodParallel == false)
             {
-                log.innerHTML += "Your gable sunroom must have 2 parallel walls to support the roof. Please try again.\n\n";
+                log.innerHTML += "Your gable sunroom must have 2 parallel side walls to support the roof. Please try again.\n\n";
             }
 
             if (log.innerHTML == "")
