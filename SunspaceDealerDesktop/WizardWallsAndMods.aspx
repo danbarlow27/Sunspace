@@ -1100,6 +1100,9 @@
         //set labels 
         function WindowPreparation()
         {
+            //First we call reset hidden to be sure we don't duplicate entries
+            resetHiddens();
+
             var currentLocation=0;
             var modLocation=0;
             var areaPositionCounter=0;
@@ -1307,7 +1310,7 @@
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "type\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "type\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "vinylTint\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "vinylTint\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "width\" >";
-                                document.getElementById("MainContent_hiddenFieldsDiv").innerHTML += html;
+                                document.getElementById("MainContent_removableHiddenFieldsDiv").innerHTML += html;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
@@ -1348,7 +1351,7 @@
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "type\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "type\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "vinylTint\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "vinylTint\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "width\" >";
-                                document.getElementById("MainContent_hiddenFieldsDiv").innerHTML += html;
+                                document.getElementById("MainContent_removableHiddenFieldsDiv").innerHTML += html;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
@@ -1384,7 +1387,7 @@
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "style\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "style\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "type\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "type\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "width\" >";
-                                document.getElementById("MainContent_hiddenFieldsDiv").innerHTML += html;
+                                document.getElementById("MainContent_removableHiddenFieldsDiv").innerHTML += html;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
@@ -1410,7 +1413,7 @@
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "position\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "position\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "type\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "type\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "width\" >";
-                                document.getElementById("MainContent_hiddenFieldsDiv").innerHTML += html;
+                                document.getElementById("MainContent_removableHiddenFieldsDiv").innerHTML += html;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "height").value = walls[i].mods[j].height;
@@ -1643,6 +1646,11 @@
             //        console.log(wallAreaArray[i][j]);
             //    }
             //}
+        }
+
+        function resetHiddens()
+        {
+            $('#MainContent_removableHiddenFieldsDiv').empty();
         }
     </script>
     <%-- End hidden div populating scripts --%>
@@ -1913,6 +1921,7 @@
 
     <%-- hiddenFieldsDiv is used to store dynamically generated hidden fields from codebehind --%>
     <div id="hiddenFieldsDiv" runat="server"></div>
+    <div id="removableHiddenFieldsDiv" runat="server"></div>
     <div id="hiddenWallInfo" runat="server"></div>
 
     <%-- <input id="hidSoffitLength" type="hidden" runat="server" /> --%>

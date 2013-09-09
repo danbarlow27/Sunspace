@@ -256,6 +256,15 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl hiddenFieldsDiv;
         
         /// <summary>
+        /// removableHiddenFieldsDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl removableHiddenFieldsDiv;
+        
+        /// <summary>
         /// hiddenWallInfo control.
         /// </summary>
         /// <remarks>
