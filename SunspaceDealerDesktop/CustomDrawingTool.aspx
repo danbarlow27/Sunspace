@@ -187,7 +187,41 @@
 
             if (doneButton.value === "Done Gable Post") {
                 if (coordList.length > 0 && coordList[coordList.length - 1].id === WALL_TYPE.GABLE)
-                {
+                {                    
+                    if (parseInt(coordList.length) == 2)
+                    {
+                        var firstGable;
+                        var secondGable;
+
+                        for (var i = 0; i < coordList.length; i++)
+                        {
+                            if (firstGable == null)
+                            {
+                                firstGable = coordList[i];
+                            }
+                            else
+                            {
+                                secondGable = coordList[i];
+                            }
+                        }                    
+
+                        if (findLineAxis(firstGable) != findLineAxis(secondGable))
+                        {
+                            log.innerHTML = "Your gable posts must be drawn on the same axis.\n\n";
+                            return;
+                        }
+                        else if (((parseFloat(firstGable.y1) != parseFloat(secondGable.y1) && parseFloat(firstGable.y2) != parseFloat(secondGable.y2)) && findLineAxis(firstGable) == "V") ||
+                            ((parseFloat(firstGable.x1) != parseFloat(secondGable.x1) && parseFloat(firstGable.x2) != parseFloat(secondGable.x2)) && findLineAxis(firstGable) == "H"))
+                        {
+                            log.innerHTML = "Your gable posts must be the same length and relative position.\n\n";
+                            return;
+                        }
+                    }
+                    else if (parseInt(coordList.length) > 2) {
+                        log.innerHTML = "You have drawn too many gable posts.\n\n";
+                        return;
+                    }
+
                     if ($('#<%=chkStandalone.ClientID%>').is(':checked'))
                     {
                         doneButton.value = "Done Proposed Walls";   //change the name (value) of the button
@@ -1048,10 +1082,14 @@
                 var gableTouches = 0; // must be 2 for each gable drawn at end of secondary loop
 
                 for (var j = 0; j < coordList.length; j++)
-                {
-
+                {                    
                     if (currentLine != coordList[j])
                     {
+                        //console.log("\n\nCurrentWall:" + currentLine.id + ", Axis:" + findLineAxis(currentLine)
+                        //+ "\ncoordList[j]Wall:" + coordList[j].id + ", Axis:" + findLineAxis(coordList[j]));
+
+                        //console.log("EndToEnd:" + findLineEndTouch(currentLine, coordList[j]) + ", perpend:" + findLinePerpendicularTouch(currentLine, coordList[j]));
+                        
                         if (currentLine.id == "E") //current wall is existing
                         {
                             if (coordList[j].id == "E") //next wall is existing
@@ -1059,7 +1097,8 @@
                                 if (findLineEndTouch(currentLine, coordList[j]) || findLinePerpendicularTouch(currentLine, coordList[j])) 
                                 {
                                     existingTouches++;
-                                    if (existingTouches == 2) {
+                                    if (existingTouches == 2)
+                                    {
                                         valid++;
                                         existingTouches = 0;
                                         break;
@@ -1235,7 +1274,7 @@
                 }
             }
 
-            goodParallel = findGableParallel();
+            //goodParallel = findGableParallel();
 
             if (parseInt(valid) != coordList.length)
             {
@@ -1250,26 +1289,15 @@
                 }
             }
             
-            if (parseInt(gablesDrawn) == 0)
+            if (parseInt(proposedTouchingGable) != (2 * parseInt(gablesDrawn)))
             {
-                log.innerHTML += "You have not drawn any gable posts.\n\n";
-            }
-            else if (parseInt(gablesDrawn) > 2)
-            {
-                log.innerHTML += "You have drawn too many gable posts.\n\n";
-            }
-            else
-            {
-                if (parseInt(proposedTouchingGable) != (2 * parseInt(gablesDrawn)))
-                {
-                    log.innerHTML += "Your gable posts do not have the required number of proposed walls touching horizontally.\n\n";
-                }
+                log.innerHTML += "Your gable posts do not have the required number of proposed walls touching horizontally.\n\n";
             }
 
-            if (goodParallel == false)
-            {
-                log.innerHTML += "Your gable sunroom must have 2 parallel side walls to support the roof. Please try again.\n\n";
-            }
+            //if (goodParallel == false)
+            //{
+            //    log.innerHTML += "Your gable sunroom must have 2 parallel side walls to support the roof. Please try again.\n\n";
+            //}
 
             if (log.innerHTML == "")
             {
