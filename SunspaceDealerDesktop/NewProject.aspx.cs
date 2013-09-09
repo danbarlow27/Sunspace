@@ -291,12 +291,15 @@ namespace SunspaceDealerDesktop
                 {
                     if (hidLayoutSelection.Value.ToString() == "1")
                     {
+                        Session.Add("lineInfo", "225,250,300,300,G,S/25,450,25,25,E,S/50,50,25,300,P,W/50,225,300,300,P,S/250,425,300,300,P,S/425,425,300,25,P,E");
                     }
                     else if (hidLayoutSelection.Value.ToString() == "2")
                     {
+                        Session.Add("lineInfo", "225,250,300,300,G,S/25,450,25,25,E,S/50,50,25,250,P,W/50,100,250,300,P,SW/100,225,300,300,P,S/250,375,300,300,P,S/375,425,300,250,P,SE/425,425,250,25,P,E");
                     }
                     else if (hidLayoutSelection.Value.ToString() == "3")
                     {
+                        Session.Add("lineInfo", "225,250,300,300,G,S/25,450,25,25,E,S/50,50,25,250,P,W/50,100,250,250,P,S/100,150,250,300,P,SW/150,225,300,300,P,S/250,325,300,300,P,S/325,375,300,250,P,SE/375,425,250,250,P,S/425,425,250,25,P,E");
                     }
                     else if (hidLayoutSelection.Value.ToString() == "5")
                     {

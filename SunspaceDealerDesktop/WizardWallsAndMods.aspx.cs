@@ -51,6 +51,11 @@ namespace SunspaceDealerDesktop
                 //Session.Add("loggedIn", "userA");
             }
 
+            string[] gableCheck = (string[])Session["newProjectArray"];
+            if (gableCheck[26] == "Dealer Gable" || gableCheck[26] == "Sunspace Gable")
+            {
+                Session.Add("isGable", "True");
+            }
             /****VALIDATION CONSTANTS***/
 
             #region DOOR VALIDATION CONSTANTS
@@ -210,12 +215,12 @@ namespace SunspaceDealerDesktop
                     populateTblProposed(i, displayedWallCount); //populate the proposed walls table on slide 1                    
                     populateWallDoorOptions(i, displayedWallCount); //populate slide 3 with appropriate proposed wall door options
                 }
-                else if (wallDetails[i - 1, 4] == "G")
-                {
-                    hiddenDivWallRequirementNumber++;
-                    Session["isGable"] = true;
-                    populateTblProposedGable(i, displayedWallCount); //populate the gable post table on slide 1
-                }
+                //else if (wallDetails[i - 1, 4] == "G")
+                //{
+                //    hiddenDivWallRequirementNumber++;
+                //    Session["isGable"] = true;
+                //    populateTblProposedGable(i, displayedWallCount); //populate the gable post table on slide 1
+                //}
             }
 
             hiddenFieldsDiv.InnerHtml = createHiddenFields(strWalls.Count()); //create hidden fields on page load dynamically, pass it number of walls

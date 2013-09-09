@@ -652,7 +652,7 @@
 
             //run through all the textboxes and check if the values in there are valid numbers
             for (var i = 1; i <= lineList.length; i++) {
-                if (coordList[i - 1][4] === "P" || coordList[i - 1][4] === "G") {
+                if (coordList[i - 1][4] === "P"/* || coordList[i - 1][4] === "G"*/) {
                     if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) //if invalid numbers
                         || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0 //zero should be changed to MIN_WALL_LENGTH
                         || isNaN(document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value)
@@ -1039,23 +1039,37 @@
             else
             {
                 document.getElementById("<%=txtErrorMessage.ClientID%>").value = ""
-                var checkRoofSlope = (document.getElementById("MainContent_txtLeftRoofSlope").value)/RUN;
-                var checkRoofProjection = roomProjection;
-                var roofRise = checkRoofSlope * checkRoofProjection;
+                var checkLeftRoofSlope = (document.getElementById("MainContent_txtLeftRoofSlope").value)/RUN;
+                var roofLeftRise = (document.getElementById("MainContent_txtGablePostHeight").value) - (document.getElementById("MainContent_txtLeftWallHeight").value);
+                var checkRoofLeftProjection = Math.sqrt(Math.pow((roomProjection/2),2) + Math.pow(roofLeftRise,2));
 
-                var roofPanelProjection = Math.sqrt(Math.pow(roofRise,2) + Math.pow(checkRoofProjection, 2));
+                var checkRightRoofSlope = (document.getElementById("MainContent_txtRightRoofSlope").value)/RUN;
+                var roofRightRise = (document.getElementById("MainContent_txtGablePostHeight").value) - (document.getElementById("MainContent_txtRightWallHeight").value);
+                var checkRoofRightProjection = Math.sqrt(Math.pow((roomProjection/2),2) + Math.pow(roofRightRise,2));
             
-                if (roofPanelProjection > parseFloat('<%=FOAM_PANEL_PROJECTION%>'))
+                if (checkRoofLeftProjection > parseFloat('<%=FOAM_PANEL_PROJECTION%>'))
                 {
-                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have foam panels with this projection\n";
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have foam panels with this left projection\n";
                 }
-                if (roofPanelProjection > parseFloat('<%=ACRYLIC_PANEL_PROJECTION%>'))
+                if (checkRoofLeftProjection > parseFloat('<%=ACRYLIC_PANEL_PROJECTION%>'))
                 {
-                    document.getElementById("<%=txtErrorMessage.ClientID%>").value += "You may not have acrylic panels with this projection\n";
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value += "You may not have acrylic panels with this left projection\n";
                 }
-                if (roofPanelProjection > parseFloat('<%=THERMADECK_PANEL_PROJECTION%>'))
+                if (checkRoofLeftProjection > parseFloat('<%=THERMADECK_PANEL_PROJECTION%>'))
                 {
-                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have a roof with this projection\n";
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have a roof with this left projection\n";
+                }
+                if (checkRoofRightProjection > parseFloat('<%=FOAM_PANEL_PROJECTION%>'))
+                {
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have foam panels with this right projection\n";
+                }
+                if (checkRoofRightProjection > parseFloat('<%=ACRYLIC_PANEL_PROJECTION%>'))
+                {
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value += "You may not have acrylic panels with this right projection\n";
+                }
+                if (checkRoofRightProjection > parseFloat('<%=THERMADECK_PANEL_PROJECTION%>'))
+                {
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have a roof with this right projection\n";
                 }
             }
         }
