@@ -255,6 +255,10 @@
                 $('#MainContent_btnSubmitDrawing').addClass('btnSubmit');
                 document.getElementById("MainContent_btnSubmitDrawing").disabled = false;
 
+                $('#btnDone').removeClass('btnSubmit');
+                $('#btnDone').addClass('btnDisabled');
+                document.getElementById("btnDone").disabled = true;
+
                 var lineInfo = "";  //Variable to hold array/line information to be passed to C# (server-side)
 
                 //For loop to concatenate a string with array/line information
@@ -298,6 +302,14 @@
             //$('#btnUndo').removeClass('btnSubmit');
             $('#btnClear').addClass('btnDisabled');
             $('#btnClear').removeClass('btnSubmit');
+
+            $('#btnDone').removeClass('btnDisabled');
+            $('#btnDone').addClass('btnSubmit');
+            document.getElementById("btnDone").disabled = false;
+
+            $('#MainContent_btnSubmitDrawing').removeClass('btnSubmit');
+            $('#MainContent_btnSubmitDrawing').addClass('btnDisabled');
+            document.getElementById("MainContent_btnSubmitDrawing").disabled = true;
         }
 
         /**
@@ -868,6 +880,7 @@
         {
             log.innerHTML = "";
 
+            var goodParallel = false; // determines if the side walls of a gable room are parallel
             var gablesDrawn = 0; // number of gable posts drawn. must be 1, max of 2 at end of validation
             var valid = 0; //must end up equal to amount of lines in coordlist
             var proposedTouchingGable = 0; // must be equal to (2 * number of gables drawn) at end of validation
@@ -1073,38 +1086,40 @@
                 }
             }
 
+            goodParallel = findGableParallel();
+
             if (parseInt(valid) != coordList.length)
             {
-                log.innerHTML += "Your walls do not attach in a valid way.\n";
-            }
-            else
-            {
-                log.innerHTML = "Your stuff is valid, congrats bro guy!";
-                return true;
+                log.innerHTML += "Your walls do not attach in a valid way.\n\n";
             }
 
             if (!$('#<%=chkStandalone.ClientID%>').is(':checked'))
             {
                 if (parseInt(proposedTouchingExisting) != 2)
                 {
-                    log.innerHTML += "You require two proposed walls that attach to existing walls.\n";
+                    log.innerHTML += "You require two proposed walls that attach to existing walls.\n\n";
                 }
             }
             
             if (parseInt(gablesDrawn) == 0)
             {
-                log.innerHTML += "You have not drawn any gable posts.\n";
+                log.innerHTML += "You have not drawn any gable posts.\n\n";
             }
             else if (parseInt(gablesDrawn) > 2)
             {
-                log.innerHTML += "You have drawn too many gable posts.\n";
+                log.innerHTML += "You have drawn too many gable posts.\n\n";
             }
             else
             {
                 if (parseInt(proposedTouchingGable) != (2 * parseInt(gablesDrawn)))
                 {
-                    log.innerHTML += "Your gable posts do not have the required number of proposed walls touching.\n";
+                    log.innerHTML += "Your gable posts do not have the required number of proposed walls touching.\n\n";
                 }
+            }
+
+            if (goodParallel == false)
+            {
+                log.innerHTML += "Your gable sunroom must have 2 parallel walls to support the roof. Please try again.\n\n";
             }
 
             if (log.innerHTML == "")
@@ -1171,6 +1186,41 @@
 
             //return true;
         //}
+
+        function findGableParallel()
+        {
+            var firstWall;
+            var secondWall;
+            
+            for (var i = 0; i < coordList.length; i++)
+            {
+                if (coordList[i].id == "P")
+                {
+                    firstWall = coordList[i];
+                    break;
+                }
+            }
+
+            for (var i = parseInt(coordList.length - 1); i > 0; i--)
+            {
+                if (coordList[i].id == "P")
+                {
+                    secondWall = coordList[i];
+                    break;
+                }
+            }
+
+            if ((findLineAxis(firstWall) == "H" && findLineAxis(secondWall) == "H") ||
+                (findLineAxis(firstWall) == "V" && findLineAxis(secondWall) == "V") ||
+                (findLineAxis(firstWall) == "D" && findLineAxis(secondWall) == "D"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         /**
         *validateOppositeWalls
