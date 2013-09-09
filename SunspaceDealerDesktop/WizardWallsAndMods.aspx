@@ -1015,24 +1015,48 @@
         }
         
         function checkRoofPanels() {
-            document.getElementById("<%=txtErrorMessage.ClientID%>").value = ""
-            var checkRoofSlope = (document.getElementById("MainContent_txtRoofSlope").value)/RUN;
-            var checkRoofProjection = roomProjection - soffitLength;
-            var roofRise = checkRoofSlope * checkRoofProjection;
+            if (gable != "True"){
+                document.getElementById("<%=txtErrorMessage.ClientID%>").value = ""
+                var checkRoofSlope = (document.getElementById("MainContent_txtRoofSlope").value)/RUN;
+                var checkRoofProjection = roomProjection - soffitLength;
+                var roofRise = checkRoofSlope * checkRoofProjection;
 
-            var roofPanelProjection = Math.sqrt(Math.pow(roofRise,2) + Math.pow(checkRoofProjection, 2));
+                var roofPanelProjection = Math.sqrt(Math.pow(roofRise,2) + Math.pow(checkRoofProjection, 2));
             
-            if (roofPanelProjection > <%=FOAM_PANEL_PROJECTION%>)
-            {
-                document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have foam panels with this projection\n";
+                if (roofPanelProjection > parseFloat('<%=FOAM_PANEL_PROJECTION%>'))
+                {
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have foam panels with this projection\n";
+                }
+                if (roofPanelProjection > parseFloat('<%=ACRYLIC_PANEL_PROJECTION%>'))
+                {
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value += "You may not have acrylic panels with this projection\n";
+                }
+                if (roofPanelProjection > parseFloat('<%=THERMADECK_PANEL_PROJECTION%>'))
+                {
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have a roof with this projection\n";
+                }
             }
-            if (roofPanelProjection > <%=ACRYLIC_PANEL_PROJECTION%>)
+            else
             {
-                document.getElementById("<%=txtErrorMessage.ClientID%>").value += "You may not have acrylic panels with this projection\n";
-            }
-            if (roofPanelProjection > <%=THERMADECK_PANEL_PROJECTION%>)
-            {
-                document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have a roof with this projection\n";
+                document.getElementById("<%=txtErrorMessage.ClientID%>").value = ""
+                var checkRoofSlope = (document.getElementById("MainContent_txtLeftRoofSlope").value)/RUN;
+                var checkRoofProjection = roomProjection;
+                var roofRise = checkRoofSlope * checkRoofProjection;
+
+                var roofPanelProjection = Math.sqrt(Math.pow(roofRise,2) + Math.pow(checkRoofProjection, 2));
+            
+                if (roofPanelProjection > parseFloat('<%=FOAM_PANEL_PROJECTION%>'))
+                {
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have foam panels with this projection\n";
+                }
+                if (roofPanelProjection > parseFloat('<%=ACRYLIC_PANEL_PROJECTION%>'))
+                {
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value += "You may not have acrylic panels with this projection\n";
+                }
+                if (roofPanelProjection > parseFloat('<%=THERMADECK_PANEL_PROJECTION%>'))
+                {
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have a roof with this projection\n";
+                }
             }
         }
 
