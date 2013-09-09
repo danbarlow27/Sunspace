@@ -93,15 +93,17 @@ function findLinePerpendicularTouch(firstLine, secondLine)
     {
         //first line is vertical - T or Upside down T shape
         if (((parseFloat(firstLine.y1) == parseFloat(secondLine.y1) && parseFloat(firstLine.y1) == parseFloat(secondLine.y2))
-            || (parseFloat(firstLine.y2) == parseFloat(secondLine.y1) && parseFloat(firstLine.y2) == parseFloat(secondLine.y2)))
-            && (parseFloat(firstLine.x1) > parseFloat(secondLine.x1) && parseFloat(firstLine.x2) < parseFloat(secondLine.x2)))
+            || (parseFloat(firstLine.y2) == parseFloat(secondLine.y1) && parseFloat(firstLine.y2) == parseFloat(secondLine.y2))) &&
+            ((parseFloat(firstLine.x1) > parseFloat(secondLine.x1) && parseFloat(firstLine.x2) < parseFloat(secondLine.x2))
+            || (parseFloat(secondLine.x1) > parseFloat(firstLine.x1) && parseFloat(secondLine.x2) < parseFloat(firstLine.x2))))
         {
             return true;
         }
         //first line is horizontal - T or Upside down T shape
         else if (((parseFloat(secondLine.y1) == parseFloat(firstLine.y1) && parseFloat(secondLine.y1) == parseFloat(firstLine.y2))
-            || (parseFloat(secondLine.y2) == parseFloat(firstLine.y1) && parseFloat(secondLine.y2) == parseFloat(firstLine.y2)))
-            && (parseFloat(firstLine.x1) < parseFloat(secondLine.x1) && parseFloat(firstLine.x2) > parseFloat(secondLine.x2)))
+            || (parseFloat(secondLine.y2) == parseFloat(firstLine.y1) && parseFloat(secondLine.y2) == parseFloat(firstLine.y2))) &&
+            ((parseFloat(firstLine.x1) < parseFloat(secondLine.x1) && parseFloat(firstLine.x2) > parseFloat(secondLine.x2))
+            || (parseFloat(secondLine.x1) < parseFloat(firstLine.x1) && parseFloat(secondLine.x2) > parseFloat(firstLine.x2))))
         {
             return true;
         }
