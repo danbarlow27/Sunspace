@@ -287,6 +287,50 @@ namespace SunspaceDealerDesktop
                     }
                 }
 
+                if (hidRoofType.Value.Contains("Gable"))
+                {
+                    if (hidLayoutSelection.Value.ToString() == "1")
+                    {
+                    }
+                    else if (hidLayoutSelection.Value.ToString() == "2")
+                    {
+                    }
+                    else if (hidLayoutSelection.Value.ToString() == "3")
+                    {
+                    }
+                    else if (hidLayoutSelection.Value.ToString() == "5")
+                    {
+                    }
+                    else if (hidLayoutSelection.Value.ToString() == "6")
+                    {
+                    }
+                    else if (hidLayoutSelection.Value.ToString() == "8")
+                    {
+                    }
+                    else if (hidLayoutSelection.Value.ToString() == "9")
+                    {
+                    }
+                    else if (hidLayoutSelection.Value.ToString() == "10")
+                    {
+                    }
+
+                    if (chkMirrored.Checked == true)
+                    {
+                        if (hidLayoutSelection.Value.ToString() == "5")
+                        {
+                        }
+                        else if (hidLayoutSelection.Value.ToString() == "6")
+                        {
+                        }
+                        else if (hidLayoutSelection.Value.ToString() == "8")
+                        {
+                        }
+                        else if (hidLayoutSelection.Value.ToString() == "9")
+                        {
+                        }
+                    }
+                }
+
                 Response.Redirect("WizardWallsAndMods.aspx");
             }
         }

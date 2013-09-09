@@ -3619,6 +3619,8 @@ namespace SunspaceDealerDesktop
                                         //trap/triangle
                                     }
                                 }
+
+                                linearItems.Add(aMod);
                             }
                             else if (Request.Form["hidWall" + i + "Door" + j + "type"] == "French")
                             {
@@ -3630,6 +3632,28 @@ namespace SunspaceDealerDesktop
                                 //private bool sunshade;
                                 List<Object> modularItems = new List<Object>();
                                 modularItems.Add(getFrenchDoorFromForm(i, j));
+
+                                //The height of the wall at mod end and mod start
+                                float modStartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
+                                float modEndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
+
+                                //If mod height is less than wall height at start or end of mod, we have space above we need to fill
+                                if (aMod.Height < modStartHeight
+                                    ||
+                                    aMod.Height < modEndHeight)
+                                {
+                                    //Unsloped
+                                    if (modStartHeight == modEndHeight)
+                                    {
+                                        //square window
+                                    }
+                                    else
+                                    {
+                                        //trap/triangle
+                                    }
+                                }
+
+                                linearItems.Add(aMod);
                             }
                             else if (Request.Form["hidWall" + i + "Door" + j + "type"] == "Patio")
                             {
@@ -3641,6 +3665,28 @@ namespace SunspaceDealerDesktop
                                 //private bool sunshade;
                                 List<Object> modularItems = new List<Object>();
                                 modularItems.Add(getPatioDoorFromForm(i, j));
+
+                                //The height of the wall at mod end and mod start
+                                float modStartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
+                                float modEndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
+
+                                //If mod height is less than wall height at start or end of mod, we have space above we need to fill
+                                if (aMod.Height < modStartHeight
+                                    ||
+                                    aMod.Height < modEndHeight)
+                                {
+                                    //Unsloped
+                                    if (modStartHeight == modEndHeight)
+                                    {
+                                        //square window
+                                    }
+                                    else
+                                    {
+                                        //trap/triangle
+                                    }
+                                }
+
+                                linearItems.Add(aMod);
                             }
                             else //nodoor
                             {
@@ -3652,8 +3698,30 @@ namespace SunspaceDealerDesktop
                                 //private bool sunshade;
                                 List<Object> modularItems = new List<Object>();
                                 modularItems.Add(getNoDoorFromForm(i, j));
-                            }
 
+                                //The height of the wall at mod end and mod start
+                                float modStartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
+                                float modEndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
+
+                                //If mod height is less than wall height at start or end of mod, we have space above we need to fill
+                                if (aMod.Height < modStartHeight
+                                    ||
+                                    aMod.Height < modEndHeight)
+                                {
+                                    //Unsloped
+                                    if (modStartHeight == modEndHeight)
+                                    {
+                                        //square window
+                                    }
+                                    else
+                                    {
+                                        //trap/triangle
+                                    }
+                                }
+
+                                linearItems.Add(aMod);
+                            }
+                            
                             if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Right" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
                             {
                                 BoxHeader aBoxHeader = new BoxHeader(false);

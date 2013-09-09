@@ -670,7 +670,7 @@
                 var existingWallCount=0;
                 for (var i = 1; i <= lineList.length; i++) { //populate the hidden fields for each wall
                     
-                    if (coordList[i - 1][4] === "P" || coordList[i - 1][4] === "G") {
+                    if (coordList[i - 1][4] === "P"/* || coordList[i - 1][4] === "G"*/) {
                         calculateSetBack((i - 1)); //calculate setback of the given wall
 
                         document.getElementById("hidWall" + i + "SetBack").value = wallSetBackArray[i - 1]; //store wall setback 
