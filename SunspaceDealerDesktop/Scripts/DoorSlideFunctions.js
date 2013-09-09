@@ -1026,8 +1026,15 @@ function validateDoorParameters(door, wall) {
 *@returns true or false based on if validation passes
 */
 function validateDoorFill(door, wall) {
+    var spaceToRemove = wall.rightFiller + wall.leftFiller;
+    if (wall.boxHeader == "Left" || wall.boxHeader == "Right") {
+        spaceToRemove += BOXHEADER_LENGTH;
+    }
+    else if (wall.boxHeader == "Both") {
+        spaceToRemove += BOXHEADER_LENGTH*2;
+    }
 
-    if ((wall.length - wall.rightFiller - wall.leftFiller) < door.fwidth) {
+    if ((wall.length - spaceToRemove) < door.fwidth) {
         errorMessageArea.innerHTML = "This wall is too small to have a door of width " + door.fwidth + ". Please try again.";
         return false;
     }
