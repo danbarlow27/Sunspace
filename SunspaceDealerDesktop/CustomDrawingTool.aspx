@@ -898,11 +898,6 @@
 
                     if (currentLine != coordList[j])
                     {
-                        console.log("\n\nCurrentWall:" + currentLine.id + ", Axis:" + findLineAxis(currentLine)
-                        + "\ncoordList[j]Wall:" + coordList[j].id + ", Axis:" + findLineAxis(coordList[j]));
-
-                        console.log("EndToEnd:" + findLineEndTouch(currentLine, coordList[j]) + ", perpend:" + findLinePerpendicularTouch(currentLine, coordList[j]));
-
                         if (currentLine.id == "E") //current wall is existing
                         {
                             if (coordList[j].id == "E") //next wall is existing
