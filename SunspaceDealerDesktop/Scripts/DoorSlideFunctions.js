@@ -510,15 +510,30 @@ function fillWallWithDoorMods(type, wallNumber) {
         return;
     }
 
+    var boxHeaderSpace = 0;
+    if (walls[wallNumber].boxHeader == "Left" || walls[wallNumber].boxHeader == "Right") {
+        boxHeaderSpace += BOXHEADER_LENGTH;
+    }
+    else if (walls[wallNumber].boxHeader == "Both") {
+        boxHeaderSpace += BOXHEADER_LENGTH * 2;
+    }
+
+    //***USE SAME FORMULA TO GET # DOORS, * BOXHEADER, RE-DO
+
+    console.log("Length: " + walls[wallNumber].length);
+    console.log("Right Filler: " + walls[wallNumber].rightFiller);
+    console.log("Left Filler: " + walls[wallNumber].leftFiller);
     //Variable to hold the amount of doors that can't fit within the specified wall
-    var amountOfDoors = parseInt((walls[wallNumber].length - walls[wallNumber].leftFiller - walls[wallNumber].rightFiller) / door.fwidth);
+    var amountOfDoors = parseInt((walls[wallNumber].length - walls[wallNumber].rightFiller - walls[wallNumber].leftFiller) / (door.fwidth+boxHeaderSpace));
+    console.log("Amount of doors: " + amountOfDoors);
     //Gets the amount of filler to put on both sides to center the doors and change the start position
-    var padding = ((walls[wallNumber].length - walls[wallNumber].leftFiller - walls[wallNumber].rightFiller) - (amountOfDoors * door.fwidth)) / 2;
+    var padding = parseFloat(((walls[wallNumber].length - walls[wallNumber].rightFiller - walls[wallNumber].leftFiller) - (amountOfDoors * (door.fwidth + boxHeaderSpace))) / 2);
+    console.log("Padding: " + padding);
     //Holds the padding to later be incremented
     var currentPosition = padding;
 
     for (var i = 0; i < amountOfDoors; i++) {
-        var newDoor = $.extend(true, {}, door);
+        var newDoor = $.extend(true, {}, door); 
         newDoor.position = currentPosition;
         insertMod(newDoor, walls[wallNumber]);
         currentPosition += door.fwidth;
@@ -1026,8 +1041,15 @@ function validateDoorParameters(door, wall) {
 *@returns true or false based on if validation passes
 */
 function validateDoorFill(door, wall) {
+    var spaceToRemove = wall.rightFiller + wall.leftFiller;
+    if (wall.boxHeader == "Left" || wall.boxHeader == "Right") {
+        spaceToRemove += BOXHEADER_LENGTH;
+    }
+    else if (wall.boxHeader == "Both") {
+        spaceToRemove += BOXHEADER_LENGTH*2;
+    }
 
-    if ((wall.length - wall.rightFiller - wall.leftFiller) < door.fwidth) {
+    if ((wall.length - spaceToRemove) < door.fwidth) {
         errorMessageArea.innerHTML = "This wall is too small to have a door of width " + door.fwidth + ". Please try again.";
         return false;
     }
