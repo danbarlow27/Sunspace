@@ -22,33 +22,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblQuestion1;
         
         /// <summary>
-        /// radFloorYes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radFloorYes;
-        
-        /// <summary>
-        /// lblFloorYesRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFloorYesRadio;
-        
-        /// <summary>
-        /// lblFloorYes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFloorYes;
-        
-        /// <summary>
         /// tblFloors control.
         /// </summary>
         /// <remarks>
@@ -119,33 +92,6 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkVapourBarrier;
-        
-        /// <summary>
-        /// radFloorNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radFloorNo;
-        
-        /// <summary>
-        /// lblFloorNoRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFloorNoRadio;
-        
-        /// <summary>
-        /// lblFloorNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFloorNo;
         
         /// <summary>
         /// btnQuestion1 control.

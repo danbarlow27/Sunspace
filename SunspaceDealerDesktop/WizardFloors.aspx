@@ -118,10 +118,8 @@
         *This function stores all the data into hidden fields and displays
         *an appropriate message to the pager
         */
-        function checkFloors() {
-            
-            //If radio button "Yes" (meaning they want floors) is checked, perform this block
-            if ($('#<%=radFloorYes.ClientID%>').is(':checked')) {
+        function checkFloors()
+        {
                 document.getElementById('<%=hidFloorBoolean.ClientID%>').value = true;
                 document.getElementById('<%=hidFloorType.ClientID%>').value = $('#<%=ddlFloorType.ClientID%>').val();
                 document.getElementById('<%=hidFloorThickness.ClientID%>').value = $('#<%=ddlFloorThickness.ClientID%>').val();
@@ -134,19 +132,6 @@
                 $('#<%=lblFloorDetailsAnswer.ClientID%>').text(document.getElementById('<%=hidFloorType.ClientID%>').value + ' Floor Added');
                 document.getElementById('pagerOne').style.display = 'inline';
                 document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
-            }
-                //If radio button "No" (meaning they don't want floors) is checked, perform this block
-            else {
-                document.getElementById('<%=hidFloorBoolean.ClientID%>').value = false;
-                document.getElementById('<%=hidFloorType.ClientID%>').value = '';
-                document.getElementById('<%=hidFloorThickness.ClientID%>').value = '';
-                document.getElementById('<%=hidFloorVapourBarrier.ClientID%>').value = '';
-
-                $('#<%=lblFloorDetailsAnswer.ClientID%>').text('No Floor Added');
-                document.getElementById('pagerOne').style.display = 'inline';
-                document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
-            }
-
         }
     </script>
 
@@ -164,15 +149,8 @@
                     <%-- Label for question 1 (floor details) --%>
                     <asp:Label ID="lblQuestion1" runat="server" Text="Floor Details"></asp:Label>
                 </h1>
-                    
-                <ul class="toggleOptions">
-                    <li>
-                        <asp:RadioButton ID="radFloorYes" GroupName="Floors" runat="server" OnClick="checkFloors()" />
-                        <asp:Label ID="lblFloorYesRadio" AssociatedControlID="radFloorYes" runat="server"></asp:Label>
-                        <asp:Label ID="lblFloorYes" AssociatedControlID="radFloorYes" runat="server" Text="Yes"></asp:Label>
-                        <%--Yes Floor Details --%>
-                        <div class="toggleContent">
-                            <ul>
+                        <div>
+                            <ul class="toggleOptions">
                                 <li>
                                     <asp:Table ID="tblFloors" CssClass="tblTxtFields" runat="server">
 
@@ -197,7 +175,7 @@
 
                                         <asp:TableRow ID="rowVapourBarrier">
                                             <asp:TableCell>
-                                                <asp:Label ID="lblVapourBarrier" AssociatedControlID="chkVapourBarrier" runat="server" Text="Varpour Barrier:"></asp:Label>
+                                                <asp:Label ID="lblVapourBarrier" AssociatedControlID="chkVapourBarrier" runat="server" Text="Vapour Barrier:"></asp:Label>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
@@ -209,14 +187,6 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
-                    <li>
-                        <%--No Floor --%>
-                        <asp:RadioButton ID="radFloorNo" GroupName="Floors" runat="server" OnClick="checkFloors()" />
-                        <asp:Label ID="lblFloorNoRadio" AssociatedControlID="radFloorNo" runat="server"></asp:Label>
-                        <asp:Label ID="lblFloorNo" AssociatedControlID="radFloorNo" runat="server" Text="No"></asp:Label>                        
-                    </li>
-                </ul>
                 <%-- button to go to the next question --%>
                 <asp:Button ID="btnQuestion1" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
 
@@ -254,7 +224,7 @@
             </div>    
         </div>
 
-        <asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label> 
+        <asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label"></asp:Label> 
     </div>
 
     <input id="hidFloorBoolean" type="hidden" runat="server" />
