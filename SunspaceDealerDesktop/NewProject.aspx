@@ -8,7 +8,7 @@
             //changeme when component ordering is put into place
             window.location.replace("Home.aspx");
         }
-        
+
         function newProjectCheckQuestion1() {
             console.log("onkeyup slide1");
             var ddlCustomerCountry = document.getElementById("<%=ddlCustomerCountry.ClientID%>").value;
@@ -89,12 +89,12 @@
                     else if (isNaN(zipCode) || zipCode.length < 5) {
                         document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Zip Code you entered is not valid.\n";
                     }
-                }
+            }
 
                 //check postal code
-                if (ddlCustomerCountry == "CAN")
-                {
-                    var ddlProvState = document.getElementById("<%=ddlCustomerProvState.ClientID%>");
+            if (ddlCustomerCountry == "CAN")
+            {
+                var ddlProvState = document.getElementById("<%=ddlCustomerProvState.ClientID%>");
                     var canProvArray = <%= canProvJ %>;
                     var canCodeArray = <%= canCodesJ %>;
 
@@ -118,12 +118,12 @@
                     {
                         document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Postal Code is required.\n";
                     }
-                    else 
-                    {                        
-                        if (postCheck == false) 
+                    else
+                    {
+                        if (postCheck == false)
                         {
                             document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Postal Code you entered is not valid.\n";
-                        }                        
+                        }
                     }
                 }
 
@@ -150,7 +150,7 @@
                         document.getElementById('<%=txtErrorMessage.ClientID%>').value += validPhone;
                     }
                 }
-                else if (document.getElementById("<%=txtCustomerPhone.ClientID%>").value == "")
+                else if (document.getElementById("<%=txtCustomerPhone.ClientID%>").value == "" || lengthCheck.length < 10)
                 {
                     document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Phone is required.\n";
                 }
@@ -533,7 +533,8 @@
                     }
                 }
                 else {
-                    //no type selection, errors
+                    document.getElementById('<%=btnQuestion7.ClientID%>').disabled = true;
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value += "Please select a roof type.\n";
                 }
 
                 if ($('#<%=txtSoffitLength.ClientID%>').val() != "")
@@ -966,7 +967,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlCustomerProvState" runat="server" OnChange="newProjectCheckQuestion1()" ></asp:DropDownList>
+                                                <asp:DropDownList ID="ddlCustomerProvState" runat="server" OnChange=""></asp:DropDownList>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -1273,7 +1274,7 @@
                                                 <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height:" />
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtKneewallHeight" onkeydown="return (event.keyCode!=13);" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" runat="server" MaxLength="3" />
+                                                <asp:TextBox ID="txtKneewallHeight" onkeydown="return (event.keyCode!=13);" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" Width="65" runat="server" MaxLength="3" />
                                             </asp:TableCell>                                         
                                         </asp:TableRow>
 
@@ -1461,8 +1462,8 @@
                                     <asp:Label ID="lblSunspaceGable" AssociatedControlID="radSunspaceGable" runat="server" Text="Sunspace gable"></asp:Label>
                                 </li>
                                 <li>
-                                    <asp:TextBox ID="txtSoffitLength" onkeydown="return (event.keyCode!=13);" onkeyup="newProjectCheckQuestion7()" runat="server"></asp:TextBox>
                                     <asp:Label ID="lblSoffitLength" runat="server" Text="Soffit Length:"></asp:Label>
+                                    <asp:TextBox ID="txtSoffitLength" onkeydown="return (event.keyCode!=13);" CssClass="txtField txtInput" Width="35" onkeyup="newProjectCheckQuestion7()" runat="server"></asp:TextBox>
                                 </li>
                             </ul>
                         </div>
