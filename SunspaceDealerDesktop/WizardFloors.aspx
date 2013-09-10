@@ -39,7 +39,7 @@
         //Function calls to occur when the document is ready/loaded
         $(document).ready(function () {
             floorTypeDisplay();
-            checkFloors();
+            loadValues();
         });
 
         /**
@@ -55,6 +55,15 @@
             else {
                 document.getElementById('MainContent_rowVapourBarrier').style.display = "none";
             }
+        }
+
+        function loadValues()
+        {
+            $('#<%=txtWidthDisplay.ClientID%>').val(findFloorWidth());
+            $('#<%=txtProjectionDisplay.ClientID%>').val(findFloorProjection());
+            $('#<%=lblPagerSquareFootageDisplay.ClientID%>').text(findSquareFootage(findFloorWidth(), findFloorProjection()) + "\'");
+            document.getElementById('pagerOne').style.display = 'inline';
+            document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
         }
 
         /**
@@ -128,13 +137,7 @@
             if ($('#<%=chkVapourBarrier.ClientID%>').is(':checked'))
                 document.getElementById('<%=hidFloorVapourBarrier.ClientID%>').value = true;
             else
-                document.getElementById('<%=hidFloorVapourBarrier.ClientID%>').value = false;                
-
-            $('#<%=txtWidthDisplay.ClientID%>').val(findFloorWidth());
-            $('#<%=txtProjectionDisplay.ClientID%>').val(findFloorProjection());
-            $('#<%=lblPagerSquareFootageDisplay.ClientID%>').text(findSquareFootage(findFloorWidth(), findFloorProjection()) + "\'");
-            document.getElementById('pagerOne').style.display = 'inline';
-            document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
+                document.getElementById('<%=hidFloorVapourBarrier.ClientID%>').value = false;   
 
         }
 
@@ -144,15 +147,12 @@
 
             return squareFootage.toFixed(2);
         }
-
-       <%--
         function updateSquareFootage()
         {
             
-            $('#<%=lblPagerSquareFootageDisplay.ClientID%>').text(findSquareFootage(parseFloat($('<%=txtWidthDisplay.ClientID%>'.val())), parseFloat($('<%=txtProjectionDisplay.ClientID%>').val())) + "\'");
+            $('#<%=lblPagerSquareFootageDisplay.ClientID%>').text(findSquareFootage(parseFloat(document.getElementById("MainContent_txtWidthDisplay").value), parseFloat(document.getElementById("MainContent_txtProjectionDisplay").value)) + "\'");
         
         }
-        --%>
 
     </script>
 
@@ -191,7 +191,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtWidthDisplay" CssClass="txtField txtInput" Width="60" runat="server" Text="" onchange="updateSquareFootage()"></asp:TextBox>"
+                                                <asp:TextBox ID="txtWidthDisplay" CssClass="txtField txtInput" Width="60" runat="server" Text="" onkeyup="updateSquareFootage()"></asp:TextBox>"
                                             </asp:TableCell>  
                                         </asp:TableRow>
 
@@ -201,7 +201,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtProjectionDisplay" CssClass="txtField txtInput" Width="60" runat="server" Text="" onchange="updateSquareFootage()"></asp:TextBox>"
+                                                <asp:TextBox ID="txtProjectionDisplay" CssClass="txtField txtInput" Width="60" runat="server" Text="" onkeyup="updateSquareFootage()"></asp:TextBox>"
                                             </asp:TableCell>  
                                         </asp:TableRow>
                                         
