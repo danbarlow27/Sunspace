@@ -19,7 +19,7 @@
         }
 
         /****Line information for walls****/
-        var detailsOfAllLines = '<%= (string)Session["coordList"] %>'; //all the coordinates and details of all the lines, coming from the session
+        var detailsOfAllLines = '<%= wallCoordinates %>'; //all the coordinates and details of all the lines, coming from the session
         var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/");
         var coordList = [];
         var proposedList = [];
@@ -40,6 +40,7 @@
         $(document).ready(function () {
             floorTypeDisplay();
             loadValues();
+            checkFloors();
         });
 
         /**
@@ -55,74 +56,19 @@
             else {
                 document.getElementById('MainContent_rowVapourBarrier').style.display = "none";
             }
+
+            checkFloors();
         }
 
         function loadValues()
         {
-            $('#<%=txtWidthDisplay.ClientID%>').val(findFloorWidth());
-            $('#<%=txtProjectionDisplay.ClientID%>').val(findFloorProjection());
-            $('#<%=lblPagerSquareFootageDisplay.ClientID%>').text(findSquareFootage(findFloorWidth(), findFloorProjection()) + "\'");
+            $('#<%=txtWidthDisplay.ClientID%>').val('<%= roomWidth%>');
+            $('#<%=txtProjectionDisplay.ClientID%>').val('<%= roomProjection%>');
+            $('#<%=lblPagerSquareFootageDisplay.ClientID%>').text(findSquareFootage('<%= roomWidth%>', '<%= roomProjection%>') + "\'");
             document.getElementById('pagerOne').style.display = 'inline';
             document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
         }
-
-        /**
-        *findFloorProjection
-        *This function finds the projection of the current sunroom layout
-        */
-        function findFloorProjection() {
-            var largestDifference = 0;
-
-            for (var k = 0; k < proposedList.length; k++) {
-
-                var toCheck = proposedList[k][2];
-
-                for (var i = 0; i < proposedList.length; i++) {
-
-                    if (Math.abs(toCheck - proposedList[i][3]) > largestDifference) {
-                        largestDifference = walls[proposedList[i][6]].length;
-                    }
-
-                    if (toCheck != proposedList[i][2]) {
-                        if (Math.abs(toCheck - proposedList[i][2]) > largestDifference) {
-                            largestDifference = walls[proposedList[i][6]].length;
-                        }
-                    }
-                }
-            }
-
-            return largestDifference;
-        }
-
-        /**
-        *findFloorWidth
-        *This function finds the width of the current sunroom layout
-        */
-        function findFloorWidth() {
-
-            var largestDifference = 0;
-
-            for (var k = 0; k < proposedList.length; k++) {
-
-                var toCheck = proposedList[k][0];
-
-                for (var i = 0; i < proposedList.length; i++) {
-
-                    if (Math.abs(toCheck - proposedList[i][1]) > largestDifference) {
-                        largestDifference = walls[proposedList[i][6]].length;
-                    }
-
-                    if (toCheck != proposedList[i][0]) {
-                        if (Math.abs(toCheck - proposedList[i][0]) > largestDifference) {
-                            largestDifference = walls[proposedList[i][6]].length;
-                        }
-                    }
-                }
-            }
-
-            return largestDifference;
-        }
-
+               
         /**
         *checkFloors
         *This function stores all the data into hidden fields and displays
@@ -130,15 +76,39 @@
         */
         function checkFloors()
         {
-            document.getElementById('<%=hidFloorBoolean.ClientID%>').value = true;
             document.getElementById('<%=hidFloorType.ClientID%>').value = $('#<%=ddlFloorType.ClientID%>').val();
             document.getElementById('<%=hidFloorThickness.ClientID%>').value = $('#<%=ddlFloorThickness.ClientID%>').val();
 
             if ($('#<%=chkVapourBarrier.ClientID%>').is(':checked'))
                 document.getElementById('<%=hidFloorVapourBarrier.ClientID%>').value = true;
             else
-                document.getElementById('<%=hidFloorVapourBarrier.ClientID%>').value = false;   
+                document.getElementById('<%=hidFloorVapourBarrier.ClientID%>').value = false;
 
+            //Validate entry for width/projection
+            //Only run validation if a number is entered and values selected
+            if (document.getElementById("<%=txtWidthDisplay.ClientID%>").value != "") {
+                //only requirement on height at this moment is that it is a valid number
+                if (isNaN(document.getElementById("<%=txtWidthDisplay.ClientID%>").value)) {
+                    //kneewall height error handling
+                    //DANPLS "The kneewall height you entered is not a valid number.";
+                }
+                else {
+                    //valid
+                    document.getElementById('<%=hidFloorWidth.ClientID%>').value = document.getElementById('<%=txtWidthDisplay.ClientID%>').value;
+                }
+            }
+
+            if (document.getElementById("<%=txtProjectionDisplay.ClientID%>").value != "") {
+                //only requirement on height at this moment is that it is a valid number
+                if (isNaN(document.getElementById("<%=txtProjectionDisplay.ClientID%>").value)) {
+                    //kneewall height error handling
+                    //DANPLS "The kneewall height you entered is not a valid number.";
+                }
+                else {
+                    //valid
+                    document.getElementById('<%=hidFloorProjection.ClientID%>').value = document.getElementById('<%=txtProjectionDisplay.ClientID%>').value;
+                }
+            }
         }
 
         function findSquareFootage(width, projection)
@@ -149,11 +119,28 @@
         }
         function updateSquareFootage()
         {
+            document.getElementById('<%= btnQuestion1.ClientID%>').disabled = true;
+            var widthTemp = parseFloat(document.getElementById("MainContent_txtWidthDisplay").value)
+            var projectionTemp = parseFloat(document.getElementById("MainContent_txtProjectionDisplay").value)
             
-            $('#<%=lblPagerSquareFootageDisplay.ClientID%>').text(findSquareFootage(parseFloat(document.getElementById("MainContent_txtWidthDisplay").value), parseFloat(document.getElementById("MainContent_txtProjectionDisplay").value)) + "\'");
-        
-        }
+            var error = "";
+            if (isNaN(widthTemp)) {
+                error += "Your width is invalid. Please enter a valid number of inches.<br/>";
+            }
+            if (isNaN(projectionTemp)) {
+                error += "Your projection is invalid. Please enter a valid number of inches.<br/>";
+            }
 
+            if (error == "") {
+                $('#<%=lblPagerSquareFootageDisplay.ClientID%>').text(findSquareFootage(widthTemp, projectionTemp) + "\ '");
+                document.getElementById('<%= btnQuestion1.ClientID%>').disabled = false;
+            }
+            else {
+                document.getElementById('<%=lblPagerSquareFootageDisplay.ClientID%>').innerHTML = error;
+            }
+
+            checkFloors();
+        }
     </script>
 
     <%-- SLIDES (QUESTION)
@@ -191,7 +178,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtWidthDisplay" CssClass="txtField txtInput" Width="60" runat="server" Text="" onkeyup="updateSquareFootage()"></asp:TextBox>"
+                                                <asp:TextBox ID="txtWidthDisplay" CssClass="txtField txtInput" Width="60" runat="server" Text="" onkeyup="updateSquareFootage()" MaxLength="3"></asp:TextBox> "
                                             </asp:TableCell>  
                                         </asp:TableRow>
 
@@ -201,7 +188,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtProjectionDisplay" CssClass="txtField txtInput" Width="60" runat="server" Text="" onkeyup="updateSquareFootage()"></asp:TextBox>"
+                                                <asp:TextBox ID="txtProjectionDisplay" CssClass="txtField txtInput" Width="60" runat="server" Text="" onkeyup="updateSquareFootage()" MaxLength="3"></asp:TextBox> "
                                             </asp:TableCell>  
                                         </asp:TableRow>
                                         
@@ -267,8 +254,10 @@
         </div>
     </div>
 
-    <input id="hidFloorBoolean" type="hidden" runat="server" />
+
     <input id="hidFloorType" type="hidden" runat="server" />
+    <input id="hidFloorWidth" type="hidden" runat="server" />
+    <input id="hidFloorProjection" type="hidden" runat="server" />
     <input id="hidFloorThickness" type="hidden" runat="server" />
     <input id="hidFloorVapourBarrier" type="hidden" runat="server" />
 

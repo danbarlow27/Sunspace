@@ -157,15 +157,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblPagerSquareFootageDisplay;
         
         /// <summary>
-        /// hidFloorBoolean control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidFloorBoolean;
-        
-        /// <summary>
         /// hidFloorType control.
         /// </summary>
         /// <remarks>
@@ -173,6 +164,24 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidFloorType;
+        
+        /// <summary>
+        /// hidFloorWidth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidFloorWidth;
+        
+        /// <summary>
+        /// hidFloorProjection control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidFloorProjection;
         
         /// <summary>
         /// hidFloorThickness control.

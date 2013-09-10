@@ -3528,6 +3528,8 @@ namespace SunspaceDealerDesktop
             List<Wall> listOfWalls = new List<Wall>();
 
             int existingWallCount = 0;
+            Session.Add("roomWidth", hidRoomWidth);
+            Session.Add("roomProjection", hidRoomProjection);
 
             for (int i = 1; i <= strWalls.Length; i++)
             {
