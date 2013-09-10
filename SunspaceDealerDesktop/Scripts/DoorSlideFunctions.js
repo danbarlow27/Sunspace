@@ -510,25 +510,26 @@ function fillWallWithDoorMods(type, wallNumber) {
         return;
     }
 
-    var boxHeaderSpace = 0;
-    if (walls[wallNumber].boxHeader == "Left" || walls[wallNumber].boxHeader == "Right") {
-        boxHeaderSpace += BOXHEADER_LENGTH;
+    var totalDoorSpace = door.fwidth;
+    if (door.boxHeader == "Left" || door.boxHeader == "Right") {
+        totalDoorSpace += BOXHEADER_LENGTH;
     }
-    else if (walls[wallNumber].boxHeader == "Both") {
-        boxHeaderSpace += BOXHEADER_LENGTH * 2;
+    else if (door.boxHeader == "Both") {
+        totalDoorSpace += BOXHEADER_LENGTH * 2;
     }
 
-    //***USE SAME FORMULA TO GET # DOORS, * BOXHEADER, RE-DO
+    console.log(walls[wallNumber].length + " - " + walls[wallNumber].rightFiller + " - " + walls[wallNumber].leftFiller + " / " + (totalDoorSpace));
 
-    console.log("Length: " + walls[wallNumber].length);
-    console.log("Right Filler: " + walls[wallNumber].rightFiller);
-    console.log("Left Filler: " + walls[wallNumber].leftFiller);
     //Variable to hold the amount of doors that can't fit within the specified wall
-    var amountOfDoors = parseInt((walls[wallNumber].length - walls[wallNumber].rightFiller - walls[wallNumber].leftFiller) / (door.fwidth+boxHeaderSpace));
-    console.log("Amount of doors: " + amountOfDoors);
+    var amountOfDoors = parseInt((walls[wallNumber].length - walls[wallNumber].rightFiller - walls[wallNumber].leftFiller) / (totalDoorSpace));
+
+    console.log("(" + walls[wallNumber].length + " - " + walls[wallNumber].rightFiller + " - " + walls[wallNumber].leftFiller + ")" + " - " + "(" + amountOfDoors + " * " + totalDoorSpace + ")" + " / " + 2);
     //Gets the amount of filler to put on both sides to center the doors and change the start position
-    var padding = parseFloat(((walls[wallNumber].length - walls[wallNumber].rightFiller - walls[wallNumber].leftFiller) - (amountOfDoors * (door.fwidth + boxHeaderSpace))) / 2);
-    console.log("Padding: " + padding);
+    var padding = parseFloat(((walls[wallNumber].length - walls[wallNumber].rightFiller - walls[wallNumber].leftFiller) - (amountOfDoors * (totalDoorSpace))) / 2);
+    var temp = validateDecimal(padding);
+
+    padding = parseFloat(temp[0]) + parseFloat(temp[1]);
+
     //Holds the padding to later be incremented
     var currentPosition = padding;
 
@@ -536,7 +537,9 @@ function fillWallWithDoorMods(type, wallNumber) {
         var newDoor = $.extend(true, {}, door); 
         newDoor.position = currentPosition;
         insertMod(newDoor, walls[wallNumber]);
-        currentPosition += door.fwidth;
+        currentPosition += totalDoorSpace;
+        console.log("Position placed: " + newDoor.position);
+        console.log("Next Position: " + currentPosition);
     }
 
     //Update total space left in the wall
