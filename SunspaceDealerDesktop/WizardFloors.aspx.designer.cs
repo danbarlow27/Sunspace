@@ -49,6 +49,42 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddlFloorType;
         
         /// <summary>
+        /// lblWidth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblWidth;
+        
+        /// <summary>
+        /// txtWidthDisplay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtWidthDisplay;
+        
+        /// <summary>
+        /// lblPagerProjection control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPagerProjection;
+        
+        /// <summary>
+        /// txtProjectionDisplay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtProjectionDisplay;
+        
+        /// <summary>
         /// lblFloorThickness control.
         /// </summary>
         /// <remarks>
@@ -103,31 +139,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Button btnQuestion1;
         
         /// <summary>
-        /// lblFloorDetails control.
+        /// lblPagerSquareFootage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFloorDetails;
+        protected global::System.Web.UI.WebControls.Label lblPagerSquareFootage;
         
         /// <summary>
-        /// lblFloorDetailsAnswer control.
+        /// lblPagerSquareFootageDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFloorDetailsAnswer;
-        
-        /// <summary>
-        /// lblErrorMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErrorMessage;
+        protected global::System.Web.UI.WebControls.Label lblPagerSquareFootageDisplay;
         
         /// <summary>
         /// hidFloorBoolean control.

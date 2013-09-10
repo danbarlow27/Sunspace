@@ -38,7 +38,8 @@
 
         //Function calls to occur when the document is ready/loaded
         $(document).ready(function () {
-            floorTypeDisplay();            
+            floorTypeDisplay();
+            checkFloors();
         });
 
         /**
@@ -120,19 +121,39 @@
         */
         function checkFloors()
         {
-                document.getElementById('<%=hidFloorBoolean.ClientID%>').value = true;
-                document.getElementById('<%=hidFloorType.ClientID%>').value = $('#<%=ddlFloorType.ClientID%>').val();
-                document.getElementById('<%=hidFloorThickness.ClientID%>').value = $('#<%=ddlFloorThickness.ClientID%>').val();
+            document.getElementById('<%=hidFloorBoolean.ClientID%>').value = true;
+            document.getElementById('<%=hidFloorType.ClientID%>').value = $('#<%=ddlFloorType.ClientID%>').val();
+            document.getElementById('<%=hidFloorThickness.ClientID%>').value = $('#<%=ddlFloorThickness.ClientID%>').val();
 
-                if ($('#<%=chkVapourBarrier.ClientID%>').is(':checked'))
-                    document.getElementById('<%=hidFloorVapourBarrier.ClientID%>').value = true;
-                else
-                    document.getElementById('<%=hidFloorVapourBarrier.ClientID%>').value = false;                
+            if ($('#<%=chkVapourBarrier.ClientID%>').is(':checked'))
+                document.getElementById('<%=hidFloorVapourBarrier.ClientID%>').value = true;
+            else
+                document.getElementById('<%=hidFloorVapourBarrier.ClientID%>').value = false;                
 
-                $('#<%=lblFloorDetailsAnswer.ClientID%>').text(document.getElementById('<%=hidFloorType.ClientID%>').value + ' Floor Added');
-                document.getElementById('pagerOne').style.display = 'inline';
-                document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
+            $('#<%=txtWidthDisplay.ClientID%>').val(findFloorWidth());
+            $('#<%=txtProjectionDisplay.ClientID%>').val(findFloorProjection());
+            $('#<%=lblPagerSquareFootageDisplay.ClientID%>').text(findSquareFootage(findFloorWidth(), findFloorProjection()) + "\'");
+            document.getElementById('pagerOne').style.display = 'inline';
+            document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
+
         }
+
+        function findSquareFootage(width, projection)
+        {
+            var squareFootage = (parseFloat(width) / 12) * (parseFloat(projection) / 12);
+
+            return squareFootage.toFixed(2);
+        }
+
+       <%--
+        function updateSquareFootage()
+        {
+            
+            $('#<%=lblPagerSquareFootageDisplay.ClientID%>').text(findSquareFootage(parseFloat($('<%=txtWidthDisplay.ClientID%>'.val())), parseFloat($('<%=txtProjectionDisplay.ClientID%>').val())) + "\'");
+        
+        }
+        --%>
+
     </script>
 
     <%-- SLIDES (QUESTION)
@@ -153,7 +174,7 @@
                             <ul class="toggleOptions">
                                 <li>
                                     <asp:Table ID="tblFloors" CssClass="tblTxtFields" runat="server">
-
+                                        
                                         <asp:TableRow style="display:inherit">
                                             <asp:TableCell>
                                                 <asp:Label ID="lblFloorType" AssociatedControlID="ddlFloorType" runat="server" Text="Type:"></asp:Label>
@@ -163,6 +184,27 @@
                                                 <asp:DropDownList ID="ddlFloorType" onchange="floorTypeDisplay(); checkFloors()" runat="server"></asp:DropDownList>
                                             </asp:TableCell>
                                         </asp:TableRow>
+
+                                        <asp:TableRow style="display:inherit">  
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblWidth" runat="server" Text="Floor Width: "></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtWidthDisplay" CssClass="txtField txtInput" Width="60" runat="server" Text="" onchange="updateSquareFootage()"></asp:TextBox>"
+                                            </asp:TableCell>  
+                                        </asp:TableRow>
+
+                                        <asp:TableRow style="display:inherit">  
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblPagerProjection" runat="server" Text="Floor Projection: "></asp:Label>
+                                            </asp:TableCell>
+
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtProjectionDisplay" CssClass="txtField txtInput" Width="60" runat="server" Text="" onchange="updateSquareFootage()"></asp:TextBox>"
+                                            </asp:TableCell>  
+                                        </asp:TableRow>
+                                        
                                         <asp:TableRow style="display:inherit">
                                             <asp:TableCell>
                                                 <asp:Label ID="lblFloorThickness" AssociatedControlID="ddlFloorThickness" runat="server" Text="Thickness:"></asp:Label>
@@ -188,10 +230,10 @@
                             </ul>
                         </div>
                 <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion1" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion1" Enabled="false" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Confirm" />
 
             </div> 
-            <%-- end #slide1 --%>        
+            <%-- end #slide1 --%>            
 
         </div> <%-- end .slide-wrapper --%>
 
@@ -215,16 +257,14 @@
                     <div style="display: none" id="pagerOne">
                         <li>
                             <a href="#" data-slide="#slide1" class="slidePanel">
-                                <asp:Label ID="lblFloorDetails" runat="server" Text="Floor Details"></asp:Label>
-                                <asp:Label ID="lblFloorDetailsAnswer" runat="server" Text=""></asp:Label>
+                                <asp:Label ID="lblPagerSquareFootage" runat="server" Text="Floor Square Footage"></asp:Label>
+                                <asp:Label ID="lblPagerSquareFootageDisplay" runat="server" Text=""></asp:Label>
                             </a>
                         </li>
                     </div>                   
                 </ul>    
             </div>    
         </div>
-
-        <asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label"></asp:Label> 
     </div>
 
     <input id="hidFloorBoolean" type="hidden" runat="server" />
