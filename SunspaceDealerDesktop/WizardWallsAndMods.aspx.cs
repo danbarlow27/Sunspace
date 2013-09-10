@@ -552,6 +552,35 @@ namespace SunspaceDealerDesktop
 
             if (isGable)
             {
+                #region Table Row # Side Walls Same Height
+                TableRow sideWallsRow = new TableRow();
+                TableCell sideWallsLabelCell = new TableCell();
+                TableCell sideWallsCheckAutoHeightCell = new TableCell();
+
+                Label sideWallsLabel = new Label();
+                sideWallsLabel.ID = "lblSideWalls";
+                sideWallsLabel.Text = "Side Walls Same Height:";
+
+                CheckBox sideWallsAutoHeight = new CheckBox();
+                sideWallsAutoHeight.ID = "chkAutoWalls";
+                sideWallsAutoHeight.Checked = false;
+
+                Label sideWallsCheckLabel = new Label();
+                sideWallsCheckLabel.ID = "lblCheckWallsSAmeClickable";
+                sideWallsCheckLabel.AssociatedControlID = "chkAutoWalls";
+                #endregion
+
+                #region Table Row # Side Walls Same Height
+                sideWallsLabelCell.Controls.Add(sideWallsLabel);
+                sideWallsCheckAutoHeightCell.Controls.Add(sideWallsAutoHeight);
+                sideWallsCheckAutoHeightCell.Controls.Add(sideWallsCheckLabel);
+                //sideWallsCheckAutoHeightCell.Controls.Add(sideWallsTextLabel);
+
+                tblWallHeights.Rows.Add(sideWallsRow);
+
+                sideWallsRow.Cells.Add(sideWallsLabelCell);
+                sideWallsRow.Cells.Add(sideWallsCheckAutoHeightCell);
+                #endregion
 
                 #region Table Row # Left Wall Height
                 TableRow leftWallHeightRow = new TableRow();
@@ -768,31 +797,6 @@ namespace SunspaceDealerDesktop
                 rightRoofSlopeLabel.AssociatedControlID = "txtRightRoofSlope";
                 #endregion
 
-                #region Table Row # Side Walls Same Height
-                TableRow sideWallsRow = new TableRow();
-                TableCell sideWallsLabelCell = new TableCell();
-                TableCell sideWallsCheckAutoHeightCell = new TableCell();
-
-                Label sideWallsLabel = new Label();
-                sideWallsLabel.ID = "lblSideWalls";
-                sideWallsLabel.Text = "Side Walls Same Height:";
-
-                CheckBox sideWallsAutoHeight = new CheckBox();
-                sideWallsAutoHeight.ID = "chkAutoWalls";
-                sideWallsAutoHeight.Checked = false;
-                sideWallsAutoHeight.Attributes.Add("onclick", "sameWallHeight()");
-
-                Label sideWallsCheckLabel = new Label();
-                sideWallsCheckLabel.ID = "lblCheckWallsSAmeClickable";
-                sideWallsCheckLabel.AssociatedControlID = "chkAutoWalls";
-
-                //Label sideWallsTextLabel = new Label();
-                //sideWallsTextLabel.ID = "lblCheckWallsSameText";
-                //sideWallsTextLabel.AssociatedControlID = "chkAutoWalls";
-                //sideWallsTextLabel.Text = "Side Walls Same Height:";
-                #endregion
-
-
                 #region Table Row # Back Wall Height Added
                 leftWallLabelCell.Controls.Add(leftWallLabel);
                 leftWallTextboxCell.Controls.Add(leftWallTextbox);
@@ -867,18 +871,6 @@ namespace SunspaceDealerDesktop
                 rightRoofSlopeRow.Cells.Add(rightRoofSlopeLabelCell);
                 rightRoofSlopeRow.Cells.Add(rightRoofSlopeTextboxCell);
                 rightRoofSlopeRow.Cells.Add(rightRoofSlopeRunLabelCell);
-                #endregion
-
-                #region Table Row # Side Walls Same Height
-                sideWallsLabelCell.Controls.Add(sideWallsLabel);
-                sideWallsCheckAutoHeightCell.Controls.Add(sideWallsAutoHeight);
-                sideWallsCheckAutoHeightCell.Controls.Add(sideWallsCheckLabel);
-                //sideWallsCheckAutoHeightCell.Controls.Add(sideWallsTextLabel);
-
-                tblWallHeights.Rows.Add(sideWallsRow);
-
-                sideWallsRow.Cells.Add(sideWallsLabelCell);
-                sideWallsRow.Cells.Add(sideWallsCheckAutoHeightCell);
                 #endregion
 
                 string hiddenString = "";

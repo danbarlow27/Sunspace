@@ -726,6 +726,12 @@
             //document.getElementById('MainContent_btnQuestion1').disabled = false;
             //document.getElementById('MainContent_btnQuestion2').disabled = false;
             //document.getElementById('MainContent_btnQuestion3').disabled = false;
+            if ($('#MainContent_chkAutoWalls').prop('checked')) {
+                {
+                    //var theValue = $('#MainContent_txtLeftWallHeight').val();
+                    document.getElementById("MainContent_txtRightWallHeight").value = $('#MainContent_txtLeftWallHeight').val();
+                }
+            }
 
             var isValid = false; //to do valid input or invalid input logic
             var answer = ""; //answer to be displayed on the side panel
@@ -735,6 +741,7 @@
 
                 //if user wants to auto calculate the slope
                 if (document.getElementById("MainContent_radAutoRoofSlope").checked) {
+                    
                     //we have front wall height and back wall height, calculate slope
                     if (!isNaN(document.getElementById("MainContent_txtLeftWallHeight").value) //if the other textbox values are valid
                         && document.getElementById("MainContent_txtLeftWallHeight").value > 0
@@ -1071,23 +1078,6 @@
                 {
                     document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You may not have a roof with this right projection\n";
                 }
-            }
-        }
-
-        function sameWallHeight() {
-
-            if ($('#MainContent_chkAutoWalls').prop('checked')) {
-                if ($('#MainContent_txtLeftWallHeight').val() == "") {
-                    $('#MainContent_txtLeftWallHeight').val($('#MainContent_txtRightWallHeight').val());
-                }
-                else {
-                    $('#MainContent_txtRightWallHeight').val($('#MainContent_txtLeftWallHeight').val());
-                }
-
-                $('#MainContent_txtRightWallHeight').attr('disabled', 'disabled');
-            }
-            else {
-                $('#MainContent_txtRightWallHeight').removeAttr('disabled');
             }
         }
         
