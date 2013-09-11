@@ -1192,6 +1192,7 @@
                                 if (walls[i].mods[j].boxHeader == "Right" || walls[i].mods[j].boxHeader == "Both")
                                 {
                                     console.log("Right or both boxheader, increasing location from " + currentLocation + " to " + (currentLocation+BOXHEADER_LENGTH));
+                                    currentLocation += BOXHEADER_LENGTH;
                                 }
                                 
                                 areaPositionCounter++;
