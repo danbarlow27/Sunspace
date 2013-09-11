@@ -459,10 +459,34 @@ namespace SunspaceDealerDesktop
 
             //build roof objects
             float numberOfPanels = (float)Math.Ceiling(roofWidth / panelWidth); //If it requires 'part' of a panel, that is essentially another panel, just cut. Cut will be handled later.
-                        
+
+            float gablePosition;
+            float projectionOne;
+            float projectionTwo;
+
             //lets start making a list of roof items
             List<RoofItem> itemList = new List<RoofItem>();
             List<RoofItem> gableList = new List<RoofItem>();
+
+            List<Wall> listOfWalls = (List<Wall>)Session["listOfWalls"];
+            //Find the distance from the left side of the entire front side the gable post is located
+            for (int i = 0; i < listOfWalls.Count; i++)
+            {
+                //CHANGE ME IF WALLTYPE USES DIFFERENT VALUES
+                if (listOfWalls[i].WallType == "GP")
+                {
+                    //Since a gable must be wall-post-wall, we can assume these values
+                    //are true
+                    gablePosition = listOfWalls[i - 1].Length;
+                    projectionOne = (listOfWalls[i - 1].EndHeight - listOfWalls[i - 1].StartHeight) / gablePosition;
+                    projectionTwo =(listOfWalls[i + 1].StartHeight - listOfWalls[i + 1].EndHeight) / listOfWalls[i + 1].Length;
+                }
+                if (listOfWalls[i].WallType == "FGW")
+                {
+                    //CHANGEME need this for full gable wall
+                    //gablePosition = something;
+                }
+            }
 
             if (hidSystem.Value != "Thermadeck")
             {

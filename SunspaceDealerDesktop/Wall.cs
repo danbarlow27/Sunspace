@@ -23,7 +23,7 @@ namespace SunspaceDealerDesktop
         private float totalCornerLength;
         private float totalReceiverLength;
         //private float slope; //slope of the roof that is sitting on this wall
-        List<Object> linearItems = new List<Object>();
+        List<LinearItem> linearItems = new List<LinearItem>();
         List<Object> obstructions = new List<Object>();
         //colours?
 
@@ -373,7 +373,7 @@ namespace SunspaceDealerDesktop
         //    }
         //}
 
-        public List<Object> LinearItems
+        public List<LinearItem> LinearItems
         {
             get
             {
