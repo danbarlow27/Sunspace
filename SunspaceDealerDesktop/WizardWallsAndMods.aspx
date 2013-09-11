@@ -1209,7 +1209,7 @@
                                 if (walls[i].mods[j].boxHeader == "Left" || walls[i].mods[j].boxHeader == "Both")
                                 {
                                     console.log("Left or both boxheader found, decreasing size from " + wallAreaArray[wallPositionCounter][areaPositionCounter] + " to " + (wallAreaArray[wallPositionCounter][areaPositionCounter] - BOXHEADER_LENGTH));
-                                    wallAreaArray[wallPositionCounter][areaPositionCounter] -= BOXHEADER_LENGTH;
+                                    wallAreaArray[wallPositionCounter][areaPositionCounter] -= parseFloat(BOXHEADER_LENGTH * 2);
                                 }
 
                                 areaPositionCounter++;
