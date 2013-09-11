@@ -461,8 +461,8 @@ namespace SunspaceDealerDesktop
             float numberOfPanels = (float)Math.Ceiling(roofWidth / panelWidth); //If it requires 'part' of a panel, that is essentially another panel, just cut. Cut will be handled later.
 
             float gablePosition;
-            float projectionOne;
-            float projectionTwo;
+            float projectionOne=0f;
+            float projectionTwo=0f;
 
             //lets start making a list of roof items
             List<RoofItem> itemList = new List<RoofItem>();
@@ -491,14 +491,14 @@ namespace SunspaceDealerDesktop
             if (hidSystem.Value != "Thermadeck")
             {
                 //Add the first panel, because if we loop adding panel+seperator, we will end with one extra
-                //We use roofProjection/2 for the following, because this is just one side of the gable roof, thus half the projection
-                itemList.Add(new RoofItem(panelType, roofProjection / 2, panelWidth));
+                //We use roofProjection / 2 for the following, because this is just one side of the gable roof, thus half the projection
+                itemList.Add(new RoofItem(panelType, projectionOne, panelWidth));
 
                 //loop adding seperator then panels, minus one iteration because one panel is already added
                 for (int i = 0; i < (numberOfPanels - 1); i++)
                 {
-                    itemList.Add(new RoofItem(panelBeamType, roofProjection/2, (float)panelBeamWidth));
-                    itemList.Add(new RoofItem(panelType, roofProjection / 2, panelWidth));
+                    itemList.Add(new RoofItem(panelBeamType, projectionOne, (float)panelBeamWidth));
+                    itemList.Add(new RoofItem(panelType, projectionOne, panelWidth));
                 }
             }
             //if it is thermadeck
@@ -506,7 +506,7 @@ namespace SunspaceDealerDesktop
             {
                 for (int i = 0; i < numberOfPanels; i++)
                 {
-                    itemList.Add(new RoofItem(panelType, roofProjection / 2, panelWidth));
+                    itemList.Add(new RoofItem(panelType, projectionOne, panelWidth));
                 }
             }
             float itemWidthTotal = 0;
@@ -536,7 +536,7 @@ namespace SunspaceDealerDesktop
             }
 
             List<RoofModule> moduleList = new List<RoofModule>();
-            RoofModule aModule = new RoofModule(roofProjection / 2, roofWidth, panelInteriorSkin, panelExteriorSkin, itemList);
+            RoofModule aModule = new RoofModule(projectionOne, roofWidth, panelInteriorSkin, panelExteriorSkin, itemList);
             moduleList.Add(aModule);
 
             //We make a second module with the reverse roof items, because the gable is mirrored on the other side
@@ -545,7 +545,13 @@ namespace SunspaceDealerDesktop
                 gableList.Add(itemList[i]);
             }
 
-            RoofModule aSecondModule = new RoofModule(roofProjection / 2, roofWidth, panelInteriorSkin, panelExteriorSkin, gableList);
+            //Now set the duplication to their actual projections
+            for (int i = 0; i< gableList.Count; i++)
+            {
+                gableList[i].Projection = projectionTwo;
+            }
+
+            RoofModule aSecondModule = new RoofModule(projectionTwo, roofWidth, panelInteriorSkin, panelExteriorSkin, gableList);
 
             moduleList.Add(aSecondModule);
 

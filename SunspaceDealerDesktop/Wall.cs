@@ -209,7 +209,7 @@ namespace SunspaceDealerDesktop
         }
         */
 
-        public void addToItemList(Object anObject)
+        public void addToItemList(LinearItem anObject)
         {
             linearItems.Add(anObject);
         }
