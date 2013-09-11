@@ -7,6 +7,6 @@
     <asp:Label ID="lblDealers" runat="server"></asp:Label>
     <asp:DropDownList id="ddlDealers" runat="server"></asp:DropDownList>
     <br />
-    <asp:Button ID="btnDealers" runat="server" Text="Spoof" OnClick="btnDealers_Click" />
+    <asp:Button ID="btnDealers" runat="server" Text="Spoof" CssClass="btnSubmit" OnClick="btnDealers_Click" />
     <asp:SqlDataSource ID="sdsDealers" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [users]"></asp:SqlDataSource>
 </asp:Content>

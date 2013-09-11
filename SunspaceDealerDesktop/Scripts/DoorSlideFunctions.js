@@ -497,8 +497,8 @@ function fillWallWithDoorMods(type, wallNumber) {
         //Find the frame size
         //var frameSize = door.fwidth - door.width;
         //Set the dimensions
-        door.fwidth = walls[wallNumber].length - walls[wallNumber].leftFiller - walls[wallNumber].rightFiller;
-        door.width = door.fwidth; // - frameSize
+        door.mwidth = walls[wallNumber].length - walls[wallNumber].leftFiller - walls[wallNumber].rightFiller;
+        door.width = door.mwidth; // - frameSize
     }
     
     //If validation fails, perform block
@@ -510,7 +510,7 @@ function fillWallWithDoorMods(type, wallNumber) {
         return;
     }
 
-    var totalDoorSpace = door.fwidth;
+    var totalDoorSpace = door.mwidth;
     if (door.boxHeader == "Left" || door.boxHeader == "Right") {
         totalDoorSpace += BOXHEADER_LENGTH;
     }
