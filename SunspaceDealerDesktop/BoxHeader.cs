@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SunspaceDealerDesktop
 {
-    public class BoxHeader
+    public class BoxHeader : LinearItem
     {
         #region Attributes
         private float width;
@@ -19,6 +19,8 @@ namespace SunspaceDealerDesktop
         /// <param name="receiever">true if this is a boxHeader receiever, otherwise false.</param>
         public BoxHeader(bool receiever)
         {
+            this.ItemType = "BoxHeader";
+
             if (receiever == true)
             {
                 Length = Constants.BOXHEADER_RECEIVER_LENGTH;
@@ -28,8 +30,15 @@ namespace SunspaceDealerDesktop
                 Length = Constants.BOXHEADER_LENGTH;
             }
         }
+        /// <summary>
+        /// Instantiate a new boxHeader at constant lengths, based on true/false whether or not it is a boxHeader/Receiever piece.
+        /// </summary>
+        /// <param name="receiever">true if this is a boxHeader receiever, otherwise false.</param>
+        /// <param name="sentWidth">in case of any custom width boxheader, this is available.</param>
         public BoxHeader(bool receiever, float sentWidth)
         {
+            this.ItemType = "BoxHeader";
+
             if (receiever == true)
             {
                 Length = Constants.BOXHEADER_RECEIVER_LENGTH;

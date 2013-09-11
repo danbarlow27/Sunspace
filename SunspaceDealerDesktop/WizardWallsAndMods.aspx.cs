@@ -3563,7 +3563,7 @@ namespace SunspaceDealerDesktop
             for (int i = 1; i <= strWalls.Length; i++)
             {
                 //A list of linear items to be added to each wall
-                List<Object> linearItems = new List<Object>();
+                List<LinearItem> linearItems = new List<LinearItem>();
 
                 if (wallDetails[i-1, 4] == "P")
                 {

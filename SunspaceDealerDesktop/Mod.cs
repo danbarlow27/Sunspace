@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SunspaceDealerDesktop
 {
-    public class Mod
+    public class Mod : LinearItem
     {
         #region Attributes
 
@@ -24,6 +24,7 @@ namespace SunspaceDealerDesktop
 
         public Mod()
         {
+            this.ItemType = "Mod";
             LinearIndex = 0;
             Sunshade = false;
             FixedLocation = 0.0f;
