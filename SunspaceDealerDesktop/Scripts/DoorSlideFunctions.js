@@ -486,7 +486,6 @@ function doorKickplateStyle(type, wallNumber) {
 *@param wallNumber - holds an integer to know which wall is currently being affected
 */
 function fillWallWithDoorMods(type, wallNumber) {
-
     //Call to createDoorObject returns object stored into door variable
     var door = createDoorObject(wallNumber, type);
 
@@ -515,7 +514,7 @@ function fillWallWithDoorMods(type, wallNumber) {
         totalDoorSpace += BOXHEADER_LENGTH;
     }
     else if (door.boxHeader == "Both") {
-        totalDoorSpace += BOXHEADER_LENGTH * 2;
+        totalDoorSpace += parseFloat(BOXHEADER_LENGTH * 2);
     }
 
     console.log(walls[wallNumber].length + " - " + walls[wallNumber].rightFiller + " - " + walls[wallNumber].leftFiller + " / " + (totalDoorSpace));
