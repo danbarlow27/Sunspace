@@ -1354,7 +1354,7 @@ namespace SunspaceDealerDesktop
                                             + "default_filler=" + txt100DefaultFiller.Text + ", "
                                             + "interior_panel_skin='" + ddl100InteriorPanelSkin.SelectedValue + "', "
                                             + "exterior_panel_skin='" + ddl100ExteriorPanelSkin.SelectedValue + "', "
-                                            + "frame_colour='" + ddl100FrameColour.SelectedValue + "', "
+                                            + "interior_frame_colour='" + ddl100FrameColour.SelectedValue + "', "
                                             + "door_type='" + ddl100DoorType.SelectedValue + "', "
                                             + "door_style='" + ddl100DoorStyle.SelectedValue + "', "
                                             + "door_swing='" + ddl100DoorSwing.SelectedValue + "', "

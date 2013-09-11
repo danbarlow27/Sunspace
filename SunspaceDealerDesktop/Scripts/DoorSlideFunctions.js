@@ -648,7 +648,7 @@ function totalSpaceLeftInWall(wall) {
             totalSpace -= BOXHEADER_LENGTH;
         }
         else if (wall.mods[wallSpace].boxHeader == "Both") {
-            totalSpace -= BOXHEADER_LENGTH;
+            totalSpace -= parseFloat(BOXHEADER_LENGTH*2);
         }
     }
 
