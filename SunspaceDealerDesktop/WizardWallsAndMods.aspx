@@ -1259,10 +1259,17 @@
                 for (var j=0;j<wallAreaArray[i].length;j++)
                 {
                     var validatedWindow = validateWindowModSize(wallAreaArray[i][j]);
-                    document.getElementById("MainContent_lblOutputArea" + i).innerHTML += "Sizes: " + validatedWindow[0] + ", Number of windows: " + validatedWindow[1] + ", Remaining filler: " + validatedWindow[2] + "<br/>";
-                    html = "<input id=\"hidWall" + (i+1+existingWallCount) + "WindowInfo" + (j+1) + "\" type=\"hidden\" name=\"hidWall" + (i+1+existingWallCount) + "WindowInfo" + (j+1) + "\"/>";
-                    document.getElementById("MainContent_hiddenFieldsDiv").innerHTML += html;
-                    document.getElementById("hidWall" + (i+1+existingWallCount) + "WindowInfo" + (j+1)).value += validatedWindow[0] + "," + validatedWindow[1] + "," + validatedWindow[2] + ",";
+                    console.log("Checking for 0");
+                    //Only display an area if it's more than a 0 area
+                    if (validatedWindow[0] >= 0)
+                    {
+                        console.log(">=0, valid");
+                        console.log(validatedWindow[0] + ", " + validatedWindow[1] + ", " + validatedWindow[2]);
+                        document.getElementById("MainContent_lblOutputArea" + i).innerHTML += "Sizes: " + validatedWindow[0] + ", Number of windows: " + validatedWindow[1] + ", Remaining filler: " + validatedWindow[2] + "<br/>";
+                        html = "<input id=\"hidWall" + (i+1+existingWallCount) + "WindowInfo" + (j+1) + "\" type=\"hidden\" name=\"hidWall" + (i+1+existingWallCount) + "WindowInfo" + (j+1) + "\"/>";
+                        document.getElementById("MainContent_hiddenFieldsDiv").innerHTML += html;
+                        document.getElementById("hidWall" + (i+1+existingWallCount) + "WindowInfo" + (j+1)).value += validatedWindow[0] + "," + validatedWindow[1] + "," + validatedWindow[2] + ",";
+                    }
                 }
             }
 
