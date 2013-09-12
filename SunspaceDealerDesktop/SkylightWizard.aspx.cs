@@ -15,8 +15,28 @@ namespace SunspaceDealerDesktop
         public string panelSizes;
         public float SKYLIGHT_WIDTH = Constants.SKYLIGHT_WIDTH;
 
+        protected ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
+        protected ListItem lst18 = new ListItem("1/8", ".125");
+        protected ListItem lst14 = new ListItem("1/4", ".25");
+        protected ListItem lst38 = new ListItem("3/8", ".375");
+        protected ListItem lst12 = new ListItem("1/2", ".5");
+        protected ListItem lst58 = new ListItem("5/8", ".625");
+        protected ListItem lst34 = new ListItem("3/4", ".75");
+        protected ListItem lst78 = new ListItem("7/8", ".875");
+
+        protected DropDownList genericDropdown = new DropDownList();
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            genericDropdown.Items.Add(lst0);
+            genericDropdown.Items.Add(lst18);
+            genericDropdown.Items.Add(lst14);
+            genericDropdown.Items.Add(lst38);
+            genericDropdown.Items.Add(lst12);
+            genericDropdown.Items.Add(lst58);
+            genericDropdown.Items.Add(lst34);
+            genericDropdown.Items.Add(lst78);
+
             if (!IsPostBack)
             {
                 //for both
@@ -121,9 +141,15 @@ namespace SunspaceDealerDesktop
 
                         TextBox txtFanBeam = new TextBox();
                         txtFanBeam.ID = "txtFanBeam" + panelsProcessed;
+                        txtFanBeam.MaxLength = 3;
                         txtFanBeam.Attributes.Add("onkeyup", "skylightWizardCheckQuestion1()");
                         txtFanBeam.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                         panelOptionPlaceholder.Controls.Add(txtFanBeam);
+
+                        DropDownList ddlFanBeamInches = genericDropdown;
+                        ddlFanBeamInches.ID = "ddlFanBeam" + panelsProcessed;
+                        ddlFanBeamInches.Attributes.Add("OnChange", "skylightWizardCheckQuestion1()");
+                        panelOptionPlaceholder.Controls.Add(ddlFanBeamInches);
 
                         Button btnFanBeamCenter = new Button();
                         btnFanBeamCenter.ID = "btnFanBeamCenter" + panelsProcessed;
@@ -161,9 +187,15 @@ namespace SunspaceDealerDesktop
 
                         TextBox txtSkylight = new TextBox();
                         txtSkylight.ID = "txtSkylight" + panelsProcessed;
+                        txtSkylight.MaxLength = 3;
                         txtSkylight.Attributes.Add("onkeyup", "skylightWizardCheckQuestion1()");
                         txtSkylight.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                         panelOptionPlaceholder.Controls.Add(txtSkylight);
+
+                        DropDownList ddlSkylightInches = genericDropdown;
+                        ddlFanBeamInches.ID = "ddlFanBeam" + panelsProcessed;
+                        ddlFanBeamInches.Attributes.Add("OnChange", "skylightWizardCheckQuestion1()");
+                        panelOptionPlaceholder.Controls.Add(ddlFanBeamInches);
 
                         Button btnSkylightCenter = new Button();
                         btnSkylightCenter.ID = "btnSkylightCenter" + panelsProcessed;

@@ -182,7 +182,7 @@ function validateWindowModSize(space/*, size, number, wall, start*/) {
     //Set space remaining equal to amount lost via rounding
     //spaceRemaining += finalWindowSize - roundedWindowSize;
     spaceRemaining = space - (roundedWindowSize * windowCounter);
-
+    
     //Need to return space * windowcounter, since we lost that amount PER WINDOW
     var anArray = new Array(roundedWindowSize, windowCounter, spaceRemaining /* * windowCounter */);
     return (anArray);

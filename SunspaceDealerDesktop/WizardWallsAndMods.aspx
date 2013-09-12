@@ -1265,7 +1265,25 @@
                     {
                         console.log(">=0, valid");
                         console.log(validatedWindow[0] + ", " + validatedWindow[1] + ", " + validatedWindow[2]);
-                        document.getElementById("MainContent_lblOutputArea" + i).innerHTML += "Sizes: " + validatedWindow[0] + ", Number of windows: " + validatedWindow[1] + ", Remaining filler: " + validatedWindow[2] + "<br/>";
+
+                        document.getElementById("MainContent_lblOutputArea" + i).innerHTML += "Sizes: " + validatedWindow[0] + ", Number of windows: " + validatedWindow[1];
+
+                        if (validatedWindow[2] >0)
+                        {
+                            if (validatedWindow[1] > 0)
+                            {
+                                document.getElementById("MainContent_lblOutputArea" + i).innerHTML += ", Remaining filler: " + validatedWindow[2] + " added to window number " + Math.ceil(validatedWindow[1] /2 ) + "<br/>";
+                            }
+                            else
+                            {
+                                document.getElementById("MainContent_lblOutputArea" + i).innerHTML += ", Remaining filler: " + validatedWindow[2] + "<br/>";
+                            }
+                        }
+                        else
+                        {
+                            document.getElementById("MainContent_lblOutputArea" + i).innerHTML += "<br/>";
+                        }
+
                         html = "<input id=\"hidWall" + (i+1+existingWallCount) + "WindowInfo" + (j+1) + "\" type=\"hidden\" name=\"hidWall" + (i+1+existingWallCount) + "WindowInfo" + (j+1) + "\"/>";
                         document.getElementById("MainContent_hiddenFieldsDiv").innerHTML += html;
                         document.getElementById("hidWall" + (i+1+existingWallCount) + "WindowInfo" + (j+1)).value += validatedWindow[0] + "," + validatedWindow[1] + "," + validatedWindow[2] + ",";
@@ -1796,7 +1814,7 @@
                 </h1>        
                               
                 <ul class="toggleOptions">
-                    <asp:PlaceHolder ID="wallPreviewPlaceholder" runat="server"></asp:PlaceHolder>                    
+                    <asp:PlaceHolder ID="wallPreviewPlaceholder" runat="server"></asp:PlaceHolder>                   
                 </ul> 
 
                 <asp:Button ID="btnSubmit" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Submit" OnClick="btnSubmit_Click" />

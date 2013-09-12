@@ -335,7 +335,10 @@ namespace SunspaceDealerDesktop
         public static string[] DOOR_HARDWARE = { "Satin Silver", "Bright Brass", "Antique Brass" };
 
         public static string[] DOOR_POSITION = { "Left", "Center", "Right", "Custom" };
-        
+
+        public const float MIN_SLAB_SIZE = 25f;
+        public const float MAX_SLAB_SIZE = 42f;
+
         #endregion Doors
 
         #region Windows
