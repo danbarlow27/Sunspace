@@ -4,11 +4,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+    <script src="Scripts/GlobalFunctions.js"></script>
     <script>
+        var panelSizes = <%=panelSizes%>;
+
         function skylightWizardCheckQuestion1() {
             //If it gets set to false anywhere in check, we disable button
             var validInputs = true;
-            var panelSizes = <%=panelSizes%>;
+
             for (var i=1;i<=<%=totalPanels%>;i++)
             {
                 if ($('#MainContent_chkFanBeam'.concat(i)).is(':checked')){
@@ -16,7 +19,7 @@
 
                     //Can't be <12, because can't be within a foot of the edges
                     //skylightwidth+12 >panelSizes-12 because, the ending point of a skylight must be more than 1ft from ending edge of a panel
-                    if ($('#MainContent_txtFanBeam'+i).val() == "" || $('#MainContent_txtFanBeam'.concat(i)).val() < 12 || ($('#MainContent_txtFanBeam'.concat(i)).val()+<%=SKYLIGHT_WIDTH%>) > (panelSizes[i]-12)){
+                    if ($('#MainContent_txtFanBeam'+i).val() == "" || (parseFloat($('#MainContent_txtFanBeam'.concat(i)).val())+parseFloat($('#MainContent_ddlFanBeamInches').val())) < 12 || (parseFloat($('#MainContent_txtFanBeam'.concat(i)).val())+parseFloat($('#MainContent_ddlFanBeamInches'.concat(i)).val())+<%=SKYLIGHT_WIDTH%>) > (panelSizes[i]-12)){
                         //invalid fanbeam entry
                         validInputs = false;
                     }
@@ -28,7 +31,7 @@
                     document.getElementById('MainContent_hidHasSkylight'.concat(i)).value = "Yes";
 
                     //Can't be <12, because can't be within a foot of the edges
-                    if ($('#MainContent_txtSkylight'.concat(i)).val() == "" || $('#MainContent_txtSkylight'.concat(i)).val() < 12){
+                    if ($('#MainContent_txtSkylight'.concat(i)).val() == "" || (parseFloat($('#MainContent_txtSkylight'.concat(i)).val()) + parseFloat($('#MainContent_ddlSkylightInches'.concat(i)).val())) < 12){
                         //invalid fanbeam entry
                         validInputs = false;
                     }
@@ -40,32 +43,36 @@
                 if ($('#MainContent_txtFanBeam'.concat(i)).val() == "")
                 {
                     //error
+                    validInputs = false;
                 }
                 else
                 {
                     if (isNaN(parseFloat($('#MainContent_txtFanBeam'.concat(i)).val())))
                     {
                         //error
+                        validInputs = false;
                     }
                     else
                     {
-                        document.getElementById('MainContent_hidBeamStart'.concat(1)).value = parseFloat($('#MainContent_txtFanBeam'.concat(i)).val() + $('#MainContent_ddlFanBeamInches'.concat(i)).val());
+                        document.getElementById('MainContent_hidBeamStart'.concat(i)).value = (parseFloat($('#MainContent_txtFanBeam'.concat(i)).val()) + parseFloat($('#MainContent_ddlFanBeamInches'.concat(i)).val()));
                     }
                 }
 
-                if ($('#MainContent_txtSkylightStart'.concat(i)).val() == "")
+                if ($('#MainContent_txtSkylight'.concat(i)).val() == "")
                 {
                     //error
+                    validInputs = false;
                 }
                 else
                 {
-                    if (isNaN(parseFloat($('#MainContent_txtSkylightStart'.concat(i)).val())))
+                    if (isNaN(parseFloat($('#MainContent_txtSkylight'.concat(i)).val())))
                     {
                         //error
+                        validInputs = false;
                     }
                     else
                     {
-                        document.getElementById('MainContent_hidSkylightStart'.concat(1)).value = parseFloat($('#MainContent_txtSkylightStart'.concat(i)).val() + $('#MainContent_ddlSkylightInches'.concat(i)).val());
+                        document.getElementById('MainContent_hidSkylightStart'.concat(i)).value = parseFloat($('#MainContent_txtSkylight'.concat(i)).val()) + parseFloat($('#MainContent_ddlSkylightInches'.concat(i)).val());
                     }
                 }
             }
@@ -80,12 +87,20 @@
             }
         }
 
-        function skylightWizardCenterFanBeam(){
-
+        function skylightWizardCenterFanBeam(panelNumber){
+            console.log("Please center fan beam " + panelNumber);
+            
+            var temp = validateDecimal(panelSizes[panelNumber]/2);
+            document.getElementById("MainContent_txtFanBeam" + panelNumber).value = parseFloat(temp[0]) + parseFloat(temp[1]);
+            skylightWizardCheckQuestion1();
         }
 
-        function skylightWizardCenterSkylight(){
+        function skylightWizardCenterSkylight(panelNumber){
+            console.log("Please center skylight " + panelNumber);
 
+            var temp = validateDecimal(panelSizes[panelNumber]/2);
+            document.getElementById("MainContent_txtSkylight" + panelNumber).value = parseFloat(temp[0]) + parseFloat(temp[1]);
+            skylightWizardCheckQuestion1();
         }
     </script>
     <div class="slide-window"  >
@@ -100,7 +115,7 @@
                     <asp:PlaceHolder ID="panelOptionPlaceholder" runat="server"></asp:PlaceHolder> 
                 </ul>
                 
-                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" Enabled="false" OnClick="btnQuestion1_Click" />
+                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" OnClick="btnQuestion1_Click" />
             </div>
         </div>
     </div>

@@ -22,15 +22,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblType;
         
         /// <summary>
-        /// lblTest control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTest;
-        
-        /// <summary>
         /// radTraditional control.
         /// </summary>
         /// <remarks>
@@ -301,6 +292,15 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txtProjection;
         
         /// <summary>
+        /// ddlProjectionInches control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlProjectionInches;
+        
+        /// <summary>
         /// lblWidth control.
         /// </summary>
         /// <remarks>
@@ -317,6 +317,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtWidth;
+        
+        /// <summary>
+        /// ddlWidthInches control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlWidthInches;
         
         /// <summary>
         /// radManualNo control.
@@ -362,6 +371,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtOverhangLength;
+        
+        /// <summary>
+        /// ddlOverhangInches control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlOverhangInches;
         
         /// <summary>
         /// lblOverhangWarning control.

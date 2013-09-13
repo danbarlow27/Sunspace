@@ -24,19 +24,8 @@ namespace SunspaceDealerDesktop
         protected ListItem lst34 = new ListItem("3/4", ".75");
         protected ListItem lst78 = new ListItem("7/8", ".875");
 
-        protected DropDownList genericDropdown = new DropDownList();
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            genericDropdown.Items.Add(lst0);
-            genericDropdown.Items.Add(lst18);
-            genericDropdown.Items.Add(lst14);
-            genericDropdown.Items.Add(lst38);
-            genericDropdown.Items.Add(lst12);
-            genericDropdown.Items.Add(lst58);
-            genericDropdown.Items.Add(lst34);
-            genericDropdown.Items.Add(lst78);
-
             if (!IsPostBack)
             {
                 //for both
@@ -146,15 +135,23 @@ namespace SunspaceDealerDesktop
                         txtFanBeam.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                         panelOptionPlaceholder.Controls.Add(txtFanBeam);
 
-                        DropDownList ddlFanBeamInches = genericDropdown;
-                        ddlFanBeamInches.ID = "ddlFanBeam" + panelsProcessed;
+                        DropDownList ddlFanBeamInches = new DropDownList();
+                        ddlFanBeamInches.Items.Add(lst0);
+                        ddlFanBeamInches.Items.Add(lst18);
+                        ddlFanBeamInches.Items.Add(lst14);
+                        ddlFanBeamInches.Items.Add(lst38);
+                        ddlFanBeamInches.Items.Add(lst12);
+                        ddlFanBeamInches.Items.Add(lst58);
+                        ddlFanBeamInches.Items.Add(lst34);
+                        ddlFanBeamInches.Items.Add(lst78);
+                        ddlFanBeamInches.ID = "ddlFanBeamInches" + panelsProcessed;
                         ddlFanBeamInches.Attributes.Add("OnChange", "skylightWizardCheckQuestion1()");
                         panelOptionPlaceholder.Controls.Add(ddlFanBeamInches);
 
                         Button btnFanBeamCenter = new Button();
                         btnFanBeamCenter.ID = "btnFanBeamCenter" + panelsProcessed;
                         btnFanBeamCenter.Text = "Centered";
-                        btnFanBeamCenter.Attributes.Add("OnClick", "skylightWizardCenterFanBeam()");
+                        btnFanBeamCenter.Attributes.Add("OnClick", "skylightWizardCenterFanBeam(" + panelsProcessed + "); return false");
                         btnFanBeamCenter.CausesValidation = false;
                         btnFanBeamCenter.UseSubmitBehavior = false;
 
@@ -192,15 +189,23 @@ namespace SunspaceDealerDesktop
                         txtSkylight.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                         panelOptionPlaceholder.Controls.Add(txtSkylight);
 
-                        DropDownList ddlSkylightInches = genericDropdown;
-                        ddlFanBeamInches.ID = "ddlFanBeam" + panelsProcessed;
-                        ddlFanBeamInches.Attributes.Add("OnChange", "skylightWizardCheckQuestion1()");
-                        panelOptionPlaceholder.Controls.Add(ddlFanBeamInches);
+                        DropDownList ddlSkylightInches = new DropDownList();
+                        ddlSkylightInches.Items.Add(lst0);
+                        ddlSkylightInches.Items.Add(lst18);
+                        ddlSkylightInches.Items.Add(lst14);
+                        ddlSkylightInches.Items.Add(lst38);
+                        ddlSkylightInches.Items.Add(lst12);
+                        ddlSkylightInches.Items.Add(lst58);
+                        ddlSkylightInches.Items.Add(lst34);
+                        ddlSkylightInches.Items.Add(lst78);
+                        ddlSkylightInches.ID = "ddlSkylightInches" + panelsProcessed;
+                        ddlSkylightInches.Attributes.Add("OnChange", "skylightWizardCheckQuestion1()");
+                        panelOptionPlaceholder.Controls.Add(ddlSkylightInches);
 
                         Button btnSkylightCenter = new Button();
                         btnSkylightCenter.ID = "btnSkylightCenter" + panelsProcessed;
                         btnSkylightCenter.Text = "Centered";
-                        btnSkylightCenter.Attributes.Add("OnClick", "skylightWizardCenterSkylight()");
+                        btnSkylightCenter.Attributes.Add("OnClick", "skylightWizardCenterSkylight(" + panelsProcessed + "); return false");
                         btnSkylightCenter.CausesValidation = false;
                         btnSkylightCenter.UseSubmitBehavior = false;
                         panelOptionPlaceholder.Controls.Add(btnSkylightCenter);
@@ -231,10 +236,9 @@ namespace SunspaceDealerDesktop
                     numberOfPanels = 0;
                 }
 
-                panelSizes= new JavaScriptSerializer().Serialize(Constants.MODEL_100_FRAMING_COLOURS);
+                panelSizes = new JavaScriptSerializer().Serialize(panelSizeArray);
             }
         }
-
         protected void btnQuestion1_Click(object sender, EventArgs e)
         {
             //add db entry for each skylight
