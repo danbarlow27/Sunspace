@@ -1020,6 +1020,99 @@
 
             return isValid;
         }
+
+        function checkQuestion3()
+        {
+            if ("<%=currentModel%>" == "M200")
+            {
+                for (var i = 0; i < coordList.length; i++)
+                {
+                    if (coordList[i][4] == "P")
+                    {
+                        // Checks for french doors
+                        if ($('#MainContent_ddlDoorStyle' + (i + 1) + 'French').val() == "Vertical Four Track")
+                        {
+                            if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Mixed")
+                            {
+                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
+                                {
+                                    document.getElementById('MainContent_row0Door' + (i + 1) + 'TintFrench').style.display = "inherit";
+                                    document.getElementById('MainContent_row1Door' + (i + 1) + 'TintFrench').style.display = "inherit";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
+                                {
+                                    document.getElementById('MainContent_row0Door' + (i + 1) + 'TintFrench').style.display = "inherit";
+                                    document.getElementById('MainContent_row1Door' + (i + 1) + 'TintFrench').style.display = "inherit";
+                                    document.getElementById('MainContent_row2Door' + (i + 1) + 'TintFrench').style.display = "inherit";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
+                                {
+                                    document.getElementById('MainContent_row0Door' + (i + 1) + 'TintFrench').style.display = "inherit";
+                                    document.getElementById('MainContent_row1Door' + (i + 1) + 'TintFrench').style.display = "inherit";
+                                    document.getElementById('MainContent_row2Door' + (i + 1) + 'TintFrench').style.display = "inherit";
+                                    document.getElementById('MainContent_row3Door' + (i + 1) + 'TintFrench').style.display = "inherit";
+                                }
+                            }
+                            else
+                            {
+                                document.getElementById('MainContent_row0Door' + (i + 1) + 'TintFrench').style.display = "none";
+                                document.getElementById('MainContent_row1Door' + (i + 1) + 'TintFrench').style.display = "none";
+                                document.getElementById('MainContent_row2Door' + (i + 1) + 'TintFrench').style.display = "none";
+                                document.getElementById('MainContent_row3Door' + (i + 1) + 'TintFrench').style.display = "none";
+                            }
+                        }
+                        else 
+                        {
+                            document.getElementById('MainContent_row0Door' + (i + 1) + 'TintFrench').style.display = "none";
+                            document.getElementById('MainContent_row1Door' + (i + 1) + 'TintFrench').style.display = "none";
+                            document.getElementById('MainContent_row2Door' + (i + 1) + 'TintFrench').style.display = "none";
+                            document.getElementById('MainContent_row3Door' + (i + 1) + 'TintFrench').style.display = "none";
+                        }
+
+
+                        // Checks for Cabana Doors
+                        if ($('#MainContent_ddlDoorStyle' + (i + 1) + 'Cabana').val() == "Vertical Four Track")
+                        {
+                            if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Mixed")
+                            {
+                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
+                                {
+                                    document.getElementById('MainContent_row0Door' + (i + 1) + 'TintCabana').style.display = "inherit";
+                                    document.getElementById('MainContent_row1Door' + (i + 1) + 'TintCabana').style.display = "inherit";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
+                                {
+                                    document.getElementById('MainContent_row0Door' + (i + 1) + 'TintCabana').style.display = "inherit";
+                                    document.getElementById('MainContent_row1Door' + (i + 1) + 'TintCabana').style.display = "inherit";
+                                    document.getElementById('MainContent_row2Door' + (i + 1) + 'TintCabana').style.display = "inherit";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
+                                {
+                                    document.getElementById('MainContent_row0Door' + (i + 1) + 'TintCabana').style.display = "inherit";
+                                    document.getElementById('MainContent_row1Door' + (i + 1) + 'TintCabana').style.display = "inherit";
+                                    document.getElementById('MainContent_row2Door' + (i + 1) + 'TintCabana').style.display = "inherit";
+                                    document.getElementById('MainContent_row3Door' + (i + 1) + 'TintCabana').style.display = "inherit";
+                                }
+                            }
+                            else
+                            {
+                                document.getElementById('MainContent_row0Door' + (i + 1) + 'TintFrench').style.display = "none";
+                                document.getElementById('MainContent_row1Door' + (i + 1) + 'TintFrench').style.display = "none";
+                                document.getElementById('MainContent_row2Door' + (i + 1) + 'TintFrench').style.display = "none";
+                                document.getElementById('MainContent_row3Door' + (i + 1) + 'TintFrench').style.display = "none";
+                            }
+                        }
+                        else 
+                        {
+                            document.getElementById('MainContent_row0Door' + (i + 1) + 'TintCabana').style.display = "none";
+                            document.getElementById('MainContent_row1Door' + (i + 1) + 'TintCabana').style.display = "none";
+                            document.getElementById('MainContent_row2Door' + (i + 1) + 'TintCabana').style.display = "none";
+                            document.getElementById('MainContent_row3Door' + (i + 1) + 'TintCabana').style.display = "none";
+                        }
+                    }
+                }
+            }
+        }
         
         function checkRoofPanels() {
             if (gable != "True"){
