@@ -1029,6 +1029,8 @@
                 {
                     if (coordList[i][4] == "P")
                     {
+                        var tintCode;
+                        
                         // Checks for french doors
                         if ($('#MainContent_ddlDoorStyle' + (i + 1) + 'French').val() == "Vertical Four Track")
                         {
