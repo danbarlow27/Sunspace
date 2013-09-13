@@ -419,7 +419,7 @@ namespace SunspaceDealerDesktop
             row.Cells.Add(cell6);
             row.Cells.Add(cell7);
             
-        }
+        }        
 
         protected void populateTblProposedGable(int i, int displayedWallCount)
         {
@@ -535,6 +535,44 @@ namespace SunspaceDealerDesktop
             row.Cells.Add(cell6);
             row.Cells.Add(cell7);
             
+        }
+
+        protected void addMixedTintDropdowns(int i, string title, Table tblDoorDetails)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                TableRow mixedDoorTintRow = new TableRow();
+                mixedDoorTintRow.Attributes.Add("style", "display: inherit;");
+                mixedDoorTintRow.ID = "row" + j + "Door" + i + "Tint" + title;
+                //mixedVinylTintRow.Attributes.Add("style", "display:none;");
+                TableCell mixedDoorTintLabelCell = new TableCell();
+                TableCell mixedDoorTintDropDownCell = new TableCell();
+
+                Label mixedDoorTintLabel = new Label();
+                mixedDoorTintLabel.ID = "lblDoor" + i + "Vinyl" + j + "Tint" + title;
+                mixedDoorTintLabel.Text = "Vinyl Vent " + (j + 1) + " Tint : ";
+                DropDownList ddlDoorTintOptions = new DropDownList();
+                ddlDoorTintOptions.ID = "ddlDoor" + i + "Tint" + j + title;
+                ListItem clearVinyl = new ListItem("Clear", "C");
+                ListItem smokeGreyVinyl = new ListItem("Smoke Grey", "S");
+                ListItem darkGreyVinyl = new ListItem("Dark Grey", "D");
+                ListItem bronzeVinyl = new ListItem("Bronze", "B");
+
+                ddlDoorTintOptions.Items.Add(clearVinyl);
+                ddlDoorTintOptions.Items.Add(smokeGreyVinyl);
+                ddlDoorTintOptions.Items.Add(darkGreyVinyl);
+                ddlDoorTintOptions.Items.Add(bronzeVinyl);
+
+                mixedDoorTintLabel.AssociatedControlID = "ddlDoor" + i + "Tint" + j + title;
+
+                mixedDoorTintLabelCell.Controls.Add(mixedDoorTintLabel);
+                mixedDoorTintDropDownCell.Controls.Add(ddlDoorTintOptions);
+
+                tblDoorDetails.Rows.Add(mixedDoorTintRow);
+
+                mixedDoorTintRow.Cells.Add(mixedDoorTintLabelCell);
+                mixedDoorTintRow.Cells.Add(mixedDoorTintDropDownCell);
+            }
         }
 
         protected void populateTblWallHeights()
@@ -1293,11 +1331,11 @@ namespace SunspaceDealerDesktop
                 doorVinylTintDDL.ID = "ddlDoorVinylTint" + i + title;
                 for (int j = 0; j < Constants.DOOR_V4T_VINYL_OPTIONS.Count(); j++)
                 {
-                    doorVinylTintDDL.Items.Add(new ListItem(Constants.DOOR_V4T_VINYL_OPTIONS[j], Constants.DOOR_V4T_VINYL_OPTIONS[j]));
+                    doorVinylTintDDL.Items.Add(new ListItem(Constants.DOOR_V4T_VINYL_OPTIONS[j], Constants.DOOR_V4T_VINYL_OPTIONS[j]));                    
                 }
 
                 doorVinylTintLBL.AssociatedControlID = "ddlDoorVinylTint" + i + title;
-
+                
                 #endregion
 
                 #region Table:Twelfth Row Door V4T Number Of Vents (tblDoorDetails)
@@ -1985,6 +2023,8 @@ namespace SunspaceDealerDesktop
 
                 doorVinylTintRow.Cells.Add(doorVinylTintLBLCell);
                 doorVinylTintRow.Cells.Add(doorVinylTintDDLCell);
+
+                addMixedTintDropdowns(i, title, tblDoorDetails);
 
                 #endregion
 
