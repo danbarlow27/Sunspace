@@ -158,7 +158,7 @@
             document.getElementById("MainContent_btnSubmitDrawing").disabled = true;
 
             //check if user selected a dealer gable or not
-            if ('<%= gableStyle %>' == "Dealer Gable")
+            if ('<%= gableStyle %>' == "Dealer Gable" || '<%= gableStyle %>' == "Sunspace Gable")
                 gable = true;
             else
                 gable = false;
@@ -205,7 +205,11 @@
                             }
                         }                    
 
-                        if (findLineAxis(firstGable) != findLineAxis(secondGable))
+                        if (findLineAxis(firstGable) == "D" || findLineAxis(secondGable) == "D") {
+                            log.innerHTML = "Your gable posts must be horizontal.\n\n";
+                            return;
+                        }
+                        else if (findLineAxis(firstGable) != findLineAxis(secondGable))
                         {
                             log.innerHTML = "Your gable posts must be drawn on the same axis.\n\n";
                             return;
