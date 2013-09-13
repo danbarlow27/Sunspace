@@ -15,6 +15,15 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
+            ListItem lst18 = new ListItem("1/8", ".125");
+            ListItem lst14 = new ListItem("1/4", ".25");
+            ListItem lst38 = new ListItem("3/8", ".375");
+            ListItem lst12 = new ListItem("1/2", ".5");
+            ListItem lst58 = new ListItem("5/8", ".625");
+            ListItem lst34 = new ListItem("3/4", ".75");
+            ListItem lst78 = new ListItem("7/8", ".875");
+
             if (!IsPostBack)
             {
                 //Temporary session declarations
@@ -135,6 +144,31 @@ namespace SunspaceDealerDesktop
                 {
                     ddlStripeColour.Items.Add(new ListItem(Constants.FASCIA_STRIPE_COLOUR[i], Constants.FASCIA_STRIPE_COLOUR[i]));
                 }
+                //sub-inch dropdowns
+                ddlProjectionInches.Items.Add(lst0);
+                ddlProjectionInches.Items.Add(lst18);
+                ddlProjectionInches.Items.Add(lst14);
+                ddlProjectionInches.Items.Add(lst38);
+                ddlProjectionInches.Items.Add(lst12);
+                ddlProjectionInches.Items.Add(lst58);
+                ddlProjectionInches.Items.Add(lst34);
+                ddlProjectionInches.Items.Add(lst78);
+                ddlOverhangInches.Items.Add(lst0);
+                ddlOverhangInches.Items.Add(lst18);
+                ddlOverhangInches.Items.Add(lst14);
+                ddlOverhangInches.Items.Add(lst38);
+                ddlOverhangInches.Items.Add(lst12);
+                ddlOverhangInches.Items.Add(lst58);
+                ddlOverhangInches.Items.Add(lst34);
+                ddlOverhangInches.Items.Add(lst78);
+                ddlWidthInches.Items.Add(lst0);
+                ddlWidthInches.Items.Add(lst18);
+                ddlWidthInches.Items.Add(lst14);
+                ddlWidthInches.Items.Add(lst38);
+                ddlWidthInches.Items.Add(lst12);
+                ddlWidthInches.Items.Add(lst58);
+                ddlWidthInches.Items.Add(lst34);
+                ddlWidthInches.Items.Add(lst78);
                 #endregion
             }
 
@@ -195,7 +229,6 @@ namespace SunspaceDealerDesktop
                 //Now that we have roof rojection and width, add it to session.
                 Session.Add("roofProjection", (roofProjection));
                 Session.Add("roofWidth", roofWidth);
-                lblTest.Text = roofProjection.ToString() + " by " + roofWidth.ToString();
 
                 //A studio roof will only have one list entry, while a gable will have two
                 List<RoofModule> gableModules = buildGableRoofModule((roofProjection), roofWidth);
@@ -271,7 +304,6 @@ namespace SunspaceDealerDesktop
                 //Now that we have roof rojection and width, add it to session.
                 Session.Add("roofProjection", roofProjection);
                 Session.Add("roofWidth", roofWidth);
-                lblTest.Text = roofProjection.ToString() + " by " + roofWidth.ToString();
 
                 //A studio roof will only have one list entry, while a gable will have two
                 List<RoofModule> aModuleList = new List<RoofModule>();
