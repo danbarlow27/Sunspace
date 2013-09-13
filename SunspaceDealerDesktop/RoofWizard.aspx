@@ -231,7 +231,7 @@ else {
                                 <li>
                                     <asp:Label ID="lblCustomDimensionWarning" runat="server" Text="If you would like an overhang, please include that in your dimensions."></asp:Label>
                                     <br /><br />
-                                    <asp:Label ID="lblProjection" runat="server" Text="Projection:" ToolTip="This entry is for the projection of the room itself with whatever overhang you desire directly off of the room."></asp:Label>
+                                    <asp:Label ID="lblProjection" runat="server" Text="Projection:" ToolTip="Generall: entry is for the projection of the room itself with whatever overhang you desire directly off of the room."></asp:Label>
                                     <asp:TextBox ID="txtProjection" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="roofWizardCheckQuestion2()"></asp:TextBox>
                                     <br /><br />
                                     <asp:Label ID="lblWidth" runat="server" Text="Width:" ToolTip="The width of the roof is the dimension that is perpendicular to projection. On a studio system, it is along either top or bottom, while on a gable it is across bottom distances and peak distance, all equal."></asp:Label>

@@ -36,6 +36,38 @@
                 else{                    
                     document.getElementById('MainContent_hidHasSkylight'.concat(i)).value = "No";
                 }
+
+                if ($('#MainContent_txtFanBeam'.concat(i)).val() == "")
+                {
+                    //error
+                }
+                else
+                {
+                    if (isNaN(parseFloat($('#MainContent_txtFanBeam'.concat(i)).val())))
+                    {
+                        //error
+                    }
+                    else
+                    {
+                        document.getElementById('MainContent_hidBeamStart'.concat(1)).value = parseFloat($('#MainContent_txtFanBeam'.concat(i)).val() + $('#MainContent_ddlFanBeamInches'.concat(i)).val());
+                    }
+                }
+
+                if ($('#MainContent_txtSkylightStart'.concat(i)).val() == "")
+                {
+                    //error
+                }
+                else
+                {
+                    if (isNaN(parseFloat($('#MainContent_txtSkylightStart'.concat(i)).val())))
+                    {
+                        //error
+                    }
+                    else
+                    {
+                        document.getElementById('MainContent_hidSkylightStart'.concat(1)).value = parseFloat($('#MainContent_txtSkylightStart'.concat(i)).val() + $('#MainContent_ddlSkylightInches'.concat(i)).val());
+                    }
+                }
             }
 
             if (validInputs == true)
