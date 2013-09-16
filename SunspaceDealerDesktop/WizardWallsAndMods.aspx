@@ -132,239 +132,238 @@
                 }
             }                         
                             
-            if (framedDoor.type == "Cabana")
+            
+            // need if logic here for mixed tint
+            if ("<%=currentModel%>" == "M200")
             {
-                // need if logic here for mixed tint
-                if ("<%=currentModel%>" == "M200")
+                for (var i = 0; i < coordList.length; i++)
                 {
-                    for (var i = 1; i <= coordList.length; i++)
+                    if ((i+1) == parseInt(wallNumber))
                     {
-                        var tintCode = "";
+                        if (coordList[i][4] == "P")
+                        { 
+                            var tintCode = "";
                         
-                        // Checks for french doors
-                        if ($('#MainContent_ddlDoorStyle' + (i + 1) + 'Cabana').val() == "Vertical Four Track")
-                        {
-                            if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Mixed")
+                            if (framedDoor.type == "Cabana")
                             {
-                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
+                                // Checks for cabana doors
+                                if ($('#MainContent_ddlDoorStyle' + (i + 1) + 'Cabana').val() == "Vertical Four Track")
                                 {
-                                    tintCode += $('#MainContent_row0Door' + (i + 1) + 'TintCabana').val();
-                                    tintCode += $('#MainContent_row1Door' + (i + 1) + 'TintCabana').val();
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
-                                {
-                                    tintCode += $('#MainContent_row0Door' + (i + 1) + 'TintCabana').val();
-                                    tintCode += $('#MainContent_row1Door' + (i + 1) + 'TintCabana').val();
-                                    tintCode += $('#MainContent_row2Door' + (i + 1) + 'TintCabana').val();
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
-                                {
-                                    tintCode += $('#MainContent_row0Door' + (i + 1) + 'TintCabana').val();
-                                    tintCode += $('#MainContent_row1Door' + (i + 1) + 'TintCabana').val();
-                                    tintCode += $('#MainContent_row2Door' + (i + 1) + 'TintCabana').val();
-                                    tintCode += $('#MainContent_row3Door' + (i + 1) + 'TintCabana').val();
-                                }
+                                    if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Mixed")
+                                    {
+                                        if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
+                                        {
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint0Cabana').val();
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint1Cabana').val();
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
+                                        {
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint0Cabana').val();
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint1Cabana').val();
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint2Cabana').val();
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
+                                        {
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint0Cabana').val();
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint1Cabana').val();
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint2Cabana').val();
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint3Cabana').val();
+                                        }
 
-                                framedDoor.vinylTint = tintCode;
-                                break;
+                                        framedDoor.vinylTint = tintCode;
+                                        break;
+                                    }
+                                    else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Clear")
+                                    {
+                                        if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
+                                        {
+                                            tintCode = "CC";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
+                                        {
+                                            tintCode = "CCC";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
+                                        {
+                                            tintCode = "CCCC";
+                                        }
+
+                                        framedDoor.vinylTint = tintCode;
+                                        break;
+                                    }
+                                    else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Smoke Grey")
+                                    {
+                                        if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
+                                        {
+                                            tintCode = "SS";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
+                                        {
+                                            tintCode = "SSS";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
+                                        {
+                                            tintCode = "SSSS";
+                                        }
+
+                                        framedDoor.vinylTint = tintCode;
+                                        break;
+                                    }
+                                    else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Dark Grey")
+                                    {
+                                        if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
+                                        {
+                                            tintCode = "DD";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
+                                        {
+                                            tintCode = "DDD";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
+                                        {
+                                            tintCode = "DDDD";
+                                        }
+
+                                        framedDoor.vinylTint = tintCode;
+                                        break;
+                                    }
+                                    else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Bronze")
+                                    {
+                                        if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
+                                        {
+                                            tintCode = "BB";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
+                                        {
+                                            tintCode = "BBB";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
+                                        {
+                                            tintCode = "BBBB";
+                                        }
+
+                                        framedDoor.vinylTint = tintCode;
+                                        break;
+                                    }
+                                }
+                                else 
+                                {
+                                    framedDoor.vinylTint = "";
+                                    break;
+                                }
                             }
-                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Clear")
+                            else if (framedDoor.type == "French")
                             {
-                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
+                                // Checks for french doors
+                                if ($('#MainContent_ddlDoorStyle' + (i + 1) + 'French').val() == "Vertical Four Track")
                                 {
-                                    tintCode = "CC";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
-                                {
-                                    tintCode = "CCC";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
-                                {
-                                    tintCode = "CCCC";
-                                }
+                                    if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Mixed")
+                                    {
+                                        if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
+                                        {
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint0French').val();
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint1French').val();
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
+                                        {
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint0French').val();
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint1French').val();
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint2French').val();
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
+                                        {
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint0French').val();
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint1French').val();
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint2French').val();
+                                            tintCode += $('#MainContent_ddlDoor' + (i + 1) + 'Tint3French').val();
+                                        }
 
-                                framedDoor.vinylTint = tintCode;
-                                break;
-                            }
-                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Smoke Grey")
-                            {
-                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
-                                {
-                                    tintCode = "SS";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
-                                {
-                                    tintCode = "SSS";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
-                                {
-                                    tintCode = "SSSS";
-                                }
+                                        framedDoor.vinylTint = tintCode;
+                                        break;
+                                    }
+                                    else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Clear")
+                                    {
+                                        if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
+                                        {
+                                            tintCode = "CC";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
+                                        {
+                                            tintCode = "CCC";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
+                                        {
+                                            tintCode = "CCCC";
+                                        }
 
-                                framedDoor.vinylTint = tintCode;
-                                break;
-                            }
-                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Dark Grey")
-                            {
-                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
-                                {
-                                    tintCode = "DD";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
-                                {
-                                    tintCode = "DDD";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
-                                {
-                                    tintCode = "DDDD";
-                                }
+                                        framedDoor.vinylTint = tintCode;
+                                        break;
+                                    }
+                                    else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Smoke Grey")
+                                    {
+                                        if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
+                                        {
+                                            tintCode = "SS";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
+                                        {
+                                            tintCode = "SSS";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
+                                        {
+                                            tintCode = "SSSS";
+                                        }
 
-                                framedDoor.vinylTint = tintCode;
-                                break;
-                            }
-                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Bronze")
-                            {
-                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
-                                {
-                                    tintCode = "BB";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
-                                {
-                                    tintCode = "BBB";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
-                                {
-                                    tintCode = "BBBB";
-                                }
+                                        framedDoor.vinylTint = tintCode;
+                                        break;
+                                    }
+                                    else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Dark Grey")
+                                    {
+                                        if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
+                                        {
+                                            tintCode = "DD";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
+                                        {
+                                            tintCode = "DDD";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
+                                        {
+                                            tintCode = "DDDD";
+                                        }
 
-                                framedDoor.vinylTint = tintCode;
-                                break;
+                                        framedDoor.vinylTint = tintCode;
+                                        break;
+                                    }
+                                    else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Bronze")
+                                    {
+                                        if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
+                                        {
+                                            tintCode = "BB";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
+                                        {
+                                            tintCode = "BBB";
+                                        }
+                                        else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
+                                        {
+                                            tintCode = "BBBB";
+                                        }
+
+                                        framedDoor.vinylTint = tintCode;
+                                        break;
+                                    }
+                                }
+                                else 
+                                {
+                                    framedDoor.vinylTint = "";
+                                    break;
+                                }
                             }
-                        }
-                        else 
-                        {
-                            framedDoor.vinylTint = "";
-                            break;
                         }
                     }
                 }
-            }
-            else if (framedDoor.type == "French")
-            {
-                if ("<%=currentModel%>" == "M200")
-                {
-                    for (var i = 1; i < coordList.length; i++)
-                    {
-                        var tintCode = "";
-                        
-                        // Checks for french doors
-                        if ($('#MainContent_ddlDoorStyle' + (i + 1) + 'French').val() == "Vertical Four Track")
-                        {
-                            if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Mixed")
-                            {
-                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
-                                {
-                                    tintCode += $('#MainContent_row0Door' + (i + 1) + 'TintFrench').val();
-                                    tintCode += $('#MainContent_row1Door' + (i + 1) + 'TintFrench').val();
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
-                                {
-                                    tintCode += $('#MainContent_row0Door' + (i + 1) + 'TintFrench').val();
-                                    tintCode += $('#MainContent_row1Door' + (i + 1) + 'TintFrench').val();
-                                    tintCode += $('#MainContent_row2Door' + (i + 1) + 'TintFrench').val();
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
-                                {
-                                    tintCode += $('#MainContent_row0Door' + (i + 1) + 'TintFrench').val();
-                                    tintCode += $('#MainContent_row1Door' + (i + 1) + 'TintFrench').val();
-                                    tintCode += $('#MainContent_row2Door' + (i + 1) + 'TintFrench').val();
-                                    tintCode += $('#MainContent_row3Door' + (i + 1) + 'TintFrench').val();
-                                }
-
-                                framedDoor.vinylTint = tintCode;
-                                break;
-                            }
-                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Clear")
-                            {
-                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
-                                {
-                                    tintCode = "CC";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
-                                {
-                                    tintCode = "CCC";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
-                                {
-                                    tintCode = "CCCC";
-                                }
-
-                                framedDoor.vinylTint = tintCode;
-                                break;
-                            }
-                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Smoke Grey")
-                            {
-                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
-                                {
-                                    tintCode = "SS";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
-                                {
-                                    tintCode = "SSS";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
-                                {
-                                    tintCode = "SSSS";
-                                }
-
-                                framedDoor.vinylTint = tintCode;
-                                break;
-                            }
-                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Dark Grey")
-                            {
-                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
-                                {
-                                    tintCode = "DD";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
-                                {
-                                    tintCode = "DDD";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
-                                {
-                                    tintCode = "DDDD";
-                                }
-
-                                framedDoor.vinylTint = tintCode;
-                                break;
-                            }
-                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Bronze")
-                            {
-                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
-                                {
-                                    tintCode = "BB";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
-                                {
-                                    tintCode = "BBB";
-                                }
-                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
-                                {
-                                    tintCode = "BBBB";
-                                }
-
-                                framedDoor.vinylTint = tintCode;
-                                break;
-                            }
-                        }
-                        else 
-                        {
-                            framedDoor.vinylTint = "";
-                            break;
-                        }
-                    }                    
-                }
-            }
+            }           
 
             console.log(framedDoor.vinylTint);
 
@@ -1373,7 +1372,6 @@
 
         function checkQuestion3()
         {
-            console.log(coordList.length);
             if ("<%=currentModel%>" == "M200")
             {
                 for (var i = 0; i < coordList.length; i++)
@@ -1389,12 +1387,15 @@
                                 {
                                     document.getElementById('MainContent_row0Door' + (i + 1) + 'TintFrench').style.display = "inherit";
                                     document.getElementById('MainContent_row1Door' + (i + 1) + 'TintFrench').style.display = "inherit";
+                                    document.getElementById('MainContent_row2Door' + (i + 1) + 'TintFrench').style.display = "none";
+                                    document.getElementById('MainContent_row3Door' + (i + 1) + 'TintFrench').style.display = "none";
                                 }
                                 else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
                                 {
                                     document.getElementById('MainContent_row0Door' + (i + 1) + 'TintFrench').style.display = "inherit";
                                     document.getElementById('MainContent_row1Door' + (i + 1) + 'TintFrench').style.display = "inherit";
                                     document.getElementById('MainContent_row2Door' + (i + 1) + 'TintFrench').style.display = "inherit";
+                                    document.getElementById('MainContent_row3Door' + (i + 1) + 'TintFrench').style.display = "none";
                                 }
                                 else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
                                 {
@@ -1430,12 +1431,15 @@
                                 {
                                     document.getElementById('MainContent_row0Door' + (i + 1) + 'TintCabana').style.display = "inherit";
                                     document.getElementById('MainContent_row1Door' + (i + 1) + 'TintCabana').style.display = "inherit";
+                                    document.getElementById('MainContent_row2Door' + (i + 1) + 'TintCabana').style.display = "none";
+                                    document.getElementById('MainContent_row3Door' + (i + 1) + 'TintCabana').style.display = "none";
                                 }
                                 else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
                                 {
                                     document.getElementById('MainContent_row0Door' + (i + 1) + 'TintCabana').style.display = "inherit";
                                     document.getElementById('MainContent_row1Door' + (i + 1) + 'TintCabana').style.display = "inherit";
                                     document.getElementById('MainContent_row2Door' + (i + 1) + 'TintCabana').style.display = "inherit";
+                                    document.getElementById('MainContent_row3Door' + (i + 1) + 'TintCabana').style.display = "none";
                                 }
                                 else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
                                 {
@@ -1447,10 +1451,10 @@
                             }
                             else
                             {
-                                document.getElementById('MainContent_row0Door' + (i + 1) + 'TintFrench').style.display = "none";
-                                document.getElementById('MainContent_row1Door' + (i + 1) + 'TintFrench').style.display = "none";
-                                document.getElementById('MainContent_row2Door' + (i + 1) + 'TintFrench').style.display = "none";
-                                document.getElementById('MainContent_row3Door' + (i + 1) + 'TintFrench').style.display = "none";
+                                document.getElementById('MainContent_row0Door' + (i + 1) + 'TintCabana').style.display = "none";
+                                document.getElementById('MainContent_row1Door' + (i + 1) + 'TintCabana').style.display = "none";
+                                document.getElementById('MainContent_row2Door' + (i + 1) + 'TintCabana').style.display = "none";
+                                document.getElementById('MainContent_row3Door' + (i + 1) + 'TintCabana').style.display = "none";
                             }
                         }
                         else 
