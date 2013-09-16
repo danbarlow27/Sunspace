@@ -42,6 +42,392 @@
             this.kneewallPunch = null;      //location of the kneewall punch, or false if no kneewall
             this.headerPunch = null;        //location of the header punch
         }
+
+        /**
+*createDoorObject
+*This function creates a door object by loading values from fields within the table
+*on the page
+*@param wallNumber - used to hold the current wall number
+*@param type - used to hold the type of door being made
+*@return framedDoor - returns an object containing all information for the specific door (i.e. height, width, style, type, etc.)
+*
+***************RADIO BUTTON VALUES NOT STORING PROPERLY, TO BE FIXED***************
+*/
+        function createDoorObject(wallNumber, type) {
+            //Object variable to hold the current door being built
+            var framedDoor;
+
+            //Switch case to instantiate, object variable to the appropriate type
+            switch (type) {
+                case "Cabana":
+                    framedDoor = new CabanaDoor();
+                    break;
+                case "French":
+                    framedDoor = new FrenchDoor();
+                    break;
+                case "Patio":
+                    framedDoor = new PatioDoor();
+                    break;
+                case "NoDoor":
+                    framedDoor = new OpenSpaceDoor();
+                    break;
+                default:
+                    return;
+            }
+
+            //Array to get all field values by name
+            var controlsArray = [
+                "ddlDoorStyle",
+                "ddlDoorVinylTint",
+                "ddlDoorNumberOfVents",
+                "ddlDoorKickplate",
+                "ddlDoorColour",
+                "ddlDoorHeight",
+                "ddlDoorWidth",
+                "radDoorOperator",
+                "ddlDoorBoxHeader",
+                "ddlDoorGlassTint",
+                "radDoorHinge",
+                "ddlDoorScreenOptions",
+                "ddlDoorHardware",
+                "radDoorSwing",
+                "ddlDoorPosition",
+            ];
+
+            //Array to get custom field values
+            var customControls = [
+                "Kickplate",
+                "Height",
+                "Width",
+                "Position"
+            ];
+
+            //Loop to find all visible controls on the slide and get the appropriate controls value
+            for (var i = 0; i < controlsArray.length; i++) {
+                var styleDropDown = $("#MainContent_" + controlsArray[i] + wallNumber + type);
+
+                //If the controls parent 'tr' is visible, perform block
+                if (styleDropDown.closest('tr').filter(':visible').length == 1) {
+                    var value;
+
+                    //If the control is of type radio, perform block
+                    if (styleDropDown.attr('type') == 'radio') {
+                        //Get the checked value
+                        value = styleDropDown.closest('table').find('input[name=\"' + styleDropDown.attr('name') + '\"]:checked').val();
+                    }
+                        //Else, perform block
+                    else {
+                        //Get control value
+                        value = styleDropDown.val();
+                    }            
+
+                    //Create identifier for property within door object. In example, 
+                    //"ddlDoorStyle" now becomes "style" property inside of framedDoor
+                    var identifier = controlsArray[i][7].toLowerCase() + controlsArray[i].substr(8);
+
+                    if (identifier in framedDoor) {
+                        //Store value to appropriate obejct property
+                        framedDoor[identifier] = value;
+                    }
+                }
+            }                         
+                            
+            if (framedDoor.type == "Cabana")
+            {
+                // need if logic here for mixed tint
+                if ("<%=currentModel%>" == "M200")
+                {
+                    for (var i = 1; i <= coordList.length; i++)
+                    {
+                        var tintCode = "";
+                        
+                        // Checks for french doors
+                        if ($('#MainContent_ddlDoorStyle' + (i + 1) + 'Cabana').val() == "Vertical Four Track")
+                        {
+                            if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Mixed")
+                            {
+                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
+                                {
+                                    tintCode += $('#MainContent_row0Door' + (i + 1) + 'TintCabana').val();
+                                    tintCode += $('#MainContent_row1Door' + (i + 1) + 'TintCabana').val();
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
+                                {
+                                    tintCode += $('#MainContent_row0Door' + (i + 1) + 'TintCabana').val();
+                                    tintCode += $('#MainContent_row1Door' + (i + 1) + 'TintCabana').val();
+                                    tintCode += $('#MainContent_row2Door' + (i + 1) + 'TintCabana').val();
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
+                                {
+                                    tintCode += $('#MainContent_row0Door' + (i + 1) + 'TintCabana').val();
+                                    tintCode += $('#MainContent_row1Door' + (i + 1) + 'TintCabana').val();
+                                    tintCode += $('#MainContent_row2Door' + (i + 1) + 'TintCabana').val();
+                                    tintCode += $('#MainContent_row3Door' + (i + 1) + 'TintCabana').val();
+                                }
+
+                                framedDoor.vinylTint = tintCode;
+                                break;
+                            }
+                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Clear")
+                            {
+                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
+                                {
+                                    tintCode = "CC";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
+                                {
+                                    tintCode = "CCC";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
+                                {
+                                    tintCode = "CCCC";
+                                }
+
+                                framedDoor.vinylTint = tintCode;
+                                break;
+                            }
+                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Smoke Grey")
+                            {
+                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
+                                {
+                                    tintCode = "SS";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
+                                {
+                                    tintCode = "SSS";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
+                                {
+                                    tintCode = "SSSS";
+                                }
+
+                                framedDoor.vinylTint = tintCode;
+                                break;
+                            }
+                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Dark Grey")
+                            {
+                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
+                                {
+                                    tintCode = "DD";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
+                                {
+                                    tintCode = "DDD";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
+                                {
+                                    tintCode = "DDDD";
+                                }
+
+                                framedDoor.vinylTint = tintCode;
+                                break;
+                            }
+                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'Cabana').val() == "Bronze")
+                            {
+                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "2")
+                                {
+                                    tintCode = "BB";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "3")
+                                {
+                                    tintCode = "BBB";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'Cabana').val() == "4")
+                                {
+                                    tintCode = "BBBB";
+                                }
+
+                                framedDoor.vinylTint = tintCode;
+                                break;
+                            }
+                        }
+                        else 
+                        {
+                            framedDoor.vinylTint = "";
+                            break;
+                        }
+                    }
+                }
+            }
+            else if (framedDoor.type == "French")
+            {
+                if ("<%=currentModel%>" == "M200")
+                {
+                    for (var i = 1; i < coordList.length; i++)
+                    {
+                        var tintCode = "";
+                        
+                        // Checks for french doors
+                        if ($('#MainContent_ddlDoorStyle' + (i + 1) + 'French').val() == "Vertical Four Track")
+                        {
+                            if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Mixed")
+                            {
+                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
+                                {
+                                    tintCode += $('#MainContent_row0Door' + (i + 1) + 'TintFrench').val();
+                                    tintCode += $('#MainContent_row1Door' + (i + 1) + 'TintFrench').val();
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
+                                {
+                                    tintCode += $('#MainContent_row0Door' + (i + 1) + 'TintFrench').val();
+                                    tintCode += $('#MainContent_row1Door' + (i + 1) + 'TintFrench').val();
+                                    tintCode += $('#MainContent_row2Door' + (i + 1) + 'TintFrench').val();
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
+                                {
+                                    tintCode += $('#MainContent_row0Door' + (i + 1) + 'TintFrench').val();
+                                    tintCode += $('#MainContent_row1Door' + (i + 1) + 'TintFrench').val();
+                                    tintCode += $('#MainContent_row2Door' + (i + 1) + 'TintFrench').val();
+                                    tintCode += $('#MainContent_row3Door' + (i + 1) + 'TintFrench').val();
+                                }
+
+                                framedDoor.vinylTint = tintCode;
+                                break;
+                            }
+                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Clear")
+                            {
+                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
+                                {
+                                    tintCode = "CC";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
+                                {
+                                    tintCode = "CCC";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
+                                {
+                                    tintCode = "CCCC";
+                                }
+
+                                framedDoor.vinylTint = tintCode;
+                                break;
+                            }
+                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Smoke Grey")
+                            {
+                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
+                                {
+                                    tintCode = "SS";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
+                                {
+                                    tintCode = "SSS";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
+                                {
+                                    tintCode = "SSSS";
+                                }
+
+                                framedDoor.vinylTint = tintCode;
+                                break;
+                            }
+                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Dark Grey")
+                            {
+                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
+                                {
+                                    tintCode = "DD";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
+                                {
+                                    tintCode = "DDD";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
+                                {
+                                    tintCode = "DDDD";
+                                }
+
+                                framedDoor.vinylTint = tintCode;
+                                break;
+                            }
+                            else if ($('#MainContent_ddlDoorVinylTint' + (i + 1) + 'French').val() == "Bronze")
+                            {
+                                if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "2")
+                                {
+                                    tintCode = "BB";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "3")
+                                {
+                                    tintCode = "BBB";
+                                }
+                                else if ($('#MainContent_ddlDoorNumberOfVents' + (i + 1) + 'French').val() == "4")
+                                {
+                                    tintCode = "BBBB";
+                                }
+
+                                framedDoor.vinylTint = tintCode;
+                                break;
+                            }
+                        }
+                        else 
+                        {
+                            framedDoor.vinylTint = "";
+                            break;
+                        }
+                    }                    
+                }
+            }
+
+            console.log(framedDoor.vinylTint);
+
+            //Changes any custom values to the actual value entered
+            for (var k = 0; k < customControls.length; k++) {
+
+                //Create the appropriate identifier for storing purposes
+                var identifier = customControls[k][0].toLowerCase() + customControls[k].substr(1);
+
+                if (!(identifier in framedDoor))
+                    continue;
+
+                //Get the value from the field being checked (i.e. width = "cWidth" or "30");
+                var value = framedDoor[identifier];
+
+                //If the value is custom (i.e. "cWidth"), perform block
+                if (value == 'c' + customControls[k]) {
+                    //Get textbox value
+                    var valueText = $('#MainContent_txtDoor' + customControls[k] + 'Custom' + wallNumber + type).val();
+                    //Get drop down value
+                    var valueDropDown = $('#MainContent_ddlDoor' + customControls[k] + 'Custom' + wallNumber + type).val();
+
+                    //Store numeric value of the sum of the text box value and drop down value
+                    framedDoor[identifier] = parseFloat(valueText) + parseFloat(valueDropDown);
+                }
+                    //Else, perform block (non-custom field)
+                else if (identifier != "position") {
+                    //Parse the value into the same property (i.e. "30" string, if now 30 numeric);
+                    framedDoor[identifier] = parseFloat(framedDoor[identifier]);
+                }
+            }
+
+            //Gets the value of width and height with the frame added, based on model number
+            var dimensions = calculateActualDoorDimension(framedDoor.width, framedDoor.height, type);
+        
+            framedDoor.fheight = dimensions.height; //Store frame height into fheight
+            framedDoor.fwidth = dimensions.width;   //Store frame width into fwidth
+            framedDoor.mheight = dimensions.height + 2;
+            framedDoor.mwidth = dimensions.width + 2;
+
+            /*Insert the door with the appropriate variables based on drop down selected index*/
+            if (framedDoor.position === "Left") {
+                if (framedDoor.boxHeader == "Left" || framedDoor.boxHeader == "Both") {
+                    framedDoor.position = walls[wallNumber].leftFiller + BOXHEADER_LENGTH;
+                }
+                else {
+                    framedDoor.position = walls[wallNumber].leftFiller;
+                }
+            }
+            else if (framedDoor.position === "Right") {
+                if (framedDoor.boxHeader == "Right" || framedDoor.boxHeader == "Both") {
+                    framedDoor.position = walls[wallNumber].length - framedDoor.mwidth - walls[wallNumber].rightFiller - BOXHEADER_LENGTH;
+                }
+                else {
+                    framedDoor.position = walls[wallNumber].length - framedDoor.mwidth - walls[wallNumber].rightFiller;
+                }
+            }
+            else if (framedDoor.position === "Center") {
+                framedDoor.position = validateDecimal(walls[wallNumber].length / 2 - framedDoor.mwidth / 2);
+            }
+            //Return framedDoor object
+            return framedDoor;
+        }
     </script>
     <script src="Scripts/DoorSlideFunctions.js"></script>
     <script src="Scripts/WindowSlideFunctions.js"></script>
@@ -987,14 +1373,13 @@
 
         function checkQuestion3()
         {
+            console.log(coordList.length);
             if ("<%=currentModel%>" == "M200")
             {
                 for (var i = 0; i < coordList.length; i++)
                 {
                     if (coordList[i][4] == "P")
-                    {
-                        var tintCode;
-                        
+                    {                        
                         // Checks for french doors
                         if ($('#MainContent_ddlDoorStyle' + (i + 1) + 'French').val() == "Vertical Four Track")
                         {
@@ -1403,7 +1788,7 @@
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "swing").value = walls[i].mods[j].swing;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
 
-                                // need if logic here for mixed tint
+                                
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "vinylTint").value = walls[i].mods[j].vinylTint;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "width").value = walls[i].mods[j].width;
                             }
@@ -1447,6 +1832,7 @@
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
 
                                 // need if logic here for mixed tint
+                                
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "vinylTint").value = walls[i].mods[j].vinylTint;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "width").value = walls[i].mods[j].width;
                             }
