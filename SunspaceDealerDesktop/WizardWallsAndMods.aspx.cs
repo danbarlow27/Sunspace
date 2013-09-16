@@ -3628,9 +3628,8 @@ namespace SunspaceDealerDesktop
                             if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Left" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
                             {
                                 BoxHeader aBoxHeader = new BoxHeader(false);
-                                aBoxHeader.Width = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight,
-                                    float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]) - aBoxHeader.Length,
-                                    float.Parse(Request.Form["hidWall" + i + "Length"]));
+                                aBoxHeader.Width = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
+                                aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
                                 linearItems.Add(aBoxHeader);
                             }
                             //Add door
@@ -3642,27 +3641,22 @@ namespace SunspaceDealerDesktop
                                 aMod.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mHeight"]);
                                 aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
                                 //private bool sunshade;
-                                List<Object> modularItems = new List<Object>();
+                                List<ModuleItem> modularItems = new List<ModuleItem>();
                                 modularItems.Add(getCabanaDoorFromForm(i, j));
+
+                                //now we add windows above
 
                                 //The height of the wall at mod end and mod start
                                 float modStartHeight=GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
                                 float modEndHeight=GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation+aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
-
-                                //If mod height is less than wall height at start or end of mod, we have space above we need to fill
-                                if (aMod.Height < modStartHeight
-                                    ||
-                                    aMod.Height < modEndHeight)
+                                                                
+                                if (modStartHeight == modEndHeight)
                                 {
-                                    //Unsloped
-                                    if (modStartHeight == modEndHeight)
-                                    {
-                                        //square window
-                                    }
-                                    else
-                                    {
-                                        //trap/triangle
-                                    }
+                                    //square window
+                                }
+                                else
+                                {
+                                    //trap/triangle
                                 }
 
                                 linearItems.Add(aMod);
@@ -3770,9 +3764,8 @@ namespace SunspaceDealerDesktop
                             if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Right" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
                             {
                                 BoxHeader aBoxHeader = new BoxHeader(false);
-                                aBoxHeader.Width = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight,
-                                    float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]) - aBoxHeader.Length,
-                                    float.Parse(Request.Form["hidWall" + i + "Length"]));
+                                aBoxHeader.Width = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
+                                aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) + Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
                                 linearItems.Add(aBoxHeader);
                             }                                
                         }                        

@@ -11,7 +11,6 @@ namespace SunspaceDealerDesktop
 
         private int linearIndex;
         private bool sunshade;
-        private float fixedLocation;
         private string modType;
         private float height;
         private float length;

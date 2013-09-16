@@ -8,7 +8,6 @@ namespace SunspaceDealerDesktop
     public class Door : ModuleItem
     {
         #region Attributes
-        private int itemIndex = 0;          //LinearItems Array Index (stored value: 1)
         private string doorType = null;     //Door type: Cabana, French, Patio, NoDoor (stored value: Cabana)
         private string doorStyle = null;    //Door style: Full View, Vertical Four Track, Full View Colonial, etc... (stored value: Full View)
         private string screenType = null;   //Door screen type: Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen (stored value: Better Vue Insect Screen)
@@ -20,18 +19,6 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Accessors
-        public int ItemIndex
-        {
-            get
-            {
-                return itemIndex;
-            }
-
-            set
-            {
-                itemIndex = value;
-            }
-        }
         public string DoorType
         {
             get

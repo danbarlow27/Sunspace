@@ -5,12 +5,9 @@ using System.Web;
 
 namespace SunspaceDealerDesktop
 {
-    public class Window
+    public class Window : ModuleItem
     {
         #region Attributes
-
-        private int linearIndex;
-        private int moduleIndex;
         private string windowType;
         private string screenType;
         private float startHeight;
@@ -19,7 +16,6 @@ namespace SunspaceDealerDesktop
         private string frameColour;
         private bool spreaderBar;
         private int numVents;
-
         #endregion
 
         #region Constructors
@@ -41,31 +37,6 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Accessors
-
-        public int LinearIndex
-        {
-            get
-            {
-                return linearIndex;
-            }
-            set
-            {
-                linearIndex = value;
-            }
-        }
-
-        public int ModuleIndex
-        {
-            get
-            {
-                return moduleIndex;
-            }
-            set
-            {
-                moduleIndex = value;
-            }
-        }
-
         public string WindowType
         {
             get

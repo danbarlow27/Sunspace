@@ -9,6 +9,7 @@ namespace SunspaceDealerDesktop
     {
         #region Attributes
         private string itemType; //Mod, boxheader, chase, etc.
+        private float fixedLocation; //The position (in inches) this item is in the wall
         #endregion
 
         #region Constructors
@@ -34,6 +35,17 @@ namespace SunspaceDealerDesktop
             set
             {
                 itemType = value;
+            }
+        }
+        public float FixedLocation
+        {
+            get
+            {
+                return fixedLocation;
+            }
+            set
+            {
+                fixedLocation = value;
             }
         }
         #endregion

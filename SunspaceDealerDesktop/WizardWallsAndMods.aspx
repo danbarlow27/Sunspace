@@ -980,6 +980,21 @@
                 }
             }
 
+            //Cheat the shit out of it
+            //Update Constants now that we know frontwall/sidewall Heights
+            if (isGable == "True") {
+                cabanaMaxHeight = Math.min(parseFloat(document.getElementById("hidLeftWallHeight").value), parseFloat(document.getElementById("hidRightWallHeight").value)) - parseFloat(4.125);
+                frenchMaxHeight = Math.min(parseFloat(document.getElementById("hidLeftWallHeight").value), parseFloat(document.getElementById("hidRightWallHeight").value)) - parseFloat(4.125);
+                patioMaxHeight = Math.min(parseFloat(document.getElementById("hidLeftWallHeight").value), parseFloat(document.getElementById("hidRightWallHeight").value)) - parseFloat(4.125);
+            }
+            else{
+                cabanaMaxHeight = parseFloat(document.getElementById("hidFrontWallHeight").value) - parseFloat(4.125);
+                frenchMaxHeight = parseFloat(document.getElementById("hidFrontWallHeight").value) - parseFloat(4.125);
+                patioMaxHeight = parseFloat(document.getElementById("hidFrontWallHeight").value) - parseFloat(4.125);                
+            }
+
+            console.log("Wall max height is " + document.getElementById("hidFrontWallHeight").value + ", so the doors must all be below " + cabanaMinHeight);
+
             checkRoofPanels();
 
             return isValid;
