@@ -3668,7 +3668,7 @@ namespace SunspaceDealerDesktop
                                             aWindow.EndHeight += windowInfo[2];
                                             aWindow.StartHeight += windowInfo[2];
                                         }
-                                        aWindow = aWindow; //for break point
+                                        modularItems.Add(aWindow);
                                     }
                                 }
                                 else
@@ -3693,7 +3693,7 @@ namespace SunspaceDealerDesktop
                                             aWindow.EndHeight += windowInfo[2];
                                             aWindow.StartHeight += windowInfo[2];
                                         }
-                                        aWindow = aWindow; //for break point
+                                        modularItems.Add(aWindow);
                                     }
                                 }
 
