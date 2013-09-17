@@ -17,11 +17,14 @@ namespace SunspaceDealerDesktop
         public string model200FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_200_FRAMING_COLOURS);
         public string model300FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_300_FRAMING_COLOURS);
         public string model400FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_400_FRAMING_COLOURS);
-
+        
         public string model100TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_100_TRANSOM_TYPES);
         public string model200TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_200_TRANSOM_TYPES);
         public string model300TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_300_TRANSOM_TYPES);
         public string model400TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_400_TRANSOM_TYPES);
+
+        public string transomGlassTints = new JavaScriptSerializer().Serialize(Constants.TRANSOM_GLASS_TINTS);
+        public string vinylTints = new JavaScriptSerializer().Serialize(Constants.VINYL_TINTS);
 
         public string usStatesJ = new JavaScriptSerializer().Serialize(Constants.STATE_LIST);
         public string usCodesJ = new JavaScriptSerializer().Serialize(Constants.STATE_CODES);
@@ -153,6 +156,87 @@ namespace SunspaceDealerDesktop
 
             //Must populate transom dropdown based on model#
             #endregion
+
+
+            ////Set based on preferences
+            //#region Preferences
+
+            ////Get preferences that belong to this dealer
+            //sdsCustomers.SelectCommand = "SELECT model_type, layout FROM preferences WHERE dealer_id=" + Session["dealer_id"];
+
+            ////assign the table names to the dataview object
+            //DataView dvPreferences = (DataView)sdsCustomers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+            ////Preclick model #
+            //string dbModelNumber = dvPreferences[0][0].ToString();
+
+            //switch (dbModelNumber)
+            //{
+            //    case "Model100":
+            //        radSunroomModel100.Checked = true;
+            //        radShowroomModel100.Checked = true;
+            //        radWallsModel100.Checked = true;
+            //        break;
+
+            //    case "Model200":
+            //        radSunroomModel200.Checked = true;
+            //        radShowroomModel200.Checked = true;
+            //        radWallsModel200.Checked = true;
+            //        break;
+
+            //    case "Model300":
+            //        radSunroomModel300.Checked = true;
+            //        radShowroomModel300.Checked = true;
+            //        radWallsModel300.Checked = true;
+            //        break;
+
+            //    case "Model400":
+            //        radSunroomModel400.Checked = true;
+            //        radShowroomModel400.Checked = true;
+            //        radWallsModel400.Checked = true;
+            //        break;
+            //}
+
+            ////Preclick layout
+            //string dbLayout = dvPreferences[0][1].ToString();
+
+            //switch (dbLayout)
+            //{
+            //    //cases based on layout names we decide to save
+            //}
+
+
+            ////Get model preferences that belong to this dealer
+            //sdsCustomers.SelectCommand = "SELECT kneewall_height, kneewall_type, transom_type, interior_frame_colour, exterior_frame_colour, interior_panel_skin, exterior_panel_skin, roof_type "
+            //                            +"FROM model_preferences "
+            //                            +"WHERE dealer_id=" + Session["dealer_id"];
+
+            ////assign the table names to the dataview object
+            //DataView dvModelPreferences = (DataView)sdsCustomers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+            //txtKneewallHeight.Text = dvModelPreferences[0][0].ToString();
+            //ddlKneewallType.SelectedValue = dvModelPreferences[0][1].ToString();
+            //ddlTransomType.SelectedValue = dvModelPreferences[0][2].ToString();
+            //ddlInteriorColour.SelectedValue = dvModelPreferences[0][3].ToString();
+            //ddlExteriorColour.SelectedValue = dvModelPreferences[0][4].ToString();
+            //ddlInteriorSkin.SelectedValue = dvModelPreferences[0][5].ToString();
+            //ddlExteriorSkin.SelectedValue = dvModelPreferences[0][6].ToString();
+
+            //switch (dvModelPreferences[0][7].ToString())
+            //{
+            //    case "Dealer Gable":
+            //        radDealerGable.Checked = true;
+            //        break;
+
+            //    case "Sunspace Gable":
+            //        radSunspaceGable.Checked = true;
+            //        break;
+
+            //    case "Studio":
+            //        radStudio.Checked = true;
+            //        break;
+            //}
+            //#endregion
         }
 
         protected void btnLayout_Click(object sender, EventArgs e)
@@ -182,6 +266,7 @@ namespace SunspaceDealerDesktop
             newProjectArray[14] = hidKneewallType.Value.ToString();
             newProjectArray[15] = hidKneewallHeight.Value.ToString();
             newProjectArray[16] = hidTransomType.Value.ToString();
+            Session.Add("newProjectTransomType", hidTransomType.Value.ToString());
             newProjectArray[17] = hidTransomHeight.Value.ToString();
             newProjectArray[18] = hidFramingColour.Value.ToString();
             newProjectArray[19] = hidInteriorColour.Value.ToString();
@@ -193,6 +278,7 @@ namespace SunspaceDealerDesktop
             newProjectArray[25] = hidRoof.Value.ToString();
             newProjectArray[26] = hidRoofType.Value.ToString();
             newProjectArray[27] = hidLayoutSelection.Value.ToString();
+            Session.Add("newProjectTransomTint", hidTransomTint.Value.ToString());
 
             Session.Add("model", hidModelNumber.Value.ToString());
             Session.Add("kneewallType", hidKneewallType.Value.ToString());

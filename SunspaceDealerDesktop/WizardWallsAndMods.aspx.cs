@@ -146,12 +146,7 @@ namespace SunspaceDealerDesktop
 
             Session["SCREEN_MAX_HEIGHT_WARRANTY"] = Constants.SCREEN_MAX_HEIGHT_WARRANTY;
             #endregion
-
-            #region SPREADER_BAR_NEEDED
-            Session["V4T_SPREADER_BAR_NEEDED"] = Constants.V4T_SPREADER_BAR_NEEDED;
-            Session["HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED"] = Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED;
-            #endregion
-
+            
             #endregion
 
             Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
@@ -3620,6 +3615,7 @@ namespace SunspaceDealerDesktop
                     float wallDoorCount = Int32.Parse(Request.Form["hidWall" + i + "DoorCount"]);
 
                     //if it has doors, do logic w/ doors, otherwise just directly go to window creation
+                    //CHANGEME 2,125/2 are hardcoded instead of constants
                     if (wallDoorCount > 0)
                     {
                         //loop for each door
@@ -3637,26 +3633,68 @@ namespace SunspaceDealerDesktop
                             {
                                 Mod aMod = new Mod();
                                 aMod.ModType = Constants.MOD_TYPE_DOOR;
-                                aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mLength"]);
-                                aMod.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mHeight"]);
+                                aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
+                                aMod.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
                                 aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
                                 //private bool sunshade;
                                 List<ModuleItem> modularItems = new List<ModuleItem>();
                                 modularItems.Add(getCabanaDoorFromForm(i, j));
 
-                                //now we add windows above
+                                //now we add transom windows
 
                                 //The height of the wall at mod end and mod start
                                 float modStartHeight=GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
                                 float modEndHeight=GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation+aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
-                                                                
+
+                                float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows((modEndHeight - aMod.Height), (string)Session["newProjectTransomType"]);
                                 if (modStartHeight == modEndHeight)
                                 {
-                                    //square window
+                                    //rectangular window
+                                    for (int currentWindow = 0; currentWindow < windowInfo[0]; currentWindow++)
+                                    {
+                                        //Set window properties
+                                        Window aWindow = new Window();
+                                        aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
+                                        aWindow.EndHeight = aWindow.StartHeight = windowInfo[1] - 2.125f;
+                                        aWindow.Colour = Request.Form["hidWallWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
+                                        aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
+                                        aWindow.ItemType = "Window";
+                                        aWindow.Length = aMod.Length - 2;
+                                        aWindow.WindowType = (string)Session["newProjectTransomType"];
+                                        if (currentWindow == 0)
+                                        {
+                                            aWindow.FEndHeight += windowInfo[2];
+                                            aWindow.FStartHeight += windowInfo[2];
+                                            aWindow.EndHeight += windowInfo[2];
+                                            aWindow.StartHeight += windowInfo[2];
+                                        }
+                                        aWindow = aWindow; //for break point
+                                    }
                                 }
                                 else
                                 {
                                     //trap/triangle
+                                    //rectangular window
+                                    for (int currentWindow = 0; currentWindow < windowInfo[0]; currentWindow++)
+                                    {
+                                        //Set window properties
+                                        Window aWindow = new Window();
+                                        aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
+                                        aWindow.EndHeight = aWindow.StartHeight = windowInfo[1] - 2.125f;
+                                        aWindow.Colour = Request.Form["hidWallWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
+                                        aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
+                                        aWindow.ItemType = "Window";
+                                        aWindow.Length = aMod.Length - 2;
+                                        aWindow.WindowType = (string)Session["newProjectTransomType"];
+                                        if (currentWindow == 0)
+                                        {
+                                            aWindow.FEndHeight += windowInfo[2];
+                                            aWindow.FStartHeight += windowInfo[2];
+                                            aWindow.EndHeight += windowInfo[2];
+                                            aWindow.StartHeight += windowInfo[2];
+                                        }
+                                        aWindow = aWindow; //for break point
+                                    }
                                 }
 
                                 linearItems.Add(aMod);
@@ -3806,7 +3844,7 @@ namespace SunspaceDealerDesktop
         {
             CabanaDoor aDoor = new CabanaDoor();
             //moduleitem attributes
-            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
+            aDoor.FEndHeight = aDoor.FStartHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
             aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
             aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
             aDoor.ItemType = "Door";
@@ -3834,7 +3872,7 @@ namespace SunspaceDealerDesktop
         {
             FrenchDoor aDoor = new FrenchDoor();
             //moduleitem attributes
-            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
+            aDoor.FEndHeight = aDoor.FStartHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
             aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
             aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
             aDoor.ItemType = "Door";
@@ -3862,7 +3900,7 @@ namespace SunspaceDealerDesktop
         {
             PatioDoor aDoor = new PatioDoor();
             //moduleitem attributes
-            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
+            aDoor.FEndHeight = aDoor.FStartHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
             aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
             aDoor.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
             aDoor.ItemType = "Door";
@@ -3892,7 +3930,7 @@ namespace SunspaceDealerDesktop
             Door aDoor = new Door();
             //moduleitem attributes
             aDoor.ItemType = "Door";
-            aDoor.FHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
+            aDoor.FEndHeight = aDoor.FStartHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fheight"]);
             aDoor.FLength = float.Parse(Request.Form["hidWall" + i + "Door" + j + "fwidth"]);
 
             //base attributes

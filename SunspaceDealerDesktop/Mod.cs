@@ -75,17 +75,6 @@ namespace SunspaceDealerDesktop
                 modularItems = value;
             }
         }
-        public float FixedLocation
-        {
-            get
-            {
-                return fixedLocation;
-            }
-            set
-            {
-                fixedLocation = value;
-            }
-        }
 
         public string ModType
         {

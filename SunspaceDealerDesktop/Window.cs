@@ -22,8 +22,6 @@ namespace SunspaceDealerDesktop
 
         public Window()
         {
-            LinearIndex = 0;
-            ModuleIndex = 0;
             WindowType = "";
             ScreenType = "";
             StartHeight = 0.0f;

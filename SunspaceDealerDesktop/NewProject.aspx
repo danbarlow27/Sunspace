@@ -339,6 +339,7 @@
                 document.getElementById("<%=hidExteriorSkin.ClientID%>").value = document.getElementById("<%=ddlExteriorSkin.ClientID%>").value;
                 document.getElementById("<%=hidKneewallHeight.ClientID%>").value = document.getElementById("<%=txtKneewallHeight.ClientID%>").value;
                 document.getElementById("<%=hidKneewallType.ClientID%>").value = document.getElementById("<%=ddlKneewallType.ClientID%>").value;
+                document.getElementById("<%=hidTransomTint.ClientID%>").value = document.getElementById("<%=ddlTransomTint.ClientID%>").value;
 
                 document.getElementById('<%=btnQuestion4.ClientID%>').disabled = false;
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').disabled = false;
@@ -352,6 +353,8 @@
                 document.getElementById('<%=btnQuestion4.ClientID%>').style.display="none";
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="inline";
             }
+
+
             return false;
         }
 
@@ -697,6 +700,7 @@
                     break;
             }
             
+
             //As this is on the same slide as kneewall and transom, we still need a way to populate those.
             //I didn't want to tack that on to this function, so I just made a new one and called it from here.
             //One function, one purpose.
@@ -737,9 +741,7 @@
         }
 
         //This function is used for initial population of the transom and kneewall type dropdowns
-        function newProjectPopulateKneewallTransom() {
-            console.log("populate kneewall transom");
-            
+        function newProjectPopulateKneewallTransom() {            
             modelNumber = document.getElementById("<%=hidModelNumber.ClientID%>");
             ddlTransomTypes = document.getElementById("<%=ddlTransomType.ClientID%>");
             ddlTransomTypes.options.length = 0;
@@ -896,6 +898,45 @@
                     theImage.setAttribute("src", "./images/layout/Preset9.png");
                 }
             }
+        }
+
+        function newProjectTransomStyleChanged()
+        {
+            ddlTransomTypes = document.getElementById("<%=ddlTransomType.ClientID%>");
+            ddlTransomTints = document.getElementById("<%=ddlTransomTint.ClientID%>");
+            ddlTransomTints.options.length = 0;
+            
+            //var blankOption = new Option("Choose a type...", "Choose a type...");
+            //ddlTransomTypes.options.add(blankOption);
+
+            //Like above, types are based on model, and will get the proper variable based on model
+            switch (ddlTransomTypes.value) {
+                case 'Glass':
+                    var anArray = <%= transomGlassTints %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTints.options.add(anOption);
+                    }
+                    break;
+
+                case 'Vinyl':
+                    var anArray =  <%= vinylTints %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTints.options.add(anOption);
+                    }                    
+                    break;
+
+                case 'Panel':
+                    ddlTransomTints.options.add(new Option("N/A", "N/A"));
+                    break;
+            }
+
+            newProjectCheckQuestion4();
         }
     </script>
 
@@ -1307,11 +1348,15 @@
                                     <asp:Table runat="server">
                                         <asp:TableRow>
                                             <asp:TableCell>
-                                                Type: <asp:DropDownList ID="ddlTransomType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                                Type: <asp:DropDownList ID="ddlTransomType" OnChange="newProjectTransomStyleChanged()" GroupName="styling" runat="server" />
+                                            </asp:TableCell>                                              
+                                        </asp:TableRow>                                           
+                                        <asp:TableRow>                                                                                   
+                                            <asp:TableCell>
+                                                Tint: <asp:DropDownList ID="ddlTransomTint" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
-                                    </asp:Table>
-                                
+                                    </asp:Table>                                
                                 </li>
                             </ul>
                         </div> 
@@ -1377,7 +1422,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </li> 
                 </ul> 
 
                 <asp:Button ID="btnQuestion4" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" />
@@ -1690,6 +1735,7 @@
     <input id="hidKneewallHeight" type="hidden" runat="server" />
     <input id="hidTransomType" type="hidden" runat="server" />
     <input id="hidTransomHeight" type="hidden" runat="server" />
+    <input id="hidTransomTint" type="hidden" runat="server" />
 
     <input id="hidFramingColour" type="hidden" runat="server" />
     <input id="hidInteriorColour" type="hidden" runat="server" />

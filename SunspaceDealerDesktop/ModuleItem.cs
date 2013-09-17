@@ -10,7 +10,8 @@ namespace SunspaceDealerDesktop
         #region Attributes
         private int moduleIndex = 0;         //ModuleItems Array Index (stored value: 1)
         private string itemType = "";       //What type of module item it is: door, window, etc.
-        private float fHeight = 0f;         //Item height including frame: 79.125" (stored value: 79.125)
+        private float fStartHeight = 0f;         //Item height including frame: 79.125" (stored value: 79.125)
+        private float fEndHeight = 0f;         //Item height including frame: 79.125" (stored value: 79.125)
         private float fLength = 0f;         //Item lenth including frame: 32.125" (stored value: 32.125)
         private string colour = null;       //Door colour: White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey (stored value: White)
         #endregion
@@ -42,16 +43,28 @@ namespace SunspaceDealerDesktop
                 itemType = value;
             }
         }
-        public float FHeight
+        public float FEndHeight
         {
             get
             {
-                return fHeight;
+                return fEndHeight;
             }
 
             set
             {
-                fHeight = value;
+                fEndHeight = value;
+            }
+        }
+        public float FStartHeight
+        {
+            get
+            {
+                return fStartHeight;
+            }
+
+            set
+            {
+                fStartHeight = value;
             }
         }
         public float FLength

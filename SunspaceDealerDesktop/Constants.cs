@@ -74,7 +74,7 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_100_TRANSOM_TYPES = { "Vinyl", "Screen", "Solid Wall" };
         public static string[] MODEL_200_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
         public static string[] MODEL_300_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
-        public static string[] MODEL_400_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
+        public static string[] MODEL_400_TRANSOM_TYPES = { "Glass", "Solid Wall" };
 
         public static string[] FASCIA_STRIPE_COLOUR = { "No Stripe", "Test1", "Test2"};
 

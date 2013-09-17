@@ -154,58 +154,167 @@ namespace SunspaceDealerDesktop
 
         /// <summary>
         /// This function, given a height, space that a mod has to fill up with windows, will find the number of windows that need
-        /// to be used, in order to have the windows be similar.
+        /// to be used, in order to have the windows be similar. Returns a float array[number of windows, size of windows, remaining space].
         /// </summary>
         /// <param name="space">The height of the area that needs to be filled with windows</param>
         /// <param name="windowType">The type of window to fill with</param>
-        /// <param name="trapezoid">Whether or not this will have a trapezoid top</param>
-        /// <returns>An array containing [number of windows, size of windows]. If trapezoid == true, the top-most window will be trapezoid, 
-        /// and it's 'height' is the higher of the two.</returns>
-        public static float[] findOptimalHeightsOfWindows(float space, string windowType, bool trapezoid)
+        public static float[] findOptimalHeightsOfWindows(float space, string windowType)
         {
-            float[] returnArray = {0, 0};
+            float[] returnArray = {0, 0, 0};
             float removableSpace = space;
 
             switch (windowType)
             {
-                case "Fixed Vinyl":
-                    if (trapezoid == true)
+                case "Vinyl":
+                    if (space <= Constants.VINYL_LITE_MAX_HEIGHT_WARRANTY)
                     {
-                        if (space <= Constants.VINYL_LITE_MAX_HEIGHT_WARRANTY)
-                        {
-                            returnArray[0] = 1;
-                            returnArray[1] = space;
-                        }
-                        else
-                        {
-                            while (removableSpace > Constants.VINYL_LITE_MAX_HEIGHT_WARRANTY)
-                            {
-                                returnArray[0]++;
-                                removableSpace -= Constants.VINYL_LITE_MAX_HEIGHT_WARRANTY;
-                            }
-
-                            returnArray[1] = space / 
-                        }
+                        returnArray[0] = 1;
+                        returnArray[1] = space;
                     }
                     else
                     {
+                        while (removableSpace > Constants.VINYL_LITE_MAX_HEIGHT_WARRANTY)
+                        {
+                            returnArray[0]++;
+                            removableSpace -= Constants.VINYL_LITE_MAX_HEIGHT_WARRANTY;
+                        }
 
+                        returnArray[1] = RoundDownToNearestEighthInch((float)(space / returnArray[0]));
+                        returnArray[2] = removableSpace;
                     }
                     break;
 
-                case "Fixed Glass":
+                case "Glass":
+                    if (space <= Constants.VINYL_LITE_MAX_HEIGHT_WARRANTY)
+                    {
+                        returnArray[0] = 1;
+                        returnArray[1] = space;
+                    }
+                    else
+                    {
+                        while (removableSpace > Constants.VINYL_LITE_MAX_HEIGHT_WARRANTY)
+                        {
+                            returnArray[0]++;
+                            removableSpace -= Constants.VINYL_LITE_MAX_HEIGHT_WARRANTY;
+                        }
+
+                        returnArray[1] = RoundDownToNearestEighthInch((float)(space / returnArray[0]));
+                        returnArray[2] = removableSpace;
+                    }
                     break;
                 
                 case "Vertical 4 Track":
+                    if (space <= Constants.V4T_4V_MAX_HEIGHT_WARRANTY)
+                    {
+                        returnArray[0] = 1;
+                        returnArray[1] = space;
+                    }
+                    else
+                    {
+                        while (removableSpace > Constants.V4T_4V_MAX_HEIGHT_WARRANTY)
+                        {
+                            returnArray[0]++;
+                            removableSpace -= Constants.V4T_4V_MAX_HEIGHT_WARRANTY;
+                        }
+
+                        returnArray[1] = RoundDownToNearestEighthInch((float)(space / returnArray[0]));
+                        returnArray[2] = removableSpace;
+                    }
                     break;
 
                 case "Horizontal 4 Track":
+                    if (space <= Constants.HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY)
+                    {
+                        returnArray[0] = 1;
+                        returnArray[1] = space;
+                    }
+                    else
+                    {
+                        while (removableSpace > Constants.HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY)
+                        {
+                            returnArray[0]++;
+                            removableSpace -= Constants.HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY;
+                        }
+
+                        returnArray[1] = RoundDownToNearestEighthInch((float)(space / returnArray[0]));
+                        returnArray[2] = removableSpace;
+                    }
                     break;
 
                 case "Horizontal Roller":
+                    if (space <= Constants.HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY)
+                    {
+                        returnArray[0] = 1;
+                        returnArray[1] = space;
+                    }
+                    else
+                    {
+                        while (removableSpace > Constants.HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY)
+                        {
+                            returnArray[0]++;
+                            removableSpace -= Constants.HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY;
+                        }
+
+                        returnArray[1] = RoundDownToNearestEighthInch((float)(space / returnArray[0]));
+                        returnArray[2] = removableSpace;
+                    }
                     break;
 
                 case "Single Slider":
+                    if (space <= Constants.SINGLE_SLIDER_MAX_HEIGHT_WARRANTY)
+                    {
+                        returnArray[0] = 1;
+                        returnArray[1] = space;
+                    }
+                    else
+                    {
+                        while (removableSpace > Constants.SINGLE_SLIDER_MAX_HEIGHT_WARRANTY)
+                        {
+                            returnArray[0]++;
+                            removableSpace -= Constants.SINGLE_SLIDER_MAX_HEIGHT_WARRANTY;
+                        }
+
+                        returnArray[1] = RoundDownToNearestEighthInch((float)(space / returnArray[0]));
+                        returnArray[2] = removableSpace;
+                    }
+                    break;
+
+                case "Double Slider":
+                    if (space <= Constants.DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY)
+                    {
+                        returnArray[0] = 1;
+                        returnArray[1] = space;
+                    }
+                    else
+                    {
+                        while (removableSpace > Constants.DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY)
+                        {
+                            returnArray[0]++;
+                            removableSpace -= Constants.DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY;
+                        }
+
+                        returnArray[1] = RoundDownToNearestEighthInch((float)(space / returnArray[0]));
+                        returnArray[2] = removableSpace;
+                    }
+                    break;
+
+                case "Screen":
+                    if (space <= Constants.SCREEN_MAX_HEIGHT_WARRANTY)
+                    {
+                        returnArray[0] = 1;
+                        returnArray[1] = space;
+                    }
+                    else
+                    {
+                        while (removableSpace > Constants.SCREEN_MAX_HEIGHT_WARRANTY)
+                        {
+                            returnArray[0]++;
+                            removableSpace -= Constants.SCREEN_MAX_HEIGHT_WARRANTY;
+                        }
+
+                        returnArray[1] = RoundDownToNearestEighthInch((float)(space / returnArray[0]));
+                        returnArray[2] = removableSpace;
+                    }
                     break;
             }
             return returnArray;
