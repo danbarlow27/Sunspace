@@ -3628,189 +3628,128 @@ namespace SunspaceDealerDesktop
                                 aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
                                 linearItems.Add(aBoxHeader);
                             }
-                            //Add door
-                            if (Request.Form["hidWall" + i + "Door" + j + "type"] == "Cabana")
-                            {
-                                Mod aMod = new Mod();
-                                aMod.ModType = Constants.MOD_TYPE_DOOR;
-                                aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
-                                aMod.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
-                                //private bool sunshade;
-                                List<ModuleItem> modularItems = new List<ModuleItem>();
-                                modularItems.Add(getCabanaDoorFromForm(i, j));
 
-                                //now we add transom windows
-
-                                //The height of the wall at mod end and mod start
-                                float modStartHeight=GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
-                                float modEndHeight=GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation+aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
-
-                                float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows((modEndHeight - aMod.Height), (string)Session["newProjectTransomType"]);
-                                if (modStartHeight == modEndHeight)
-                                {
-                                    //rectangular window
-                                    for (int currentWindow = 0; currentWindow < windowInfo[0]; currentWindow++)
-                                    {
-                                        //Set window properties
-                                        Window aWindow = new Window();
-                                        aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
-                                        aWindow.EndHeight = aWindow.StartHeight = windowInfo[1] - 2.125f;
-                                        aWindow.Colour = Request.Form["hidWallWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
-                                        aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
-                                        aWindow.ItemType = "Window";
-                                        aWindow.Length = aMod.Length - 2;
-                                        aWindow.WindowType = (string)Session["newProjectTransomType"];
-                                        if (currentWindow == 0)
-                                        {
-                                            aWindow.FEndHeight += windowInfo[2];
-                                            aWindow.FStartHeight += windowInfo[2];
-                                            aWindow.EndHeight += windowInfo[2];
-                                            aWindow.StartHeight += windowInfo[2];
-                                        }
-                                        modularItems.Add(aWindow);
-                                    }
-                                }
-                                else
-                                {
-                                    //trap/triangle
-                                    //rectangular window
-                                    for (int currentWindow = 0; currentWindow < windowInfo[0]; currentWindow++)
-                                    {
-                                        //Set window properties
-                                        Window aWindow = new Window();
-                                        aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
-                                        aWindow.EndHeight = aWindow.StartHeight = windowInfo[1] - 2.125f;
-                                        aWindow.Colour = Request.Form["hidWallWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
-                                        aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
-                                        aWindow.ItemType = "Window";
-                                        aWindow.Length = aMod.Length - 2;
-                                        aWindow.WindowType = (string)Session["newProjectTransomType"];
-                                        if (currentWindow == 0)
-                                        {
-                                            aWindow.FEndHeight += windowInfo[2];
-                                            aWindow.FStartHeight += windowInfo[2];
-                                            aWindow.EndHeight += windowInfo[2];
-                                            aWindow.StartHeight += windowInfo[2];
-                                        }
-                                        modularItems.Add(aWindow);
-                                    }
-                                }
-
-                                linearItems.Add(aMod);
-                            }
-                            else if (Request.Form["hidWall" + i + "Door" + j + "type"] == "French")
-                            {
-                                Mod aMod = new Mod();
-                                aMod.ModType = Constants.MOD_TYPE_DOOR;
-                                aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mLength"]);
-                                aMod.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mHeight"]);
-                                aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
-                                //private bool sunshade;
-                                List<Object> modularItems = new List<Object>();
-                                modularItems.Add(getFrenchDoorFromForm(i, j));
-
-                                //The height of the wall at mod end and mod start
-                                float modStartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
-                                float modEndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
-
-                                //If mod height is less than wall height at start or end of mod, we have space above we need to fill
-                                if (aMod.Height < modStartHeight
-                                    ||
-                                    aMod.Height < modEndHeight)
-                                {
-                                    //Unsloped
-                                    if (modStartHeight == modEndHeight)
-                                    {
-                                        //square window
-                                    }
-                                    else
-                                    {
-                                        //trap/triangle
-                                    }
-                                }
-
-                                linearItems.Add(aMod);
-                            }
-                            else if (Request.Form["hidWall" + i + "Door" + j + "type"] == "Patio")
-                            {
-                                Mod aMod = new Mod();
-                                aMod.ModType = Constants.MOD_TYPE_DOOR;
-                                aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mLength"]);
-                                aMod.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mHeight"]);
-                                aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
-                                //private bool sunshade;
-                                List<Object> modularItems = new List<Object>();
-                                modularItems.Add(getPatioDoorFromForm(i, j));
-
-                                //The height of the wall at mod end and mod start
-                                float modStartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
-                                float modEndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
-
-                                //If mod height is less than wall height at start or end of mod, we have space above we need to fill
-                                if (aMod.Height < modStartHeight
-                                    ||
-                                    aMod.Height < modEndHeight)
-                                {
-                                    //Unsloped
-                                    if (modStartHeight == modEndHeight)
-                                    {
-                                        //square window
-                                    }
-                                    else
-                                    {
-                                        //trap/triangle
-                                    }
-                                }
-
-                                linearItems.Add(aMod);
-                            }
-                            else //nodoor
-                            {
-                                Mod aMod = new Mod();
-                                aMod.ModType = Constants.MOD_TYPE_DOOR;
-                                aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mLength"]);
-                                aMod.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mHeight"]);
-                                aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
-                                //private bool sunshade;
-                                List<Object> modularItems = new List<Object>();
-                                modularItems.Add(getNoDoorFromForm(i, j));
-
-                                //The height of the wall at mod end and mod start
-                                float modStartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
-                                float modEndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
-
-                                //If mod height is less than wall height at start or end of mod, we have space above we need to fill
-                                if (aMod.Height < modStartHeight
-                                    ||
-                                    aMod.Height < modEndHeight)
-                                {
-                                    //Unsloped
-                                    if (modStartHeight == modEndHeight)
-                                    {
-                                        //square window
-                                    }
-                                    else
-                                    {
-                                        //trap/triangle
-                                    }
-                                }
-
-                                linearItems.Add(aMod);
-                            }
+                            Mod aMod = new Mod();
+                            aMod.ModType = Constants.MOD_TYPE_DOOR;
+                            aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
+                            aMod.StartHeight = aMod.EndHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
+                            aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
                             
+                            //private bool sunshade;
+                            List<ModuleItem> modularItems = new List<ModuleItem>();
+                            string doorType = Request.Form["hidWall" + i + "Door" + j + "type"];
+                            if (doorType == "Cabana")
+                            {
+                                Door aDoor = getCabanaDoorFromForm(i, j);
+                                aDoor.Punch = aDoor.FEndHeight;
+                                modularItems.Add(aDoor);
+                            }
+                            if (doorType == "Patio")
+                            {
+                                Door aDoor = getPatioDoorFromForm(i, j);
+                                aDoor.Punch = aDoor.FEndHeight;
+                                modularItems.Add(aDoor);
+                            }
+                            if (doorType == "French")
+                            {
+                                Door aDoor = getFrenchDoorFromForm(i, j);
+                                aDoor.Punch = aDoor.FEndHeight;
+                                modularItems.Add(aDoor);
+                            }
+                            if (doorType == "NoDoor")
+                            {
+                                Door aDoor = getNoDoorFromForm(i, j);
+                                aDoor.Punch = aDoor.FEndHeight;
+                                modularItems.Add(aDoor);
+                            }
+
+                            //now we add transom windows
+
+                            //The height of the wall at mod end and mod start
+                            float modStartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
+                            float modEndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
+
+                            float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows((modEndHeight - aMod.StartHeight), (string)Session["newProjectTransomType"]);
+                            if (modStartHeight == modEndHeight)
+                            {
+                                //rectangular window
+                                for (int currentWindow = 0; currentWindow < windowInfo[0]; currentWindow++)
+                                {
+                                    //Set window properties
+                                    Window aWindow = new Window();
+                                    aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
+                                    aWindow.EndHeight = aWindow.StartHeight = windowInfo[1] - 2.125f;
+                                    aWindow.Colour = Request.Form["hidWallWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
+                                    aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
+                                    aWindow.ItemType = "Window";
+                                    aWindow.Length = aMod.Length - 2;
+                                    aWindow.WindowType = (string)Session["newProjectTransomType"];
+                                    if (currentWindow == 0)
+                                    {
+                                        aWindow.FEndHeight += windowInfo[2];
+                                        aWindow.FStartHeight += windowInfo[2];
+                                        aWindow.EndHeight += windowInfo[2];
+                                        aWindow.StartHeight += windowInfo[2];
+                                    }
+                                    modularItems.Add(aWindow);
+                                }
+                            }
+                            else
+                            {
+                                //trap/triangle
+                                //rectangular window
+                                for (int currentWindow = 0; currentWindow < windowInfo[0]; currentWindow++)
+                                {
+                                    //Set window properties
+                                    Window aWindow = new Window();
+                                    aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
+                                    aWindow.EndHeight = aWindow.StartHeight = windowInfo[1] - 2.125f;
+                                    aWindow.Colour = Request.Form["hidWallWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
+                                    aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
+                                    aWindow.ItemType = "Window";
+                                    aWindow.Length = aMod.Length - 2;
+                                    aWindow.WindowType = (string)Session["newProjectTransomType"];
+                                    if (currentWindow == 0)
+                                    {
+                                        aWindow.FEndHeight += windowInfo[2];
+                                        aWindow.FStartHeight += windowInfo[2];
+                                        aWindow.EndHeight += windowInfo[2];
+                                        aWindow.StartHeight += windowInfo[2];
+                                    }
+                                    modularItems.Add(aWindow);
+                                }
+                            }
+
+                            linearItems.Add(aMod);
+
                             if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Right" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
                             {
                                 BoxHeader aBoxHeader = new BoxHeader(false);
                                 aBoxHeader.Width = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
                                 aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) + Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
                                 linearItems.Add(aBoxHeader);
-                            }                                
-                        }                        
+                            }
+                        }
+
+                        //Now we add the windows that fill the rest of the space
+                        string windowInfoString = Request.Form["hidWall" + i + "WindowInfo"];
+                        string[] windowInfoArray = windowInfoString.Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries);
+
+                        //This will be used to track locations of doors as we go through wall
+                        float doorLocation = 0;
+                        
+                        //Now that we have all the linear items, we add to each wall
+                        listOfWalls[linearPosition].LinearItems = linearItems;
+                        linearPosition++;
                     }
-                    //Now that we have all the linear items, we add to each wall
-                    listOfWalls[linearPosition].LinearItems = linearItems;
-                    linearPosition++;
+                    //This is a wall without doors
+                    else
+                    {
+                        string windowInfoString = Request.Form["hidWall" + i + "WindowInfo"];
+                        string[] windowInfoArray = windowInfoString.Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries);
+
+                        //loop for number of window mods
+                    }
                 }
             }
 
@@ -3854,7 +3793,7 @@ namespace SunspaceDealerDesktop
             aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
             aDoor.ScreenType = ""; //CHANGEME
             aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
-            
+
             //cabana attributes
             aDoor.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "height"]);
             aDoor.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "width"]);

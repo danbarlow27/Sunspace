@@ -12,8 +12,6 @@ namespace SunspaceDealerDesktop
         private int linearIndex;
         private bool sunshade;
         private string modType;
-        private float height;
-        private float length;
         private string sex; //MM MF FM FF
         List<ModuleItem> modularItems = new List<ModuleItem>();
 
@@ -28,8 +26,6 @@ namespace SunspaceDealerDesktop
             Sunshade = false;
             FixedLocation = 0.0f;
             ModType = "";
-            Height = 0f;
-            Length = 0f;
             Sex = "";
         }
 
@@ -85,29 +81,6 @@ namespace SunspaceDealerDesktop
             set
             {
                 modType = value;
-            }
-        }
-        public float Height
-        {
-            get
-            {
-                return height;
-            }
-            set
-            {
-                height = value;
-            }
-        }
-
-        public float Length
-        {
-            get
-            {
-                return length;
-            }
-            set
-            {
-                length = value;
             }
         }
 

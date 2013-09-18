@@ -10,6 +10,9 @@ namespace SunspaceDealerDesktop
         #region Attributes
         private string itemType; //Mod, boxheader, chase, etc.
         private float fixedLocation; //The position (in inches) this item is in the wall
+        private float startHeight;
+        private float endHeight;
+        private float length;
         #endregion
 
         #region Constructors
@@ -46,6 +49,40 @@ namespace SunspaceDealerDesktop
             set
             {
                 fixedLocation = value;
+            }
+        }
+        public float StartHeight
+        {
+            get
+            {
+                return startHeight;
+            }
+            set
+            {
+                startHeight = value;
+            }
+        }
+
+        public float EndHeight
+        {
+            get
+            {
+                return endHeight;
+            }
+            set
+            {
+                endHeight = value;
+            }
+        }
+        public float Length
+        {
+            get
+            {
+                return length;
+            }
+            set
+            {
+                length = value;
             }
         }
         #endregion

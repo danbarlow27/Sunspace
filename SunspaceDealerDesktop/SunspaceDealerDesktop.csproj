@@ -375,6 +375,7 @@
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Kneewall.cs" />
     <Compile Include="LinearItem.cs" />
     <Compile Include="ModuleItem.cs" />
     <Compile Include="OpenSpaceDoor.cs" />

@@ -12,6 +12,7 @@ namespace SunspaceDealerDesktop
         private string doorStyle = null;    //Door style: Full View, Vertical Four Track, Full View Colonial, etc... (stored value: Full View)
         private string screenType = null;   //Door screen type: Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen (stored value: Better Vue Insect Screen)
         private float kickplate = 0f;       //Door kickplate height: 6" (stored value: 6)
+        private float punch = 0f;           //Door header punch location
         #endregion
 
         #region Constructor
@@ -65,6 +66,17 @@ namespace SunspaceDealerDesktop
             set
             {
                 kickplate = value;
+            }
+        }
+        public float Punch
+        {
+            get
+            {
+                return punch;
+            }
+            set
+            {
+                punch = value;
             }
         }
         #endregion
