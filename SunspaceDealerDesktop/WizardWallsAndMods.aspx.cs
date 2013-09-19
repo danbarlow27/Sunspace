@@ -3224,6 +3224,7 @@ namespace SunspaceDealerDesktop
             fixedGlassOptions();
             openWall();
             solidWall();
+            screenOptions();
 
             windowFramingColourOptions(false);
         }
