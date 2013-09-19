@@ -1993,11 +1993,11 @@
             }
             else if ($('#MainContent_radOpenWall').is(':checked')) 
             {
-
+                document.getElementById("<%=hidWindowType.ClientID%>").value = "Open Wall";
             }
             else if ($('#MainContent_radSolidWall').is(':checked')) 
             {
-
+                document.getElementById("<%=hidWindowType.ClientID%>").value = "Solid Wall";
             }
             else if ($('#MainContent_radSingleSlider').is(':checked')) 
             {
@@ -2061,10 +2061,13 @@
                     document.getElementById("<%=hidWindowColour.ClientID%>").value = "Bronze";
                 }
             }
-            else if ($('#MainContent_radScreen').is(':checked')) 
+            if ($('#MainContent_radScreen').is(':checked')) 
             {
                 //move v4t
-                document.getElementById("<%=hidWindowType.ClientID%>").value = "Screen";
+                if ("<%=currentModel%>" == "M100")
+                {
+                    document.getElementById("<%=hidWindowType.ClientID%>").value = "Screen";
+                }
                 //check colours
                 if ($('#MainContent_radBetterVueInsectScreen').is(':checked'))
                 {

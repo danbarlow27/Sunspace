@@ -3236,28 +3236,28 @@ namespace SunspaceDealerDesktop
             RadioButton screenRadio, typeRadio;
             Label screenLabelRadio, screenLabel, typeLabelRadio, typeLabel;
 
-            
 
+            //wallWindowOptions.Controls.Add(new LiteralControl("<br/>"));
             wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
 
             //RadioButton created for every option
             screenRadio = new RadioButton();
             screenRadio.ID = "radScreen";     //Giving an appropriate id to radio buttons based on current type of window
-            screenRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
+            screenRadio.GroupName = "screenTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
             
-            if (currentModel == "M100")
-            {
-                screenRadio.Checked = true;// (currentModel == "M100") ? true : false; //select/check the radio button if current selection is default value
-            }
+            //if (currentModel == "M100")
+            //{
+            //    screenRadio.Checked = true;// (currentModel == "M100") ? true : false; //select/check the radio button if current selection is default value
+            //}
                 //screenRadio.Attributes.Add("onchange", "onWallRadioChange(\"" + i + "\")");
 
             //Label to create clickable area for radio button
             screenLabelRadio = new Label();
-            screenLabelRadio.AssociatedControlID = "radScreen";   //Tying this label to the radio button
+            screenLabelRadio.ID = "radLabelScreen";   //Tying this label to the radio button
 
             screenLabel = new Label();
             screenLabel.AssociatedControlID = "radScreen";        //Tying this label to the radio button
-            screenLabel.Text = "Screen";       //Adding text to the radio button
+            screenLabel.Text = "Screen Type";       //Adding text to the radio button
 
             wallWindowOptions.Controls.Add(screenRadio);        //Adding radio button control to placeholder wallWindowOptions
             wallWindowOptions.Controls.Add(screenLabelRadio);   //Adding label control to placeholder wallWindowOptions
