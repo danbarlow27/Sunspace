@@ -227,7 +227,7 @@ namespace SunspaceDealerDesktop
             return 0f;
         }
 
-        public void FillSpaceWithWindows(string windowType, string windowColour, int numberOfVents, float kneewallHeight, string kneewallType, string transomType)
+        public void FillSpaceWithWindows(string windowType, string windowColour, string framingColour, int numberOfVents, float kneewallHeight, string kneewallType, string transomType)
         {
             float currentLocation = 0;
 
@@ -289,6 +289,7 @@ namespace SunspaceDealerDesktop
                             }
                         }
                     }
+
                     //Now we know where the ending height is, so we subtract kneewall to get the height of the window
                     float windowHeight = highestPunch - kneewallHeight;
                     //Create the window
@@ -304,19 +305,95 @@ namespace SunspaceDealerDesktop
                     aWindow.WindowType = windowType;
 
                     //Check for spreader bar boolean
-                    //Constants.V4T_SPREADER_BAR_NEEDED;
-                    //Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED;
+                    if (windowType == "Vertical 4 Track" && aWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
+                    {
+                        aWindow.SpreaderBar = true;
+                    }
+                    else
+                    {
+                        aWindow.SpreaderBar = false;
+                    }
 
-                    //aWindow.SpreaderBar;
+                    if (windowType == "Horizontal Roller" && aWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
+                    {
+                        aWindow.SpreaderBar = true;
+                    }
+                    else
+                    {
+                        aWindow.SpreaderBar = false;
+                    }
+
+                    aMod.ModularItems.Add(aWindow);
 
                     //Now we handle transom
+                    float modStartWallHeight = GlobalFunctions.getHeightAtPosition(this.StartHeight, this.EndHeight, currentLocation, this.Length);
+                    float modEndWallHeight = GlobalFunctions.getHeightAtPosition(this.StartHeight, this.EndHeight, (currentLocation + aMod.Length), this.Length);
+                    float spaceAbovePunch = Math.Max(modStartWallHeight, modEndWallHeight) - highestPunch - .25f; //Punch physical space
+
+                    float[] transomInfo = GlobalFunctions.findOptimalHeightsOfWindows(spaceAbovePunch, transomType);
+
                     if (this.StartHeight == this.EndHeight)
                     {
                         //rectangular window
+                        for (int currentWindow = 0; currentWindow < transomInfo[0]; currentWindow++)
+                        {
+                            //Set window properties
+                            Window aTransom = new Window();
+                            aTransom.FEndHeight = aTransom.FStartHeight = transomInfo[1];
+                            aTransom.EndHeight = aTransom.StartHeight = transomInfo[1] - 2.125f; //Framing size
+                            aTransom.Colour = windowColour;
+                            aTransom.ItemType = "Window";
+                            aTransom.Length = aMod.Length - 2;
+                            aTransom.WindowType = transomType;
+                            if (currentWindow == 0)
+                            {
+                                aTransom.FEndHeight += transomInfo[2];
+                                aTransom.FStartHeight += transomInfo[2];
+                                aTransom.EndHeight += transomInfo[2];
+                                aTransom.StartHeight += transomInfo[2];
+                            }
+                            aMod.ModularItems.Add(aTransom);
+                        }
                     }
                     else
                     {
                         //trapezoid
+                        for (int currentWindow = 0; currentWindow < transomInfo[0]; currentWindow++)
+                        {
+                            //Set window properties
+                            Window aTransom = new Window();
+                            aTransom.FEndHeight = aTransom.FStartHeight = transomInfo[1];
+                            aTransom.EndHeight = aTransom.StartHeight = transomInfo[1] - 2.125f;
+                            aTransom.Colour = windowColour;
+                            aTransom.ItemType = "Window";
+                            aTransom.Length = aMod.Length - 2;
+                            aTransom.WindowType = transomType;
+                            //Add remaining area to first window
+                            if (currentWindow == 0)
+                            {
+                                aTransom.FEndHeight += transomInfo[2];
+                                aTransom.FStartHeight += transomInfo[2];
+                                aTransom.EndHeight += transomInfo[2];
+                                aTransom.StartHeight += transomInfo[2];
+                            }
+                            //If last window, we need to change a height to make it sloped
+                            if (currentWindow == transomInfo[0] - 1)
+                            {
+                                //If start wall is higher, we lower end height
+                                if (modStartWallHeight == Math.Max(modStartWallHeight, modEndWallHeight))
+                                {
+                                    aTransom.FEndHeight -= (modStartWallHeight - modEndWallHeight);
+                                    aTransom.EndHeight -= (modStartWallHeight - modEndWallHeight);
+                                }
+                                //Otherwise we lower start height
+                                else
+                                {
+                                    aTransom.FStartHeight -= (modEndWallHeight - modStartWallHeight);
+                                    aTransom.StartHeight -= (modEndWallHeight - modStartWallHeight);
+                                }
+                            }
+                            aMod.ModularItems.Add(aTransom);
+                        }
                     }
 
                     //float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows

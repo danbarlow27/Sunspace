@@ -3669,7 +3669,10 @@ namespace SunspaceDealerDesktop
                             float modStartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
                             float modEndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
 
-                            float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows((modEndHeight - aMod.StartHeight), (string)Session["newProjectTransomType"]);
+                            //The space left is the total height of the wall at the highest point of the mod minus the current built mod's space (aMod.StartHeight which equals aMod.endHeight at this point
+                            //Minus the space the door punch takes up.
+                            float sendableHeight = Math.Max(modStartHeight, modEndHeight);
+                            float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows((sendableHeight - aMod.StartHeight - .25f), (string)Session["newProjectTransomType"]);
                             if (modStartHeight == modEndHeight)
                             {
                                 //rectangular window
@@ -3678,12 +3681,13 @@ namespace SunspaceDealerDesktop
                                     //Set window properties
                                     Window aWindow = new Window();
                                     aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
-                                    aWindow.EndHeight = aWindow.StartHeight = windowInfo[1] - 2.125f;
+                                    aWindow.EndHeight = aWindow.StartHeight = windowInfo[1] - 2.125f; //Framing size
                                     aWindow.Colour = Request.Form["hidWallWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
                                     aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                     aWindow.ItemType = "Window";
                                     aWindow.Length = aMod.Length - 2;
                                     aWindow.WindowType = (string)Session["newProjectTransomType"];
+                                    //Add remaining area to first window
                                     if (currentWindow == 0)
                                     {
                                         aWindow.FEndHeight += windowInfo[2];
@@ -3697,7 +3701,6 @@ namespace SunspaceDealerDesktop
                             else
                             {
                                 //trap/triangle
-                                //rectangular window
                                 for (int currentWindow = 0; currentWindow < windowInfo[0]; currentWindow++)
                                 {
                                     //Set window properties
@@ -3709,12 +3712,29 @@ namespace SunspaceDealerDesktop
                                     aWindow.ItemType = "Window";
                                     aWindow.Length = aMod.Length - 2;
                                     aWindow.WindowType = (string)Session["newProjectTransomType"];
+                                    //Add remaining area to first window
                                     if (currentWindow == 0)
                                     {
                                         aWindow.FEndHeight += windowInfo[2];
                                         aWindow.FStartHeight += windowInfo[2];
                                         aWindow.EndHeight += windowInfo[2];
                                         aWindow.StartHeight += windowInfo[2];
+                                    }
+                                    //If last window, we need to change a height to make it sloped
+                                    if (currentWindow == windowInfo[0] - 1)
+                                    {
+                                        //If start wall is higher, we lower end height
+                                        if (wallStartHeight == Math.Max(wallStartHeight, wallEndHeight))
+                                        {
+                                            aWindow.FEndHeight -= (modStartHeight - modEndHeight);
+                                            aWindow.EndHeight -= (modStartHeight - modEndHeight);
+                                        }
+                                        //Otherwise we lower start height
+                                        else
+                                        {
+                                            aWindow.FStartHeight -= (modEndHeight - modStartHeight);
+                                            aWindow.StartHeight -= (modEndHeight - modStartHeight);
+                                        }
                                     }
                                     modularItems.Add(aWindow);
                                 }
@@ -3731,9 +3751,18 @@ namespace SunspaceDealerDesktop
                             }
                         }
 
+                        int numberOfVents=0;
+                        if (Request.Form["MainContent_hidWindowType"].ToString() == "Vertical 4 Track")
+                        {
+                            numberOfVents = Request.Form["MainContent_hidWindowColour"].ToString().Length;
+                        }
                         //Now we add the windows that fill the rest of the space
                         string windowInfoString = Request.Form["hidWall" + i + "WindowInfo"];
                         string[] windowInfoArray = windowInfoString.Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries);
+
+                        listOfWalls[linearPosition].FillSpaceWithWindows(Request.Form["MainContent_hidWindowType"].ToString(), Request.Form["MainContent_hidWindowColour"].ToString(), 
+                                                                                Request.Form["MainContent_hidWindowFramingColour"].ToString(), numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
+                                                                                Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString());
 
                         //This will be used to track locations of doors as we go through wall
                         float doorLocation = 0;

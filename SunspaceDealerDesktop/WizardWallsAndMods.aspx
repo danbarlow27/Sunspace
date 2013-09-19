@@ -1747,9 +1747,9 @@
                             document.getElementById("MainContent_lblOutputArea" + i).innerHTML += "<br/>";
                         }
 
-                        html = "<input id=\"hidWall" + (i+1+existingWallCount) + "WindowInfo" + "\" type=\"hidden\" name=\"hidWall" + (i+1+existingWallCount) + "WindowInfo" + (j+1) + "\"/>";
+                        html = "<input id=\"hidWall" + (i+1+existingWallCount) + "WindowInfo" + "\" type=\"hidden\" name=\"hidWall" + (i+1+existingWallCount) + "WindowInfo" + "\"/>";
                         document.getElementById("MainContent_hiddenFieldsDiv").innerHTML += html;
-                        document.getElementById("hidWall" + (i+1+existingWallCount) + "WindowInfo" + (j+1)).value += validatedWindow[0] + "," + validatedWindow[1] + "," + validatedWindow[2] + ",";
+                        document.getElementById("hidWall" + (i+1+existingWallCount) + "WindowInfo").value += validatedWindow[0] + "," + validatedWindow[1] + "," + validatedWindow[2] + ",";
                     }
                 }
             }

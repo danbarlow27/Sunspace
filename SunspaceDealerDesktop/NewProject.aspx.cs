@@ -264,7 +264,9 @@ namespace SunspaceDealerDesktop
             newProjectArray[12] = hidProjectType.Value.ToString();
             newProjectArray[13] = hidModelNumber.Value.ToString();
             newProjectArray[14] = hidKneewallType.Value.ToString();
+            Session.Add("newProjectKneewallType", hidKneewallType.Value.ToString());
             newProjectArray[15] = hidKneewallHeight.Value.ToString();
+            Session.Add("newProjectKneewallHeight", hidKneewallHeight.Value.ToString());
             newProjectArray[16] = hidTransomType.Value.ToString();
             Session.Add("newProjectTransomType", hidTransomType.Value.ToString());
             newProjectArray[17] = hidTransomHeight.Value.ToString();
