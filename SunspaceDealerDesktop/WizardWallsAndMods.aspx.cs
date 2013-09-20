@@ -3577,7 +3577,7 @@ namespace SunspaceDealerDesktop
                 //if blank its an existing wall, so skip it
                 if (Request.Form["hidWall" + i + "Length"] != "")
                 {
-                    Wall aWall = new Wall();
+                    Wall aWall = new Wall(); //asdf
                     aWall.Length = float.Parse(Request.Form["hidWall" + i + "Length"]);
                     aWall.Orientation = Request.Form["hidWall" + i + "Orientation"];
                     aWall.Name = "Wall " + (i-existingWallCount);
@@ -3726,14 +3726,14 @@ namespace SunspaceDealerDesktop
                                         //If start wall is higher, we lower end height
                                         if (wallStartHeight == Math.Max(wallStartHeight, wallEndHeight))
                                         {
-                                            aWindow.FEndHeight -= (modStartHeight - modEndHeight);
-                                            aWindow.EndHeight -= (modStartHeight - modEndHeight);
+                                            aWindow.FEndHeight = aWindow.FEndHeight - (modStartHeight - modEndHeight);
+                                            aWindow.EndHeight = aWindow.EndHeight - (modStartHeight - modEndHeight);
                                         }
                                         //Otherwise we lower start height
                                         else
                                         {
-                                            aWindow.FStartHeight -= (modEndHeight - modStartHeight);
-                                            aWindow.StartHeight -= (modEndHeight - modStartHeight);
+                                            aWindow.FStartHeight = aWindow.FStartHeight - (modEndHeight - modStartHeight);
+                                            aWindow.StartHeight = aWindow.StartHeight - (modEndHeight - modStartHeight);
                                         }
                                     }
                                     modularItems.Add(aWindow);
@@ -3752,17 +3752,16 @@ namespace SunspaceDealerDesktop
                         }
 
                         int numberOfVents=0;
-                        if (Request.Form["MainContent_hidWindowType"].ToString() == "Vertical 4 Track")
+                        if (hidWindowType.Value == "Vertical 4 Track")
                         {
-                            numberOfVents = Request.Form["MainContent_hidWindowColour"].ToString().Length;
+                            numberOfVents = hidWindowColour.Value.Length;
                         }
                         //Now we add the windows that fill the rest of the space
                         string windowInfoString = Request.Form["hidWall" + i + "WindowInfo"];
                         string[] windowInfoArray = windowInfoString.Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
-                        listOfWalls[linearPosition].FillSpaceWithWindows(Request.Form["MainContent_hidWindowType"].ToString(), Request.Form["MainContent_hidWindowColour"].ToString(), 
-                                                                                Request.Form["MainContent_hidWindowFramingColour"].ToString(), numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
-                                                                                Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString());
+                        listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
+                                                                         Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString());
 
                         //This will be used to track locations of doors as we go through wall
                         float doorLocation = 0;

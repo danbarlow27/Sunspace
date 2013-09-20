@@ -13,7 +13,7 @@ namespace SunspaceDealerDesktop
         int itemIndex; //LinearItems Array Index
         float length; //temporary
         //float cutLength; //Length to Cut Starter At ?????????????????
-        String colour; //Colour of the receiver
+        string colour; //Colour of the receiver
         //bool isTwoPiece; //???????????
 
         public Receiver()
@@ -56,7 +56,7 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public String Colour
+        public string Colour
         {
             get
             {

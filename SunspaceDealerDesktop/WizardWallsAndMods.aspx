@@ -1012,7 +1012,10 @@
                     else
                         isValid = true;
                 }
-            }
+            }            
+
+            //Used for 'cheat' below
+            var cheatCounter = 0;
 
             if (isValid) { //if everything is valid
 
@@ -1034,6 +1037,53 @@
                             +(document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").options[document.getElementById("MainContent_ddlWall" + i + "RightInchFractions").selectedIndex].value); //dropdown value
                         document.getElementById("hidWall" + i + "SoffitLength").value = wallSoffitArray[i - 1];//store wall soffitlength
                         answer += "Wall " + (i-existingWallCount) + ": " + document.getElementById("hidWall" + i + "Length").value + "<br/>"; //store the values in the answer variable to be displayed
+
+                        //The current program hasn't considered the space receievers or corner posts take up in a wall's length
+                        //So we're going to cheat it here by adding that 'space' to the fillers, and removing it later when the
+                        //Wall objects are being built.
+                        if (cheatCounter ==0)
+                        {
+                            document.getElementById("hidWall" + i + "LeftFiller").value = parseFloat(document.getElementById("hidWall" + i + "LeftFiller").value) + parseFloat(1);//CHANGEME receiver length
+                            cheatCounter++;
+                        }
+                        //If not the first, we add a corner post length to left filler
+                        else
+                        {
+                            if ("<%=currentModel%>" == "M400")
+                            {
+                                document.getElementById("hidWall" + i + "LeftFiller").value = parseFloat(document.getElementById("hidWall" + i + "LeftFiller").value) + parseFloat(4.125); //CHANGEME corner post
+                            }
+                            else
+                            {
+                                document.getElementById("hidWall" + i + "LeftFiller").value = parseFloat(document.getElementById("hidWall" + i + "LeftFiller").value) + parseFloat(3.125); //CHANGEME corner post
+                            }
+                        }
+                       
+                        try
+                        {
+                            //If next wall is proposed we add a corner post's length to right filler
+                            if (coordList[i][4] == "P")
+                            {
+                                if ("<%=currentModel%>" == "M400")
+                                {
+                                    document.getElementById("hidWall" + i + "RightFiller").value = parseFloat(document.getElementById("hidWall" + i + "RightFiller").value) + parseFloat(4.125); //CHANGEME corner post
+                                }
+                                else
+                                {
+                                    document.getElementById("hidWall" + i + "RightFiller").value = parseFloat(document.getElementById("hidWall" + i + "RightFiller").value) + parseFloat(3.125); //CHANGEME corner post
+                                }
+                            }
+                        }
+                        //If we catch an error, this is the last wall, add receiever instead of post
+                        catch(err)
+                        {
+                            document.getElementById("hidWall" + i + "RightFiller").value = parseFloat(document.getElementById("hidWall" + i + "RightFiller").value) + parseFloat(1); //CHANGEME corner post
+                        }
+
+                        //FINISHME
+                        //if 1, leftfiller + receiver
+                        //else if i+1 = proposed, + corner post
+                        //catch means on last wall, + receiver
                   
                     }
                     else{
