@@ -8,82 +8,35 @@ namespace SunspaceDealerDesktop
     public class BoxHeader : LinearItem
     {
         #region Attributes
-        private float width;
-        private float length;
+        private bool hasReceiver;
+        private bool isTwoPiece;
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Instantiate a new boxHeader at constant lengths, based on true/false whether or not it is a boxHeader/Receiever piece.
-        /// </summary>
-        /// <param name="receiever">true if this is a boxHeader receiever, otherwise false.</param>
-        public BoxHeader(bool receiever)
-        {
-            this.ItemType = "BoxHeader";
-
-            if (receiever == true)
-            {
-                Length = Constants.BOXHEADER_RECEIVER_LENGTH;
-            }
-            else
-            {
-                Length = Constants.BOXHEADER_LENGTH;
-            }
-        }
-        /// <summary>
-        /// Instantiate a new boxHeader at constant lengths, based on true/false whether or not it is a boxHeader/Receiever piece.
-        /// </summary>
-        /// <param name="receiever">true if this is a boxHeader receiever, otherwise false.</param>
-        /// <param name="sentWidth">in case of any custom width boxheader, this is available.</param>
-        public BoxHeader(bool receiever, float sentWidth)
-        {
-            this.ItemType = "BoxHeader";
-
-            if (receiever == true)
-            {
-                Length = Constants.BOXHEADER_RECEIVER_LENGTH;
-            }
-            else
-            {
-                Length = Constants.BOXHEADER_LENGTH;
-            }
-            Width = sentWidth;
-        }
+        public BoxHeader() { }
         #endregion
 
         #region Accessors
-        /// <summary>
-        /// The length of a boxheader refers to it's thickness, or it's girth.  On a vertical boxheader, it is left to right
-        /// commonly a small number of inches. On a horizontal box header, it is bottom to top, corresponding to the same dimension
-        /// in another direction.
-        /// </summary>
-        public float Length
+        public bool HasReceiver
         {
             get
             {
-                return length;
+                return hasReceiver;
             }
-
             set
             {
-                length = value;
+                hasReceiver = value;
             }
         }
-        /// <summary>
-        /// The width of a boxheader refers to it's projection, or it's height.  On a vertical boxheader, it is bottom to top
-        /// commonly a longer number of inches. On a horizontal box header, it is left to right, corresponding to the same dimension
-        /// in another direction.
-        /// </summary>
-        public float Width
+        public bool IsTwoPiece
         {
             get
             {
-                return width;
+                return isTwoPiece;
             }
-
             set
             {
-                width = value;
+                isTwoPiece = value;
             }
         }
         #endregion

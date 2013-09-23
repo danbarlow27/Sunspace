@@ -3602,6 +3602,7 @@ namespace SunspaceDealerDesktop
             
             //Loop for each wall
             int linearPosition = 0;
+            int cheatCounter = 0;
             for (int i = 1; i <= strWalls.Length; i++)
             {
                 //A list of linear items to be added to each wall
@@ -3619,15 +3620,62 @@ namespace SunspaceDealerDesktop
                     //CHANGEME 2,125/2 are hardcoded instead of constants
                     if (wallDoorCount > 0)
                     {
+                        //Left filler
+                        //The current program hasn't considered the space receievers or corner posts take up in a wall's length
+                        //So we're going to cheat it here by adding that 'space' to the fillers, and removing it later when the
+                        //Wall objects are being built, which is here.
+                        if (cheatCounter == 0)
+                        {
+                            wallLeftFiller -= 1;//CHANGEME receiver length
+                            Receiver aReceiver = new Receiver();
+                            aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+                            aReceiver.Length = 1f;
+                            linearItems.Add(aReceiver);
+                            cheatCounter++;
+                        }
+                        else
+                        {
+                            if (currentModel == "M400")
+                            {
+                                Corner aCorner = new Corner();
+                                aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+                                aCorner.Length = 4.125f;
+                                wallLeftFiller -= aCorner.Length;
+                                linearItems.Add(aCorner);
+                            }
+                            else
+                            {
+                                Corner aCorner = new Corner();
+                                aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+                                aCorner.Length = 3.125f;
+                                wallLeftFiller -= aCorner.Length;
+                                linearItems.Add(aCorner);
+                            }
+                            cheatCounter++;
+                        }
+
                         //loop for each door
                         for (int j = 1; j <= wallDoorCount; j++)
                         {
                             if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Left" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
                             {
-                                BoxHeader aBoxHeader = new BoxHeader(false);
-                                aBoxHeader.Width = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
-                                linearItems.Add(aBoxHeader);
+                                if (currentModel == "M400")
+                                {
+                                    HChannel anHChannel = new HChannel();
+                                    anHChannel.StartHeight = anHChannel.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
+                                    anHChannel.Length = 2.5f;
+                                    //CHANGEME if driftwood
+                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+                                    linearItems.Add(anHChannel);
+                                }
+                                else
+                                {
+                                    BoxHeader aBoxHeader = new BoxHeader();
+                                    aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
+                                    aBoxHeader.Length = 3.125f;
+                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+                                    linearItems.Add(aBoxHeader);
+                                }
                             }
 
                             Mod aMod = new Mod();
@@ -3740,20 +3788,33 @@ namespace SunspaceDealerDesktop
                                     modularItems.Add(aWindow);
                                 }
                             }
-
+                            aMod.ModularItems = modularItems;
                             linearItems.Add(aMod);
 
                             if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Right" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
                             {
-                                BoxHeader aBoxHeader = new BoxHeader(false);
-                                aBoxHeader.Width = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) + Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
-                                linearItems.Add(aBoxHeader);
+                                if (currentModel == "M400")
+                                {
+                                    HChannel anHChannel = new HChannel();
+                                    anHChannel.StartHeight = anHChannel.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
+                                    anHChannel.Length = 2.5f;
+                                    //CHANGEME if driftwood
+                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+                                    linearItems.Add(anHChannel);
+                                }
+                                else
+                                {
+                                    BoxHeader aBoxHeader = new BoxHeader();
+                                    aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
+                                    aBoxHeader.Length = 3.125f;
+                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+                                    linearItems.Add(aBoxHeader);
+                                }
                             }
                         }
 
                         int numberOfVents=0;
-                        if (hidWindowType.Value == "Vertical 4 Track")
+                        if (hidWindowType.Value == "Vertical 4 Track" || hidWindowType.Value == "Vertical Four Track")
                         {
                             numberOfVents = hidWindowColour.Value.Length;
                         }
@@ -3761,15 +3822,55 @@ namespace SunspaceDealerDesktop
                         string windowInfoString = Request.Form["hidWall" + i + "WindowInfo"];
                         string[] windowInfoArray = windowInfoString.Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
+                        //Right filler
+                        //Since we don't want to add the same corner post that is shared between walls twice, at this point we're just going to remove from filler
+                        //and from wall length, so for example, a 130 length wall will actually be 126.875 and 'go into' the next corner post
+
+                        //We try to check next wall.  If it exists, this rightside will be a corner post. If it throws an error
+                        //this must be the last wall, so we only remove a receiver's worth from the right side.
+                        try
+                        {
+                            if (wallDetails[i - 1, 4] == "P")
+                            {
+                                if (currentModel == "M400")
+                                {
+                                    wallRightFiller -= 4.125f;
+                                }
+                                else
+                                {
+                                    wallRightFiller -= 3.125f;
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            wallRightFiller -= 1f;
+                        }
+
+                        //if (currentModel == "M400")
+                        //{
+                        //    Corner aCorner = new Corner();
+                        //    aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+                        //    aCorner.Length = 4.125f;
+                        //    wallRightFiller -= aCorner.Length;
+                        //    linearItems.Add(aCorner);
+                        //}
+                        //else
+                        //{
+                        //    Corner aCorner = new Corner();
+                        //    aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+                        //    aCorner.Length = 4.125f;
+                        //    wallRightFiller -= aCorner.Length;
+                        //    linearItems.Add(aCorner);
+                        //}
+
+                        //Now that we have all the linear items, we add to each wall
+                        listOfWalls[linearPosition].LinearItems = linearItems;
+
                         listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
                                                                          Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString());
 
-                        //This will be used to track locations of doors as we go through wall
-                        float doorLocation = 0;
-                        
-                        //Now that we have all the linear items, we add to each wall
-                        listOfWalls[linearPosition].LinearItems = linearItems;
-                        linearPosition++;
+                        linearPosition++;//asdf
                     }
                     //This is a wall without doors
                     else
@@ -3777,7 +3878,9 @@ namespace SunspaceDealerDesktop
                         string windowInfoString = Request.Form["hidWall" + i + "WindowInfo"];
                         string[] windowInfoArray = windowInfoString.Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
-                        //loop for number of window mods
+                        //Left filler
+                        //Fill Function
+                        //Right filler
                     }
                 }
             }

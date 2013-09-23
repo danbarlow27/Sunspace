@@ -229,7 +229,7 @@ namespace SunspaceDealerDesktop
 
         public void FillSpaceWithWindows(string windowType, string windowColour, string framingColour, int numberOfVents, float kneewallHeight, string kneewallType, string transomType)
         {
-            float currentLocation = 0;
+            float currentLocation = 0f;
 
             //Loop through linear items using currentLocation to keep track
             for (int i = 0; i < LinearItems.Count; i++)
@@ -305,16 +305,8 @@ namespace SunspaceDealerDesktop
                     aWindow.WindowType = windowType;
 
                     //Check for spreader bar boolean
-                    if (windowType == "Vertical 4 Track" && aWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
-                    {
-                        aWindow.SpreaderBar = true;
-                    }
-                    else
-                    {
-                        aWindow.SpreaderBar = false;
-                    }
-
-                    if (windowType == "Horizontal Roller" && aWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
+                    if ((windowType == "Vertical 4 Track" && aWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED) || 
+                        (windowType == "Horizontal Roller" && aWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED))
                     {
                         aWindow.SpreaderBar = true;
                     }
@@ -397,6 +389,18 @@ namespace SunspaceDealerDesktop
                     }
 
                     //float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows
+                    //Find where to place the mod, and place it
+                    for (int j = 0; j < LinearItems.Count; j++)
+                    {
+                        if (LinearItems[i].FixedLocation > aMod.FixedLocation)
+                        {
+                            //j is past, so we insert into j-1 and exit the loop
+                            LinearItems.Insert(j - 1, aMod);
+                            break;
+                        }
+                    }
+                    //Sets currentlocation to the ending location of current linear item
+                    currentLocation = currentLocation + space + linearItems[i].Length;
                 }
             }
         }

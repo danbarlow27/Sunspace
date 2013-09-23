@@ -5,30 +5,13 @@ using System.Web;
 
 namespace SunspaceDealerDesktop
 {
-    public class Receiver
+    public class Receiver : LinearItem
     {
-
-        //anthony smells
-
-        int itemIndex; //LinearItems Array Index
-        float length; //temporary
-        //float cutLength; //Length to Cut Starter At ?????????????????
-        string colour; //Colour of the receiver
+        private int itemIndex; //LinearItems Array Index
+        private string colour; //Colour of the receiver
         //bool isTwoPiece; //???????????
 
-        public Receiver()
-        {
-            ItemIndex = -1;
-            Length = 0f;
-            Colour = "red";
-        }
-
-        public Receiver(float sentLength)
-        {
-            ItemIndex = -1;
-            Length = sentLength;
-            Colour = "Red";
-        }
+        public Receiver() { }
 
         public int ItemIndex
         {
@@ -40,19 +23,6 @@ namespace SunspaceDealerDesktop
             set
             {
                 itemIndex = value;
-            }
-        }
-
-        public float Length
-        {
-            get
-            {
-                return length;
-            }
-
-            set
-            {
-                length = value;
             }
         }
 

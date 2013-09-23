@@ -1078,13 +1078,7 @@
                         catch(err)
                         {
                             document.getElementById("hidWall" + i + "RightFiller").value = parseFloat(document.getElementById("hidWall" + i + "RightFiller").value) + parseFloat(1); //CHANGEME corner post
-                        }
-
-                        //FINISHME
-                        //if 1, leftfiller + receiver
-                        //else if i+1 = proposed, + corner post
-                        //catch means on last wall, + receiver
-                  
+                        }                  
                     }
                     else{
                         existingWallCount++;
@@ -1852,7 +1846,7 @@
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "mheight").value = walls[i].mods[j].mheight;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "mwidth").value = walls[i].mods[j].mwidth;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "numberOfVents").value = walls[i].mods[j].numberOfVents;
-                                document.getElementById("hidWall" + i + "Door" + (j+1) + "position").value = walls[i].mods[j].position;
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "position").value = parseFloat(walls[i].mods[j].position[0]) + parseFloat(walls[i].mods[j].position[1]);
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "style").value = walls[i].mods[j].style;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "swing").value = walls[i].mods[j].swing;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
