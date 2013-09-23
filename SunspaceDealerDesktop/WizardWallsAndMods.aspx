@@ -2185,6 +2185,24 @@
             //}
         }
 
+        function sunscreenToggle()
+        {
+            if ($('#MainContent_chkSunscreen').is(':checked'))
+            {
+                document.getElementById('valanceRow').style.visibility = "visible";
+                document.getElementById('fabricRow').style.visibility = "visible";
+                document.getElementById('openRow').style.visibility = "visible";
+                document.getElementById('chainRow').style.visibility = "visible";
+            }
+            else
+            {
+                document.getElementById('valanceRow').style.visibility = "hidden";
+                document.getElementById('fabricRow').style.visibility = "hidden";
+                document.getElementById('openRow').style.visibility = "hidden";
+                document.getElementById('chainRow').style.visibility = "hidden";
+            }
+        }
+
         function resetHiddens()
         {
             $('#MainContent_removableHiddenFieldsDiv').empty();

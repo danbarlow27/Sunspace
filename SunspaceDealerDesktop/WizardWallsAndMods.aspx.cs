@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Script.Serialization;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -9,7 +10,7 @@ using System.Web.UI.WebControls;
 namespace SunspaceDealerDesktop
 {
     public partial class WizardWallsAndMods : System.Web.UI.Page
-    {
+    {        
         public const float FOAM_PANEL_PROJECTION = 264f;
         public const float ACRYLIC_PANEL_PROJECTION = 276f;
         public const float THERMADECK_PANEL_PROJECTION = 288f;
@@ -2567,6 +2568,7 @@ namespace SunspaceDealerDesktop
                 frameRadio = new RadioButton();
                 frameRadio.ID = "radFrameBronze"; //Adding appropriate id to window type radio button
                 frameRadio.GroupName = "FrameColourRadios";         //Adding group name for all tint colours
+                frameRadio.Checked = true;
                 //frameRadio.Checked = (currentModel == "M200") ? true : false; //select/check the radio button if current select is defualt value
                 //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
 
@@ -3322,7 +3324,7 @@ namespace SunspaceDealerDesktop
             typeRadio = new RadioButton();
             typeRadio.ID = "radBetterVueInsectScreen"; //Adding appropriate id to window type radio button
             typeRadio.GroupName = "ScreenRadios";         //Adding group name for all window types
-            typeRadio.Checked = (currentModel == "M100") ? true : false; //select/check the radio button if current select is defualt value
+            typeRadio.Checked = true; //select/check the radio button if current select is defualt value
             //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
 
             //Window type radio button label for clickable area
@@ -3543,15 +3545,119 @@ namespace SunspaceDealerDesktop
             plcSunscreen.Controls.Add(new LiteralControl("<li>"));
             Label sunscreenLabel = new Label();
             sunscreenLabel.ID = "lblSunscreen";
-            sunscreenLabel.Text = "Sunscreen Options: ";
+            sunscreenLabel.Text = "Sunscreen Options";
             plcSunscreen.Controls.Add(sunscreenLabel);
-            plcSunscreen.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li>"));
-            Label thisLabel = new Label();
-            thisLabel.ID = "lblThisLabel";
-            thisLabel.Text = "Hello there!";
-            plcSunscreen.Controls.Add(thisLabel);
+            plcSunscreen.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li><table runat=\"server\">"));
 
-            plcSunscreen.Controls.Add(new LiteralControl("</li></ul></div></li>"));
+
+            #region include checkbox population
+            
+            plcSunscreen.Controls.Add(new LiteralControl("<tr><td>"));
+
+            Label textSunscreenLabel = new Label();
+            textSunscreenLabel.ID = "lblTextSunscreenLabel";
+            textSunscreenLabel.Attributes.Add("runat", "server");
+            textSunscreenLabel.Text = "Include Sunshades: ";
+
+            plcSunscreen.Controls.Add(textSunscreenLabel);
+            plcSunscreen.Controls.Add(new LiteralControl("</td>"));
+
+            plcSunscreen.Controls.Add(new LiteralControl("<td>"));
+
+            CheckBox checkSunscreen = new CheckBox();
+            checkSunscreen.ID = "chkSunscreen";
+            checkSunscreen.Attributes.Add("runat", "server");
+            checkSunscreen.Text = " ";
+            checkSunscreen.Attributes.Add("onchange", "sunscreenToggle()");
+
+            plcSunscreen.Controls.Add(checkSunscreen);
+
+            Label firstSunscreenLabel = new Label();
+            firstSunscreenLabel.ID = "lblFirstSunscreenLabel";
+            firstSunscreenLabel.AssociatedControlID = "chkSunscreen";
+            firstSunscreenLabel.Attributes.Add("runat", "server");
+            
+            plcSunscreen.Controls.Add(firstSunscreenLabel);
+
+            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            #endregion
+
+            #region valance population
+            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"valanceRow\" style=\"visibility:hidden\"><td>"));
+            Label valanceLabel = new Label();
+            valanceLabel.ID = "lblValance";
+            valanceLabel.Text = "Valance Color: ";
+
+            DropDownList valanceDropdown = new DropDownList();
+            valanceDropdown.ID = "ddlValance";
+            for (int i = 0; i < Constants.SUNSHADE_VALANCE_COLOURS.Length; i++)
+            {
+                valanceDropdown.Items.Add(Constants.SUNSHADE_VALANCE_COLOURS[i]);
+            }
+
+            plcSunscreen.Controls.Add(valanceLabel);
+            plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
+            plcSunscreen.Controls.Add(valanceDropdown);
+            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            #endregion
+
+            #region fabric population
+            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"fabricRow\" style=\"visibility:hidden\"><td>"));
+            Label fabricLabel = new Label();
+            fabricLabel.ID = "lblFabric";
+            fabricLabel.Text = "Fabric Color: ";
+
+            DropDownList fabricDropdown = new DropDownList();
+            fabricDropdown.ID = "ddlFabric";
+            for (int i = 0; i < Constants.SUNSHADE_FABRIC_COLOURS.Length; i++)
+            {
+                fabricDropdown.Items.Add(Constants.SUNSHADE_FABRIC_COLOURS[i]);
+            }
+
+            plcSunscreen.Controls.Add(fabricLabel);
+            plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
+            plcSunscreen.Controls.Add(fabricDropdown);
+            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            #endregion
+
+            #region openness population
+            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"openRow\" style=\"visibility:hidden\"><td>"));
+            Label openLabel = new Label();
+            openLabel.ID = "lblOpen";
+            openLabel.Text = "Openness: ";
+
+            DropDownList openDropdown = new DropDownList();
+            openDropdown.ID = "ddlOpen";
+            for (int i = 0; i < Constants.SUNSHADE_OPENNESS.Length; i++)
+            {
+                openDropdown.Items.Add(Constants.SUNSHADE_OPENNESS[i]);
+            }
+
+            plcSunscreen.Controls.Add(openLabel);
+            plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
+            plcSunscreen.Controls.Add(openDropdown);
+            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            #endregion
+
+            #region chain population
+            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"chainRow\" style=\"visibility:hidden\"><td>"));
+            Label chainLabel = new Label();
+            chainLabel.ID = "lblChain";
+            chainLabel.Text = "Chain: ";
+
+            DropDownList chainDropdown = new DropDownList();
+            chainDropdown.ID = "ddlChain";
+            
+            chainDropdown.Items.Add("Left");
+            chainDropdown.Items.Add("Right");
+
+            plcSunscreen.Controls.Add(chainLabel);
+            plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
+            plcSunscreen.Controls.Add(chainDropdown);
+            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            #endregion
+
+            plcSunscreen.Controls.Add(new LiteralControl("</table></li></ul></div></li>"));
         }
         #endregion
 
