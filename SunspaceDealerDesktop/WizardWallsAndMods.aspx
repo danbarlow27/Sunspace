@@ -2121,23 +2121,23 @@
                 //check colours
                 if ($('#MainContent_radBetterVueInsectScreen').is(':checked'))
                 {
-                    document.getElementById("<%=hidScreenType.ClientID%>").value = "Better Vue Insect Screen (Default)";
+                    document.getElementById("<%=hidScreenType.ClientID%>").value = "BetterVueInsectScreen";
                 }
                 if ($('#MainContent_radNoSeeUms20x20Mesh').is(':checked'))
                 {
-                    document.getElementById("<%=hidScreenType.ClientID%>").value = "No See Ums 20 x 20 Mesh";
+                    document.getElementById("<%=hidScreenType.ClientID%>").value = "NoSeeUms2020Mesh";
                 }
                 if ($('#MainContent_radSolarInsectScreening').is(':checked'))
                 {
-                    document.getElementById("<%=hidScreenType.ClientID%>").value = "Solar Insect Screening";
+                    document.getElementById("<%=hidScreenType.ClientID%>").value = "SolarInsectScreening";
                 }
                 if ($('#MainContent_radToughScreen').is(':checked'))
                 {
-                    document.getElementById("<%=hidScreenType.ClientID%>").value = "Tuff Screen";
+                    document.getElementById("<%=hidScreenType.ClientID%>").value = "TuffScreen";
                 }
                 if ($('#MainContent_radNoScreen').is(':checked'))
                 {
-                    document.getElementById("<%=hidScreenType.ClientID%>").value = "No Screen";
+                    document.getElementById("<%=hidScreenType.ClientID%>").value = "NoScreen";
                 }
             }
 
@@ -2319,7 +2319,10 @@
                 </h1>        
                               
                 <ul class="toggleOptions">
-                    <asp:PlaceHolder ID="wallWindowOptions" runat="server"></asp:PlaceHolder>                    
+                    <asp:PlaceHolder ID="wallWindowOptions" runat="server"></asp:PlaceHolder>
+                    <asp:PlaceHolder ID="plcFrameOptions" runat="server"></asp:PlaceHolder>
+                    <asp:PlaceHolder ID="plcScreenOptions" runat="server"></asp:PlaceHolder>
+                    <asp:PlaceHolder ID="plcSunscreen" runat="server"></asp:PlaceHolder>                    
                 </ul>  
                  
                 <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" OnClientClick="WindowPreparation();return false;"/>     
