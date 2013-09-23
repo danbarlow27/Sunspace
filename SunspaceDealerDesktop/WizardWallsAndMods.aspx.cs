@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Script.Serialization;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -9,7 +10,7 @@ using System.Web.UI.WebControls;
 namespace SunspaceDealerDesktop
 {
     public partial class WizardWallsAndMods : System.Web.UI.Page
-    {
+    {        
         public const float FOAM_PANEL_PROJECTION = 264f;
         public const float ACRYLIC_PANEL_PROJECTION = 276f;
         public const float THERMADECK_PANEL_PROJECTION = 288f;
@@ -2441,7 +2442,14 @@ namespace SunspaceDealerDesktop
         protected void windowFramingColourOptions(bool bronze, bool white = true, bool driftwood = true, bool green = false, bool black = false, bool ivory = false, bool cherrywood = false, bool grey = false)
         {
 
-            wallWindowOptions.Controls.Add(new LiteralControl("<br/><h2>Framing Colour: </h2>"));
+            plcFrameOptions.Controls.Add(new LiteralControl("<li>"));
+
+            Label frameOptionLabel = new Label();
+            frameOptionLabel.ID = "lblFrameOptionLabel";
+            frameOptionLabel.Text = "Framing Options";
+            plcFrameOptions.Controls.Add(frameOptionLabel);
+
+            plcFrameOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li>"));
 
             #region framing colour dropdown
 
@@ -2554,12 +2562,13 @@ namespace SunspaceDealerDesktop
                 #region Bronze
 
                 //li tag to hold window type radio button and all its content
-                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+                plcFrameOptions.Controls.Add(new LiteralControl("<li>"));
 
                 //Vinyl tint radio button
                 frameRadio = new RadioButton();
                 frameRadio.ID = "radFrameBronze"; //Adding appropriate id to window type radio button
                 frameRadio.GroupName = "FrameColourRadios";         //Adding group name for all tint colours
+                frameRadio.Checked = true;
                 //frameRadio.Checked = (currentModel == "M200") ? true : false; //select/check the radio button if current select is defualt value
                 //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
 
@@ -2572,10 +2581,10 @@ namespace SunspaceDealerDesktop
                 frameLabel.AssociatedControlID = "radFrameBronze";    //Tying this label to the radio button
                 frameLabel.Text = "Bronze";
 
-                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+                plcFrameOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(new LiteralControl("</li>"));
 
                 #endregion
             }
@@ -2587,7 +2596,7 @@ namespace SunspaceDealerDesktop
                 #region White
 
                 //li tag to hold window type radio button and all its content
-                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+                plcFrameOptions.Controls.Add(new LiteralControl("<li>"));
 
                 //Vinyl tint radio button
                 frameRadio = new RadioButton();
@@ -2604,10 +2613,10 @@ namespace SunspaceDealerDesktop
                 frameLabel.AssociatedControlID = "radFrameWhite";    //Tying this label to the radio button
                 frameLabel.Text = "White";
 
-                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+                plcFrameOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(new LiteralControl("</li>"));
 
                 #endregion
             }
@@ -2619,7 +2628,7 @@ namespace SunspaceDealerDesktop
                 #region Driftwood
 
                 //li tag to hold window type radio button and all its content
-                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+                plcFrameOptions.Controls.Add(new LiteralControl("<li>"));
 
                 //Vinyl tint radio button
                 frameRadio = new RadioButton();
@@ -2636,10 +2645,10 @@ namespace SunspaceDealerDesktop
                 frameLabel.AssociatedControlID = "radFrameDriftwood";    //Tying this label to the radio button
                 frameLabel.Text = "Driftwood";
 
-                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+                plcFrameOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(new LiteralControl("</li>"));
 
                 #endregion
             }
@@ -2651,7 +2660,7 @@ namespace SunspaceDealerDesktop
                 #region Grey
 
                 //li tag to hold window type radio button and all its content
-                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+                plcFrameOptions.Controls.Add(new LiteralControl("<li>"));
 
                 //Vinyl tint radio button
                 frameRadio = new RadioButton();
@@ -2668,10 +2677,10 @@ namespace SunspaceDealerDesktop
                 frameLabel.AssociatedControlID = "radFrameGrey";    //Tying this label to the radio button
                 frameLabel.Text = "Grey";
 
-                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+                plcFrameOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(new LiteralControl("</li>"));
 
                 #endregion
             }
@@ -2683,7 +2692,7 @@ namespace SunspaceDealerDesktop
                 #region Green
 
                 //li tag to hold window type radio button and all its content
-                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+                plcFrameOptions.Controls.Add(new LiteralControl("<li>"));
 
                 //Vinyl tint radio button
                 frameRadio = new RadioButton();
@@ -2700,10 +2709,10 @@ namespace SunspaceDealerDesktop
                 frameLabel.AssociatedControlID = "radFrameGreen";    //Tying this label to the radio button
                 frameLabel.Text = "Green";
 
-                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+                plcFrameOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(new LiteralControl("</li>"));
 
                 #endregion
             }
@@ -2713,7 +2722,7 @@ namespace SunspaceDealerDesktop
                 #region Ivory
 
                 //li tag to hold window type radio button and all its content
-                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+                plcFrameOptions.Controls.Add(new LiteralControl("<li>"));
 
                 //Vinyl tint radio button
                 frameRadio = new RadioButton();
@@ -2730,10 +2739,10 @@ namespace SunspaceDealerDesktop
                 frameLabel.AssociatedControlID = "radFrameIvory";    //Tying this label to the radio button
                 frameLabel.Text = "Ivory";
 
-                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+                plcFrameOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(new LiteralControl("</li>"));
 
                 #endregion
             }
@@ -2742,7 +2751,7 @@ namespace SunspaceDealerDesktop
                 #region Cherrywood
 
                 //li tag to hold window type radio button and all its content
-                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+                plcFrameOptions.Controls.Add(new LiteralControl("<li>"));
 
                 //Vinyl tint radio button
                 frameRadio = new RadioButton();
@@ -2759,10 +2768,10 @@ namespace SunspaceDealerDesktop
                 frameLabel.AssociatedControlID = "radFrameCherrywood";    //Tying this label to the radio button
                 frameLabel.Text = "Cherrywood";
 
-                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+                plcFrameOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(new LiteralControl("</li>"));
 
                 #endregion
             }
@@ -2771,7 +2780,7 @@ namespace SunspaceDealerDesktop
                 #region Black
 
                 //li tag to hold window type radio button and all its content
-                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+                plcFrameOptions.Controls.Add(new LiteralControl("<li>"));
 
                 //Vinyl tint radio button
                 frameRadio = new RadioButton();
@@ -2788,15 +2797,17 @@ namespace SunspaceDealerDesktop
                 frameLabel.AssociatedControlID = "radFrameBlack";    //Tying this label to the radio button
                 frameLabel.Text = "Black";
 
-                wallWindowOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+                plcFrameOptions.Controls.Add(frameRadio);        //Adding radio button control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(frameLabel);        //Adding label control to placeholder wallWindowOptions
+                plcFrameOptions.Controls.Add(new LiteralControl("</li>"));
 
                 #endregion
             }
 
             #endregion
+
+            plcFrameOptions.Controls.Add(new LiteralControl("</li></ul></div>"));
 
         }
 
@@ -3136,21 +3147,46 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void windowOptions()
         {
-            wallWindowOptions.Controls.Add(new LiteralControl("<br/><h2>Window Type: </h2>"));
-
             switch (currentModel)
             {
                 case "M100":
                     model100WindowOptions();
                     break;
                 case "M200":
+                    wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+                    Label m200Label = new Label();
+                    m200Label.ID = "lblM200Label";
+                    m200Label.Text = "Window Options";
+                    wallWindowOptions.Controls.Add(m200Label);
+
+                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li>"));
                     model200WindowOptions();
+                    wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
                     break;
                 case "M300":
+                    wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+                    Label m300Label = new Label();
+                    m300Label.ID = "lblM300Label";
+                    m300Label.Text = "Window Options";
+                    wallWindowOptions.Controls.Add(m300Label);
+
+                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li>"));
                     model300WindowOptions();
+                    wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
                     break;
                 case "M400":
+                    wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+
+                    Label m400Label = new Label();
+                    m400Label.ID = "lblM400Label";
+                    m400Label.Text = "Window Options";
+                    wallWindowOptions.Controls.Add(m400Label);
+
+                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li>"));
                     model400WindowOptions();
+                    wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
                     break;
             }
         }
@@ -3239,7 +3275,14 @@ namespace SunspaceDealerDesktop
 
 
             //wallWindowOptions.Controls.Add(new LiteralControl("<br/>"));
-            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+            plcScreenOptions.Controls.Add(new LiteralControl("<li>"));
+
+            Label screenOptionLabel = new Label();
+            screenOptionLabel.ID = "lblScreenOptionLabel";
+            screenOptionLabel.Text = "Screen Options";
+            plcScreenOptions.Controls.Add(screenOptionLabel);
+
+            plcScreenOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li>"));
 
             //RadioButton created for every option
             screenRadio = new RadioButton();
@@ -3256,32 +3299,32 @@ namespace SunspaceDealerDesktop
             screenLabelRadio = new Label();
             screenLabelRadio.ID = "radLabelScreen";   //Tying this label to the radio button
 
-            screenLabel = new Label();
-            screenLabel.AssociatedControlID = "radScreen";        //Tying this label to the radio button
-            screenLabel.Text = "Screen Type";       //Adding text to the radio button
+            //screenLabel = new Label();
+            //screenLabel.AssociatedControlID = "radScreen";        //Tying this label to the radio button
+            //screenLabel.Text = "Screen Type";       //Adding text to the radio button
 
-            wallWindowOptions.Controls.Add(screenRadio);        //Adding radio button control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(screenLabelRadio);   //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(screenLabel);        //Adding label control to placeholder wallWindowOptions
+            plcScreenOptions.Controls.Add(screenRadio);        //Adding radio button control to placeholder wallWindowOptions
+            plcScreenOptions.Controls.Add(screenLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            //plcScreenOptions.Controls.Add(screenLabel);        //Adding label control to placeholder wallWindowOptions
 
             //Creating div tag to hold all the current window type information 
-            wallWindowOptions.Controls.Add(new LiteralControl("<div id=\"screenWindowDetails\" class=\"toggleContent\">"));
+            //wallWindowOptions.Controls.Add(new LiteralControl("<div id=\"screenWindowDetails\" class=\"toggleContent\">"));
 
             //Creating one ul tag to hold multiple li tags containing screen window types
-            wallWindowOptions.Controls.Add(new LiteralControl("<ul><li><ul id='screenDetailsList' class='toggleOptions'>"));
+            //wallWindowOptions.Controls.Add(new LiteralControl("<ul><li><ul id='screenDetailsList' class='toggleOptions'>"));
 
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             #region Better Vue Insect Screen
 
             //li tag to hold window type radio button and all its content
-            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+            plcScreenOptions.Controls.Add(new LiteralControl("<li>"));
 
             //Window type radio button
             typeRadio = new RadioButton();
             typeRadio.ID = "radBetterVueInsectScreen"; //Adding appropriate id to window type radio button
             typeRadio.GroupName = "ScreenRadios";         //Adding group name for all window types
-            typeRadio.Checked = (currentModel == "M100") ? true : false; //select/check the radio button if current select is defualt value
+            typeRadio.Checked = true; //select/check the radio button if current select is defualt value
             //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
 
             //Window type radio button label for clickable area
@@ -3293,10 +3336,10 @@ namespace SunspaceDealerDesktop
             typeLabel.AssociatedControlID = "radBetterVueInsectScreen";    //Tying this label to the radio button
             typeLabel.Text = "Better Vue Insect Screen";
 
-            wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+            plcScreenOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
+            plcScreenOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            plcScreenOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
+            plcScreenOptions.Controls.Add(new LiteralControl("</li>"));
 
             #endregion
 
@@ -3305,7 +3348,7 @@ namespace SunspaceDealerDesktop
             #region No See Ums 20x20 Mesh
 
             //li tag to hold window type radio button and all its content
-            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+            plcScreenOptions.Controls.Add(new LiteralControl("<li>"));
 
             //window type radio button
             typeRadio = new RadioButton();
@@ -3323,10 +3366,10 @@ namespace SunspaceDealerDesktop
             typeLabel.Text = "No See Ums 20x20 Mesh";
 
 
-            wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+            plcScreenOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
+            plcScreenOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            plcScreenOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
+            plcScreenOptions.Controls.Add(new LiteralControl("</li>"));
 
             #endregion
 
@@ -3335,7 +3378,7 @@ namespace SunspaceDealerDesktop
             #region Solar Insect Screening
 
             //li tag to hold Window type radio button and all its content
-            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+            plcScreenOptions.Controls.Add(new LiteralControl("<li>"));
 
             //Window type radio button
             typeRadio = new RadioButton();
@@ -3353,10 +3396,10 @@ namespace SunspaceDealerDesktop
             typeLabel.Text = "Solar Insect Screening";
 
 
-            wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+            plcScreenOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
+            plcScreenOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            plcScreenOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
+            plcScreenOptions.Controls.Add(new LiteralControl("</li>"));
 
             #endregion
 
@@ -3365,7 +3408,7 @@ namespace SunspaceDealerDesktop
             #region Tough Screen
 
             //li tag to hold Window type radio button and all its content
-            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+            plcScreenOptions.Controls.Add(new LiteralControl("<li>"));
 
             //Window type radio button
             typeRadio = new RadioButton();
@@ -3383,10 +3426,10 @@ namespace SunspaceDealerDesktop
             typeLabel.Text = "Tough Screen";
 
 
-            wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
-            wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+            plcScreenOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
+            plcScreenOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
+            plcScreenOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
+            plcScreenOptions.Controls.Add(new LiteralControl("</li>"));
 
             #endregion
 
@@ -3397,7 +3440,7 @@ namespace SunspaceDealerDesktop
                 #region No Screen
 
                 //li tag to hold Window type radio button and all its content
-                wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+                plcScreenOptions.Controls.Add(new LiteralControl("<li>"));
 
                 //Window type radio button
                 typeRadio = new RadioButton();
@@ -3415,16 +3458,18 @@ namespace SunspaceDealerDesktop
                 typeLabel.Text = "No Screen";
 
 
-                wallWindowOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
-                wallWindowOptions.Controls.Add(new LiteralControl("</li>"));
+                plcScreenOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder wallWindowOptions
+                plcScreenOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                plcScreenOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
+                plcScreenOptions.Controls.Add(new LiteralControl("</li>"));
 
                 #endregion
             }
             ////////////////////////////////////////////////
 
-            wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>"));
+            //wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>"));
+            plcScreenOptions.Controls.Add(new LiteralControl("</li></ul></div>"));
+            populateSunscreen();
 
         }
 
@@ -3492,6 +3537,128 @@ namespace SunspaceDealerDesktop
             tintOptions("SolidWall", "Solid Wall", false, false, false, false, false, false);
         }
 
+        #endregion
+
+        #region Sunscreen
+        protected void populateSunscreen()
+        {
+            plcSunscreen.Controls.Add(new LiteralControl("<li>"));
+            Label sunscreenLabel = new Label();
+            sunscreenLabel.ID = "lblSunscreen";
+            sunscreenLabel.Text = "Sunscreen Options";
+            plcSunscreen.Controls.Add(sunscreenLabel);
+            plcSunscreen.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li><table runat=\"server\">"));
+
+
+            #region include checkbox population
+            
+            plcSunscreen.Controls.Add(new LiteralControl("<tr><td>"));
+
+            Label textSunscreenLabel = new Label();
+            textSunscreenLabel.ID = "lblTextSunscreenLabel";
+            textSunscreenLabel.Attributes.Add("runat", "server");
+            textSunscreenLabel.Text = "Include Sunshades: ";
+
+            plcSunscreen.Controls.Add(textSunscreenLabel);
+            plcSunscreen.Controls.Add(new LiteralControl("</td>"));
+
+            plcSunscreen.Controls.Add(new LiteralControl("<td>"));
+
+            CheckBox checkSunscreen = new CheckBox();
+            checkSunscreen.ID = "chkSunscreen";
+            checkSunscreen.Attributes.Add("runat", "server");
+            checkSunscreen.Text = " ";
+            checkSunscreen.Attributes.Add("onchange", "sunscreenToggle()");
+
+            plcSunscreen.Controls.Add(checkSunscreen);
+
+            Label firstSunscreenLabel = new Label();
+            firstSunscreenLabel.ID = "lblFirstSunscreenLabel";
+            firstSunscreenLabel.AssociatedControlID = "chkSunscreen";
+            firstSunscreenLabel.Attributes.Add("runat", "server");
+            
+            plcSunscreen.Controls.Add(firstSunscreenLabel);
+
+            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            #endregion
+
+            #region valance population
+            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"valanceRow\" style=\"visibility:hidden\"><td>"));
+            Label valanceLabel = new Label();
+            valanceLabel.ID = "lblValance";
+            valanceLabel.Text = "Valance Color: ";
+
+            DropDownList valanceDropdown = new DropDownList();
+            valanceDropdown.ID = "ddlValance";
+            for (int i = 0; i < Constants.SUNSHADE_VALANCE_COLOURS.Length; i++)
+            {
+                valanceDropdown.Items.Add(Constants.SUNSHADE_VALANCE_COLOURS[i]);
+            }
+
+            plcSunscreen.Controls.Add(valanceLabel);
+            plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
+            plcSunscreen.Controls.Add(valanceDropdown);
+            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            #endregion
+
+            #region fabric population
+            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"fabricRow\" style=\"visibility:hidden\"><td>"));
+            Label fabricLabel = new Label();
+            fabricLabel.ID = "lblFabric";
+            fabricLabel.Text = "Fabric Color: ";
+
+            DropDownList fabricDropdown = new DropDownList();
+            fabricDropdown.ID = "ddlFabric";
+            for (int i = 0; i < Constants.SUNSHADE_FABRIC_COLOURS.Length; i++)
+            {
+                fabricDropdown.Items.Add(Constants.SUNSHADE_FABRIC_COLOURS[i]);
+            }
+
+            plcSunscreen.Controls.Add(fabricLabel);
+            plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
+            plcSunscreen.Controls.Add(fabricDropdown);
+            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            #endregion
+
+            #region openness population
+            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"openRow\" style=\"visibility:hidden\"><td>"));
+            Label openLabel = new Label();
+            openLabel.ID = "lblOpen";
+            openLabel.Text = "Openness: ";
+
+            DropDownList openDropdown = new DropDownList();
+            openDropdown.ID = "ddlOpen";
+            for (int i = 0; i < Constants.SUNSHADE_OPENNESS.Length; i++)
+            {
+                openDropdown.Items.Add(Constants.SUNSHADE_OPENNESS[i]);
+            }
+
+            plcSunscreen.Controls.Add(openLabel);
+            plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
+            plcSunscreen.Controls.Add(openDropdown);
+            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            #endregion
+
+            #region chain population
+            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"chainRow\" style=\"visibility:hidden\"><td>"));
+            Label chainLabel = new Label();
+            chainLabel.ID = "lblChain";
+            chainLabel.Text = "Chain: ";
+
+            DropDownList chainDropdown = new DropDownList();
+            chainDropdown.ID = "ddlChain";
+            
+            chainDropdown.Items.Add("Left");
+            chainDropdown.Items.Add("Right");
+
+            plcSunscreen.Controls.Add(chainLabel);
+            plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
+            plcSunscreen.Controls.Add(chainDropdown);
+            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            #endregion
+
+            plcSunscreen.Controls.Add(new LiteralControl("</table></li></ul></div></li>"));
+        }
         #endregion
 
         protected void txtWallLengths_TextChanged(object sender, EventArgs e)

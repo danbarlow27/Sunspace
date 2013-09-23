@@ -121,6 +121,33 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.PlaceHolder wallWindowOptions;
         
         /// <summary>
+        /// plcFrameOptions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder plcFrameOptions;
+        
+        /// <summary>
+        /// plcScreenOptions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder plcScreenOptions;
+        
+        /// <summary>
+        /// plcSunscreen control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder plcSunscreen;
+        
+        /// <summary>
         /// btnQuestion4 control.
         /// </summary>
         /// <remarks>
