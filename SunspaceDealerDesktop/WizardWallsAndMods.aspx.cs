@@ -2828,7 +2828,7 @@ namespace SunspaceDealerDesktop
             RadioButton typeRadio, tintRadio;
             Label typeLabelRadio, typeLabel, tintLabelRadio, tintLabel;
 
-            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
+            wallWindowOptions.Controls.Add(new LiteralControl("<ul class=\"toggleOptions\"><li>"));
 
             //RadioButton created for every option
             typeRadio = new RadioButton();
@@ -2866,7 +2866,7 @@ namespace SunspaceDealerDesktop
                 wallWindowOptions.Controls.Add(new LiteralControl("<div id='" + windowTypeId + "WindowDetails' class='toggleContent'>"));
 
                 //Creating one ul tag to hold multiple li tags containing vinyl tints
-                wallWindowOptions.Controls.Add(new LiteralControl("<ul><li><ul id='" + windowTypeId + "DetailsList' class='toggleOptions'>"));
+                wallWindowOptions.Controls.Add(new LiteralControl("<ul>"));
             }
 
 
@@ -3136,7 +3136,7 @@ namespace SunspaceDealerDesktop
             }
             else
             {//there are tint options
-                wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>")); //close the previously opened tags
+                wallWindowOptions.Controls.Add(new LiteralControl("</ul></div></li></ul>")); //close the previously opened tags
             }
 
             #endregion
@@ -3583,7 +3583,7 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region valance population
-            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"valanceRow\" style=\"visibility:hidden\"><td>"));
+            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"valanceRow\" style=\"display:none\"><td>"));
             Label valanceLabel = new Label();
             valanceLabel.ID = "lblValance";
             valanceLabel.Text = "Valance Color: ";
@@ -3602,7 +3602,7 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region fabric population
-            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"fabricRow\" style=\"visibility:hidden\"><td>"));
+            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"fabricRow\" style=\"display:none\"><td>"));
             Label fabricLabel = new Label();
             fabricLabel.ID = "lblFabric";
             fabricLabel.Text = "Fabric Color: ";
@@ -3621,7 +3621,7 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region openness population
-            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"openRow\" style=\"visibility:hidden\"><td>"));
+            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"openRow\" style=\"display:none\"><td>"));
             Label openLabel = new Label();
             openLabel.ID = "lblOpen";
             openLabel.Text = "Openness: ";
@@ -3640,7 +3640,7 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region chain population
-            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"chainRow\" style=\"visibility:hidden\"><td>"));
+            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"chainRow\" style=\"display:none\"><td>"));
             Label chainLabel = new Label();
             chainLabel.ID = "lblChain";
             chainLabel.Text = "Chain: ";

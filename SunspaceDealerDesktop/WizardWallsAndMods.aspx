@@ -2183,17 +2183,17 @@
         {
             if ($('#MainContent_chkSunscreen').is(':checked'))
             {
-                document.getElementById('valanceRow').style.visibility = "visible";
-                document.getElementById('fabricRow').style.visibility = "visible";
-                document.getElementById('openRow').style.visibility = "visible";
-                document.getElementById('chainRow').style.visibility = "visible";
+                document.getElementById('valanceRow').style.display = "table-row";
+                document.getElementById('fabricRow').style.display = "table-row";
+                document.getElementById('openRow').style.display = "table-row";
+                document.getElementById('chainRow').style.display = "table-row";
             }
             else
             {
-                document.getElementById('valanceRow').style.visibility = "hidden";
-                document.getElementById('fabricRow').style.visibility = "hidden";
-                document.getElementById('openRow').style.visibility = "hidden";
-                document.getElementById('chainRow').style.visibility = "hidden";
+                document.getElementById('valanceRow').style.display = "none";
+                document.getElementById('fabricRow').style.display = "none";
+                document.getElementById('openRow').style.display = "none";
+                document.getElementById('chainRow').style.display = "none";
             }
         }
 
