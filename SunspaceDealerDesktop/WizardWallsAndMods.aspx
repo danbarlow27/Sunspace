@@ -1763,12 +1763,14 @@
                 document.getElementById("MainContent_lblOutputArea" + i).innerHTML = "";
                 var html = "";
                 //console.log("");
+
+                var MIN_MOD_WIDTH = 0;
+                var MAX_MOD_WIDTH =0;
+
                 for (var j=0;j<wallAreaArray[i].length;j++)
                 {
-                    var MIN_MOD_WIDTH = 0;
-                    var MAX_MOD_WIDTH =0;
-                    
-                    switch (document.getElementById(<%=hidWindowType.ClientID%>).value) {
+                    <%--
+                    switch (document.getElementById("<%=hidWindowType.ClientID%>").value) {
                         case "Vinyl":
                             MIN_MOD_WIDTH = <%=VINYL_TRAP_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
                             MAX_MOD_WIDTH = <%=VINYL_TRAP_MAX_WIDTH_WARRANTY%>;
@@ -1808,7 +1810,7 @@
                             MIN_MOD_WIDTH = <%=SCREEN_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
                             MAX_MOD_WIDTH = <%=SCREEN_MAX_WIDTH_WARRANTY%>;
                             break;
-                    }
+                    }--%>
                     var validatedWindow = validateWindowModSize(wallAreaArray[i][j], MIN_MOD_WIDTH, MAX_MOD_WIDTH);
                     console.log("Checking for 0");
                     //Only display an area if it's more than a 0 area
