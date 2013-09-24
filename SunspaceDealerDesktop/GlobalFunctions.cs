@@ -319,5 +319,105 @@ namespace SunspaceDealerDesktop
             }
             return returnArray;
         }
+
+        public static float[] validateWindowModSize(float space, string windowType/*, size, number, wall, start*/) 
+        {
+            float MIN_MOD_WIDTH = 0f;
+            float MAX_MOD_WIDTH = 0f;
+            int windowCounter = 0;
+            float finalWindowSize = 0;
+            float spaceRemaining = space;
+
+            //get constants based on type
+            switch (windowType)
+            {
+                case "Vinyl":
+                    MIN_MOD_WIDTH = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                    MAX_MOD_WIDTH = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
+                    break;
+
+                case "Glass":
+                    MIN_MOD_WIDTH = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                    MAX_MOD_WIDTH = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
+                    break;
+
+                case "Vertical 4 Track":
+                    MIN_MOD_WIDTH = Constants.V4T_4V_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                    MAX_MOD_WIDTH = Constants.V4T_4V_MAX_WIDTH_WARRANTY;
+                    break;
+
+                case "Horizontal 4 Track":
+                    MIN_MOD_WIDTH = Constants.HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                    MAX_MOD_WIDTH = Constants.HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY;
+                    break;
+
+                case "Horizontal Roller":
+                    MIN_MOD_WIDTH = Constants.HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                    MAX_MOD_WIDTH = Constants.HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY;
+                    break;
+
+                case "Single Slider":
+                    MIN_MOD_WIDTH = Constants.SINGLE_SLIDER_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                    MAX_MOD_WIDTH = Constants.SINGLE_SLIDER_MAX_WIDTH_WARRANTY;
+                    break;
+
+                case "Double Slider":
+                    MIN_MOD_WIDTH = Constants.DOUBLE_SLIDER_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                    MAX_MOD_WIDTH = Constants.DOUBLE_SLIDER_MAX_WIDTH_WARRANTY;
+                    break;
+
+                case "Screen":
+                    MIN_MOD_WIDTH = Constants.SCREEN_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                    MAX_MOD_WIDTH = Constants.SCREEN_MAX_WIDTH_WARRANTY;
+                    break;
+            }
+            while (spaceRemaining >= MIN_MOD_WIDTH)
+            {
+                if (spaceRemaining >= MAX_MOD_WIDTH)
+                {
+                    spaceRemaining -= MAX_MOD_WIDTH;
+                    windowCounter++;
+                }
+                else if (spaceRemaining < MAX_MOD_WIDTH && spaceRemaining > MIN_MOD_WIDTH)
+                {
+                    spaceRemaining = 0;
+                    windowCounter++;
+                }
+                else if (spaceRemaining == MIN_MOD_WIDTH)
+                {
+                    spaceRemaining = 0;
+                    windowCounter++;
+                }
+            }
+
+            if (spaceRemaining > 0 && windowCounter > 0)
+            {
+                //Should never get here? will always hit one of the spaceRemaining=0 above
+                windowCounter++;
+                finalWindowSize = space / windowCounter;
+                spaceRemaining = 0;
+            }
+            else if (spaceRemaining > 0 && windowCounter == 0)
+            {
+                //Should never get here? will always hit one of the spaceRemaining=0 above
+                //add spaceRemaining to filler
+                //fillFiller(space, wall, start);
+                //spaceRemaining = 0;
+            }
+            else
+            {
+                finalWindowSize = space / windowCounter;
+            }
+    
+            var roundedWindowSize = RoundDownToNearestEighthInch(finalWindowSize);
+
+            //Set space remaining equal to amount lost via rounding
+            //spaceRemaining += finalWindowSize - roundedWindowSize;
+            spaceRemaining = space - (roundedWindowSize * windowCounter);
+    
+            //Need to return space * windowcounter, since we lost that amount PER WINDOW
+            float[] anArray = { roundedWindowSize, windowCounter, spaceRemaining }; /* * windowCounter */
+            return (anArray);
+        }
     }
 }

@@ -1765,7 +1765,51 @@
                 //console.log("");
                 for (var j=0;j<wallAreaArray[i].length;j++)
                 {
-                    var validatedWindow = validateWindowModSize(wallAreaArray[i][j]);
+                    var MIN_MOD_WIDTH = 0;
+                    var MAX_MOD_WIDTH =0;
+                    
+                    switch (document.getElementById(<%=hidWindowType.ClientID%>).value) {
+                        case "Vinyl":
+                            MIN_MOD_WIDTH = <%=VINYL_TRAP_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                            MAX_MOD_WIDTH = <%=VINYL_TRAP_MAX_WIDTH_WARRANTY%>;
+                            break;
+
+                        case "Glass":
+                            MIN_MOD_WIDTH = <%=VINYL_TRAP_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                            MAX_MOD_WIDTH = <%=VINYL_TRAP_MAX_WIDTH_WARRANTY%>;
+                            break;
+
+                        case "Vertical 4 Track":
+                            MIN_MOD_WIDTH = <%=V4T_4V_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                            MAX_MOD_WIDTH = <%=V4T_4V_MAX_WIDTH_WARRANTY%>;
+                            break;
+
+                        case "Horizontal 4 Track":
+                            MIN_MOD_WIDTH = <%=HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                            MAX_MOD_WIDTH = <%=HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY%>;
+                            break;
+
+                        case "Horizontal Roller":
+                            MIN_MOD_WIDTH = <%=HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                            MAX_MOD_WIDTH = <%=HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY%>;
+                            break;
+
+                        case "Single Slider":
+                            MIN_MOD_WIDTH = <%=SINGLE_SLIDER_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                            MAX_MOD_WIDTH = <%=SINGLE_SLIDER_MAX_WIDTH_WARRANTY%>;
+                            break;
+
+                        case "Double Slider":
+                            MIN_MOD_WIDTH = <%=DOUBLE_SLIDER_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                            MAX_MOD_WIDTH = <%=DOUBLE_SLIDER_MAX_WIDTH_WARRANTY%>;
+                            break;
+
+                        case "Screen":
+                            MIN_MOD_WIDTH = <%=SCREEN_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                            MAX_MOD_WIDTH = <%=SCREEN_MAX_WIDTH_WARRANTY%>;
+                            break;
+                    }
+                    var validatedWindow = validateWindowModSize(wallAreaArray[i][j], MIN_MOD_WIDTH, MAX_MOD_WIDTH);
                     console.log("Checking for 0");
                     //Only display an area if it's more than a 0 area
                     if (validatedWindow[0] >= 0)

@@ -131,13 +131,12 @@ function fillWindowsMods() {
         }
     }
 
-function validateWindowModSize(space/*, size, number, wall, start*/) {
-    var MIN_MOD_WIDTH = 12;
-    var MAX_MOD_WIDTH = 35;
+function validateWindowModSize(space, MIN_MOD_WIDTH, MAX_MOD_WIDTH/*, size, number, wall, start*/) {
+
     var windowCounter = 0;
     var finalWindowSize = 0;
     var spaceRemaining = space;
-
+    
     while (spaceRemaining >= MIN_MOD_WIDTH)
     {
         if (spaceRemaining >= MAX_MOD_WIDTH)

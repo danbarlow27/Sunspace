@@ -392,7 +392,7 @@ namespace SunspaceDealerDesktop
                     //Find where to place the mod, and place it
                     for (int j = 0; j < LinearItems.Count; j++)
                     {
-                        if (LinearItems[i].FixedLocation > aMod.FixedLocation)
+                        if (LinearItems[j].FixedLocation > aMod.FixedLocation)
                         {
                             //j is past, so we insert into j-1 and exit the loop
                             LinearItems.Insert(j - 1, aMod);
