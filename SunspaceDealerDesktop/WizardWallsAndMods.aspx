@@ -2040,6 +2040,7 @@
 
         function resetHiddens()
         {
+            console.log("Reset hiddens");
             $('#MainContent_removableHiddenFieldsDiv').empty();//Then we move values to hidden fields
             //document.getElementById("hidWindowType");
             //document.getElementById("hidWindowColour");
@@ -2250,7 +2251,7 @@
             }
             else if ($('#MainContent_radFrameBlack').is(':checked'))
             {
-                document.getElementById("<%=hidWindowFramingColour.ClientID%>").value = "Black";
+                document.getElementById("<%=hidWindowFramingColour.ClientID%>").value = "Black";//
             }
 
             ////check the usable area array in console
@@ -2314,10 +2315,6 @@
             document.getElementById("<%=hidChain.ClientID%>").value = $('#MainContent_ddlChain').val();
         }
 
-        function resetHiddens()
-        {
-            $('#MainContent_removableHiddenFieldsDiv').empty();
-        }
     </script>
     <%-- End hidden div populating scripts --%>
 
