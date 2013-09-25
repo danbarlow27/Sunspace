@@ -2022,7 +2022,7 @@
 
         function sunshadeToggle()
         {
-            if ($('#MainContent_chkSunscreen').is(':checked'))
+            if ($('#MainContent_chkSunshade').is(':checked'))
             {
                 document.getElementById('valanceRow').style.display = "table-row";
                 document.getElementById('fabricRow').style.display = "table-row";
