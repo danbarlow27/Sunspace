@@ -139,13 +139,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.PlaceHolder plcScreenOptions;
         
         /// <summary>
-        /// plcSunscreen control.
+        /// plcSunshade control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder plcSunscreen;
+        protected global::System.Web.UI.WebControls.PlaceHolder plcSunshade;
         
         /// <summary>
         /// btnQuestion4 control.
@@ -353,5 +353,50 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidScreenType;
+        
+        /// <summary>
+        /// hidSunshade control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidSunshade;
+        
+        /// <summary>
+        /// hidValance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidValance;
+        
+        /// <summary>
+        /// hidFabric control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidFabric;
+        
+        /// <summary>
+        /// hidOpenness control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidOpenness;
+        
+        /// <summary>
+        /// hidChain control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidChain;
     }
 }

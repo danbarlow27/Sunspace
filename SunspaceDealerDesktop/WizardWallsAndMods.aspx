@@ -2020,23 +2020,23 @@
             //}
         }
 
-        function sunscreenToggle()
-        {
-            if ($('#MainContent_chkSunscreen').is(':checked'))
-            {
-                document.getElementById('valanceRow').style.display = "table-row";
-                document.getElementById('fabricRow').style.display = "table-row";
-                document.getElementById('openRow').style.display = "table-row";
-                document.getElementById('chainRow').style.display = "table-row";
-            }
-            else
-            {
-                document.getElementById('valanceRow').style.display = "none";
-                document.getElementById('fabricRow').style.display = "none";
-                document.getElementById('openRow').style.display = "none";
-                document.getElementById('chainRow').style.display = "none";
-            }
-        }
+        //function sunshadeToggle()
+        //{
+        //    if ($('#MainContent_chkSunshade').is(':checked'))
+        //    {
+        //        document.getElementById('valanceRow').style.display = "table-row";
+        //        document.getElementById('fabricRow').style.display = "table-row";
+        //        document.getElementById('openRow').style.display = "table-row";
+        //        document.getElementById('chainRow').style.display = "table-row";
+        //    }
+        //    else
+        //    {
+        //        document.getElementById('valanceRow').style.display = "none";
+        //        document.getElementById('fabricRow').style.display = "none";
+        //        document.getElementById('openRow').style.display = "none";
+        //        document.getElementById('chainRow').style.display = "none";
+        //    }
+        //}
 
         function resetHiddens()
         {
@@ -2252,6 +2252,71 @@
             {
                 document.getElementById("<%=hidWindowFramingColour.ClientID%>").value = "Black";
             }
+
+            ////check the usable area array in console
+            //for (var i=0;i<wallAreaArray.length-existingWallCount;i++)
+            //{
+            //    console.log("Proposed " + (i+1) + ":");
+            //    for (var j=0;j<wallAreaArray[i].length;j++)
+            //    {
+            //        console.log(wallAreaArray[i][j]);
+            //    }
+            //}
+        }
+
+        function sunshadeToggle()
+        {
+            if ($('#MainContent_chkSunshade').is(':checked'))
+            {
+                document.getElementById('valanceRow').style.display = "table-row";
+                document.getElementById('fabricRow').style.display = "table-row";
+                document.getElementById('openRow').style.display = "table-row";
+                document.getElementById('chainRow').style.display = "table-row";
+
+                document.getElementById("<%=hidSunshade.ClientID%>").value = "true";
+                document.getElementById("<%=hidValance.ClientID%>").value = $('#MainContent_ddlValance').val();
+                document.getElementById("<%=hidFabric.ClientID%>").value = $('#MainContent_ddlFabric').val();
+                document.getElementById("<%=hidOpenness.ClientID%>").value = $('#MainContent_ddlOpen').val();
+                document.getElementById("<%=hidChain.ClientID%>").value = $('#MainContent_ddlChain').val();
+            }
+            else
+            {
+                document.getElementById('valanceRow').style.display = "none";
+                document.getElementById('fabricRow').style.display = "none";
+                document.getElementById('openRow').style.display = "none";
+                document.getElementById('chainRow').style.display = "none";
+
+                document.getElementById("<%=hidSunshade.ClientID%>").value = "false";
+                document.getElementById("<%=hidValance.ClientID%>").value = "";
+                document.getElementById("<%=hidFabric.ClientID%>").value = "";
+                document.getElementById("<%=hidOpenness.ClientID%>").value = "";
+                document.getElementById("<%=hidChain.ClientID%>").value = "";
+            }
+        }
+
+        function valanceChange()
+        {
+            document.getElementById("<%=hidValance.ClientID%>").value = $('#MainContent_ddlValance').val();
+        }
+
+        function fabricChange()
+        {
+            document.getElementById("<%=hidFabric.ClientID%>").value = $('#MainContent_ddlFabric').val();
+        }
+
+        function openChange()
+        {
+            document.getElementById("<%=hidOpenness.ClientID%>").value = $('#MainContent_ddlOpen').val();
+        }
+
+        function chainChange()
+        {
+            document.getElementById("<%=hidChain.ClientID%>").value = $('#MainContent_ddlChain').val();
+        }
+
+        function resetHiddens()
+        {
+            $('#MainContent_removableHiddenFieldsDiv').empty();
         }
     </script>
     <%-- End hidden div populating scripts --%>
@@ -2386,7 +2451,7 @@
                     <asp:PlaceHolder ID="wallWindowOptions" runat="server"></asp:PlaceHolder>
                     <asp:PlaceHolder ID="plcFrameOptions" runat="server"></asp:PlaceHolder>
                     <asp:PlaceHolder ID="plcScreenOptions" runat="server"></asp:PlaceHolder>
-                    <asp:PlaceHolder ID="plcSunscreen" runat="server"></asp:PlaceHolder>                    
+                    <asp:PlaceHolder ID="plcSunshade" runat="server"></asp:PlaceHolder>                    
                 </ul>  
                  
                 <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" OnClientClick="WindowPreparation();return false;"/>     
@@ -2535,6 +2600,11 @@
     <input id="hidWindowColour" type="hidden" runat="server" />
     <input id="hidWindowFramingColour" type="hidden" runat="server" />
     <input id="hidScreenType" type="hidden" runat="server" />
+    <input id="hidSunshade" type="hidden" runat="server" />
+    <input id="hidValance" type="hidden" runat="server" />
+    <input id="hidFabric" type="hidden" runat="server" />
+    <input id="hidOpenness" type="hidden" runat="server" />
+    <input id="hidChain" type="hidden" runat="server" />
 
     <%-- end hidden fields --%>    
 

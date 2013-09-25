@@ -11,6 +11,10 @@ namespace SunspaceDealerDesktop
 
         private int linearIndex;
         private bool sunshade;
+        private string sunshadeValance;
+        private string sunshadeFabric;
+        private string sunshadeOpenness;
+        private string sunshadeChain;
         private string modType;
         private string sex; //MM MF FM FF
         List<ModuleItem> modularItems = new List<ModuleItem>();
@@ -24,6 +28,10 @@ namespace SunspaceDealerDesktop
             this.ItemType = "Mod";
             LinearIndex = 0;
             Sunshade = false;
+            SunshadeValance = "";
+            SunshadeFabric = "";
+            SunshadeOpenness = "";
+            SunshadeChain = "";
             FixedLocation = 0.0f;
             ModType = "";
             Sex = "";
@@ -56,6 +64,58 @@ namespace SunspaceDealerDesktop
             set
             {
                 sunshade = value;
+            }
+        }
+
+        public string SunshadeValance
+        {
+            get
+            {
+                return sunshadeValance;
+            }
+
+            set
+            {
+                sunshadeValance = value;
+            }
+        }
+
+        public string SunshadeFabric
+        {
+            get
+            {
+                return sunshadeFabric;
+            }
+
+            set
+            {
+                sunshadeFabric = value;
+            }
+        }
+
+        public string SunshadeOpenness
+        {
+            get
+            {
+                return sunshadeOpenness;
+            }
+
+            set
+            {
+                sunshadeOpenness = value;
+            }
+        }
+
+        public string SunshadeChain
+        {
+            get
+            {
+                return sunshadeChain;
+            }
+
+            set
+            {
+                sunshadeChain = value;
             }
         }
 
