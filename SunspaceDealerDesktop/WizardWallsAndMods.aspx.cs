@@ -2847,6 +2847,7 @@ namespace SunspaceDealerDesktop
             typeRadio = new RadioButton();
             typeRadio.ID = "rad" + windowTypeId;     //Giving an appropriate id to radio buttons based on current type of window
             typeRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
+            typeRadio.Attributes.Add("onchange", "resetHiddens()");
 
 
             typeRadio.Checked = (windowTypeId == "V4T" && currentModel == "M200") ? true : //select/check the radio button if current selection is default value
@@ -3301,6 +3302,7 @@ namespace SunspaceDealerDesktop
             screenRadio = new RadioButton();
             screenRadio.ID = "radScreen";     //Giving an appropriate id to radio buttons based on current type of window
             screenRadio.GroupName = "screenTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
+            screenRadio.Attributes.Add("onchange", "resetHiddens()");
             
             //if (currentModel == "M100")
             //{
