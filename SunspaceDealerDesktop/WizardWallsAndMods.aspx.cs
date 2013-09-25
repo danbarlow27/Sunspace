@@ -3145,7 +3145,7 @@ namespace SunspaceDealerDesktop
 
             if (!grey && !darkGrey && !smokeGrey && !bronze && !clear && !mixed)
             {//if there are no tint options
-                //do nothing
+                wallWindowOptions.Controls.Add(new LiteralControl("</li></ul>")); //opened tags at the top, need to close them regardless of tint or no tint
             }
             else
             {//there are tint options
