@@ -1598,20 +1598,21 @@
         function WindowPreparation()
         {
             //First we call reset hidden to be sure we don't duplicate entries
-            resetHiddens();
+            resetHiddens();                       
 
             var currentLocation=0;
             var modLocation=0;
             var areaPositionCounter=0;
             var wallPositionCounter=0;
-
+            
             var wallAreaArray = new Array();
             for (var i = 0; i < lineList.length; i++) {
                 wallAreaArray[i] = new Array();
             }
-
+            
             for (var i=1;i<=lineList.length;i++)
             {
+                console.log("freeze");
                 currentLocation=0;
                 modLocation=0;
                 areaPositionCounter=0;
@@ -1647,10 +1648,8 @@
                             //if the mod is at the start of the wall, we have no usable area at the start, so increase currentLocation
                             if (walls[i].mods[j].boxHeader == "Left" || walls[i].mods[j].boxHeader == "Both")
                             {
-                                console.log("Left or both boxheader");
                                 if(modLocation == walls[i].leftFiller + BOXHEADER_LENGTH)
                                 {
-                                    console.log("Left flush");
                                     //New current location is equal to ending position of mod (start+width)
                                     currentLocation = walls[i].leftFiller + walls[i].mods[j].mwidth + BOXHEADER_LENGTH;
 
@@ -1663,10 +1662,8 @@
                             }
                             else
                             {
-                                console.log("Right or no boxheader");
                                 if(modLocation == walls[i].leftFiller)
                                 {
-                                    console.log("Left flush");
                                     //New current location is equal to ending position of mod (start+width)
                                     currentLocation = walls[i].leftFiller + walls[i].mods[j].mwidth;
 
@@ -1757,6 +1754,8 @@
                 }
             }
 
+            console.log("after loop 1");
+
             //We have an array of usable area, now we get information about window generation for confirmation
             for (var i=0;i<wallAreaArray.length-existingWallCount;i++)
             {
@@ -1767,50 +1766,55 @@
                 var MIN_MOD_WIDTH = 0;
                 var MAX_MOD_WIDTH =0;
 
+                console.log("Switch: " + document.getElementById("<%=hidWindowType.ClientID%>").value);
+
+                switch (document.getElementById("<%=hidWindowType.ClientID%>").value) {
+                    case "Vinyl":
+                        MIN_MOD_WIDTH = <%=VINYL_TRAP_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                        MAX_MOD_WIDTH = <%=VINYL_TRAP_MAX_WIDTH_WARRANTY%>;
+                        break;
+
+                    case "Glass":
+                        MIN_MOD_WIDTH = <%=VINYL_TRAP_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                        MAX_MOD_WIDTH = <%=VINYL_TRAP_MAX_WIDTH_WARRANTY%>;
+                        break;
+
+                    case "Vertical 4 Track":
+                        MIN_MOD_WIDTH = <%=V4T_4V_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                        MAX_MOD_WIDTH = <%=V4T_4V_MAX_WIDTH_WARRANTY%>;
+                        break;
+
+                    case "Horizontal 4 Track":
+                        MIN_MOD_WIDTH = <%=HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                        MAX_MOD_WIDTH = <%=HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY%>;
+                        break;
+
+                    case "Horizontal Roller":
+                        MIN_MOD_WIDTH = <%=HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                        MAX_MOD_WIDTH = <%=HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY%>;
+                        break;
+
+                    case "Single Slider":
+                        MIN_MOD_WIDTH = <%=SINGLE_SLIDER_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                        MAX_MOD_WIDTH = <%=SINGLE_SLIDER_MAX_WIDTH_WARRANTY%>;
+                        break;
+
+                    case "Double Slider":
+                        MIN_MOD_WIDTH = <%=DOUBLE_SLIDER_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                        MAX_MOD_WIDTH = <%=DOUBLE_SLIDER_MAX_WIDTH_WARRANTY%>;
+                        break;
+
+                    case "Screen":
+                        MIN_MOD_WIDTH = <%=SCREEN_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
+                        MAX_MOD_WIDTH = <%=SCREEN_MAX_WIDTH_WARRANTY%>;
+                        break;
+                }
+
+                console.log("Post switch");
+
                 for (var j=0;j<wallAreaArray[i].length;j++)
                 {
-                    <%--
-                    switch (document.getElementById("<%=hidWindowType.ClientID%>").value) {
-                        case "Vinyl":
-                            MIN_MOD_WIDTH = <%=VINYL_TRAP_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
-                            MAX_MOD_WIDTH = <%=VINYL_TRAP_MAX_WIDTH_WARRANTY%>;
-                            break;
-
-                        case "Glass":
-                            MIN_MOD_WIDTH = <%=VINYL_TRAP_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
-                            MAX_MOD_WIDTH = <%=VINYL_TRAP_MAX_WIDTH_WARRANTY%>;
-                            break;
-
-                        case "Vertical 4 Track":
-                            MIN_MOD_WIDTH = <%=V4T_4V_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
-                            MAX_MOD_WIDTH = <%=V4T_4V_MAX_WIDTH_WARRANTY%>;
-                            break;
-
-                        case "Horizontal 4 Track":
-                            MIN_MOD_WIDTH = <%=HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
-                            MAX_MOD_WIDTH = <%=HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY%>;
-                            break;
-
-                        case "Horizontal Roller":
-                            MIN_MOD_WIDTH = <%=HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
-                            MAX_MOD_WIDTH = <%=HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY%>;
-                            break;
-
-                        case "Single Slider":
-                            MIN_MOD_WIDTH = <%=SINGLE_SLIDER_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
-                            MAX_MOD_WIDTH = <%=SINGLE_SLIDER_MAX_WIDTH_WARRANTY%>;
-                            break;
-
-                        case "Double Slider":
-                            MIN_MOD_WIDTH = <%=DOUBLE_SLIDER_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
-                            MAX_MOD_WIDTH = <%=DOUBLE_SLIDER_MAX_WIDTH_WARRANTY%>;
-                            break;
-
-                        case "Screen":
-                            MIN_MOD_WIDTH = <%=SCREEN_MIN_WIDTH_WARRANTY%>; //We use the trap version because they can have both
-                            MAX_MOD_WIDTH = <%=SCREEN_MAX_WIDTH_WARRANTY%>;
-                            break;
-                    }--%>
+                    console.log("freeze");
                     var validatedWindow = validateWindowModSize(wallAreaArray[i][j], MIN_MOD_WIDTH, MAX_MOD_WIDTH);
                     console.log("Checking for 0");
                     //Only display an area if it's more than a 0 area
@@ -1847,6 +1851,7 @@
             //Now move all other required data into hidden fields.
             for (var i=1;i<=lineList.length;i++)
             {
+                console.log("freeze");
                 if (coordList[i - 1][4] == "P")
                 {
                     document.getElementById("hidWall" + i + "StartHeight").value = walls[i].startHeight;
@@ -2002,7 +2007,40 @@
                 }
             }
 
-            //Move window properties to hidden fields
+            
+            
+            ////check the usable area array in console
+            //for (var i=0;i<wallAreaArray.length-existingWallCount;i++)
+            //{
+            //    console.log("Proposed " + (i+1) + ":");
+            //    for (var j=0;j<wallAreaArray[i].length;j++)
+            //    {
+            //        console.log(wallAreaArray[i][j]);
+            //    }
+            //}
+        }
+
+        function sunscreenToggle()
+        {
+            if ($('#MainContent_chkSunscreen').is(':checked'))
+            {
+                document.getElementById('valanceRow').style.display = "table-row";
+                document.getElementById('fabricRow').style.display = "table-row";
+                document.getElementById('openRow').style.display = "table-row";
+                document.getElementById('chainRow').style.display = "table-row";
+            }
+            else
+            {
+                document.getElementById('valanceRow').style.display = "none";
+                document.getElementById('fabricRow').style.display = "none";
+                document.getElementById('openRow').style.display = "none";
+                document.getElementById('chainRow').style.display = "none";
+            }
+        }
+
+        function resetHiddens()
+        {
+            $('#MainContent_removableHiddenFieldsDiv').empty();//Then we move values to hidden fields
             //document.getElementById("hidWindowType");
             //document.getElementById("hidWindowColour");
             if ($('#MainContent_radV4T').is(':checked')) 
@@ -2151,6 +2189,7 @@
                     document.getElementById("<%=hidWindowColour.ClientID%>").value = "Bronze";
                 }
             }
+
             if ($('#MainContent_radScreen').is(':checked')) 
             {
                 //move v4t

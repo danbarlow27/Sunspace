@@ -3776,7 +3776,7 @@ namespace SunspaceDealerDesktop
                 }
                 else
                 {
-                    existingWallCount++;
+                    existingWallCount++;//
                 }
             }
             

@@ -137,8 +137,13 @@ function validateWindowModSize(space, MIN_MOD_WIDTH, MAX_MOD_WIDTH/*, size, numb
     var finalWindowSize = 0;
     var spaceRemaining = space;
     
+    console.log("pre-loop 1");
     while (spaceRemaining >= MIN_MOD_WIDTH)
     {
+        //console.log(spaceRemaining);
+        //console.log("min: " + MIN_MOD_WIDTH);
+        //console.log("max: " + MAX_MOD_WIDTH);
+
         if (spaceRemaining >= MAX_MOD_WIDTH)
         {
             spaceRemaining -= MAX_MOD_WIDTH;
