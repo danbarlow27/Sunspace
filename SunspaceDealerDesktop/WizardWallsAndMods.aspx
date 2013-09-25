@@ -2213,7 +2213,7 @@
             {
                 document.getElementById("<%=hidWindowFramingColour.ClientID%>").value = "Black";
             }
-            
+
             ////check the usable area array in console
             //for (var i=0;i<wallAreaArray.length-existingWallCount;i++)
             //{
