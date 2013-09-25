@@ -3608,6 +3608,8 @@ namespace SunspaceDealerDesktop
                 valanceDropdown.Items.Add(Constants.SUNSHADE_VALANCE_COLOURS[i]);
             }
 
+            valanceDropdown.Attributes.Add("onchange", "valanceChange()");
+
             plcSunscreen.Controls.Add(valanceLabel);
             plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
             plcSunscreen.Controls.Add(valanceDropdown);
@@ -3626,6 +3628,8 @@ namespace SunspaceDealerDesktop
             {
                 fabricDropdown.Items.Add(Constants.SUNSHADE_FABRIC_COLOURS[i]);
             }
+
+            fabricDropdown.Attributes.Add("onchange", "fabricChange()");
 
             plcSunscreen.Controls.Add(fabricLabel);
             plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
@@ -3646,6 +3650,8 @@ namespace SunspaceDealerDesktop
                 openDropdown.Items.Add(Constants.SUNSHADE_OPENNESS[i]);
             }
 
+            openDropdown.Attributes.Add("onchange", "openChange()");
+
             plcSunscreen.Controls.Add(openLabel);
             plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
             plcSunscreen.Controls.Add(openDropdown);
@@ -3663,6 +3669,8 @@ namespace SunspaceDealerDesktop
             
             chainDropdown.Items.Add("Left");
             chainDropdown.Items.Add("Right");
+
+            chainDropdown.Attributes.Add("onchange", "chainChange()");
 
             plcSunscreen.Controls.Add(chainLabel);
             plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));

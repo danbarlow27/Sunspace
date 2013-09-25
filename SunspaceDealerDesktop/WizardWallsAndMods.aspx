@@ -2272,6 +2272,11 @@
                 document.getElementById('fabricRow').style.display = "table-row";
                 document.getElementById('openRow').style.display = "table-row";
                 document.getElementById('chainRow').style.display = "table-row";
+                document.getElementById("<%=hidSunscreen.ClientID%>").value = "true";
+                document.getElementById("<%=hidValance.ClientID%>").value = $('#MainContent_ddlValance').val();
+                document.getElementById("<%=hidFabric.ClientID%>").value = $('#MainContent_ddlFabric').val();
+                document.getElementById("<%=hidOpenness.ClientID%>").value = $('#MainContent_ddlOpen').val();
+                document.getElementById("<%=hidChain.ClientID%>").value = $('#MainContent_ddlChain').val();
             }
             else
             {
@@ -2279,7 +2284,33 @@
                 document.getElementById('fabricRow').style.display = "none";
                 document.getElementById('openRow').style.display = "none";
                 document.getElementById('chainRow').style.display = "none";
+
+                document.getElementById("<%=hidSunscreen.ClientID%>").value = "false";
+                document.getElementById("<%=hidValance.ClientID%>").value = "";
+                document.getElementById("<%=hidFabric.ClientID%>").value = "";
+                document.getElementById("<%=hidOpenness.ClientID%>").value = "";
+                document.getElementById("<%=hidChain.ClientID%>").value = "";
             }
+        }
+
+        function valanceChange()
+        {
+            document.getElementById("<%=hidValance.ClientID%>").value = $('#MainContent_ddlValance').val();
+        }
+
+        function fabricChange()
+        {
+            document.getElementById("<%=hidFabric.ClientID%>").value = $('#MainContent_ddlFabric').val();
+        }
+
+        function openChange()
+        {
+            document.getElementById("<%=hidOpenness.ClientID%>").value = $('#MainContent_ddlOpen').val();
+        }
+
+        function chainChange()
+        {
+            document.getElementById("<%=hidChain.ClientID%>").value = $('#MainContent_ddlChain').val();
         }
 
         function resetHiddens()
@@ -2568,6 +2599,11 @@
     <input id="hidWindowColour" type="hidden" runat="server" />
     <input id="hidWindowFramingColour" type="hidden" runat="server" />
     <input id="hidScreenType" type="hidden" runat="server" />
+    <input id="hidSunscreen" type="hidden" runat="server" />
+    <input id="hidValance" type="hidden" runat="server" />
+    <input id="hidFabric" type="hidden" runat="server" />
+    <input id="hidOpenness" type="hidden" runat="server" />
+    <input id="hidChain" type="hidden" runat="server" />
 
     <%-- end hidden fields --%>    
 
