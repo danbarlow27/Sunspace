@@ -3758,14 +3758,14 @@ namespace SunspaceDealerDesktop
                 //if blank its an existing wall, so skip it
                 if (Request.Form["hidWall" + i + "Length"] != "")
                 {
-                    Wall aWall = new Wall(); //asdf
+                    Wall aWall = new Wall(); 
                     aWall.Length = float.Parse(Request.Form["hidWall" + i + "Length"]);
                     aWall.Orientation = Request.Form["hidWall" + i + "Orientation"];
                     aWall.Name = "Wall " + (i-existingWallCount);
                     aWall.WallType = "Proposed";
                     aWall.ModelType = currentModel;
-                    aWall.StartHeight = float.Parse(Request.Form["hidWall" + i + "StartHeight"]);
-                    aWall.EndHeight = float.Parse(Request.Form["hidWall" + i + "EndHeight"]);
+                    aWall.StartHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "StartHeight"]));//
+                    aWall.EndHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "EndHeight"]));
                     aWall.SoffitLength = float.Parse(Request.Form["hidWall" + i + "SoffitLength"]);
                     aWall.GablePeak = 0;
 
@@ -3810,7 +3810,8 @@ namespace SunspaceDealerDesktop
                             Receiver aReceiver = new Receiver();
                             aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
                             aReceiver.Length = 1f;
-                            linearItems.Add(aReceiver);
+                            aReceiver.FixedLocation = 0;
+                            linearItems.Insert(0,aReceiver);
                             cheatCounter++;
                         }
                         else
@@ -4050,7 +4051,7 @@ namespace SunspaceDealerDesktop
                         listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
                                                                          Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString());
 
-                        linearPosition++;//asdf
+                        linearPosition++;//
                     }
                     //This is a wall without doors
                     else
@@ -4061,6 +4062,18 @@ namespace SunspaceDealerDesktop
                         //Left filler
                         //Fill Function
                         //Right filler
+                    }
+
+                    //if last wall, we have right side receiver
+                    if (i == strWalls.Length)
+                    {
+                        wallRightFiller -= 1;//CHANGEME receiver length
+                        Receiver aReceiver = new Receiver();
+                        aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+                        aReceiver.Length = 1f;
+                        aReceiver.FixedLocation = 0;
+                        linearItems.Add(aReceiver);
+                        cheatCounter++;
                     }
                 }
             }
