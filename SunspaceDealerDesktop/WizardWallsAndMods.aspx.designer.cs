@@ -355,13 +355,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidScreenType;
         
         /// <summary>
-        /// hidSunscreen control.
+        /// hidSunshade control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidSunscreen;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidSunshade;
         
         /// <summary>
         /// hidValance control.

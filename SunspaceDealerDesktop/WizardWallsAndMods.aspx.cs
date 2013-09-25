@@ -3482,7 +3482,7 @@ namespace SunspaceDealerDesktop
 
             //wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>"));
             plcScreenOptions.Controls.Add(new LiteralControl("</li></ul></div>"));
-            populateSunscreen();
+            populateSunshade();
 
         }
 
@@ -3552,51 +3552,51 @@ namespace SunspaceDealerDesktop
 
         #endregion
 
-        #region Sunscreen
-        protected void populateSunscreen()
+        #region Sunshade
+        protected void populateSunshade()
         {
-            plcSunscreen.Controls.Add(new LiteralControl("<li>"));
-            Label sunscreenLabel = new Label();
-            sunscreenLabel.ID = "lblSunscreen";
-            sunscreenLabel.Text = "Sunscreen Options";
-            plcSunscreen.Controls.Add(sunscreenLabel);
-            plcSunscreen.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li><table runat=\"server\">"));
+            plcSunshade.Controls.Add(new LiteralControl("<li>"));
+            Label sunshadeLabel = new Label();
+            sunshadeLabel.ID = "lblSunscreen";
+            sunshadeLabel.Text = "Sunshade Options";
+            plcSunshade.Controls.Add(sunshadeLabel);
+            plcSunshade.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li><table runat=\"server\">"));
 
 
             #region include checkbox population
             
-            plcSunscreen.Controls.Add(new LiteralControl("<tr><td>"));
+            plcSunshade.Controls.Add(new LiteralControl("<tr><td>"));
 
-            Label textSunscreenLabel = new Label();
-            textSunscreenLabel.ID = "lblTextSunscreenLabel";
-            textSunscreenLabel.Attributes.Add("runat", "server");
-            textSunscreenLabel.Text = "Include Sunshades: ";
+            Label textSunshadeLabel = new Label();
+            textSunshadeLabel.ID = "lblTextSunshadeLabel";
+            textSunshadeLabel.Attributes.Add("runat", "server");
+            textSunshadeLabel.Text = "Include Sunshades: ";
 
-            plcSunscreen.Controls.Add(textSunscreenLabel);
-            plcSunscreen.Controls.Add(new LiteralControl("</td>"));
+            plcSunshade.Controls.Add(textSunshadeLabel);
+            plcSunshade.Controls.Add(new LiteralControl("</td>"));
 
-            plcSunscreen.Controls.Add(new LiteralControl("<td>"));
+            plcSunshade.Controls.Add(new LiteralControl("<td>"));
 
-            CheckBox checkSunscreen = new CheckBox();
-            checkSunscreen.ID = "chkSunscreen";
-            checkSunscreen.Attributes.Add("runat", "server");
-            checkSunscreen.Text = " ";
-            checkSunscreen.Attributes.Add("onchange", "sunscreenToggle()");
+            CheckBox checkSunshade = new CheckBox();
+            checkSunshade.ID = "chkSunshade";
+            checkSunshade.Attributes.Add("runat", "server");
+            checkSunshade.Text = " ";
+            checkSunshade.Attributes.Add("onchange", "sunshadeToggle()");
 
-            plcSunscreen.Controls.Add(checkSunscreen);
+            plcSunshade.Controls.Add(checkSunshade);
 
-            Label firstSunscreenLabel = new Label();
-            firstSunscreenLabel.ID = "lblFirstSunscreenLabel";
-            firstSunscreenLabel.AssociatedControlID = "chkSunscreen";
-            firstSunscreenLabel.Attributes.Add("runat", "server");
+            Label firstSunshadeLabel = new Label();
+            firstSunshadeLabel.ID = "lblFirstSunshadeLabel";
+            firstSunshadeLabel.AssociatedControlID = "chkSunshade";
+            firstSunshadeLabel.Attributes.Add("runat", "server");
             
-            plcSunscreen.Controls.Add(firstSunscreenLabel);
+            plcSunshade.Controls.Add(firstSunshadeLabel);
 
-            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            plcSunshade.Controls.Add(new LiteralControl("</td></tr>"));
             #endregion
 
             #region valance population
-            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"valanceRow\" style=\"display:none\"><td>"));
+            plcSunshade.Controls.Add(new LiteralControl("<tr id=\"valanceRow\" style=\"display:none\"><td>"));
             Label valanceLabel = new Label();
             valanceLabel.ID = "lblValance";
             valanceLabel.Text = "Valance Color: ";
@@ -3610,14 +3610,14 @@ namespace SunspaceDealerDesktop
 
             valanceDropdown.Attributes.Add("onchange", "valanceChange()");
 
-            plcSunscreen.Controls.Add(valanceLabel);
-            plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
-            plcSunscreen.Controls.Add(valanceDropdown);
-            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            plcSunshade.Controls.Add(valanceLabel);
+            plcSunshade.Controls.Add(new LiteralControl("</td><td>"));
+            plcSunshade.Controls.Add(valanceDropdown);
+            plcSunshade.Controls.Add(new LiteralControl("</td></tr>"));
             #endregion
 
             #region fabric population
-            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"fabricRow\" style=\"display:none\"><td>"));
+            plcSunshade.Controls.Add(new LiteralControl("<tr id=\"fabricRow\" style=\"display:none\"><td>"));
             Label fabricLabel = new Label();
             fabricLabel.ID = "lblFabric";
             fabricLabel.Text = "Fabric Color: ";
@@ -3631,14 +3631,14 @@ namespace SunspaceDealerDesktop
 
             fabricDropdown.Attributes.Add("onchange", "fabricChange()");
 
-            plcSunscreen.Controls.Add(fabricLabel);
-            plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
-            plcSunscreen.Controls.Add(fabricDropdown);
-            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            plcSunshade.Controls.Add(fabricLabel);
+            plcSunshade.Controls.Add(new LiteralControl("</td><td>"));
+            plcSunshade.Controls.Add(fabricDropdown);
+            plcSunshade.Controls.Add(new LiteralControl("</td></tr>"));
             #endregion
 
             #region openness population
-            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"openRow\" style=\"display:none\"><td>"));
+            plcSunshade.Controls.Add(new LiteralControl("<tr id=\"openRow\" style=\"display:none\"><td>"));
             Label openLabel = new Label();
             openLabel.ID = "lblOpen";
             openLabel.Text = "Openness: ";
@@ -3652,14 +3652,14 @@ namespace SunspaceDealerDesktop
 
             openDropdown.Attributes.Add("onchange", "openChange()");
 
-            plcSunscreen.Controls.Add(openLabel);
-            plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
-            plcSunscreen.Controls.Add(openDropdown);
-            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            plcSunshade.Controls.Add(openLabel);
+            plcSunshade.Controls.Add(new LiteralControl("</td><td>"));
+            plcSunshade.Controls.Add(openDropdown);
+            plcSunshade.Controls.Add(new LiteralControl("</td></tr>"));
             #endregion
 
             #region chain population
-            plcSunscreen.Controls.Add(new LiteralControl("<tr id=\"chainRow\" style=\"display:none\"><td>"));
+            plcSunshade.Controls.Add(new LiteralControl("<tr id=\"chainRow\" style=\"display:none\"><td>"));
             Label chainLabel = new Label();
             chainLabel.ID = "lblChain";
             chainLabel.Text = "Chain: ";
@@ -3672,13 +3672,13 @@ namespace SunspaceDealerDesktop
 
             chainDropdown.Attributes.Add("onchange", "chainChange()");
 
-            plcSunscreen.Controls.Add(chainLabel);
-            plcSunscreen.Controls.Add(new LiteralControl("</td><td>"));
-            plcSunscreen.Controls.Add(chainDropdown);
-            plcSunscreen.Controls.Add(new LiteralControl("</td></tr>"));
+            plcSunshade.Controls.Add(chainLabel);
+            plcSunshade.Controls.Add(new LiteralControl("</td><td>"));
+            plcSunshade.Controls.Add(chainDropdown);
+            plcSunshade.Controls.Add(new LiteralControl("</td></tr>"));
             #endregion
 
-            plcSunscreen.Controls.Add(new LiteralControl("</table></li></ul></div></li>"));
+            plcSunshade.Controls.Add(new LiteralControl("</table></li></ul></div></li>"));
         }
         #endregion
 
@@ -3871,8 +3871,13 @@ namespace SunspaceDealerDesktop
                             aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
                             aMod.StartHeight = aMod.EndHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
                             aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
-                            
-                            //private bool sunshade;
+                            aMod.Sunshade = bool.Parse(Request.Form["hidSunshade"]);
+                            aMod.SunshadeValance = (string)Request.Form["hidValance"];
+                            aMod.SunshadeFabric = (string)Request.Form["hidFabric"];
+                            aMod.SunshadeOpenness = (string)Request.Form["hidOpenness"];
+                            aMod.SunshadeChain = (string)Request.Form["hidChain"];
+
+
                             List<ModuleItem> modularItems = new List<ModuleItem>();
                             string doorType = Request.Form["hidWall" + i + "Door" + j + "type"];
                             if (doorType == "Cabana")
@@ -4056,7 +4061,8 @@ namespace SunspaceDealerDesktop
                         listOfWalls[linearPosition].LinearItems = linearItems;
 
                         listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
-                                                                         Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString());
+                                                                         Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
+                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value);
 
                         linearPosition++;//asdf
                     }

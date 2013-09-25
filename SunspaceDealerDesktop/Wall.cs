@@ -227,7 +227,8 @@ namespace SunspaceDealerDesktop
             return 0f;
         }
 
-        public void FillSpaceWithWindows(string windowType, string windowColour, string framingColour, int numberOfVents, float kneewallHeight, string kneewallType, string transomType)
+        public void FillSpaceWithWindows(string windowType, string windowColour, string framingColour, int numberOfVents, float kneewallHeight, string kneewallType, string transomType, 
+            bool sunshade, string valance, string fabric, string openness, string chain)
         {
             float currentLocation = 0f;
 
@@ -254,6 +255,11 @@ namespace SunspaceDealerDesktop
                     aMod.ItemType = "Mod";
                     aMod.Length = space;
                     aMod.ModType = "Window";
+                    aMod.Sunshade = sunshade;
+                    aMod.SunshadeValance = valance;
+                    aMod.SunshadeFabric = fabric;
+                    aMod.SunshadeOpenness = openness;
+                    aMod.SunshadeChain = chain;
 
                     height = Math.Max(aMod.StartHeight, aMod.EndHeight);
 

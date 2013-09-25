@@ -2266,13 +2266,14 @@
 
         function sunscreenToggle()
         {
-            if ($('#MainContent_chkSunscreen').is(':checked'))
+            if ($('#MainContent_chkSunshade').is(':checked'))
             {
                 document.getElementById('valanceRow').style.display = "table-row";
                 document.getElementById('fabricRow').style.display = "table-row";
                 document.getElementById('openRow').style.display = "table-row";
                 document.getElementById('chainRow').style.display = "table-row";
-                document.getElementById("<%=hidSunscreen.ClientID%>").value = "true";
+
+                document.getElementById("<%=hidSunshade.ClientID%>").value = "true";
                 document.getElementById("<%=hidValance.ClientID%>").value = $('#MainContent_ddlValance').val();
                 document.getElementById("<%=hidFabric.ClientID%>").value = $('#MainContent_ddlFabric').val();
                 document.getElementById("<%=hidOpenness.ClientID%>").value = $('#MainContent_ddlOpen').val();
@@ -2285,7 +2286,7 @@
                 document.getElementById('openRow').style.display = "none";
                 document.getElementById('chainRow').style.display = "none";
 
-                document.getElementById("<%=hidSunscreen.ClientID%>").value = "false";
+                document.getElementById("<%=hidSunshade.ClientID%>").value = "false";
                 document.getElementById("<%=hidValance.ClientID%>").value = "";
                 document.getElementById("<%=hidFabric.ClientID%>").value = "";
                 document.getElementById("<%=hidOpenness.ClientID%>").value = "";
@@ -2599,7 +2600,7 @@
     <input id="hidWindowColour" type="hidden" runat="server" />
     <input id="hidWindowFramingColour" type="hidden" runat="server" />
     <input id="hidScreenType" type="hidden" runat="server" />
-    <input id="hidSunscreen" type="hidden" runat="server" />
+    <input id="hidSunshade" type="hidden" runat="server" />
     <input id="hidValance" type="hidden" runat="server" />
     <input id="hidFabric" type="hidden" runat="server" />
     <input id="hidOpenness" type="hidden" runat="server" />
