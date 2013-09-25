@@ -2020,23 +2020,23 @@
             //}
         }
 
-        function sunshadeToggle()
-        {
-            if ($('#MainContent_chkSunshade').is(':checked'))
-            {
-                document.getElementById('valanceRow').style.display = "table-row";
-                document.getElementById('fabricRow').style.display = "table-row";
-                document.getElementById('openRow').style.display = "table-row";
-                document.getElementById('chainRow').style.display = "table-row";
-            }
-            else
-            {
-                document.getElementById('valanceRow').style.display = "none";
-                document.getElementById('fabricRow').style.display = "none";
-                document.getElementById('openRow').style.display = "none";
-                document.getElementById('chainRow').style.display = "none";
-            }
-        }
+        //function sunshadeToggle()
+        //{
+        //    if ($('#MainContent_chkSunshade').is(':checked'))
+        //    {
+        //        document.getElementById('valanceRow').style.display = "table-row";
+        //        document.getElementById('fabricRow').style.display = "table-row";
+        //        document.getElementById('openRow').style.display = "table-row";
+        //        document.getElementById('chainRow').style.display = "table-row";
+        //    }
+        //    else
+        //    {
+        //        document.getElementById('valanceRow').style.display = "none";
+        //        document.getElementById('fabricRow').style.display = "none";
+        //        document.getElementById('openRow').style.display = "none";
+        //        document.getElementById('chainRow').style.display = "none";
+        //    }
+        //}
 
         function resetHiddens()
         {
@@ -2264,7 +2264,7 @@
             //}
         }
 
-        function sunscreenToggle()
+        function sunshadeToggle()
         {
             if ($('#MainContent_chkSunshade').is(':checked'))
             {
