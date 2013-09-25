@@ -2847,7 +2847,6 @@ namespace SunspaceDealerDesktop
             typeRadio = new RadioButton();
             typeRadio.ID = "rad" + windowTypeId;     //Giving an appropriate id to radio buttons based on current type of window
             typeRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
-            typeRadio.Attributes.Add("onchange", "resetHiddens()");
 
 
             typeRadio.Checked = (windowTypeId == "V4T" && currentModel == "M200") ? true : //select/check the radio button if current selection is default value
@@ -2882,7 +2881,6 @@ namespace SunspaceDealerDesktop
                 //Creating one ul tag to hold multiple li tags containing vinyl tints
                 wallWindowOptions.Controls.Add(new LiteralControl("<ul>"));
             }
-
 
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3152,7 +3150,6 @@ namespace SunspaceDealerDesktop
             {//there are tint options
                 wallWindowOptions.Controls.Add(new LiteralControl("</ul></div></li></ul>")); //close the previously opened tags
             }
-
             #endregion
         }
 
@@ -3302,7 +3299,6 @@ namespace SunspaceDealerDesktop
             screenRadio = new RadioButton();
             screenRadio.ID = "radScreen";     //Giving an appropriate id to radio buttons based on current type of window
             screenRadio.GroupName = "screenTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
-            screenRadio.Attributes.Add("onchange", "resetHiddens()");
             
             //if (currentModel == "M100")
             //{
