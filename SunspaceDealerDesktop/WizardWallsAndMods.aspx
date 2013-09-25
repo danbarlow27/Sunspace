@@ -2020,7 +2020,7 @@
             //}
         }
 
-        function sunscreenToggle()
+        function sunshadeToggle()
         {
             if ($('#MainContent_chkSunscreen').is(':checked'))
             {
