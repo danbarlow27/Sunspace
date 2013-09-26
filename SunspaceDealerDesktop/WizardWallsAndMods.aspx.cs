@@ -2882,7 +2882,6 @@ namespace SunspaceDealerDesktop
                 wallWindowOptions.Controls.Add(new LiteralControl("<ul>"));
             }
 
-
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             #region tint options
@@ -3151,7 +3150,6 @@ namespace SunspaceDealerDesktop
             {//there are tint options
                 wallWindowOptions.Controls.Add(new LiteralControl("</ul></div></li></ul>")); //close the previously opened tags
             }
-
             #endregion
         }
 
