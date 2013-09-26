@@ -251,7 +251,7 @@ namespace SunspaceDealerDesktop
                     Mod aMod = new Mod();
                     aMod.FixedLocation = currentLocation;
                     aMod.StartHeight = this.GetHeightAtLocation(currentLocation);
-                    aMod.EndHeight = this.GetHeightAtLocation(currentLocation+LinearItems[i].FixedLocation);
+                    aMod.EndHeight = this.GetHeightAtLocation(LinearItems[i].FixedLocation);
                     aMod.ItemType = "Mod";
                     aMod.Length = space;
                     aMod.ModType = "Window";

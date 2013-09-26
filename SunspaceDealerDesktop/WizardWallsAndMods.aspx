@@ -2018,6 +2018,12 @@
             //        console.log(wallAreaArray[i][j]);
             //    }
             //}
+            //Now move blank values to empty hidden fields
+            sunshadeToggle();
+            valanceChange();
+            fabricChange();
+            openChange();
+            chainChange();
         }
 
         //function sunshadeToggle()
@@ -2596,12 +2602,12 @@
     <input id="hidWindowType" type="hidden" runat="server" />
     <input id="hidWindowColour" type="hidden" runat="server" />
     <input id="hidWindowFramingColour" type="hidden" runat="server" />
-    <input id="hidScreenType" type="hidden" runat="server" />
-    <input id="hidSunshade" type="hidden" runat="server" />
-    <input id="hidValance" type="hidden" runat="server" />
-    <input id="hidFabric" type="hidden" runat="server" />
-    <input id="hidOpenness" type="hidden" runat="server" />
-    <input id="hidChain" type="hidden" runat="server" />
+    <input id="hidScreenType" type="hidden" runat="server" value="" />
+    <input id="hidSunshade" type="hidden" runat="server" value=""/>
+    <input id="hidValance" type="hidden" runat="server" value="" />
+    <input id="hidFabric" type="hidden" runat="server" value="" />
+    <input id="hidOpenness" type="hidden" runat="server" value="" />
+    <input id="hidChain" type="hidden" runat="server" value="" />
 
     <%-- end hidden fields --%>    
 

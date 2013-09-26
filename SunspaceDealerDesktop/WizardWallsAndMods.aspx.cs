@@ -3713,7 +3713,7 @@ namespace SunspaceDealerDesktop
         }
 
         ///// <summary>
-        ///// This is an event, that is used to dynamically create wall objects with the appropriate details
+        ///// This is an event that is used to dynamically create wall objects with the appropriate details
         ///// </summary>
         ///// <param name="sender"></param>
         ///// <param name="e"></param>
@@ -3772,7 +3772,7 @@ namespace SunspaceDealerDesktop
                     aWall.Name = "Wall " + (i-existingWallCount);
                     aWall.WallType = "Proposed";
                     aWall.ModelType = currentModel;
-                    aWall.StartHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "StartHeight"]));//
+                    aWall.StartHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "StartHeight"]));
                     aWall.EndHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "EndHeight"]));
                     aWall.SoffitLength = float.Parse(Request.Form["hidWall" + i + "SoffitLength"]);
                     aWall.GablePeak = 0;
@@ -3784,7 +3784,7 @@ namespace SunspaceDealerDesktop
                 }
                 else
                 {
-                    existingWallCount++;//
+                    existingWallCount++;
                 }
             }
             
@@ -3867,16 +3867,16 @@ namespace SunspaceDealerDesktop
                                 }
                             }
 
-                            Mod aMod = new Mod();
+                            Mod aMod = new Mod();//
                             aMod.ModType = Constants.MOD_TYPE_DOOR;
                             aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
                             aMod.StartHeight = aMod.EndHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
                             aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
-                            aMod.Sunshade = bool.Parse(Request.Form["hidSunshade"]);
-                            aMod.SunshadeValance = (string)Request.Form["hidValance"];
-                            aMod.SunshadeFabric = (string)Request.Form["hidFabric"];
-                            aMod.SunshadeOpenness = (string)Request.Form["hidOpenness"];
-                            aMod.SunshadeChain = (string)Request.Form["hidChain"];
+                            aMod.Sunshade = Convert.ToBoolean(Request.Form["MainContent_hidSunshade"]);
+                            aMod.SunshadeValance = (string)Request.Form["MainContent_hidValance"];
+                            aMod.SunshadeFabric = (string)Request.Form["MainContent_hidFabric"];
+                            aMod.SunshadeOpenness = (string)Request.Form["MainContent_hidOpenness"];
+                            aMod.SunshadeChain = (string)Request.Form["MainContent_hidChain"];
 
 
                             List<ModuleItem> modularItems = new List<ModuleItem>();
@@ -3905,6 +3905,8 @@ namespace SunspaceDealerDesktop
                                 aDoor.Punch = aDoor.FEndHeight;
                                 modularItems.Add(aDoor);
                             }
+
+                            //Extra door stuff here
 
                             //now we add transom windows
 
@@ -4065,7 +4067,7 @@ namespace SunspaceDealerDesktop
                                                                          Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
                                                                          hidFabric.Value, hidOpenness.Value, hidChain.Value);
 
-                        linearPosition++;//
+                        linearPosition++;
                     }
                     //This is a wall without doors
                     else
