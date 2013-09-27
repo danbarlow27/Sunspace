@@ -24,29 +24,33 @@ namespace SunspaceDealerDesktop
             float decimalHeld = numberToRound - noDecimalNumber;
             float returnDecimal;
 
-            if (decimalHeld > 0.875f)
+            if (decimalHeld >= 0.875f)
             {
                 returnDecimal = 0.875f;
             }
-            else if (decimalHeld > 0.75f)
+            else if (decimalHeld >= 0.75f)
             {
                 returnDecimal = 0.75f;
             }
-            else if (decimalHeld > 0.625f)
+            else if (decimalHeld >= 0.625f)
             {
                 returnDecimal = 0.625f;
             }
-            else if (decimalHeld > 0.5f)
+            else if (decimalHeld >= 0.5f)
             {
                 returnDecimal = 0.5f;
             }
-            else if (decimalHeld > 0.375f)
+            else if (decimalHeld >= 0.375f)
             {
                 returnDecimal = 0.375f;
             }
-            else if (decimalHeld > 0.25f)
+            else if (decimalHeld >= 0.25f)
             {
                 returnDecimal = 0.25f;
+            }
+            else if (decimalHeld >= 0.125f)
+            {
+                returnDecimal = 0.125f;
             }
             else
             {

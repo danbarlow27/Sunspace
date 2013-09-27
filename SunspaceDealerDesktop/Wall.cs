@@ -156,6 +156,60 @@ namespace SunspaceDealerDesktop
             return new float[] { numberOfMods, optimalModSize, extraFiller };
         }
 
+        public float[] FindOptimalLengthOfWindowModsGivenSpace(float sentSpace, float MIN_MOD_WIDTH, float MAX_MOD_WIDTH)
+        {
+            int windowCounter = 0;
+            float finalWindowSize = 0;
+            float spaceRemaining = sentSpace;
+
+            while (spaceRemaining >= MIN_MOD_WIDTH)
+            {
+                if (spaceRemaining >= MAX_MOD_WIDTH)
+                {
+                    spaceRemaining -= MAX_MOD_WIDTH;
+                    windowCounter++;
+                }
+                else if (spaceRemaining < MAX_MOD_WIDTH && spaceRemaining > MIN_MOD_WIDTH)
+                {
+                    spaceRemaining = 0;
+                    windowCounter++;
+                }
+                else if (spaceRemaining == MIN_MOD_WIDTH)
+                {
+                    spaceRemaining = 0;
+                    windowCounter++;
+                }
+            }
+
+            if (spaceRemaining > 0 && windowCounter > 0)
+            {
+                //Should never get here? will always hit one of the spaceRemaining=0 above
+                windowCounter++;
+                finalWindowSize = sentSpace / windowCounter;
+                spaceRemaining = 0;
+            }
+            else if (spaceRemaining > 0 && windowCounter == 0)
+            {
+                //Should never get here? will always hit one of the spaceRemaining=0 above
+                //add spaceRemaining to filler
+                //fillFiller(space, wall, start);
+                //spaceRemaining = 0;
+            }
+            else
+            {
+                finalWindowSize = sentSpace / windowCounter;
+            }
+
+            float roundedWindowSize = GlobalFunctions.RoundDownToNearestEighthInch(finalWindowSize);
+
+            //Set space remaining equal to amount lost via rounding
+            //spaceRemaining += finalWindowSize - roundedWindowSize;
+            spaceRemaining = sentSpace - (roundedWindowSize * windowCounter);
+
+            //Need to return space * windowcounter, since we lost that amount PER WINDOW
+            float[] anArray = { roundedWindowSize, windowCounter, spaceRemaining };
+            return (anArray);
+        }
         /*
         public String FindOptimalSizeOfMods(int numberOfMods)
         {
@@ -216,10 +270,22 @@ namespace SunspaceDealerDesktop
 
         public float GetHeightAtLocation(float location)
         {
-            //slope = rise/run
-            //rise = slope*run
-            //rise = (trise/trun)*run
-            return ((this.EndHeight - this.StartHeight)/this.Length)*location;
+            float returnValue = 0f;
+
+            if (this.StartHeight == this.EndHeight)
+            {
+                returnValue = StartHeight;
+            }
+            else
+            {
+                //slope = rise/run
+                //rise = start-end
+                //slope == (start-end)/wallLength
+                //height at position = start height + (difference = slope*position)
+                returnValue = startHeight + (((endHeight - startHeight) / this.Length) * location);
+            }
+
+            return returnValue;
         }
 
         public float FindHighestDoorPunch()
@@ -233,180 +299,249 @@ namespace SunspaceDealerDesktop
             float currentLocation = 0f;
 
             //Loop through linear items using currentLocation to keep track
-            for (int i = 0; i < LinearItems.Count; i++)
+            for (int i = 0; i <= LinearItems.Count; i++)//
             {
-                //If an item starts at this location, we aren't in a workable area
-                if (LinearItems[i].FixedLocation == currentLocation)
+                try
                 {
-                    //We set the location equal to the length of the linear item, which is the end of it
-                    currentLocation = LinearItems[i].Length;
+                    //If an item starts at this location, we aren't in a workable area
+                    if (LinearItems[i].FixedLocation == currentLocation)
+                    {
+                        //We set the location equal to the length of the linear item, which is the end of it
+                        currentLocation += LinearItems[i].Length;
+                    }
+                    //Item must start after current
+                    else if (LinearItems[i].FixedLocation > currentLocation)
+                    {
+                        //The space is equal to where the next item starts - current location
+                        float space = LinearItems[i].FixedLocation - currentLocation;
+                        float numOfWindowsInThisSpace = 1; //If the space is too large for one window mod, we need this many
+                        float eachSpace = space; //If the space is too large for one window mod, we'll have a # of mods of this size
+
+                        float MAX_MOD_WIDTH = 0;
+                        float MIN_MOD_WIDTH = 0;
+
+                        switch (windowType)
+                        {
+                            case "Vinyl":
+                                MIN_MOD_WIDTH = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                                MAX_MOD_WIDTH = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
+                                break;
+
+                            case "Glass":
+                                MIN_MOD_WIDTH = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                                MAX_MOD_WIDTH = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
+                                break;
+
+                            case "Vertical 4 Track":
+                                MIN_MOD_WIDTH = Constants.V4T_4V_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                                MAX_MOD_WIDTH = Constants.V4T_4V_MAX_WIDTH_WARRANTY;
+                                break;
+
+                            case "Horizontal 4 Track":
+                                MIN_MOD_WIDTH = Constants.HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                                MAX_MOD_WIDTH = Constants.HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY;
+                                break;
+
+                            case "Horizontal Roller":
+                                MIN_MOD_WIDTH = Constants.HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                                MAX_MOD_WIDTH = Constants.HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY;
+                                break;
+
+                            case "Single Slider":
+                                MIN_MOD_WIDTH = Constants.SINGLE_SLIDER_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                                MAX_MOD_WIDTH = Constants.SINGLE_SLIDER_MAX_WIDTH_WARRANTY;
+                                break;
+
+                            case "Double Slider":
+                                MIN_MOD_WIDTH = Constants.DOUBLE_SLIDER_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                                MAX_MOD_WIDTH = Constants.DOUBLE_SLIDER_MAX_WIDTH_WARRANTY;
+                                break;
+
+                            case "Screen":
+                                MIN_MOD_WIDTH = Constants.SCREEN_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                                MAX_MOD_WIDTH = Constants.SCREEN_MAX_WIDTH_WARRANTY;
+                                break;
+                        }
+
+                        //Find optimal lengths of window mods given space
+                        float[] windowSpecifics = FindOptimalLengthOfWindowModsGivenSpace(space, MIN_MOD_WIDTH, MAX_MOD_WIDTH);
+
+                        float height;
+
+                        //Loop mod creation for each window counted in this space
+                        for (int windowCounter = 0; windowCounter < windowSpecifics[1]; windowCounter++)
+                        {
+                            //We have a space, so create a window mod to fill it
+                            Mod aMod = new Mod();
+                            aMod.FixedLocation = currentLocation;
+                            aMod.StartHeight = this.GetHeightAtLocation(currentLocation);
+                            aMod.EndHeight = this.GetHeightAtLocation(LinearItems[i].FixedLocation);
+                            aMod.ItemType = "Mod";
+                            aMod.Length = windowSpecifics[0];
+                            if (windowCounter == 0)
+                            {
+                                aMod.Length += windowSpecifics[2];
+                            }
+                            aMod.ModType = "Window";
+                            aMod.Sunshade = sunshade;
+                            aMod.SunshadeValance = valance;
+                            aMod.SunshadeFabric = fabric;
+                            aMod.SunshadeOpenness = openness;
+                            aMod.SunshadeChain = chain;
+
+                            height = Math.Max(aMod.StartHeight, aMod.EndHeight);
+
+                            //Check for kneewall info
+                            if (kneewallHeight > 0)
+                            {
+                                //Have one
+                                Kneewall aKneewall = new Kneewall();
+                                aKneewall.FEndHeight = aKneewall.FStartHeight = kneewallHeight;
+                                height -= kneewallHeight; //Remove this from usable height, as the kneewall takes it up
+                                aKneewall.KneewallType = kneewallType;
+                                aKneewall.ItemType = "Kneewall";
+                                aKneewall.FLength = aMod.Length - 2;
+                                aMod.ModularItems.Add(aKneewall);
+                            }
+
+                            float highestPunch = 0f;
+                            //Kneewall will have been added now, or not, either way we add the window
+                            //find highest punch
+                            for (int j = 0; j < LinearItems.Count; j++)
+                            {
+                                if (LinearItems[j].ItemType == "Mod")
+                                {
+                                    Mod tempMod = (Mod)LinearItems[j];
+
+                                    if (tempMod.ModType == "Door")
+                                    {
+                                        //check 0 because door will always be first item in door mod
+                                        if (((Door)tempMod.ModularItems[0]).Punch > highestPunch)
+                                        {
+                                            highestPunch = ((Door)tempMod.ModularItems[0]).Punch;
+                                        }
+                                    }
+                                }
+                            }
+
+                            //Now we know where the ending height is, so we subtract kneewall to get the height of the window
+                            float windowHeight = highestPunch - kneewallHeight;
+                            //Create the window
+                            Window aWindow = new Window();
+                            aWindow.FEndHeight = aWindow.FStartHeight = windowHeight + 2.125f; //CHANGEME hardcoded 2.125
+                            aWindow.EndHeight = aWindow.StartHeight = windowHeight;
+                            aWindow.FLength = aMod.Length - 2;
+                            aWindow.Length = aWindow.FLength - 2f - 2.125f; //CHANGEME hardcoded
+                            aWindow.FrameColour = windowColour;
+                            aWindow.ItemType = "Window";
+                            aWindow.NumVents = numberOfVents;
+                            //aWindow.ScreenType; //CHANGEME Dan, if you need to send something for this, send it
+                            aWindow.WindowType = windowType;
+
+                            //Check for spreader bar boolean
+                            if ((windowType == "Vertical 4 Track" && aWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED) ||
+                                (windowType == "Horizontal Roller" && aWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED))
+                            {
+                                aWindow.SpreaderBar = true;
+                            }
+                            else
+                            {
+                                aWindow.SpreaderBar = false;
+                            }
+
+                            aMod.ModularItems.Add(aWindow);
+
+                            //Now we handle transom
+                            float modStartWallHeight = GlobalFunctions.getHeightAtPosition(this.StartHeight, this.EndHeight, currentLocation, this.Length);
+                            float modEndWallHeight = GlobalFunctions.getHeightAtPosition(this.StartHeight, this.EndHeight, (currentLocation + aMod.Length), this.Length);
+                            float spaceAbovePunch = Math.Max(modStartWallHeight, modEndWallHeight) - highestPunch - .25f; //Punch physical space
+
+                            float[] transomInfo = GlobalFunctions.findOptimalHeightsOfWindows(spaceAbovePunch, transomType);
+
+                            if (this.StartHeight == this.EndHeight)
+                            {
+                                //rectangular window
+                                for (int currentWindow = 0; currentWindow < transomInfo[0]; currentWindow++)
+                                {
+                                    //Set window properties
+                                    Window aTransom = new Window();
+                                    aTransom.FEndHeight = aTransom.FStartHeight = transomInfo[1];
+                                    aTransom.EndHeight = aTransom.StartHeight = transomInfo[1] - 2.125f; //Framing size
+                                    aTransom.Colour = windowColour;
+                                    aTransom.ItemType = "Window";
+                                    aTransom.Length = aMod.Length - 2;
+                                    aTransom.WindowType = transomType;
+                                    if (currentWindow == 0)
+                                    {
+                                        aTransom.FEndHeight += transomInfo[2];
+                                        aTransom.FStartHeight += transomInfo[2];
+                                        aTransom.EndHeight += transomInfo[2];
+                                        aTransom.StartHeight += transomInfo[2];
+                                    }
+                                    aMod.ModularItems.Add(aTransom);
+                                }
+                            }
+                            else
+                            {
+                                //trapezoid
+                                for (int currentWindow = 0; currentWindow < transomInfo[0]; currentWindow++)
+                                {
+                                    //Set window properties
+                                    Window aTransom = new Window();
+                                    aTransom.FEndHeight = aTransom.FStartHeight = transomInfo[1];
+                                    aTransom.EndHeight = aTransom.StartHeight = transomInfo[1] - 2.125f;
+                                    aTransom.Colour = windowColour;
+                                    aTransom.ItemType = "Window";
+                                    aTransom.Length = aMod.Length - 2;
+                                    aTransom.WindowType = transomType;
+                                    //Add remaining area to first window
+                                    if (currentWindow == 0)
+                                    {
+                                        aTransom.FEndHeight += transomInfo[2];
+                                        aTransom.FStartHeight += transomInfo[2];
+                                        aTransom.EndHeight += transomInfo[2];
+                                        aTransom.StartHeight += transomInfo[2];
+                                    }
+                                    //If last window, we need to change a height to make it sloped
+                                    if (currentWindow == transomInfo[0] - 1)
+                                    {
+                                        //If start wall is higher, we lower end height
+                                        if (modStartWallHeight == Math.Max(modStartWallHeight, modEndWallHeight))
+                                        {
+                                            aTransom.FEndHeight -= (modStartWallHeight - modEndWallHeight);
+                                            aTransom.EndHeight -= (modStartWallHeight - modEndWallHeight);
+                                        }
+                                        //Otherwise we lower start height
+                                        else
+                                        {
+                                            aTransom.FStartHeight -= (modEndWallHeight - modStartWallHeight);
+                                            aTransom.StartHeight -= (modEndWallHeight - modStartWallHeight);
+                                        }
+                                    }
+                                    aMod.ModularItems.Add(aTransom);
+                                }
+                            }
+
+                            //float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows
+                            //Find where to place the mod, and place it
+                            for (int j = 0; j < LinearItems.Count; j++)
+                            {
+                                if (LinearItems[j].FixedLocation > aMod.FixedLocation)
+                                {
+                                    //j is past, so we insert into j-1 and exit the loop
+                                    LinearItems.Insert(j, aMod);
+                                    break;
+                                }
+                            }
+                            //Sets currentlocation to the ending location of current linear item
+                            currentLocation = currentLocation + space;
+                        }
+                    }
                 }
-                //Item must start after current
-                else if (LinearItems[i].FixedLocation > currentLocation)
+                catch (Exception ex)
                 {
-                    //The space is equal to where the next item starts - current location
-                    float space = LinearItems[i].FixedLocation - currentLocation;
-                    float height;
-                    //We have a space, so create a window mod to fill it
-                    Mod aMod = new Mod();
-                    aMod.FixedLocation = currentLocation;
-                    aMod.StartHeight = this.GetHeightAtLocation(currentLocation);
-                    aMod.EndHeight = this.GetHeightAtLocation(LinearItems[i].FixedLocation);
-                    aMod.ItemType = "Mod";
-                    aMod.Length = space;
-                    aMod.ModType = "Window";
-                    aMod.Sunshade = sunshade;
-                    aMod.SunshadeValance = valance;
-                    aMod.SunshadeFabric = fabric;
-                    aMod.SunshadeOpenness = openness;
-                    aMod.SunshadeChain = chain;
-
-                    height = Math.Max(aMod.StartHeight, aMod.EndHeight);
-
-                    //Check for kneewall info
-                    if (kneewallHeight > 0)
-                    {
-                        //Have one
-                        Kneewall aKneewall = new Kneewall();
-                        aKneewall.FEndHeight = aKneewall.FStartHeight = kneewallHeight;
-                        height -= kneewallHeight; //Remove this from usable height, as the kneewall takes it up
-                        aKneewall.KneewallType = kneewallType;
-                        aKneewall.ItemType = "Kneewall";
-                        aKneewall.FLength = space - 2;
-                        aMod.ModularItems.Add(aKneewall);
-                    }
-
-                    float highestPunch = 0f;
-                    //Kneewall will have been added now, or not, either way we add the window
-                    //find highest punch
-                    for (int j = 0; j < LinearItems.Count; j++)
-                    {
-                        if (LinearItems[j].ItemType == "Mod")
-                        {
-                            Mod tempMod = (Mod) LinearItems[j];
-
-                            if (tempMod.ModType == "Door")
-                            {
-                                //check 0 because door will always be first item in door mod
-                                if (((Door)tempMod.ModularItems[0]).Punch > highestPunch)
-                                {
-                                    highestPunch = ((Door)tempMod.ModularItems[0]).Punch;
-                                }
-                            }
-                        }
-                    }
-
-                    //Now we know where the ending height is, so we subtract kneewall to get the height of the window
-                    float windowHeight = highestPunch - kneewallHeight;
-                    //Create the window
-                    Window aWindow = new Window();
-                    aWindow.FEndHeight = aWindow.FStartHeight = windowHeight + 2.125f; //CHANGEME hardcoded 2.125
-                    aWindow.EndHeight = aWindow.StartHeight = windowHeight;
-                    aWindow.FLength = aMod.Length - 2;
-                    aWindow.Length = aWindow.FLength - 2f - 2.125f; //CHANGEME hardcoded
-                    aWindow.FrameColour = windowColour;
-                    aWindow.ItemType = "Window";
-                    aWindow.NumVents=numberOfVents;
-                    //aWindow.ScreenType; //CHANGEME Dan, if you need to send something for this, send it
-                    aWindow.WindowType = windowType;
-
-                    //Check for spreader bar boolean
-                    if ((windowType == "Vertical 4 Track" && aWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED) || 
-                        (windowType == "Horizontal Roller" && aWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED))
-                    {
-                        aWindow.SpreaderBar = true;
-                    }
-                    else
-                    {
-                        aWindow.SpreaderBar = false;
-                    }
-
-                    aMod.ModularItems.Add(aWindow);
-
-                    //Now we handle transom
-                    float modStartWallHeight = GlobalFunctions.getHeightAtPosition(this.StartHeight, this.EndHeight, currentLocation, this.Length);
-                    float modEndWallHeight = GlobalFunctions.getHeightAtPosition(this.StartHeight, this.EndHeight, (currentLocation + aMod.Length), this.Length);
-                    float spaceAbovePunch = Math.Max(modStartWallHeight, modEndWallHeight) - highestPunch - .25f; //Punch physical space
-
-                    float[] transomInfo = GlobalFunctions.findOptimalHeightsOfWindows(spaceAbovePunch, transomType);
-
-                    if (this.StartHeight == this.EndHeight)
-                    {
-                        //rectangular window
-                        for (int currentWindow = 0; currentWindow < transomInfo[0]; currentWindow++)
-                        {
-                            //Set window properties
-                            Window aTransom = new Window();
-                            aTransom.FEndHeight = aTransom.FStartHeight = transomInfo[1];
-                            aTransom.EndHeight = aTransom.StartHeight = transomInfo[1] - 2.125f; //Framing size
-                            aTransom.Colour = windowColour;
-                            aTransom.ItemType = "Window";
-                            aTransom.Length = aMod.Length - 2;
-                            aTransom.WindowType = transomType;
-                            if (currentWindow == 0)
-                            {
-                                aTransom.FEndHeight += transomInfo[2];
-                                aTransom.FStartHeight += transomInfo[2];
-                                aTransom.EndHeight += transomInfo[2];
-                                aTransom.StartHeight += transomInfo[2];
-                            }
-                            aMod.ModularItems.Add(aTransom);
-                        }
-                    }
-                    else
-                    {
-                        //trapezoid
-                        for (int currentWindow = 0; currentWindow < transomInfo[0]; currentWindow++)
-                        {
-                            //Set window properties
-                            Window aTransom = new Window();
-                            aTransom.FEndHeight = aTransom.FStartHeight = transomInfo[1];
-                            aTransom.EndHeight = aTransom.StartHeight = transomInfo[1] - 2.125f;
-                            aTransom.Colour = windowColour;
-                            aTransom.ItemType = "Window";
-                            aTransom.Length = aMod.Length - 2;
-                            aTransom.WindowType = transomType;
-                            //Add remaining area to first window
-                            if (currentWindow == 0)
-                            {
-                                aTransom.FEndHeight += transomInfo[2];
-                                aTransom.FStartHeight += transomInfo[2];
-                                aTransom.EndHeight += transomInfo[2];
-                                aTransom.StartHeight += transomInfo[2];
-                            }
-                            //If last window, we need to change a height to make it sloped
-                            if (currentWindow == transomInfo[0] - 1)
-                            {
-                                //If start wall is higher, we lower end height
-                                if (modStartWallHeight == Math.Max(modStartWallHeight, modEndWallHeight))
-                                {
-                                    aTransom.FEndHeight -= (modStartWallHeight - modEndWallHeight);
-                                    aTransom.EndHeight -= (modStartWallHeight - modEndWallHeight);
-                                }
-                                //Otherwise we lower start height
-                                else
-                                {
-                                    aTransom.FStartHeight -= (modEndWallHeight - modStartWallHeight);
-                                    aTransom.StartHeight -= (modEndWallHeight - modStartWallHeight);
-                                }
-                            }
-                            aMod.ModularItems.Add(aTransom);
-                        }
-                    }
-
-                    //float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows
-                    //Find where to place the mod, and place it
-                    for (int j = 0; j < LinearItems.Count; j++)
-                    {
-                        if (LinearItems[j].FixedLocation > aMod.FixedLocation)
-                        {
-                            //j is past, so we insert into j-1 and exit the loop
-                            LinearItems.Insert(j - 1, aMod);
-                            break;
-                        }
-                    }
-                    //Sets currentlocation to the ending location of current linear item
-                    currentLocation = currentLocation + space + linearItems[i].Length;
+                    //If caught, it's because we tried to touch the next linear item but it was past the last
+                    //Check currentLocation to see if there is still space left
                 }
             }
         }

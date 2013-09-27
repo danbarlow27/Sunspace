@@ -3770,7 +3770,7 @@ namespace SunspaceDealerDesktop
                     aWall.Name = "Wall " + (i-existingWallCount);
                     aWall.WallType = "Proposed";
                     aWall.ModelType = currentModel;
-                    aWall.StartHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "StartHeight"]));
+                    aWall.StartHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "StartHeight"]));//
                     aWall.EndHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "EndHeight"]));
                     aWall.SoffitLength = float.Parse(Request.Form["hidWall" + i + "SoffitLength"]);
                     aWall.GablePeak = 0;
@@ -3796,10 +3796,10 @@ namespace SunspaceDealerDesktop
 
                 if (wallDetails[i-1, 4] == "P")
                 {
-                    float wallStartHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "StartHeight"]));
-                    float wallEndHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "EndHeight"]));
-                    float wallLeftFiller = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "LeftFiller"]));
-                    float wallRightFiller = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "RightFiller"]));
+                    float wallStartHeight = (float.Parse(Request.Form["hidWall" + i + "StartHeight"]));
+                    float wallEndHeight = (float.Parse(Request.Form["hidWall" + i + "EndHeight"]));
+                    float wallLeftFiller = (float.Parse(Request.Form["hidWall" + i + "LeftFiller"]));
+                    float wallRightFiller = (float.Parse(Request.Form["hidWall" + i + "RightFiller"]));
                     float wallDoorCount = Int32.Parse(Request.Form["hidWall" + i + "DoorCount"]);
 
                     //if it has doors, do logic w/ doors, otherwise just directly go to window creation
@@ -3859,7 +3859,7 @@ namespace SunspaceDealerDesktop
                                 {
                                     BoxHeader aBoxHeader = new BoxHeader();
                                     aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                    aBoxHeader.Length = 3.125f;
+                                    aBoxHeader.Length = 3.25f;
                                     aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
                                     linearItems.Add(aBoxHeader);
                                 }
@@ -3868,8 +3868,9 @@ namespace SunspaceDealerDesktop
                             Mod aMod = new Mod();//
                             aMod.ModType = Constants.MOD_TYPE_DOOR;
                             aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
-                            aMod.StartHeight = aMod.EndHeight = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
                             aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
+                            aMod.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
+                            aMod.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
                             aMod.Sunshade = Convert.ToBoolean(Request.Form["MainContent_hidSunshade"]);
                             aMod.SunshadeValance = (string)Request.Form["MainContent_hidValance"];
                             aMod.SunshadeFabric = (string)Request.Form["MainContent_hidFabric"];
@@ -3993,6 +3994,7 @@ namespace SunspaceDealerDesktop
                                     anHChannel.StartHeight = anHChannel.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
                                     anHChannel.Length = 2.5f;
                                     //CHANGEME if driftwood
+                                    anHChannel.ItemType = "HChannel";//
                                     anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
                                     linearItems.Add(anHChannel);
                                 }
@@ -4000,8 +4002,9 @@ namespace SunspaceDealerDesktop
                                 {
                                     BoxHeader aBoxHeader = new BoxHeader();
                                     aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                    aBoxHeader.Length = 3.125f;
+                                    aBoxHeader.Length = 3.25f;
                                     aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+                                    aBoxHeader.ItemType = "BoxHeader";
                                     linearItems.Add(aBoxHeader);
                                 }
                             }
@@ -4022,25 +4025,49 @@ namespace SunspaceDealerDesktop
 
                         //We try to check next wall.  If it exists, this rightside will be a corner post. If it throws an error
                         //this must be the last wall, so we only remove a receiver's worth from the right side.
-                        try
+                        //try
+                        //{
+                        //    if (wallDetails[i - 1, 4] == "P")
+                        //    {
+                        //        if (currentModel == "M400")
+                        //        {
+                        //            wallRightFiller -= 4.125f;
+                        //        }
+                        //        else
+                        //        {
+                        //            wallRightFiller -= 3.125f;
+                        //        }
+                        //    }
+                        //}
+                        //catch (Exception ex)
+                        //{
+                        //    wallRightFiller -= 1f;
+                        //}
+
+                        
+                        //Now add the filler itself
+                        if (wallLeftFiller > 0)
                         {
-                            if (wallDetails[i - 1, 4] == "P")
-                            {
-                                if (currentModel == "M400")
-                                {
-                                    wallRightFiller -= 4.125f;
-                                }
-                                else
-                                {
-                                    wallRightFiller -= 3.125f;
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            wallRightFiller -= 1f;
+                            Filler leftFiller = new Filler();
+                            leftFiller.Length = wallLeftFiller;
+                            leftFiller.FixedLocation = linearItems[0].Length;
+                            leftFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
+                            leftFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation + leftFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
+                            leftFiller.ItemType = "Filler";
+                            linearItems.Insert(1, leftFiller); //Inserted as second element, after receiever or post
                         }
 
+                        if (wallRightFiller > 0)
+                        {
+
+                            Filler rightFiller = new Filler();
+                            rightFiller.Length = wallRightFiller;
+                            rightFiller.FixedLocation = listOfWalls[linearPosition].Length - wallRightFiller;
+                            rightFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, rightFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
+                            rightFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, rightFiller.FixedLocation + rightFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
+                            rightFiller.ItemType = "Filler";
+                            linearItems.Add(rightFiller); 
+                        }
                         //if (currentModel == "M400")
                         //{
                         //    Corner aCorner = new Corner();
@@ -4070,9 +4097,105 @@ namespace SunspaceDealerDesktop
                     //This is a wall without doors
                     else
                     {
+                        //Left filler
+                        //The current program hasn't considered the space receievers or corner posts take up in a wall's length
+                        //So we're going to cheat it here by adding that 'space' to the fillers, and removing it later when the
+                        //Wall objects are being built, which is here.
+                        if (cheatCounter == 0)
+                        {
+                            wallLeftFiller -= 1;//CHANGEME receiver length
+                            Receiver aReceiver = new Receiver();
+                            aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+                            aReceiver.Length = 1f;
+                            aReceiver.FixedLocation = 0;
+                            linearItems.Insert(0, aReceiver);
+                            cheatCounter++;
+                        }
+                        else
+                        {
+                            if (currentModel == "M400")
+                            {
+                                Corner aCorner = new Corner();
+                                aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+                                aCorner.Length = 4.125f;
+                                wallLeftFiller -= aCorner.Length;
+                                linearItems.Add(aCorner);
+                            }
+                            else
+                            {
+                                Corner aCorner = new Corner();
+                                aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+                                aCorner.Length = 3.125f;
+                                wallLeftFiller -= aCorner.Length;
+                                linearItems.Add(aCorner);
+                            }
+                            cheatCounter++;
+                        }
+
+                        int numberOfVents = 0;
+                        if (hidWindowType.Value == "Vertical 4 Track" || hidWindowType.Value == "Vertical Four Track")
+                        {
+                            numberOfVents = hidWindowColour.Value.Length;
+                        }
+                        //Now we add the windows that fill the rest of the space
                         string windowInfoString = Request.Form["hidWall" + i + "WindowInfo"];
                         string[] windowInfoArray = windowInfoString.Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
+                        //Right filler
+                        //Since we don't want to add the same corner post that is shared between walls twice, at this point we're just going to remove from filler
+                        //and from wall length, so for example, a 130 length wall will actually be 126.875 and 'go into' the next corner post
+
+                        //We try to check next wall.  If it exists, this rightside will be a corner post. If it throws an error
+                        //this must be the last wall, so we only remove a receiver's worth from the right side.
+                        //try
+                        //{
+                        //    if (wallDetails[i - 1, 4] == "P")
+                        //    {
+                        //        if (currentModel == "M400")
+                        //        {
+                        //            wallRightFiller -= 4.125f;
+                        //        }
+                        //        else
+                        //        {
+                        //            wallRightFiller -= 3.125f;
+                        //        }
+                        //    }
+                        //}
+                        //catch (Exception ex)
+                        //{
+                        //    wallRightFiller -= 1f;
+                        //}
+
+                        //Now add the filler itself
+                        if (wallLeftFiller > 0)
+                        {
+                            Filler leftFiller = new Filler();
+                            leftFiller.Length = wallLeftFiller;
+                            leftFiller.FixedLocation = linearItems[0].Length;
+                            leftFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
+                            leftFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation + leftFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
+                            leftFiller.ItemType = "Filler";
+                            linearItems.Insert(1, leftFiller); //Inserted as second element, after receiever or post
+                        }
+
+                        if (wallRightFiller > 0)
+                        {
+
+                            Filler rightFiller = new Filler();
+                            rightFiller.Length = wallRightFiller;
+                            rightFiller.FixedLocation = listOfWalls[linearPosition].Length - wallRightFiller;
+                            rightFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, rightFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
+                            rightFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, rightFiller.FixedLocation + rightFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
+                            rightFiller.ItemType = "Filler";
+                            linearItems.Add(rightFiller);
+                        }
+
+                        listOfWalls[linearPosition].LinearItems = linearItems;
+
+                        listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
+                                                                         Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
+                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value);//
+                        linearPosition++;
                         //Left filler
                         //Fill Function
                         //Right filler
@@ -4083,10 +4206,10 @@ namespace SunspaceDealerDesktop
                     {
                         wallRightFiller -= 1;//CHANGEME receiver length
                         Receiver aReceiver = new Receiver();
-                        aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+                        aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, listOfWalls[listOfWalls.Count - 1].Length - 1, listOfWalls[listOfWalls.Count - 1].Length);
                         aReceiver.Length = 1f;
-                        aReceiver.FixedLocation = 0;
-                        linearItems.Add(aReceiver);
+                        aReceiver.FixedLocation = listOfWalls[listOfWalls.Count - 1].Length - 1;
+                        listOfWalls[listOfWalls.Count - 1].LinearItems.Add(aReceiver);
                         cheatCounter++;
                     }
                 }
