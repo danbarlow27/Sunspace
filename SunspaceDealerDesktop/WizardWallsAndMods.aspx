@@ -2436,7 +2436,7 @@
                     <asp:PlaceHolder ID="wallWindowOptions" runat="server"></asp:PlaceHolder>
                     <asp:PlaceHolder ID="plcFrameOptions" runat="server"></asp:PlaceHolder>
                     <asp:PlaceHolder ID="plcScreenOptions" runat="server"></asp:PlaceHolder>
-                    <asp:PlaceHolder ID="plcSunshade" runat="server"></asp:PlaceHolder>                    
+                    <asp:PlaceHolder ID="plcSunshade" runat="server"></asp:PlaceHolder>           
                 </ul>  
                  
                 <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" OnClientClick="WindowPreparation();return false;"/>     

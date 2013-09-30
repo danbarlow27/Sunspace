@@ -2841,12 +2841,12 @@ namespace SunspaceDealerDesktop
             RadioButton typeRadio, tintRadio;
             Label typeLabelRadio, typeLabel, tintLabelRadio, tintLabel;
 
-            wallWindowOptions.Controls.Add(new LiteralControl("<ul class=\"toggleOptions\"><li>"));
+            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
 
             //RadioButton created for every option
             typeRadio = new RadioButton();
             typeRadio.ID = "rad" + windowTypeId;     //Giving an appropriate id to radio buttons based on current type of window
-            typeRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
+            typeRadio.GroupName = "theWindowTypes";     //Giving an appropriate group name to all windowtype radio buttons
 
 
             typeRadio.Checked = (windowTypeId == "V4T" && currentModel == "M200") ? true : //select/check the radio button if current selection is default value
@@ -3144,11 +3144,11 @@ namespace SunspaceDealerDesktop
 
             if (!grey && !darkGrey && !smokeGrey && !bronze && !clear && !mixed)
             {//if there are no tint options
-                wallWindowOptions.Controls.Add(new LiteralControl("</li></ul>")); //opened tags at the top, need to close them regardless of tint or no tint
+                wallWindowOptions.Controls.Add(new LiteralControl("</li>")); //opened tags at the top, need to close them regardless of tint or no tint
             }
             else
             {//there are tint options
-                wallWindowOptions.Controls.Add(new LiteralControl("</ul></div></li></ul>")); //close the previously opened tags
+                wallWindowOptions.Controls.Add(new LiteralControl("</ul></div></li>")); //close the previously opened tags
             }
             #endregion
         }
@@ -3171,9 +3171,9 @@ namespace SunspaceDealerDesktop
                     m200Label.Text = "Window Options";
                     wallWindowOptions.Controls.Add(m200Label);
 
-                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul class=\"toggleOptions\">"));
                     model200WindowOptions();
-                    wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("</ul></div></li>"));
                     break;
                 case "M300":
                     wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
@@ -3183,7 +3183,7 @@ namespace SunspaceDealerDesktop
                     m300Label.Text = "Window Options";
                     wallWindowOptions.Controls.Add(m300Label);
 
-                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul class=\"toggleOptions\"><li>"));
                     model300WindowOptions();
                     wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
                     break;
@@ -3195,7 +3195,7 @@ namespace SunspaceDealerDesktop
                     m400Label.Text = "Window Options";
                     wallWindowOptions.Controls.Add(m400Label);
 
-                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul class=\"toggleOptions\"><li>"));
                     model400WindowOptions();
                     wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
                     break;
