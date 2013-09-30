@@ -2879,7 +2879,7 @@ namespace SunspaceDealerDesktop
                 wallWindowOptions.Controls.Add(new LiteralControl("<div id='" + windowTypeId + "WindowDetails' class='toggleContent'>"));
 
                 //Creating one ul tag to hold multiple li tags containing vinyl tints
-                wallWindowOptions.Controls.Add(new LiteralControl("<ul>"));
+                wallWindowOptions.Controls.Add(new LiteralControl("<ul class=\"toggleOptions\">"));
             }
 
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3083,8 +3083,8 @@ namespace SunspaceDealerDesktop
                 wallWindowOptions.Controls.Add(new LiteralControl("<div id='" + windowTypeId + "mixedTintDetails' class='toggleContent'>"));
 
                 //Creating one ul tag to hold multiple li tags containing vinyl tints
-                wallWindowOptions.Controls.Add(new LiteralControl("<ul><li><ul id='" + windowTypeId + "mixedTintList' class='toggleOptions'>"));
-
+                //wallWindowOptions.Controls.Add(new LiteralControl("<ul><li><ul id='" + windowTypeId + "mixedTintList' class='toggleOptions'>"));
+                wallWindowOptions.Controls.Add(new LiteralControl("<ul><li>"));
 
                 Table tblMixedTints = new Table(); //table to hold vinyl number labels and dropdown options
 
@@ -3095,7 +3095,7 @@ namespace SunspaceDealerDesktop
                 {
                     TableRow mixedVinylTintRow = new TableRow();
                     mixedVinylTintRow.ID = "row" + windowTypeId + "Vinyl" + vinylCount + "Tint";
-                    //mixedVinylTintRow.Attributes.Add("style", "display:none;");
+                    mixedVinylTintRow.Attributes.Add("style", "display:block;");
                     TableCell mixedVinylTintLabelCell = new TableCell();
                     TableCell mixedVinylTintDropDownCell = new TableCell();
 
@@ -3104,10 +3104,10 @@ namespace SunspaceDealerDesktop
                     mixedVinylTintLabel.Text = "Vinyl " + vinylCount + " Tint : ";
                     DropDownList ddlVinylTintOptions = new DropDownList();
                     ddlVinylTintOptions.ID = "ddl" + windowTypeId + "VinylTint" + vinylCount;
-                    ListItem clearVinyl = new ListItem("Clear", "clear");
-                    ListItem smokeGreyVinyl = new ListItem("Smoke Grey", "smokeGrey");
-                    ListItem darkGreyVinyl = new ListItem("Dark Grey", "darkGrey");
-                    ListItem bronzeVinyl = new ListItem("Bronze", "bronze");
+                    ListItem clearVinyl = new ListItem("Clear", "C");
+                    ListItem smokeGreyVinyl = new ListItem("Smoke Grey", "S");
+                    ListItem darkGreyVinyl = new ListItem("Dark Grey", "D");
+                    ListItem bronzeVinyl = new ListItem("Bronze", "B");
 
                     ddlVinylTintOptions.Items.Add(clearVinyl);
                     ddlVinylTintOptions.Items.Add(smokeGreyVinyl);
@@ -3127,7 +3127,8 @@ namespace SunspaceDealerDesktop
 
                 wallWindowOptions.Controls.Add(tblMixedTints);
 
-                wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div>"));
+                //wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div>"));
+                wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div>"));
 
                 /****************************************************************************************/
                 /*************************       END OF MIXED OPTIONS      ******************************/
