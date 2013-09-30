@@ -11,6 +11,11 @@ namespace SunspaceDealerDesktop
     {
         public static string[] MODEL_NUMBERS = { "M100", "M200", "M300", "M400" };
 
+        #region Punches
+        public const float DOOR_PUNCH = 0.25F;
+        public const float KNEEWALL_PUNCH = 0.25F;
+        #endregion
+
         #region Database Restricted Constants
         //Patterns:
         //MAX_LENGTH_

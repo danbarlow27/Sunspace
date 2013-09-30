@@ -423,15 +423,22 @@ namespace SunspaceDealerDesktop
                                     }
                                 }
                             }
-
+                            
+                            //If punch is 0 at this point there are no doors, in such a case, we will set the punch to be a set distance below the min height of the wall
+                            //That way we arbitrarily set a location for the transom to start and maintain consistency.
+                            if (highestPunch == 0)
+                            {
+                                highestPunch = Math.Min(aMod.StartHeight, aMod.EndHeight) - 4.125F - Constants.KNEEWALL_PUNCH; //changeme based on type
+                            }
                             //Now we know where the ending height is, so we subtract kneewall to get the height of the window
-                            float windowHeight = highestPunch - kneewallHeight;
+                            //Punch takes up space too, so subtract it as well
+                            float windowHeight = highestPunch - kneewallHeight - Constants.KNEEWALL_PUNCH;
                             //Create the window
                             Window aWindow = new Window();
-                            aWindow.FEndHeight = aWindow.FStartHeight = windowHeight + 2.125f; //CHANGEME hardcoded 2.125
-                            aWindow.EndHeight = aWindow.StartHeight = windowHeight;
+                            aWindow.FEndHeight = aWindow.FStartHeight = windowHeight; //CHANGEME hardcoded 2.125
+                            aWindow.EndHeight = aWindow.StartHeight = windowHeight - 2.125f;
                             aWindow.FLength = aMod.Length - 2;
-                            aWindow.Length = aWindow.FLength - 2f - 2.125f; //CHANGEME hardcoded
+                            aWindow.Length = aWindow.FLength - 2.125f; //CHANGEME hardcoded
                             aWindow.FrameColour = windowColour;
                             aWindow.ItemType = "Window";
                             aWindow.NumVents = numberOfVents;
@@ -465,8 +472,8 @@ namespace SunspaceDealerDesktop
                                 {
                                     //Set window properties
                                     Window aTransom = new Window();
-                                    aTransom.FEndHeight = aTransom.FStartHeight = transomInfo[1];
-                                    aTransom.EndHeight = aTransom.StartHeight = transomInfo[1] - 2.125f; //Framing size
+                                    aTransom.FEndHeight = aTransom.FStartHeight = transomInfo[1]; //Window with frame
+                                    aTransom.EndHeight = aTransom.StartHeight = transomInfo[1] - 2.125f; //Window itself
                                     aTransom.Colour = windowColour;
                                     aTransom.ItemType = "Window";
                                     aTransom.Length = aMod.Length - 2;
@@ -492,7 +499,8 @@ namespace SunspaceDealerDesktop
                                     aTransom.EndHeight = aTransom.StartHeight = transomInfo[1] - 2.125f;
                                     aTransom.Colour = windowColour;
                                     aTransom.ItemType = "Window";
-                                    aTransom.Length = aMod.Length - 2;
+                                    aTransom.FLength = aMod.Length - 2;
+                                    aTransom.Length = aMod.Length - 2 - 2.125f;
                                     aTransom.WindowType = transomType;
                                     //Add remaining area to first window
                                     if (currentWindow == 0)
@@ -534,7 +542,7 @@ namespace SunspaceDealerDesktop
                                 }
                             }
                             //Sets currentlocation to the ending location of current linear item
-                            currentLocation = currentLocation + space;
+                            currentLocation = currentLocation + aMod.Length;
                         }
                     }
                 }

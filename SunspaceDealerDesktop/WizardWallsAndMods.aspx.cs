@@ -3910,13 +3910,13 @@ namespace SunspaceDealerDesktop
                             //now we add transom windows
 
                             //The height of the wall at mod end and mod start
-                            float modStartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
+                            float modStartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));//
                             float modEndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
 
                             //The space left is the total height of the wall at the highest point of the mod minus the current built mod's space (aMod.StartHeight which equals aMod.endHeight at this point
                             //Minus the space the door punch takes up.
                             float sendableHeight = Math.Max(modStartHeight, modEndHeight);
-                            float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows((sendableHeight - aMod.StartHeight - .25f), (string)Session["newProjectTransomType"]);
+                            float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows((sendableHeight - modularItems[0].FStartHeight - .25f), (string)Session["newProjectTransomType"]);
                             if (modStartHeight == modEndHeight)
                             {
                                 //rectangular window
@@ -4190,6 +4190,18 @@ namespace SunspaceDealerDesktop
                             linearItems.Add(rightFiller);
                         }
 
+                        //if last wall, we have right side receiver
+                        if (i == strWalls.Length)
+                        {
+                            wallRightFiller -= 1;//CHANGEME receiver length
+                            Receiver aReceiver = new Receiver();
+                            aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, listOfWalls[listOfWalls.Count - 1].Length - 1, listOfWalls[listOfWalls.Count - 1].Length);
+                            aReceiver.Length = 1f;
+                            aReceiver.FixedLocation = listOfWalls[listOfWalls.Count - 1].Length - 1;
+                            listOfWalls[listOfWalls.Count - 1].LinearItems.Add(aReceiver);
+                            cheatCounter++;
+                        }
+
                         listOfWalls[linearPosition].LinearItems = linearItems;
 
                         listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
@@ -4199,19 +4211,7 @@ namespace SunspaceDealerDesktop
                         //Left filler
                         //Fill Function
                         //Right filler
-                    }
-
-                    //if last wall, we have right side receiver
-                    if (i == strWalls.Length)
-                    {
-                        wallRightFiller -= 1;//CHANGEME receiver length
-                        Receiver aReceiver = new Receiver();
-                        aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, listOfWalls[listOfWalls.Count - 1].Length - 1, listOfWalls[listOfWalls.Count - 1].Length);
-                        aReceiver.Length = 1f;
-                        aReceiver.FixedLocation = listOfWalls[listOfWalls.Count - 1].Length - 1;
-                        listOfWalls[listOfWalls.Count - 1].LinearItems.Add(aReceiver);
-                        cheatCounter++;
-                    }
+                    }                    
                 }
             }
 
@@ -4237,7 +4237,7 @@ namespace SunspaceDealerDesktop
             //Forward to next page
             Session.Add("sunroomProjection", hidRoomProjection.Value);
             Session.Add("sunroomWidth", hidRoomWidth.Value);
-            Response.Redirect("RoofWizard.aspx");
+            Response.Redirect("RoofWizard.aspx");//
 
         }
 
