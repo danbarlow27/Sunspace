@@ -4152,7 +4152,7 @@ namespace SunspaceDealerDesktop
 
                         listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
                                                                          Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
-                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value);
+                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value);
 
                         linearPosition++;
                     }
@@ -4286,7 +4286,7 @@ namespace SunspaceDealerDesktop
 
                         listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
                                                                          Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
-                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value);//
+                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value);//
                         linearPosition++;
                     }
                     #endregion

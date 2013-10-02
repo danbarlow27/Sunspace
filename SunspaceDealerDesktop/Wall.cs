@@ -294,7 +294,7 @@ namespace SunspaceDealerDesktop
         }
 
         public void FillSpaceWithWindows(string windowType, string windowColour, string framingColour, int numberOfVents, float kneewallHeight, string kneewallType, string transomType, 
-            bool sunshade, string valance, string fabric, string openness, string chain)
+            bool sunshade, string valance, string fabric, string openness, string chain, string screenType)
         {
             float currentLocation = 0f;
 
@@ -442,7 +442,7 @@ namespace SunspaceDealerDesktop
                             aWindow.FrameColour = windowColour;
                             aWindow.ItemType = "Window";
                             aWindow.NumVents = numberOfVents;
-                            //aWindow.ScreenType; //CHANGEME Dan, if you need to send something for this, send it
+                            aWindow.ScreenType = screenType; //fixt
                             aWindow.WindowType = windowType;
 
                             //Check for spreader bar boolean

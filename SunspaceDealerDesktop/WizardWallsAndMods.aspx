@@ -2026,7 +2026,11 @@
             $('#MainContent_removableHiddenFieldsDiv').empty();//Then we move values to hidden fields
             //document.getElementById("hidWindowType");
             //document.getElementById("hidWindowColour");
-            if ($('#MainContent_radV4T').is(':checked')) 
+            if ("<%=currentModel%>" == "M100")
+            {
+                document.getElementById("<%=hidWindowType.ClientID%>").value = "Screen";
+            }
+            else if ($('#MainContent_radV4T').is(':checked')) 
             {
                 //move v4t
                 document.getElementById("<%=hidWindowType.ClientID%>").value = "Vertical 4 Track";
@@ -2173,34 +2177,26 @@
                 }
             }
 
-            if ($('#MainContent_radScreen').is(':checked')) 
+            //check colours
+            if ($('#MainContent_radBetterVueInsectScreen').is(':checked'))
             {
-                //move v4t
-                if ("<%=currentModel%>" == "M100")
-                {
-                    document.getElementById("<%=hidWindowType.ClientID%>").value = "Screen";
-                }
-                //check colours
-                if ($('#MainContent_radBetterVueInsectScreen').is(':checked'))
-                {
-                    document.getElementById("<%=hidScreenType.ClientID%>").value = "BetterVueInsectScreen";
-                }
-                if ($('#MainContent_radNoSeeUms20x20Mesh').is(':checked'))
-                {
-                    document.getElementById("<%=hidScreenType.ClientID%>").value = "NoSeeUms2020Mesh";
-                }
-                if ($('#MainContent_radSolarInsectScreening').is(':checked'))
-                {
-                    document.getElementById("<%=hidScreenType.ClientID%>").value = "SolarInsectScreening";
-                }
-                if ($('#MainContent_radToughScreen').is(':checked'))
-                {
-                    document.getElementById("<%=hidScreenType.ClientID%>").value = "TuffScreen";
-                }
-                if ($('#MainContent_radNoScreen').is(':checked'))
-                {
-                    document.getElementById("<%=hidScreenType.ClientID%>").value = "NoScreen";
-                }
+                document.getElementById("<%=hidScreenType.ClientID%>").value = "BetterVueInsectScreen";
+            }
+            if ($('#MainContent_radNoSeeUms20x20Mesh').is(':checked'))
+            {
+                document.getElementById("<%=hidScreenType.ClientID%>").value = "NoSeeUms2020Mesh";
+            }
+            if ($('#MainContent_radSolarInsectScreening').is(':checked'))
+            {
+                document.getElementById("<%=hidScreenType.ClientID%>").value = "SolarInsectScreening";
+            }
+            if ($('#MainContent_radToughScreen').is(':checked'))
+            {
+                document.getElementById("<%=hidScreenType.ClientID%>").value = "TuffScreen";
+            }
+            if ($('#MainContent_radNoScreen').is(':checked'))
+            {
+                document.getElementById("<%=hidScreenType.ClientID%>").value = "NoScreen";
             }
 
             if ($('#MainContent_radFrameBronze').is(':checked'))
