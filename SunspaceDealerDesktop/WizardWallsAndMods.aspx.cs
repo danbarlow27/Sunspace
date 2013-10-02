@@ -2844,12 +2844,12 @@ namespace SunspaceDealerDesktop
             RadioButton typeRadio, tintRadio;
             Label typeLabelRadio, typeLabel, tintLabelRadio, tintLabel;
 
-            wallWindowOptions.Controls.Add(new LiteralControl("<ul class=\"toggleOptions\"><li>"));
+            wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
 
             //RadioButton created for every option
             typeRadio = new RadioButton();
             typeRadio.ID = "rad" + windowTypeId;     //Giving an appropriate id to radio buttons based on current type of window
-            typeRadio.GroupName = "windowTypeRadios";     //Giving an appropriate group name to all windowtype radio buttons
+            typeRadio.GroupName = "theWindowTypes";     //Giving an appropriate group name to all windowtype radio buttons
 
 
             typeRadio.Checked = (windowTypeId == "V4T" && currentModel == "M200") ? true : //select/check the radio button if current selection is default value
@@ -2882,7 +2882,7 @@ namespace SunspaceDealerDesktop
                 wallWindowOptions.Controls.Add(new LiteralControl("<div id='" + windowTypeId + "WindowDetails' class='toggleContent'>"));
 
                 //Creating one ul tag to hold multiple li tags containing vinyl tints
-                wallWindowOptions.Controls.Add(new LiteralControl("<ul>"));
+                wallWindowOptions.Controls.Add(new LiteralControl("<ul class=\"toggleOptions\">"));
             }
 
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3086,8 +3086,8 @@ namespace SunspaceDealerDesktop
                 wallWindowOptions.Controls.Add(new LiteralControl("<div id='" + windowTypeId + "mixedTintDetails' class='toggleContent'>"));
 
                 //Creating one ul tag to hold multiple li tags containing vinyl tints
-                wallWindowOptions.Controls.Add(new LiteralControl("<ul><li><ul id='" + windowTypeId + "mixedTintList' class='toggleOptions'>"));
-
+                //wallWindowOptions.Controls.Add(new LiteralControl("<ul><li><ul id='" + windowTypeId + "mixedTintList' class='toggleOptions'>"));
+                wallWindowOptions.Controls.Add(new LiteralControl("<ul><li>"));
 
                 Table tblMixedTints = new Table(); //table to hold vinyl number labels and dropdown options
 
@@ -3098,7 +3098,7 @@ namespace SunspaceDealerDesktop
                 {
                     TableRow mixedVinylTintRow = new TableRow();
                     mixedVinylTintRow.ID = "row" + windowTypeId + "Vinyl" + vinylCount + "Tint";
-                    //mixedVinylTintRow.Attributes.Add("style", "display:none;");
+                    mixedVinylTintRow.Attributes.Add("style", "display:block;");
                     TableCell mixedVinylTintLabelCell = new TableCell();
                     TableCell mixedVinylTintDropDownCell = new TableCell();
 
@@ -3107,10 +3107,10 @@ namespace SunspaceDealerDesktop
                     mixedVinylTintLabel.Text = "Vinyl " + vinylCount + " Tint : ";
                     DropDownList ddlVinylTintOptions = new DropDownList();
                     ddlVinylTintOptions.ID = "ddl" + windowTypeId + "VinylTint" + vinylCount;
-                    ListItem clearVinyl = new ListItem("Clear", "clear");
-                    ListItem smokeGreyVinyl = new ListItem("Smoke Grey", "smokeGrey");
-                    ListItem darkGreyVinyl = new ListItem("Dark Grey", "darkGrey");
-                    ListItem bronzeVinyl = new ListItem("Bronze", "bronze");
+                    ListItem clearVinyl = new ListItem("Clear", "C");
+                    ListItem smokeGreyVinyl = new ListItem("Smoke Grey", "S");
+                    ListItem darkGreyVinyl = new ListItem("Dark Grey", "D");
+                    ListItem bronzeVinyl = new ListItem("Bronze", "B");
 
                     ddlVinylTintOptions.Items.Add(clearVinyl);
                     ddlVinylTintOptions.Items.Add(smokeGreyVinyl);
@@ -3130,7 +3130,8 @@ namespace SunspaceDealerDesktop
 
                 wallWindowOptions.Controls.Add(tblMixedTints);
 
-                wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div>"));
+                //wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div>"));
+                wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div>"));
 
                 /****************************************************************************************/
                 /*************************       END OF MIXED OPTIONS      ******************************/
@@ -3147,11 +3148,11 @@ namespace SunspaceDealerDesktop
 
             if (!grey && !darkGrey && !smokeGrey && !bronze && !clear && !mixed)
             {//if there are no tint options
-                wallWindowOptions.Controls.Add(new LiteralControl("</li></ul>")); //opened tags at the top, need to close them regardless of tint or no tint
+                wallWindowOptions.Controls.Add(new LiteralControl("</li>")); //opened tags at the top, need to close them regardless of tint or no tint
             }
             else
             {//there are tint options
-                wallWindowOptions.Controls.Add(new LiteralControl("</ul></div></li></ul>")); //close the previously opened tags
+                wallWindowOptions.Controls.Add(new LiteralControl("</ul></div></li>")); //close the previously opened tags
             }
             #endregion
         }
@@ -3174,9 +3175,9 @@ namespace SunspaceDealerDesktop
                     m200Label.Text = "Window Options";
                     wallWindowOptions.Controls.Add(m200Label);
 
-                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul class=\"toggleOptions\">"));
                     model200WindowOptions();
-                    wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("</ul></div></li>"));
                     break;
                 case "M300":
                     wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
@@ -3186,7 +3187,7 @@ namespace SunspaceDealerDesktop
                     m300Label.Text = "Window Options";
                     wallWindowOptions.Controls.Add(m300Label);
 
-                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul class=\"toggleOptions\"><li>"));
                     model300WindowOptions();
                     wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
                     break;
@@ -3198,7 +3199,7 @@ namespace SunspaceDealerDesktop
                     m400Label.Text = "Window Options";
                     wallWindowOptions.Controls.Add(m400Label);
 
-                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul><li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul class=\"toggleOptions\"><li>"));
                     model400WindowOptions();
                     wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
                     break;
