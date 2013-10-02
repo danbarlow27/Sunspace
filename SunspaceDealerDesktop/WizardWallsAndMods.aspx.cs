@@ -3213,6 +3213,8 @@ namespace SunspaceDealerDesktop
         protected void model100WindowOptions()
         {
             screenOptions();
+
+            windowFramingColourOptions(true, true, true, false, false, false, false, false);
         }
         
         /// <summary>
