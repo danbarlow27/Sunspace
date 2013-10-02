@@ -3187,9 +3187,9 @@ namespace SunspaceDealerDesktop
                     m300Label.Text = "Window Options";
                     wallWindowOptions.Controls.Add(m300Label);
 
-                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul class=\"toggleOptions\"><li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul class=\"toggleOptions\">"));
                     model300WindowOptions();
-                    wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("</ul></div></li>"));
                     break;
                 case "M400":
                     wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
@@ -3199,9 +3199,9 @@ namespace SunspaceDealerDesktop
                     m400Label.Text = "Window Options";
                     wallWindowOptions.Controls.Add(m400Label);
 
-                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul class=\"toggleOptions\"><li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul class=\"toggleOptions\">"));
                     model400WindowOptions();
-                    wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("</ul></div></li>"));
                     break;
             }
         }
