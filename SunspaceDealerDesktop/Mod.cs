@@ -9,7 +9,6 @@ namespace SunspaceDealerDesktop
     {
         #region Attributes
 
-        private int linearIndex;
         private bool sunshade;
         private string sunshadeValance;
         private string sunshadeFabric;
@@ -26,7 +25,6 @@ namespace SunspaceDealerDesktop
         public Mod()
         {
             this.ItemType = "Mod";
-            LinearIndex = 0;
             Sunshade = false;
             SunshadeValance = "";
             SunshadeFabric = "";
@@ -39,20 +37,7 @@ namespace SunspaceDealerDesktop
 
         #endregion
 
-        #region Accessors
-
-        public int LinearIndex
-        {
-            get
-            {
-                return linearIndex;
-            }
-
-            set
-            {
-                linearIndex = value;
-            }
-        }
+        #region Accessors       
 
         public bool Sunshade
         {

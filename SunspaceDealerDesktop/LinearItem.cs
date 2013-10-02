@@ -8,6 +8,7 @@ namespace SunspaceDealerDesktop
     public class LinearItem
     {
         #region Attributes
+        private int linearIndex;
         private string itemType; //Mod, boxheader, chase, etc.
         private float fixedLocation; //The position (in inches) this item is in the wall
         private float startHeight;
@@ -29,6 +30,19 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Accessors
+        public int LinearIndex
+        {
+            get
+            {
+                return linearIndex;
+            }
+
+            set
+            {
+                linearIndex = value;
+            }
+        }
+
         public string ItemType
         {
             get

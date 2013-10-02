@@ -3858,6 +3858,7 @@ namespace SunspaceDealerDesktop
                         {
                             wallLeftFiller -= 1;//CHANGEME receiver length
                             Receiver aReceiver = new Receiver();
+                            aReceiver.ItemType = "Receiver";
                             aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
                             aReceiver.Length = 1f;
                             aReceiver.FixedLocation = 0;
@@ -3875,6 +3876,7 @@ namespace SunspaceDealerDesktop
                                     Corner aCorner = new Corner();
                                     aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
                                     aCorner.Length = 4.125f;
+                                    aCorner.ItemType = "Corner";
                                     wallLeftFiller -= aCorner.Length;
                                     linearItems.Add(aCorner);
                                 }
@@ -3883,6 +3885,7 @@ namespace SunspaceDealerDesktop
                                     Corner aCorner = new Corner();
                                     aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
                                     aCorner.Length = 3.125f;
+                                    aCorner.ItemType = "Corner";
                                     wallLeftFiller -= aCorner.Length;
                                     linearItems.Add(aCorner);
                                 }
@@ -3898,6 +3901,7 @@ namespace SunspaceDealerDesktop
                                 if (currentModel == "M400")
                                 {
                                     HChannel anHChannel = new HChannel();
+                                    anHChannel.ItemType = "HChannel";
                                     anHChannel.StartHeight = anHChannel.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
                                     anHChannel.Length = 2.5f;
                                     //CHANGEME if driftwood
@@ -3907,6 +3911,7 @@ namespace SunspaceDealerDesktop
                                 else
                                 {
                                     BoxHeader aBoxHeader = new BoxHeader();
+                                    aBoxHeader.ItemType = "BoxHeader";
                                     aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
                                     aBoxHeader.Length = 3.25f;
                                     aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
@@ -3915,6 +3920,7 @@ namespace SunspaceDealerDesktop
                             }
 
                             Mod aMod = new Mod();//
+                            aMod.ItemType = "Mod";
                             aMod.ModType = Constants.MOD_TYPE_DOOR;
                             aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
                             aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
@@ -4184,6 +4190,7 @@ namespace SunspaceDealerDesktop
                                     Corner aCorner = new Corner();
                                     aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
                                     aCorner.Length = 4.125f;
+                                    aCorner.ItemType = "Corner";
                                     wallLeftFiller -= aCorner.Length;
                                     linearItems.Add(aCorner);
                                 }
@@ -4192,6 +4199,7 @@ namespace SunspaceDealerDesktop
                                     Corner aCorner = new Corner();
                                     aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
                                     aCorner.Length = 3.125f;
+                                    aCorner.ItemType = "Corner";
                                     wallLeftFiller -= aCorner.Length;
                                     linearItems.Add(aCorner);
                                 }
@@ -4356,7 +4364,34 @@ namespace SunspaceDealerDesktop
             }
 
             //Indexes
-            //Names
+            //Loop for each wall to set its linear indexes
+            int linearCounter=1;
+
+            for (int i = 0; i < listOfWalls.Count; i++)
+            {
+                listOfWalls[i].FirstItemIndex = linearCounter;
+                for (int j = 0; j < listOfWalls[i].LinearItems.Count; j++)
+                {
+                    //First, lets set modular indexes
+                    if (listOfWalls[i].LinearItems[j].ItemType == "Mod")
+                    {
+                        //Get the mod, then loop for all its items
+                        Mod aMod = (Mod)listOfWalls[i].LinearItems[j];
+                        for (int k = 0; k < aMod.ModularItems.Count; k++)
+                        {
+                            aMod.ModularItems[k].ModuleIndex = (k+1);
+                        }
+                        listOfWalls[i].LinearItems[j] = aMod;
+                    }
+
+                    //now set this item's linear index
+                    listOfWalls[i].LinearItems[j].LinearIndex = linearCounter;
+                    linearCounter++;
+                }
+
+                listOfWalls[i].LastItemIndex = linearCounter;
+                listOfWalls[i].Name = "Wall " + (i + 1);
+            }
 
             Session.Add("sunroomProjection", hidRoomProjection.Value);
             Session.Add("sunroomWidth", hidRoomWidth.Value);

@@ -20,7 +20,7 @@ namespace SunspaceDealerDesktop
         public ModuleItem() { }
         #endregion
 
-        #region Accessors    
+        #region Accessors
         public int ModuleIndex
         {
             get
