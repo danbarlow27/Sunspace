@@ -363,9 +363,7 @@
                         }
                     }
                 }
-            }           
-
-            console.log(framedDoor.vinylTint);
+            }
 
             //Changes any custom values to the actual value entered
             for (var k = 0; k < customControls.length; k++) {
@@ -437,7 +435,7 @@
         //console.log('<%= (string)Session["lineInfo"] %>');
 
         var gable = '<%= Session["isGable"] %>';
-
+        var gableType = '<%= gableType %>';
         var detailsOfAllLines = '<%= (string)Session["lineInfo"] %>'; //all the coordinates and details of all the lines, coming from the session
         var lineList = detailsOfAllLines.substr(0, detailsOfAllLines.length - 1).split("/"); //a list of individual lines and their coordinates and details 
         var coordList = new Array(); //new 2d array to store each individual coordinate and details of each line
@@ -769,7 +767,6 @@
 
                     if (tempWidth > highestWidth) { //determine if the current temp projection is greater than the highest projection calculated
                         highestWidth = tempWidth; // reset the highest projection
-                        console.log(highestWidth);
                     }
                 }
             }
@@ -1421,9 +1418,7 @@
                 frenchMaxHeight = parseFloat(document.getElementById("hidFrontWallHeight").value) - parseFloat(4.125);
                 patioMaxHeight = parseFloat(document.getElementById("hidFrontWallHeight").value) - parseFloat(4.125);                
             }
-
-            console.log("Wall max height is " + document.getElementById("hidFrontWallHeight").value + ", so the doors must all be below " + cabanaMinHeight);
-
+            
             checkRoofPanels();
 
             return isValid;
@@ -1612,7 +1607,6 @@
             
             for (var i=1;i<=lineList.length;i++)
             {
-                console.log("freeze");
                 currentLocation=0;
                 modLocation=0;
                 areaPositionCounter=0;
@@ -1678,7 +1672,6 @@
                             //If this is the first mod in the wall, and it's not located at the start, we have a workable area first
                             if(currentLocation == 0)
                             {
-                                console.log("2nd");
                                 //Since its from start of wall to first mod, the size of the first usable area is equal to
                                 //the position of the first mod in the wall. We then subtract left filler, as its first workable area
 
@@ -1704,7 +1697,6 @@
                                 //it isn't at the start and is not immediately following a left flush door
                             else if (currentLocation > 0 && currentLocation < modLocation)
                             {
-                                console.log("3rd");
                                 wallAreaArray[wallPositionCounter][areaPositionCounter] = modLocation - currentLocation;
 
                                 //New current location is equal to ending position of mod (start+width)
@@ -1718,8 +1710,6 @@
 
                                 areaPositionCounter++;
                             }
-
-                            console.log("");
                         }
 
                         //if it doesn't get in any other block, the mods are done and this is the last usable area to 
@@ -1750,23 +1740,35 @@
                         wallAreaArray[wallPositionCounter][0] = walls[i].length - walls[i].leftFiller - walls[i].rightFiller;
                     }
                     wallPositionCounter++;
-                    console.log(".");
                 }
             }
 
-            console.log("after loop 1");
-
             //We have an array of usable area, now we get information about window generation for confirmation
-            for (var i=0;i<wallAreaArray.length-existingWallCount;i++)
+            var additionalRemoves = 0;
+
+            //Gables have been handled oddly on the drawing tool, so we need to reduce the counter of the next loop accordingly
+            if(gable == "True")
             {
+                //A dealer gable has one additional entry for the gable post itself, so we'll subtract by 1 and it is essentially just proposed walls as if it were not gable
+                if (gableType == "Dealer Gable")
+                {
+                    additionalRemoves = 1;
+                }
+                else
+                {                    
+                    additionalRemoves = 1;
+                }
+            }
+
+            for (var i=0;i<(wallAreaArray.length-existingWallCount-additionalRemoves);i++)
+            {
+                console.log(wallAreaArray.length + ", " + existingWallCount);
                 document.getElementById("MainContent_lblOutputArea" + i).innerHTML = "";
                 var html = "";
                 //console.log("");
 
                 var MIN_MOD_WIDTH = 0;
                 var MAX_MOD_WIDTH =0;
-
-                console.log("Switch: " + document.getElementById("<%=hidWindowType.ClientID%>").value);
 
                 switch (document.getElementById("<%=hidWindowType.ClientID%>").value) {
                     case "Vinyl":
@@ -1809,20 +1811,14 @@
                         MAX_MOD_WIDTH = <%=SCREEN_MAX_WIDTH_WARRANTY%>;
                         break;
                 }
-
-                console.log("Post switch");
-
+                
                 for (var j=0;j<wallAreaArray[i].length;j++)
                 {
-                    console.log("freeze");
                     var validatedWindow = validateWindowModSize(wallAreaArray[i][j], MIN_MOD_WIDTH, MAX_MOD_WIDTH);
-                    console.log("Checking for 0");
+
                     //Only display an area if it's more than a 0 area
                     if (validatedWindow[0] >= 0)
                     {
-                        console.log(">=0, valid");
-                        console.log(validatedWindow[0] + ", " + validatedWindow[1] + ", " + validatedWindow[2]);
-
                         document.getElementById("MainContent_lblOutputArea" + i).innerHTML += "Sizes: " + validatedWindow[0] + ", Number of windows: " + validatedWindow[1];
 
                         if (validatedWindow[2] >0)
@@ -1851,7 +1847,6 @@
             //Now move all other required data into hidden fields.
             for (var i=1;i<=lineList.length;i++)
             {
-                console.log("freeze");
                 if (coordList[i - 1][4] == "P")
                 {
                     document.getElementById("hidWall" + i + "StartHeight").value = walls[i].startHeight;
@@ -2028,7 +2023,6 @@
 
         function resetHiddens()
         {
-            console.log("Reset hiddens");
             $('#MainContent_removableHiddenFieldsDiv').empty();//Then we move values to hidden fields
             //document.getElementById("hidWindowType");
             //document.getElementById("hidWindowColour");
