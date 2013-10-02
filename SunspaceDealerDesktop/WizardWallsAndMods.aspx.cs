@@ -3187,9 +3187,9 @@ namespace SunspaceDealerDesktop
                     m300Label.Text = "Window Options";
                     wallWindowOptions.Controls.Add(m300Label);
 
-                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul class=\"toggleOptions\"><li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul class=\"toggleOptions\">"));
                     model300WindowOptions();
-                    wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("</ul></div></li>"));
                     break;
                 case "M400":
                     wallWindowOptions.Controls.Add(new LiteralControl("<li>"));
@@ -3199,9 +3199,9 @@ namespace SunspaceDealerDesktop
                     m400Label.Text = "Window Options";
                     wallWindowOptions.Controls.Add(m400Label);
 
-                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul class=\"toggleOptions\"><li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul class=\"toggleOptions\">"));
                     model400WindowOptions();
-                    wallWindowOptions.Controls.Add(new LiteralControl("</li></ul></div></li>"));
+                    wallWindowOptions.Controls.Add(new LiteralControl("</ul></div></li>"));
                     break;
             }
         }
@@ -3213,6 +3213,8 @@ namespace SunspaceDealerDesktop
         protected void model100WindowOptions()
         {
             screenOptions();
+
+            windowFramingColourOptions(true, true, true, false, false, false, false, false);
         }
         
         /// <summary>
@@ -4158,7 +4160,7 @@ namespace SunspaceDealerDesktop
 
                         listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
                                                                          Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
-                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value);
+                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value);
 
                         linearPosition++;
                     }
@@ -4294,7 +4296,7 @@ namespace SunspaceDealerDesktop
 
                         listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
                                                                          Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
-                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value);//
+                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value);//
                         linearPosition++;
                     }
                     #endregion
