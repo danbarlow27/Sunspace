@@ -1075,6 +1075,24 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddlKneewallType;
         
         /// <summary>
+        /// lblKneewallTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblKneewallTint;
+        
+        /// <summary>
+        /// ddlKneewallTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlKneewallTint;
+        
+        /// <summary>
         /// lblTransomOptions control.
         /// </summary>
         /// <remarks>
@@ -2216,6 +2234,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidKneewallHeight;
+        
+        /// <summary>
+        /// hidKneewallTint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidKneewallTint;
         
         /// <summary>
         /// hidTransomType control.

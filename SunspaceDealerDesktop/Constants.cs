@@ -71,15 +71,14 @@ namespace SunspaceDealerDesktop
                                                "Driftwood Rigiwall Pebble", "White Rigiwall Stucco", "Driftwood Rigiwall Stucco",
                                                "White FRP (Interior Only)", "Driftwood FRP (Interior Only)", "Bronze FRP (Interior Only)"};
 
+        public static string[] MODEL_100_GLASS_TINTS = { };
+        public static string[] MODEL_200_GLASS_TINTS = { };
+        public static string[] MODEL_300_GLASS_TINTS = { };
+        public static string[] MODEL_400_GLASS_TINTS = { };
 
         public static string[] VINYL_TINTS = { "Clear", "Smoke Grey", "Dark Grey", "Bronze"};
 
         public static string[] INSTALLATION_TYPES = { "House", "Trailer", "Standalone" };
-        //Glass, Vinyl, Screen, Panel, Open?
-        public static string[] MODEL_100_TRANSOM_TYPES = { "Vinyl", "Screen", "Solid Wall" };
-        public static string[] MODEL_200_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
-        public static string[] MODEL_300_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
-        public static string[] MODEL_400_TRANSOM_TYPES = { "Glass", "Solid Wall" };
 
         public static string[] FASCIA_STRIPE_COLOUR = { "No Stripe", "Test1", "Test2"};
 
@@ -546,7 +545,7 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Kneewalls
-        public static string[] KNEEWALL_TYPES = { "Panel", "Glass" };
+        public static string[] KNEEWALL_TYPES = { "Solid Wall", "Glass" };
         public static string[] KNEEWALL_GLASS_TINTS = { "Grey", "Bronze" };
         #endregion
 
@@ -557,6 +556,10 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Transom
+        public static string[] MODEL_100_TRANSOM_TYPES = { "Vinyl", "Screen", "Solid Wall" };
+        public static string[] MODEL_200_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
+        public static string[] MODEL_300_TRANSOM_TYPES = { "Vinyl", "Glass", "Solid Wall" };
+        public static string[] MODEL_400_TRANSOM_TYPES = { "Glass", "Solid Wall" };
         public static string[] TRANSOM_TYPES = { "Panel", "Glass", "Vinyl" };
         public static string[] TRANSOM_GLASS_TINTS = { "Grey", "Bronze" };
             //Transom glass tints by model

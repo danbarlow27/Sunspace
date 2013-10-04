@@ -4367,7 +4367,7 @@ namespace SunspaceDealerDesktop
 
             //Indexes
             //Loop for each wall to set its linear indexes
-            int linearCounter=1;
+            int linearCounter=0;
 
             for (int i = 0; i < listOfWalls.Count; i++)
             {
@@ -4395,6 +4395,7 @@ namespace SunspaceDealerDesktop
                 listOfWalls[i].Name = "Wall " + (i + 1);
             }
 
+            Session.Add("listOfWalls", listOfWalls);
             Session.Add("sunroomProjection", hidRoomProjection.Value);
             Session.Add("sunroomWidth", hidRoomWidth.Value);
             Response.Redirect("RoofWizard.aspx");//
@@ -4426,6 +4427,10 @@ namespace SunspaceDealerDesktop
             aDoor.Swing = Request.Form["hidWall" + i + "Door" + j + "swing"];
             aDoor.HardwareType = Request.Form["hidWall" + i + "Door" + j + "hardware"];
 
+            ////doorWindow
+            //Window aDoorWindow = new Window();
+            //aDoorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
+            //aDoorWindow.
             return aDoor;
         }
 

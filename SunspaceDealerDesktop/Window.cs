@@ -14,7 +14,7 @@ namespace SunspaceDealerDesktop
         private float endHeight;
         private float length;
         private string frameColour;
-        private bool spreaderBar;
+        private float spreaderBar;
         private int numVents;
         #endregion
 
@@ -28,7 +28,7 @@ namespace SunspaceDealerDesktop
             EndHeight = 0.0f;
             Length = 0.0f;
             FrameColour = "";
-            SpreaderBar = false;
+            SpreaderBar = -1f;
             NumVents = 0;
         }
 
@@ -107,7 +107,7 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public bool SpreaderBar
+        public float SpreaderBar
         {
             get
             {

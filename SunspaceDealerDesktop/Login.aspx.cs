@@ -38,7 +38,7 @@ namespace SunspaceDealerDesktop
                 string userHash = GlobalFunctions.CalculateSHAHash(txtPassword.Text);
 
                 //Get the customers assosciated with this dealer. status=1 requires it to be an active account.
-                sdsLogin.SelectCommand = "SELECT login, password, user_type, user_group, reference_id FROM users WHERE login='" + userName + "' AND password='" + userHash + "' AND status=1";
+                sdsLogin.SelectCommand = "SELECT login, password, user_type, user_group, reference_id, user_id FROM users WHERE login='" + userName + "' AND password='" + userHash + "' AND status=1";
 
                 //assign the table names to the dataview object
                 DataView dvUsers = (DataView)sdsLogin.Select(System.Web.UI.DataSourceSelectArguments.Empty);
@@ -57,6 +57,7 @@ namespace SunspaceDealerDesktop
                     {
                         //-1 is not a valid dealer ID, so on later checks, if -1, the user will need to spoof, which changes this
                         Session.Add("dealer_id", "-1");
+                        Session.Add("user_id", dvUsers[0][5].ToString());
                         Session.Add("user_type", dvUsers[0][2].ToString());
                         Session.Add("user_group", dvUsers[0][3].ToString());
                         Session.Add("loggedIn", dvUsers[0][0].ToString());
@@ -65,6 +66,7 @@ namespace SunspaceDealerDesktop
                     else if (dvUsers[0][2].ToString() == "D")
                     {
                         Session.Add("dealer_id", dvUsers[0][4].ToString());
+                        Session.Add("user_id", dvUsers[0][5].ToString());
                         Session.Add("user_type", dvUsers[0][2].ToString());
                         Session.Add("user_group", dvUsers[0][3].ToString());
                         Session.Add("loggedIn", dvUsers[0][0].ToString());

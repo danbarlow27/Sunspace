@@ -339,6 +339,7 @@
                 document.getElementById("<%=hidExteriorSkin.ClientID%>").value = document.getElementById("<%=ddlExteriorSkin.ClientID%>").value;
                 document.getElementById("<%=hidKneewallHeight.ClientID%>").value = document.getElementById("<%=txtKneewallHeight.ClientID%>").value;
                 document.getElementById("<%=hidKneewallType.ClientID%>").value = document.getElementById("<%=ddlKneewallType.ClientID%>").value;
+                document.getElementById("<%=hidKneewallTint.ClientID%>").value = document.getElementById("<%=ddlKneewallTint.ClientID%>").value;
                 document.getElementById("<%=hidTransomTint.ClientID%>").value = document.getElementById("<%=ddlTransomTint.ClientID%>").value;
 
                 document.getElementById('<%=btnQuestion4.ClientID%>').disabled = false;
@@ -1327,6 +1328,15 @@
                                                 <asp:DropDownList ID="ddlKneewallType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblKneewallTint" AssociatedControlID="txtKneewallHeight" runat="server" Text="Tint:"></asp:Label>
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlKneewallTint" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server"></asp:DropDownList>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
                                     </asp:Table>
                                 </li>
                             </ul>   
@@ -1733,6 +1743,7 @@
 
     <input id="hidKneewallType" type="hidden" runat="server" />
     <input id="hidKneewallHeight" type="hidden" runat="server" />
+    <input id="hidKneewallTint" type="hidden" runat="server" />
     <input id="hidTransomType" type="hidden" runat="server" />
     <input id="hidTransomHeight" type="hidden" runat="server" />
     <input id="hidTransomTint" type="hidden" runat="server" />

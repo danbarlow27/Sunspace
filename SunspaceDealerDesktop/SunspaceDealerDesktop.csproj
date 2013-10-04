@@ -410,6 +410,7 @@
     <Compile Include="NoIcons.Master.designer.cs">
       <DependentUpon>NoIcons.Master</DependentUpon>
     </Compile>
+    <Compile Include="Project.cs" />
     <Compile Include="ProjectPreview.aspx.cs">
       <DependentUpon>ProjectPreview.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -417,7 +418,6 @@
     <Compile Include="ProjectPreview.aspx.designer.cs">
       <DependentUpon>ProjectPreview.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Receiver.cs" />
     <Compile Include="Roof.cs" />

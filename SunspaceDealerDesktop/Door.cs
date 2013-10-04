@@ -13,6 +13,7 @@ namespace SunspaceDealerDesktop
         private string screenType = null;   //Door screen type: Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen (stored value: Better Vue Insect Screen)
         private float kickplate = 0f;       //Door kickplate height: 6" (stored value: 6)
         private float punch = 0f;           //Door header punch location
+        private Window doorWindow;
         #endregion
 
         #region Constructor
@@ -77,6 +78,17 @@ namespace SunspaceDealerDesktop
             set
             {
                 punch = value;
+            }
+        }
+        public Window DoorWindow
+        {
+            get
+            {
+                return doorWindow;
+            }
+            set
+            {
+                doorWindow = value;
             }
         }
         #endregion

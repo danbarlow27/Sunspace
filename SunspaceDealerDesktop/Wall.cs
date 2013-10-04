@@ -397,6 +397,7 @@ namespace SunspaceDealerDesktop
                                 //Have one
                                 Kneewall aKneewall = new Kneewall();
                                 aKneewall.FEndHeight = aKneewall.FStartHeight = kneewallHeight;
+                                aKneewall.EndHeight = aKneewall.StartHeight = kneewallHeight - 2.125f;
                                 height -= kneewallHeight; //Remove this from usable height, as the kneewall takes it up
                                 aKneewall.KneewallType = kneewallType;
                                 aKneewall.ItemType = "Kneewall";
@@ -446,14 +447,13 @@ namespace SunspaceDealerDesktop
                             aWindow.WindowType = windowType;
 
                             //Check for spreader bar boolean
-                            if ((windowType == "Vertical 4 Track" && aWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED) ||
-                                (windowType == "Horizontal Roller" && aWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED))
+                            if (windowType == "Vertical 4 Track" && aWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
                             {
-                                aWindow.SpreaderBar = true;
+                                aWindow.SpreaderBar = (aWindow.FLength/2) - (Constants.SPREADER_BAR_SIZE/2); //Find center of window, then place center of spreader bar at that position (by subtracting half of it)
                             }
-                            else
+                            if (windowType == "Horizontal Roller" && aWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
                             {
-                                aWindow.SpreaderBar = false;
+                                aWindow.SpreaderBar = (aWindow.FEndHeight/2) - (Constants.SPREADER_BAR_SIZE/2);
                             }
 
                             aMod.ModularItems.Add(aWindow);

@@ -154,6 +154,10 @@ namespace SunspaceDealerDesktop
                 ddlKneewallType.Items.Add(Constants.KNEEWALL_TYPES[i]);
             }
 
+            for (int i = 0; i < Constants.KNEEWALL_GLASS_TINTS.Length; i++)
+            {
+                ddlKneewallTint.Items.Add(Constants.KNEEWALL_GLASS_TINTS[i]);
+            }
             //Must populate transom dropdown based on model#
             #endregion
 
@@ -261,20 +265,25 @@ namespace SunspaceDealerDesktop
             newProjectArray[9] = hidCell.Value.ToString();
             newProjectArray[10] = hidEmail.Value.ToString();
             newProjectArray[11] = hidProjectName.Value.ToString();
+            Session.Add("newProjectProjectName", hidProjectName.Value.ToString());
             newProjectArray[12] = hidProjectType.Value.ToString();
             newProjectArray[13] = hidModelNumber.Value.ToString();
             newProjectArray[14] = hidKneewallType.Value.ToString();
             Session.Add("newProjectKneewallType", hidKneewallType.Value.ToString());
             newProjectArray[15] = hidKneewallHeight.Value.ToString();
             Session.Add("newProjectKneewallHeight", hidKneewallHeight.Value.ToString());
+            Session.Add("newProjectKneewallTint", hidKneewallTint.Value.ToString());
             newProjectArray[16] = hidTransomType.Value.ToString();
             Session.Add("newProjectTransomType", hidTransomType.Value.ToString());
             newProjectArray[17] = hidTransomHeight.Value.ToString();
             newProjectArray[18] = hidFramingColour.Value.ToString();
+            Session.Add("newProjectFramingColour", hidFramingColour.Value.ToString());
             newProjectArray[19] = hidInteriorColour.Value.ToString();
             newProjectArray[20] = hidInteriorSkin.Value.ToString();
+            Session.Add("newProjectInteriorSkin", hidInteriorSkin.Value.ToString());
             newProjectArray[21] = hidExteriorColour.Value.ToString();
             newProjectArray[22] = hidExteriorSkin.Value.ToString();
+            Session.Add("newProjectExteriorSkin", hidExteriorSkin.Value.ToString());
             newProjectArray[23] = hidFoamProtected.Value.ToString();
             newProjectArray[24] = hidPrefabFloor.Value.ToString();
             newProjectArray[25] = hidRoof.Value.ToString();
