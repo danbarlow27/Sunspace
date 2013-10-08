@@ -226,7 +226,7 @@ namespace SunspaceDealerDesktop
                     }
                     break;
 
-                case "Horizontal 4 Track":
+                case "Horizontal 2 Track":
                     if (space <= Constants.HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY)
                     {
                         returnArray[0] = 1;

@@ -562,6 +562,7 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_400_TRANSOM_TYPES = { "Glass", "Solid Wall" };
         public static string[] TRANSOM_TYPES = { "Panel", "Glass", "Vinyl" };
         public static string[] TRANSOM_GLASS_TINTS = { "Grey", "Bronze" };
+        public static float TRANSOM_SPREADER_BAR_REQUIRED = 36f;
             //Transom glass tints by model
             //transom vinyl tints by model
             //frame colours by model, is it the same as above?

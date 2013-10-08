@@ -337,7 +337,7 @@ namespace SunspaceDealerDesktop
                                 MAX_MOD_WIDTH = Constants.V4T_4V_MAX_WIDTH_WARRANTY;
                                 break;
 
-                            case "Horizontal 4 Track":
+                            case "Horizontal 2 Track":
                                 MIN_MOD_WIDTH = Constants.HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
                                 MAX_MOD_WIDTH = Constants.HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY;
                                 break;
@@ -455,6 +455,22 @@ namespace SunspaceDealerDesktop
                             {
                                 aWindow.SpreaderBar = (aWindow.FEndHeight/2) - (Constants.SPREADER_BAR_SIZE/2);
                             }
+                            if (windowType == "Vinyl")
+                            {
+                                if (aWindow.FLength > Constants.TRANSOM_SPREADER_BAR_REQUIRED || aWindow.FEndHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED || aWindow.FStartHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED)
+                                {
+                                    //If length is longer, vertical bar, else horizontal bar
+                                    if (aWindow.Length > aWindow.FEndHeight && aWindow.Length > aWindow.FStartHeight)
+                                    {
+                                        aWindow.SpreaderBar = (aWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+                                    }
+                                    else
+                                    {
+                                        aWindow.SpreaderBar = (aWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+                                    }
+                                    //If dimensions are equal?
+                                }
+                            }
 
                             aMod.ModularItems.Add(aWindow);
 
@@ -484,6 +500,20 @@ namespace SunspaceDealerDesktop
                                         aTransom.FStartHeight += transomInfo[2];
                                         aTransom.EndHeight += transomInfo[2];
                                         aTransom.StartHeight += transomInfo[2];
+                                    }
+
+                                    if (aTransom.FLength > Constants.TRANSOM_SPREADER_BAR_REQUIRED || aTransom.FEndHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED || aTransom.FStartHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED)
+                                    {
+                                        //If length is longer, vertical bar, else horizontal bar
+                                        if (aTransom.Length > aTransom.FEndHeight && aTransom.Length > aTransom.FStartHeight)
+                                        {
+                                            aTransom.SpreaderBar = (aTransom.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+                                        }
+                                        else
+                                        {
+                                            aTransom.SpreaderBar = (aTransom.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+                                        }
+                                        //If dimensions are equal?
                                     }
                                     aMod.ModularItems.Add(aTransom);
                                 }
