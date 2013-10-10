@@ -160,19 +160,10 @@ namespace SunspaceDealerDesktop
 
             #region Wall Colours
             #region 100
-            for (int i = 0; i < Constants.INTERIOR_WALL_COLOURS.Count(); i++)
-                {
-                    ddl100InteriorPanelColour.Items.Add(new ListItem(Constants.INTERIOR_WALL_COLOURS[i], Constants.INTERIOR_WALL_COLOURS[i]));
-                }
 
                 for (int i = 0; i < Constants.INTERIOR_WALL_SKIN_TYPES.Count(); i++)
                 {
                     ddl100InteriorPanelSkin.Items.Add(new ListItem(Constants.INTERIOR_WALL_SKIN_TYPES[i], Constants.INTERIOR_WALL_SKIN_TYPES[i]));
-                }
-
-                for (int i = 0; i < Constants.EXTERIOR_WALL_COLOURS.Count(); i++)
-                {
-                    ddl100ExteriorPanelColour.Items.Add(new ListItem(Constants.EXTERIOR_WALL_COLOURS[i], Constants.EXTERIOR_WALL_COLOURS[i]));
                 }
 
                 for (int i = 0; i < Constants.EXTERIOR_WALL_SKIN_TYPES.Count(); i++)
@@ -187,19 +178,10 @@ namespace SunspaceDealerDesktop
                 #endregion
 
             #region 200
-            for (int i = 0; i < Constants.INTERIOR_WALL_COLOURS.Count(); i++)
-            {
-                ddl200InteriorPanelColour.Items.Add(new ListItem(Constants.INTERIOR_WALL_COLOURS[i], Constants.INTERIOR_WALL_COLOURS[i]));
-            }
 
             for (int i = 0; i < Constants.INTERIOR_WALL_SKIN_TYPES.Count(); i++)
             {
                 ddl200InteriorPanelSkin.Items.Add(new ListItem(Constants.INTERIOR_WALL_SKIN_TYPES[i], Constants.INTERIOR_WALL_SKIN_TYPES[i]));
-            }
-
-            for (int i = 0; i < Constants.EXTERIOR_WALL_COLOURS.Count(); i++)
-            {
-                ddl200ExteriorPanelColour.Items.Add(new ListItem(Constants.EXTERIOR_WALL_COLOURS[i], Constants.EXTERIOR_WALL_COLOURS[i]));
             }
 
             for (int i = 0; i < Constants.EXTERIOR_WALL_SKIN_TYPES.Count(); i++)
@@ -214,19 +196,10 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region 300
-            for (int i = 0; i < Constants.INTERIOR_WALL_COLOURS.Count(); i++)
-            {
-                ddl300InteriorPanelColour.Items.Add(new ListItem(Constants.INTERIOR_WALL_COLOURS[i], Constants.INTERIOR_WALL_COLOURS[i]));
-            }
 
             for (int i = 0; i < Constants.INTERIOR_WALL_SKIN_TYPES.Count(); i++)
             {
                 ddl300InteriorPanelSkin.Items.Add(new ListItem(Constants.INTERIOR_WALL_SKIN_TYPES[i], Constants.INTERIOR_WALL_SKIN_TYPES[i]));
-            }
-
-            for (int i = 0; i < Constants.EXTERIOR_WALL_COLOURS.Count(); i++)
-            {
-                ddl300ExteriorPanelColour.Items.Add(new ListItem(Constants.EXTERIOR_WALL_COLOURS[i], Constants.EXTERIOR_WALL_COLOURS[i]));
             }
 
             for (int i = 0; i < Constants.EXTERIOR_WALL_SKIN_TYPES.Count(); i++)
@@ -241,19 +214,10 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region 400
-            for (int i = 0; i < Constants.INTERIOR_WALL_COLOURS.Count(); i++)
-            {
-                ddl400InteriorPanelColour.Items.Add(new ListItem(Constants.INTERIOR_WALL_COLOURS[i], Constants.INTERIOR_WALL_COLOURS[i]));
-            }
 
             for (int i = 0; i < Constants.INTERIOR_WALL_SKIN_TYPES.Count(); i++)
             {
                 ddl400InteriorPanelSkin.Items.Add(new ListItem(Constants.INTERIOR_WALL_SKIN_TYPES[i], Constants.INTERIOR_WALL_SKIN_TYPES[i]));
-            }
-
-            for (int i = 0; i < Constants.EXTERIOR_WALL_COLOURS.Count(); i++)
-            {
-                ddl400ExteriorPanelColour.Items.Add(new ListItem(Constants.EXTERIOR_WALL_COLOURS[i], Constants.EXTERIOR_WALL_COLOURS[i]));
             }
 
             for (int i = 0; i < Constants.EXTERIOR_WALL_SKIN_TYPES.Count(); i++)
@@ -1098,22 +1062,25 @@ namespace SunspaceDealerDesktop
                 }
                 catch (Exception ex)
                 {
-                    lblError.Text = "Commit Exception Type: " + ex.GetType();
+                    //If we get here, it means the user doesn't currently have a preferences entry. There was a problem with user creation.
+                    #region Handle
+                    lblError.Text = "There was an error loading preferences, please contact an administrator:";
                     lblError.Text += "  Message: " + ex.Message;
 
-                    // Attempt to roll back the transaction. 
-                    try
-                    {
-                        aTransaction.Rollback();
-                    }
-                    catch (Exception ex2)
-                    {
-                        // This catch block will handle any errors that may have occurred 
-                        // on the server that would cause the rollback to fail, such as 
-                        // a closed connection.
-                        lblError.Text = "Rollback Exception Type: " + ex2.GetType();
-                        lblError.Text += "  Message: " + ex2.Message;
-                    }
+                    //// Attempt to roll back the transaction. 
+                    //try
+                    //{
+                    //    aTransaction.Rollback();
+                    //}
+                    //catch (Exception ex2)
+                    //{
+                    //    // This catch block will handle any errors that may have occurred 
+                    //    // on the server that would cause the rollback to fail, such as 
+                    //    // a closed connection.
+                    //    lblError.Text = "Rollback Exception Type: " + ex2.GetType();
+                    //    lblError.Text += "  Message: " + ex2.Message;
+                    //}
+                    #endregion
                 }
             }
             #endregion

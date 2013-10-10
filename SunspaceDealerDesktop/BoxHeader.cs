@@ -8,7 +8,7 @@ namespace SunspaceDealerDesktop
     public class BoxHeader : LinearItem
     {
         #region Attributes
-        private bool hasReceiver;
+        private bool isReceiver;
         private bool isTwoPiece;
         #endregion
 
@@ -17,15 +17,15 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Accessors
-        public bool HasReceiver
+        public bool IsReceiver
         {
             get
             {
-                return hasReceiver;
+                return isReceiver;
             }
             set
             {
-                hasReceiver = value;
+                isReceiver = value;
             }
         }
         public bool IsTwoPiece

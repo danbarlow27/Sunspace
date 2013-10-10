@@ -460,7 +460,7 @@ namespace SunspaceDealerDesktop
                                 if (aWindow.FLength > Constants.TRANSOM_SPREADER_BAR_REQUIRED || aWindow.FEndHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED || aWindow.FStartHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED)
                                 {
                                     //If length is longer, vertical bar, else horizontal bar
-                                    if (aWindow.Length > aWindow.FEndHeight && aWindow.Length > aWindow.FStartHeight)
+                                    if (aWindow.Length >= aWindow.FEndHeight && aWindow.Length >= aWindow.FStartHeight)
                                     {
                                         aWindow.SpreaderBar = (aWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2);
                                     }

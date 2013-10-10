@@ -1147,24 +1147,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddlFramingColour;
         
         /// <summary>
-        /// lblInteriorColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblInteriorColour;
-        
-        /// <summary>
-        /// ddlInteriorColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlInteriorColour;
-        
-        /// <summary>
         /// lblInteriorSkin control.
         /// </summary>
         /// <remarks>
@@ -1181,24 +1163,6 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlInteriorSkin;
-        
-        /// <summary>
-        /// lblExteriorColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblExteriorColour;
-        
-        /// <summary>
-        /// ddlExteriorColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlExteriorColour;
         
         /// <summary>
         /// lblExteriorSkin control.

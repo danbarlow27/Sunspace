@@ -333,9 +333,7 @@
             if (document.getElementById("<%=txtErrorMessage.ClientID%>").value == "") {
                 document.getElementById("<%=hidTransomType.ClientID%>").value = document.getElementById("<%=ddlTransomType.ClientID%>").value;
                 document.getElementById("<%=hidFramingColour.ClientID%>").value = document.getElementById("<%=ddlFramingColour.ClientID%>").value;
-                document.getElementById("<%=hidInteriorColour.ClientID%>").value = document.getElementById("<%=ddlInteriorColour.ClientID%>").value;
                 document.getElementById("<%=hidInteriorSkin.ClientID%>").value = document.getElementById("<%=ddlInteriorSkin.ClientID%>").value;
-                document.getElementById("<%=hidExteriorColour.ClientID%>").value = document.getElementById("<%=ddlExteriorColour.ClientID%>").value;
                 document.getElementById("<%=hidExteriorSkin.ClientID%>").value = document.getElementById("<%=ddlExteriorSkin.ClientID%>").value;
                 document.getElementById("<%=hidKneewallHeight.ClientID%>").value = document.getElementById("<%=txtKneewallHeight.ClientID%>").value;
                 document.getElementById("<%=hidKneewallType.ClientID%>").value = document.getElementById("<%=ddlKneewallType.ClientID%>").value;
@@ -717,23 +715,17 @@
             
             if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "White")
             {
-                $("#<%=ddlInteriorColour.ClientID%>").val('White');
                 $("#<%=ddlInteriorSkin.ClientID%>").val('White Aluminum Stucco');
-                $("#<%=ddlExteriorColour.ClientID%>").val('White');
                 $("#<%=ddlExteriorSkin.ClientID%>").val('White Aluminum Stucco');
             }
             else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Driftwood")
             {
-                $("#<%=ddlInteriorColour.ClientID%>").val('Driftwood');
                 $("#<%=ddlInteriorSkin.ClientID%>").val('Driftwood Aluminum Stucco');
-                $("#<%=ddlExteriorColour.ClientID%>").val('Driftwood');
                 $("#<%=ddlExteriorSkin.ClientID%>").val('Driftwood Aluminum Stucco');
             }
             else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Bronze")
             {
-                $("#<%=ddlInteriorColour.ClientID%>").val('Bronze');
                 $("#<%=ddlInteriorSkin.ClientID%>").val('Bronze Aluminum Stucco');
-                $("#<%=ddlExteriorColour.ClientID%>").val('Bronze');
                 $("#<%=ddlExteriorSkin.ClientID%>").val('Bronze Aluminum Stucco');
             }
 
@@ -1395,28 +1387,10 @@
 
                                         <asp:TableRow>
                                             <asp:TableCell>
-                                                <asp:Label ID="lblInteriorColour" AssociatedControlID="ddlInteriorColour" runat="server" Text="Interior Colour:" />
-                                            </asp:TableCell>
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlInteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
                                                 <asp:Label ID="lblInteriorSkin" AssociatedControlID="ddlInteriorSkin" runat="server" Text="Interior Skin:" />
                                             </asp:TableCell>
                                             <asp:TableCell>
                                                 <asp:DropDownList ID="ddlInteriorSkin" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
-                                            </asp:TableCell>
-                                        </asp:TableRow>
-
-                                        <asp:TableRow>
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblExteriorColour" AssociatedControlID="ddlExteriorColour" runat="server" Text="Exterior Colour:" />
-                                            </asp:TableCell>
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlExteriorColour" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
 

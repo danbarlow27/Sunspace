@@ -3939,8 +3939,47 @@ namespace SunspaceDealerDesktop
                             string doorType = Request.Form["hidWall" + i + "Door" + j + "type"];
                             if (doorType == "Cabana")
                             {
+                                //cast test? does it retain cabana info?
                                 Door aDoor = getCabanaDoorFromForm(i, j);
                                 aDoor.Punch = aDoor.FEndHeight;
+
+                                Window doorWindow = new Window();
+                                doorWindow.WindowType = Request.Form["hidWall" + i + "Door" + j + "style"];
+                                //doorWindow.FLength = aDoor.FLength - SOMEVALUE;
+                                doorWindow.Length = doorWindow.FLength - 2.125f;
+                                //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
+                                //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
+                                doorWindow.ItemType = "Window";
+                                doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
+                                doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
+                                doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
+                                //Spreaderbar logic
+                                if (doorWindow.WindowType == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
+                                {
+                                    doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2); //Find center of window, then place center of spreader bar at that position (by subtracting half of it)
+                                }
+                                if (doorWindow.WindowType == "Horizontal Roller" && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
+                                {
+                                    doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+                                }
+                                if (doorWindow.WindowType == "Vinyl")
+                                {
+                                    if (doorWindow.FLength > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FEndHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FStartHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED)
+                                    {
+                                        //If length is longer, vertical bar, else horizontal bar
+                                        if (doorWindow.Length >= doorWindow.FEndHeight && doorWindow.Length >= doorWindow.FStartHeight)
+                                        {
+                                            doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+                                        }
+                                        else
+                                        {
+                                            doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+                                        }
+                                        //If dimensions are equal?
+                                    }
+                                }
+
+                                aDoor.DoorWindow = doorWindow;
                                 modularItems.Add(aDoor);
                             }
                             if (doorType == "Patio")
@@ -3953,12 +3992,60 @@ namespace SunspaceDealerDesktop
                             {
                                 Door aDoor = getFrenchDoorFromForm(i, j);
                                 aDoor.Punch = aDoor.FEndHeight;
+
+                                Window doorWindow = new Window();
+                                doorWindow.WindowType = Request.Form["hidWall" + i + "Door" + j + "style"];
+                                //doorWindow.FLength = aDoor.FLength - SOMEVALUE;
+                                doorWindow.Length = doorWindow.FLength - 2.125f;
+                                //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
+                                //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
+                                doorWindow.ItemType = "Window";
+                                doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
+                                doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
+                                doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
+                                //Spreaderbar logic
+                                if (doorWindow.WindowType == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
+                                {
+                                    doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2); //Find center of window, then place center of spreader bar at that position (by subtracting half of it)
+                                }
+                                if (doorWindow.WindowType == "Horizontal Roller" && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
+                                {
+                                    doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+                                }
+                                if (doorWindow.WindowType == "Vinyl")
+                                {
+                                    if (doorWindow.FLength > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FEndHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FStartHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED)
+                                    {
+                                        //If length is longer, vertical bar, else horizontal bar
+                                        if (doorWindow.Length >= doorWindow.FEndHeight && doorWindow.Length >= doorWindow.FStartHeight)
+                                        {
+                                            doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+                                        }
+                                        else
+                                        {
+                                            doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+                                        }
+                                        //If dimensions are equal?
+                                    }
+                                }
+
+                                aDoor.DoorWindow = doorWindow;
                                 modularItems.Add(aDoor);
                             }
                             if (doorType == "NoDoor")
                             {
                                 Door aDoor = getNoDoorFromForm(i, j);
                                 aDoor.Punch = aDoor.FEndHeight;
+
+                                Window doorWindow = new Window();
+                                doorWindow.WindowType = Request.Form["hidWall" + i + "Door" + j + "style"];
+                                //doorWindow.FLength = aDoor.FLength - SOMEVALUE;
+                                doorWindow.Length = doorWindow.FLength - 2.125f;
+                                //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
+                                //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
+                                doorWindow.ItemType = "Window";
+
+                                aDoor.DoorWindow = doorWindow;
                                 modularItems.Add(aDoor);
                             }
 
@@ -4338,8 +4425,10 @@ namespace SunspaceDealerDesktop
 
                             //Add the boxheader/receiever
                             BoxHeader aBoxHeader = new BoxHeader();
+                            aBoxHeader.IsReceiver = true;
                             aBoxHeader.FixedLocation = listOfWalls[i].Length;
                             aBoxHeader.Length = 3.25f;
+                            aBoxHeader.ItemType = "BoxHeader";
                             listOfWalls[i].LinearItems.Add(aBoxHeader);
                             listOfWalls[i].Length += 3.25f;
 

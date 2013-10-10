@@ -189,6 +189,8 @@ namespace SunspaceDealerDesktop
 
             //Get room projection and width from session and set our roofs projection and width to those
             float roofProjection = Convert.ToSingle(Session["sunroomProjection"]);
+            float roofProjection1 = Convert.ToSingle(Session["sunroomProjection"]);
+            float roofProjection2 = Convert.ToSingle(Session["sunroomProjection"]);
             float roofWidth = Convert.ToSingle(Session["sunroomWidth"]);
 
             //We also get slope of room, and soffit length
@@ -198,7 +200,40 @@ namespace SunspaceDealerDesktop
             #region Gable System
             //if gable, we need two studio roof systems and additional logic
             if (newProjectArray[26] == "Dealer Gable" || newProjectArray[26] == "Sunspace Gable")
-            {            
+            {
+                #region Old Symmetrical Gable Code
+                ////If they've entered manual dimensions, we don't need to calculate overhang
+                //if (hidProjection.Value != "")
+                //{
+                //    //However, if its smaller than the room, we need to throw an error
+                //    if (Convert.ToSingle(hidProjection.Value) >= roofProjection)
+                //    {
+                //        //Since its valid, just set our sizes to the specified
+                //        roofProjection = Convert.ToSingle(hidProjection.Value);
+                //        roofWidth = Convert.ToSingle(hidWidth.Value);
+                //    }
+                //}    
+                //else
+                //{
+                //    roofProjection += (Convert.ToSingle(hidOverhang.Value) * 2);
+                //    roofWidth += (Convert.ToSingle(hidOverhang.Value) * 2);
+                //}
+
+                ////Convert the room projection into actual roof projection
+                //roofProjection = (float)Math.Sqrt(Math.Pow(2*roofProjection, 2));
+                //roofProjection /= 2; //divide by 2 for each part of a gable
+
+                ////Convert to nearest eighth inch
+                //roofProjection *= 8;
+                //int intRoofProjection = Convert.ToInt32(roofProjection);
+                //roofProjection = intRoofProjection / 8f;
+                //roofProjection *= 2; //remultiply to get whole projection
+
+                //Now that we have roof rojection and width, add it to session.
+                //Session.Add("roofProjection", (roofProjection));
+                //Session.Add("roofWidth", roofWidth);
+                #endregion
+
                 //If they've entered manual dimensions, we don't need to calculate overhang
                 if (hidProjection.Value != "")
                 {
@@ -209,25 +244,51 @@ namespace SunspaceDealerDesktop
                         roofProjection = Convert.ToSingle(hidProjection.Value);
                         roofWidth = Convert.ToSingle(hidWidth.Value);
                     }
-                }    
+                }
                 else
                 {
                     roofProjection += (Convert.ToSingle(hidOverhang.Value) * 2);
                     roofWidth += (Convert.ToSingle(hidOverhang.Value) * 2);
                 }
 
-                //Convert the room projection into actual roof projection
-                roofProjection = (float)Math.Sqrt(Math.Pow(2*roofProjection, 2));
-                roofProjection /= 2; //divide by 2 for each part of a gable
+                List<Wall> listOfWalls = (List<Wall>)Session["listOfWalls"];
+                
+                //Loop through walls to find gable post
+                for (int i = 0; i < listOfWalls.Count; i++)
+                {
+                    float foundBoxHeaderReceiver = 0f;
+                    BoxHeader aBoxHeader = null;
 
-                //Convert to nearest eighth inch
-                roofProjection *= 8;
-                int intRoofProjection = Convert.ToInt32(roofProjection);
-                roofProjection = intRoofProjection / 8f;
-                roofProjection *= 2; //remultiply to get whole projection
+                    for (int j = 0; j < listOfWalls[i].LinearItems.Count; j++)
+                    {
+                        if (listOfWalls[i].LinearItems[j].ItemType == "BoxHeader")
+                        {
+                            aBoxHeader = (BoxHeader)listOfWalls[i].LinearItems[j];
+                            if (aBoxHeader.IsReceiver == true)
+                            {
+                                foundBoxHeaderReceiver = aBoxHeader.FixedLocation;
+                                break;
+                            }
+                        }
+                    }
 
-                //Now that we have roof rojection and width, add it to session.
-                Session.Add("roofProjection", (roofProjection));
+                    //If start != end, it's part of a sloped front wall on Dealer Gables
+                    if (listOfWalls[i].StartHeight < listOfWalls[i].EndHeight)
+                    {
+                        roofProjection1 = Convert.ToSingle(hidOverhang.Value) + listOfWalls[i].Length + 2.125f;
+                        roofProjection2 = Convert.ToSingle(hidOverhang.Value) + listOfWalls[i+1].Length + 2.125f;
+                    }
+
+                    //If it found a boxheader receiever, then it is the gable-frontwall of a sunspace gable
+                    if (foundBoxHeaderReceiver > 0f)
+                    {
+                        roofProjection1 = Convert.ToSingle(hidOverhang.Value) + foundBoxHeaderReceiver + aBoxHeader.Length;
+                        roofProjection2 = Convert.ToSingle(hidOverhang.Value) + listOfWalls[i].Length + 2.125f - foundBoxHeaderReceiver; //we subtract the location of
+                    }
+                }
+
+                Session.Add("roofProjection1", (roofProjection1));
+                Session.Add("roofProjection2", (roofProjection2));
                 Session.Add("roofWidth", roofWidth);
 
                 //A studio roof will only have one list entry, while a gable will have two

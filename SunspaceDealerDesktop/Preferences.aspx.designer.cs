@@ -301,24 +301,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl100FrameColour;
         
         /// <summary>
-        /// lbl100InteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl100InteriorPanelColour;
-        
-        /// <summary>
-        /// ddl100InteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl100InteriorPanelColour;
-        
-        /// <summary>
         /// lbl100InteriorPanelSkin control.
         /// </summary>
         /// <remarks>
@@ -335,24 +317,6 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl100InteriorPanelSkin;
-        
-        /// <summary>
-        /// lbl100ExteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl100ExteriorPanelColour;
-        
-        /// <summary>
-        /// ddl100ExteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl100ExteriorPanelColour;
         
         /// <summary>
         /// lbl100ExteriorPanelSkin control.
@@ -1246,24 +1210,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl200FrameColour;
         
         /// <summary>
-        /// lbl200InteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl200InteriorPanelColour;
-        
-        /// <summary>
-        /// ddl200InteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl200InteriorPanelColour;
-        
-        /// <summary>
         /// lbl200InteriorPanelSkin control.
         /// </summary>
         /// <remarks>
@@ -1280,24 +1226,6 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl200InteriorPanelSkin;
-        
-        /// <summary>
-        /// lbl200ExteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl200ExteriorPanelColour;
-        
-        /// <summary>
-        /// ddl200ExteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl200ExteriorPanelColour;
         
         /// <summary>
         /// lbl200ExteriorPanelSkin control.
@@ -2209,24 +2137,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl300FrameColour;
         
         /// <summary>
-        /// lbl300InteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl300InteriorPanelColour;
-        
-        /// <summary>
-        /// ddl300InteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl300InteriorPanelColour;
-        
-        /// <summary>
         /// lbl300InteriorPanelSkin control.
         /// </summary>
         /// <remarks>
@@ -2243,24 +2153,6 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl300InteriorPanelSkin;
-        
-        /// <summary>
-        /// lbl300ExteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl300ExteriorPanelColour;
-        
-        /// <summary>
-        /// ddl300ExteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl300ExteriorPanelColour;
         
         /// <summary>
         /// lbl300ExteriorPanelSkin control.
@@ -3172,24 +3064,6 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.DropDownList ddl400FrameColour;
         
         /// <summary>
-        /// lbl400InteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl400InteriorPanelColour;
-        
-        /// <summary>
-        /// ddl400InteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl400InteriorPanelColour;
-        
-        /// <summary>
         /// lbl400InteriorPanelSkin control.
         /// </summary>
         /// <remarks>
@@ -3206,24 +3080,6 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl400InteriorPanelSkin;
-        
-        /// <summary>
-        /// lbl400ExteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl400ExteriorPanelColour;
-        
-        /// <summary>
-        /// ddl400ExteriorPanelColour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl400ExteriorPanelColour;
         
         /// <summary>
         /// lbl400ExteriorPanelSkin control.
