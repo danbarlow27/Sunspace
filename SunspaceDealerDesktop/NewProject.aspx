@@ -322,6 +322,10 @@
                     //kneewall height error handling
                     document.getElementById("<%=txtErrorMessage.ClientID%>").value = "The kneewall height you entered is not a valid number.";
                 }
+                else if(document.getElementById("<%=txtKneewallHeight.ClientID%>").value != 4 && document.getElementById("<%=txtKneewallHeight.ClientID%>").value < 10)
+                {
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "The kneewall height must be 4\" or >10\"";
+                }
             }
             else {
                 document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You must enter a kneewall height to proceed.";

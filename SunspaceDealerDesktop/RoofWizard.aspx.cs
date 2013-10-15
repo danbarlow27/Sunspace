@@ -15,6 +15,11 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["loggedIn"] == null)
+            {
+                Response.Redirect("Login.aspx");
+            }   
+
             ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
             ListItem lst18 = new ListItem("1/8", ".125");
             ListItem lst14 = new ListItem("1/4", ".25");
@@ -27,18 +32,17 @@ namespace SunspaceDealerDesktop
             if (!IsPostBack)
             {
                 //Temporary session declarations
-                string[] tempArray = new String[27];
-                tempArray[26] = "Studio";
-                tempArray[26] = "Dealer Gable";
-                Session.Add("newProjectArray", tempArray);
-                Session.Add("sunroomProjection", 101.86576858656);
-                Session.Add("sunroomWidth", 100);
-                Session.Add("roofSlope", 1.2);
-                Session.Add("soffitLength", 0);
-                Session.Add("isStandalone", "false");
+                //string[] tempArray = new String[27];
+                //tempArray[26] = "Studio";
+                //tempArray[26] = "Dealer Gable";
+                //Session.Add("newProjectArray", tempArray);
+                //Session.Add("sunroomProjection", 101.86576858656);
+                //Session.Add("sunroomWidth", 100);
+                //Session.Add("roofSlope", 1.2);
+                //Session.Add("soffitLength", 0);
+                //Session.Add("isStandalone", "false");
 
                 //Create a temporary fake list of walls, will use a [ shape, W/S/E walls going from 120 backwall to 110 front wall, 120 projection, 120 width, to match other fake variables
-                List<Wall> aListOfWalls = new List<Wall>();
 
                 //Wall aWall = new Wall();
                 //aWall.Length = 100;
@@ -64,31 +68,32 @@ namespace SunspaceDealerDesktop
 
                 //aListOfWalls.Add(aWall);
 
-                Wall aWall = new Wall();
-                aWall.Length = 100;
-                aWall.StartHeight = 100;
-                aWall.EndHeight = 100;
-                aWall.Orientation = "W";
+                ////Studio test
+                //Wall aWall = new Wall();
+                //aWall.Length = 100;
+                //aWall.StartHeight = 100;
+                //aWall.EndHeight = 100;
+                //aWall.Orientation = "W";
 
-                aListOfWalls.Add(aWall);
+                //aListOfWalls.Add(aWall);
 
-                aWall = new Wall();
-                aWall.Length = 100;
-                aWall.StartHeight = 100;
-                aWall.EndHeight = 100;
-                aWall.Orientation = "S";
+                //aWall = new Wall();
+                //aWall.Length = 100;
+                //aWall.StartHeight = 100;
+                //aWall.EndHeight = 100;
+                //aWall.Orientation = "S";
 
-                aListOfWalls.Add(aWall);
+                //aListOfWalls.Add(aWall);
 
-                aWall = new Wall();
-                aWall.Length = 100;
-                aWall.StartHeight = 100;
-                aWall.EndHeight = 100;
-                aWall.Orientation = "E";
+                //aWall = new Wall();
+                //aWall.Length = 100;
+                //aWall.StartHeight = 100;
+                //aWall.EndHeight = 100;
+                //aWall.Orientation = "E";
 
-                aListOfWalls.Add(aWall);
+                //aListOfWalls.Add(aWall);
 
-                Session.Add("listOfWalls", aListOfWalls);
+                //Session.Add("listOfWalls", aListOfWalls);
                 //slope
                 //enter an overhang #
                 //include gutter in overhang
@@ -145,14 +150,6 @@ namespace SunspaceDealerDesktop
                     ddlStripeColour.Items.Add(new ListItem(Constants.FASCIA_STRIPE_COLOUR[i], Constants.FASCIA_STRIPE_COLOUR[i]));
                 }
                 //sub-inch dropdowns
-                ddlProjectionInches.Items.Add(lst0);
-                ddlProjectionInches.Items.Add(lst18);
-                ddlProjectionInches.Items.Add(lst14);
-                ddlProjectionInches.Items.Add(lst38);
-                ddlProjectionInches.Items.Add(lst12);
-                ddlProjectionInches.Items.Add(lst58);
-                ddlProjectionInches.Items.Add(lst34);
-                ddlProjectionInches.Items.Add(lst78);
                 ddlOverhangInches.Items.Add(lst0);
                 ddlOverhangInches.Items.Add(lst18);
                 ddlOverhangInches.Items.Add(lst14);
@@ -161,14 +158,6 @@ namespace SunspaceDealerDesktop
                 ddlOverhangInches.Items.Add(lst58);
                 ddlOverhangInches.Items.Add(lst34);
                 ddlOverhangInches.Items.Add(lst78);
-                ddlWidthInches.Items.Add(lst0);
-                ddlWidthInches.Items.Add(lst18);
-                ddlWidthInches.Items.Add(lst14);
-                ddlWidthInches.Items.Add(lst38);
-                ddlWidthInches.Items.Add(lst12);
-                ddlWidthInches.Items.Add(lst58);
-                ddlWidthInches.Items.Add(lst34);
-                ddlWidthInches.Items.Add(lst78);
                 #endregion
             }
 
@@ -182,7 +171,7 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        protected void btnFinalButton_Click(object sender, EventArgs e)
+        protected void btnFinalButton_Click(object sender, EventArgs e)//
         {
             //Check roof type, position 26
             string[] newProjectArray = (string[])Session["newProjectArray"];
@@ -234,23 +223,6 @@ namespace SunspaceDealerDesktop
                 //Session.Add("roofWidth", roofWidth);
                 #endregion
 
-                //If they've entered manual dimensions, we don't need to calculate overhang
-                if (hidProjection.Value != "")
-                {
-                    //However, if its smaller than the room, we need to throw an error
-                    if (Convert.ToSingle(hidProjection.Value) >= roofProjection)
-                    {
-                        //Since its valid, just set our sizes to the specified
-                        roofProjection = Convert.ToSingle(hidProjection.Value);
-                        roofWidth = Convert.ToSingle(hidWidth.Value);
-                    }
-                }
-                else
-                {
-                    roofProjection += (Convert.ToSingle(hidOverhang.Value) * 2);
-                    roofWidth += (Convert.ToSingle(hidOverhang.Value) * 2);
-                }
-
                 List<Wall> listOfWalls = (List<Wall>)Session["listOfWalls"];
                 
                 //Loop through walls to find gable post
@@ -275,15 +247,19 @@ namespace SunspaceDealerDesktop
                     //If start != end, it's part of a sloped front wall on Dealer Gables
                     if (listOfWalls[i].StartHeight < listOfWalls[i].EndHeight)
                     {
-                        roofProjection1 = Convert.ToSingle(hidOverhang.Value) + listOfWalls[i].Length + 2.125f;
-                        roofProjection2 = Convert.ToSingle(hidOverhang.Value) + listOfWalls[i+1].Length + 2.125f;
+                        //roofProjection1 = Convert.ToSingle(hidOverhang.Value) + listOfWalls[i].Length + 2.125f;
+                        //roofProjection2 = Convert.ToSingle(hidOverhang.Value) + listOfWalls[i+1].Length + 2.125f;
+                        break;
                     }
 
                     //If it found a boxheader receiever, then it is the gable-frontwall of a sunspace gable
                     if (foundBoxHeaderReceiver > 0f)
                     {
-                        roofProjection1 = Convert.ToSingle(hidOverhang.Value) + foundBoxHeaderReceiver + aBoxHeader.Length;
-                        roofProjection2 = Convert.ToSingle(hidOverhang.Value) + listOfWalls[i].Length + 2.125f - foundBoxHeaderReceiver; //we subtract the location of
+                        //a^2 + b^2 = c^2, +overhang value, gives projection of a roof panel
+
+                        roofProjection1 = GlobalFunctions.RoundDownToNearestEighthInch(Convert.ToSingle(hidOverhang.Value) + (float)Math.Sqrt((float)Math.Pow((foundBoxHeaderReceiver + (aBoxHeader.Length/2)),2) + (float)Math.Pow(listOfWalls[i].GablePeak - listOfWalls[i].StartHeight, 2)));
+                        roofProjection2 = GlobalFunctions.RoundDownToNearestEighthInch(Convert.ToSingle(hidOverhang.Value) + (float)Math.Sqrt((float)Math.Pow((listOfWalls[i].Length - (aBoxHeader.Length / 2) - foundBoxHeaderReceiver), 2) + (float)Math.Pow(listOfWalls[i].GablePeak - listOfWalls[i].StartHeight, 2)));
+                        break;
                     }
                 }
 
@@ -292,7 +268,7 @@ namespace SunspaceDealerDesktop
                 Session.Add("roofWidth", roofWidth);
 
                 //A studio roof will only have one list entry, while a gable will have two
-                List<RoofModule> gableModules = buildGableRoofModule((roofProjection), roofWidth);
+                List<RoofModule> gableModules = buildGableRoofModule(roofProjection1, roofProjection2, roofWidth);
 
                 bool isFireProtected = false;
                 bool isThermadeck = false;
@@ -505,7 +481,7 @@ namespace SunspaceDealerDesktop
             return aModule;
         }
 
-        protected List<RoofModule> buildGableRoofModule(float roofProjection, float roofWidth)
+        protected List<RoofModule> buildGableRoofModule(float roofProjection1, float roofProjection2, float roofWidth)
         {
             //Variables that will be used to build the roof
             float panelWidth;
@@ -553,33 +529,14 @@ namespace SunspaceDealerDesktop
             //build roof objects
             float numberOfPanels = (float)Math.Ceiling(roofWidth / panelWidth); //If it requires 'part' of a panel, that is essentially another panel, just cut. Cut will be handled later.
 
-            float gablePosition;
-            float projectionOne=0f;
-            float projectionTwo=0f;
+            float projectionOne = roofProjection1;
+            float projectionTwo = roofProjection2;
 
             //lets start making a list of roof items
             List<RoofItem> itemList = new List<RoofItem>();
             List<RoofItem> gableList = new List<RoofItem>();
 
             List<Wall> listOfWalls = (List<Wall>)Session["listOfWalls"];
-            //Find the distance from the left side of the entire front side the gable post is located
-            for (int i = 0; i < listOfWalls.Count; i++)
-            {
-                //CHANGE ME IF WALLTYPE USES DIFFERENT VALUES
-                if (listOfWalls[i].WallType == "GP")
-                {
-                    //Since a gable must be wall-post-wall, we can assume these values
-                    //are true
-                    gablePosition = listOfWalls[i - 1].Length;
-                    projectionOne = (listOfWalls[i - 1].EndHeight - listOfWalls[i - 1].StartHeight) / gablePosition;
-                    projectionTwo =(listOfWalls[i + 1].StartHeight - listOfWalls[i + 1].EndHeight) / listOfWalls[i + 1].Length;
-                }
-                if (listOfWalls[i].WallType == "FGW")
-                {
-                    //CHANGEME need this for full gable wall
-                    //gablePosition = something;
-                }
-            }
 
             if (hidSystem.Value != "Thermadeck")
             {
@@ -639,7 +596,7 @@ namespace SunspaceDealerDesktop
             }
 
             //Now set the duplication to their actual projections
-            for (int i = 0; i< gableList.Count; i++)
+            for (int i = 0; i < gableList.Count; i++)
             {
                 gableList[i].Projection = projectionTwo;
             }

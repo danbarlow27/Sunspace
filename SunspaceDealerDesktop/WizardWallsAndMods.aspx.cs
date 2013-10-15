@@ -3762,8 +3762,8 @@ namespace SunspaceDealerDesktop
             List<Wall> listOfWalls = new List<Wall>();
 
             int existingWallCount = 0;
-            Session.Add("roomWidth", hidRoomWidth);
-            Session.Add("roomProjection", hidRoomProjection);
+            Session.Add("roomWidth", hidRoomWidth.Value);
+            Session.Add("roomProjection", hidRoomProjection.Value);
 
             for (int i = 1; i <= strWalls.Length; i++)
             {
@@ -3945,14 +3945,15 @@ namespace SunspaceDealerDesktop
 
                                 Window doorWindow = new Window();
                                 doorWindow.WindowType = Request.Form["hidWall" + i + "Door" + j + "style"];
-                                //doorWindow.FLength = aDoor.FLength - SOMEVALUE;
+                                doorWindow.FLength = aDoor.FLength - 11.5f;
                                 doorWindow.Length = doorWindow.FLength - 2.125f;
-                                //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
-                                //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
+                                doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight - aDoor.Kickplate - 4; //4 corresponds to the amount of framing at a bottom of a door
+                                doorWindow.StartHeight = doorWindow.EndHeight = aDoor.FStartHeight - aDoor.Kickplate - 4 - 2.125f;
                                 doorWindow.ItemType = "Window";
                                 doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
                                 doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
+
                                 //Spreaderbar logic
                                 if (doorWindow.WindowType == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
                                 {
@@ -4262,6 +4263,7 @@ namespace SunspaceDealerDesktop
                         {
                             wallLeftFiller -= 1;//CHANGEME receiver length
                             Receiver aReceiver = new Receiver();
+                            aReceiver.ItemType = "Receiver";
                             aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
                             aReceiver.Length = 1f;
                             aReceiver.FixedLocation = 0;
@@ -4431,6 +4433,7 @@ namespace SunspaceDealerDesktop
                             aBoxHeader.ItemType = "BoxHeader";
                             listOfWalls[i].LinearItems.Add(aBoxHeader);
                             listOfWalls[i].Length += 3.25f;
+                            listOfWalls[i].GablePeak = listOfWalls[i + 1].StartHeight;
 
                             //Loop through next wall adding items
                             //Remove corner post of second wall
@@ -4442,6 +4445,8 @@ namespace SunspaceDealerDesktop
                                 listOfWalls[i].LinearItems.Add(listOfWalls[i + 1].LinearItems[j]);
                                 //Now that the item is in the wall, the wall is longer, so increase its length
                                 listOfWalls[i].Length += listOfWalls[i + 1].LinearItems[j].Length;
+                                //Adjust endheight to endheight of second wall
+                                listOfWalls[i].EndHeight = listOfWalls[i + 1].EndHeight;
                             }
 
                             //remove second wall entirely
@@ -4487,7 +4492,7 @@ namespace SunspaceDealerDesktop
             Session.Add("listOfWalls", listOfWalls);
             Session.Add("sunroomProjection", hidRoomProjection.Value);
             Session.Add("sunroomWidth", hidRoomWidth.Value);
-            Response.Redirect("RoofWizard.aspx");//
+            Response.Redirect("RoofWizard.aspx");
 
         }
 

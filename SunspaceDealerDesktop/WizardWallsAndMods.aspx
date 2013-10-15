@@ -723,10 +723,13 @@
             var tempWidth = 0; //variable to store each setback
             var highestWidth = 0; //variable to store the highest width calculated from the left side of the room
             var width = 0;
-
-            for (var index = 0; index < wallSetBackArray.length; index++) { //run through all the setbacks
-                if (wallSetBackArray[index]) { //if its not null (it would be null for existing walls
-
+            var isGable = false;
+            for (var index = 0; index < coordList.length; index++) { //run through all the setbacks
+                if (coordList[index][4] === "G")
+                {
+                    isGable = true;
+                }
+                if (coordList[index][4] === "P") {
                     /*
                     WEST        :   ZERO
                     EAST        :   ZERO
@@ -742,25 +745,51 @@
                     var L = +(document.getElementById("MainContent_txtWall" + (index + 1) + "Length").value);
 
                     //get the orientation of the given wall
-                    switch (coordList[index][5]) { //5 = orientation
-                        case "S": //if south
-                            width = L;
-                            break;
-                        case "N": //or north
-                            width = -L;
-                            break;
-                        case "W": //if west
-                        case "E": //if east
-                            width = 0;
-                            break;
-                        case "SW": //if southwest
-                        case "NW": //or northwest
-                            width = -(Math.sqrt((Math.pow(L, 2)) / 2));
-                            break;
-                        case "SE": //if southeast
-                        case "NE": //or northeast
-                            width = Math.sqrt((Math.pow(L, 2)) / 2);
-                            break;
+                    if (isGable == false)
+                    {
+                        switch (coordList[index][5]) { //5 = orientation
+                            case "S": //if south
+                                width = L;
+                                break;
+                            case "N": //or north
+                                width = -L;
+                                break;
+                            case "W": //if west
+                            case "E": //if east
+                                width = 0;
+                                break;
+                            case "SW": //if southwest
+                            case "NW": //or northwest
+                                width = -(Math.sqrt((Math.pow(L, 2)) / 2));
+                                break;
+                            case "SE": //if southeast
+                            case "NE": //or northeast
+                                width = Math.sqrt((Math.pow(L, 2)) / 2);
+                                break;
+                        }
+                    }
+                    else{
+                        switch (coordList[index][5])
+                        {
+                            case "S":
+                            case "N":
+                                width = 0;
+                                break;
+                            case "W":
+                                width = L;
+                                break;
+                            case "E":
+                                width = -L;
+                                break;
+                            case "SE":
+                            case "NE":
+                                width = -(Math.sqrt((Math.pow(L, 2)) / 2));
+                                break;
+                            case "SW":
+                            case "NW":
+                                width = Math.sqrt((Math.pow(L, 2)) / 2);
+                                break;
+                        }
                     }
 
                     tempWidth = +tempWidth + width //add the values to temp variable

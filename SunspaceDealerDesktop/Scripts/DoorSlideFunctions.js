@@ -569,7 +569,7 @@ function typeRowsDisplayed(type, wallNumber) {
         doorHeight.style.display = "inherit";
         doorWidth.style.display = "inherit";
         doorBoxHeader.style.display = "inherit";
-        doorKickplate.style.display = "inherit";
+        //doorKickplate.style.display = "inherit";
 
         //Cabana Specific                            
         doorGlassTint.style.display = "inherit";
@@ -601,7 +601,7 @@ function typeRowsDisplayed(type, wallNumber) {
         doorHeight.style.display = "inherit";
         doorWidth.style.display = "inherit";
         doorBoxHeader.style.display = "inherit";
-        doorKickplate.style.display = "inherit";
+        //doorKickplate.style.display = "inherit";
 
         //French specific
         doorOperatorLHH.style.display = "inherit";

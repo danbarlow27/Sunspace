@@ -124,24 +124,13 @@ namespace SunspaceDealerDesktop
 
             //slide4
             #region Slide 4 pageload
-            //ddlInteriorColour.Items.Add("Choose a colour...");
-            for (int i = 0; i < Constants.INTERIOR_WALL_COLOURS.Length; i++)
-            {
-                ddlInteriorColour.Items.Add(Constants.INTERIOR_WALL_COLOURS[i]);
-            }
 
             //ddlInteriorSkin.Items.Add("Choose a skin...");
             for (int i = 0; i < Constants.INTERIOR_WALL_SKIN_TYPES.Length; i++)
             {
                 ddlInteriorSkin.Items.Add(Constants.INTERIOR_WALL_SKIN_TYPES[i]);
             }
-
-            //ddlExteriorColour.Items.Add("Choose a colour...");
-            for (int i = 0; i < Constants.EXTERIOR_WALL_COLOURS.Length; i++)
-            {
-                ddlExteriorColour.Items.Add(Constants.EXTERIOR_WALL_COLOURS[i]);
-            }
-
+            
             //ddlExteriorSkin.Items.Add("Choose a skin...");
             for (int i = 0; i < Constants.EXTERIOR_WALL_SKIN_TYPES.Length; i++)
             {

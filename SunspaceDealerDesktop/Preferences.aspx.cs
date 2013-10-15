@@ -1096,9 +1096,7 @@ namespace SunspaceDealerDesktop
             ddl100DefaultFiller.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
 
             ddl100FrameColour.Attributes.Add("onChange", "return preferencesCascadeColours(100);");
-            ddl100InteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
             ddl100InteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
-            ddl100ExteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
             ddl100ExteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
 
             ddl100DoorType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
@@ -1142,9 +1140,7 @@ namespace SunspaceDealerDesktop
             ddl200DefaultFiller.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
 
             ddl200FrameColour.Attributes.Add("onChange", "return preferencesCascadeColours(200);");
-            ddl200InteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
             ddl200InteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
-            ddl200ExteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
             ddl200ExteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
 
             ddl200DoorType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
@@ -1188,9 +1184,7 @@ namespace SunspaceDealerDesktop
             ddl300DefaultFiller.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
 
             ddl300FrameColour.Attributes.Add("onChange", "return preferencesCascadeColours(300);");
-            ddl300InteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
             ddl300InteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
-            ddl300ExteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
             ddl300ExteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
 
             ddl300DoorType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
@@ -1234,9 +1228,7 @@ namespace SunspaceDealerDesktop
             ddl400DefaultFiller.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
 
             ddl400FrameColour.Attributes.Add("onChange", "return preferencesCascadeColours(400);");
-            ddl400InteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
             ddl400InteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
-            ddl400ExteriorPanelColour.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
             ddl400ExteriorPanelSkin.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
 
             ddl400DoorType.Attributes.Add("onChange", "return MoveValuesToHiddenDivs();");
@@ -1321,8 +1313,7 @@ namespace SunspaceDealerDesktop
                                             + "default_filler=" + txt100DefaultFiller.Text + ", "
                                             + "interior_panel_skin='" + ddl100InteriorPanelSkin.SelectedValue + "', "
                                             + "exterior_panel_skin='" + ddl100ExteriorPanelSkin.SelectedValue + "', "
-                                            + "interior_frame_colour='" + ddl100InteriorPanelColour.SelectedValue + "', "
-                                            + "exterior_frame_colour='" + ddl100ExteriorPanelColour.SelectedValue + "', "
+                                            + "frame_colour='" + ddl100FrameColour.SelectedValue + "', "
                                             + "door_type='" + ddl100DoorType.SelectedValue + "', "
                                             + "door_style='" + ddl100DoorStyle.SelectedValue + "', "
                                             + "door_swing='" + ddl100DoorSwing.SelectedValue + "', "
@@ -1369,8 +1360,7 @@ namespace SunspaceDealerDesktop
                                             + "default_filler=" + txt200DefaultFiller.Text + ", "
                                             + "interior_panel_skin='" + ddl200InteriorPanelSkin.SelectedValue + "', "
                                             + "exterior_panel_skin='" + ddl200ExteriorPanelSkin.SelectedValue + "', "
-                                            + "interior_frame_colour='" + ddl200InteriorPanelColour.SelectedValue + "', "
-                                            + "exterior_frame_colour='" + ddl200ExteriorPanelColour.SelectedValue + "', "
+                                            + "frame_colour='" + ddl200FrameColour.SelectedValue + "', "
                                             + "door_type='" + ddl200DoorType.SelectedValue + "', "
                                             + "door_style='" + ddl200DoorStyle.SelectedValue + "', "
                                             + "door_swing='" + ddl200DoorSwing.SelectedValue + "', "
@@ -1417,8 +1407,7 @@ namespace SunspaceDealerDesktop
                                             + "default_filler=" + txt300DefaultFiller.Text + ", "
                                             + "interior_panel_skin='" + ddl300InteriorPanelSkin.SelectedValue + "', "
                                             + "exterior_panel_skin='" + ddl300ExteriorPanelSkin.SelectedValue + "', "
-                                            + "interior_frame_colour='" + ddl300InteriorPanelColour.SelectedValue + "', "
-                                            + "exterior_frame_colour='" + ddl300ExteriorPanelColour.SelectedValue + "', "
+                                            + "frame_colour='" + ddl300FrameColour.SelectedValue + "', "
                                             + "door_type='" + ddl300DoorType.SelectedValue + "', "
                                             + "door_style='" + ddl300DoorStyle.SelectedValue + "', "
                                             + "door_swing='" + ddl300DoorSwing.SelectedValue + "', "
@@ -1465,8 +1454,7 @@ namespace SunspaceDealerDesktop
                                             + "default_filler=" + txt400DefaultFiller.Text + ", "
                                             + "interior_panel_skin='" + ddl400InteriorPanelSkin.SelectedValue + "', "
                                             + "exterior_panel_skin='" + ddl400ExteriorPanelSkin.SelectedValue + "', "
-                                            + "interior_frame_colour='" + ddl400InteriorPanelColour.SelectedValue + "', "
-                                            + "exterior_frame_colour='" + ddl400ExteriorPanelColour.SelectedValue + "', "
+                                            + "frame_colour='" + ddl400FrameColour.SelectedValue + "', "
                                             + "door_type='" + ddl400DoorType.SelectedValue + "', "
                                             + "door_style='" + ddl400DoorStyle.SelectedValue + "', "
                                             + "door_swing='" + ddl400DoorSwing.SelectedValue + "', "

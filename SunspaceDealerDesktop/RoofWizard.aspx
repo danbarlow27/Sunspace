@@ -47,57 +47,21 @@
                 maxProjection = <%= THERMADECK_PANEL_PROJECTION %>;
             }
 
-            if ($('#<%=radManualYes.ClientID%>').is(':checked')) {
-                if ($('#<%=txtProjection.ClientID%>').val() == "") {
-                    //please enter a valid number
-                    document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
-                    document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
-                }
-                else if (isNaN($('#<%=txtProjection.ClientID%>').val())) {
-                    //please enter a valid number
-                    document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
-                    document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
-                }
-                else if ($('#<%=txtProjection.ClientID%>').val() <=0 || parseFloat($('#<%=txtProjection.ClientID%>').val() + $('#<%=ddlProjectionInches.ClientID%>').val()) > maxProjection)
-                {                    
-                    //please enter a valid number
-                    document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
-                    document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
-                }
-                else if ($('#<%=txtWidth.ClientID%>').val() == "") {
-                    //please enter a valid number
-                    document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
-                    document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
-                }
-                else if (isNaN($('#<%=txtWidth.ClientID%>').val())) {
-                    //please enter a valid number
-                    document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
-                    document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
-                }
-                else {
-                    document.getElementById('<%=btnQuestion2.ClientID%>').disabled = false;
-                    document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = false;
-                }
+            if ($('#<%=txtOverhangLength.ClientID%>').val() == "") {
+                //please enter a valid number
+                document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
+                document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
+            }
+            else if (isNaN($('#<%=txtOverhangLength.ClientID%>').val())) {
+                //please enter a valid number
+                document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
+                document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
             }
             else {
-                if ($('#<%=txtOverhangLength.ClientID%>').val() == "") {
-                    //please enter a valid number
-                    document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
-                    document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
-                }
-                else if (isNaN($('#<%=txtOverhangLength.ClientID%>').val())) {
-                    //please enter a valid number
-                    document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
-                    document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
-                }
-                else {
-                    document.getElementById('<%=btnQuestion2.ClientID%>').disabled = false;
-                    document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = false;
-                }
+                document.getElementById('<%=btnQuestion2.ClientID%>').disabled = false;
+                document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = false;
             }
 
-            document.getElementById("<%=hidProjection.ClientID%>").value = parseFloat($('#<%=txtProjection.ClientID%>').val()) + parseFloat($('#<%=ddlProjectionInches.ClientID%>').val());
-            document.getElementById("<%=hidWidth.ClientID%>").value = parseFloat($('#<%=txtWidth.ClientID%>').val()) + parseFloat($('#<%=ddlWidthInches.ClientID%>').val());
             document.getElementById("<%=hidOverhang.ClientID%>").value = parseFloat($('#<%=txtOverhangLength.ClientID%>').val()) + parseFloat($('#<%=ddlOverhangInches.ClientID%>').val());
         }
 
@@ -211,50 +175,16 @@
             <%-- Slide 2 - Dimensions & Overhang --%>           
             <div id="slide2" class="slide">
                 <h1>
-                    <asp:Label ID="lblQuestion1" runat="server" Text="Would you like to manually enter roof dimensions?"></asp:Label>
+                    <asp:Label ID="lblQuestion1" runat="server" Text="Please enter your roof overhang."></asp:Label>
                 </h1>        
                               
                 <ul class="toggleOptions">
-                    
-                    <li>
-                        <asp:RadioButton ID="radManualYes" GroupName="question2" runat="server" OnClick="roofWizardCheckQuestion2()" />
-                        <asp:Label ID="lblManualYesRadio" AssociatedControlID="radManualYes" runat="server"></asp:Label>
-                        <asp:Label ID="lblManualYes" AssociatedControlID="radManualYes" runat="server" Text="Yes"></asp:Label>
-
-                        <%--Dimension Entry --%>
-                        <div class="toggleContent">
-                            <ul>
-                                <li>
-                                    <asp:Label ID="lblCustomDimensionWarning" runat="server" Text="If you would like an overhang, please include that in your dimensions."></asp:Label>
-                                    <br /><br />
-                                    <asp:Label ID="lblProjection" runat="server" Text="Projection:" ToolTip="Generall: entry is for the projection of the room itself with whatever overhang you desire directly off of the room."></asp:Label>
-                                    <asp:TextBox ID="txtProjection" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="roofWizardCheckQuestion2()"></asp:TextBox>
-                                    <asp:DropDownList ID="ddlProjectionInches" runat="server" OnChange="roofWizardCheckQuestion2()"></asp:DropDownList>
-                                    <br /><br />
-                                    <asp:Label ID="lblWidth" runat="server" Text="Width:" ToolTip="The width of the roof is the dimension that is perpendicular to projection. On a studio system, it is along either top or bottom, while on a gable it is across bottom distances and peak distance, all equal."></asp:Label>
-                                    <asp:TextBox ID="txtWidth" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="roofWizardCheckQuestion2()"></asp:TextBox>
-                                    <asp:DropDownList ID="ddlWidthInches" runat="server" OnChange="roofWizardCheckQuestion2()"></asp:DropDownList>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <asp:RadioButton ID="radManualNo" GroupName="question2" runat="server" OnClick="roofWizardCheckQuestion2()" />
-                        <asp:Label ID="lblManualNoRadio" AssociatedControlID="radManualNo" runat="server"></asp:Label>
-                        <asp:Label ID="lblManualNo" AssociatedControlID="radManualNo" runat="server" Text="No"></asp:Label>
-
-                        <%--Overhang Entry --%>
-                        <div class="toggleContent">
-                            <ul>
-                                <li>                                    
-                                    <asp:Label ID="lblOverhangLength" runat="server" Text="Overhang Length"></asp:Label>
-                                    <asp:TextBox ID="txtOverhangLength" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="roofWizardCheckQuestion2()"></asp:TextBox>
-                                    <asp:DropDownList ID="ddlOverhangInches" runat="server" OnChange="roofWizardCheckQuestion2()" ></asp:DropDownList>
-                                    <br />
-                                    <asp:Label ID="lblOverhangWarning" runat="server" Text="Enter 0 for no overhang"></asp:Label>
-                                </li>
-                            </ul>
-                        </div>
+                    <li>                                
+                        <asp:Label ID="lblOverhangLength" runat="server" Text="Overhang Length"></asp:Label>
+                        <asp:TextBox ID="txtOverhangLength" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="roofWizardCheckQuestion2()"></asp:TextBox>
+                        <asp:DropDownList ID="ddlOverhangInches" runat="server" OnChange="roofWizardCheckQuestion2()" ></asp:DropDownList>
+                        <br />
+                        <asp:Label ID="lblOverhangWarning" runat="server" Text="Enter 0 for no overhang"></asp:Label>
                     </li>
                 </ul>
 
