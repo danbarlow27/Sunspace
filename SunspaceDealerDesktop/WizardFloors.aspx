@@ -4,19 +4,20 @@
 
     <script>
         /****HARD CODED VALUES TO BE PASSED FROM PREVIOUS PAGES****/
-        var walls = [];
-        walls[4] = {
-            "wallId": 4,
-            "length": 200
-        }
-        walls[5] = {
-            "wallId": 5,
-            "length": 300
-        }
-        walls[6] = {
-            "wallId": 6,
-            "length": 150
-        }
+        //Ctrl+F On Walls[ only shows these entries, are they meaningful?
+        //var walls = [];
+        //walls[4] = {
+        //    "wallId": 4,
+        //    "length": 200
+        //}
+        //walls[5] = {
+        //    "wallId": 5,
+        //    "length": 300
+        //}
+        //walls[6] = {
+        //    "wallId": 6,
+        //    "length": 150
+        //}
 
         /****Line information for walls****/
         var detailsOfAllLines = '<%= wallCoordinates %>'; //all the coordinates and details of all the lines, coming from the session
@@ -217,7 +218,7 @@
                             </ul>
                         </div>
                 <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion1" Enabled="false" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Confirm" />
+                <asp:Button ID="btnQuestion1" Enabled="false" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Confirm" OnClick="btnQuestion1_Click" />
 
             </div> 
             <%-- end #slide1 --%>            

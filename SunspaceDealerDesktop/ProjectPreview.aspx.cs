@@ -29,6 +29,7 @@ namespace SunspaceDealerDesktop
                 aConnection.Open();
                 SqlCommand aCommand = aConnection.CreateCommand();
                 SqlTransaction aTransaction;
+                SqlDataReader aReader;
 
                 // Start a local transaction.
                 aTransaction = aConnection.BeginTransaction("SampleTransaction");
@@ -44,25 +45,29 @@ namespace SunspaceDealerDesktop
                     #region Project
                     aCommand.CommandText = "INSERT INTO projects(project_type, installation_type, project_name, customer_id, user_id, date_created, status, revised_date, revised_user_id, msrp, project_notes, "
                                             + "hidden, cut_pitch) VALUES ("
-                                            + "project_type='Sunroom', " //Will always be a sunroom to be at this point in wizard
-                                            + "installation_type='" + "House" + "', "
-                                            + "project_name='" + Session["newProjectProjectName"] + "', "
-                                            + "customer_id=" + 1 + ", "
-                                            + "user_id=" + Session["user_id"] + ", "
-                                            + "date_created='" + DateTime.Now.ToString("yyyy/MM/dd") + "', "
-                                            + "status='" + "Active" + "', "
-                                            + "revised_date='" + DateTime.Now.ToString("yyyy/MM/dd") + "', "
-                                            + "revised_user_id=" + Session["user_id"] + ", "
-                                            + "msrp=" + 0 + ", "
-                                            + "project_notes=" +  0 + ", "
-                                            + "hidden=" + false + ", "
-                                            + "cut_pitch=" + 1
+                                            + "'Sunroom', " //Will always be a sunroom to be at this point in wizard
+                                            + "'House', "
+                                            + "'" + Session["newProjectProjectName"] + "', "
+                                            + "1, "
+                                            + Session["user_id"] + ", "
+                                            + "'" + DateTime.Now.ToString("yyyy/MM/dd") + "', "
+                                            + "'" + "Active" + "', "
+                                            + "'" + DateTime.Now.ToString("yyyy/MM/dd") + "', "
+                                            + Session["user_id"] + ", "
+                                            + 0 + ", "
+                                            + 0 + ", "
+                                            + 0 + ", "
+                                            + 1
                                             + ");";
                     aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
                     #endregion
 
                     //Get project_id for use in below statements
-                    int project_id = 1;
+                    aCommand.CommandText = "SELECT project_id FROM projects WHERE project_name = '" + Session["newProjectProjectName"] + "'";
+                    aReader = aCommand.ExecuteReader();
+                    aReader.Read();
+
+                    int project_id = Convert.ToInt32(aReader[0]);
 
                     #region Walls
                     for (int i = 0; i < listOfWalls.Count; i++)
@@ -127,6 +132,33 @@ namespace SunspaceDealerDesktop
                             {
                                 //Get the mod, then loop for all its items
                                 Mod aMod = (Mod)listOfWalls[i].LinearItems[j];
+                                //We make a module entry for this module 
+                                aCommand.CommandText = "INSERT INTO module(project_id, linear_index, number_items, sunshade) VALUES("
+                                                        + "project_id=" + project_id + ", "
+                                                        + "linear_index=" + j + ", "
+                                                        + "number_items=" + aMod.ModularItems.Count + ", "
+                                                        + "sunshade=" + aMod.Sunshade
+                                                        + ");";
+                                aCommand.ExecuteNonQuery();
+                                
+                                //If sunshades are true, we make an entry there too
+                                if (aMod.Sunshade == true)
+                                {
+                                    //We make a sunshade entry for this module 
+                                    aCommand.CommandText = "INSERT INTO sunshade_items(project_id, linear_index, height, length, valance_colour, fabric_colour, openness, chain) VALUES("
+                                                            + "project_id=" + project_id + ", "
+                                                            + "linear_index=" + j + ", "
+                                                            //The height of the sunshade is equal to the highest of the two heights, minus the highest of the two heights of the transom. This places the sunshade below the transom at the top of the window
+                                                            + "height=" + (Math.Max(aMod.StartHeight, aMod.EndHeight) - Math.Max(aMod.ModularItems[aMod.ModularItems.Count-1].FStartHeight,aMod.ModularItems[aMod.ModularItems.Count-1].FEndHeight)) + ", "
+                                                            + "length=" + aMod.Length + ", "
+                                                            + "valance_colour='" + aMod.SunshadeValance + "', "
+                                                            + "fabric_colour='" + aMod.SunshadeFabric + "', "
+                                                            + "openness='" + aMod.SunshadeOpenness + "', "
+                                                            + "chain='" + aMod.SunshadeChain
+                                                            + ");";
+                                    aCommand.ExecuteNonQuery();
+                                }
+
                                 for (int k = 0; k < aMod.ModularItems.Count; k++)
                                 {
                                     //We make a module_items entry for this module item
@@ -257,19 +289,22 @@ namespace SunspaceDealerDesktop
                                                     break;
 
                                                 case "Vertical 4 Track":
-                                                    aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
-                                                                            + "project_id=" + project_id + ", "
-                                                                            + "linear_index=" + j + ", "
-                                                                            + "module_index=" + k + ", "
-                                                                            + "vent_index=" + -1 + ", " //This is not in a vent, this is just solid vinyl
-                                                                            + "door_index=" + 0 + ", " //This is a window, so it is 0
-                                                                            + "start_height=" + aWindow.StartHeight + ", "
-                                                                            + "end_height=" + aWindow.EndHeight + ", "
-                                                                            + "length=" + aWindow.Length + ", "
-                                                                            + "vinyl_tint='" + aWindow.Colour + "', "
-                                                                            + "spreader_bar=" + aWindow.SpreaderBar + ", "
-                                                                            + ");";
-                                                    aCommand.ExecuteNonQuery();
+                                                    for (int vents = 0; vents < aWindow.NumVents; vents++)
+                                                    {
+                                                        aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                                                + "project_id=" + project_id + ", "
+                                                                                + "linear_index=" + j + ", "
+                                                                                + "module_index=" + k + ", "
+                                                                                + "vent_index=" + vents + ", " //This is not in a vent, this is just solid vinyl
+                                                                                + "door_index=" + 0 + ", " //This is a window, so it is 0
+                                                                                + "start_height=" + aWindow.StartHeight + ", "
+                                                                                + "end_height=" + aWindow.EndHeight + ", "
+                                                                                + "length=" + aWindow.Length + ", "
+                                                                                + "vinyl_tint='" + aWindow.Colour.Substring(vents, 1) + "', "
+                                                                                + "spreader_bar=" + aWindow.SpreaderBar + ", "
+                                                                                + ");";
+                                                        aCommand.ExecuteNonQuery();
+                                                    }
                                                     break;
 
                                                 case "Horizontal 2 Track":
@@ -304,11 +339,11 @@ namespace SunspaceDealerDesktop
                                                     aCommand.ExecuteNonQuery();
                                                     break;
 
-                                                case "Single Slider":
-                                                    break;
+                                                //case "Single Slider":
+                                                //    break;
 
-                                                case "Double Slider":
-                                                    break;
+                                                //case "Double Slider":
+                                                //    break;
 
                                                 case "Screen":
                                                     aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length, mount) VALUES("
@@ -363,34 +398,184 @@ namespace SunspaceDealerDesktop
                                             //Now make entry for the door window
                                             if (aDoor.DoorType != "Patio")
                                             {
-                                                switch (aDoor.DoorStyle)
+                                                for (int doorNum = 1; doorNum < 2; doorNum++)
                                                 {
-                                                    case "Full Screen":
-                                                        break;
-                                                    case "Vertical Four Track":
-                                                    case "Vertical 4 Track":
-                                                        break;
-                                                    case "Full View":
-                                                        break;
-                                                    case "Full View Colonial":
-                                                        break;
-                                                    case "Half Lite":
-                                                        break;
-                                                    case "Half Lite Venting":
-                                                        break;
-                                                    case "Half Lite with Mini Blinds":
-                                                        break;
-                                                    case "Full View with Mini Blinds":
-                                                        break;
+                                                    Window doorWindow = aDoor.DoorWindow;
+                                                    switch (doorWindow.WindowType)
+                                                    {
+                                                        #region old by-door
+                                                        //case "Full Screen":
+                                                        //    break;
+                                                        //case "Vertical Four Track":
+                                                        //case "Vertical 4 Track":
+                                                        //    break;
+                                                        //case "Full View":
+                                                        //    break;
+                                                        //case "Full View Colonial":
+                                                        //    break;
+                                                        //case "Half Lite":
+                                                        //    break;
+                                                        //case "Half Lite Venting":
+                                                        //    break;
+                                                        //case "Half Lite with Mini Blinds":
+                                                        //    break;
+                                                        //case "Full View with Mini Blinds":
+                                                        //    break;
+                                                        #endregion
+
+                                                        #region new by-window
+                                                        case "Vinyl":
+                                                            aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                                                    + "project_id=" + project_id + ", "
+                                                                                    + "linear_index=" + j + ", "
+                                                                                    + "module_index=" + k + ", "
+                                                                                    + "vent_index=" + -1 + ", " //This is not in a vent, this is just solid vinyl
+                                                                                    + "door_index=" + doorNum + ", " //This is a window, so it is 0
+                                                                                    + "start_height=" + doorWindow.StartHeight + ", "
+                                                                                    + "end_height=" + doorWindow.EndHeight + ", "
+                                                                                    + "length=" + doorWindow.Length + ", "
+                                                                                    + "vinyl_tint='" + doorWindow.Colour + "', "
+                                                                                    + "spreader_bar=" + doorWindow.SpreaderBar + ", "
+                                                                                    + ");";
+                                                            aCommand.ExecuteNonQuery();
+                                                            break;
+
+                                                        case "Glass":
+                                                            aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES()"
+                                                                                    + "project_id=" + project_id + ", "
+                                                                                    + "linear_index=" + j + ", "
+                                                                                    + "module_index=" + k + ", "
+                                                                                    + "vent_index=" + -1 + ", " //This is not a vent, just solid glass
+                                                                                    + "door_index=" + doorNum + ", " //This is a window
+                                                                                    + "glass_type='" + "" + "', "
+                                                                                    + "start_height=" + doorWindow.StartHeight + ", "
+                                                                                    + "end_height=" + doorWindow.EndHeight + ", "
+                                                                                    + "length=" + doorWindow.Length + ", "
+                                                                                    + "glass_tint='" + doorWindow.Colour + "', "
+                                                                                    + "tempered=" + 0 + ", "
+                                                                                    + "operation=" + 0 + ", "
+                                                                                    + ");";
+                                                            aCommand.ExecuteNonQuery();
+                                                            break;
+
+                                                        case "Vertical 4 Track":
+                                                            for (int vents = 0; vents < doorWindow.NumVents; vents++)
+                                                            {
+                                                                aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                                                        + "project_id=" + project_id + ", "
+                                                                                        + "linear_index=" + j + ", "
+                                                                                        + "module_index=" + k + ", "
+                                                                                        + "vent_index=" + vents + ", " //This is not in a vent, this is just solid vinyl
+                                                                                        + "door_index=" + doorNum + ", " //This is a window, so it is 0
+                                                                                        + "start_height=" + doorWindow.StartHeight + ", "
+                                                                                        + "end_height=" + doorWindow.EndHeight + ", "
+                                                                                        + "length=" + doorWindow.Length + ", "
+                                                                                        + "vinyl_tint='" + doorWindow.Colour.Substring(vents, 1) + "', "
+                                                                                        + "spreader_bar=" + doorWindow.SpreaderBar + ", "
+                                                                                        + ");";
+                                                                aCommand.ExecuteNonQuery();
+                                                            }
+                                                            break;
+
+                                                        case "Horizontal 2 Track":
+                                                            aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                                                    + "project_id=" + project_id + ", "
+                                                                                    + "linear_index=" + j + ", "
+                                                                                    + "module_index=" + k + ", "
+                                                                                    + "vent_index=" + -1 + ", " //This is not in a vent, this is just solid vinyl
+                                                                                    + "door_index=" + doorNum + ", " //This is a window, so it is 0
+                                                                                    + "start_height=" + doorWindow.StartHeight + ", "
+                                                                                    + "end_height=" + doorWindow.EndHeight + ", "
+                                                                                    + "length=" + doorWindow.Length + ", "
+                                                                                    + "vinyl_tint='" + doorWindow.Colour + "', "
+                                                                                    + "spreader_bar=" + doorWindow.SpreaderBar + ", "
+                                                                                    + ");";
+                                                            aCommand.ExecuteNonQuery();
+                                                            break;
+
+                                                        case "Horizontal Roller":
+                                                            aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                                                    + "project_id=" + project_id + ", "
+                                                                                    + "linear_index=" + j + ", "
+                                                                                    + "module_index=" + k + ", "
+                                                                                    + "vent_index=" + -1 + ", " //This is not in a vent, this is just solid vinyl
+                                                                                    + "door_index=" + doorNum + ", " //This is a window, so it is 0
+                                                                                    + "start_height=" + doorWindow.StartHeight + ", "
+                                                                                    + "end_height=" + doorWindow.EndHeight + ", "
+                                                                                    + "length=" + doorWindow.Length + ", "
+                                                                                    + "vinyl_tint='" + doorWindow.Colour + "', "
+                                                                                    + "spreader_bar=" + doorWindow.SpreaderBar + ", "
+                                                                                    + ");";
+                                                            aCommand.ExecuteNonQuery();
+                                                            break;
+
+                                                        //case "Single Slider":
+                                                        //    break;
+
+                                                        //case "Double Slider":
+                                                        //    break;
+
+                                                        case "Screen":
+                                                            aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length, mount) VALUES("
+                                                                                    + "project_id=" + project_id + ", "
+                                                                                    + "linear_index=" + j + ", "
+                                                                                    + "module_index=" + k + ", "
+                                                                                    + "door_index=" + doorNum + ", " //This is a window, so 0
+                                                                                    + "screen_type='" + doorWindow.ScreenType + "', "
+                                                                                    + "start_height=" + doorWindow.StartHeight + ", "
+                                                                                    + "end_height=" + doorWindow.EndHeight + ", "
+                                                                                    + "length=" + doorWindow.Length + ", "
+                                                                                    + "mount='" + "In" + "'" //A screen window is inside mount, whereas a screen on a window of another type is outside mounted (handled below)
+                                                                                    + ");";
+                                                            aCommand.ExecuteNonQuery();
+                                                            break;                                                            
+                                                        #endregion
+                                                    }
+                                                    //If not a french door, we'll only have 1 door, so just increment this to cheat out of the loop
+                                                    if (aDoor.DoorType != "French")
+                                                    {
+                                                        doorNum++;
+                                                    }
                                                 }
                                             }
                                             else if (aDoor.DoorType == "Patio")
                                             {
+                                                Window doorWindow = aDoor.DoorWindow;
                                                 switch (aDoor.DoorStyle)
                                                 {
                                                     case "Aluminum Storm Screen":
+                                                        aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES()"
+                                                                                + "project_id=" + project_id + ", "
+                                                                                + "linear_index=" + j + ", "
+                                                                                + "module_index=" + k + ", "
+                                                                                + "vent_index=" + -1 + ", " //This is not a vent, just solid glass
+                                                                                + "door_index=" + 1 + ", " //This is a window
+                                                                                + "glass_type='" + "" + "', "
+                                                                                + "start_height=" + doorWindow.StartHeight + ", "
+                                                                                + "end_height=" + doorWindow.EndHeight + ", "
+                                                                                + "length=" + doorWindow.Length + ", "
+                                                                                + "glass_tint='" + doorWindow.Colour + "', "
+                                                                                + "tempered=" + 0 + ", "
+                                                                                + "operation=" + 0 + ", "
+                                                                                + ");";
+                                                        aCommand.ExecuteNonQuery();
                                                         break;
                                                     case "Aluminum Storm Glass":
+                                                        aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES()"
+                                                                                + "project_id=" + project_id + ", "
+                                                                                + "linear_index=" + j + ", "
+                                                                                + "module_index=" + k + ", "
+                                                                                + "vent_index=" + -1 + ", " //This is not a vent, just solid glass
+                                                                                + "door_index=" + 1 + ", " //This is a window
+                                                                                + "glass_type='" + "" + "', "
+                                                                                + "start_height=" + doorWindow.StartHeight + ", "
+                                                                                + "end_height=" + doorWindow.EndHeight + ", "
+                                                                                + "length=" + doorWindow.Length + ", "
+                                                                                + "glass_tint='" + doorWindow.Colour + "', "
+                                                                                + "tempered=" + 0 + ", "
+                                                                                + "operation=" + 0 + ", "
+                                                                                + ");";
+                                                        aCommand.ExecuteNonQuery();
                                                         break;
                                                     case "Vinyl Guard":
                                                         break;
@@ -406,6 +591,85 @@ namespace SunspaceDealerDesktop
                     }
                     #endregion
 
+                    #region Roof
+                    if (Session["newProjectHasRoof"].ToString() != "")
+                    {
+                        Roof aRoof = (Roof)Session["completedRoof"];
+                        aCommand.CommandText = "INSERT INTO roofs(project_id, roof_index, roof_type, interior_skin, exterior_skin, thickness, fire_protection, thermadeck, acrylic, gutter, gutter_pro, gutter_colour, projection, width) VALUES()"
+                                                + "project_id=" + project_id + ", "
+                                                + "roof_index=" + 0 + ", "
+                                                + "roof_type='" + Session["newProjectRoofType"] + "', "
+                                                + "interior_skin='" + aRoof.InteriorSkin + "', " 
+                                                + "exterior_skin='" + aRoof.ExteriorSkin + "', " 
+                                                + "thickness=" + aRoof.Thickness + ", "
+                                                + "fire_protection=" + aRoof.FireProtection + ", "
+                                                + "thermadeck=" + aRoof.Thermadeck + ", "
+                                                + "acrylic=" + 0 + ", " //CHANGEME
+                                                + "gutter=" + aRoof.Gutters + ", "
+                                                + "gutter_pro=" + aRoof.GutterPro + ", "
+                                                + "gutter_colour='" + aRoof.GutterColour + "', "
+                                                + "projection=" + aRoof.Projection + ", "
+                                                + "width=" + aRoof.Width
+                                                + ");";
+                        aCommand.ExecuteNonQuery();
+
+                        //Now insert the needed roof modules
+
+                        for (int roofModules=0; roofModules < aRoof.RoofModules.Count; roofModules++)
+                        {
+                            string roof_view;
+                            if (Session["newProjectRoofType"] == "Studio")
+                            {
+                                //If it's a studio roof, we have a single studio roof module
+                                roof_view = "S";
+                            }
+                            else if(roofModules ==0)
+                            {
+                                //If it's not studio, and it's the first module, it's gable left
+                                roof_view = "GL";
+                            }
+                            else
+                            {
+                                //Otherwise it's gable right
+                                roof_view = "GR";
+                            }
+
+                            aCommand.CommandText = "INSERT INTO roof_modules(project_id, roof_index, roof_view, interior_skin, exterior_skin, number_items, projection, width) VALUES()"
+                                                + "project_id=" + project_id + ", "
+                                                + "roof_index=" + 0 + ", "
+                                                + "roof_view='" + roof_view + "', "
+                                                + "interior_skin='" + aRoof.InteriorSkin + "', " 
+                                                + "exterior_skin='" + aRoof.ExteriorSkin + "', " 
+                                                + "number_items=" + aRoof.RoofModules[roofModules].RoofItems.Count + ", "
+                                                + "projection=" + aRoof.RoofModules[roofModules].Projection + ", "
+                                                + "width=" + aRoof.RoofModules[roofModules].Width
+                                                + ");";
+                            aCommand.ExecuteNonQuery();
+
+                            //We also enter the roof items
+                            for (int roofItems=0; roofItems < aRoof.RoofModules[roofModules].RoofItems.Count; roofItems++)
+                            {
+                                aCommand.CommandText = "INSERT INTO roof_items(project_id, roof_index, roof_view, item_index, roof_item, projection, width) VALUES()"
+                                                + "project_id=" + project_id + ", "
+                                                + "roof_index=" + 0 + ", "
+                                                + "roof_view='" + roof_view + "', "
+                                                + "item_index=" + roofItems + ", "
+                                                + "roof_item='" + aRoof.RoofModules[roofModules].RoofItems[roofItems].ItemType + "', "
+                                                + "projection=" + aRoof.RoofModules[roofModules].RoofItems[roofItems].Projection + ", "
+                                                + "width=" + aRoof.RoofModules[roofModules].RoofItems[roofItems].Width
+                                                + ");";
+                                aCommand.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region Floor
+                    if (Session["newProjectPrefabFloor"] != "")
+                    {
+
+                    }
+                    #endregion
                     //lblError.Text = "Successfully Updated!\n\n";
                     aTransaction.Commit();
                 }

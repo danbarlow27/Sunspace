@@ -299,7 +299,7 @@ namespace SunspaceDealerDesktop
                 Roof aRoof = new Roof("Dealer Gable", hidInteriorRoofSkin.Value, hidExteriorRoofSkin.Value, Convert.ToSingle(hidThickness.Value), isFireProtected, isThermadeck, hasGutters, gutterPro, hidGutterColour.Value, hidStripeColour.Value, 0, roofProjection, roofWidth, gableModules);
                 Session.Add("completedRoof", aRoof);
 
-                Response.Redirect("RoofTesting.aspx");
+                Response.Redirect("SkylightWizard.aspx");
             }
             #endregion
 
@@ -323,7 +323,7 @@ namespace SunspaceDealerDesktop
                 }
                 else
                 {
-                    roofProjection += (Convert.ToSingle(hidOverhang.Value) * 2);
+                    roofProjection += (Convert.ToSingle(hidOverhang.Value));
                     roofWidth += (Convert.ToSingle(hidOverhang.Value) * 2);
                 }
             
@@ -375,7 +375,7 @@ namespace SunspaceDealerDesktop
                 Roof aRoof = new Roof("Studio", hidInteriorRoofSkin.Value, hidExteriorRoofSkin.Value, Convert.ToSingle(hidThickness.Value), isFireProtected, isThermadeck, hasGutters, gutterPro, hidGutterColour.Value, hidStripeColour.Value, 0, roofProjection, roofWidth, aModuleList);
                 Session.Add("completedRoof", aRoof);
 
-                Response.Redirect("RoofTesting.aspx");
+                Response.Redirect("SkylightWizard.aspx");
             }
             #endregion
         }
@@ -434,13 +434,13 @@ namespace SunspaceDealerDesktop
             if (hidSystem.Value != "Thermadeck")
             {
                 //Add the first panel, because if we loop adding panel+seperator, we will end with one extra
-                itemList.Add(new RoofItem(panelType, roofProjection, panelWidth));
+                itemList.Add(new RoofItem(panelType, roofProjection, panelWidth, -1f, -1f));
 
                 //loop adding seperator then panels, minus one iteration because one panel is already added
                 for (int i = 0; i < (numberOfPanels - 1); i++)
                 {
-                    itemList.Add(new RoofItem(panelBeamType, roofProjection, (float)panelBeamWidth));
-                    itemList.Add(new RoofItem(panelType, roofProjection, panelWidth));
+                    itemList.Add(new RoofItem(panelBeamType, roofProjection, (float)panelBeamWidth, -1f, -1f));
+                    itemList.Add(new RoofItem(panelType, roofProjection, panelWidth, -1f, -1f));
                 }
             }
             //if it is thermadeck
@@ -448,7 +448,7 @@ namespace SunspaceDealerDesktop
             {
                 for (int i = 0; i < numberOfPanels; i++)
                 {
-                    itemList.Add(new RoofItem(panelType, roofProjection, panelWidth));
+                    itemList.Add(new RoofItem(panelType, roofProjection, panelWidth, -1f, -1f));
                 }
             }
             float itemWidthTotal = 0;
@@ -542,13 +542,13 @@ namespace SunspaceDealerDesktop
             {
                 //Add the first panel, because if we loop adding panel+seperator, we will end with one extra
                 //We use roofProjection / 2 for the following, because this is just one side of the gable roof, thus half the projection
-                itemList.Add(new RoofItem(panelType, projectionOne, panelWidth));
+                itemList.Add(new RoofItem(panelType, projectionOne, panelWidth, -1f, -1f));
 
                 //loop adding seperator then panels, minus one iteration because one panel is already added
                 for (int i = 0; i < (numberOfPanels - 1); i++)
                 {
-                    itemList.Add(new RoofItem(panelBeamType, projectionOne, (float)panelBeamWidth));
-                    itemList.Add(new RoofItem(panelType, projectionOne, panelWidth));
+                    itemList.Add(new RoofItem(panelBeamType, projectionOne, (float)panelBeamWidth, -1f, -1f));
+                    itemList.Add(new RoofItem(panelType, projectionOne, panelWidth, -1f, -1f));
                 }
             }
             //if it is thermadeck
@@ -556,7 +556,7 @@ namespace SunspaceDealerDesktop
             {
                 for (int i = 0; i < numberOfPanels; i++)
                 {
-                    itemList.Add(new RoofItem(panelType, projectionOne, panelWidth));
+                    itemList.Add(new RoofItem(panelType, projectionOne, panelWidth, -1f, -1f));
                 }
             }
             float itemWidthTotal = 0;

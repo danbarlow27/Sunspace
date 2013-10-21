@@ -28,33 +28,33 @@ namespace SunspaceDealerDesktop
         {
             if (!IsPostBack)
             {
-                //for both
-                List<RoofItem> testItems = new List<RoofItem>();
-                testItems.Add(new RoofItem("Foam Panel", 276f, 48f));
-                testItems.Add(new RoofItem("I-Beam", 276f, 0.5f));
-                testItems.Add(new RoofItem("Foam Panel", 276f, 48f));
-                testItems.Add(new RoofItem("I-Beam", 276f, 0.5f));
-                testItems.Add(new RoofItem("Foam Panel", 276f, 48f));
-                testItems.Add(new RoofItem("I-Beam", 276f, 0.5f));
-                testItems.Add(new RoofItem("Foam Panel", 276f, 44.5f));
+                ////for both
+                //List<RoofItem> testItems = new List<RoofItem>();
+                //testItems.Add(new RoofItem("Foam Panel", 276f, 48f));
+                //testItems.Add(new RoofItem("I-Beam", 276f, 0.5f));
+                //testItems.Add(new RoofItem("Foam Panel", 276f, 48f));
+                //testItems.Add(new RoofItem("I-Beam", 276f, 0.5f));
+                //testItems.Add(new RoofItem("Foam Panel", 276f, 48f));
+                //testItems.Add(new RoofItem("I-Beam", 276f, 0.5f));
+                //testItems.Add(new RoofItem("Foam Panel", 276f, 44.5f));
 
-                //for gable
-                List<RoofItem> testItems2 = new List<RoofItem>();
-                testItems2.Add(new RoofItem("Foam Panel", 276f, 44.5f));
-                testItems2.Add(new RoofItem("I-Beam", 276f, 0.5f));
-                testItems2.Add(new RoofItem("Foam Panel", 276f, 48f));
-                testItems2.Add(new RoofItem("I-Beam", 276f, 0.5f));
-                testItems2.Add(new RoofItem("Foam Panel", 276f, 48f));
-                testItems2.Add(new RoofItem("I-Beam", 276f, 0.5f));
-                testItems2.Add(new RoofItem("Foam Panel", 276f, 48f));
+                ////for gable
+                //List<RoofItem> testItems2 = new List<RoofItem>();
+                //testItems2.Add(new RoofItem("Foam Panel", 276f, 44.5f));
+                //testItems2.Add(new RoofItem("I-Beam", 276f, 0.5f));
+                //testItems2.Add(new RoofItem("Foam Panel", 276f, 48f));
+                //testItems2.Add(new RoofItem("I-Beam", 276f, 0.5f));
+                //testItems2.Add(new RoofItem("Foam Panel", 276f, 48f));
+                //testItems2.Add(new RoofItem("I-Beam", 276f, 0.5f));
+                //testItems2.Add(new RoofItem("Foam Panel", 276f, 48f));
 
-                List<RoofModule> testModules = new List<RoofModule>();
-                testModules.Add(new RoofModule(276, 190, "osb", "osb", testItems));
-                testModules.Add(new RoofModule(276, 190, "osb", "osb", testItems2));
+                //List<RoofModule> testModules = new List<RoofModule>();
+                //testModules.Add(new RoofModule(276, 190, "osb", "osb", testItems));
+                //testModules.Add(new RoofModule(276, 190, "osb", "osb", testItems2));
 
                 //Roof testRoof = new Roof("Studio", "osb", "osb", 3, false, false, false, false, "White", "White", 0, 120, 120, testModules);
-                Roof testRoof = new Roof("Dealer Gable", "osb", "osb", 3, false, false, false, false, "White", "White", 0, 120, 120, testModules);
-                Session.Add("completedRoof", testRoof);
+                //Roof testRoof = new Roof("Dealer Gable", "osb", "osb", 3, false, false, false, false, "White", "White", 0, 120, 120, testModules);
+                //Session.Add("completedRoof", testRoof);
 
                 Roof aRoof = (Roof)Session["completedRoof"];
                 List<RoofModule> moduleList = aRoof.RoofModules;
@@ -91,7 +91,7 @@ namespace SunspaceDealerDesktop
                         Label textLabel = new Label();
                         textLabel.ID = "lblPanel" + (panelsProcessed);
                         textLabel.AssociatedControlID = "radPanel" + (panelsProcessed);
-                        textLabel.Text = "Panel " + (panelsProcessed);
+                        textLabel.Text = "Panel " + (panelsProcessed) + panelSizeArray[j].ToString();
 
                         panelOptionPlaceholder.Controls.Add(new LiteralControl("<li>"));
                         panelOptionPlaceholder.Controls.Add(aRadioButton);
@@ -241,8 +241,50 @@ namespace SunspaceDealerDesktop
         }
         protected void btnQuestion1_Click(object sender, EventArgs e)
         {
-            //add db entry for each skylight
-            //add db entry for each fanbeam
+            Roof aRoof = (Roof)Session["completedRoof"];
+            List<RoofModule> moduleList = aRoof.RoofModules;
+
+            //Array of panel sizes which will be passed to javascript
+            List<float> panelSizeArray = new List<float>();
+            int panelsProcessed = 0;
+            int numberOfPanels = 0;
+
+            //Loop for each roof module
+            for (int i = 0; i < aRoof.RoofModules.Count; i++)
+            {
+                //At i's roof module, loop for all roof items to find number of panels
+                for (int j = 0; j < aRoof.RoofModules[i].RoofItems.Count(); j++)
+                {
+                    if (aRoof.RoofModules[i].RoofItems[j].ItemType.Contains("Panel"))
+                    {
+                        numberOfPanels++;
+                        panelSizeArray.Add(aRoof.RoofModules[i].RoofItems[j].Width);
+                    }
+                }
+                for (int j = 0; j < numberOfPanels; j++)
+                {
+                    panelsProcessed++;
+
+                    if (Request.Form["MainContent_hidHasBeam" + panelsProcessed] == "Yes")
+                    {
+                        aRoof.RoofModules[i].RoofItems[j].FanBeam = Convert.ToSingle(Request.Form["MainContent_hidBeamStart" + panelsProcessed]);
+                    }
+                    if (Request.Form["MainContent_hidHasSkylight" + panelsProcessed] == "Yes")
+                    {
+                        aRoof.RoofModules[i].RoofItems[j].FanBeam = Convert.ToSingle(Request.Form["MainContent_hidSkylightStart" + panelsProcessed]);
+                    }
+                }
+            }
+
+            Session["completedRoof"] = aRoof;
+            if (Session["newProjectPrefabFloor"] != "")
+            {
+                Response.Redirect("WizardFloors.aspx");
+            }
+            else
+            {
+                Response.Redirect("ProjectPreview.aspx");
+            }
         }
     }
 }
