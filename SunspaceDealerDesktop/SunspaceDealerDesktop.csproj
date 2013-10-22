@@ -190,6 +190,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="DoorOnlyOrder.aspx" />
     <Content Include="GenerateMods.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="Images\layout\Preset1.png" />
@@ -356,6 +357,13 @@
     </Compile>
     <Compile Include="Customer.cs" />
     <Compile Include="Door.cs" />
+    <Compile Include="DoorOnlyOrder.aspx.cs">
+      <DependentUpon>DoorOnlyOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DoorOnlyOrder.aspx.designer.cs">
+      <DependentUpon>DoorOnlyOrder.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Filler.cs" />
     <Compile Include="FrenchDoor.cs" />
     <Compile Include="GenerateMods.aspx.cs">

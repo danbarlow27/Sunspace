@@ -91,7 +91,7 @@ namespace SunspaceDealerDesktop
                         Label textLabel = new Label();
                         textLabel.ID = "lblPanel" + (panelsProcessed);
                         textLabel.AssociatedControlID = "radPanel" + (panelsProcessed);
-                        textLabel.Text = "Panel " + (panelsProcessed) + panelSizeArray[j].ToString();
+                        textLabel.Text = "Panel " + (panelsProcessed) + " - " + panelSizeArray[j].ToString();
 
                         panelOptionPlaceholder.Controls.Add(new LiteralControl("<li>"));
                         panelOptionPlaceholder.Controls.Add(aRadioButton);
