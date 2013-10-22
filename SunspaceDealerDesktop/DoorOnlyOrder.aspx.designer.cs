@@ -7,47 +7,36 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SunspaceDealerDesktop
-{
-
-
-    public partial class Home1
-    {
-
+namespace SunspaceDealerDesktop {
+    
+    
+    public partial class DoorOnlyOrder {
+        
         /// <summary>
-        /// btnAddUsers control.
+        /// lblQuestion1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddUsers;
-
+        protected global::System.Web.UI.WebControls.Label lblQuestion1;
+        
         /// <summary>
-        /// btnNewProject control.
+        /// slide1DoorInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnNewProject;
-
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl slide1DoorInfo;
+        
         /// <summary>
-        /// btnPreferences control.
+        /// txtErrorMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPreferences;
-
-        /// <summary>
-        /// btnSpoof control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSpoof;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtErrorMessage;
     }
 }
