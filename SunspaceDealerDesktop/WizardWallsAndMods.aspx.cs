@@ -3950,7 +3950,6 @@ namespace SunspaceDealerDesktop
                                 doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight - aDoor.Kickplate - 4; //4 corresponds to the amount of framing at a bottom of a door
                                 doorWindow.StartHeight = doorWindow.EndHeight = aDoor.FStartHeight - aDoor.Kickplate - 4 - 2.125f;
                                 doorWindow.ItemType = "Window";
-                                doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
                                 doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
 
@@ -3958,6 +3957,7 @@ namespace SunspaceDealerDesktop
                                 if (doorWindow.WindowType == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
                                 {
                                     doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2); //Find center of window, then place center of spreader bar at that position (by subtracting half of it)
+                                    doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
                                 }
                                 if (doorWindow.WindowType == "Horizontal Roller" && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
                                 {
