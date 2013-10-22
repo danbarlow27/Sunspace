@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SunspaceDealerDesktop {
-    
-    
-    public partial class Home1 {
-        
+namespace SunspaceDealerDesktop
+{
+
+
+    public partial class Home1
+    {
+
         /// <summary>
         /// btnAddUsers control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddUsers;
-        
+
         /// <summary>
         /// btnNewProject control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnNewProject;
-        
+
         /// <summary>
         /// btnPreferences control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPreferences;
-        
+
         /// <summary>
         /// btnSpoof control.
         /// </summary>
