@@ -215,6 +215,7 @@
     <Content Include="Images\layout\Preset6.png" />
     <Content Include="Images\layout\Preset6G.png" />
     <Content Include="Images\layout\Preset6M.png" />
+    <Content Include="Images\layout\Preset6MG.png" />
     <Content Include="Images\layout\Preset7.png" />
     <Content Include="Images\layout\Preset7M.png" />
     <Content Include="Images\layout\Preset8.png" />
