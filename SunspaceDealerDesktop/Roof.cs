@@ -14,6 +14,7 @@ namespace SunspaceDealerDesktop
         private double thickness;
         private bool fireProtection;
         private bool thermadeck;
+        private bool acrylic;
         private bool gutters;
         private bool gutterPro;
         private string gutterColour;
@@ -33,6 +34,7 @@ namespace SunspaceDealerDesktop
             Thickness=0;
             FireProtection=false;
             Thermadeck=false;
+            acrylic = false;
             Gutters=false;
             GutterPro=false;
             GutterColour = "";
@@ -141,6 +143,19 @@ namespace SunspaceDealerDesktop
             set
             {
                 thermadeck = value;
+            }
+        }
+
+        public bool Acrylic
+        {
+            get
+            {
+                return acrylic;
+            }
+
+            set
+            {
+                acrylic = value;
             }
         }
 

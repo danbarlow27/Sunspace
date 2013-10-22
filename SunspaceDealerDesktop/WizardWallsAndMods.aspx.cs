@@ -3945,7 +3945,7 @@ namespace SunspaceDealerDesktop
 
                                 Window doorWindow = new Window();
                                 doorWindow.WindowType = Request.Form["hidWall" + i + "Door" + j + "style"];
-                                doorWindow.FLength = aDoor.FLength - 11.5f;
+                                doorWindow.FLength = aDoor.FLength - 11.5f; //11.5 is the amount of door between edge of door and start of window (both sides totalled to 11.5)
                                 doorWindow.Length = doorWindow.FLength - 2.125f;
                                 doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight - aDoor.Kickplate - 4; //4 corresponds to the amount of framing at a bottom of a door
                                 doorWindow.StartHeight = doorWindow.EndHeight = aDoor.FStartHeight - aDoor.Kickplate - 4 - 2.125f;

@@ -275,7 +275,9 @@ namespace SunspaceDealerDesktop
             Session.Add("newProjectExteriorSkin", hidExteriorSkin.Value.ToString());
             newProjectArray[23] = hidFoamProtected.Value.ToString();
             newProjectArray[24] = hidPrefabFloor.Value.ToString();
+            Session.Add("newProjectPrefabFloor", hidPrefabFloor.Value.ToString());
             newProjectArray[25] = hidRoof.Value.ToString();
+            Session.Add("newProjectHasRoof", hidRoof.Value.ToString());
             newProjectArray[26] = hidRoofType.Value.ToString();
             Session.Add("newProjectRoofType", hidRoofType.Value.ToString());
             newProjectArray[27] = hidLayoutSelection.Value.ToString();

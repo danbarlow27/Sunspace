@@ -1550,6 +1550,19 @@
                     }
                 }
             }
+
+            //Validate custom kickplate
+            for (var i = 0; i < coordList.length; i++)
+            {
+                if (isNaN(document.getElementById('MainContent_rowDoorCustomKickplate' + i + "Cabana").value))
+                {
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "Kickplates must be a valid number.";                   
+                }
+                else if(document.getElementById('MainContent_rowDoorCustomKickplate' + i + "Cabana").value != 4 && document.getElementById('MainContent_rowDoorCustomKickplate' + i + "Cabana").value <10)
+                {
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "Kickplates must equal 4\" or be greater than or equal to 10\"";     
+                }
+            }
         }
         
         function checkRoofPanels() {

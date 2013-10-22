@@ -19,7 +19,7 @@
 
                     //Can't be <12, because can't be within a foot of the edges
                     //skylightwidth+12 >panelSizes-12 because, the ending point of a skylight must be more than 1ft from ending edge of a panel
-                    if ($('#MainContent_txtFanBeam'+i).val() == "" || (parseFloat($('#MainContent_txtFanBeam'.concat(i)).val())+parseFloat($('#MainContent_ddlFanBeamInches').val())) < 12 || (parseFloat($('#MainContent_txtFanBeam'.concat(i)).val())+parseFloat($('#MainContent_ddlFanBeamInches'.concat(i)).val())+<%=SKYLIGHT_WIDTH%>) > (panelSizes[i]-12)){
+                    if ($('#MainContent_txtFanBeam'+i).val() == "" || isNaN($('#MainContent_txtFanBeam'+i).val()) || (parseFloat($('#MainContent_txtFanBeam'.concat(i)).val())+parseFloat($('#MainContent_ddlFanBeamInches').val())) < 12 || (parseFloat($('#MainContent_txtFanBeam'.concat(i)).val())+parseFloat($('#MainContent_ddlFanBeamInches'.concat(i)).val())+<%=SKYLIGHT_WIDTH%>) > (panelSizes[i]-12)){
                         //invalid fanbeam entry
                         validInputs = false;
                     }
@@ -31,50 +31,14 @@
                     document.getElementById('MainContent_hidHasSkylight'.concat(i)).value = "Yes";
 
                     //Can't be <12, because can't be within a foot of the edges
-                    if ($('#MainContent_txtSkylight'.concat(i)).val() == "" || (parseFloat($('#MainContent_txtSkylight'.concat(i)).val()) + parseFloat($('#MainContent_ddlSkylightInches'.concat(i)).val())) < 12){
+                    if ($('#MainContent_txtSkylight'.concat(i)).val() == "" || isNaN($('#MainContent_txtSkylight'+i).val()) ||(parseFloat($('#MainContent_txtSkylight'.concat(i)).val()) + parseFloat($('#MainContent_ddlSkylightInches'.concat(i)).val())) < 12){
                         //invalid fanbeam entry
                         validInputs = false;
                     }
                 }
                 else{                    
                     document.getElementById('MainContent_hidHasSkylight'.concat(i)).value = "No";
-                }
-
-                if ($('#MainContent_txtFanBeam'.concat(i)).val() == "")
-                {
-                    //error
-                    validInputs = false;
-                }
-                else
-                {
-                    if (isNaN(parseFloat($('#MainContent_txtFanBeam'.concat(i)).val())))
-                    {
-                        //error
-                        validInputs = false;
-                    }
-                    else
-                    {
-                        document.getElementById('MainContent_hidBeamStart'.concat(i)).value = (parseFloat($('#MainContent_txtFanBeam'.concat(i)).val()) + parseFloat($('#MainContent_ddlFanBeamInches'.concat(i)).val()));
-                    }
-                }
-
-                if ($('#MainContent_txtSkylight'.concat(i)).val() == "")
-                {
-                    //error
-                    validInputs = false;
-                }
-                else
-                {
-                    if (isNaN(parseFloat($('#MainContent_txtSkylight'.concat(i)).val())))
-                    {
-                        //error
-                        validInputs = false;
-                    }
-                    else
-                    {
-                        document.getElementById('MainContent_hidSkylightStart'.concat(i)).value = parseFloat($('#MainContent_txtSkylight'.concat(i)).val()) + parseFloat($('#MainContent_ddlSkylightInches'.concat(i)).val());
-                    }
-                }
+                }                
             }
 
             if (validInputs == true)
@@ -115,7 +79,7 @@
                     <asp:PlaceHolder ID="panelOptionPlaceholder" runat="server"></asp:PlaceHolder> 
                 </ul>
                 
-                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" OnClick="btnQuestion1_Click" />
+                <asp:Button ID="btnQuestion1" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Submit" OnClick="btnQuestion1_Click" />
             </div>
         </div>
     </div>

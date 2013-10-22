@@ -343,6 +343,8 @@ namespace SunspaceDealerDesktop
         public const float MIN_SLAB_SIZE = 25f;
         public const float MAX_SLAB_SIZE = 42f;
 
+        public const float PATIO_FRAMING = 2F;
+
         #endregion Doors
 
         #region Windows
@@ -551,7 +553,7 @@ namespace SunspaceDealerDesktop
 
         #region Kickplate
 
-        public static string[] KICKPLATE_SIZE_OPTIONS = { "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "Custom" };
+        public static string[] KICKPLATE_SIZE_OPTIONS = { "4", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "Custom" };
 
         #endregion
 
