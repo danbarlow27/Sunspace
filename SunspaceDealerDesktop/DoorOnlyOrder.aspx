@@ -3,20 +3,22 @@
 <div class="slide-window" id="slide-window" >
 
         <div class="slide-wrapper">
-            
-            <%-- QUESTION 1 - Door Info
+            <%-- QUESTION 3 - DOOR OPTIONS/DETAILS
             ======================================== --%>
-            <div id="slide1" class="slide">
 
+            <div id="slide3" class="slide">
                 <h1>
-                    <%-- Label for question 1 (Door Info) --%>
-                    <asp:Label ID="lblQuestion1" runat="server" Text="Please select door details"></asp:Label>
+                    <asp:Label ID="lblDoorDetails" runat="server" Text="Door Details"></asp:Label>
                 </h1>        
+                              
+                <ul class="toggleOptions">
+                    <asp:PlaceHolder ID="DoorOptions" runat="server"></asp:PlaceHolder>                    
+                </ul>            
 
-                <div id="slide1DoorInfo" runat="server" >
-                </div>
+                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question"/>
 
             </div>
+            <%-- end #slide3 --%>
 
          </div>
     </div>
@@ -38,6 +40,9 @@
                     <%--<div style="display: none" id="pagerOne">
                         <li>
                                 <a href="#" data-slide="#slide1" class="slidePanel">
+                                    <asp:Label ID="" runat="server" Text=""></asp:Label>
+                                    <asp:Label ID="" runat="server" Text=""></asp:Label>
+
                                     <asp:Label ID="lblWallLengthsSlidePanel" runat="server" Text="Wall Lengths"></asp:Label>
                                     <asp:Label ID="lblWallLengthsAnswer" runat="server" Text="Wall Lengths"></asp:Label>
                                 </a>
