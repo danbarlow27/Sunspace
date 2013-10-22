@@ -448,7 +448,7 @@ namespace SunspaceDealerDesktop
                 insertNewCustomer();
             }
             //required session stuff before forwarding
-            Response.Redirect("Home.aspx");
+            Response.Redirect("DoorOnlyOrder.aspx");
         }
 
         //This function will add a new user to the customer database at an applicable time when the page is completed and has been posted back.
