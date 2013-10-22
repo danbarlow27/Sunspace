@@ -3,7 +3,6 @@
 <div class="slide-window" id="slide-window" >
 
         <div class="slide-wrapper">
-            
             <%-- QUESTION 3 - DOOR OPTIONS/DETAILS
             ======================================== --%>
 
@@ -43,6 +42,9 @@
                                 <a href="#" data-slide="#slide1" class="slidePanel">
                                     <asp:Label ID="" runat="server" Text=""></asp:Label>
                                     <asp:Label ID="" runat="server" Text=""></asp:Label>
+
+                                    <asp:Label ID="lblWallLengthsSlidePanel" runat="server" Text="Wall Lengths"></asp:Label>
+                                    <asp:Label ID="lblWallLengthsAnswer" runat="server" Text="Wall Lengths"></asp:Label>
                                 </a>
                         </li>
                     </div>--%>

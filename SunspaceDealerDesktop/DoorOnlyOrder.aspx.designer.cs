@@ -13,13 +13,13 @@ namespace SunspaceDealerDesktop {
     public partial class DoorOnlyOrder {
         
         /// <summary>
-        /// lblQuestion1 control.
+        /// lblDoorDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblQuestion1;
+        protected global::System.Web.UI.WebControls.Label lblDoorDetails;
         
         /// <summary>
         /// DoorOptions control.
@@ -29,6 +29,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder DoorOptions;
+        
+        /// <summary>
+        /// btnQuestion3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnQuestion3;
         
         /// <summary>
         /// txtErrorMessage control.
