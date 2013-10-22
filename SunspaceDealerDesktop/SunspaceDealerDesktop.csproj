@@ -193,6 +193,51 @@
     <Content Include="DoorOnlyOrder.aspx" />
     <Content Include="GenerateMods.aspx" />
     <Content Include="Home.aspx" />
+    <Content Include="Images\accent.png" />
+    <Content Include="Images\bullet.png" />
+    <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\iconSearch.png" />
+    <Content Include="Images\iconsNav.png" />
+    <Content Include="Images\layout\Preset1.png" />
+    <Content Include="Images\layout\Preset10.png" />
+    <Content Include="Images\layout\Preset10G.png" />
+    <Content Include="Images\layout\Preset1G.png" />
+    <Content Include="Images\layout\Preset2.png" />
+    <Content Include="Images\layout\Preset2G.png" />
+    <Content Include="Images\layout\Preset3.png" />
+    <Content Include="Images\layout\Preset3G.png" />
+    <Content Include="Images\layout\Preset4.png" />
+    <Content Include="Images\layout\Preset4M.png" />
+    <Content Include="Images\layout\Preset5.png" />
+    <Content Include="Images\layout\Preset5G.png" />
+    <Content Include="Images\layout\Preset5M.png" />
+    <Content Include="Images\layout\Preset5MG.png" />
+    <Content Include="Images\layout\Preset6.png" />
+    <Content Include="Images\layout\Preset6G.png" />
+    <Content Include="Images\layout\Preset6M.png" />
+    <Content Include="Images\layout\Preset7.png" />
+    <Content Include="Images\layout\Preset7M.png" />
+    <Content Include="Images\layout\Preset8.png" />
+    <Content Include="Images\layout\Preset8G.png" />
+    <Content Include="Images\layout\Preset8M.png" />
+    <Content Include="Images\layout\Preset8MG.png" />
+    <Content Include="Images\layout\Preset9.png" />
+    <Content Include="Images\layout\Preset9G.png" />
+    <Content Include="Images\layout\Preset9M.png" />
+    <Content Include="Images\layout\Preset9MG.png" />
+    <Content Include="Images\layout\PresetC1.png" />
+    <Content Include="Images\layout\PresetS1.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\orderedList0.png" />
+    <Content Include="Images\orderedList1.png" />
+    <Content Include="Images\orderedList2.png" />
+    <Content Include="Images\orderedList3.png" />
+    <Content Include="Images\orderedList4.png" />
+    <Content Include="Images\orderedList5.png" />
+    <Content Include="Images\orderedList6.png" />
+    <Content Include="Images\orderedList7.png" />
+    <Content Include="Images\orderedList8.png" />
+    <Content Include="Images\orderedList9.png" />
     <Content Include="Preferences.aspx" />
     <Content Include="Content\jquery.bxslider.css" />
     <Content Include="Login.aspx" />
@@ -500,9 +545,7 @@
       <DependentUpon>WizardWindows.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Images\layout\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Account\Web.config" />
     <Content Include="Site.Master" />
