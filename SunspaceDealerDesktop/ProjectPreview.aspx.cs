@@ -471,7 +471,7 @@ namespace SunspaceDealerDesktop
                                                                                         + doorWindow.EndHeight + ", "
                                                                                         + doorWindow.Length + ", '"
                                                                                         + doorWindow.Colour.Substring(vents, 1) + "', "
-                                                                                        + doorWindow.SpreaderBar 
+                                                                                        + doorWindow.SpreaderBar
                                                                                         + ");";
                                                                 aCommand.ExecuteNonQuery();
                                                             }
