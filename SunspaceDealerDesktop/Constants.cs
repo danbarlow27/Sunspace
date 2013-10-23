@@ -317,6 +317,8 @@ namespace SunspaceDealerDesktop
         public static string[] DOOR_MODEL_100_PATIO_STYLES = { "Aluminum Storm Screen", "Aluminum Storm Glass" };
         public static string[] DOOR_MODEL_200_300_PATIO_STYLES = { "Aluminum Storm Glass" };
         public static string[] DOOR_MODEL_400_PATIO_STYLES = { "Vinyl Guard" };
+        public static string[] DOOR_ORDER_ENTRY = { "Full Screen", "Vertical 4 Track", "Full View", "Full View Colonial" };
+        public static string[] DOOR_ORDER_PATIO = { "Vinyl Guard", "Aluminum Storm" };
 
         public static string[] DOOR_GLASS_TINTS = { "Grey", "Bronze", "Clear" };
 

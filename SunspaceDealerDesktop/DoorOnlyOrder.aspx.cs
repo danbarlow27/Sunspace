@@ -68,8 +68,15 @@ namespace SunspaceDealerDesktop
                 //Conditional operator to set the current door type with the right label
                 string title = Constants.DOOR_TYPES[typeCount]; //(typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoDoor";
 
-                //li tag to hold door type radio button and all its content
-                DoorOptions.Controls.Add(new LiteralControl("<li>"));
+                if (title == "NoDoor")
+                {
+                    continue;
+                }
+                else
+                {
+                    //li tag to hold door type radio button and all its content
+                    DoorOptions.Controls.Add(new LiteralControl("<li>"));
+                }
 
                 //Door type radio button
                 RadioButton typeRadio = new RadioButton();
@@ -85,14 +92,8 @@ namespace SunspaceDealerDesktop
                 //Door type radio button label text
                 Label typeLabel = new Label();
                 typeLabel.AssociatedControlID = "radType" + title;    //Tying this label to the radio button
-                if (title == "NoDoor")
-                {
-                    typeLabel.Text = "Opening Only (No Door)";
-                }
-                else
-                {
-                    typeLabel.Text = title;     //Displaying the proper texted based on current title variable
-                }
+                typeLabel.Text = title;     //Displaying the proper texted based on current title variable
+                
 
                 DoorOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder DoorOptions
                 DoorOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder DoorOptions
@@ -135,51 +136,21 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorStyleDDL = new DropDownList();
                 doorStyleDDL.ID = "ddlDoorStyle" + title;
-                doorStyleDDL.Attributes.Add("onchange", "doorStyle('" + title + "','" + "'); checkQuestion3();");
+                doorStyleDDL.Attributes.Add("onchange", "doorStyle('" + title + "'); checkQuestion3();");
                 if (title == "Patio")
                 {
-                    for (int j = 0; j < Constants.DOOR_MODEL_100_PATIO_STYLES.Count(); j++)
+                    for (int j = 0; j < Constants.DOOR_ORDER_PATIO.Count(); j++)
                     {
-                        doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_100_PATIO_STYLES[j], Constants.DOOR_MODEL_100_PATIO_STYLES[j]));
+                        doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_ORDER_PATIO[j], Constants.DOOR_ORDER_PATIO[j]));
                     }
                 }
                 else
                 {
-                    for (int j = 0; j < Constants.DOOR_MODEL_100_STYLES.Count(); j++)
+                    for (int j = 0; j < Constants.DOOR_ORDER_ENTRY.Count(); j++)
                     {
-                        doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_100_STYLES[j], Constants.DOOR_MODEL_100_STYLES[j]));
+                        doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_ORDER_ENTRY[j], Constants.DOOR_ORDER_ENTRY[j]));
                     }
                 }
-                if (title == "Patio")
-                {
-                    for (int j = 0; j < Constants.DOOR_MODEL_200_300_PATIO_STYLES.Count(); j++)
-                    {
-                        doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_PATIO_STYLES[j]));
-                    }
-                }
-                else
-                {
-                    for (int j = 0; j < Constants.DOOR_MODEL_200_STYLES.Count(); j++)
-                    {
-                        doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_STYLES[j], Constants.DOOR_MODEL_200_STYLES[j]));
-                    }
-                }
-                if (title == "Patio")
-                {
-                    for (int j = 0; j < Constants.DOOR_MODEL_200_300_PATIO_STYLES.Count(); j++)
-                    {
-                        doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_200_300_PATIO_STYLES[j], Constants.DOOR_MODEL_200_300_PATIO_STYLES[j]));
-                    }
-                }
-                else
-                {
-                    for (int j = 0; j < Constants.DOOR_MODEL_300_STYLES.Count(); j++)
-                    {
-                        doorStyleDDL.Items.Add(new ListItem(Constants.DOOR_MODEL_300_STYLES[j], Constants.DOOR_MODEL_300_STYLES[j]));
-                    }
-                }
-
-
 
                 doorStyleLBL.AssociatedControlID = "ddlDoorStyle" + title;
 
@@ -380,7 +351,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorHeightDDL = new DropDownList();
                 doorHeightDDL.ID = "ddlDoorHeight" + title;
-                doorHeightDDL.Attributes.Add("onchange", "customDimension('" + "','" + title + "','Height')");
+                doorHeightDDL.Attributes.Add("onchange", "customDimension('" + title + "','Height')");
                 for (int j = 0; j < Constants.DOOR_HEIGHTS.Count(); j++)
                 {
                     if (Constants.DOOR_HEIGHTS[j] == "Custom")
@@ -445,7 +416,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorWidthDDL = new DropDownList();
                 doorWidthDDL.ID = "ddlDoorWidth" + title;
-                doorWidthDDL.Attributes.Add("onchange", "customDimension('" + "', '" + title + "','Width')");
+                doorWidthDDL.Attributes.Add("onchange", "customDimension('" + title + "','Width')");
 
                 if (title == "Patio")
                 {
@@ -796,7 +767,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorPositionDDLDDL = new DropDownList();
                 doorPositionDDLDDL.ID = "ddlDoorPosition" + title;
-                doorPositionDDLDDL.Attributes.Add("onchange", "customDimension('" + "', '" + title + "','Position')");
+                doorPositionDDLDDL.Attributes.Add("onchange", "customDimension('" + title + "','Position')");
                 for (int j = 0; j < Constants.DOOR_POSITION.Count(); j++)
                 {
                     if (Constants.DOOR_POSITION[j] == "Custom")
@@ -1182,15 +1153,8 @@ namespace SunspaceDealerDesktop
 
                 #region Table:# Row Add This Door (tblDoorDetails)
 
-                if (title == "NoDoor")
-                {
-                    doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + title + "' type='button' onclick='addDoor(\"" + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This Opening Only (No Door)'/>"));
-                }
-                else
-                {
-                    doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + title + "' type='button' onclick='addDoor(\"" + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
-                }
-
+                doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + title + "' type='button' onclick='addDoor(\"" + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
+                
                 tblDoorDetails.Rows.Add(doorButtonRow);
 
                 doorButtonRow.Cells.Add(doorAddButtonCell);
@@ -1216,6 +1180,7 @@ namespace SunspaceDealerDesktop
                 DoorOptions.Controls.Add(new LiteralControl("</div>"));
 
                 DoorOptions.Controls.Add(new LiteralControl("</li>"));
+
             }
             #endregion
         }
