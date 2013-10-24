@@ -99,12 +99,9 @@
             var doorHardware = document.getElementById("MainContent_rowDoorHardware" + type);
             var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + type);
             var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + type);
-            var doorPosition = document.getElementById("MainContent_rowDoorPosition" + type);
-            var doorPositionCustom = document.getElementById("MainContent_rowDoorCustomPosition" + type);
             /****END:TABLE ROWS BY ID****/
 
             /****START:RADIO BUTTONS TO BE CHECKED INITIALLY****/
-            var doorPositionCustom = document.getElementById("MainContent_ddlDoorPosition" + type).options[document.getElementById("MainContent_ddlDoorPosition" + type).selectedIndex].value;
             var doorHingeLHHChecked = document.getElementById("MainContent_radDoorHinge" + type);
             var doorSwingInChecked = document.getElementById("MainContent_radDoorSwing" + type);
 
@@ -132,13 +129,7 @@
                 doorSwingIn.style.display = "inherit";
                 doorSwingOut.style.display = "inherit";
                 doorHardware.style.display = "inherit";
-                doorPosition.style.display = "inherit";
-
-                //If the value of position drop down is custom, display the appropriate field
-                if (doorPositionCustom == "cPosition") {
-                    customDimension(wallNumber, type, "Position");
-                }
-
+                
                 //Radio button defaults
                 doorHingeLHHChecked.setAttribute("checked", "checked");
                 doorSwingInChecked.setAttribute("checked", "checked");
@@ -163,12 +154,6 @@
                 doorSwingIn.style.display = "inherit";
                 doorSwingOut.style.display = "inherit";
                 doorHardware.style.display = "inherit";
-                doorPosition.style.display = "inherit";
-
-                //If the value of position drop down is custom, display the appropriate field
-                if (doorPositionCustom == "cPosition") {
-                    customDimension(wallNumber, type, "Position");
-                }
 
                 //Radio button defaults
                 doorOperatorLHHChecked.setAttribute("checked", "checked");
@@ -191,36 +176,17 @@
                 doorGlassTint.style.display = "inherit";
                 doorOperatorLHH.style.display = "inherit";
                 doorOperatorRHH.style.display = "inherit";
-                doorPosition.style.display = "inherit";
                 doorScreenOptions.style.display = "inherit";
-
-                //If the value of position drop down is custom, display the appropriate field
-                if (doorPositionCustom == "cPosition") {
-                    customDimension(wallNumber, type, "Position");
-                }
 
                 //Radio button defaults
                 doorOperatorLHHChecked.setAttribute("checked", "checked");
 
                 doorStyle(type);
             }
-                //If type is NoDoor, display the appropriate fields
-            else if (type == "NoDoor") {
-
-                doorHeight.style.display = "inherit";
-                doorWidth.style.display = "inherit";
-                doorPosition.style.display = "inherit";
-
-                //If the value of position drop down is custom, display the appropriate field
-                if (doorPositionCustom == "cPosition") {
-                    customDimension(wallNumber, type, "Position");
-                }
-            }
         }
     </script>
 
     <div class="slide-window" id="slide-window" >
-
         <div class="slide-wrapper">
             <%-- QUESTION 3 - DOOR OPTIONS/DETAILS
             ======================================== --%>
@@ -234,7 +200,7 @@
                     <asp:PlaceHolder ID="DoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question"/>
+                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Next Question"/>
 
             </div>
             <%-- end #slide3 --%>
@@ -254,14 +220,11 @@
                     <div style="position:inherit; text-align:center; top:0px; right:0px;" id="mySunroom"></div>
                     <%--==================================== --%>
 
-
                     <%-- div to display the answers for question 1 --%>
                     <div style="display: block" id="pagerOne">
                         <li>
-                            <a href="#" data-slide="#slide1" class="slidePanel">
-                                <asp:Label ID="lblCabanaDoor" runat="server" Text="Text"></asp:Label>
-                                <asp:Label ID="lblCabanaDoorAnswer" runat="server" Text="Answer"></asp:Label>
-                            </a>
+                            <asp:Label ID="lblCabanaDoor" runat="server" Text="Text"></asp:Label>
+                            <asp:Label ID="lblCabanaDoorAnswer" runat="server" Text="Answer"></asp:Label>
                         </li>
                     </div>
                 </ul>    

@@ -783,41 +783,7 @@ namespace SunspaceDealerDesktop
                 doorPositionDDLLBL.AssociatedControlID = "ddlDoorPosition" + title;
 
                 #endregion
-
-                #region Table:# Row Door Position Custom (tblDoorDetails)
-
-                TableRow doorPositionRow = new TableRow();
-                doorPositionRow.ID = "rowDoorCustomPosition" + title;
-                doorPositionRow.Attributes.Add("style", "display:none;");
-                TableCell doorPositionLBLCell = new TableCell();
-                TableCell doorPositionTXTCell = new TableCell();
-                TableCell doorPositionDDLCell = new TableCell();
-
-                Label doorPositionLBL = new Label();
-                doorPositionLBL.ID = "lblDoorCustomPosition" + title;
-                doorPositionLBL.Text = "Door position from left side (inches):";
-
-                TextBox doorPositionTXT = new TextBox();
-                doorPositionTXT.ID = "txtDoorPositionCustom" + title;
-                doorPositionTXT.CssClass = "txtField txtDoorInput";
-                doorPositionTXT.Attributes.Add("maxlength", "3");
-                doorPositionTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
-
-                DropDownList inchSpecificLeft = new DropDownList();
-                inchSpecificLeft.ID = "ddlDoorPositionCustom" + title;
-                inchSpecificLeft.Items.Add(lst0);
-                inchSpecificLeft.Items.Add(lst18);
-                inchSpecificLeft.Items.Add(lst14);
-                inchSpecificLeft.Items.Add(lst38);
-                inchSpecificLeft.Items.Add(lst12);
-                inchSpecificLeft.Items.Add(lst58);
-                inchSpecificLeft.Items.Add(lst34);
-                inchSpecificLeft.Items.Add(lst78);
-
-                doorPositionLBL.AssociatedControlID = "txtDoorPositionCustom" + title;
-
-                #endregion
-
+            
                 #region Table:# Row Add This Door (tblDoorDetails)
 
                 TableRow doorButtonRow = new TableRow();
@@ -1121,33 +1087,6 @@ namespace SunspaceDealerDesktop
 
                 doorSwingOutRow.Cells.Add(doorSwingOutLBLCell);
                 doorSwingOutRow.Cells.Add(doorSwingOutRADCell);
-
-                #endregion
-
-                #region Table:# Row Door Position DDL Added To Table (tblDoorDetails)
-
-                doorPositionDDLLBLCell.Controls.Add(doorPositionDDLLBL);
-                doorPositionDDLDDLCell.Controls.Add(doorPositionDDLDDL);
-
-                tblDoorDetails.Rows.Add(doorPositionDDLRow);
-
-
-                doorPositionDDLRow.Cells.Add(doorPositionDDLLBLCell);
-                doorPositionDDLRow.Cells.Add(doorPositionDDLDDLCell);
-
-                #endregion
-
-                #region Table:# Row Door Position Added To Table (tblDoorDetails)
-
-                doorPositionLBLCell.Controls.Add(doorPositionLBL);
-                doorPositionTXTCell.Controls.Add(doorPositionTXT);
-                doorPositionDDLCell.Controls.Add(inchSpecificLeft);
-
-                tblDoorDetails.Rows.Add(doorPositionRow);
-
-                doorPositionRow.Cells.Add(doorPositionLBLCell);
-                doorPositionRow.Cells.Add(doorPositionTXTCell);
-                doorPositionRow.Cells.Add(doorPositionDDLCell);
 
                 #endregion
 
