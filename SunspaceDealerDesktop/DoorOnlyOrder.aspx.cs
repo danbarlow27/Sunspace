@@ -1092,7 +1092,7 @@ namespace SunspaceDealerDesktop
 
                 #region Table:# Row Add This Door (tblDoorDetails)
 
-                doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + title + "' type='button' onclick='addDoor(\"" + "\", \"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
+                doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
                 
                 tblDoorDetails.Rows.Add(doorButtonRow);
 

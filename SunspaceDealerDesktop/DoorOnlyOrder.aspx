@@ -184,6 +184,63 @@
                 doorStyle(type);
             }
         }
+
+        function addDoor(title) {
+            if (title == 'Cabana') {
+                var answer = $('#MainContent_ddlDoorStyleCabana').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorColourCabana').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorHeightCabana').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorWidthCabana').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorBoxHeaderCabana').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorGlassTintCabana').val() + '<br/>';
+                if ($('#MainContent_radDoorHingeCabana:checked').val())
+                    answer += 'Left<br/>';
+                else
+                    answer += 'Right<br/>';
+                answer += $('#MainContent_ddlDoorScreenOptionsCabana').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorHardwareCabana').val() + '<br/>';
+                if ($('#MainContent_radDoorSwingCabana:checked').val())
+                    answer += 'In<br/>';
+                else
+                    answer += 'Out<br/>';
+            }
+            else if (title == 'French') {
+                var answer = $('#MainContent_ddlDoorStyleFrench').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorColourFrench').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorHeightFrench').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorWidthFrench').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorBoxHeaderFrench').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorGlassTintFrench').val() + '<br/>';
+                if ($('#MainContent_radDoorHingeFrench:checked').val())
+                    answer += 'Left<br/>';
+                else
+                    answer += 'Right<br/>';
+                answer += $('#MainContent_ddlDoorScreenOptionsFrench').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorHardwareFrench').val() + '<br/>';
+                if ($('#MainContent_radDoorSwingFrench:checked').val())
+                    answer += 'In<br/>';
+                else
+                    answer += 'Out<br/>';
+            }
+            else {
+                var answer = $('#MainContent_ddlDoorStylePatio').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorColourPatio').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorHeightPatio').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorWidthPatio').val() + '<br/>';
+                if ($('#MainContent_lblDoorOperatorLHHPatio:checked').val())
+                    answer += 'Left<br/>';
+                else
+                    answer += 'Right<br/>';
+                answer += $('#MainContent_ddlDoorBoxHeaderPatio').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorGlassTintPatio').val() + '<br/>';
+                if ($('#MainContent_radDoorSwingPatio:checked').val())
+                    answer += 'In<br/>';
+                else
+                    answer += 'Out<br/>';
+            }
+            $('#MainContent_lblDoor').html(title);
+            $('#MainContent_lblDoorAnswer').html(answer);
+        }
     </script>
 
     <div class="slide-window" id="slide-window" >
@@ -223,8 +280,8 @@
                     <%-- div to display the answers for question 1 --%>
                     <div style="display: block" id="pagerOne">
                         <li>
-                            <asp:Label ID="lblCabanaDoor" runat="server" Text="Text"></asp:Label>
-                            <asp:Label ID="lblCabanaDoorAnswer" runat="server" Text="Answer"></asp:Label>
+                            <asp:Label ID="lblDoor" runat="server" Text="Text"></asp:Label>
+                            <asp:Label ID="lblDoorAnswer" runat="server" Text="Answer"></asp:Label>
                         </li>
                     </div>
                 </ul>    
