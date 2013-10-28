@@ -119,8 +119,8 @@
                 doorColour.style.display = "inherit";
                 doorHeight.style.display = "inherit";
                 doorWidth.style.display = "inherit";
-                doorBoxHeader.style.display = "inherit";
-                //doorKickplate.style.display = "inherit";
+                //doorBoxHeader.style.display = "inherit";
+                doorKickplate.style.display = "inherit";
 
                 //Cabana Specific                            
                 doorGlassTint.style.display = "inherit";
@@ -145,7 +145,7 @@
                 doorColour.style.display = "inherit";
                 doorHeight.style.display = "inherit";
                 doorWidth.style.display = "inherit";
-                doorBoxHeader.style.display = "inherit";
+                //doorBoxHeader.style.display = "inherit";
                 doorKickplate.style.display = "inherit";
 
                 //French specific
@@ -170,7 +170,7 @@
                 doorColour.style.display = "inherit";
                 doorHeight.style.display = "inherit";
                 doorWidth.style.display = "inherit";
-                doorBoxHeader.style.display = "inherit";
+                //doorBoxHeader.style.display = "inherit";
 
                 //Patio Specifics
                 doorGlassTint.style.display = "inherit";
