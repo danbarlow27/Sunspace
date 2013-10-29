@@ -402,6 +402,7 @@
             framedDoor.mheight = dimensions.height + 2;
             framedDoor.mwidth = dimensions.width + 2;
 
+            framedDoor.kickplate = <%= Session["newProjectKneewallHeight"] %>;
             /*Insert the door with the appropriate variables based on drop down selected index*/
             if (framedDoor.position === "Left") {
                 if (framedDoor.boxHeader == "Left" || framedDoor.boxHeader == "Both") {
@@ -423,6 +424,7 @@
                 framedDoor.position = validateDecimal(walls[wallNumber].length / 2 - framedDoor.mwidth / 2);
             }
             //Return framedDoor object
+            console.log(framedDoor.position);
             return framedDoor;
         }
     </script>
@@ -1934,7 +1936,7 @@
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "mheight").value = walls[i].mods[j].mheight;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "mwidth").value = walls[i].mods[j].mwidth;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "numberOfVents").value = walls[i].mods[j].numberOfVents;
-                                document.getElementById("hidWall" + i + "Door" + (j+1) + "position").value = parseFloat(walls[i].mods[j].position[0]) + parseFloat(walls[i].mods[j].position[1]);
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "position").value = parseFloat(walls[i].mods[j].position);
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "style").value = walls[i].mods[j].style;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "swing").value = walls[i].mods[j].swing;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
