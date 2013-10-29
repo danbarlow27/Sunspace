@@ -1425,68 +1425,68 @@ namespace SunspaceDealerDesktop
 
                 #endregion
 
-                //#region Table:# Row Door Kickplate (tblDoorDetails)
+                #region Table:# Row Door Kickplate (tblDoorDetails)
 
-                //TableRow doorKickplateRow = new TableRow();
-                //doorKickplateRow.ID = "rowDoorKickplate" + i + title;
-                //doorKickplateRow.Attributes.Add("style", "display:none;");
-                //TableCell doorKickplateLBLCell = new TableCell();
-                //TableCell doorKickplateDDLCell = new TableCell();
+                TableRow doorKickplateRow = new TableRow();
+                doorKickplateRow.ID = "rowDoorKickplate" + i + title;
+                doorKickplateRow.Attributes.Add("style", "display:none;");
+                TableCell doorKickplateLBLCell = new TableCell();
+                TableCell doorKickplateDDLCell = new TableCell();
 
-                //Label doorKickplateLBL = new Label();
-                //doorKickplateLBL.ID = "lblDoorKickplate" + i + title;
-                //doorKickplateLBL.Text = "Kickplate Height:";
+                Label doorKickplateLBL = new Label();
+                doorKickplateLBL.ID = "lblDoorKickplate" + i + title;
+                doorKickplateLBL.Text = "Kickplate Height:";
 
-                //DropDownList doorKickplateDDL = new DropDownList();
-                //doorKickplateDDL.ID = "ddlDoorKickplate" + i + title;
-                //doorKickplateDDL.Attributes.Add("onchange", "doorKickplateStyle('" + title + "','" + i + "')");
-                //for (int j = 0; j < Constants.KICKPLATE_SIZE_OPTIONS.Count(); j++)
-                //{
-                //    if (Constants.KICKPLATE_SIZE_OPTIONS[j] == "Custom")
-                //    {
-                //        doorKickplateDDL.Items.Add(new ListItem(Constants.KICKPLATE_SIZE_OPTIONS[j], "cKickplate"));
-                //    }
-                //    else
-                //    {
-                //        doorKickplateDDL.Items.Add(new ListItem(Constants.KICKPLATE_SIZE_OPTIONS[j] + "\"", Constants.KICKPLATE_SIZE_OPTIONS[j]));
-                //    }
-                //}
+                DropDownList doorKickplateDDL = new DropDownList();
+                doorKickplateDDL.ID = "ddlDoorKickplate" + i + title;
+                doorKickplateDDL.Attributes.Add("onchange", "doorKickplateStyle('" + title + "','" + i + "')");
+                for (int j = 0; j < Constants.KICKPLATE_SIZE_OPTIONS.Count(); j++)
+                {
+                    if (Constants.KICKPLATE_SIZE_OPTIONS[j] == "Custom")
+                    {
+                        doorKickplateDDL.Items.Add(new ListItem(Constants.KICKPLATE_SIZE_OPTIONS[j], "cKickplate"));
+                    }
+                    else
+                    {
+                        doorKickplateDDL.Items.Add(new ListItem(Constants.KICKPLATE_SIZE_OPTIONS[j] + "\"", Constants.KICKPLATE_SIZE_OPTIONS[j]));
+                    }
+                }
 
-                //#endregion
+                #endregion
 
-                //#region Table:# Row Door Kickplate Custom (tblDoorDetails)
+                #region Table:# Row Door Kickplate Custom (tblDoorDetails)
 
-                //TableRow doorCustomKickplateRow = new TableRow();
-                //doorCustomKickplateRow.ID = "rowDoorCustomKickplate" + i + title;
-                //doorCustomKickplateRow.Attributes.Add("style", "display:none;");
-                //TableCell doorCustomKickplateLBLCell = new TableCell();
-                //TableCell doorCustomKickplateTXTCell = new TableCell();
-                //TableCell doorCustomKickplateDDLCell = new TableCell();
+                TableRow doorCustomKickplateRow = new TableRow();
+                doorCustomKickplateRow.ID = "rowDoorCustomKickplate" + i + title;
+                doorCustomKickplateRow.Attributes.Add("style", "display:none;");
+                TableCell doorCustomKickplateLBLCell = new TableCell();
+                TableCell doorCustomKickplateTXTCell = new TableCell();
+                TableCell doorCustomKickplateDDLCell = new TableCell();
 
-                //Label doorCustomKickplateLBL = new Label();
-                //doorCustomKickplateLBL.ID = "lblDoorCustomKickplate" + i + title;
-                //doorCustomKickplateLBL.Text = "Custom Kickplate (inches):";
+                Label doorCustomKickplateLBL = new Label();
+                doorCustomKickplateLBL.ID = "lblDoorCustomKickplate" + i + title;
+                doorCustomKickplateLBL.Text = "Custom Kickplate (inches):";
 
-                //TextBox doorCustomKickplateTXT = new TextBox();
-                //doorCustomKickplateTXT.ID = "txtDoorKickplateCustom" + i + title;
-                //doorCustomKickplateTXT.CssClass = "txtField txtDoorInput";
-                //doorCustomKickplateTXT.Attributes.Add("maxlength", "3");
-                //doorCustomKickplateTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                TextBox doorCustomKickplateTXT = new TextBox();
+                doorCustomKickplateTXT.ID = "txtDoorKickplateCustom" + i + title;
+                doorCustomKickplateTXT.CssClass = "txtField txtDoorInput";
+                doorCustomKickplateTXT.Attributes.Add("maxlength", "3");
+                doorCustomKickplateTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
 
-                //DropDownList inchCustomKickplate = new DropDownList();
-                //inchCustomKickplate.ID = "ddlDoorKickplateCustom" + i + title;
-                //inchCustomKickplate.Items.Add(lst0);
-                //inchCustomKickplate.Items.Add(lst18);
-                //inchCustomKickplate.Items.Add(lst14);
-                //inchCustomKickplate.Items.Add(lst38);
-                //inchCustomKickplate.Items.Add(lst12);
-                //inchCustomKickplate.Items.Add(lst58);
-                //inchCustomKickplate.Items.Add(lst34);
-                //inchCustomKickplate.Items.Add(lst78);
+                DropDownList inchCustomKickplate = new DropDownList();
+                inchCustomKickplate.ID = "ddlDoorKickplateCustom" + i + title;
+                inchCustomKickplate.Items.Add(lst0);
+                inchCustomKickplate.Items.Add(lst18);
+                inchCustomKickplate.Items.Add(lst14);
+                inchCustomKickplate.Items.Add(lst38);
+                inchCustomKickplate.Items.Add(lst12);
+                inchCustomKickplate.Items.Add(lst58);
+                inchCustomKickplate.Items.Add(lst34);
+                inchCustomKickplate.Items.Add(lst78);
 
-                //doorCustomKickplateLBL.AssociatedControlID = "txtDoorKickplateCustom" + i + title;
+                doorCustomKickplateLBL.AssociatedControlID = "txtDoorKickplateCustom" + i + title;
 
-                //#endregion
+                #endregion
 
                 #region Table:Third Row Color of Door (tblDoorDetails)
 
@@ -2082,31 +2082,31 @@ namespace SunspaceDealerDesktop
 
                 #endregion
 
-                //#region Table:# Row Door Kickplate (tblDoorDetails)
+                #region Table:# Row Door Kickplate (tblDoorDetails)
 
-                //doorKickplateLBLCell.Controls.Add(doorKickplateLBL);
-                //doorKickplateDDLCell.Controls.Add(doorKickplateDDL);
+                doorKickplateLBLCell.Controls.Add(doorKickplateLBL);
+                doorKickplateDDLCell.Controls.Add(doorKickplateDDL);
 
-                //tblDoorDetails.Rows.Add(doorKickplateRow);
+                tblDoorDetails.Rows.Add(doorKickplateRow);
 
-                //doorKickplateRow.Cells.Add(doorKickplateLBLCell);
-                //doorKickplateRow.Cells.Add(doorKickplateDDLCell);
+                doorKickplateRow.Cells.Add(doorKickplateLBLCell);
+                doorKickplateRow.Cells.Add(doorKickplateDDLCell);
 
-                //#endregion
+                #endregion
 
-                //#region Table:# Row Door Kickplate Custom (tblDoorDetails)
+                #region Table:# Row Door Kickplate Custom (tblDoorDetails)
 
-                //doorCustomKickplateLBLCell.Controls.Add(doorCustomKickplateLBL);
-                //doorCustomKickplateTXTCell.Controls.Add(doorCustomKickplateTXT);
-                //doorCustomKickplateDDLCell.Controls.Add(inchCustomKickplate);
+                doorCustomKickplateLBLCell.Controls.Add(doorCustomKickplateLBL);
+                doorCustomKickplateTXTCell.Controls.Add(doorCustomKickplateTXT);
+                doorCustomKickplateDDLCell.Controls.Add(inchCustomKickplate);
 
-                //tblDoorDetails.Rows.Add(doorCustomKickplateRow);
+                tblDoorDetails.Rows.Add(doorCustomKickplateRow);
 
-                //doorCustomKickplateRow.Cells.Add(doorCustomKickplateLBLCell);
-                //doorCustomKickplateRow.Cells.Add(doorCustomKickplateTXTCell);
-                //doorCustomKickplateRow.Cells.Add(doorCustomKickplateDDLCell);
+                doorCustomKickplateRow.Cells.Add(doorCustomKickplateLBLCell);
+                doorCustomKickplateRow.Cells.Add(doorCustomKickplateTXTCell);
+                doorCustomKickplateRow.Cells.Add(doorCustomKickplateDDLCell);
 
-                //#endregion
+                #endregion
 
                 #region Table:Third Row Color of Door Added to Table (tblDoorDetails)
 
