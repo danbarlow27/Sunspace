@@ -257,8 +257,8 @@
     <Content Include="WizardFloors.aspx" />
     <Content Include="WizardWallsAndMods.aspx" />
     <Content Include="NoIcons.Master" />
-    <Content Include="WizardWindowOnly.aspx" />
     <Content Include="WizardWindows.aspx" />
+    <Content Include="WizardWindowsOnly.aspx" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="SavedProjects.aspx" />
     <Content Include="Scripts\D3.js" />
@@ -531,19 +531,19 @@
     <Compile Include="WizardWallsAndMods.aspx.designer.cs">
       <DependentUpon>WizardWallsAndMods.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WizardWindowOnly.aspx.cs">
-      <DependentUpon>WizardWindowOnly.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WizardWindowOnly.aspx.designer.cs">
-      <DependentUpon>WizardWindowOnly.aspx</DependentUpon>
-    </Compile>
     <Compile Include="WizardWindows.aspx.cs">
       <DependentUpon>WizardWindows.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="WizardWindows.aspx.designer.cs">
       <DependentUpon>WizardWindows.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WizardWindowsOnly.aspx.cs">
+      <DependentUpon>WizardWindowsOnly.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WizardWindowsOnly.aspx.designer.cs">
+      <DependentUpon>WizardWindowsOnly.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup />

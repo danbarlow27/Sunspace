@@ -214,11 +214,31 @@
                             log.innerHTML = "Your gable posts must be drawn on the same axis.\n\n";
                             return;
                         }
-                        else if (((parseFloat(firstGable.y1) != parseFloat(secondGable.y1) && parseFloat(firstGable.y2) != parseFloat(secondGable.y2)) && findLineAxis(firstGable) == "V") ||
-                            ((parseFloat(firstGable.x1) != parseFloat(secondGable.x1) && parseFloat(firstGable.x2) != parseFloat(secondGable.x2)) && findLineAxis(firstGable) == "H"))
+                        else if (findLineAxis(firstGable) == "V")
                         {
-                            log.innerHTML = "Your gable posts must be the same length and relative position.\n\n";
-                            return;
+                            if ((parseFloat(firstGable.y1) == parseFloat(secondGable.y1) && parseFloat(firstGable.y2) == parseFloat(secondGable.y2)) ||
+                                (parseFloat(firstGable.y1) == parseFloat(secondGable.y2) && parseFloat(firstGable.y2) == parseFloat(secondGable.y1)))
+                            {
+                                console.log("Gable lines are valid.");
+                            }
+                            else
+                            {
+                                log.innerHTML = "Your gable posts must be the same length and relative position.\n\n";
+                                return;
+                            }
+                        }
+                        else if (findLineAxis(firstGable) == "H")
+                        {
+                            if ((parseFloat(firstGable.x1) == parseFloat(secondGable.x1) && parseFloat(firstGable.x2) == parseFloat(secondGable.x2)) ||
+                            ((parseFloat(firstGable.x1) == parseFloat(secondGable.x2) && parseFloat(firstGable.x2) == parseFloat(secondGable.x1))))
+                            {
+                                console.log("Gable lines are valid.");
+                            }
+                            else
+                            {
+                                log.innerHTML = "Your gable posts must be the same length and relative position.\n\n";
+                                return;
+                            }
                         }
                     }
                     else if (parseInt(coordList.length) > 2) {

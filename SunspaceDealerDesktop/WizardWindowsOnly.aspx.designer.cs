@@ -10,25 +10,25 @@
 namespace SunspaceDealerDesktop {
     
     
-    public partial class DoorOnlyOrder {
+    public partial class WizardWindowsOnly {
         
         /// <summary>
-        /// lblDoorDetails control.
+        /// lblWindowDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorDetails;
+        protected global::System.Web.UI.WebControls.Label lblWindowDetails;
         
         /// <summary>
-        /// DoorOptions control.
+        /// WindowOptions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder DoorOptions;
+        protected global::System.Web.UI.WebControls.PlaceHolder WindowOptions;
         
         /// <summary>
         /// btnQuestion3 control.
@@ -40,22 +40,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Button btnQuestion3;
         
         /// <summary>
-        /// lblDoor control.
+        /// lblCabanaWindow control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoor;
+        protected global::System.Web.UI.WebControls.Label lblCabanaWindow;
         
         /// <summary>
-        /// lblDoorAnswer control.
+        /// lblCabanaWindowAnswer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoorAnswer;
+        protected global::System.Web.UI.WebControls.Label lblCabanaWindowAnswer;
         
         /// <summary>
         /// txtErrorMessage control.
