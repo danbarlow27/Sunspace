@@ -54,7 +54,7 @@
         function skylightWizardCenterFanBeam(panelNumber){
             console.log("Please center fan beam " + panelNumber);
             
-            var temp = validateDecimal(panelSizes[panelNumber]/2);
+            var temp = validateDecimal(panelSizes[panelNumber-1]/2);
             document.getElementById("MainContent_txtFanBeam" + panelNumber).value = parseFloat(temp[0]) + parseFloat(temp[1]);
             skylightWizardCheckQuestion1();
         }
@@ -62,7 +62,7 @@
         function skylightWizardCenterSkylight(panelNumber){
             console.log("Please center skylight " + panelNumber);
 
-            var temp = validateDecimal(panelSizes[panelNumber]/2);
+            var temp = validateDecimal(panelSizes[panelNumber-1]/2);
             document.getElementById("MainContent_txtSkylight" + panelNumber).value = parseFloat(temp[0]) + parseFloat(temp[1]);
             skylightWizardCheckQuestion1();
         }
