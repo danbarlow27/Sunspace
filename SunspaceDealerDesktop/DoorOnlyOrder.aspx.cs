@@ -18,49 +18,13 @@ namespace SunspaceDealerDesktop
         protected ListItem lst34 = new ListItem("3/4", ".75");
         protected ListItem lst78 = new ListItem("7/8", ".875");
         List<Door> doorsOrdered = new List<Door>();
+        int cabanaCount = 0, frenchCount = 0, patioCount = 0;        
 
-        protected void addMixedTintDropdowns(string title, Table tblDoorDetails)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                TableRow mixedDoorTintRow = new TableRow();
-                //mixedDoorTintRow.Attributes.Add("style", "display: inherit;");
-                mixedDoorTintRow.ID = "row" + j + "DoorTint" + title;
-                mixedDoorTintRow.Attributes.Add("style", "display:none;");
-                TableCell mixedDoorTintLabelCell = new TableCell();
-                TableCell mixedDoorTintDropDownCell = new TableCell();
-
-                Label mixedDoorTintLabel = new Label();
-                mixedDoorTintLabel.ID = "lblDoorVinyl" + j + "Tint" + title;
-                mixedDoorTintLabel.Text = "Vinyl Vent " + (j + 1) + " Tint : ";
-                DropDownList ddlDoorTintOptions = new DropDownList();
-                ddlDoorTintOptions.ID = "ddlDoorTint" + j + title;
-                ListItem clearVinyl = new ListItem("Clear", "C");
-                ListItem smokeGreyVinyl = new ListItem("Smoke Grey", "S");
-                ListItem darkGreyVinyl = new ListItem("Dark Grey", "D");
-                ListItem bronzeVinyl = new ListItem("Bronze", "B");
-
-                ddlDoorTintOptions.Attributes.Add("onchange", "checkQuestion3()");
-
-                ddlDoorTintOptions.Items.Add(clearVinyl);
-                ddlDoorTintOptions.Items.Add(smokeGreyVinyl);
-                ddlDoorTintOptions.Items.Add(darkGreyVinyl);
-                ddlDoorTintOptions.Items.Add(bronzeVinyl);
-
-                mixedDoorTintLabel.AssociatedControlID = "ddlDoorTint" + j + title;
-
-                mixedDoorTintLabelCell.Controls.Add(mixedDoorTintLabel);
-                mixedDoorTintDropDownCell.Controls.Add(ddlDoorTintOptions);
-
-                tblDoorDetails.Rows.Add(mixedDoorTintRow);
-
-                mixedDoorTintRow.Cells.Add(mixedDoorTintLabelCell);
-                mixedDoorTintRow.Cells.Add(mixedDoorTintDropDownCell);
-            }
-        }
+        
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             #region Loop to display door types as radio buttons
 
             //For loop to get through all the possible door types: Cabana, French, Patio, Opening Only (No Door)
@@ -138,7 +102,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorStyleDDL = new DropDownList();
                 doorStyleDDL.ID = "ddlDoorStyle" + title;
-                doorStyleDDL.Attributes.Add("onchange", "doorStyle('" + title + "'); checkQuestion3();");
+                doorStyleDDL.Attributes.Add("onchange", "doorStyle('" + title + "')");
                 if (title == "Patio")
                 {
                     for (int j = 0; j < Constants.DOOR_ORDER_PATIO.Count(); j++)
@@ -176,8 +140,6 @@ namespace SunspaceDealerDesktop
                 {
                     doorVinylTintDDL.Items.Add(new ListItem(Constants.DOOR_V4T_VINYL_OPTIONS[j], Constants.DOOR_V4T_VINYL_OPTIONS[j]));
                 }
-
-                doorVinylTintDDL.Attributes.Add("onchange", "checkQuestion3()");
                 doorVinylTintLBL.AssociatedControlID = "ddlDoorVinylTint" + title;
 
                 #endregion
@@ -202,8 +164,6 @@ namespace SunspaceDealerDesktop
                 }
 
                 doorNumberOfVentsLBL.AssociatedControlID = "ddlDoorNumberOfVents" + title;
-
-                doorNumberOfVentsDDL.Attributes.Add("onchange", "checkQuestion3()");
 
                 #endregion
 
@@ -794,6 +754,12 @@ namespace SunspaceDealerDesktop
                 TableCell doorAddButtonCell = new TableCell();
                 TableCell doorFillButtonCell = new TableCell();
 
+                Button doorButton = new Button();
+                doorButton.ID = "btnAdd" + title;
+                doorButton.Text = "Add this " + title + " door";
+                doorButton.CssClass = "btnSubmit";
+                doorButton.Attributes.Add("click", "addDoor(\"" + title + "\")");
+
                 #endregion
 
                 //Adding to table
@@ -841,8 +807,6 @@ namespace SunspaceDealerDesktop
 
                 doorVinylTintRow.Cells.Add(doorVinylTintLBLCell);
                 doorVinylTintRow.Cells.Add(doorVinylTintDDLCell);
-
-                addMixedTintDropdowns(title, tblDoorDetails);
 
                 #endregion
 
@@ -1094,8 +1058,9 @@ namespace SunspaceDealerDesktop
 
                 #region Table:# Row Add This Door (tblDoorDetails)
 
-                doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
-                
+                //doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
+                doorAddButtonCell.Controls.Add(doorButton);
+
                 tblDoorDetails.Rows.Add(doorButtonRow);
 
                 doorButtonRow.Cells.Add(doorAddButtonCell);
@@ -1125,9 +1090,15 @@ namespace SunspaceDealerDesktop
             }
             #endregion
 
+            #region PostBack functionality to store doors
             if (IsPostBack)
             {
-                //System.Diagnostics.Debug.Write("Running " + Request.Form["ctl00$MainContent$doorTypeRadios"]);
+                if ((List<Door>)Session["doorsOrdered"] != null)
+                {
+                    doorsOrdered = (List<Door>)Session["doorsOrdered"];
+                    //System.Diagnostics.Debug.Write("Running 1 " + doorsOrdered.Count);
+                }
+                
                 if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypeCabana")
                 {
                     Door aDoor = getCabanaDoorFromForm();
@@ -1143,7 +1114,16 @@ namespace SunspaceDealerDesktop
                     Door aDoor = getPatioDoorFromForm();
                     doorsOrdered.Add(aDoor);
                 }
+                Session.Add("doorsOrdered", doorsOrdered);
+                System.Diagnostics.Debug.Write("Running 2 " + doorsOrdered.Count);
             }
+            #endregion
+
+            findNumberOfDoorTypes();
+
+            Session["cabanaCount"] = cabanaCount;
+            Session["frenchCount"] = frenchCount;
+            Session["patioCount"] = patioCount;
         }
 
         protected CabanaDoor getCabanaDoorFromForm()
@@ -1231,6 +1211,40 @@ namespace SunspaceDealerDesktop
             //aDoor.HardwareType = Request.Form["hidWall" + i + "Door" + j + "hardware"];
 
             return aDoor;
+        }
+
+        private void createHiddenCabana(CabanaDoor aDoor) {
+            string hiddenCabana = "";
+            hiddenCabana += "<input id=\"hidCabanaStyle\" type=\"hidden\" value=\"" + aDoor.DoorStyle + "\" runat=\"server\" />";
+            hiddenCabana += "<input id=\"hidCabanaKickplate\" type=\"hidden\" value=\"" + aDoor.Kickplate + "\" runat=\"server\" />";
+            hiddenCabana += "<input id=\"hidCabanaColour\" type=\"hidden\" value=\"" + aDoor.Colour + "\" runat=\"server\" />";
+            hiddenCabana += "<input id=\"hidCabanaHeight\" type=\"hidden\" value=\"" + aDoor.FStartHeight + "\" runat=\"server\" />";
+            hiddenCabana += "<input id=\"hidCabanaWidth\" type=\"hidden\" value=\"" + aDoor.FLength + "\" runat=\"server\" />";
+            hiddenCabana += "<input id=\"hidCabanaGlassTint\" type=\"hidden\" value=\"" + aDoor.GlassTint + "\" runat=\"server\" />";
+            hiddenCabana += "<input id=\"hidCabanaHinge\" type=\"hidden\" value=\"" + aDoor.Hinge + "\" runat=\"server\" />";
+            hiddenCabana += "<input id=\"hidCabanaScreenStyle\" type=\"hidden\" value=\"" + aDoor.ScreenType + "\" runat=\"server\" />";
+            hiddenCabana += "<input id=\"hidCabanaHardware\" type=\"hidden\" value=\"" + aDoor.HardwareType + "\" runat=\"server\" />";
+            hiddenCabana += "<input id=\"hidCabanaSwing\" type=\"hidden\" value=\"" + aDoor.Swing + "\" runat=\"server\" />";
+
+            hiddenFieldsDiv.InnerHtml += hiddenCabana;
+        }
+
+        private void createHiddenFrench() { 
+        }
+
+        private void createHiddenPatio() { 
+        }
+
+        private void findNumberOfDoorTypes() {
+            doorsOrdered.ForEach(delegate(Door doorChecked)
+            {
+                if (doorChecked is CabanaDoor)
+                    cabanaCount++;
+                else if (doorChecked is FrenchDoor)
+                    frenchCount++;
+                else if (doorChecked is PatioDoor)
+                    patioCount++;
+            });
         }
     }
 }

@@ -3,11 +3,31 @@
     <script src="Scripts/GlobalFunctions.js"></script>
     <script src="Scripts/Validation.js"></script>
     <script>
+
+        var cabanaCount = '<%= Session["cabanaCount"] %>';
+        var frenchCount = '<%= Session["frenchCount"] %>';
+        var patioCount = '<%= Session["patioCount"] %>';
+
+        $(document).ready(
+        function loadDoors() {
+            var pager = '';
+
+            if (cabanaCount != 0)
+                pager += 'Cabana Doors Order: ' + cabanaCount + '<br/>';
+            if (frenchCount != 0)
+                pager += 'French Doors Order: ' + frenchCount + '<br/>';
+            if (patioCount != 0)
+                pager += 'Patio Doors Order: ' + patioCount + '<br/>';
+
+
+            $('#MainContent_lblDoor').html("Doors Ordered");
+            $('#MainContent_lblDoorAnswer').html(pager);
+        });
+
         /**
         *customDimension
         *Checks the drop down selection on change, if the selection is custom, displays additional fields,
         *else custom field is hidden (i.e. css style.display = none)
-        *@param wallNumber - holds an integer to know which wall is currently being affected
         *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
         *@param dimension - gets the dimension currently being called (i.e Width, Height)
         */
@@ -34,15 +54,14 @@
         *vinyl tint becomes displayed, since Vertical Four Track is the only door style
         *that has vinyl tint options
         *@param type - holds the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
-        *@param wallNumber - holds an integer to know which wall is currently being affected
         */
         function doorStyle(type) {
 
             //Get value of door style drop down
             var doorStyleDDL = document.getElementById('MainContent_ddlDoorStyle' + type).options[document.getElementById('MainContent_ddlDoorStyle' + type).selectedIndex].value;
-
+            
             //If drop down value is v4TCabana, perform block
-            if (doorStyleDDL == 'Vertical Four Track') {
+            if (doorStyleDDL == 'Vertical 4 Track') {
                 //Change door vinyl tint row display style to inherit
                 document.getElementById('MainContent_rowDoorVinylTint' + type).style.display = 'inherit';
                 //Change door number of vents row display style to inherit
@@ -68,12 +87,12 @@
                 document.getElementById('MainContent_rowDoorScreenOptions' + type).style.display = 'none';
             }
         }
+
         /**
         *typeOfRowsDisplayed
         *This function finds which type of door is selected and displays the appropriate fields
         *from a table hidden from the user
         *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
-        *@param wallNumber - holds an integer to know which wall is currently being affected
         */
         function typeRowsDisplayed(type) {
 
@@ -121,6 +140,7 @@
                 doorWidth.style.display = "inherit";
                 //doorBoxHeader.style.display = "inherit";
                 doorKickplate.style.display = "inherit";
+                doorVinylTint.style.display = "inherit";
 
                 //Cabana Specific                            
                 doorGlassTint.style.display = "inherit";
@@ -147,6 +167,7 @@
                 doorWidth.style.display = "inherit";
                 //doorBoxHeader.style.display = "inherit";
                 doorKickplate.style.display = "inherit";
+                doorVinylTint.style.display = "inherit";
 
                 //French specific
                 doorOperatorLHH.style.display = "inherit";
@@ -185,6 +206,11 @@
             }
         }
 
+        /**
+        *addDoor
+        *This function is used to add doors to an array of door objects
+        *@param title - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
+        */
         function addDoor(title) {
             if (title == 'Cabana') {
                 var answer = $('#MainContent_ddlDoorStyleCabana').val() + '<br/>';
@@ -241,6 +267,7 @@
             $('#MainContent_lblDoor').html(title);
             $('#MainContent_lblDoorAnswer').html(answer);
         }
+
     </script>
 
     <div class="slide-window" id="slide-window" >
@@ -291,4 +318,5 @@
         <%--<asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label>--%>
         <textarea id="txtErrorMessage" class="txtErrorMessage" disabled="disabled" rows="5" runat="server"></textarea>
     </div>
+    <div id="hiddenFieldsDiv" runat="server"></div>
 </asp:Content>
