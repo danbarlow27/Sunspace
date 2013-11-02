@@ -74,29 +74,29 @@
         function displayMixedTint(type) {
             if ($('#MainContent_ddlDoorVinylTint' + type).val() == "Mixed") {
                 if ($('#MainContent_ddlDoorNumberOfVents' + type).val() == "2") {
-                    document.getElementById('MainContent_row0DoorTintCabana').style.display = "inherit";
-                    document.getElementById('MainContent_row1DoorTintCabana').style.display = "inherit";
-                    document.getElementById('MainContent_row2DoorTintCabana').style.display = "none";
-                    document.getElementById('MainContent_row3DoorTintCabana').style.display = "none";
+                    document.getElementById('MainContent_row0DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row1DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row2DoorTint' + type).style.display = "none";
+                    document.getElementById('MainContent_row3DoorTint' + type).style.display = "none";
                 }
                 else if ($('#MainContent_ddlDoorNumberOfVents' + type).val() == "3") {
-                    document.getElementById('MainContent_row0DoorTintCabana').style.display = "inherit";
-                    document.getElementById('MainContent_row1DoorTintCabana').style.display = "inherit";
-                    document.getElementById('MainContent_row2DoorTintCabana').style.display = "inherit";
-                    document.getElementById('MainContent_row3DoorTintCabana').style.display = "none";
+                    document.getElementById('MainContent_row0DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row1DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row2DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row3DoorTint' + type).style.display = "none";
                 }
                 else if ($('#MainContent_ddlDoorNumberOfVents' + type).val() == "4") {
-                    document.getElementById('MainContent_row0DoorTintCabana').style.display = "inherit";
-                    document.getElementById('MainContent_row1DoorTintCabana').style.display = "inherit";
-                    document.getElementById('MainContent_row2DoorTintCabana').style.display = "inherit";
-                    document.getElementById('MainContent_row3DoorTintCabana').style.display = "inherit";
+                    document.getElementById('MainContent_row0DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row1DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row2DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row3DoorTint' + type).style.display = "inherit";
                 }
             }
             else {
-                document.getElementById('MainContent_row0DoorTintCabana').style.display = "none";
-                document.getElementById('MainContent_row1DoorTintCabana').style.display = "none";
-                document.getElementById('MainContent_row2DoorTintCabana').style.display = "none";
-                document.getElementById('MainContent_row3DoorTintCabana').style.display = "none";
+                document.getElementById('MainContent_row0DoorTint' + type).style.display = "none";
+                document.getElementById('MainContent_row1DoorTint' + type).style.display = "none";
+                document.getElementById('MainContent_row2DoorTint' + type).style.display = "none";
+                document.getElementById('MainContent_row3DoorTint' + type).style.display = "none";
             }
         }
 
