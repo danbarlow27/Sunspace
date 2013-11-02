@@ -48,11 +48,13 @@
                 //Change door number of vents row display style to inherit
                 document.getElementById('MainContent_rowDoorNumberOfVents' + type).style.display = 'inherit';
                 //Change door screen options row display style to none
-                document.getElementById('MainContent_rowDoorScreenOptions' + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorScreenTypes' + type).style.display = 'none';
+
+                displayMixedTint(type);
             }
             else if (doorStyleDDL == 'Full Screen' || doorStyleDDL == 'Screen') {
                 //Change door screen options row display style to inherit
-                document.getElementById('MainContent_rowDoorScreenOptions' + type).style.display = 'inherit';
+                document.getElementById('MainContent_rowDoorScreenTypes' + type).style.display = 'inherit';
                 //Change door vinyl tint row display style to none
                 document.getElementById('MainContent_rowDoorVinylTint' + type).style.display = 'none';
                 //Change door number of vents row display style to inherit
@@ -65,7 +67,36 @@
                 //Change door number of vents row display style to inherit
                 document.getElementById('MainContent_rowDoorNumberOfVents' + type).style.display = 'none';
                 //Change door screen options row display style to none
-                document.getElementById('MainContent_rowDoorScreenOptions' + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorScreenTypes' + type).style.display = 'none';
+            }
+        }
+
+        function displayMixedTint(type) {
+            if ($('#MainContent_ddlDoorVinylTint' + type).val() == "Mixed") {
+                if ($('#MainContent_ddlDoorNumberOfVents' + type).val() == "2") {
+                    document.getElementById('MainContent_row0DoorTintCabana').style.display = "inherit";
+                    document.getElementById('MainContent_row1DoorTintCabana').style.display = "inherit";
+                    document.getElementById('MainContent_row2DoorTintCabana').style.display = "none";
+                    document.getElementById('MainContent_row3DoorTintCabana').style.display = "none";
+                }
+                else if ($('#MainContent_ddlDoorNumberOfVents' + type).val() == "3") {
+                    document.getElementById('MainContent_row0DoorTintCabana').style.display = "inherit";
+                    document.getElementById('MainContent_row1DoorTintCabana').style.display = "inherit";
+                    document.getElementById('MainContent_row2DoorTintCabana').style.display = "inherit";
+                    document.getElementById('MainContent_row3DoorTintCabana').style.display = "none";
+                }
+                else if ($('#MainContent_ddlDoorNumberOfVents' + type).val() == "4") {
+                    document.getElementById('MainContent_row0DoorTintCabana').style.display = "inherit";
+                    document.getElementById('MainContent_row1DoorTintCabana').style.display = "inherit";
+                    document.getElementById('MainContent_row2DoorTintCabana').style.display = "inherit";
+                    document.getElementById('MainContent_row3DoorTintCabana').style.display = "inherit";
+                }
+            }
+            else {
+                document.getElementById('MainContent_row0DoorTintCabana').style.display = "none";
+                document.getElementById('MainContent_row1DoorTintCabana').style.display = "none";
+                document.getElementById('MainContent_row2DoorTintCabana').style.display = "none";
+                document.getElementById('MainContent_row3DoorTintCabana').style.display = "none";
             }
         }
 
@@ -95,7 +126,7 @@
             var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + type);
             var doorHingeLHH = document.getElementById("MainContent_rowDoorHingeLHH" + type);
             var doorHingeRHH = document.getElementById("MainContent_rowDoorHingeRHH" + type);
-            var doorScreenOptions = document.getElementById("MainContent_rowDoorScreenOptions" + type);
+            var doorScreenTypes = document.getElementById("MainContent_rowDoorScreenTypes" + type);
             var doorHardware = document.getElementById("MainContent_rowDoorHardware" + type);
             var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + type);
             var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + type);
@@ -178,7 +209,7 @@
                 doorGlassTint.style.display = "inherit";
                 doorOperatorLHH.style.display = "inherit";
                 doorOperatorRHH.style.display = "inherit";
-                doorScreenOptions.style.display = "inherit";
+                doorScreenTypes.style.display = "inherit";
 
                 //Radio button defaults
                 doorOperatorLHHChecked.setAttribute("checked", "checked");
@@ -204,7 +235,7 @@
                     answer += 'Left<br/>';
                 else
                     answer += 'Right<br/>';
-                answer += $('#MainContent_ddlDoorScreenOptionsCabana').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorScreenTypesCabana').val() + '<br/>';
                 answer += $('#MainContent_ddlDoorHardwareCabana').val() + '<br/>';
                 if ($('#MainContent_radDoorSwingCabana:checked').val())
                     answer += 'In<br/>';
@@ -222,7 +253,7 @@
                     answer += 'Left<br/>';
                 else
                     answer += 'Right<br/>';
-                answer += $('#MainContent_ddlDoorScreenOptionsFrench').val() + '<br/>';
+                answer += $('#MainContent_ddlDoorScreenTypesFrench').val() + '<br/>';
                 answer += $('#MainContent_ddlDoorHardwareFrench').val() + '<br/>';
                 if ($('#MainContent_radDoorSwingFrench:checked').val())
                     answer += 'In<br/>';
