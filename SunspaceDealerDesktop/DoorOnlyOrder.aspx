@@ -9,7 +9,7 @@
         *customDimension
         *Checks the drop down selection on change, if the selection is custom, displays additional fields,
         *else custom field is hidden (i.e. css style.display = none)
-        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio);
         *@param dimension - gets the dimension currently being called (i.e Width, Height)
         */
         function customDimension(type, dimension) {
@@ -34,7 +34,7 @@
         *Door style function is triggered when the user selects Vertical Four Track, 
         *vinyl tint becomes displayed, since Vertical Four Track is the only door style
         *that has vinyl tint options
-        *@param type - holds the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        *@param type - holds the type of door selected (i.e. Cabana, French, Patio);
         */
         function doorStyle(type) {
 
@@ -71,6 +71,12 @@
             }
         }
 
+        /**
+        *displayMixedTint
+        *This function is used to display invidual window tints on a vertical 4 track
+        *only if the "Mixed" option is selected.
+        *@param type - holds the type of door selected (i.e. Cabana, French, Patio);
+        */
         function displayMixedTint(type) {
             if ($('#MainContent_ddlDoorVinylTint' + type).val() == "Mixed") {
                 if ($('#MainContent_ddlDoorNumberOfVents' + type).val() == "2") {

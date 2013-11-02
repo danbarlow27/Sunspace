@@ -17,10 +17,7 @@ namespace SunspaceDealerDesktop
         protected ListItem lst58 = new ListItem("5/8", ".625");
         protected ListItem lst34 = new ListItem("3/4", ".75");
         protected ListItem lst78 = new ListItem("7/8", ".875");
-        List<Door> doorsOrdered = new List<Door>();
-              
-
-        
+        List<Door> doorsOrdered = new List<Door>();            
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -1124,6 +1121,12 @@ namespace SunspaceDealerDesktop
             populateSideBar(findNumberOfDoorTypes());
         }
 
+        /// <summary>
+        /// This function creates rows in a table containing information
+        /// on individual window tints for a Vertical 4 Track
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="tblDoorDetails"></param>
         protected void addMixedTintDropdowns(string title, Table tblDoorDetails)
         {
             for (int j = 0; j < 4; j++)
@@ -1162,6 +1165,11 @@ namespace SunspaceDealerDesktop
             }
         }
 
+        /// <summary>
+        /// This function creates a CabanaDoor object and stores the
+        /// information entered on the page.
+        /// </summary>
+        /// <returns>CabanaDoor aDoor</returns>
         protected CabanaDoor getCabanaDoorFromForm()
         {
             CabanaDoor aDoor = new CabanaDoor();
@@ -1217,6 +1225,11 @@ namespace SunspaceDealerDesktop
             return aDoor;
         }
 
+        /// <summary>
+        /// This function creates a FrenchDoor object and stores the
+        /// information entered on the page.
+        /// </summary>
+        /// <returns>FrenchDoor aDoor</returns>
         protected FrenchDoor getFrenchDoorFromForm()
         {
             FrenchDoor aDoor = new FrenchDoor();
@@ -1270,6 +1283,11 @@ namespace SunspaceDealerDesktop
             return aDoor;
         }
 
+        /// <summary>
+        /// This function creates a PatioDoor object and stores the
+        /// information entered on the page.
+        /// </summary>
+        /// <returns>PatioDoor aDoor</returns>
         protected PatioDoor getPatioDoorFromForm()
         {
             PatioDoor aDoor = new PatioDoor();
@@ -1295,12 +1313,15 @@ namespace SunspaceDealerDesktop
             return aDoor;
         }
         
-        /**
-         *Tuple items:
-         *Item1:Cabana door count
-         *Item2:French door count
-         *Item3:Patio door count
-         */
+        /// <summary>
+        /// This function is used to find the amount of each type of 
+        /// door that has been ordered.
+        /// </summary>
+        /// <returns>Tuple<int,int,int>(cabanaCount,frenchCount,patioCount)</returns>
+        /// NOTE Tuple items:
+        /// Item1:Cabana door count
+        /// Item2:French door count
+        /// Item3:Patio door count
         private Tuple<int,int,int> findNumberOfDoorTypes() {
             int cabanaCount = 0, frenchCount = 0, patioCount = 0;
             doorsOrdered.ForEach(delegate(Door doorChecked)
@@ -1315,7 +1336,14 @@ namespace SunspaceDealerDesktop
             //System.Diagnostics.Debug.Write("This is the cabana count: " + cabanaCount);
             return new Tuple<int,int,int>(cabanaCount,frenchCount,patioCount);
         }
-
+        
+        /// <summary>
+        /// This function is used to populate the side bar which displays
+        /// information regarding how many doors of each type have been ordered,
+        /// along with individual door information. This is done in an accordion
+        /// style to hide unneeded data.
+        /// </summary>
+        /// <param name="doorTypeCounts"></param>
         private void populateSideBar(Tuple<int,int,int> doorTypeCounts) {
 
             int count;
