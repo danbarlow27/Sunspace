@@ -4,25 +4,6 @@
     <script src="Scripts/Validation.js"></script>
     <script>
 
-        var cabanaCount = '<%= Session["cabanaCount"] %>';
-        var frenchCount = '<%= Session["frenchCount"] %>';
-        var patioCount = '<%= Session["patioCount"] %>';
-
-        $(document).ready(
-        function loadDoors() {
-            var pager = '';
-
-            if (cabanaCount != 0)
-                pager += 'Cabana Doors Order: ' + cabanaCount + '<br/>';
-            if (frenchCount != 0)
-                pager += 'French Doors Order: ' + frenchCount + '<br/>';
-            if (patioCount != 0)
-                pager += 'Patio Doors Order: ' + patioCount + '<br/>';
-
-
-            $('#MainContent_lblDoor').html("Doors Ordered");
-            $('#MainContent_lblDoorAnswer').html(pager);
-        });
 
         /**
         *customDimension
@@ -298,20 +279,7 @@
         <div id="paging-wrapper">    
             <div id="paging"> 
                 <h2>Door Specifications</h2>
-
-                <ul>
-                    <!--Div tag to hold the canvas/grid-->
-                    <div style="position:inherit; text-align:center; top:0px; right:0px;" id="mySunroom"></div>
-                    <%--==================================== --%>
-
-                    <%-- div to display the answers for question 1 --%>
-                    <div style="display: block" id="pagerOne">
-                        <li>
-                            <asp:Label ID="lblDoor" runat="server" Text="Text"></asp:Label>
-                            <asp:Label ID="lblDoorAnswer" runat="server" Text="Answer"></asp:Label>
-                        </li>
-                    </div>
-                </ul>    
+                <asp:PlaceHolder ID="lblDoorPager" runat="server"></asp:PlaceHolder>  
             </div> <%-- end #paging --%>      
         </div>
 
