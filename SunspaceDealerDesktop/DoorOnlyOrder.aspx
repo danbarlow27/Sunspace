@@ -49,6 +49,8 @@
                 document.getElementById('MainContent_rowDoorNumberOfVents' + type).style.display = 'inherit';
                 //Change door screen options row display style to none
                 document.getElementById('MainContent_rowDoorScreenTypes' + type).style.display = 'none';
+                //Change door glass tint row display style to none
+                document.getElementById('MainContent_rowDoorGlassTint' + type).style.display = 'none';
 
                 displayMixedTint(type);
             }
@@ -59,6 +61,8 @@
                 document.getElementById('MainContent_rowDoorVinylTint' + type).style.display = 'none';
                 //Change door number of vents row display style to inherit
                 document.getElementById('MainContent_rowDoorNumberOfVents' + type).style.display = 'none';
+                //Change door glass tint row display style to none
+                document.getElementById('MainContent_rowDoorGlassTint' + type).style.display = 'none';
             }
                 //else, perform block
             else {
@@ -68,6 +72,8 @@
                 document.getElementById('MainContent_rowDoorNumberOfVents' + type).style.display = 'none';
                 //Change door screen options row display style to none
                 document.getElementById('MainContent_rowDoorScreenTypes' + type).style.display = 'none';
+                //Change door glass tint row display style to inherit
+                document.getElementById('MainContent_rowDoorGlassTint' + type).style.display = 'inherit';
             }
         }
 
@@ -302,7 +308,7 @@
                     <asp:PlaceHolder ID="DoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Next Question"/>
+                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Done Ordering Doors"/>
 
             </div>
             <%-- end #slide3 --%>
