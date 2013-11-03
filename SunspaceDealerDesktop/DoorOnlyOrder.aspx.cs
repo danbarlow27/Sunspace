@@ -757,7 +757,7 @@ namespace SunspaceDealerDesktop
                 doorButton.ID = "btnAdd" + title;
                 doorButton.Text = "Add this " + title + " door";
                 doorButton.CssClass = "btnSubmit";
-                doorButton.Attributes.Add("click", "addDoor(\"" + title + "\")");
+                //doorButton.Attributes.Add("click", "addDoor(\"" + title + "\")");
 
                 #endregion
 

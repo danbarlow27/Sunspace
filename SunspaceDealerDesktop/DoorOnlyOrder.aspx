@@ -116,7 +116,7 @@
         *typeOfRowsDisplayed
         *This function finds which type of door is selected and displays the appropriate fields
         *from a table hidden from the user
-        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio)
         */
         function typeRowsDisplayed(type) {
 
@@ -228,68 +228,6 @@
 
                 doorStyle(type);
             }
-        }
-
-        /**
-        *addDoor
-        *This function is used to add doors to an array of door objects
-        *@param title - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
-        */
-        function addDoor(title) {
-            if (title == 'Cabana') {
-                var answer = $('#MainContent_ddlDoorStyleCabana').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorColourCabana').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorHeightCabana').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorWidthCabana').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorBoxHeaderCabana').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorGlassTintCabana').val() + '<br/>';
-                if ($('#MainContent_radDoorHingeCabana:checked').val())
-                    answer += 'Left<br/>';
-                else
-                    answer += 'Right<br/>';
-                answer += $('#MainContent_ddlDoorScreenTypesCabana').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorHardwareCabana').val() + '<br/>';
-                if ($('#MainContent_radDoorSwingCabana:checked').val())
-                    answer += 'In<br/>';
-                else
-                    answer += 'Out<br/>';
-            }
-            else if (title == 'French') {
-                var answer = $('#MainContent_ddlDoorStyleFrench').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorColourFrench').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorHeightFrench').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorWidthFrench').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorBoxHeaderFrench').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorGlassTintFrench').val() + '<br/>';
-                if ($('#MainContent_radDoorHingeFrench:checked').val())
-                    answer += 'Left<br/>';
-                else
-                    answer += 'Right<br/>';
-                answer += $('#MainContent_ddlDoorScreenTypesFrench').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorHardwareFrench').val() + '<br/>';
-                if ($('#MainContent_radDoorSwingFrench:checked').val())
-                    answer += 'In<br/>';
-                else
-                    answer += 'Out<br/>';
-            }
-            else {
-                var answer = $('#MainContent_ddlDoorStylePatio').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorColourPatio').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorHeightPatio').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorWidthPatio').val() + '<br/>';
-                if ($('#MainContent_lblDoorOperatorLHHPatio:checked').val())
-                    answer += 'Left<br/>';
-                else
-                    answer += 'Right<br/>';
-                answer += $('#MainContent_ddlDoorBoxHeaderPatio').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorGlassTintPatio').val() + '<br/>';
-                if ($('#MainContent_radDoorSwingPatio:checked').val())
-                    answer += 'In<br/>';
-                else
-                    answer += 'Out<br/>';
-            }
-            $('#MainContent_lblDoor').html(title);
-            $('#MainContent_lblDoorAnswer').html(answer);
         }
 
     </script>
