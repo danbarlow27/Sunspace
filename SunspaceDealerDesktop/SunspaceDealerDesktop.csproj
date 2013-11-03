@@ -247,6 +247,7 @@
     <Content Include="Content\fonts\Shanti-Regular.ttf" />
     <Content Include="ProjectPreview.aspx" />
     <Content Include="ProjEd.aspx" />
+    <Content Include="RoofOnlyOrder.aspx" />
     <Content Include="RoofTesting.aspx" />
     <Content Include="RoofWizard.aspx" />
     <Content Include="Scripts\DoorSlideFunctions.js" />
@@ -452,6 +453,13 @@
     <Compile Include="Roof.cs" />
     <Compile Include="RoofItem.cs" />
     <Compile Include="RoofModule.cs" />
+    <Compile Include="RoofOnlyOrder.aspx.cs">
+      <DependentUpon>RoofOnlyOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RoofOnlyOrder.aspx.designer.cs">
+      <DependentUpon>RoofOnlyOrder.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RoofTesting.aspx.cs">
       <DependentUpon>RoofTesting.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
