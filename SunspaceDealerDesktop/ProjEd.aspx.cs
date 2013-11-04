@@ -9,6 +9,8 @@ namespace SunspaceDealerDesktop
 {
     public partial class ProjEd : System.Web.UI.Page
     {
+        //replace these with actual constants
+        
         //fractions dropdown list items
         protected ListItem lst0 = new ListItem("---", "0", true);
         protected ListItem lst18 = new ListItem("1/8", ".125");
@@ -19,10 +21,15 @@ namespace SunspaceDealerDesktop
         protected ListItem lst34 = new ListItem("3/4", ".75");
         protected ListItem lst78 = new ListItem("7/8", ".875");
 
+        //Model type dropdown list items
         protected ListItem lstM100 = new ListItem("100", "M100");
         protected ListItem lstM200 = new ListItem("200", "M200");
         protected ListItem lstM300 = new ListItem("300", "M300");
         protected ListItem lstM400 = new ListItem("400", "M400");
+
+        //roofstyle type dropdown list items
+        protected ListItem lstGable = new ListItem("Gable", "Gable");
+        protected ListItem lstStudio = new ListItem("Studio", "Studio");
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -83,7 +90,7 @@ namespace SunspaceDealerDesktop
             listOfWalls.Add(firstWall);
             listOfWalls.Add(secondWall);
             listOfWalls.Add(thirdWall);
-            #endregion
+            #endregion  //hardcode population
 
             #region dynamic accordion population
 
@@ -91,6 +98,7 @@ namespace SunspaceDealerDesktop
             accordion.Controls.Add(new LiteralControl("<h2>Project Wide Settings</h2>"));
             accordion.Controls.Add(new LiteralControl("<ul>"));
 
+            #region Tag Name
             accordion.Controls.Add(new LiteralControl("<li>"));
             Label tagName = new Label();
             tagName.ID = "lblTagName";
@@ -102,9 +110,12 @@ namespace SunspaceDealerDesktop
             tagNameTextBox.Text = projectName.ToString();
             tagNameTextBox.CssClass = "txtField txtInput";
             tagNameTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            tagNameTextBox.Attributes.Add("runat", "server");
             accordion.Controls.Add(tagNameTextBox);
             accordion.Controls.Add(new LiteralControl("</li>"));
+            #endregion //tag name
 
+            #region Model Type
             accordion.Controls.Add(new LiteralControl("<li>"));
             Label modelLabel = new Label();
             modelLabel.ID = "lblModelLabel";
@@ -118,17 +129,110 @@ namespace SunspaceDealerDesktop
             modelDropDown.Items.Add(lstM300);
             modelDropDown.Items.Add(lstM400);
             modelDropDown.SelectedValue = modelType;
+            modelDropDown.Attributes.Add("runat", "server");
             accordion.Controls.Add(modelDropDown);
+            accordion.Controls.Add(new LiteralControl("</li>"));
+            #endregion //model type
+
+            #region Roof Style
+            accordion.Controls.Add(new LiteralControl("<li>"));
+            Label styleLabel = new Label();
+            styleLabel.ID = "lblStyleLabel";
+            styleLabel.Text = "Roof Style: ";
+            accordion.Controls.Add(styleLabel);
+
+            DropDownList styleDropDown = new DropDownList();
+            styleDropDown.ID = "ddlStyle";
+            styleDropDown.Items.Add(lstGable);
+            styleDropDown.Items.Add(lstStudio);
+            styleDropDown.SelectedValue = roofStyle;
+            styleDropDown.Attributes.Add("runat", "server");
+            accordion.Controls.Add(styleDropDown);
+            accordion.Controls.Add(new LiteralControl("</li>"));
+            #endregion //roof style
+
+            #region Cut Pitch
+            accordion.Controls.Add(new LiteralControl("<li>"));
+            Label firstCutPitchLabel = new Label();
+            firstCutPitchLabel.ID = "lblFirstCutPitch";
+            firstCutPitchLabel.Text = "Cut Pitch";
+            accordion.Controls.Add(firstCutPitchLabel);
+
+            CheckBox cutPitchCheckBox = new CheckBox();
+            cutPitchCheckBox.ID = "chkCutPitch";
+            cutPitchCheckBox.Checked = cutPitch;
+            cutPitchCheckBox.Text = " ";
+            cutPitchCheckBox.Attributes.Add("runat", "server");
+            accordion.Controls.Add(cutPitchCheckBox);
+
+            Label secondCutPitchLabel = new Label();
+            secondCutPitchLabel.ID = "lblSecondCutPitch";
+            secondCutPitchLabel.AssociatedControlID = "chkCutPitch";
+            secondCutPitchLabel.Attributes.Add("runat", "server");
+            accordion.Controls.Add(secondCutPitchLabel);
+            accordion.Controls.Add(new LiteralControl("</li>"));
+            #endregion //cut pitch
+
+            #region Install Type
+            //only display this selection if install type != standalone
+            accordion.Controls.Add(new LiteralControl("<li>"));
+
+            accordion.Controls.Add(new LiteralControl("<br/>"));
+            Label installLabel = new Label();
+            installLabel.ID = "lblInstall";
+            installLabel.Text = "Install Type";
+            accordion.Controls.Add(installLabel);
+            accordion.Controls.Add(new LiteralControl("<br/>"));
+
+            RadioButton installHouseRadio = new RadioButton();
+            installHouseRadio.ID = "radInstallHouse";
+            installHouseRadio.Attributes.Add("runat", "server");
+            installHouseRadio.GroupName = "InstallType";
+            installHouseRadio.Text = " ";
+            accordion.Controls.Add(installHouseRadio);
+
+            Label firstInstallLabel = new Label();
+            firstInstallLabel.ID = "lblFirstInstallLabel";
+            firstInstallLabel.AssociatedControlID = "radInstallHouse";
+            accordion.Controls.Add(firstInstallLabel);
+
+            Label secondInstallLabel = new Label();
+            secondInstallLabel.ID = "lblSecondInstallLabel";
+            secondInstallLabel.AssociatedControlID = "radInstallHouse";
+            secondInstallLabel.Text = "House";
+            accordion.Controls.Add(secondInstallLabel);
+
+            accordion.Controls.Add(new LiteralControl("<br/>"));
+
+            RadioButton installTrailerRadio = new RadioButton();
+            installTrailerRadio.ID = "radInstallTrailer";
+            installTrailerRadio.Attributes.Add("runat", "server");
+            installTrailerRadio.GroupName = "InstallType";
+            installTrailerRadio.Text = " ";
+            accordion.Controls.Add(installTrailerRadio);
+
+            Label thirdInstallLabel = new Label();
+            thirdInstallLabel.ID = "lblThirdInstallLabel";
+            thirdInstallLabel.AssociatedControlID = "radInstallTrailer";
+            accordion.Controls.Add(thirdInstallLabel);
+
+            Label fourthInstallLabel = new Label();
+            fourthInstallLabel.ID = "lblFourthInstallLabel";
+            fourthInstallLabel.AssociatedControlID = "radInstallHouse";
+            fourthInstallLabel.Text = "Trailer";
+            accordion.Controls.Add(fourthInstallLabel);
             accordion.Controls.Add(new LiteralControl("</li>"));
 
             accordion.Controls.Add(new LiteralControl("</ul>"));
-            #endregion
+            #endregion //Install Type
+
+            #endregion //Project Wide
 
             #region Wall Height Entry
             accordion.Controls.Add(new LiteralControl("<h2>Wall Heights</h2>"));
-
             accordion.Controls.Add(new LiteralControl("<ul>"));
 
+            #region BackWall Height
             accordion.Controls.Add(new LiteralControl("<li>"));
             Label backwallHeight = new Label();
             backwallHeight.ID = "lblBackwall";
@@ -140,6 +244,7 @@ namespace SunspaceDealerDesktop
             backwallTextBox.Text = backwall.ToString();
             backwallTextBox.CssClass = "txtField txtInput";
             backwallTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            backwallTextBox.Attributes.Add("runat", "server");
             accordion.Controls.Add(backwallTextBox);
 
             DropDownList backwallFractions = new DropDownList();
@@ -152,9 +257,12 @@ namespace SunspaceDealerDesktop
             backwallFractions.Items.Add(lst38);
             backwallFractions.Items.Add(lst58);
             backwallFractions.Items.Add(lst78);
+            backwallFractions.Attributes.Add("runat", "server");
             accordion.Controls.Add(backwallFractions);
             accordion.Controls.Add(new LiteralControl("</li>"));
+            #endregion //backwall height
 
+            #region FrontWall Height
             accordion.Controls.Add(new LiteralControl("<li>"));
             Label frontwallHeight = new Label();
             frontwallHeight.ID = "lblFrontwall";
@@ -166,6 +274,7 @@ namespace SunspaceDealerDesktop
             frontwallTextBox.Text = frontwall.ToString();
             frontwallTextBox.CssClass = "txtField txtInput";
             frontwallTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            frontwallTextBox.Attributes.Add("runat", "server");
             accordion.Controls.Add(frontwallTextBox);
 
             DropDownList frontwallFractions = new DropDownList();
@@ -178,9 +287,12 @@ namespace SunspaceDealerDesktop
             frontwallFractions.Items.Add(lst38);
             frontwallFractions.Items.Add(lst58);
             frontwallFractions.Items.Add(lst78);
+            frontwallFractions.Attributes.Add("runat", "server");
             accordion.Controls.Add(frontwallFractions);
             accordion.Controls.Add(new LiteralControl("</li>"));
+            #endregion //frontwall height
 
+            #region Slope
             accordion.Controls.Add(new LiteralControl("<li>"));
             Label slopeLabel = new Label();
             slopeLabel.ID = "lblSlope";
@@ -192,6 +304,7 @@ namespace SunspaceDealerDesktop
             slopeTextBox.Text = slope.ToString();
             slopeTextBox.CssClass = "txtField txtInput";
             slopeTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            slopeTextBox.Attributes.Add("runat", "server");
             accordion.Controls.Add(slopeTextBox);
 
             Label overTwelve = new Label();
@@ -199,9 +312,10 @@ namespace SunspaceDealerDesktop
             overTwelve.Text = " / 12";
             accordion.Controls.Add(overTwelve);
             accordion.Controls.Add(new LiteralControl("</li>"));
+            #endregion //slope
 
             accordion.Controls.Add(new LiteralControl("</ul>"));
-            #endregion
+            #endregion //wall height entry
 
             #region Wall Width Entry
             accordion.Controls.Add(new LiteralControl("<ul class=\"toggleOptions\">"));
@@ -230,6 +344,7 @@ namespace SunspaceDealerDesktop
                 widthTextBox.Text = listOfWalls[i].Length.ToString();
                 widthTextBox.CssClass = "txtField txtInput";
                 widthTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                widthTextBox.Attributes.Add("runat", "server");
                 accordion.Controls.Add(widthTextBox);
 
                 DropDownList widthFractions = new DropDownList();
@@ -242,10 +357,11 @@ namespace SunspaceDealerDesktop
                 widthFractions.Items.Add(lst38);
                 widthFractions.Items.Add(lst58);
                 widthFractions.Items.Add(lst78);
+                widthFractions.Attributes.Add("runat", "server");
                 accordion.Controls.Add(widthFractions);
 
                 accordion.Controls.Add(new LiteralControl("</li>"));
-                #endregion
+                #endregion //wall length
 
                 #region Wall StartHeight
                 accordion.Controls.Add(new LiteralControl("<li>"));
@@ -257,10 +373,11 @@ namespace SunspaceDealerDesktop
                 Label startHeightDisplay = new Label();
                 startHeightDisplay.ID = "lblStartHeightDisplay" + (i + 1);
                 startHeightDisplay.Text = listOfWalls[i].StartHeight.ToString();
+                startHeightDisplay.Attributes.Add("runat", "server");
                 accordion.Controls.Add(startHeightDisplay);
 
                 accordion.Controls.Add(new LiteralControl("</li>"));
-                #endregion
+                #endregion //wall start height
 
                 #region Wall EndHeight
                 accordion.Controls.Add(new LiteralControl("<li>"));
@@ -272,18 +389,19 @@ namespace SunspaceDealerDesktop
                 Label endHeightDisplay = new Label();
                 endHeightDisplay.ID = "lblEndHeightDisplay" + (i + 1);
                 endHeightDisplay.Text = listOfWalls[i].EndHeight.ToString();
+                endHeightDisplay.Attributes.Add("runat", "server");
                 accordion.Controls.Add(endHeightDisplay);
 
                 accordion.Controls.Add(new LiteralControl("</li>"));
-                #endregion
+                #endregion //wall endheight
 
                 accordion.Controls.Add(new LiteralControl("</ul></div></li>"));
             }
 
             accordion.Controls.Add(new LiteralControl("</ul>"));
-            #endregion
+            #endregion //wall width entry
 
-            #endregion
+            #endregion //dynamic accordion population
         }
     }
 }
