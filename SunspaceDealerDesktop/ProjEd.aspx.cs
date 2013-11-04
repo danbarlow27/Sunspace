@@ -19,23 +19,37 @@ namespace SunspaceDealerDesktop
         protected ListItem lst34 = new ListItem("3/4", ".75");
         protected ListItem lst78 = new ListItem("7/8", ".875");
 
+        protected ListItem lstM100 = new ListItem("100", "M100");
+        protected ListItem lstM200 = new ListItem("200", "M200");
+        protected ListItem lstM300 = new ListItem("300", "M300");
+        protected ListItem lstM400 = new ListItem("400", "M400");
+
         protected void Page_Load(object sender, EventArgs e)
         {
             #region hardcode population
             //This info will all come from the database eventually            
 
             List<Wall> listOfWalls = new List<Wall>();
-
             float backwall = 150.0f;
             float frontwall = 140.0f;
             float slope = 0.6f;
+            string projectName = "Joey's Super Fantastic Sunroom";
+            string modelType = "M200";
+            string roofStyle = "Studio";
+            bool cutPitch = true;
+            string installType = "house";
+            string framingColour = "Driftwood";
+            string interiorColour = "Driftwood";
+            string exteriorColour = "Driftwood";
+            string interiorSkin = "Driftwood Aluminum Stucco";
+            string exteriorSkin = "Driftwood Aluminum Stucco";
 
             Wall firstWall = new Wall();
             firstWall.Length = 200;
             firstWall.Orientation = "WEST";
             firstWall.Name = "Wall 1";
             firstWall.WallType = "Proposed";
-            firstWall.ModelType = "Model200";
+            firstWall.ModelType = "M200";
             firstWall.StartHeight = 150;
             firstWall.EndHeight = 140;
             firstWall.SoffitLength = 0;
@@ -47,7 +61,7 @@ namespace SunspaceDealerDesktop
             secondWall.Orientation = "SOUTH";
             secondWall.Name = "Wall 2";
             secondWall.WallType = "Proposed";
-            secondWall.ModelType = "Model200";
+            secondWall.ModelType = "M200";
             secondWall.StartHeight = 140;
             secondWall.EndHeight = 140;
             secondWall.SoffitLength = 0;
@@ -59,7 +73,7 @@ namespace SunspaceDealerDesktop
             thirdWall.Orientation = "EAST";
             thirdWall.Name = "Wall 3";
             thirdWall.WallType = "Proposed";
-            thirdWall.ModelType = "Model200";
+            thirdWall.ModelType = "M200";
             thirdWall.StartHeight = 140;
             thirdWall.EndHeight = 150;
             thirdWall.SoffitLength = 0;
@@ -72,6 +86,43 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region dynamic accordion population
+
+            #region Project Wide
+            accordion.Controls.Add(new LiteralControl("<h2>Project Wide Settings</h2>"));
+            accordion.Controls.Add(new LiteralControl("<ul>"));
+
+            accordion.Controls.Add(new LiteralControl("<li>"));
+            Label tagName = new Label();
+            tagName.ID = "lblTagName";
+            tagName.Text = "Tag Name: ";
+            accordion.Controls.Add(tagName);
+
+            TextBox tagNameTextBox = new TextBox();
+            tagNameTextBox.ID = "txtTagName";
+            tagNameTextBox.Text = projectName.ToString();
+            tagNameTextBox.CssClass = "txtField txtInput";
+            tagNameTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            accordion.Controls.Add(tagNameTextBox);
+            accordion.Controls.Add(new LiteralControl("</li>"));
+
+            accordion.Controls.Add(new LiteralControl("<li>"));
+            Label modelLabel = new Label();
+            modelLabel.ID = "lblModelLabel";
+            modelLabel.Text = "Model Type: ";
+            accordion.Controls.Add(modelLabel);
+
+            DropDownList modelDropDown = new DropDownList();
+            modelDropDown.ID = "ddlModel";
+            modelDropDown.Items.Add(lstM100);
+            modelDropDown.Items.Add(lstM200);
+            modelDropDown.Items.Add(lstM300);
+            modelDropDown.Items.Add(lstM400);
+            modelDropDown.SelectedValue = modelType;
+            accordion.Controls.Add(modelDropDown);
+            accordion.Controls.Add(new LiteralControl("</li>"));
+
+            accordion.Controls.Add(new LiteralControl("</ul>"));
+            #endregion
 
             #region Wall Height Entry
             accordion.Controls.Add(new LiteralControl("<h2>Wall Heights</h2>"));
