@@ -9,10 +9,26 @@ namespace SunspaceDealerDesktop
 {
     public partial class ProjEd : System.Web.UI.Page
     {
+        //fractions dropdown list items
+        protected ListItem lst0 = new ListItem("---", "0", true);
+        protected ListItem lst18 = new ListItem("1/8", ".125");
+        protected ListItem lst14 = new ListItem("1/4", ".25");
+        protected ListItem lst38 = new ListItem("3/8", ".375");
+        protected ListItem lst12 = new ListItem("1/2", ".5");
+        protected ListItem lst58 = new ListItem("5/8", ".625");
+        protected ListItem lst34 = new ListItem("3/4", ".75");
+        protected ListItem lst78 = new ListItem("7/8", ".875");
+
         protected void Page_Load(object sender, EventArgs e)
         {
             #region hardcode population
+            //This info will all come from the database eventually            
+
             List<Wall> listOfWalls = new List<Wall>();
+
+            float backwall = 150.0f;
+            float frontwall = 140.0f;
+            float slope = 0.6f;
 
             Wall firstWall = new Wall();
             firstWall.Length = 200;
@@ -24,6 +40,7 @@ namespace SunspaceDealerDesktop
             firstWall.EndHeight = 140;
             firstWall.SoffitLength = 0;
             firstWall.GablePeak = 0;
+            firstWall.SoffitLength = 0;
 
             Wall secondWall = new Wall();
             secondWall.Length = 200;
@@ -35,6 +52,7 @@ namespace SunspaceDealerDesktop
             secondWall.EndHeight = 140;
             secondWall.SoffitLength = 0;
             secondWall.GablePeak = 0;
+            secondWall.SoffitLength = 0;
 
             Wall thirdWall = new Wall();
             thirdWall.Length = 200;
@@ -46,6 +64,7 @@ namespace SunspaceDealerDesktop
             thirdWall.EndHeight = 150;
             thirdWall.SoffitLength = 0;
             thirdWall.GablePeak = 0;
+            thirdWall.SoffitLength = 0;
 
             listOfWalls.Add(firstWall);
             listOfWalls.Add(secondWall);
@@ -53,10 +72,89 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region dynamic accordion population
-            accordion.Controls.Add(new LiteralControl("<ul class=\"toggleOptions\">"));
 
-            #region Wall Heights and Widths
-            accordion.Controls.Add(new LiteralControl("<h2>Wall Heights and Widths</h2>"));
+            #region Wall Height Entry
+            accordion.Controls.Add(new LiteralControl("<h2>Wall Heights</h2>"));
+
+            accordion.Controls.Add(new LiteralControl("<ul>"));
+
+            accordion.Controls.Add(new LiteralControl("<li>"));
+            Label backwallHeight = new Label();
+            backwallHeight.ID = "lblBackwall";
+            backwallHeight.Text = "Back Wall Height: ";
+            accordion.Controls.Add(backwallHeight);
+
+            TextBox backwallTextBox = new TextBox();
+            backwallTextBox.ID = "txtBackwall";
+            backwallTextBox.Text = backwall.ToString();
+            backwallTextBox.CssClass = "txtField txtInput";
+            backwallTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            accordion.Controls.Add(backwallTextBox);
+
+            DropDownList backwallFractions = new DropDownList();
+            backwallFractions.ID = "ddlBackwallFractions";
+            backwallFractions.Items.Add(lst0);
+            backwallFractions.Items.Add(lst12);
+            backwallFractions.Items.Add(lst14);
+            backwallFractions.Items.Add(lst18);
+            backwallFractions.Items.Add(lst34);
+            backwallFractions.Items.Add(lst38);
+            backwallFractions.Items.Add(lst58);
+            backwallFractions.Items.Add(lst78);
+            accordion.Controls.Add(backwallFractions);
+            accordion.Controls.Add(new LiteralControl("</li>"));
+
+            accordion.Controls.Add(new LiteralControl("<li>"));
+            Label frontwallHeight = new Label();
+            frontwallHeight.ID = "lblFrontwall";
+            frontwallHeight.Text = "Front Wall Height: ";
+            accordion.Controls.Add(frontwallHeight);
+
+            TextBox frontwallTextBox = new TextBox();
+            frontwallTextBox.ID = "txtFrontwall";
+            frontwallTextBox.Text = frontwall.ToString();
+            frontwallTextBox.CssClass = "txtField txtInput";
+            frontwallTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            accordion.Controls.Add(frontwallTextBox);
+
+            DropDownList frontwallFractions = new DropDownList();
+            frontwallFractions.ID = "ddlFrontwallFractions";
+            frontwallFractions.Items.Add(lst0);
+            frontwallFractions.Items.Add(lst12);
+            frontwallFractions.Items.Add(lst14);
+            frontwallFractions.Items.Add(lst18);
+            frontwallFractions.Items.Add(lst34);
+            frontwallFractions.Items.Add(lst38);
+            frontwallFractions.Items.Add(lst58);
+            frontwallFractions.Items.Add(lst78);
+            accordion.Controls.Add(frontwallFractions);
+            accordion.Controls.Add(new LiteralControl("</li>"));
+
+            accordion.Controls.Add(new LiteralControl("<li>"));
+            Label slopeLabel = new Label();
+            slopeLabel.ID = "lblSlope";
+            slopeLabel.Text = "Slope: ";
+            accordion.Controls.Add(slopeLabel);
+
+            TextBox slopeTextBox = new TextBox();
+            slopeTextBox.ID = "txtSlope";
+            slopeTextBox.Text = slope.ToString();
+            slopeTextBox.CssClass = "txtField txtInput";
+            slopeTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            accordion.Controls.Add(slopeTextBox);
+
+            Label overTwelve = new Label();
+            overTwelve.ID = "lblOverTwelve";
+            overTwelve.Text = " / 12";
+            accordion.Controls.Add(overTwelve);
+            accordion.Controls.Add(new LiteralControl("</li>"));
+
+            accordion.Controls.Add(new LiteralControl("</ul>"));
+            #endregion
+
+            #region Wall Width Entry
+            accordion.Controls.Add(new LiteralControl("<ul class=\"toggleOptions\">"));
+            accordion.Controls.Add(new LiteralControl("<h2>Wall Widths</h2>"));
 
             for (int i = 0; i < listOfWalls.Count; i++)
             {
@@ -71,17 +169,29 @@ namespace SunspaceDealerDesktop
 
                 #region Wall Length
                 accordion.Controls.Add(new LiteralControl("<li>"));
-                Label length = new Label();
-                length.ID = "lblLength" + (i + 1);
-                length.Text = "Length: ";
-                accordion.Controls.Add(length);
+                Label width = new Label();
+                width.ID = "lblWidth" + (i + 1);
+                width.Text = "Width: ";
+                accordion.Controls.Add(width);
 
-                TextBox lengthTextBox = new TextBox();
-                lengthTextBox.ID = "txtLength" + (i + 1);
-                lengthTextBox.Text = listOfWalls[i].Length.ToString();
-                accordion.Controls.Add(lengthTextBox);
-                lengthTextBox.CssClass = "txtField txtInput";
-                lengthTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                TextBox widthTextBox = new TextBox();
+                widthTextBox.ID = "txtWidth" + (i + 1);
+                widthTextBox.Text = listOfWalls[i].Length.ToString();
+                widthTextBox.CssClass = "txtField txtInput";
+                widthTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                accordion.Controls.Add(widthTextBox);
+
+                DropDownList widthFractions = new DropDownList();
+                widthFractions.ID = "ddlWall" + (i + 1) + "Fractions";
+                widthFractions.Items.Add(lst0);
+                widthFractions.Items.Add(lst12);
+                widthFractions.Items.Add(lst14);
+                widthFractions.Items.Add(lst18);
+                widthFractions.Items.Add(lst34);
+                widthFractions.Items.Add(lst38);
+                widthFractions.Items.Add(lst58);
+                widthFractions.Items.Add(lst78);
+                accordion.Controls.Add(widthFractions);
 
                 accordion.Controls.Add(new LiteralControl("</li>"));
                 #endregion
@@ -93,12 +203,10 @@ namespace SunspaceDealerDesktop
                 startHeight.Text = "Start Height: ";
                 accordion.Controls.Add(startHeight);
 
-                TextBox startHeightTextBox = new TextBox();
-                startHeightTextBox.ID = "txtStartHeight" + (i + 1);
-                startHeightTextBox.Text = listOfWalls[i].StartHeight.ToString();
-                accordion.Controls.Add(startHeightTextBox);
-                startHeightTextBox.CssClass = "txtField txtInput";
-                startHeightTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                Label startHeightDisplay = new Label();
+                startHeightDisplay.ID = "lblStartHeightDisplay" + (i + 1);
+                startHeightDisplay.Text = listOfWalls[i].StartHeight.ToString();
+                accordion.Controls.Add(startHeightDisplay);
 
                 accordion.Controls.Add(new LiteralControl("</li>"));
                 #endregion
@@ -110,12 +218,10 @@ namespace SunspaceDealerDesktop
                 endHeight.Text = "End Height: ";
                 accordion.Controls.Add(endHeight);
 
-                TextBox endHeightTextBox = new TextBox();
-                endHeightTextBox.ID = "txtEndHeight" + (i + 1);
-                endHeightTextBox.Text = listOfWalls[i].EndHeight.ToString();
-                accordion.Controls.Add(endHeightTextBox);
-                endHeightTextBox.CssClass = "txtField txtInput";
-                endHeightTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                Label endHeightDisplay = new Label();
+                endHeightDisplay.ID = "lblEndHeightDisplay" + (i + 1);
+                endHeightDisplay.Text = listOfWalls[i].EndHeight.ToString();
+                accordion.Controls.Add(endHeightDisplay);
 
                 accordion.Controls.Add(new LiteralControl("</li>"));
                 #endregion
