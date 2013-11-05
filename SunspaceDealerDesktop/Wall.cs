@@ -440,7 +440,8 @@ namespace SunspaceDealerDesktop
                             aWindow.EndHeight = aWindow.StartHeight = windowHeight - 2.125f;
                             aWindow.FLength = aMod.Length - 2;
                             aWindow.Length = aWindow.FLength - 2.125f; //CHANGEME hardcoded
-                            aWindow.FrameColour = windowColour;
+                            aWindow.Colour = windowColour;
+                            aWindow.FrameColour = framingColour;
                             aWindow.ItemType = "Window";
                             aWindow.NumVents = numberOfVents;
                             aWindow.ScreenType = screenType; //fixt
