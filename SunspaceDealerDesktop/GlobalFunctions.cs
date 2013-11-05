@@ -4,11 +4,37 @@ using System.Linq;
 using System.Web;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web.UI.WebControls;
 
 namespace SunspaceDealerDesktop
 {
     public static class GlobalFunctions
     {
+        public static List<ListItem> FractionOptions()
+        {
+            List<ListItem> options = new List<ListItem>();
+
+            ListItem lst0 = new ListItem("---", "0", true);
+            ListItem lst18 = new ListItem("1/8", ".125");
+            ListItem lst14 = new ListItem("1/4", ".25");
+            ListItem lst38 = new ListItem("3/8", ".375");
+            ListItem lst12 = new ListItem("1/2", ".5");
+            ListItem lst58 = new ListItem("5/8", ".625");
+            ListItem lst34 = new ListItem("3/4", ".75");
+            ListItem lst78 = new ListItem("7/8", ".875");
+
+            options.Add(lst0);
+            options.Add(lst18);
+            options.Add(lst14);
+            options.Add(lst38);
+            options.Add(lst12);
+            options.Add(lst58);
+            options.Add(lst34);
+            options.Add(lst78);
+
+            return options;
+        }
+        
         /**
          * RoundDownToNearestEighthInch
          * sent float numberToRound, the number sent which needs to be rounded
