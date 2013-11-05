@@ -17,50 +17,11 @@ namespace SunspaceDealerDesktop
         protected ListItem lst58 = new ListItem("5/8", ".625");
         protected ListItem lst34 = new ListItem("3/4", ".75");
         protected ListItem lst78 = new ListItem("7/8", ".875");
-        List<Door> doorsOrdered = new List<Door>();
-
-        protected void addMixedTintDropdowns(string title, Table tblDoorDetails)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                TableRow mixedDoorTintRow = new TableRow();
-                //mixedDoorTintRow.Attributes.Add("style", "display: inherit;");
-                mixedDoorTintRow.ID = "row" + j + "DoorTint" + title;
-                mixedDoorTintRow.Attributes.Add("style", "display:none;");
-                TableCell mixedDoorTintLabelCell = new TableCell();
-                TableCell mixedDoorTintDropDownCell = new TableCell();
-
-                Label mixedDoorTintLabel = new Label();
-                mixedDoorTintLabel.ID = "lblDoorVinyl" + j + "Tint" + title;
-                mixedDoorTintLabel.Text = "Vinyl Vent " + (j + 1) + " Tint : ";
-                DropDownList ddlDoorTintOptions = new DropDownList();
-                ddlDoorTintOptions.ID = "ddlDoorTint" + j + title;
-                ListItem clearVinyl = new ListItem("Clear", "C");
-                ListItem smokeGreyVinyl = new ListItem("Smoke Grey", "S");
-                ListItem darkGreyVinyl = new ListItem("Dark Grey", "D");
-                ListItem bronzeVinyl = new ListItem("Bronze", "B");
-
-                ddlDoorTintOptions.Attributes.Add("onchange", "checkQuestion3()");
-
-                ddlDoorTintOptions.Items.Add(clearVinyl);
-                ddlDoorTintOptions.Items.Add(smokeGreyVinyl);
-                ddlDoorTintOptions.Items.Add(darkGreyVinyl);
-                ddlDoorTintOptions.Items.Add(bronzeVinyl);
-
-                mixedDoorTintLabel.AssociatedControlID = "ddlDoorTint" + j + title;
-
-                mixedDoorTintLabelCell.Controls.Add(mixedDoorTintLabel);
-                mixedDoorTintDropDownCell.Controls.Add(ddlDoorTintOptions);
-
-                tblDoorDetails.Rows.Add(mixedDoorTintRow);
-
-                mixedDoorTintRow.Cells.Add(mixedDoorTintLabelCell);
-                mixedDoorTintRow.Cells.Add(mixedDoorTintDropDownCell);
-            }
-        }
+        List<Door> doorsOrdered = new List<Door>();            
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             #region Loop to display door types as radio buttons
 
             //For loop to get through all the possible door types: Cabana, French, Patio, Opening Only (No Door)
@@ -138,7 +99,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorStyleDDL = new DropDownList();
                 doorStyleDDL.ID = "ddlDoorStyle" + title;
-                doorStyleDDL.Attributes.Add("onchange", "doorStyle('" + title + "'); checkQuestion3();");
+                doorStyleDDL.Attributes.Add("onchange", "doorStyle('" + title + "')");
                 if (title == "Patio")
                 {
                     for (int j = 0; j < Constants.DOOR_ORDER_PATIO.Count(); j++)
@@ -172,12 +133,11 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorVinylTintDDL = new DropDownList();
                 doorVinylTintDDL.ID = "ddlDoorVinylTint" + title;
+                doorVinylTintDDL.Attributes.Add("onchange", "displayMixedTint('" + title + "')");
                 for (int j = 0; j < Constants.DOOR_V4T_VINYL_OPTIONS.Count(); j++)
                 {
                     doorVinylTintDDL.Items.Add(new ListItem(Constants.DOOR_V4T_VINYL_OPTIONS[j], Constants.DOOR_V4T_VINYL_OPTIONS[j]));
                 }
-
-                doorVinylTintDDL.Attributes.Add("onchange", "checkQuestion3()");
                 doorVinylTintLBL.AssociatedControlID = "ddlDoorVinylTint" + title;
 
                 #endregion
@@ -196,14 +156,13 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorNumberOfVentsDDL = new DropDownList();
                 doorNumberOfVentsDDL.ID = "ddlDoorNumberOfVents" + title;
+                doorNumberOfVentsDDL.Attributes.Add("onchange", "displayMixedTint('" + title + "')");
                 for (int j = 0; j < Constants.DOOR_NUMBER_OF_VENTS.Count(); j++)
                 {
                     doorNumberOfVentsDDL.Items.Add(new ListItem(Constants.DOOR_NUMBER_OF_VENTS[j], Constants.DOOR_NUMBER_OF_VENTS[j]));
                 }
 
                 doorNumberOfVentsLBL.AssociatedControlID = "ddlDoorNumberOfVents" + title;
-
-                doorNumberOfVentsDDL.Attributes.Add("onchange", "checkQuestion3()");
 
                 #endregion
 
@@ -611,7 +570,7 @@ namespace SunspaceDealerDesktop
 
                 Label doorHingeLHHLBLMain = new Label();
                 doorHingeLHHLBLMain.ID = "lblDoorHingeLHHMain" + title;
-                doorHingeLHHLBLMain.Text = "Hinge placement:";
+                doorHingeLHHLBLMain.Text = "Hinge Placement:";
 
                 Label doorHingeLHHLBLRad = new Label();
                 doorHingeLHHLBLRad.ID = "lblHingeLHHRad" + title;
@@ -655,26 +614,26 @@ namespace SunspaceDealerDesktop
 
                 #endregion
 
-                #region Table:Fourteenth Row Door Screen Options (tblDoorDetails)
+                #region Table:Fourteenth Row Door Screen Types (tblDoorDetails)
 
-                TableRow doorScreenOptionsRow = new TableRow();
-                doorScreenOptionsRow.ID = "rowDoorScreenOptions" + title;
-                doorScreenOptionsRow.Attributes.Add("style", "display:none;");
-                TableCell doorScreenOptionsLBLCell = new TableCell();
-                TableCell doorScreenOptionsDDLCell = new TableCell();
+                TableRow doorScreenTypesRow = new TableRow();
+                doorScreenTypesRow.ID = "rowDoorScreenTypes" + title;
+                doorScreenTypesRow.Attributes.Add("style", "display:none;");
+                TableCell doorScreenTypesLBLCell = new TableCell();
+                TableCell doorScreenTypesDDLCell = new TableCell();
 
-                Label doorScreenOptionsLBL = new Label();
-                doorScreenOptionsLBL.ID = "lblDoorScreenOptions" + title;
-                doorScreenOptionsLBL.Text = "Door Screen Option:";
+                Label doorScreenTypesLBL = new Label();
+                doorScreenTypesLBL.ID = "lblDoorScreenTypes" + title;
+                doorScreenTypesLBL.Text = "Door Screen Type:";
 
-                DropDownList doorScreenOptionsDDL = new DropDownList();
-                doorScreenOptionsDDL.ID = "ddlDoorScreenOptions" + title;
+                DropDownList doorScreenTypesDDL = new DropDownList();
+                doorScreenTypesDDL.ID = "ddlDoorScreenTypes" + title;
                 for (int j = 0; j < Constants.SCREEN_TYPES.Count(); j++)
                 {
-                    doorScreenOptionsDDL.Items.Add(new ListItem(Constants.SCREEN_TYPES[j], Constants.SCREEN_TYPES[j]));
+                    doorScreenTypesDDL.Items.Add(new ListItem(Constants.SCREEN_TYPES[j], Constants.SCREEN_TYPES[j]));
                 }
 
-                doorScreenOptionsLBL.AssociatedControlID = "ddlDoorScreenOptions" + title;
+                doorScreenTypesLBL.AssociatedControlID = "ddlDoorScreenTypes" + title;
 
                 #endregion
 
@@ -794,6 +753,12 @@ namespace SunspaceDealerDesktop
                 TableCell doorAddButtonCell = new TableCell();
                 TableCell doorFillButtonCell = new TableCell();
 
+                Button doorButton = new Button();
+                doorButton.ID = "btnAdd" + title;
+                doorButton.Text = "Add this " + title + " door";
+                doorButton.CssClass = "btnSubmit";
+                //doorButton.Attributes.Add("click", "addDoor(\"" + title + "\")");
+
                 #endregion
 
                 //Adding to table
@@ -841,7 +806,7 @@ namespace SunspaceDealerDesktop
 
                 doorVinylTintRow.Cells.Add(doorVinylTintLBLCell);
                 doorVinylTintRow.Cells.Add(doorVinylTintDDLCell);
-
+                
                 addMixedTintDropdowns(title, tblDoorDetails);
 
                 #endregion
@@ -1042,13 +1007,13 @@ namespace SunspaceDealerDesktop
 
                 #region Table:Fourteenth Row Door Screen Options Added To Table (tblDoorDetails)
 
-                doorScreenOptionsLBLCell.Controls.Add(doorScreenOptionsLBL);
-                doorScreenOptionsDDLCell.Controls.Add(doorScreenOptionsDDL);
+                doorScreenTypesLBLCell.Controls.Add(doorScreenTypesLBL);
+                doorScreenTypesDDLCell.Controls.Add(doorScreenTypesDDL);
 
-                tblDoorDetails.Rows.Add(doorScreenOptionsRow);
+                tblDoorDetails.Rows.Add(doorScreenTypesRow);
 
-                doorScreenOptionsRow.Cells.Add(doorScreenOptionsLBLCell);
-                doorScreenOptionsRow.Cells.Add(doorScreenOptionsDDLCell);
+                doorScreenTypesRow.Cells.Add(doorScreenTypesLBLCell);
+                doorScreenTypesRow.Cells.Add(doorScreenTypesDDLCell);
 
                 #endregion
 
@@ -1094,8 +1059,9 @@ namespace SunspaceDealerDesktop
 
                 #region Table:# Row Add This Door (tblDoorDetails)
 
-                doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
-                
+                //doorAddButtonCell.Controls.Add(new LiteralControl("<input id='btnAddthisDoor" + title + "' type='button' onclick='addDoor(\"" + title + "\")' class='btnSubmit' style='display:inherit;' value='Add This " + title + " Door'/>"));
+                doorAddButtonCell.Controls.Add(doorButton);
+
                 tblDoorDetails.Rows.Add(doorButtonRow);
 
                 doorButtonRow.Cells.Add(doorAddButtonCell);
@@ -1125,9 +1091,14 @@ namespace SunspaceDealerDesktop
             }
             #endregion
 
+            #region PostBack functionality to store doors
             if (IsPostBack)
             {
-                //System.Diagnostics.Debug.Write("Running " + Request.Form["ctl00$MainContent$doorTypeRadios"]);
+                if ((List<Door>)Session["doorsOrdered"] != null)
+                {
+                    doorsOrdered = (List<Door>)Session["doorsOrdered"];
+                }
+                
                 if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypeCabana")
                 {
                     Door aDoor = getCabanaDoorFromForm();
@@ -1143,9 +1114,62 @@ namespace SunspaceDealerDesktop
                     Door aDoor = getPatioDoorFromForm();
                     doorsOrdered.Add(aDoor);
                 }
+                Session.Add("doorsOrdered", doorsOrdered);
+            }
+            #endregion
+            
+            populateSideBar(findNumberOfDoorTypes());
+        }
+
+        /// <summary>
+        /// This function creates rows in a table containing information
+        /// on individual window tints for a Vertical 4 Track
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="tblDoorDetails"></param>
+        protected void addMixedTintDropdowns(string title, Table tblDoorDetails)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                TableRow mixedDoorTintRow = new TableRow();
+                //mixedDoorTintRow.Attributes.Add("style", "display: inherit;");
+                mixedDoorTintRow.ID = "row" + j + "DoorTint" + title;
+                mixedDoorTintRow.Attributes.Add("style", "display:none;");
+                TableCell mixedDoorTintLabelCell = new TableCell();
+                TableCell mixedDoorTintDropDownCell = new TableCell();
+
+                Label mixedDoorTintLabel = new Label();
+                mixedDoorTintLabel.ID = "lblDoorVinyl" + j + "Tint" + title;
+                mixedDoorTintLabel.Text = "Vinyl Vent " + (j + 1) + " Tint : ";
+                DropDownList ddlDoorTintOptions = new DropDownList();
+                ddlDoorTintOptions.ID = "ddlDoorTint" + j + title;
+                ListItem clearVinyl = new ListItem("Clear", "C");
+                ListItem smokeGreyVinyl = new ListItem("Smoke Grey", "S");
+                ListItem darkGreyVinyl = new ListItem("Dark Grey", "D");
+                ListItem bronzeVinyl = new ListItem("Bronze", "B");
+
+                ddlDoorTintOptions.Items.Add(clearVinyl);
+                ddlDoorTintOptions.Items.Add(smokeGreyVinyl);
+                ddlDoorTintOptions.Items.Add(darkGreyVinyl);
+                ddlDoorTintOptions.Items.Add(bronzeVinyl);
+
+                mixedDoorTintLabel.AssociatedControlID = "ddlDoorTint" + j + title;
+
+                mixedDoorTintLabelCell.Controls.Add(mixedDoorTintLabel);
+                mixedDoorTintDropDownCell.Controls.Add(ddlDoorTintOptions);
+
+                tblDoorDetails.Rows.Add(mixedDoorTintRow);
+
+                mixedDoorTintRow.Cells.Add(mixedDoorTintLabelCell);
+                mixedDoorTintRow.Cells.Add(mixedDoorTintDropDownCell);
             }
         }
 
+        /// <summary>
+        /// This function creates a CabanaDoor object and stores the
+        /// information entered on the page.
+        /// </summary>
+        /// <returns>CabanaDoor aDoor</returns>
         protected CabanaDoor getCabanaDoorFromForm()
         {
             CabanaDoor aDoor = new CabanaDoor();
@@ -1164,19 +1188,48 @@ namespace SunspaceDealerDesktop
             aDoor.Height = float.Parse(Request.Form["ctl00$MainContent$ddlDoorHeightCabana"]);
             aDoor.Length = float.Parse(Request.Form["ctl00$MainContent$ddlDoorWidthCabana"]);
             aDoor.GlassTint = Request.Form["ctl00$MainContent$ddlDoorGlassTintCabana"];
-            aDoor.VinylTint = "";
-            aDoor.ScreenType = Request.Form["ctl00$MainContent$ddlDoorScreenOptionsCabana"];
+            if (aDoor.DoorStyle == "Vertical 4 Track")
+            {
+                aDoor.VinylTint = Request.Form["ctl00$MainContent$ddlDoorVinylTintCabana"];
+                aDoor.DoorWindow = new Window();
+                aDoor.DoorWindow.NumVents = int.Parse(Request.Form["ctl00$MainContent$ddlDoorNumberOfVentsCabana"]);
+                if (aDoor.VinylTint == "Mixed")
+                {
+                    if (aDoor.DoorWindow.NumVents == 2)
+                    {
+                        aDoor.VinylTint = Request.Form["ctl00$MainContent$ddlDoorTint0Cabana"] + Request.Form["ctl00$MainContent$ddlDoorTint1Cabana"];
+                    }
+                    else if (aDoor.DoorWindow.NumVents == 3)
+                    {
+                        aDoor.VinylTint = Request.Form["ctl00$MainContent$ddlDoorTint0Cabana"]
+                            + Request.Form["ctl00$MainContent$ddlDoorTint1Cabana"]
+                            + Request.Form["ctl00$MainContent$ddlDoorTint2Cabana"];
+                    }
+                    else if (aDoor.DoorWindow.NumVents == 4)
+                    {
+                        aDoor.VinylTint = Request.Form["ctl00$MainContent$ddlDoorTint0Cabana"]
+                            + Request.Form["ctl00$MainContent$ddlDoorTint1Cabana"]
+                            + Request.Form["ctl00$MainContent$ddlDoorTint2Cabana"]
+                            + Request.Form["ctl00$MainContent$ddlDoorTint3Cabana"];
+                    }
+                }
+            }
+            else
+            {
+                aDoor.ScreenType = Request.Form["ctl00$MainContent$ddlDoorScreenOptionsCabana"];
+            }
             aDoor.Hinge = Request.Form["ctl00$MainContent$DoorHingeCabana"];
             aDoor.Swing = Request.Form["ctl00$MainContent$SwingInOutCabana"];
             aDoor.HardwareType = Request.Form["ctl00$MainContent$ddlDoorHardwareCabana"];
 
-            ////doorWindow
-            //Window aDoorWindow = new Window();
-            //aDoorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "colour"];
-            //aDoorWindow.
             return aDoor;
         }
 
+        /// <summary>
+        /// This function creates a FrenchDoor object and stores the
+        /// information entered on the page.
+        /// </summary>
+        /// <returns>FrenchDoor aDoor</returns>
         protected FrenchDoor getFrenchDoorFromForm()
         {
             FrenchDoor aDoor = new FrenchDoor();
@@ -1195,7 +1248,33 @@ namespace SunspaceDealerDesktop
             aDoor.Height = float.Parse(Request.Form["ctl00$MainContent$ddlDoorHeightFrench"]);
             aDoor.Length = float.Parse(Request.Form["ctl00$MainContent$ddlDoorWidthFrench"]);
             aDoor.GlassTint = Request.Form["ctl00$MainContent$ddlDoorGlassTintFrench"];
-            aDoor.VinylTint = "";
+            if (aDoor.DoorStyle == "Vertical 4 Track")
+            {
+                aDoor.VinylTint = Request.Form["ctl00$MainContent$ddlDoorVinylTintFrench"];
+                aDoor.DoorWindow = new Window();
+                aDoor.DoorWindow.NumVents = int.Parse(Request.Form["ctl00$MainContent$ddlDoorNumberOfVentsFrench"]);
+                if (aDoor.VinylTint == "Mixed")
+                {
+                    if (aDoor.DoorWindow.NumVents == 2)
+                    {
+                        aDoor.VinylTint = Request.Form["ctl00$MainContent$ddlDoorTint0French"]
+                            + Request.Form["ctl00$MainContent$ddlDoorTint1French"];
+                    }
+                    else if (aDoor.DoorWindow.NumVents == 3)
+                    {
+                        aDoor.VinylTint = Request.Form["ctl00$MainContent$ddlDoorTint0French"]
+                            + Request.Form["ctl00$MainContent$ddlDoorTint1French"]
+                            + Request.Form["ctl00$MainContent$ddlDoorTint2French"];
+                    }
+                    else if (aDoor.DoorWindow.NumVents == 4)
+                    {
+                        aDoor.VinylTint = Request.Form["ctl00$MainContent$ddlDoorTint0French"]
+                            + Request.Form["ctl00$MainContent$ddlDoorTint1French"]
+                            + Request.Form["ctl00$MainContent$ddlDoorTint2French"]
+                            + Request.Form["ctl00$MainContent$ddlDoorTint3French"];
+                    }
+                }
+            }
             aDoor.ScreenType = Request.Form["ctl00$MainContent$ddlDoorScreenOptionsFrench"];
             aDoor.OperatingDoor = Request.Form["ctl00$MainContent$PrimaryOperatorFrench"]; 
             aDoor.Swing = Request.Form["ctl00$MainContent$SwingInOutFrench"];
@@ -1204,6 +1283,11 @@ namespace SunspaceDealerDesktop
             return aDoor;
         }
 
+        /// <summary>
+        /// This function creates a PatioDoor object and stores the
+        /// information entered on the page.
+        /// </summary>
+        /// <returns>PatioDoor aDoor</returns>
         protected PatioDoor getPatioDoorFromForm()
         {
             PatioDoor aDoor = new PatioDoor();
@@ -1223,14 +1307,325 @@ namespace SunspaceDealerDesktop
             aDoor.Height = float.Parse(Request.Form["ctl00$MainContent$ddlDoorHeightPatio"]);
             aDoor.Length = float.Parse(Request.Form["ctl00$MainContent$ddlDoorWidthPatio"]);
             aDoor.GlassTint = Request.Form["ctl00$MainContent$ddlDoorGlassTintPatio"];
-            //aDoor.VinylTint = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
             //aDoor.ScreenType = ""; //CHANGEME
             aDoor.OperatingDoor = Request.Form["ctl00$MainContent$PrimaryOperatorPatio"];
-            //aDoor.Hinge = Request.Form["hidWall" + i + "Door" + j + "hinge"];
-            //aDoor.Swing = Request.Form["hidWall" + i + "Door" + j + "swing"];
-            //aDoor.HardwareType = Request.Form["hidWall" + i + "Door" + j + "hardware"];
 
             return aDoor;
+        }
+        
+        /// <summary>
+        /// This function is used to find the amount of each type of 
+        /// door that has been ordered.
+        /// </summary>
+        /// <returns>Tuple<int,int,int>(cabanaCount,frenchCount,patioCount)</returns>
+        /// NOTE Tuple items:
+        /// Item1:Cabana door count
+        /// Item2:French door count
+        /// Item3:Patio door count
+        private Tuple<int,int,int> findNumberOfDoorTypes() {
+            int cabanaCount = 0, frenchCount = 0, patioCount = 0;
+            doorsOrdered.ForEach(delegate(Door doorChecked)
+            {
+                if (doorChecked is CabanaDoor)
+                    cabanaCount++;
+                else if (doorChecked is FrenchDoor)
+                    frenchCount++;
+                else if (doorChecked is PatioDoor)
+                    patioCount++;
+            });
+            //System.Diagnostics.Debug.Write("This is the cabana count: " + cabanaCount);
+            return new Tuple<int,int,int>(cabanaCount,frenchCount,patioCount);
+        }
+        
+        /// <summary>
+        /// This function is used to populate the side bar which displays
+        /// information regarding how many doors of each type have been ordered,
+        /// along with individual door information. This is done in an accordion
+        /// style to hide unneeded data.
+        /// </summary>
+        /// <param name="doorTypeCounts"></param>
+        private void populateSideBar(Tuple<int,int,int> doorTypeCounts) {
+
+            int count;
+
+            lblDoorPager.Controls.Add(new LiteralControl("<ul class='toggleOptions'>"));
+
+            if (doorTypeCounts.Item1 > 0)
+            {
+                lblDoorPager.Controls.Add(new LiteralControl("<li id='cabanaDoors'>"));
+                
+
+                Label cabanaLabel = new Label();
+                cabanaLabel.ID = "lblCabanaDoors";
+                cabanaLabel.Text = "Cabana Doors Ordered " + doorTypeCounts.Item1;
+                lblDoorPager.Controls.Add(cabanaLabel);                
+
+                count = 1;
+
+                #region Creating Cabana door pager items
+                foreach (Door aDoor in doorsOrdered){
+                    if (aDoor.DoorType == "Cabana")
+                    {
+                        lblDoorPager.Controls.Add(new LiteralControl("<div class='toggleContent'>"));
+
+                        CabanaDoor aCabana = (CabanaDoor)aDoor;
+
+                        Label cabanaCurrentDoor = new Label();
+                        cabanaCurrentDoor.ID = "lblCabanaCabana" + count;
+                        cabanaCurrentDoor.Text = "Cabana Door " + count;
+                        lblDoorPager.Controls.Add(cabanaCurrentDoor);
+
+                        Label cabanaStyle = new Label();
+                        cabanaStyle.ID = "lblCabanaStyle" + count;
+                        cabanaStyle.Text = "Style: " + aCabana.DoorStyle;
+                        lblDoorPager.Controls.Add(cabanaStyle);
+
+                        Label cabanaColour = new Label();
+                        cabanaColour.ID = "lblCabanaColour" + count;
+                        cabanaColour.Text = "Colour: " + aCabana.Colour;
+                        lblDoorPager.Controls.Add(cabanaColour);
+
+                        Label cabanaKickplate = new Label();
+                        cabanaKickplate.ID = "lblCabanaKickplate" + count;
+                        cabanaKickplate.Text = "Kickplate: " + String.Format("{0}", aCabana.Kickplate);
+                        lblDoorPager.Controls.Add(cabanaKickplate);
+
+                        Label cabanaHeight = new Label();
+                        cabanaHeight.ID = "lblCabanaHeight" + count;
+                        cabanaHeight.Text = "Height: " + String.Format("{0}", aCabana.Height);
+                        lblDoorPager.Controls.Add(cabanaHeight);
+
+                        Label cabanaLength = new Label();
+                        cabanaLength.ID = "lblCabanaLength" + count;
+                        cabanaLength.Text = "Width: " + String.Format("{0}", aCabana.Length);
+                        lblDoorPager.Controls.Add(cabanaLength);
+
+                        Label cabanaGlassTint = new Label();
+                        cabanaGlassTint.ID = "lblCabanaGlassTint" + count;
+                        cabanaGlassTint.Text = "Glass Tint: " + aCabana.GlassTint;
+                        lblDoorPager.Controls.Add(cabanaGlassTint);
+
+                        if (aCabana.DoorStyle == "Vertical 4 Track")
+                        {
+                            Label cabanaNumVents = new Label();
+                            cabanaNumVents.ID = "lblCabanaNumVents" + count;
+                            cabanaNumVents.Text = "No. Vents: " + String.Format("{0}", aCabana.DoorWindow.NumVents);
+                            lblDoorPager.Controls.Add(cabanaNumVents);
+
+                            Label cabanaVinylTint = new Label();
+                            cabanaVinylTint.ID = "lblCabanaVinylTint" + count;
+                            cabanaVinylTint.Text = "Vinyl Tint: " + aCabana.VinylTint;
+                            lblDoorPager.Controls.Add(cabanaVinylTint);
+                        }
+                        else
+                        {
+                            Label cabanaScreenType = new Label();
+                            cabanaScreenType.ID = "lblCabanaScreenType" + count;
+                            cabanaScreenType.Text = "Screen Type: " + aCabana.ScreenType;
+                            lblDoorPager.Controls.Add(cabanaScreenType);
+                        }
+
+                        Label cabanaHinge = new Label();
+                        cabanaHinge.ID = "lblCabanaHinge" + count;
+                        cabanaHinge.Text = "Hinge: " + aCabana.Hinge;
+                        lblDoorPager.Controls.Add(cabanaHinge);
+
+                        Label cabanaSwing = new Label();
+                        cabanaSwing.ID = "lblCabanaSwing" + count;
+                        cabanaSwing.Text = "Swing: " + aCabana.Swing;
+                        lblDoorPager.Controls.Add(cabanaSwing);
+
+                        Label cabanaHardwareType = new Label();
+                        cabanaHardwareType.ID = "lblCabanaHardwareType" + count;
+                        cabanaHardwareType.Text = "Hardware: " + aCabana.HardwareType;
+                        lblDoorPager.Controls.Add(cabanaHardwareType);
+
+
+                        lblDoorPager.Controls.Add(new LiteralControl("</div>"));
+
+                        count++;
+                    }
+                }
+                #endregion
+
+                lblDoorPager.Controls.Add(new LiteralControl("</li>"));
+            }
+            if (doorTypeCounts.Item2 > 0)
+            {
+                lblDoorPager.Controls.Add(new LiteralControl("<li id='frenchDoors'>"));
+
+                Label frenchLabel = new Label();
+                frenchLabel.ID = "lblFrenchDoors";
+                frenchLabel.Text = "French Doors Ordered " + doorTypeCounts.Item2;
+                lblDoorPager.Controls.Add(frenchLabel);
+                
+                count = 1;
+
+                #region Creating French door pager items
+                foreach (Door aDoor in doorsOrdered)
+                {
+                    if (aDoor.DoorType == "French")
+                    {
+                        lblDoorPager.Controls.Add(new LiteralControl("<div class='toggleContent'>"));
+
+                        FrenchDoor aFrench = (FrenchDoor)aDoor;
+
+                        Label frenchCurrentDoor = new Label();
+                        frenchCurrentDoor.ID = "lblFrenchFrench" + count;
+                        frenchCurrentDoor.Text = "French Door " + count;
+                        lblDoorPager.Controls.Add(frenchCurrentDoor);
+
+                        Label frenchStyle = new Label();
+                        frenchStyle.ID = "lblFrenchStyle" + count;
+                        frenchStyle.Text = "Style: " + aFrench.DoorStyle;
+                        lblDoorPager.Controls.Add(frenchStyle);
+
+                        Label frenchColour = new Label();
+                        frenchColour.ID = "lblFrenchColour" + count;
+                        frenchColour.Text = "Colour: " + aFrench.Colour;
+                        lblDoorPager.Controls.Add(frenchColour);
+
+                        Label frenchKickplate = new Label();
+                        frenchKickplate.ID = "lblFrenchKickplate" + count;
+                        frenchKickplate.Text = "Kickplate: " + String.Format("{0}", aFrench.Kickplate);
+                        lblDoorPager.Controls.Add(frenchKickplate);
+
+                        Label frenchHeight = new Label();
+                        frenchHeight.ID = "lblFrenchHeight" + count;
+                        frenchHeight.Text = "Height: " + String.Format("{0}", aFrench.Height);
+                        lblDoorPager.Controls.Add(frenchHeight);
+
+                        Label frenchLength = new Label();
+                        frenchLength.ID = "lblFrenchLength" + count;
+                        frenchLength.Text = "Width: " + String.Format("{0}", aFrench.Length);
+                        lblDoorPager.Controls.Add(frenchLength);
+
+                        Label frenchGlassTint = new Label();
+                        frenchGlassTint.ID = "lblFrenchGlassTint" + count;
+                        frenchGlassTint.Text = "Glass Tint: " + aFrench.GlassTint;
+                        lblDoorPager.Controls.Add(frenchGlassTint);
+
+                        if (aFrench.DoorStyle == "Vertical 4 Track")
+                        {
+                            Label frenchNumVents = new Label();
+                            frenchNumVents.ID = "lblFrenchNumVents" + count;
+                            frenchNumVents.Text = "No. Vents: " + String.Format("{0}", aFrench.DoorWindow.NumVents);
+                            lblDoorPager.Controls.Add(frenchNumVents);
+
+                            Label frenchVinylTint = new Label();
+                            frenchVinylTint.ID = "lblFrenchVinylTint" + count;
+                            frenchVinylTint.Text = "Vinyl Tint: " + aFrench.VinylTint;
+                            lblDoorPager.Controls.Add(frenchVinylTint);
+                        }
+                        else
+                        {
+                            Label frenchScreenType = new Label();
+                            frenchScreenType.ID = "lblFrenchScreenType" + count;
+                            frenchScreenType.Text = "Screen Type: " + aFrench.ScreenType;
+                            lblDoorPager.Controls.Add(frenchScreenType);
+                        }
+
+                        Label frenchOperatingDoor = new Label();
+                        frenchOperatingDoor.ID = "lblFrenchOperatingDoor" + count;
+                        frenchOperatingDoor.Text = "Operating Door: " + aFrench.OperatingDoor;
+                        lblDoorPager.Controls.Add(frenchOperatingDoor);
+
+                        Label frenchSwing = new Label();
+                        frenchSwing.ID = "lblFrenchSwing" + count;
+                        frenchSwing.Text = "Swing: " + aFrench.Swing;
+                        lblDoorPager.Controls.Add(frenchSwing);
+
+                        Label frenchHardwareType = new Label();
+                        frenchHardwareType.ID = "lblFrenchHardwareType" + count;
+                        frenchHardwareType.Text = "Hardware: " + aFrench.HardwareType;
+                        lblDoorPager.Controls.Add(frenchHardwareType);
+
+                        lblDoorPager.Controls.Add(new LiteralControl("</div>"));
+
+                        count++;
+                    }
+                }
+                #endregion
+
+                lblDoorPager.Controls.Add(new LiteralControl("</li>"));
+            }
+            if (doorTypeCounts.Item3 > 0)
+            {
+                lblDoorPager.Controls.Add(new LiteralControl("<li id='patioDoors'>"));
+
+                Label patioLabel = new Label();
+                patioLabel.ID = "lblPatioDoors";
+                patioLabel.Text = "Patio Doors Ordered " + doorTypeCounts.Item3;
+                lblDoorPager.Controls.Add(patioLabel);
+                
+                count = 1;
+
+                #region Creating Patio door pager items
+                foreach (Door aDoor in doorsOrdered)
+                {
+                    if (aDoor.DoorType == "Patio")
+                    {
+                        lblDoorPager.Controls.Add(new LiteralControl("<div class='toggleContent'>"));
+
+                        PatioDoor aPatio = (PatioDoor)aDoor;
+
+                        Label patioCurrentDoor = new Label();
+                        patioCurrentDoor.ID = "lblPatioPatio" + count;
+                        patioCurrentDoor.Text = "Patio Door " + count;
+                        lblDoorPager.Controls.Add(patioCurrentDoor);
+
+                        Label patioStyle = new Label();
+                        patioStyle.ID = "lblPatioStyle" + count;
+                        patioStyle.Text = "Style: " + aPatio.DoorStyle;
+                        lblDoorPager.Controls.Add(patioStyle);
+
+                        Label patioColour = new Label();
+                        patioColour.ID = "lblPatioColour" + count;
+                        patioColour.Text = "Colour: " + aPatio.Colour;
+                        lblDoorPager.Controls.Add(patioColour);
+
+                        Label patioKickplate = new Label();
+                        patioKickplate.ID = "lblPatioKickplate" + count;
+                        patioKickplate.Text = "Kickplate: " + String.Format("{0}", aPatio.Kickplate);
+                        lblDoorPager.Controls.Add(patioKickplate);
+
+                        Label patioHeight = new Label();
+                        patioHeight.ID = "lblPatioHeight" + count;
+                        patioHeight.Text = "Height: " + String.Format("{0}", aPatio.Height);
+                        lblDoorPager.Controls.Add(patioHeight);
+
+                        Label patioLength = new Label();
+                        patioLength.ID = "lblPatioLength" + count;
+                        patioLength.Text = "Width: " + String.Format("{0}", aPatio.Length);
+                        lblDoorPager.Controls.Add(patioLength);
+
+                        Label patioGlassTint = new Label();
+                        patioGlassTint.ID = "lblPatioGlassTint" + count;
+                        patioGlassTint.Text = "Glass Tint: " + aPatio.GlassTint;
+                        lblDoorPager.Controls.Add(patioGlassTint);
+
+                        Label patioScreenType = new Label();
+                        patioScreenType.ID = "lblPatioScreenType" + count;
+                        patioScreenType.Text = "Screen Type: " + aPatio.ScreenType;
+                        lblDoorPager.Controls.Add(patioScreenType);
+
+                        Label patioOperatingDoor = new Label();
+                        patioOperatingDoor.ID = "lblPatioOperatingDoor" + count;
+                        patioOperatingDoor.Text = "Operating Door: " + aPatio.OperatingDoor;
+                        lblDoorPager.Controls.Add(patioOperatingDoor);
+
+                        lblDoorPager.Controls.Add(new LiteralControl("</div>"));
+
+                        count++;
+                    }
+                }
+                #endregion
+
+                lblDoorPager.Controls.Add(new LiteralControl("</li>"));
+            }
+
+            lblDoorPager.Controls.Add(new LiteralControl("</ul>"));
+            
         }
     }
 }

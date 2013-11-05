@@ -3,12 +3,13 @@
     <script src="Scripts/GlobalFunctions.js"></script>
     <script src="Scripts/Validation.js"></script>
     <script>
+
+
         /**
         *customDimension
         *Checks the drop down selection on change, if the selection is custom, displays additional fields,
         *else custom field is hidden (i.e. css style.display = none)
-        *@param wallNumber - holds an integer to know which wall is currently being affected
-        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio);
         *@param dimension - gets the dimension currently being called (i.e Width, Height)
         */
         function customDimension(type, dimension) {
@@ -33,30 +34,35 @@
         *Door style function is triggered when the user selects Vertical Four Track, 
         *vinyl tint becomes displayed, since Vertical Four Track is the only door style
         *that has vinyl tint options
-        *@param type - holds the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door));
-        *@param wallNumber - holds an integer to know which wall is currently being affected
+        *@param type - holds the type of door selected (i.e. Cabana, French, Patio);
         */
         function doorStyle(type) {
 
             //Get value of door style drop down
             var doorStyleDDL = document.getElementById('MainContent_ddlDoorStyle' + type).options[document.getElementById('MainContent_ddlDoorStyle' + type).selectedIndex].value;
-
+            
             //If drop down value is v4TCabana, perform block
-            if (doorStyleDDL == 'Vertical Four Track') {
+            if (doorStyleDDL == 'Vertical 4 Track') {
                 //Change door vinyl tint row display style to inherit
                 document.getElementById('MainContent_rowDoorVinylTint' + type).style.display = 'inherit';
                 //Change door number of vents row display style to inherit
                 document.getElementById('MainContent_rowDoorNumberOfVents' + type).style.display = 'inherit';
                 //Change door screen options row display style to none
-                document.getElementById('MainContent_rowDoorScreenOptions' + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorScreenTypes' + type).style.display = 'none';
+                //Change door glass tint row display style to none
+                document.getElementById('MainContent_rowDoorGlassTint' + type).style.display = 'none';
+
+                displayMixedTint(type);
             }
             else if (doorStyleDDL == 'Full Screen' || doorStyleDDL == 'Screen') {
                 //Change door screen options row display style to inherit
-                document.getElementById('MainContent_rowDoorScreenOptions' + type).style.display = 'inherit';
+                document.getElementById('MainContent_rowDoorScreenTypes' + type).style.display = 'inherit';
                 //Change door vinyl tint row display style to none
                 document.getElementById('MainContent_rowDoorVinylTint' + type).style.display = 'none';
                 //Change door number of vents row display style to inherit
                 document.getElementById('MainContent_rowDoorNumberOfVents' + type).style.display = 'none';
+                //Change door glass tint row display style to none
+                document.getElementById('MainContent_rowDoorGlassTint' + type).style.display = 'none';
             }
                 //else, perform block
             else {
@@ -65,15 +71,52 @@
                 //Change door number of vents row display style to inherit
                 document.getElementById('MainContent_rowDoorNumberOfVents' + type).style.display = 'none';
                 //Change door screen options row display style to none
-                document.getElementById('MainContent_rowDoorScreenOptions' + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorScreenTypes' + type).style.display = 'none';
+                //Change door glass tint row display style to inherit
+                document.getElementById('MainContent_rowDoorGlassTint' + type).style.display = 'inherit';
             }
         }
+
+        /**
+        *displayMixedTint
+        *This function is used to display invidual window tints on a vertical 4 track
+        *only if the "Mixed" option is selected.
+        *@param type - holds the type of door selected (i.e. Cabana, French, Patio);
+        */
+        function displayMixedTint(type) {
+            if ($('#MainContent_ddlDoorVinylTint' + type).val() == "Mixed") {
+                if ($('#MainContent_ddlDoorNumberOfVents' + type).val() == "2") {
+                    document.getElementById('MainContent_row0DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row1DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row2DoorTint' + type).style.display = "none";
+                    document.getElementById('MainContent_row3DoorTint' + type).style.display = "none";
+                }
+                else if ($('#MainContent_ddlDoorNumberOfVents' + type).val() == "3") {
+                    document.getElementById('MainContent_row0DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row1DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row2DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row3DoorTint' + type).style.display = "none";
+                }
+                else if ($('#MainContent_ddlDoorNumberOfVents' + type).val() == "4") {
+                    document.getElementById('MainContent_row0DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row1DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row2DoorTint' + type).style.display = "inherit";
+                    document.getElementById('MainContent_row3DoorTint' + type).style.display = "inherit";
+                }
+            }
+            else {
+                document.getElementById('MainContent_row0DoorTint' + type).style.display = "none";
+                document.getElementById('MainContent_row1DoorTint' + type).style.display = "none";
+                document.getElementById('MainContent_row2DoorTint' + type).style.display = "none";
+                document.getElementById('MainContent_row3DoorTint' + type).style.display = "none";
+            }
+        }
+
         /**
         *typeOfRowsDisplayed
         *This function finds which type of door is selected and displays the appropriate fields
         *from a table hidden from the user
-        *@param type - gets the type of door selected (i.e. Cabana, French, Patio, Opening Only (No Door))
-        *@param wallNumber - holds an integer to know which wall is currently being affected
+        *@param type - gets the type of door selected (i.e. Cabana, French, Patio)
         */
         function typeRowsDisplayed(type) {
 
@@ -95,7 +138,7 @@
             var doorGlassTint = document.getElementById("MainContent_rowDoorGlassTint" + type);
             var doorHingeLHH = document.getElementById("MainContent_rowDoorHingeLHH" + type);
             var doorHingeRHH = document.getElementById("MainContent_rowDoorHingeRHH" + type);
-            var doorScreenOptions = document.getElementById("MainContent_rowDoorScreenOptions" + type);
+            var doorScreenTypes = document.getElementById("MainContent_rowDoorScreenTypes" + type);
             var doorHardware = document.getElementById("MainContent_rowDoorHardware" + type);
             var doorSwingIn = document.getElementById("MainContent_rowDoorSwingIn" + type);
             var doorSwingOut = document.getElementById("MainContent_rowDoorSwingOut" + type);
@@ -121,6 +164,7 @@
                 doorWidth.style.display = "inherit";
                 //doorBoxHeader.style.display = "inherit";
                 doorKickplate.style.display = "inherit";
+                doorVinylTint.style.display = "inherit";
 
                 //Cabana Specific                            
                 doorGlassTint.style.display = "inherit";
@@ -147,6 +191,7 @@
                 doorWidth.style.display = "inherit";
                 //doorBoxHeader.style.display = "inherit";
                 doorKickplate.style.display = "inherit";
+                doorVinylTint.style.display = "inherit";
 
                 //French specific
                 doorOperatorLHH.style.display = "inherit";
@@ -176,7 +221,7 @@
                 doorGlassTint.style.display = "inherit";
                 doorOperatorLHH.style.display = "inherit";
                 doorOperatorRHH.style.display = "inherit";
-                doorScreenOptions.style.display = "inherit";
+                doorScreenTypes.style.display = "inherit";
 
                 //Radio button defaults
                 doorOperatorLHHChecked.setAttribute("checked", "checked");
@@ -185,62 +230,6 @@
             }
         }
 
-        function addDoor(title) {
-            if (title == 'Cabana') {
-                var answer = $('#MainContent_ddlDoorStyleCabana').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorColourCabana').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorHeightCabana').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorWidthCabana').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorBoxHeaderCabana').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorGlassTintCabana').val() + '<br/>';
-                if ($('#MainContent_radDoorHingeCabana:checked').val())
-                    answer += 'Left<br/>';
-                else
-                    answer += 'Right<br/>';
-                answer += $('#MainContent_ddlDoorScreenOptionsCabana').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorHardwareCabana').val() + '<br/>';
-                if ($('#MainContent_radDoorSwingCabana:checked').val())
-                    answer += 'In<br/>';
-                else
-                    answer += 'Out<br/>';
-            }
-            else if (title == 'French') {
-                var answer = $('#MainContent_ddlDoorStyleFrench').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorColourFrench').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorHeightFrench').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorWidthFrench').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorBoxHeaderFrench').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorGlassTintFrench').val() + '<br/>';
-                if ($('#MainContent_radDoorHingeFrench:checked').val())
-                    answer += 'Left<br/>';
-                else
-                    answer += 'Right<br/>';
-                answer += $('#MainContent_ddlDoorScreenOptionsFrench').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorHardwareFrench').val() + '<br/>';
-                if ($('#MainContent_radDoorSwingFrench:checked').val())
-                    answer += 'In<br/>';
-                else
-                    answer += 'Out<br/>';
-            }
-            else {
-                var answer = $('#MainContent_ddlDoorStylePatio').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorColourPatio').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorHeightPatio').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorWidthPatio').val() + '<br/>';
-                if ($('#MainContent_lblDoorOperatorLHHPatio:checked').val())
-                    answer += 'Left<br/>';
-                else
-                    answer += 'Right<br/>';
-                answer += $('#MainContent_ddlDoorBoxHeaderPatio').val() + '<br/>';
-                answer += $('#MainContent_ddlDoorGlassTintPatio').val() + '<br/>';
-                if ($('#MainContent_radDoorSwingPatio:checked').val())
-                    answer += 'In<br/>';
-                else
-                    answer += 'Out<br/>';
-            }
-            $('#MainContent_lblDoor').html(title);
-            $('#MainContent_lblDoorAnswer').html(answer);
-        }
     </script>
 
     <div class="slide-window" id="slide-window" >
@@ -257,7 +246,7 @@
                     <asp:PlaceHolder ID="DoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Next Question"/>
+                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Done Ordering Doors"/>
 
             </div>
             <%-- end #slide3 --%>
@@ -271,24 +260,12 @@
         <div id="paging-wrapper">    
             <div id="paging"> 
                 <h2>Door Specifications</h2>
-
-                <ul>
-                    <!--Div tag to hold the canvas/grid-->
-                    <div style="position:inherit; text-align:center; top:0px; right:0px;" id="mySunroom"></div>
-                    <%--==================================== --%>
-
-                    <%-- div to display the answers for question 1 --%>
-                    <div style="display: block" id="pagerOne">
-                        <li>
-                            <asp:Label ID="lblDoor" runat="server" Text="Text"></asp:Label>
-                            <asp:Label ID="lblDoorAnswer" runat="server" Text="Answer"></asp:Label>
-                        </li>
-                    </div>
-                </ul>    
+                <asp:PlaceHolder ID="lblDoorPager" runat="server"></asp:PlaceHolder>  
             </div> <%-- end #paging --%>      
         </div>
 
         <%--<asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label>--%>
         <textarea id="txtErrorMessage" class="txtErrorMessage" disabled="disabled" rows="5" runat="server"></textarea>
     </div>
+    <div id="hiddenFieldsDiv" runat="server"></div>
 </asp:Content>
