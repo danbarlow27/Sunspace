@@ -9,21 +9,13 @@ namespace SunspaceDealerDesktop
 {
     public partial class ProjEd : System.Web.UI.Page
     {        
-        //fractions dropdown list items
-        //protected ListItem lst0 = new ListItem("---", "0", true);
-        //protected ListItem lst18 = new ListItem("1/8", ".125");
-        //protected ListItem lst14 = new ListItem("1/4", ".25");
-        //protected ListItem lst38 = new ListItem("3/8", ".375");
-        //protected ListItem lst12 = new ListItem("1/2", ".5");
-        //protected ListItem lst58 = new ListItem("5/8", ".625");
-        //protected ListItem lst34 = new ListItem("3/4", ".75");
-        //protected ListItem lst78 = new ListItem("7/8", ".875");
+        //fractions list for dropdowns
         protected List<ListItem> fractionList = GlobalFunctions.FractionOptions();
 
-        //Model type dropdown list items
+        //Model type list for dropdowns
         protected string[] modelNumbers = Constants.MODEL_NUMBERS;
 
-        //roofstyle type dropdown list items
+        //roofstyle type list for dropdowns
         protected string[] roofTypes = Constants.ROOF_TYPES;
 
         //Framing Colours, Exterior/Interior Colours/Skins
@@ -34,6 +26,7 @@ namespace SunspaceDealerDesktop
 
         protected string[] interiorWallColours = Constants.INTERIOR_WALL_COLOURS;
         protected string[] exteriorWallColours = Constants.EXTERIOR_WALL_COLOURS;
+
         protected string[] interiorWallSkinTypes = Constants.INTERIOR_WALL_SKIN_TYPES;
         protected string[] exteriorWallSkinTypes = Constants.EXTERIOR_WALL_SKIN_TYPES;
 
