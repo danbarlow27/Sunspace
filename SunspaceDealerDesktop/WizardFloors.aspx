@@ -142,6 +142,67 @@
 
             checkFloors();
         }
+        function wizardFloorsCheckQuestion2() {
+            document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;
+
+            var confirmValid = true;
+            var error = "";
+
+            if ($('#<%=txtLedgerSetback.ClientID%>').val() != "") {
+                if (isNaN($('#<%=txtLedgerSetback.ClientID%>').val())) {
+                    confirmValid = false;
+                }
+                else {
+                    error += "Your ledger setback is invalid. Please enter a valid number of inches.<br/>";
+                }
+            }
+            else {
+                error += "Your ledger setback is empty. Please enter a ledger setback.<br/>";
+            }
+
+            if ($('#<%=txtFrontSetback.ClientID%>').val() != "") {
+                if (isNaN($('#<%=txtFrontSetback.ClientID%>').val())) {
+                    confirmValid = false;
+                }
+                else {
+                    error += "Your front setback is invalid. Please enter a valid number of inches.<br/>";
+                }
+            }
+            else {
+                error += "Your front setback is empty. Please enter a front setback.<br/>";
+            }
+
+            if ($('#<%=txtSidesSetback.ClientID%>').val() != "") {
+                if (isNaN($('#<%=txtSidesSetback.ClientID%>').val())) {
+                    confirmValid = false;
+                }
+                else {
+                    error += "Your side setbacks are invalid. Please enter a valid number of inches.<br/>";
+                }
+            }
+            else {
+                error += "Your side setbacks are empty. Please enter side setbacks.<br/>";
+            }
+
+            if ($('#<%=txtJointSetback.ClientID%>').val() != "") {
+                if (isNaN($('#<%=txtJointSetback.ClientID%>').val())) {
+                    confirmValid = false;
+                }
+                else {
+                    error += "Your joint setback is invalid. Please enter a valid number of inches.<br/>";
+                }
+            }
+            else {
+                error += "Your joint setback is empty. Please enter a joint setback.<br/>";
+            }
+
+            if (confirmValid == true) {
+                document.getElementById('<%=btnQuestion2.ClientID%>').disabled = false;
+            }
+            else {
+                document.getElementById('<%=lblPagerSetbackAnswer.ClientID%>').innerHTML = error;
+            }
+        }
     </script>
 
     <%-- SLIDES (QUESTION)
@@ -158,71 +219,134 @@
                     <%-- Label for question 1 (floor details) --%>
                     <asp:Label ID="lblQuestion1" runat="server" Text="Floor Details"></asp:Label>
                 </h1>
-                        <div>
-                            <ul class="toggleOptions">
-                                <li>
-                                    <asp:Table ID="tblFloors" CssClass="tblTxtFields" runat="server">
+
+                <ul class="toggleOptions">
+                    <li>
+                        <asp:Table ID="tblFloors" CssClass="tblTxtFields" runat="server">
                                         
-                                        <asp:TableRow style="display:inherit">
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblFloorType" AssociatedControlID="ddlFloorType" runat="server" Text="Type:"></asp:Label>
-                                            </asp:TableCell>
+                            <asp:TableRow style="display:inherit">
+                                <asp:TableCell>
+                                    <asp:Label ID="lblFloorType" AssociatedControlID="ddlFloorType" runat="server" Text="Type:"></asp:Label>
+                                </asp:TableCell>
 
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlFloorType" onchange="floorTypeDisplay(); checkFloors()" runat="server"></asp:DropDownList>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
+                                <asp:TableCell>
+                                    <asp:DropDownList ID="ddlFloorType" onchange="floorTypeDisplay(); checkFloors()" runat="server"></asp:DropDownList>
+                                </asp:TableCell>
+                            </asp:TableRow>
 
-                                        <asp:TableRow style="display:inherit">  
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblWidth" runat="server" Text="Floor Width: "></asp:Label>
-                                            </asp:TableCell>
+                            <asp:TableRow style="display:inherit">  
+                                <asp:TableCell>
+                                    <asp:Label ID="lblWidth" runat="server" Text="Floor Width: "></asp:Label>
+                                </asp:TableCell>
 
-                                            <asp:TableCell>
-                                                <asp:TextBox ID="txtWidthDisplay" CssClass="txtField txtInput" Width="60" runat="server" Text="" onkeyup="updateSquareFootage()" MaxLength="3"></asp:TextBox> "
-                                            </asp:TableCell>  
-                                        </asp:TableRow>
+                                <asp:TableCell>
+                                    <asp:TextBox ID="txtWidthDisplay" CssClass="txtField txtInput" Width="60" runat="server" Text="" onkeyup="updateSquareFootage()" MaxLength="3"></asp:TextBox> "
+                                </asp:TableCell>  
+                            </asp:TableRow>
 
-                                        <asp:TableRow style="display:inherit">  
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblPagerProjection" runat="server" Text="Floor Projection: "></asp:Label>
-                                            </asp:TableCell>
+                            <asp:TableRow style="display:inherit">  
+                                <asp:TableCell>
+                                    <asp:Label ID="lblPagerProjection" runat="server" Text="Floor Projection: "></asp:Label>
+                                </asp:TableCell>
 
-                                            <asp:TableCell>
-                                                <asp:TextBox ID="txtProjectionDisplay" CssClass="txtField txtInput" Width="60" runat="server" Text="" onkeyup="updateSquareFootage()" MaxLength="3"></asp:TextBox> "
-                                            </asp:TableCell>  
-                                        </asp:TableRow>
+                                <asp:TableCell>
+                                    <asp:TextBox ID="txtProjectionDisplay" CssClass="txtField txtInput" Width="60" runat="server" Text="" onkeyup="updateSquareFootage()" MaxLength="3"></asp:TextBox> "
+                                </asp:TableCell>  
+                            </asp:TableRow>
                                         
-                                        <asp:TableRow style="display:inherit">
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblFloorThickness" AssociatedControlID="ddlFloorThickness" runat="server" Text="Thickness:"></asp:Label>
-                                            </asp:TableCell>
+                            <asp:TableRow style="display:inherit">
+                                <asp:TableCell>
+                                    <asp:Label ID="lblFloorThickness" AssociatedControlID="ddlFloorThickness" runat="server" Text="Thickness:"></asp:Label>
+                                </asp:TableCell>
 
-                                            <asp:TableCell>
-                                                <asp:DropDownList ID="ddlFloorThickness" runat="server" onchange="checkFloors()"></asp:DropDownList>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
+                                <asp:TableCell>
+                                    <asp:DropDownList ID="ddlFloorThickness" runat="server" onchange="checkFloors()"></asp:DropDownList>
+                                </asp:TableCell>
+                            </asp:TableRow>
 
-                                        <asp:TableRow ID="rowVapourBarrier">
-                                            <asp:TableCell>
-                                                <asp:Label ID="lblVapourBarrier" AssociatedControlID="chkVapourBarrier" runat="server" Text="Vapour Barrier:"></asp:Label>
-                                            </asp:TableCell>
+                            <asp:TableRow ID="rowVapourBarrier">
+                                <asp:TableCell>
+                                    <asp:Label ID="lblVapourBarrier" AssociatedControlID="chkVapourBarrier" runat="server" Text="Vapour Barrier:"></asp:Label>
+                                </asp:TableCell>
 
-                                            <asp:TableCell>
-                                                <asp:CheckBox ID="chkVapourBarrier" runat="server" Text=" " onchange="checkFloors()"/>
-                                            </asp:TableCell>
-                                        </asp:TableRow>
+                                <asp:TableCell>
+                                    <asp:CheckBox ID="chkVapourBarrier" runat="server" Text=" " onchange="checkFloors()"/>
+                                </asp:TableCell>
+                            </asp:TableRow>
+                        </asp:Table>
+                    </li>
+                </ul>
 
-                                    </asp:Table>
-                                </li>
-                            </ul>
-                        </div>
-                <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion1" Enabled="false" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Confirm" OnClick="btnQuestion1_Click" />
-
+                <asp:Button ID="btnQuestion1" Enabled = "True" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
             </div> 
             <%-- end #slide1 --%>            
 
+            <%-- QUESTION 2 - Set Back
+            ======================================== --%>
+            <div id="slide2" class="slide">
+                <h1>
+                    <asp:Label ID="lblSetBack" runat="server" Text="Set Back"></asp:Label>
+                </h1>
+
+                <div>
+                    <ul class="toggleOptions">
+                        <li>
+                            <asp:Table ID="tblSetback" CssClass="tblTxtFields" runat="server">
+                                <asp:TableRow style="display:inherit">
+                                    <asp:TableCell>
+                                        <asp:Label ID="lblLedger" Text="Ledger: " runat="server"></asp:Label>
+                                    </asp:TableCell>
+                                    <asp:TableCell>
+                                        <asp:TextBox ID="txtLedgerSetback" onkeyup="wizardFloorsCheckQuestion2()" runat="server"></asp:TextBox>
+                                    </asp:TableCell>
+                                    <asp:TableCell>
+                                        <asp:DropDownList ID="ddlLedgerSetbackInches" OnChange="wizardFloorsCheckQuestion2()" runat="server"></asp:DropDownList>
+                                    </asp:TableCell>
+                                </asp:TableRow>
+
+                                <asp:TableRow style="display:inherit">
+                                    <asp:TableCell>
+                                        <asp:Label ID="lblFront" Text="Front: " runat="server"></asp:Label>
+                                    </asp:TableCell>
+                                    <asp:TableCell>
+                                        <asp:TextBox ID="txtFrontSetback" onkeyup="wizardFloorsCheckQuestion2()" runat="server"></asp:TextBox>
+                                    </asp:TableCell>
+                                    <asp:TableCell>
+                                        <asp:DropDownList ID="ddlFrontSetbackInches" OnChange="wizardFloorsCheckQuestion2()" runat="server"></asp:DropDownList>
+                                    </asp:TableCell>
+                                </asp:TableRow>
+
+                                <asp:TableRow style="display:inherit">
+                                    <asp:TableCell>
+                                        <asp:Label ID="lblSides" Text="Sides: " runat="server"></asp:Label>
+                                    </asp:TableCell>
+                                    <asp:TableCell>
+                                        <asp:TextBox ID="txtSidesSetback" onkeyup="wizardFloorsCheckQuestion2()" runat="server"></asp:TextBox>
+                                    </asp:TableCell>
+                                    <asp:TableCell>
+                                        <asp:DropDownList ID="ddlSidesSetbackInches" OnChange="wizardFloorsCheckQuestion2()" runat="server"></asp:DropDownList>
+                                    </asp:TableCell>
+                                </asp:TableRow>
+
+                                <asp:TableRow style="display:inherit">
+                                    <asp:TableCell>
+                                        <asp:Label ID="lblJoint" Text="Joint: " runat="server"></asp:Label>
+                                    </asp:TableCell>
+                                    <asp:TableCell>
+                                        <asp:TextBox ID="txtJointSetback" onkeyup="wizardFloorsCheckQuestion2()" runat="server"></asp:TextBox>
+                                    </asp:TableCell>
+                                    <asp:TableCell>
+                                        <asp:DropDownList ID="ddlJointSetbackInches" OnChange="wizardFloorsCheckQuestion2()" runat="server"></asp:DropDownList>
+                                    </asp:TableCell>
+                                </asp:TableRow>
+                            </asp:Table>
+                        </li>
+                    </ul>
+                </div>
+                <%-- button to go to the next question --%>
+                <asp:Button ID="btnQuestion2" Enabled="false" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Confirm" OnClick="btnQuestion1_Click" />
+            </div>
+            <%-- end #slide3 --%>
         </div> <%-- end .slide-wrapper --%>
 
     </div> 
@@ -249,7 +373,15 @@
                                 <asp:Label ID="lblPagerSquareFootageDisplay" runat="server" Text=""></asp:Label>
                             </a>
                         </li>
-                    </div>                   
+                    </div> 
+                    
+                    <div style="display: none" id="pagerTwo">
+                        <li>
+                            <a href="#" data-slide="#slide2" class="slidePanel">
+                                <asp:Label ID="lblPagerSetbackAnswer" runat="server"></asp:Label>
+                            </a>
+                        </li>          
+                    </div>                  
                 </ul>    
             </div>    
         </div>
