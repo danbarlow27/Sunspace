@@ -101,6 +101,7 @@
                             document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = sizeOfEachVent;
                             document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = sizeOfEachVent;
 
+                            /*
                             if (document.getElementById('MainContent_radWindowUnevenVentsDone' + type).checked) {
                                 document.getElementById('MainContent_txtWindowTopVentHeight' + type).readOnly = "readonly";
                                 document.getElementById('MainContent_txtWindowBottomVentHeight' + type).readOnly = "readonly";
@@ -115,6 +116,7 @@
                                 document.getElementById('MainContent_ddlWindowTopVentHeight' + type).disabled = false;
                                 document.getElementById('MainContent_ddlWindowBottomVentHeight' + type).disabled = false;
                             }
+                            */
                         }
                         else {
                             document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'none';
@@ -320,24 +322,8 @@
     <div id="sidebar">
         <div id="paging-wrapper">    
             <div id="paging"> 
-                <h2>Window Specifications</h2>
-
-                <ul>
-                    <!--Div tag to hold the canvas/grid-->
-                    <div style="position:inherit; text-align:center; top:0px; right:0px;" id="mySunroom"></div>
-                    <%--==================================== --%>
-
-
-                    <%-- div to display the answers for question 1 --%>
-                    <div style="display: block" id="pagerOne">
-                        <li>
-                            <a href="#" data-slide="#slide1" class="slidePanel">
-                                <asp:Label ID="lblCabanaWindow" runat="server" Text="Text"></asp:Label>
-                                <asp:Label ID="lblCabanaWindowAnswer" runat="server" Text="Answer"></asp:Label>
-                            </a>
-                        </li>
-                    </div>
-                </ul>    
+                <h2>Door Specifications</h2>
+                <asp:PlaceHolder ID="lblWindowPager" runat="server"></asp:PlaceHolder>  
             </div> <%-- end #paging --%>      
         </div>
 
