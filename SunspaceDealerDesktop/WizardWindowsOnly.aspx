@@ -3,6 +3,7 @@
     <script src="Scripts/GlobalFunctions.js"></script>
     <script src="Scripts/Validation.js"></script>
     <script>
+
         /**
         *customDimension
         *Checks the drop down selection on change, if the selection is custom, displays additional fields,
@@ -28,6 +29,13 @@
             }
         }
 
+
+        function validateUnevenVents() {
+
+            ///add uneven vents validation code here
+
+        }
+
         /**
         *windowStyle
         *Window style function is triggered when the user selects Vertical Four Track, 
@@ -38,35 +46,187 @@
         */
         function windowStyle(type) {
 
-            //Get value of window style drop down
             var windowStyleDDL = document.getElementById('MainContent_ddlWindowStyle' + type).options[document.getElementById('MainContent_ddlWindowStyle' + type).selectedIndex].value;
 
-            //If drop down value is v4TCabana, perform block
-            if (windowStyleDDL == 'Vertical Four Track') {
-                //Change window vinyl tint row display style to inherit
-                document.getElementById('MainContent_rowWindowVinylTint' + type).style.display = 'inherit';
-                //Change window number of vents row display style to inherit
-                document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'inherit';
-                //Change window screen options row display style to none
-                document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'none';
+            if (type === "Vinyl") {
+
+                //Get value of window style drop down
+                var windowVentsDDL = document.getElementById('MainContent_ddlWindowNumberOfVents' + type).options[document.getElementById('MainContent_ddlWindowNumberOfVents' + type).selectedIndex].value;
+                var windowTintsDDL = document.getElementById('MainContent_ddlWindowTint' + type).options[document.getElementById('MainContent_ddlWindowTint' + type).selectedIndex].value;
+                var vinylRows = (windowVentsDDL == 12) ? 4 :
+                                (windowVentsDDL == 9) ? 3 :
+                                (windowVentsDDL == 8) ? 4 :
+                                (windowVentsDDL == 6) ? 3 :
+                                (windowVentsDDL == 4) ? 4 : 3;
+
+                var tempVents;
+
+                if (windowStyleDDL === "Vertical 4 Track" ||
+                    windowStyleDDL === "Horizontal 2 Track" || 
+                    windowStyleDDL === "Horizontal 3 Track" || 
+                    windowStyleDDL === "Horizontal 4 Track") {
+                    document.getElementById('MainContent_rowWindowTint' + type).style.display = 'inherit';
+                    document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'inherit';
+                    
+
+                    if (windowStyleDDL === "Vertical 4 Track") {
+                        document.getElementById('MainContent_rowWindowInsideMount' + type).style.display = 'inherit';
+                        document.getElementById('MainContent_rowWindowOutsideMount' + type).style.display = 'inherit';
+                        document.getElementById('MainContent_cellWindowUnevenVents' + type).style.display = 'inherit';
+                        document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'inherit';
+                        document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'inherit';
+
+                        windowVentsDDL = document.getElementById('MainContent_ddlWindowNumberOfVents' + type).options[document.getElementById('MainContent_ddlWindowNumberOfVents' + type).selectedIndex].value;
+                        vinylRows = (windowVentsDDL == 12) ? 4 :
+                                (windowVentsDDL == 9) ? 3 :
+                                (windowVentsDDL == 8) ? 4 :
+                                (windowVentsDDL == 6) ? 3 :
+                                (windowVentsDDL == 4) ? 4 : 3;
+
+                        if (document.getElementById('MainContent_radWindowOutsideMount' + type).checked) {
+                            document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'inherit';
+                        }
+                        else {
+                            document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'none';
+                        }
+
+
+                        if (document.getElementById('MainContent_chkWindowUnevenVents' + type).checked) {
+
+                            document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'inherit';
+                            document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'inherit';
+
+                            var sizeOfEachVent = document.getElementById('MainContent_txtWindowHeightVinyl').value / vinylRows;
+
+                            document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = sizeOfEachVent;
+                            document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = sizeOfEachVent;
+
+                            if (document.getElementById('MainContent_radWindowUnevenVentsDone' + type).checked) {
+                                document.getElementById('MainContent_txtWindowTopVentHeight' + type).readOnly = "readonly";
+                                document.getElementById('MainContent_txtWindowBottomVentHeight' + type).readOnly = "readonly";
+                                document.getElementById('MainContent_ddlWindowTopVentHeight' + type).disabled = true;
+                                document.getElementById('MainContent_ddlWindowBottomVentHeight' + type).disabled = true;
+
+                                validateUnevenVents();
+                            }
+                            else {
+                                document.getElementById('MainContent_txtWindowTopVentHeight' + type).readOnly = "";
+                                document.getElementById('MainContent_txtWindowBottomVentHeight' + type).readOnly = "";
+                                document.getElementById('MainContent_ddlWindowTopVentHeight' + type).disabled = false;
+                                document.getElementById('MainContent_ddlWindowBottomVentHeight' + type).disabled = false;
+                            }
+                        }
+                        else {
+                            document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'none';
+                            document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = '';
+                            document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
+                            document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
+                        }
+                    }
+                    else if (windowStyleDDL === "Horizontal 2 Track" ||
+                             windowStyleDDL === "Horizontal 3 Track" ||
+                             windowStyleDDL === "Horizontal 4 Track") {
+                        document.getElementById('MainContent_rowWindowInsideMount' + type).style.display = 'none';
+                        document.getElementById('MainContent_rowWindowOutsideMount' + type).style.display = 'none';
+                        document.getElementById('MainContent_cellWindowUnevenVents' + type).style.display = 'none';
+                        document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'inherit';
+                        document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'none';
+                        document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'inherit';
+
+                        windowVentsDDL = vinylRows = (windowStyleDDL === "Horizontal 2 Track") ? 2 :
+                                                     (windowStyleDDL === "Horizontal 3 Track") ? 3 : 4;
+                    }
+                    else {
+                        document.getElementById('MainContent_rowWindowInsideMount' + type).style.display = 'none';
+                        document.getElementById('MainContent_rowWindowOutsideMount' + type).style.display = 'none';
+                        document.getElementById('MainContent_cellWindowUnevenVents' + type).style.display = 'none';
+                        document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'none';
+                        document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'none';
+                    }
+
+                    if (tempVents != windowVentsDDL) {
+                        tempVents = windowVentsDDL;
+                        for (var i = 0; i < 4; i++) {
+                            document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
+                        }
+                        for (var i = 0; i < vinylRows; i++) {
+                            document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'inherit';
+                        }
+                    }
+
+                    if (windowTintsDDL == "Mixed") {
+                        for (var i = 0; i < 4; i++) {
+                            document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
+                        }
+                        for (var i = 0; i < vinylRows; i++) {
+                            document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'inherit';
+                        }
+                    }
+                    else {
+                        for (var i = 0; i < 4; i++) {
+                            document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
+                        }
+                    }
+                }
+                else if (windowStyleDDL == 'Vinyl Trapezoid' || windowStyleDDL == 'Vinyl Fixed Lite') {
+
+                    if (windowStyleDDL == 'Vinyl Trapezoid') {
+                        document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'none';
+                        document.getElementById('MainContent_rowWindowLeftHeight' + type).style.display = 'inherit';
+                        document.getElementById('MainContent_rowWindowRightHeight' + type).style.display = 'inherit';
+                    }
+                    else {
+                        document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'inherit';
+                        document.getElementById('MainContent_rowWindowLeftHeight' + type).style.display = 'none';
+                        document.getElementById('MainContent_rowWindowRightHeight' + type).style.display = 'none';
+                    }
+
+                    document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowInsideMount' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowOutsideMount' + type).style.display = 'none';
+                    document.getElementById('MainContent_cellWindowUnevenVents' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'none';
+                    document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = '';
+                    document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
+                    document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
+                    document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowTint' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'none';
+                }
+                    //else, perform block
+                else {
+                    document.getElementById('MainContent_rowWindowInsideMount' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowOutsideMount' + type).style.display = 'none';
+                    document.getElementById('MainContent_cellWindowUnevenVents' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'none';
+                    document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = '';
+                    document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
+                    document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
+                    document.getElementById('MainContent_rowWindowTint' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'none';
+                    document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'none';
+                }
             }
-            else if (windowStyleDDL == 'Full Screen' || windowStyleDDL == 'Screen') {
-                //Change window screen options row display style to inherit
-                document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'inherit';
-                //Change window vinyl tint row display style to none
-                document.getElementById('MainContent_rowWindowVinylTint' + type).style.display = 'none';
-                //Change window number of vents row display style to inherit
-                document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'none';
+            else if (type === "Glass") {
+                document.getElementById('MainContent_rowWindowTint' + type).style.display = 'inherit';
+
+                if (windowStyleDDL == 'Aluminum Framed Trapezoid' || windowStyleDDL == 'PVC Framed Single Glazed Trapezoid') {
+                    document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowLeftHeight' + type).style.display = 'inherit';
+                    document.getElementById('MainContent_rowWindowRightHeight' + type).style.display = 'inherit';
+                }
+                else {
+                    document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'inherit';
+                    document.getElementById('MainContent_rowWindowLeftHeight' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowRightHeight' + type).style.display = 'none';
+                }
+
             }
-                //else, perform block
             else {
-                //Change window vinyl tint row display style to none
-                document.getElementById('MainContent_rowWindowVinylTint' + type).style.display = 'none';
-                //Change window number of vents row display style to inherit
-                document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'none';
-                //Change window screen options row display style to none
-                document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'none';
+                document.getElementById('MainContent_rowWindowTint' + type).style.display = 'none';
             }
+
         }
         /**
         *typeOfRowsDisplayed
@@ -80,41 +240,17 @@
             /****START:TABLE ROWS BY ID****/
             var windowTitle = document.getElementById("MainContent_rowWindowTitle" + type);
             var windowStyleTable = document.getElementById("MainContent_rowWindowStyle" + type);
-            var windowVinylTint = document.getElementById("MainContent_rowWindowVinylTint" + type);
+            var windowTint = document.getElementById("MainContent_rowWindowTint" + type);
             var windowNumberOfVents = document.getElementById("MainContent_rowWindowNumberOfVents" + type);
-            var windowKickplate = document.getElementById("MainContent_rowWindowKickplate" + type);
-            var windowKicplateCustom = document.getElementById("MainContent_rowWindowCustomKickplate" + type);
             var windowColour = document.getElementById("MainContent_rowWindowColour" + type);
             var windowHeight = document.getElementById("MainContent_rowWindowHeight" + type);
-            var windowHeightCustom = document.getElementById("MainContent_rowWindowCustomHeight" + type);
             var windowWidth = document.getElementById("MainContent_rowWindowWidth" + type);
-            var windowWidthCustom = document.getElementById("MainContent_rowWindowCustomWidth" + type);
-            var windowOperatorLHH = document.getElementById("MainContent_rowWindowOperatorLHH" + type);
-            var windowOperatorRHH = document.getElementById("MainContent_rowWindowOperatorRHH" + type);
-            var windowBoxHeader = document.getElementById("MainContent_rowWindowBoxHeader" + type);
-            var windowGlassTint = document.getElementById("MainContent_rowWindowGlassTint" + type);
-            var windowHingeLHH = document.getElementById("MainContent_rowWindowHingeLHH" + type);
-            var windowHingeRHH = document.getElementById("MainContent_rowWindowHingeRHH" + type);
             var windowScreenOptions = document.getElementById("MainContent_rowWindowScreenOptions" + type);
-            var windowHardware = document.getElementById("MainContent_rowWindowHardware" + type);
-            var windowSwingIn = document.getElementById("MainContent_rowWindowSwingIn" + type);
-            var windowSwingOut = document.getElementById("MainContent_rowWindowSwingOut" + type);
-            var windowPosition = document.getElementById("MainContent_rowWindowPosition" + type);
-            var windowPositionCustom = document.getElementById("MainContent_rowWindowCustomPosition" + type);
+            
             /****END:TABLE ROWS BY ID****/
 
-            /****START:RADIO BUTTONS TO BE CHECKED INITIALLY****/
-            var windowPositionCustom = document.getElementById("MainContent_ddlWindowPosition" + type).options[document.getElementById("MainContent_ddlWindowPosition" + type).selectedIndex].value;
-            var windowHingeLHHChecked = document.getElementById("MainContent_radWindowHinge" + type);
-            var windowSwingInChecked = document.getElementById("MainContent_radWindowSwing" + type);
-
-            //FRENCH/PATIO DOOR ONLY
-            var windowOperatorLHHChecked = document.getElementById("MainContent_radWindowOperator" + type);
-            /****END:RADIO BUTTONS TO BE CHECKED INITIALLY****/
-
             //If type is Cabana, display the appropriate fields
-            if (type == "Cabana") {
-
+            if (type == "Vinyl") {
                 /****FIELDS TO DISPLAY****/
                 //General
                 windowTitle.style.display = "inherit";
@@ -122,31 +258,11 @@
                 windowColour.style.display = "inherit";
                 windowHeight.style.display = "inherit";
                 windowWidth.style.display = "inherit";
-                windowBoxHeader.style.display = "inherit";
-                //windowKickplate.style.display = "inherit";
-
-                //Cabana Specific                            
-                windowGlassTint.style.display = "inherit";
-                windowHingeLHH.style.display = "inherit";
-                windowHingeRHH.style.display = "inherit";
-                windowSwingIn.style.display = "inherit";
-                windowSwingOut.style.display = "inherit";
-                windowHardware.style.display = "inherit";
-                windowPosition.style.display = "inherit";
-
-                //If the value of position drop down is custom, display the appropriate field
-                if (windowPositionCustom == "cPosition") {
-                    customDimension(wallNumber, type, "Position");
-                }
-
-                //Radio button defaults
-                windowHingeLHHChecked.setAttribute("checked", "checked");
-                windowSwingInChecked.setAttribute("checked", "checked");
 
                 windowStyle(type);
             }
                 //If type is French, display the appropriate fields
-            else if (type == "French") {
+            else if (type == "Glass") {
 
                 //General
                 windowTitle.style.display = "inherit";
@@ -154,68 +270,25 @@
                 windowColour.style.display = "inherit";
                 windowHeight.style.display = "inherit";
                 windowWidth.style.display = "inherit";
-                windowBoxHeader.style.display = "inherit";
-                windowKickplate.style.display = "inherit";
-
-                //French specific
-                windowOperatorLHH.style.display = "inherit";
-                windowOperatorRHH.style.display = "inherit";
-                windowSwingIn.style.display = "inherit";
-                windowSwingOut.style.display = "inherit";
-                windowHardware.style.display = "inherit";
-                windowPosition.style.display = "inherit";
-
-                //If the value of position drop down is custom, display the appropriate field
-                if (windowPositionCustom == "cPosition") {
-                    customDimension(wallNumber, type, "Position");
-                }
-
-                //Radio button defaults
-                windowOperatorLHHChecked.setAttribute("checked", "checked");
-                windowSwingInChecked.setAttribute("checked", "checked");
 
                 windowStyle(type);
             }
                 //If type is Patio, display the appropriate fields
-            else if (type == "Patio") {
+            else if (type == "Screen") {
 
-                //General
                 windowTitle.style.display = "inherit";
                 windowStyleTable.style.display = "inherit";
                 windowColour.style.display = "inherit";
                 windowHeight.style.display = "inherit";
                 windowWidth.style.display = "inherit";
-                windowBoxHeader.style.display = "inherit";
 
-                //Patio Specifics
                 windowGlassTint.style.display = "inherit";
-                windowOperatorLHH.style.display = "inherit";
-                windowOperatorRHH.style.display = "inherit";
-                windowPosition.style.display = "inherit";
                 windowScreenOptions.style.display = "inherit";
-
-                //If the value of position drop down is custom, display the appropriate field
-                if (windowPositionCustom == "cPosition") {
-                    customDimension(wallNumber, type, "Position");
-                }
-
-                //Radio button defaults
-                windowOperatorLHHChecked.setAttribute("checked", "checked");
 
                 windowStyle(type);
             }
                 //If type is NoWindow, display the appropriate fields
-            else if (type == "NoWindow") {
-
-                windowHeight.style.display = "inherit";
-                windowWidth.style.display = "inherit";
-                windowPosition.style.display = "inherit";
-
-                //If the value of position drop down is custom, display the appropriate field
-                if (windowPositionCustom == "cPosition") {
-                    customDimension(wallNumber, type, "Position");
-                }
-            }
+            
         }
     </script>
 
