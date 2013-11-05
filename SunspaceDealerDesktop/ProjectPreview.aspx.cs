@@ -305,6 +305,7 @@ namespace SunspaceDealerDesktop
                                                 case "Vertical 4 Track":
                                                     for (int vents = 0; vents < aWindow.NumVents; vents++)
                                                     {
+                                                        string myColour = aWindow.Colour.Substring(vents, 1);
                                                         aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
                                                                                 + project_id + ", "
                                                                                 + linearCounter + ", "
@@ -314,7 +315,7 @@ namespace SunspaceDealerDesktop
                                                                                 + aWindow.StartHeight + ", "
                                                                                 + aWindow.EndHeight + ", "
                                                                                 + aWindow.Length + ", '"
-                                                                                + aWindow.Colour.Substring(vents, 1) + "', "
+                                                                                + myColour + "', "
                                                                                 + aWindow.SpreaderBar
                                                                                 + ");";
                                                         aCommand.ExecuteNonQuery();
