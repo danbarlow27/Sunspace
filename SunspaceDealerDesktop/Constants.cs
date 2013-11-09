@@ -78,6 +78,8 @@ namespace SunspaceDealerDesktop
 
         public static string[] VINYL_TINTS = { "Clear", "Smoke Grey", "Dark Grey", "Bronze"};
 
+        public static string[] GLASS_TINTS = { "Clear", "Bronze", "Grey" };
+
         public static string[] INSTALLATION_TYPES = { "House", "Trailer", "Standalone" };
 
         public static string[] FASCIA_STRIPE_COLOUR = { "No Stripe", "Test1", "Test2"};

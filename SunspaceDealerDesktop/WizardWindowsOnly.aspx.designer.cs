@@ -40,22 +40,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Button btnQuestion3;
         
         /// <summary>
-        /// lblCabanaWindow control.
+        /// lblWindowPager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCabanaWindow;
-        
-        /// <summary>
-        /// lblCabanaWindowAnswer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCabanaWindowAnswer;
+        protected global::System.Web.UI.WebControls.PlaceHolder lblWindowPager;
         
         /// <summary>
         /// txtErrorMessage control.

@@ -3952,6 +3952,7 @@ namespace SunspaceDealerDesktop
                                 doorWindow.ItemType = "Window";
                                 doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
+                                doorWindow.SpreaderBar = -1;
 
                                 //Spreaderbar logic
                                 if (doorWindow.WindowType == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
@@ -4004,6 +4005,7 @@ namespace SunspaceDealerDesktop
                                 doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
                                 doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
+                                doorWindow.SpreaderBar = -1;
                                 //Spreaderbar logic
                                 if (doorWindow.WindowType == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
                                 {
@@ -4045,6 +4047,7 @@ namespace SunspaceDealerDesktop
                                 //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
                                 //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
                                 doorWindow.ItemType = "Window";
+                                doorWindow.SpreaderBar = -1;
 
                                 aDoor.DoorWindow = doorWindow;
                                 modularItems.Add(aDoor);
@@ -4071,11 +4074,13 @@ namespace SunspaceDealerDesktop
                                     Window aWindow = new Window();
                                     aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
                                     aWindow.EndHeight = aWindow.StartHeight = windowInfo[1] - 2.125f; //Framing size
-                                    aWindow.Colour = Request.Form["hidWallWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
+                                    aWindow.Colour = Request.Form["MainContent_hidWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
                                     aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                     aWindow.ItemType = "Window";
                                     aWindow.Length = aMod.Length - 2;
                                     aWindow.WindowType = (string)Session["newProjectTransomType"];
+                                    aWindow.SpreaderBar = -1;
+
                                     //Add remaining area to first window
                                     if (currentWindow == 0)
                                     {
@@ -4096,11 +4101,13 @@ namespace SunspaceDealerDesktop
                                     Window aWindow = new Window();
                                     aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
                                     aWindow.EndHeight = aWindow.StartHeight = windowInfo[1] - 2.125f;
-                                    aWindow.Colour = Request.Form["hidWallWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
+                                    aWindow.Colour = Request.Form["MainContent_hidWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
                                     aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                     aWindow.ItemType = "Window";
                                     aWindow.Length = aMod.Length - 2;
                                     aWindow.WindowType = (string)Session["newProjectTransomType"];
+                                    aWindow.SpreaderBar = -1;
+
                                     //Add remaining area to first window
                                     if (currentWindow == 0)
                                     {
@@ -4492,8 +4499,19 @@ namespace SunspaceDealerDesktop
             Session.Add("listOfWalls", listOfWalls);
             Session.Add("sunroomProjection", hidRoomProjection.Value);
             Session.Add("sunroomWidth", hidRoomWidth.Value);
-            Response.Redirect("RoofWizard.aspx");
 
+            if (Session["newProjectHasRoof"].ToString() == "Yes")
+            {
+                Response.Redirect("RoofWizard.aspx");
+            }
+            else if (Session["newProjectPrefabFloor"].ToString() == "Yes")
+            {
+                Response.Redirect("WizardFloors.aspx");
+            }
+            else
+            {
+                Response.Redirect("ProjectPreview.aspx");
+            }
         }
 
         protected CabanaDoor getCabanaDoorFromForm(int i, int j)

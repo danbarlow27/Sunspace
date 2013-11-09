@@ -277,7 +277,7 @@ namespace SunspaceDealerDesktop
             }
 
             Session["completedRoof"] = aRoof;
-            if (Session["newProjectPrefabFloor"] != "")
+            if (Session["newProjectPrefabFloor"].ToString() == "Yes")
             {
                 Response.Redirect("WizardFloors.aspx");
             }
