@@ -4,7 +4,6 @@
     <script src="Scripts/Validation.js"></script>
     <script>
 
-
         /**
         *customDimension
         *Checks the drop down selection on change, if the selection is custom, displays additional fields,

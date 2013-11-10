@@ -19,7 +19,7 @@ namespace SunspaceDealerDesktop
                 //Conditional operator to set the current roof type with the right label
                 string title = Constants.ROOF_TYPES[typeCount]; //(typeCount == 1) ? "Cabana" : (typeCount == 2) ? "French" : (typeCount == 3) ? "Patio" : "NoRoof";
                                 
-               RoofOptions.Controls.Add(new LiteralControl("<li>"));
+                RoofOptions.Controls.Add(new LiteralControl("<li>"));
                 
                 //Roof type radio button
                 RadioButton typeRadio = new RadioButton();
@@ -53,7 +53,170 @@ namespace SunspaceDealerDesktop
 
                 for (int roofStyle = 0; roofStyle < 3; roofStyle++)
                 {
-                    string radioTitle = Constants.ROOF_STYLE[roofStyle];
+                    string radioTitle = Constants.ROOF_STYLE[roofStyle];                    
+
+                    #region Studio Height and Width
+                    if (roofStyle == 0 && title == "Studio")
+                    {
+                        RoofOptions.Controls.Add(new LiteralControl("<li>"));
+
+                        Label widthLabel = new Label();
+                        widthLabel.ID = "lblWidth" + title;
+                        widthLabel.Text = "Width: ";
+                        widthLabel.AssociatedControlID = "txtWidth" + title;
+                        widthLabel.CssClass = "labelFormatting";
+
+                        TextBox widthTextbox = new TextBox();
+                        widthTextbox.ID = "txtWidth" + title;
+                        widthTextbox.CssClass = "txtField txtInput";
+
+                        RoofOptions.Controls.Add(widthLabel);
+                        RoofOptions.Controls.Add(widthTextbox);                        
+                                                
+                        RoofOptions.Controls.Add(new LiteralControl("</li>"));
+
+                        RoofOptions.Controls.Add(new LiteralControl("<li>"));
+
+                        Label heightLabel = new Label();
+                        heightLabel.ID = "lblHeight" + title;
+                        heightLabel.Text = "Height: ";
+                        heightLabel.AssociatedControlID = "txtHeight" + title;
+                        heightLabel.CssClass = "labelFormatting";
+
+                        TextBox heightTextbox = new TextBox();
+                        heightTextbox.ID = "txtHeight" + title;
+                        heightTextbox.CssClass = "txtField txtInput";
+
+                        RoofOptions.Controls.Add(heightLabel);
+                        RoofOptions.Controls.Add(heightTextbox);
+
+                        RoofOptions.Controls.Add(new LiteralControl("</li>"));
+
+                        RoofOptions.Controls.Add(new LiteralControl("<li>"));
+
+                        Label soffitLabel = new Label();
+                        soffitLabel.ID = "lblSoffit" + title;
+                        soffitLabel.Text = "Soffit: ";
+                        soffitLabel.AssociatedControlID = "txtSoffit" + title;
+                        soffitLabel.CssClass = "labelFormatting";
+
+                        TextBox soffitTextbox = new TextBox();
+                        soffitTextbox.ID = "txtSoffit" + title;
+                        soffitTextbox.CssClass = "txtField txtInput";
+
+                        RoofOptions.Controls.Add(soffitLabel);
+                        RoofOptions.Controls.Add(soffitTextbox);
+
+                        RoofOptions.Controls.Add(new LiteralControl("</li>"));
+                    }
+                    #endregion
+                    #region Gable Height and Width
+                    else if (roofStyle == 0 && title == "Gable") 
+                    {
+                        RoofOptions.Controls.Add(new LiteralControl("<li>"));
+
+                        Label widthLeftLabel = new Label();
+                        widthLeftLabel.ID = "lblWidthLeft" + title;
+                        widthLeftLabel.Text = "WidthLeft: ";
+                        widthLeftLabel.AssociatedControlID = "txtWidthLeft" + title;
+                        widthLeftLabel.CssClass = "labelFormatting";
+
+                        TextBox widthLeftTextbox = new TextBox();
+                        widthLeftTextbox.ID = "txtWidthLeft" + title;
+                        widthLeftTextbox.CssClass = "txtField txtInput";
+
+                        RoofOptions.Controls.Add(widthLeftLabel);
+                        RoofOptions.Controls.Add(widthLeftTextbox);
+
+                        RoofOptions.Controls.Add(new LiteralControl("</li>"));
+
+                        RoofOptions.Controls.Add(new LiteralControl("<li>"));
+
+                        Label heightLeftLabel = new Label();
+                        heightLeftLabel.ID = "lblHeightLeft" + title;
+                        heightLeftLabel.Text = "Height Left: ";
+                        heightLeftLabel.AssociatedControlID = "txtHeightLeft" + title;
+                        heightLeftLabel.CssClass = "labelFormatting";
+
+                        TextBox heightLeftTextbox = new TextBox();
+                        heightLeftTextbox.ID = "txtHeightLeft" + title;
+                        heightLeftTextbox.CssClass = "txtField txtInput";
+
+                        RoofOptions.Controls.Add(heightLeftLabel);
+                        RoofOptions.Controls.Add(heightLeftTextbox);
+
+                        RoofOptions.Controls.Add(new LiteralControl("</li>"));
+
+                        RoofOptions.Controls.Add(new LiteralControl("<li>"));
+
+                        Label gableLabel = new Label();
+                        gableLabel.ID = "lblGable" + title;
+                        gableLabel.Text = "Gable: ";
+                        gableLabel.AssociatedControlID = "txtGable" + title;
+                        gableLabel.CssClass = "labelFormatting";
+
+                        TextBox gableTextbox = new TextBox();
+                        gableTextbox.ID = "txtGable" + title;
+                        gableTextbox.CssClass = "txtField txtInput";
+
+                        RoofOptions.Controls.Add(gableLabel);
+                        RoofOptions.Controls.Add(gableTextbox);
+
+                        RoofOptions.Controls.Add(new LiteralControl("</li>"));
+
+                        RoofOptions.Controls.Add(new LiteralControl("<li>"));
+
+                        Label widthRightLabel = new Label();
+                        widthRightLabel.ID = "lblWidthRight" + title;
+                        widthRightLabel.Text = "WidthRight: ";
+                        widthRightLabel.AssociatedControlID = "txtWidthRight" + title;
+                        widthRightLabel.CssClass = "labelFormatting";
+
+                        TextBox widthRightTextbox = new TextBox();
+                        widthRightTextbox.ID = "txtWidthRight" + title;
+                        widthRightTextbox.CssClass = "txtField txtInput";
+
+                        RoofOptions.Controls.Add(widthRightLabel);
+                        RoofOptions.Controls.Add(widthRightTextbox);
+
+                        RoofOptions.Controls.Add(new LiteralControl("</li>"));
+
+                        RoofOptions.Controls.Add(new LiteralControl("<li>"));
+
+                        Label heightRightLabel = new Label();
+                        heightRightLabel.ID = "lblHeightRight" + title;
+                        heightRightLabel.Text = "Height Right: ";
+                        heightRightLabel.AssociatedControlID = "txtHeightRight" + title;
+                        heightRightLabel.CssClass = "labelFormatting";
+
+                        TextBox heightRightTextbox = new TextBox();
+                        heightRightTextbox.ID = "txtHeightRight" + title;
+                        heightRightTextbox.CssClass = "txtField txtInput";
+
+                        RoofOptions.Controls.Add(heightRightLabel);
+                        RoofOptions.Controls.Add(heightRightTextbox);
+
+                        RoofOptions.Controls.Add(new LiteralControl("</li>"));
+
+                        RoofOptions.Controls.Add(new LiteralControl("<li>"));
+
+                        Label soffitLabel = new Label();
+                        soffitLabel.ID = "lblSoffit" + title;
+                        soffitLabel.Text = "Soffit: ";
+                        soffitLabel.AssociatedControlID = "txtSoffit" + title;
+                        soffitLabel.CssClass = "labelFormatting";
+
+                        TextBox soffitTextbox = new TextBox();
+                        soffitTextbox.ID = "txtSoffit" + title;
+                        soffitTextbox.CssClass = "txtField txtInput";
+
+                        RoofOptions.Controls.Add(soffitLabel);
+                        RoofOptions.Controls.Add(soffitTextbox);
+
+                        RoofOptions.Controls.Add(new LiteralControl("</li>"));
+
+                    }
+                    #endregion
 
                     //New instance of a table for every roof type
                     Table tblRoofDetails = new Table();
@@ -121,6 +284,7 @@ namespace SunspaceDealerDesktop
                     DropDownList roofPanelThicknessDDL = new DropDownList();
                     roofPanelThicknessDDL.ID = "ddlRoofPanelThickness" + title + radioTitle;
 
+                    #region Alum. Skin or O.S.B. options
                     if (radioTitle == "Alum. Skin or O.S.B.") {
                         for (int i = 0; i < Constants.ROOF_TRADITIONAL_THICKNESSES.Count(); i++) { 
                             roofPanelThicknessDDL.Items.Add(new ListItem(Constants.ROOF_TRADITIONAL_THICKNESSES[i], Constants.ROOF_TRADITIONAL_THICKNESSES[i]));
@@ -137,11 +301,6 @@ namespace SunspaceDealerDesktop
                         DropDownList roofStripeColourDDL = new DropDownList();
                         roofStripeColourDDL.ID = "ddlRoofStripeColour" + title + radioTitle;
 
-                        for (int i = 0; i < Constants.ROOF_STRIPE_COLOURS.Count(); i++)
-                        {
-                            roofStripeColourDDL.Items.Add(new ListItem(Constants.ROOF_STRIPE_COLOURS[i], Constants.ROOF_STRIPE_COLOURS[i]));
-                        }
-
                         roofStripeColourLBLCell.Controls.Add(roofStripeColourLBL);
 
                         roofStripeColourDDLCell.Controls.Add(roofStripeColourDDL);
@@ -149,19 +308,82 @@ namespace SunspaceDealerDesktop
                         tblRoofDetails.Rows.Add(roofStripeColourRow);
 
                         roofStripeColourRow.Cells.Add(roofStripeColourLBLCell);
-                        
+
                         roofStripeColourRow.Cells.Add(roofStripeColourDDLCell);
+
+                        for (int i = 0; i < Constants.ROOF_STRIPE_COLOURS.Count(); i++)
+                        {
+                            roofStripeColourDDL.Items.Add(new ListItem(Constants.ROOF_STRIPE_COLOURS[i], Constants.ROOF_STRIPE_COLOURS[i]));
+                        }
+
                     }
+                    #endregion
+                    #region Acrylic T-Bar System options
                     else if (radioTitle == "Acrylic T-Bar System"){
+
+                        TableRow roofAcrylicColourRow = new TableRow();
+                        TableCell roofAcrylicColourLBLCell = new TableCell();
+                        TableCell roofAcrylicColourDDLCell = new TableCell();
+
+                        Label roofAcrylicColourLBL = new Label();
+                        roofAcrylicColourLBL.ID = "lblRoofAcrylicColour" + title + radioTitle;
+                        roofAcrylicColourLBL.Text = "Acrylic Colour: ";
+
+                        DropDownList roofAcrylicColourDDL = new DropDownList();
+                        roofAcrylicColourDDL.ID = "ddlRoofAcrylicColour" + title + radioTitle;
+
+                        for (int i = 0; i < Constants.ROOF_ACRYLIC_COLOURS.Count(); i++)
+                        {
+                            roofAcrylicColourDDL.Items.Add(new ListItem(Constants.ROOF_ACRYLIC_COLOURS[i], Constants.ROOF_ACRYLIC_COLOURS[i]));
+                        }
+
+                        roofAcrylicColourLBLCell.Controls.Add(roofAcrylicColourLBL);
+
+                        roofAcrylicColourDDLCell.Controls.Add(roofAcrylicColourDDL);
+
+                        tblRoofDetails.Rows.Add(roofAcrylicColourRow);
+
+                        roofAcrylicColourRow.Cells.Add(roofAcrylicColourLBLCell);
+
+                        roofAcrylicColourRow.Cells.Add(roofAcrylicColourDDLCell);
+
                         for (int i = 0; i < Constants.ROOF_ACRYLIC_THICKNESSES.Count(); i++) { 
                             roofPanelThicknessDDL.Items.Add(new ListItem(Constants.ROOF_ACRYLIC_THICKNESSES[i], Constants.ROOF_ACRYLIC_THICKNESSES[i]));
                         }
                     }
-                    else{
+                    #endregion
+                    #region Thermadeck Sytem options
+                    else
+                    {
+
+                        TableRow roofBarrierRow = new TableRow();
+                        TableCell roofBarrierCHKCell = new TableCell();
+
+                        CheckBox roofBarrierCHK = new CheckBox();
+                        roofBarrierCHK.ID = "chkRoofBarrier" + title + radioTitle;
+                        Label roofBarrierLBLCheck = new Label();
+                        roofBarrierLBLCheck.ID = "lblBarrierCheck" + title + radioTitle;
+                        roofBarrierLBLCheck.AssociatedControlID = "chkRoofBarrier" + title + radioTitle;
+                        Label roofBarrierLBL = new Label();
+                        roofBarrierLBL.ID = "lblBarrier" + title + radioTitle;
+                        roofBarrierLBL.AssociatedControlID = "chkRoofBarrier" + title + radioTitle;
+                        roofBarrierLBL.Text = "Metal Vapour Barrier";
+                        
+                        roofBarrierCHKCell.Controls.Add(roofBarrierCHK);
+
+                        roofBarrierCHKCell.Controls.Add(roofBarrierLBLCheck);
+
+                        roofBarrierCHKCell.Controls.Add(roofBarrierLBL);
+
+                        tblRoofDetails.Rows.Add(roofBarrierRow);
+
+                        roofBarrierRow.Cells.Add(roofBarrierCHKCell);
+
                         for (int i = 0; i < Constants.ROOF_THERMADECK_THICKNESSES.Count(); i++) { 
                             roofPanelThicknessDDL.Items.Add(new ListItem(Constants.ROOF_THERMADECK_THICKNESSES[i], Constants.ROOF_THERMADECK_THICKNESSES[i]));
                         }
                     }
+                    #endregion
 
                     roofPanelThicknessLBLCell.Controls.Add(roofPanelThicknessLBL);
 
