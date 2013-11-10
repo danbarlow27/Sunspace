@@ -22,7 +22,6 @@
                 //Set display style of respective row to "inherit"
                 document.getElementById('MainContent_rowWindowCustom' + dimension + type).style.display = 'inherit';
             }
-                //Else, perform block
             else {
                 //Set display style of respective row to "none"
                 document.getElementById('MainContent_rowWindowCustom' + dimension + type).style.display = 'none';
@@ -51,7 +50,7 @@
             if (type === "Vinyl") {
 
                 //Get value of window style drop down
-                var windowVentsDDL = document.getElementById('MainContent_ddlWindowNumberOfVents' + type).options[document.getElementById('MainContent_ddlWindowNumberOfVents' + type).selectedIndex].value;
+                var windowVentsDDL = document.getElementById('MainContent_ddlWindowV4TNumberOfVents' + type).options[document.getElementById('MainContent_ddlWindowV4TNumberOfVents' + type).selectedIndex].value;
                 var windowTintsDDL = document.getElementById('MainContent_ddlWindowTint' + type).options[document.getElementById('MainContent_ddlWindowTint' + type).selectedIndex].value;
                 var vinylRows = (windowVentsDDL == 12) ? 4 :
                                 (windowVentsDDL == 9) ? 3 :
@@ -65,23 +64,54 @@
                     windowStyleDDL === "Horizontal 2 Track" || 
                     windowStyleDDL === "Horizontal 3 Track" || 
                     windowStyleDDL === "Horizontal 4 Track") {
-                    document.getElementById('MainContent_rowWindowTint' + type).style.display = 'inherit';
-                    document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'inherit';
                     
+                    document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'inherit';
+                    document.getElementById('MainContent_rowWindowLeftHeight' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowRightHeight' + type).style.display = 'none';
 
                     if (windowStyleDDL === "Vertical 4 Track") {
                         document.getElementById('MainContent_rowWindowInsideMount' + type).style.display = 'inherit';
                         document.getElementById('MainContent_rowWindowOutsideMount' + type).style.display = 'inherit';
                         document.getElementById('MainContent_cellWindowUnevenVents' + type).style.display = 'inherit';
                         document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'inherit';
-                        document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'inherit';
+                        document.getElementById('MainContent_rowWindowV4TNumberOfVents' + type).style.display = 'inherit';
+                        document.getElementById('MainContent_rowWindowH4TNumberOfVents' + type).style.display = 'none';
+                        document.getElementById('MainContent_rowWindowTint' + type).style.display = 'inherit';
+                        document.getElementById('MainContent_rowWindowTintNoMixed' + type).style.display = 'none';
 
-                        windowVentsDDL = document.getElementById('MainContent_ddlWindowNumberOfVents' + type).options[document.getElementById('MainContent_ddlWindowNumberOfVents' + type).selectedIndex].value;
+                        windowVentsDDL = document.getElementById('MainContent_ddlWindowV4TNumberOfVents' + type).options[document.getElementById('MainContent_ddlWindowV4TNumberOfVents' + type).selectedIndex].value;
                         vinylRows = (windowVentsDDL == 12) ? 4 :
                                 (windowVentsDDL == 9) ? 3 :
                                 (windowVentsDDL == 8) ? 4 :
                                 (windowVentsDDL == 6) ? 3 :
                                 (windowVentsDDL == 4) ? 4 : 3;
+
+
+                        if (tempVents != windowVentsDDL) {
+                            tempVents = windowVentsDDL;
+                            for (var i = 0; i < 4; i++) {
+                                document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
+                            }
+                            for (var i = 0; i < vinylRows; i++) {
+                                document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'inherit';
+                            }
+                        }
+
+                        if (windowTintsDDL == "Mixed") {
+                            for (var i = 0; i < 4; i++) {
+                                document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
+                            }
+                            for (var i = 0; i < vinylRows; i++) {
+                                document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'inherit';
+                            }
+                        }
+                        else {
+                            for (var i = 0; i < 4; i++) {
+                                document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
+                            }
+                        }
+
+
 
                         if (document.getElementById('MainContent_radWindowOutsideMount' + type).checked) {
                             document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'inherit';
@@ -93,13 +123,28 @@
 
                         if (document.getElementById('MainContent_chkWindowUnevenVents' + type).checked) {
 
-                            document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'inherit';
-                            document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'inherit';
+                            document.getElementById('MainContent_rowWindowAsIfHeight' + type).style.display = 'inherit';
+                            document.getElementById('MainContent_rowWindowTopBottomBothRad' + type).style.display = 'inherit';
 
-                            var sizeOfEachVent = document.getElementById('MainContent_txtWindowHeightVinyl').value / vinylRows;
 
-                            document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = sizeOfEachVent;
-                            document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = sizeOfEachVent;
+                            if (document.getElementById('MainContent_radWindowBothRad' + type).checked) {
+
+                                var sizeOfEachVent = document.getElementById('MainContent_txtWindowAsIfHeight' + type).value / vinylRows;
+
+                                document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = sizeOfEachVent;
+                                document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = sizeOfEachVent;
+
+                                document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'inherit';
+                                document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'inherit';
+
+                            }
+                            else {
+                                document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = '';
+                                document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
+
+                                document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'none';
+                                document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
+                            }
 
                             /*
                             if (document.getElementById('MainContent_radWindowUnevenVentsDone' + type).checked) {
@@ -123,54 +168,71 @@
                             document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = '';
                             document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
                             document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
+                            document.getElementById('MainContent_rowWindowAsIfHeight' + type).style.display = 'none';
+                            document.getElementById('MainContent_rowWindowTopBottomBothRad' + type).style.display = 'none';
                         }
                     }
                     else if (windowStyleDDL === "Horizontal 2 Track" ||
-                             windowStyleDDL === "Horizontal 3 Track" ||
                              windowStyleDDL === "Horizontal 4 Track") {
                         document.getElementById('MainContent_rowWindowInsideMount' + type).style.display = 'none';
                         document.getElementById('MainContent_rowWindowOutsideMount' + type).style.display = 'none';
                         document.getElementById('MainContent_cellWindowUnevenVents' + type).style.display = 'none';
                         document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'inherit';
-                        document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'none';
+                        document.getElementById('MainContent_rowWindowV4TNumberOfVents' + type).style.display = 'none';
                         document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'inherit';
+                        document.getElementById('MainContent_rowWindowTint' + type).style.display = 'none';
+                        document.getElementById('MainContent_rowWindowTintNoMixed' + type).style.display = 'inherit';
+                        document.getElementById('MainContent_rowWindowTopBottomBothRad' + type).style.display = 'none';
+                        document.getElementById('MainContent_rowWindowAsIfHeight' + type).style.display = 'none';
+                        document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = '';
+                        document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
+                        document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'none';
+                        document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
 
-                        windowVentsDDL = vinylRows = (windowStyleDDL === "Horizontal 2 Track") ? 2 :
-                                                     (windowStyleDDL === "Horizontal 3 Track") ? 3 : 4;
+                        if (windowStyleDDL === "Horizontal 2 Track") {
+                            windowVentsDDL = vinylRows = 2;
+                            document.getElementById('MainContent_rowWindowH4TNumberOfVents' + type).style.display = 'none';
+                        }  
+                        else if (windowStyleDDL === "Horizontal 4 Track") {
+                            document.getElementById('MainContent_rowWindowH4TNumberOfVents' + type).style.display = 'inherit';
+                            windowVentsDDL = vinylRows = document.getElementById('MainContent_ddlWindowH4TNumberOfVents' + type).options[document.getElementById('MainContent_ddlWindowH4TNumberOfVents' + type).selectedIndex].value;
+                        }
+
+                        for (var i = 0; i < 4; i++) 
+                            document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
+
                     }
                     else {
                         document.getElementById('MainContent_rowWindowInsideMount' + type).style.display = 'none';
                         document.getElementById('MainContent_rowWindowOutsideMount' + type).style.display = 'none';
                         document.getElementById('MainContent_cellWindowUnevenVents' + type).style.display = 'none';
                         document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'none';
-                        document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'none';
-                    }
-
-                    if (tempVents != windowVentsDDL) {
-                        tempVents = windowVentsDDL;
-                        for (var i = 0; i < 4; i++) {
-                            document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
-                        }
-                        for (var i = 0; i < vinylRows; i++) {
-                            document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'inherit';
-                        }
-                    }
-
-                    if (windowTintsDDL == "Mixed") {
-                        for (var i = 0; i < 4; i++) {
-                            document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
-                        }
-                        for (var i = 0; i < vinylRows; i++) {
-                            document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'inherit';
-                        }
-                    }
-                    else {
-                        for (var i = 0; i < 4; i++) {
-                            document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
-                        }
+                        document.getElementById('MainContent_rowWindowV4TNumberOfVents' + type).style.display = 'none';
+                        document.getElementById('MainContent_rowWindowH4TNumberOfVents' + type).style.display = 'none';
+                        document.getElementById('MainContent_rowWindowAsIfHeight' + type).style.display = 'none';
+                        document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = '';
+                        document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
+                        document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'none';
+                        document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
                     }
                 }
                 else if (windowStyleDDL == 'Vinyl Trapezoid' || windowStyleDDL == 'Vinyl Fixed Lite') {
+
+                    for (var i = 0; i < 4; i++)
+                        document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
+
+                    document.getElementById('MainContent_rowWindowTint' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowTintNoMixed' + type).style.display = 'inherit';
+                    document.getElementById('MainContent_rowWindowTopBottomBothRad' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowAsIfHeight' + type).style.display = 'none';
+                    document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = '';
+                    document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
+                    document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'inherit';
+                    document.getElementById('MainContent_rowWindowLeftHeight' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowRightHeight' + type).style.display = 'none';
+
 
                     if (windowStyleDDL == 'Vinyl Trapezoid') {
                         document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'none';
@@ -193,7 +255,8 @@
                     document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
                     document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'none';
                     document.getElementById('MainContent_rowWindowTint' + type).style.display = 'none';
-                    document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowV4TNumberOfVents' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowH4TNumberOfVents' + type).style.display = 'none';
                 }
                     //else, perform block
                 else {
@@ -205,9 +268,13 @@
                     document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
                     document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
                     document.getElementById('MainContent_rowWindowTint' + type).style.display = 'none';
-                    document.getElementById('MainContent_rowWindowNumberOfVents' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowV4TNumberOfVents' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowH4TNumberOfVents' + type).style.display = 'none';
                     document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'none';
                     document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowTintNoMixed' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowTopBottomBothRad' + type).style.display = 'none';
+                    document.getElementById('MainContent_rowWindowAsIfHeight' + type).style.display = 'none';
                 }
             }
             else if (type === "Glass") {
@@ -243,7 +310,7 @@
             var windowTitle = document.getElementById("MainContent_rowWindowTitle" + type);
             var windowStyleTable = document.getElementById("MainContent_rowWindowStyle" + type);
             var windowTint = document.getElementById("MainContent_rowWindowTint" + type);
-            var windowNumberOfVents = document.getElementById("MainContent_rowWindowNumberOfVents" + type);
+            //var windowNumberOfVents = document.getElementById("MainContent_rowWindowNumberOfVents" + type);
             var windowColour = document.getElementById("MainContent_rowWindowColour" + type);
             var windowHeight = document.getElementById("MainContent_rowWindowHeight" + type);
             var windowWidth = document.getElementById("MainContent_rowWindowWidth" + type);

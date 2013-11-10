@@ -103,7 +103,7 @@ namespace SunspaceDealerDesktop
 
                 Label windowTitleLBL = new Label();
                 windowTitleLBL.ID = "lblWindowTitle" + title;
-                windowTitleLBL.Text = "Select Window Details:";
+                windowTitleLBL.Text = "Select Window Details";
                 windowTitleLBL.Attributes.Add("style", "font-weight:bold;");
 
                 windowTitleLBLCell.Controls.Add(windowTitleLBL);
@@ -128,7 +128,7 @@ namespace SunspaceDealerDesktop
 
                 Label windowSpreaderBarLBL = new Label();
                 windowSpreaderBarLBL.ID = "lblWindowSpreaderBarRad" + title;
-                windowSpreaderBarLBL.Text = " Spreader Bar";
+                windowSpreaderBarLBL.Text = " Spreader Bar:";
 
                 CheckBox windowSpreaderBarCHK = new CheckBox();
                 windowSpreaderBarCHK.ID = "chkWindowSpreaderBar" + title;
@@ -152,7 +152,7 @@ namespace SunspaceDealerDesktop
 
                 Label windowStyleLBL = new Label();
                 windowStyleLBL.ID = "lblWindowStyle" + title;
-                windowStyleLBL.Text = "Style";
+                windowStyleLBL.Text = "Style:";
 
                 DropDownList windowStyleDDL = new DropDownList();
                 windowStyleDDL.ID = "ddlWindowStyle" + title;
@@ -164,14 +164,12 @@ namespace SunspaceDealerDesktop
 
                     ListItem v4t = new ListItem("Vertical 4 Track", "Vertical 4 Track");
                     ListItem h2t = new ListItem("Horizontal 2 Track", "Horizontal 2 Track");
-                    ListItem h3t = new ListItem("Horizontal 3 Track", "Horizontal 3 Track");
                     ListItem h4t = new ListItem("Horizontal 4 Track", "Horizontal 4 Track");
                     ListItem fixedLite = new ListItem("Vinyl Fixed Lite", "Vinyl Fixed Lite");
                     ListItem trap = new ListItem("Vinyl Trapezoid", "Vinyl Trapezoid");
 
                     windowStyleDDL.Items.Add(v4t);
                     windowStyleDDL.Items.Add(h2t);
-                    windowStyleDDL.Items.Add(h3t);
                     windowStyleDDL.Items.Add(h4t);
                     windowStyleDDL.Items.Add(fixedLite);
                     windowStyleDDL.Items.Add(trap);
@@ -261,6 +259,53 @@ namespace SunspaceDealerDesktop
                 windowHeightRow.Cells.Add(windowHeightDDLCell);
 
                 #endregion
+
+
+                #region Table:Sixth Row Window "As-if" Height (tblWindowDetails)
+
+                TableRow windowAsIfHeightRow = new TableRow();
+                windowAsIfHeightRow.ID = "rowWindowAsIfHeight" + title;
+                windowAsIfHeightRow.Attributes.Add("style", "display:none;");
+                TableCell windowAsIfHeightLBLCell = new TableCell();
+                TableCell windowAsIfHeightTXTCell = new TableCell();
+                TableCell windowAsIfHeightDDLCell = new TableCell();
+
+                Label windowAsIfHeightLBL = new Label();
+                windowAsIfHeightLBL.ID = "lblWindowAsIfHeight" + title;
+                windowAsIfHeightLBL.Text = "Build As If:";
+
+                TextBox windowAsIfHeightTXT = new TextBox();
+                windowAsIfHeightTXT.ID = "txtWindowAsIfHeight" + title;
+                windowAsIfHeightTXT.CssClass = "txtField txtWindowInput";
+                windowAsIfHeightTXT.Attributes.Add("maxlength", "3");
+                windowAsIfHeightTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+
+                DropDownList inchAsIfHeight = new DropDownList();
+                inchAsIfHeight.ID = "ddlWindowAsIfHeight" + title;
+                inchAsIfHeight.Items.Add(lst0);
+                inchAsIfHeight.Items.Add(lst18);
+                inchAsIfHeight.Items.Add(lst14);
+                inchAsIfHeight.Items.Add(lst38);
+                inchAsIfHeight.Items.Add(lst12);
+                inchAsIfHeight.Items.Add(lst58);
+                inchAsIfHeight.Items.Add(lst34);
+                inchAsIfHeight.Items.Add(lst78);
+
+                windowAsIfHeightLBL.AssociatedControlID = "txtWindowAsIfHeight" + title;
+
+
+                windowAsIfHeightLBLCell.Controls.Add(windowAsIfHeightLBL);
+                windowAsIfHeightTXTCell.Controls.Add(windowAsIfHeightTXT);
+                windowAsIfHeightDDLCell.Controls.Add(inchAsIfHeight);
+
+                tblWindowDetails.Rows.Add(windowAsIfHeightRow);
+
+                windowAsIfHeightRow.Cells.Add(windowAsIfHeightLBLCell);
+                windowAsIfHeightRow.Cells.Add(windowAsIfHeightTXTCell);
+                windowAsIfHeightRow.Cells.Add(windowAsIfHeightDDLCell);
+
+                #endregion
+
 
                 #region Table:Sixth Row Trapezoid Window Left Height (tblWindowDetails)
 
@@ -402,20 +447,19 @@ namespace SunspaceDealerDesktop
 
                 #region Table:Twelfth Row Window V4T Number Of Vents (tblWindowDetails)
 
-                TableRow windowNumberOfVentsRow = new TableRow();
-                windowNumberOfVentsRow.ID = "rowWindowNumberOfVents" + title;
-                windowNumberOfVentsRow.Attributes.Add("style", "display:none;");
-                TableCell windowNumberOfVentsLBLCell = new TableCell();
-                TableCell windowNumberOfVentsDDLCell = new TableCell();
+                TableRow windowV4TNumberOfVentsRow = new TableRow();
+                windowV4TNumberOfVentsRow.ID = "rowWindowV4TNumberOfVents" + title;
+                windowV4TNumberOfVentsRow.Attributes.Add("style", "display:none;");
+                TableCell windowV4TNumberOfVentsLBLCell = new TableCell();
+                TableCell windowV4TNumberOfVentsDDLCell = new TableCell();
 
-                Label windowNumberOfVentsLBL = new Label();
-                windowNumberOfVentsLBL.ID = "lblNumberOfVents" + title;
-                windowNumberOfVentsLBL.Text = "V4T Number Of Vents:";
+                Label windowV4TNumberOfVentsLBL = new Label();
+                windowV4TNumberOfVentsLBL.ID = "lblV4TNumberOfVents" + title;
+                windowV4TNumberOfVentsLBL.Text = "Number Of Vents:";
 
-                DropDownList windowNumberOfVentsDDL = new DropDownList();
-                windowNumberOfVentsDDL.ID = "ddlWindowNumberOfVents" + title;
-                windowNumberOfVentsDDL.Attributes.Add("onchange", "windowStyle('" + title + "');");
-                //ListItem V2 = new ListItem("2", "2");
+                DropDownList windowV4TNumberOfVentsDDL = new DropDownList();
+                windowV4TNumberOfVentsDDL.ID = "ddlWindowV4TNumberOfVents" + title;
+                windowV4TNumberOfVentsDDL.Attributes.Add("onchange", "windowStyle('" + title + "');");
                 ListItem V3 = new ListItem("3", "3");
                 ListItem V4 = new ListItem("4", "4");
                 ListItem V6S = new ListItem("6 Stereo", "6");
@@ -423,27 +467,30 @@ namespace SunspaceDealerDesktop
                 ListItem V9S = new ListItem("9 Stereo", "9");
                 ListItem V12S = new ListItem("12 Stereo", "12");
 
-                windowNumberOfVentsDDL.Items.Add(V3);
-                windowNumberOfVentsDDL.Items.Add(V4);
-                windowNumberOfVentsDDL.Items.Add(V6S);
-                windowNumberOfVentsDDL.Items.Add(V8S);
-                windowNumberOfVentsDDL.Items.Add(V9S);
-                windowNumberOfVentsDDL.Items.Add(V12S);
+                windowV4TNumberOfVentsDDL.Items.Add(V3);
+                windowV4TNumberOfVentsDDL.Items.Add(V4);
+                windowV4TNumberOfVentsDDL.Items.Add(V6S);
+                windowV4TNumberOfVentsDDL.Items.Add(V8S);
+                windowV4TNumberOfVentsDDL.Items.Add(V9S);
+                windowV4TNumberOfVentsDDL.Items.Add(V12S);
 
-                windowNumberOfVentsLBL.AssociatedControlID = "ddlWindowNumberOfVents" + title;
+                windowV4TNumberOfVentsLBL.AssociatedControlID = "ddlWindowV4TNumberOfVents" + title;
 
-                windowNumberOfVentsLBLCell.Controls.Add(windowNumberOfVentsLBL);
-                windowNumberOfVentsDDLCell.Controls.Add(windowNumberOfVentsDDL);
+                windowV4TNumberOfVentsLBLCell.Controls.Add(windowV4TNumberOfVentsLBL);
+                windowV4TNumberOfVentsDDLCell.Controls.Add(windowV4TNumberOfVentsDDL);
 
-                windowNumberOfVentsRow.Cells.Add(windowNumberOfVentsLBLCell);
-                windowNumberOfVentsRow.Cells.Add(windowNumberOfVentsDDLCell);
+                windowV4TNumberOfVentsRow.Cells.Add(windowV4TNumberOfVentsLBLCell);
+                windowV4TNumberOfVentsRow.Cells.Add(windowV4TNumberOfVentsDDLCell);
+
+                #endregion
+
 
                 #region Uneven Vents Checkbox
 
                 TableCell windowUnevenVentsCHKCell = new TableCell();
                 windowUnevenVentsCHKCell.Attributes.Add("style", "display:none;");
                 windowUnevenVentsCHKCell.ID = "cellWindowUnevenVents" + title;
-                
+
                 Label windowUnevenVentsLBLChk = new Label();
                 windowUnevenVentsLBLChk.ID = "lblWindowUnevenVents" + title;
 
@@ -463,11 +510,135 @@ namespace SunspaceDealerDesktop
                 windowUnevenVentsCHKCell.Controls.Add(windowUnevenVentsLBLChk);
                 windowUnevenVentsCHKCell.Controls.Add(windowUnevenVentsLBL);
 
-                windowNumberOfVentsRow.Cells.Add(windowUnevenVentsCHKCell);
+                windowV4TNumberOfVentsRow.Cells.Add(windowUnevenVentsCHKCell);
+
+
+                tblWindowDetails.Rows.Add(windowV4TNumberOfVentsRow);
 
                 #endregion
 
-                tblWindowDetails.Rows.Add(windowNumberOfVentsRow);
+                
+                #region H4T number of vents
+
+                TableRow windowH4TNumberOfVentsRow = new TableRow();
+                windowH4TNumberOfVentsRow.ID = "rowWindowH4TNumberOfVents" + title;
+                windowH4TNumberOfVentsRow.Attributes.Add("style", "display:none;");
+                TableCell windowH4TNumberOfVentsLBLCell = new TableCell();
+                TableCell windowH4TNumberOfVentsDDLCell = new TableCell();
+
+                Label windowH4TNumberOfVentsLBL = new Label();
+                windowH4TNumberOfVentsLBL.ID = "lblH4TNumberOfVents" + title;
+                windowH4TNumberOfVentsLBL.Text = "Number Of Vents:";
+
+                DropDownList windowH4TNumberOfVentsDDL = new DropDownList();
+                windowH4TNumberOfVentsDDL.ID = "ddlWindowH4TNumberOfVents" + title;
+                windowH4TNumberOfVentsDDL.Attributes.Add("onchange", "windowStyle('" + title + "');");
+                
+                windowH4TNumberOfVentsDDL.Items.Add(V3);
+                windowH4TNumberOfVentsDDL.Items.Add(V4);
+                
+                windowH4TNumberOfVentsLBL.AssociatedControlID = "ddlWindowH4TNumberOfVents" + title;
+
+                windowH4TNumberOfVentsLBLCell.Controls.Add(windowH4TNumberOfVentsLBL);
+                windowH4TNumberOfVentsDDLCell.Controls.Add(windowH4TNumberOfVentsDDL);
+
+                windowH4TNumberOfVentsRow.Cells.Add(windowH4TNumberOfVentsLBLCell);
+                windowH4TNumberOfVentsRow.Cells.Add(windowH4TNumberOfVentsDDLCell);
+
+                tblWindowDetails.Rows.Add(windowH4TNumberOfVentsRow);
+
+                #endregion
+
+                #region Table:Eight Row Window Uneven vent top bottom both rad (tblWindowDetails)
+
+                TableRow windowTopBottomBothRadRow = new TableRow();
+                windowTopBottomBothRadRow.ID = "rowWindowTopBottomBothRad" + title;
+                windowTopBottomBothRadRow.Attributes.Add("style", "display:none;");
+                                
+                #region rad top
+
+                TableCell windowTopRadCell = new TableCell();
+                
+                Label windowTopRadLBLRad = new Label();
+                windowTopRadLBLRad.ID = "lblWindowTopRad" + title;
+
+                Label windowTopRadLBL = new Label();
+                windowTopRadLBL.ID = "lblWindowTopRadRad" + title;
+                windowTopRadLBL.Text = "Top";
+
+                RadioButton windowTopRadRAD = new RadioButton();
+                windowTopRadRAD.ID = "radWindowTopRad" + title;
+                windowTopRadRAD.Attributes.Add("value", "top");
+                windowTopRadRAD.GroupName = "Uneven" + title;
+                windowTopRadRAD.Attributes.Add("onclick", "windowStyle('" + title + "');");
+
+                windowTopRadLBLRad.AssociatedControlID = "radWindowTopRad" + title;
+                windowTopRadLBL.AssociatedControlID = "radWindowTopRad" + title;
+                
+                windowTopRadCell.Controls.Add(windowTopRadRAD);
+                windowTopRadCell.Controls.Add(windowTopRadLBLRad);
+                windowTopRadCell.Controls.Add(windowTopRadLBL);
+
+                #endregion
+
+                #region rad bottom
+
+                TableCell windowBottomRadCell = new TableCell();
+
+                Label windowBottomRadLBLRad = new Label();
+                windowBottomRadLBLRad.ID = "lblWindowBottomRad" + title;
+
+                Label windowBottomRadLBL = new Label();
+                windowBottomRadLBL.ID = "lblWindowBottomRadRad" + title;
+                windowBottomRadLBL.Text = "Bottom";
+
+                RadioButton windowBottomRadRAD = new RadioButton();
+                windowBottomRadRAD.ID = "radWindowBottomRad" + title;
+                windowBottomRadRAD.Attributes.Add("value", "bottom");
+                windowBottomRadRAD.GroupName = "Uneven" + title;
+                windowBottomRadRAD.Attributes.Add("onclick", "windowStyle('" + title + "');");
+                windowBottomRadRAD.Checked = true;
+
+                windowBottomRadLBLRad.AssociatedControlID = "radWindowBottomRad" + title;
+                windowBottomRadLBL.AssociatedControlID = "radWindowBottomRad" + title;
+
+                windowBottomRadCell.Controls.Add(windowBottomRadRAD);
+                windowBottomRadCell.Controls.Add(windowBottomRadLBLRad);
+                windowBottomRadCell.Controls.Add(windowBottomRadLBL);
+
+                #endregion
+
+                #region rad both
+
+                TableCell windowBothRadCell = new TableCell();
+
+                Label windowBothRadLBLRad = new Label();
+                windowBothRadLBLRad.ID = "lblWindowBothRad" + title;
+
+                Label windowBothRadLBL = new Label();
+                windowBothRadLBL.ID = "lblWindowBothRadRad" + title;
+                windowBothRadLBL.Text = "Both";
+
+                RadioButton windowBothRadRAD = new RadioButton();
+                windowBothRadRAD.ID = "radWindowBothRad" + title;
+                windowBothRadRAD.Attributes.Add("value", "both");
+                windowBothRadRAD.GroupName = "Uneven" + title;
+                windowBothRadRAD.Attributes.Add("onclick", "windowStyle('" + title + "');");
+
+                windowBothRadLBLRad.AssociatedControlID = "radWindowBothRad" + title;
+                windowBothRadLBL.AssociatedControlID = "radWindowBothRad" + title;
+
+                windowBothRadCell.Controls.Add(windowBothRadRAD);
+                windowBothRadCell.Controls.Add(windowBothRadLBLRad);
+                windowBothRadCell.Controls.Add(windowBothRadLBL);
+
+                #endregion
+
+                tblWindowDetails.Rows.Add(windowTopBottomBothRadRow);
+
+                windowTopBottomBothRadRow.Cells.Add(windowTopRadCell);
+                windowTopBottomBothRadRow.Cells.Add(windowBottomRadCell);
+                windowTopBottomBothRadRow.Cells.Add(windowBothRadCell);
 
                 #endregion
 
@@ -673,6 +844,40 @@ namespace SunspaceDealerDesktop
 
                 #endregion
 
+                #region Table:Sixteenth Row Window NOT V4T Vinyl Tint (tblWindowDetails)
+
+                TableRow windowTintNoMixedRow = new TableRow();
+                windowTintNoMixedRow.ID = "rowWindowTintNoMixed" + title;
+                windowTintNoMixedRow.Attributes.Add("style", "display:none;");
+                TableCell windowTintNoMixedLBLCell = new TableCell();
+                TableCell windowTintNoMixedDDLCell = new TableCell();
+
+                Label windowTintNoMixedLBL = new Label();
+                windowTintNoMixedLBL.ID = "lblWindowTintNoMixed" + title;
+                windowTintNoMixedLBL.Text = title + "Tint:";
+
+                DropDownList windowTintNoMixedDDL = new DropDownList();
+                windowTintNoMixedDDL.ID = "ddlWindowTintNoMixed" + title;
+                windowTintNoMixedDDL.Attributes.Add("onchange", "windowStyle('" + title + "');");
+
+                for (int j = 0; j < Constants.DOOR_V4T_VINYL_OPTIONS.Count() - 1; j++)
+                {
+                    windowTintNoMixedDDL.Items.Add(new ListItem(Constants.DOOR_V4T_VINYL_OPTIONS[j], Constants.DOOR_V4T_VINYL_OPTIONS[j]));
+                }
+                
+                //windowTintNoMixedDDL.Attributes.Add("onchange", "checkQuestion3()");
+                windowTintNoMixedLBL.AssociatedControlID = "ddlWindowTintNoMixed" + title;
+
+                windowTintNoMixedLBLCell.Controls.Add(windowTintNoMixedLBL);
+                windowTintNoMixedDDLCell.Controls.Add(windowTintNoMixedDDL);
+
+                tblWindowDetails.Rows.Add(windowTintNoMixedRow);
+
+                windowTintNoMixedRow.Cells.Add(windowTintNoMixedLBLCell);
+                windowTintNoMixedRow.Cells.Add(windowTintNoMixedDDLCell);
+
+                #endregion
+
                 #region Table:Third Row Color of Window (tblWindowDetails)
 
                 TableRow colourOfWindowRow = new TableRow();
@@ -794,7 +999,7 @@ namespace SunspaceDealerDesktop
 
                 Label windowScreenOptionsLBL = new Label();
                 windowScreenOptionsLBL.ID = "lblWindowScreenOptions" + title;
-                windowScreenOptionsLBL.Text = "Window Screen Option:";
+                windowScreenOptionsLBL.Text = "Screen:";
 
                 DropDownList windowScreenOptionsDDL = new DropDownList();
                 windowScreenOptionsDDL.ID = "ddlWindowScreenOptions" + title;
@@ -804,12 +1009,14 @@ namespace SunspaceDealerDesktop
                 ListItem betterVueInsect = new ListItem("Better Vue Insect Screen", "Better Vue Insect Screen");
                 ListItem solarInsect = new ListItem("Solar Insect Screening", "Solar Insect Screening");
                 ListItem tuff = new ListItem("Tuff Screen", "Tuff Screen");
+                ListItem noScreen = new ListItem("No Screen", "No Screen");
 
                 windowScreenOptionsDDL.Items.Add(standard);
                 windowScreenOptionsDDL.Items.Add(noSeeUms);
                 windowScreenOptionsDDL.Items.Add(betterVueInsect);
                 windowScreenOptionsDDL.Items.Add(solarInsect);
                 windowScreenOptionsDDL.Items.Add(tuff);
+                windowScreenOptionsDDL.Items.Add(noScreen);
 
                 //for (int j = 0; j < Constants.SCREEN_TYPES.Count(); j++)
                 //{
