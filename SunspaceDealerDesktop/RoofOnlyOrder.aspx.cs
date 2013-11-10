@@ -9,6 +9,8 @@ namespace SunspaceDealerDesktop
 {
     public partial class RoofOnlyOrder : System.Web.UI.Page
     {
+        List<Roof> roofsOrdered = new List<Roof>();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             #region Loop to display roof types as radio buttons
@@ -229,7 +231,7 @@ namespace SunspaceDealerDesktop
                     //Roof style radio button
                     RadioButton styleRadio = new RadioButton();
                     styleRadio.ID = "radStyle" + title + radioTitle; //Adding appropriate id to roof style radio button
-                    styleRadio.GroupName = "roofStyleRadios";         //Adding group name for all roof styles
+                    styleRadio.GroupName = "roofStyleRadios" + title;         //Adding group name for all roof styles
                     styleRadio.Attributes.Add("onclick", "styleRowsDisplayed('" + title + "')"); //On click event to display the proper fields/rows
 
                     //Roof style radio button label for clickable area
@@ -252,7 +254,6 @@ namespace SunspaceDealerDesktop
                     RoofOptions.Controls.Add(new LiteralControl("<li>"));
 
                     //Creating cells and controls for rows
-
                     #region Table:Default Row Title Current Roof (tblRoofDetails)
 
                     TableRow roofTitleRow = new TableRow();
@@ -446,6 +447,81 @@ namespace SunspaceDealerDesktop
             }
             #endregion
 
+            getRoofFromForm();
+        }
+
+        private Roof getRoofFromForm()
+        {
+            Roof aRoof = new Roof();
+            string roofType, roofStyle;
+
+            roofType = Request.Form["ctl00$MainContent$roofTypeRadios"];
+
+            if (roofType == "Studio")
+            {
+                aRoof.Type = roofType;
+                aRoof.Width = float.Parse(Request.Form["ctl00$MainContent$txtWidthStudio"]);
+                aRoof.Projection = float.Parse(Request.Form["ctl00$MainContent$txtHeightStudio"]);
+                //aRoof.Soffit = float.Parse(Request.Form["ctl00$MainContent$txtSoffitStudio"]);        DOESN'T EXIST IN ROOF.CS
+                
+                roofStyle = Request.Form["ctl00$MainContent$roofStyleRadiosStudio"];
+
+                if (roofStyle == "Alum. Skin or O.S.B.")
+                {
+                    aRoof.StripeColour = Request.Form["ctl00$MainContent$ddlRoofStripeColourStudioAlum. Skin or O.S.B."];
+                    aRoof.Thickness = float.Parse(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessStudioAlum. Skin or O.S.B."]);
+                }
+                else if (roofStyle == "Acrylic T-Bar System")
+                {
+                    //aRoof.AcrylicColour = Request.Form["ctl00$MainContent$ddlRoofAcrylicColourStudioAcrylic T-Bar System"];
+                    aRoof.Thickness = float.Parse(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessStudioAcrylic T-Bar System"]);
+                }
+                else
+                {
+                    //aRoof.MetalVapourBarrier = Request.Form["ctl00$MainContent$chkRoofBarrierStudioThermadeck System"];
+                    aRoof.Thickness = float.Parse(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessStudioThermadeck System"]);
+                }
+            }
+            else if (roofType == "Gable")
+            {
+                aRoof.Type = roofType;
+                aRoof.Width = float.Parse(Request.Form["ctl00$MainContent$txtWidthLeftGable"]);
+                aRoof.Projection = float.Parse(Request.Form["ctl00$MainContent$txtHeightLeftGable"]);
+                //aRoof.Gable = float.Parse(Request.Form["ctl00$MainContent$txtGableGable"]);               DOESN'T EXIST IN ROOF.CS
+                //aRoof.Width = float.Parse(Request.Form["ctl00$MainContent$txtWidthRightGable"]);          RIGHT SIDE
+                //aRoof.Projection = float.Parse(Request.Form["ctl00$MainContent$txtHeightRightGable"]);    RIGHT SIDE
+                //aRoof.Soffit = float.Parse(Request.Form["ctl00$MainContent$txtSoffitStudio"]);            DOESN'T EXIST IN ROOF.CS
+
+                roofStyle = Request.Form["ctl00$MainContent$roofStyleRadiosGable"];
+
+                if (roofStyle == "Alum. Skin or O.S.B.")
+                {
+                    aRoof.StripeColour = Request.Form["ctl00$MainContent$ddlRoofStripeColourGableAlum. Skin or O.S.B."];
+                    aRoof.Thickness = float.Parse(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessGableAlum. Skin or O.S.B."]);
+                }
+                else if (roofStyle == "Acrylic T-Bar System")
+                {
+                    //aRoof.AcrylicColour = Request.Form["ctl00$MainContent$ddlRoofAcrylicColourGableAcrylic T-Bar System"];    DOESN'T EXIST IN ROOF.CS
+                    aRoof.Thickness = float.Parse(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessGableAcrylic T-Bar System"]);
+                }
+                else
+                {
+                    //aRoof.MetalVapourBarrier = Request.Form["ctl00$MainContent$chkRoofBarrierGableThermadeck System"];    DOESN'T EXIST IN ROOF.CS
+                    aRoof.Thickness = float.Parse(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessGableThermadeck System"]);
+                }
+            }
+
+
+            return aRoof;
+        }
+
+        private void populateSideBar() {
+
+            lblRoofPager.Controls.Add(new LiteralControl("<ul class='toggleOptions'>"));
+
+
+
+            lblRoofPager.Controls.Add(new LiteralControl("</ul>"));
         }
     }
 }
