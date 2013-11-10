@@ -18,6 +18,7 @@
                 </h1>        
                               
                 <ul class="toggleOptions">
+                    <asp:PlaceHolder ID="RoofOptions" runat="server"></asp:PlaceHolder>
                 </ul>            
 
                 <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Done"/>

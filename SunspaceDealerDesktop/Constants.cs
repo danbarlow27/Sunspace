@@ -526,6 +526,7 @@ namespace SunspaceDealerDesktop
 
         #region Roofs
         public static string[] ROOF_TYPES = { "Studio", "Gable" };
+        public static string[] ROOF_STYLE = { "Alum. Skin or O.S.B.", "Acrylic T-Bar System", "Thermadeck System" };
         public static string[] ROOF_EXTERIOR_SKIN_TYPES = { "White Aluminum Stucco", "Driftwood Aluminum Stucco", "Bronze Aluminum Stucco",
                                                "White Cedar Aluminum Woodgrain", "White Cedar Forestex", "White Rigiwall Pebble",
                                                "Driftwood Rigiwall Pebble", "White Rigiwall Stucco", "Driftwood Rigiwall Stucco", "OSB"};
@@ -538,6 +539,9 @@ namespace SunspaceDealerDesktop
         public static string[] ROOF_TRADITIONAL_THICKNESSES = { "3", "4", "6" };
         public static string[] ROOF_THERMADECK_THICKNESSES = { "4.5", "6.5", "8.25" };
         public static string[] ROOF_ACRYLIC_THICKNESSES = { "1.5" };
+
+        public static string[] ROOF_STRIPE_COLOURS = { "No Stripe", "Country Blue", "Black", "Burgundy", "Hunter Green", "Purple", "Turquoise", "Slate Grey", "Beige", "Brown" };
+        public static string[] ROOF_ACRYLIC_COLOURS = { "Clear", "Bronze", "Solar Cool White", "Heat Stop Cool Blue" };
 
         public static string[] ROOF_EXTRUSION_TYPE = { "I-Beam", "I-Beam FP", "I-Beam OSB", "I-Beam OSB/OSB", "Pressure Cap", "Pressure Cap FP", "Pressure Cap OSB", "Pressure Cap OSB/OSB" };
         public const float ROOF_IBEAM_WIDTH = 0.5f;
