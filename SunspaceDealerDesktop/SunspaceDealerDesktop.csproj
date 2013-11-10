@@ -387,6 +387,7 @@
     <Compile Include="GenerateMods.aspx.designer.cs">
       <DependentUpon>GenerateMods.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GlassWindow.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -481,6 +482,7 @@
     <Compile Include="SavedProjects.aspx.designer.cs">
       <DependentUpon>SavedProjects.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ScreenWindow.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -524,6 +526,7 @@
     <Compile Include="TestNumMods.aspx.designer.cs">
       <DependentUpon>TestNumMods.aspx</DependentUpon>
     </Compile>
+    <Compile Include="V4TWindow.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -531,6 +534,7 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
+    <Compile Include="VinylWindow.cs" />
     <Compile Include="Wall.cs" />
     <Compile Include="Window.cs" />
     <Compile Include="WizardFloors.aspx.cs">
