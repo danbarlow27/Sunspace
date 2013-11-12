@@ -17,6 +17,24 @@ namespace SunspaceDealerDesktop
         protected ListItem lst58 = new ListItem("5/8", ".625");
         protected ListItem lst34 = new ListItem("3/4", ".75");
         protected ListItem lst78 = new ListItem("7/8", ".875");
+
+
+        protected ListItem lst116 = new ListItem("1/16", ".1667");
+        protected ListItem lst216 = new ListItem("1/8", ".125");
+        protected ListItem lst316 = new ListItem("3/16", ".1875");//
+        protected ListItem lst416 = new ListItem("1/4", ".25");
+        protected ListItem lst516 = new ListItem("5/16", ".3125");
+        protected ListItem lst616 = new ListItem("3/8", ".375");
+        protected ListItem lst716 = new ListItem("7/16", ".4375");
+        protected ListItem lst816 = new ListItem("1/2", ".5");
+        protected ListItem lst916 = new ListItem("9/16", ".5625");
+        protected ListItem lst1016 = new ListItem("5/8", ".625");//
+        protected ListItem lst1116 = new ListItem("11/16", ".6875");
+        protected ListItem lst1216 = new ListItem("3/4", ".75");
+        protected ListItem lst1316 = new ListItem("13/16", ".8125");
+        protected ListItem lst1416 = new ListItem("7/8", ".875");
+        protected ListItem lst1516 = new ListItem("15/16", ".9375");
+        
         List<Window> windowsOrdered = new List<Window>();
 
         protected void addMixedTintDropdowns(string title, Table tblWindowDetails)
@@ -100,18 +118,37 @@ namespace SunspaceDealerDesktop
                 windowTitleRow.ID = "rowWindowTitle" + title;
                 windowTitleRow.Attributes.Add("style", "display:none;");
                 TableCell windowTitleLBLCell = new TableCell();
+                TableCell windowDLOLBLCell = new TableCell();
+                windowDLOLBLCell.HorizontalAlign = HorizontalAlign.Center;
+                TableCell windowDeductionsLBLCell = new TableCell();
+                windowDeductionsLBLCell.HorizontalAlign = HorizontalAlign.Center;
 
                 Label windowTitleLBL = new Label();
                 windowTitleLBL.ID = "lblWindowTitle" + title;
                 windowTitleLBL.Text = "Select Window Details";
                 windowTitleLBL.Attributes.Add("style", "font-weight:bold;");
 
+                Label windowDLOLBL = new Label();
+                windowDLOLBL.ID = "lblWindowDLO" + title;
+                windowDLOLBL.Text = "DLO";
+                windowDLOLBL.ForeColor = System.Drawing.Color.Blue;
+                windowDLOLBL.Attributes.Add("onclick", "this.innerText = (this.innerText === 'DLO') ? 'Tip to Tip' : 'DLO';");
+              
+                Label windowDeductionsLBL = new Label();
+                windowDeductionsLBL.ID = "lblWindowDeductions" + title;
+                windowDeductionsLBL.Text = "No Deductions";
+                windowDeductionsLBL.ForeColor = System.Drawing.Color.Blue;
+                windowDeductionsLBL.Attributes.Add("onclick", "this.innerText = (this.innerText === 'No Deductions') ? 'Deduct 1/8\"' : (this.innerText === 'Deduct 1/8\"') ? 'Deduct 1/4\"' : (this.innerText === 'Deduct 1/4\"') ? 'Deduct 3/8\"' : (this.innerText === 'Deduct 3/8\"') ? 'Deduct 1/2\"' : 'No Deductions';");
+
                 windowTitleLBLCell.Controls.Add(windowTitleLBL);
+                windowDLOLBLCell.Controls.Add(windowDLOLBL);
+                windowDeductionsLBLCell.Controls.Add(windowDeductionsLBL);
 
                 tblWindowDetails.Rows.Add(windowTitleRow);
 
                 windowTitleRow.Cells.Add(windowTitleLBLCell);
-
+                windowTitleRow.Cells.Add(windowDLOLBLCell);
+                windowTitleRow.Cells.Add(windowDeductionsLBLCell);
                 #endregion
 
                 #region Table:Second Row Window Style (tblWindowDetails)
@@ -257,6 +294,8 @@ namespace SunspaceDealerDesktop
                 windowHeightRow.Cells.Add(windowHeightLBLCell);
                 windowHeightRow.Cells.Add(windowHeightTXTCell);
                 windowHeightRow.Cells.Add(windowHeightDDLCell);
+
+
 
                 #endregion
 
@@ -723,13 +762,22 @@ namespace SunspaceDealerDesktop
                 DropDownList inchTopVentDDL = new DropDownList();
                 inchTopVentDDL.ID = "ddlWindowTopVentHeight" + title;
                 inchTopVentDDL.Items.Add(lst0);
-                inchTopVentDDL.Items.Add(lst18);
-                inchTopVentDDL.Items.Add(lst14);
-                inchTopVentDDL.Items.Add(lst38);
-                inchTopVentDDL.Items.Add(lst12);
-                inchTopVentDDL.Items.Add(lst58);
-                inchTopVentDDL.Items.Add(lst34);
-                inchTopVentDDL.Items.Add(lst78);
+                inchTopVentDDL.Items.Add(lst116);
+                inchTopVentDDL.Items.Add(lst216);
+                inchTopVentDDL.Items.Add(lst316);
+                inchTopVentDDL.Items.Add(lst416);
+                inchTopVentDDL.Items.Add(lst516);
+                inchTopVentDDL.Items.Add(lst616);
+                inchTopVentDDL.Items.Add(lst716);
+                inchTopVentDDL.Items.Add(lst816);
+                inchTopVentDDL.Items.Add(lst916);
+                inchTopVentDDL.Items.Add(lst1016);
+                inchTopVentDDL.Items.Add(lst1116);
+                inchTopVentDDL.Items.Add(lst1216);
+                inchTopVentDDL.Items.Add(lst1316);
+                inchTopVentDDL.Items.Add(lst1416);
+                inchTopVentDDL.Items.Add(lst1516);
+ 
 
                 windowTopVentLBL.AssociatedControlID = "txtWindowTopVentHeight" + title;
 
@@ -770,13 +818,21 @@ namespace SunspaceDealerDesktop
                 DropDownList inchBottomVentDDL = new DropDownList();
                 inchBottomVentDDL.ID = "ddlWindowBottomVentHeight" + title;
                 inchBottomVentDDL.Items.Add(lst0);
-                inchBottomVentDDL.Items.Add(lst18);
-                inchBottomVentDDL.Items.Add(lst14);
-                inchBottomVentDDL.Items.Add(lst38);
-                inchBottomVentDDL.Items.Add(lst12);
-                inchBottomVentDDL.Items.Add(lst58);
-                inchBottomVentDDL.Items.Add(lst34);
-                inchBottomVentDDL.Items.Add(lst78);
+                inchBottomVentDDL.Items.Add(lst116);
+                inchBottomVentDDL.Items.Add(lst216);
+                inchBottomVentDDL.Items.Add(lst316);
+                inchBottomVentDDL.Items.Add(lst416);
+                inchBottomVentDDL.Items.Add(lst516);
+                inchBottomVentDDL.Items.Add(lst616);
+                inchBottomVentDDL.Items.Add(lst716);
+                inchBottomVentDDL.Items.Add(lst816);
+                inchBottomVentDDL.Items.Add(lst916);
+                inchBottomVentDDL.Items.Add(lst1016);
+                inchBottomVentDDL.Items.Add(lst1116);
+                inchBottomVentDDL.Items.Add(lst1216);
+                inchBottomVentDDL.Items.Add(lst1316);
+                inchBottomVentDDL.Items.Add(lst1416);
+                inchBottomVentDDL.Items.Add(lst1516);
 
                 windowBottomVentLBL.AssociatedControlID = "txtWindowBottomVentHeight" + title;
 
@@ -1082,37 +1138,6 @@ namespace SunspaceDealerDesktop
 
                 WindowOptions.Controls.Add(new LiteralControl("</li>"));
 
-
-                #region PostBack functionality to store windows
-                if (IsPostBack)
-                {
-                    if ((List<Window>)Session["windowsOrdered"] != null)
-                    {
-                        windowsOrdered = (List<Window>)Session["windowsOrdered"];
-                    }
-
-                    if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeVinyl")
-                    {
-                        Window aWindow = getVinylWindowFromForm();
-                        windowsOrdered.Add(aWindow);
-                    }
-                    else if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeGlass")
-                    {
-                        Window aWindow = getGlassWindowFromForm();
-                        windowsOrdered.Add(aWindow);
-                    }
-                    else if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeScreen")
-                    {
-                        Window aWindow = getScreenWindowFromForm();
-                        windowsOrdered.Add(aWindow);
-                    }
-                    Session.Add("windowsOrdered", windowsOrdered);
-                }
-                #endregion
-
-                populateSideBar(findNumberOfWindowTypes());
-
-
             }
         }
 
@@ -1149,7 +1174,41 @@ namespace SunspaceDealerDesktop
                     aWindow.RightHeight = float.Parse(Request.Form["ctl00$MainContent$ddlWindowHeightVinyl"]);
             }
             
+
             aWindow.Width = float.Parse(Request.Form["ctl00$MainContent$ddlWindowWidthVinyl"]);
+
+            if (Request.Form["ctl100$MainContent$lblWindowDLOLBLVinyl"] == "DLO")
+            {
+                aWindow.RightHeight = aWindow.RightHeight + 2;
+                aWindow.LeftHeight = aWindow.LeftHeight + 2;
+                aWindow.Width = aWindow.Width + 2;
+            }
+
+            if (Request.Form["ctl100$MainContent$lblWindowDeductionsLBLVinyl"] == "Deduct 1/8\"")
+            {
+                aWindow.RightHeight = aWindow.RightHeight - 0.125F;
+                aWindow.LeftHeight = aWindow.LeftHeight - 0.125F;
+                aWindow.Width = aWindow.Width - 0.125F;
+            }
+            else if (Request.Form["ctl100$MainContent$lblWindowDeductionsLBLVinyl"] == "Deduct 1/4\"")
+            {
+                aWindow.RightHeight = aWindow.RightHeight - 0.25F;
+                aWindow.LeftHeight = aWindow.LeftHeight - 0.25F;
+                aWindow.Width = aWindow.Width - 0.25F;
+            }
+            else if (Request.Form["ctl100$MainContent$lblWindowDeductionsLBLVinyl"] == "Deduct 3/8\"")
+            {
+                aWindow.RightHeight = aWindow.RightHeight - 0.375F;
+                aWindow.LeftHeight = aWindow.LeftHeight - 0.375F;
+                aWindow.Width = aWindow.Width - 0.375F;
+            }
+            else if (Request.Form["ctl100$MainContent$lblWindowDeductionsLBLVinyl"] == "Deduct 1/2\"")
+            {
+                aWindow.RightHeight = aWindow.RightHeight - 0.5F;
+                aWindow.LeftHeight = aWindow.LeftHeight - 0.5F;
+                aWindow.Width = aWindow.Width - 0.5F;
+            }
+
             //aWindow.GlassTint = Request.Form["ctl00$MainContent$ddlWindowGlassTintVinyl"];
             //if (aWindow.WindowStyle == "Vertical 4 Track")
             //{
@@ -1190,6 +1249,7 @@ namespace SunspaceDealerDesktop
             //aWindow.Hinge = Request.Form["ctl00$MainContent$WindowHingeVinyl"];
             //aWindow.Swing = Request.Form["ctl00$MainContent$SwingInOutVinyl"];
             //aWindow.HardwareType = Request.Form["ctl00$MainContent$ddlWindowHardwareVinyl"];
+            //aWindow.SpreaderBar = Request.Form["ctl00$MainContent$chkWindowHardwareVinyl"];
 
             return aWindow;
         }
@@ -1228,6 +1288,41 @@ namespace SunspaceDealerDesktop
             }
             
             aWindow.Width = float.Parse(Request.Form["ctl00$MainContent$ddlWindowWidthGlass"]);
+
+
+            if (Request.Form["ctl100$MainContent$lblWindowDLOLBLGlass"] == "DLO")
+            {
+                aWindow.RightHeight = aWindow.RightHeight + 2;
+                aWindow.LeftHeight = aWindow.LeftHeight + 2;
+                aWindow.Width = aWindow.Width + 2;
+            }
+
+            if (Request.Form["ctl100$MainContent$lblWindowDeductionsLBLGlass"] == "Deduct 1/8\"")
+            {
+                aWindow.RightHeight = aWindow.RightHeight - 0.125F;
+                aWindow.LeftHeight = aWindow.LeftHeight - 0.125F;
+                aWindow.Width = aWindow.Width - 0.125F;
+            }
+            else if (Request.Form["ctl100$MainContent$lblWindowDeductionsLBLGlass"] == "Deduct 1/4\"")
+            {
+                aWindow.RightHeight = aWindow.RightHeight - 0.25F;
+                aWindow.LeftHeight = aWindow.LeftHeight - 0.25F;
+                aWindow.Width = aWindow.Width - 0.25F;
+            }
+            else if (Request.Form["ctl100$MainContent$lblWindowDeductionsLBLGlass"] == "Deduct 3/8\"")
+            {
+                aWindow.RightHeight = aWindow.RightHeight - 0.375F;
+                aWindow.LeftHeight = aWindow.LeftHeight - 0.375F;
+                aWindow.Width = aWindow.Width - 0.375F;
+            }
+            else if (Request.Form["ctl100$MainContent$lblWindowDeductionsLBLGlass"] == "Deduct 1/2\"")
+            {
+                aWindow.RightHeight = aWindow.RightHeight - 0.5F;
+                aWindow.LeftHeight = aWindow.LeftHeight - 0.5F;
+                aWindow.Width = aWindow.Width - 0.5F;
+            }
+            
+            
             aWindow.GlassTint = Request.Form["ctl00$MainContent$ddlWindowGlassTintGlass"];
 
             aWindow.ScreenType = Request.Form["ctl00$MainContent$ddlWindowScreenOptionsGlass"];
@@ -1263,7 +1358,40 @@ namespace SunspaceDealerDesktop
             aWindow.LeftHeight = 
                 aWindow.RightHeight = float.Parse(Request.Form["ctl00$MainContent$ddlWindowHeightScreen"]);
             
-            aWindow.Length = float.Parse(Request.Form["ctl00$MainContent$ddlWindowWidthScreen"]);
+            aWindow.Width = float.Parse(Request.Form["ctl00$MainContent$ddlWindowWidthScreen"]);
+
+            if (Request.Form["ctl100$MainContent$lblWindowDLOLBLScreen"] == "DLO")
+            {
+                aWindow.RightHeight = aWindow.RightHeight + 2;
+                aWindow.LeftHeight = aWindow.LeftHeight + 2;
+                aWindow.Width = aWindow.Width + 2;
+            }
+
+            if (Request.Form["ctl100$MainContent$lblWindowDeductionsLBLScreen"] == "Deduct 1/8\"")
+            {
+                aWindow.RightHeight = aWindow.RightHeight - 0.125F;
+                aWindow.LeftHeight = aWindow.LeftHeight - 0.125F;
+                aWindow.Width = aWindow.Width - 0.125F;
+            }
+            else if (Request.Form["ctl100$MainContent$lblWindowDeductionsLBLScreen"] == "Deduct 1/4\"")
+            {
+                aWindow.RightHeight = aWindow.RightHeight - 0.25F;
+                aWindow.LeftHeight = aWindow.LeftHeight - 0.25F;
+                aWindow.Width = aWindow.Width - 0.25F;
+            }
+            else if (Request.Form["ctl100$MainContent$lblWindowDeductionsLBLScreen"] == "Deduct 3/8\"")
+            {
+                aWindow.RightHeight = aWindow.RightHeight - 0.375F;
+                aWindow.LeftHeight = aWindow.LeftHeight - 0.375F;
+                aWindow.Width = aWindow.Width - 0.375F;
+            }
+            else if (Request.Form["ctl100$MainContent$lblWindowDeductionsLBLScreen"] == "Deduct 1/2\"")
+            {
+                aWindow.RightHeight = aWindow.RightHeight - 0.5F;
+                aWindow.LeftHeight = aWindow.LeftHeight - 0.5F;
+                aWindow.Width = aWindow.Width - 0.5F;
+            }
+
             //aWindow.GlassTint = Request.Form["ctl00$MainContent$ddlWindowGlassTintScreen"];
             aWindow.ScreenType = Request.Form["ctl00$MainContent$ddlWindowScreenOptionsScreen"];
             //aWindow.OperatingWindow = Request.Form["ctl00$MainContent$PrimaryOperatorScreen"];
@@ -1641,6 +1769,37 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             loadDetails("Window");
+
+
+            #region PostBack functionality to store windows
+            if (IsPostBack)
+            {
+                if ((List<Window>)Session["windowsOrdered"] != null)
+                {
+                    windowsOrdered = (List<Window>)Session["windowsOrdered"];
+                }
+
+                if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeVinyl")
+                {
+                    Window aWindow = getVinylWindowFromForm();
+                    windowsOrdered.Add(aWindow);
+                }
+                else if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeGlass")
+                {
+                    Window aWindow = getGlassWindowFromForm();
+                    windowsOrdered.Add(aWindow);
+                }
+                else if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeScreen")
+                {
+                    Window aWindow = getScreenWindowFromForm();
+                    windowsOrdered.Add(aWindow);
+                }
+                Session.Add("windowsOrdered", windowsOrdered);
+            }
+            #endregion
+
+            populateSideBar(findNumberOfWindowTypes());
+
         }
     }
 }
