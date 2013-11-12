@@ -11,12 +11,13 @@ namespace SunspaceDealerDesktop
     public class VinylWindow : Window
     {
         #region Attributes
-        private string windowType;
-        private string screenType;
-        private float startHeight;
-        private float endHeight;
-        private float length;
-        private string frameColour;
+        //private string windowType;
+        //private string screenType;
+        //private float startHeight;
+        //private float endHeight;
+        //private float length;
+        //private string frameColour;
+        private string vinylTint;
         private float spreaderBar;
         private int numVents;
         #endregion
@@ -25,12 +26,12 @@ namespace SunspaceDealerDesktop
 
         public VinylWindow()
         {
-            WindowType = "";
-            ScreenType = "";
-            StartHeight = 0.0f;
-            EndHeight = 0.0f;
-            Length = 0.0f;
-            FrameColour = "";
+            //WindowType = "";
+            //ScreenType = "";
+            //StartHeight = 0.0f;
+            //EndHeight = 0.0f;
+            //Length = 0.0f;
+            VinylTint = "";
             SpreaderBar = -1f;
             NumVents = 0;
         }
@@ -38,75 +39,75 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Accessors
-        public string WindowType
-        {
-            get
-            {
-                return windowType;
-            }
-            set
-            {
-                windowType = value;
-            }
-        }
+        //public string WindowType
+        //{
+        //    get
+        //    {
+        //        return windowType;
+        //    }
+        //    set
+        //    {
+        //        windowType = value;
+        //    }
+        //}
 
-        public string ScreenType
-        {
-            get
-            {
-                return screenType;
-            }
-            set
-            {
-                screenType = value;
-            }
-        }
+        //public string ScreenType
+        //{
+        //    get
+        //    {
+        //        return screenType;
+        //    }
+        //    set
+        //    {
+        //        screenType = value;
+        //    }
+        //}
 
-        public float StartHeight
-        {
-            get
-            {
-                return startHeight;
-            }
-            set
-            {
-                startHeight = value;
-            }
-        }
+        //public float StartHeight
+        //{
+        //    get
+        //    {
+        //        return startHeight;
+        //    }
+        //    set
+        //    {
+        //        startHeight = value;
+        //    }
+        //}
 
-        public float EndHeight
-        {
-            get
-            {
-                return endHeight;
-            }
-            set
-            {
-                endHeight = value;
-            }
-        }
+        //public float EndHeight
+        //{
+        //    get
+        //    {
+        //        return endHeight;
+        //    }
+        //    set
+        //    {
+        //        endHeight = value;
+        //    }
+        //}
 
-        public float Length
-        {
-            get
-            {
-                return length;
-            }
-            set
-            {
-                length = value;
-            }
-        }
+        //public float Length
+        //{
+        //    get
+        //    {
+        //        return length;
+        //    }
+        //    set
+        //    {
+        //        length = value;
+        //    }
+        //}
 
-        public string FrameColour
+        public string VinylTint
         {
             get
             {
-                return frameColour;
+                return vinylTint;
             }
             set
             {
-                frameColour = value;
+                vinylTint = value;
             }
         }
 

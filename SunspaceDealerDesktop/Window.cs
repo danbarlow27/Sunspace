@@ -8,42 +8,42 @@ namespace SunspaceDealerDesktop
     public class Window : ModuleItem
     {
         #region Attributes
-        private string windowType;
+        private string windowStyle;
         private string screenType;
-        private float startHeight;
-        private float endHeight;
-        private float length;
+        private float leftHeight;
+        private float rightHeight;
+        private float width;
         private string frameColour;
-        private float spreaderBar;
-        private int numVents;
+        private float spreaderBar; //this is in vinyl window class, but here also to suppress errors
+        private int numVents; //this is in vinyl window class, but here also to suppress errors
         #endregion
 
         #region Constructors
 
         public Window()
         {
-            WindowType = "";
+            WindowStyle = "";
             ScreenType = "";
-            StartHeight = 0.0f;
-            EndHeight = 0.0f;
-            Length = 0.0f;
+            LeftHeight = 0.0f;
+            RightHeight = 0.0f;
+            Width = 0.0f;
             FrameColour = "";
-            SpreaderBar = -1f;
-            NumVents = 0;
+            //SpreaderBar = -1f;
+            //NumVents = 0;
         }
 
         #endregion
 
         #region Accessors
-        public string WindowType
+        public string WindowStyle
         {
             get
             {
-                return windowType;
+                return windowStyle;
             }
             set
             {
-                windowType = value;
+                windowStyle = value;
             }
         }
 
@@ -59,39 +59,39 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public float StartHeight
+        public float LeftHeight
         {
             get
             {
-                return startHeight;
+                return leftHeight;
             }
             set
             {
-                startHeight = value;
+                leftHeight = value;
             }
         }
 
-        public float EndHeight
+        public float RightHeight
         {
             get
             {
-                return endHeight;
+                return rightHeight;
             }
             set
             {
-                endHeight = value;
+                rightHeight = value;
             }
         }
 
-        public float Length
+        public float Width
         {
             get
             {
-                return length;
+                return width;
             }
             set
             {
-                length = value;
+                width = value;
             }
         }
 
@@ -107,7 +107,7 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public float SpreaderBar
+        public float SpreaderBar  //this is in vinyl window class, but here also to suppress errors
         {
             get
             {
@@ -119,7 +119,7 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public int NumVents
+        public int NumVents  //this is in vinyl window class, but here also to suppress errors
         {
             get
             {

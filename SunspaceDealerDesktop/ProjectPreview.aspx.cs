@@ -253,7 +253,7 @@ namespace SunspaceDealerDesktop
                                                                     + linearCounter + ", "
                                                                     + k + ", "
                                                                     + 0 + ", '" //0 because this is a window from a module, not within a door
-                                                                    + aWindow.WindowType + "', '"
+                                                                    + aWindow.WindowStyle + "', '"
                                                                     + aWindow.ScreenType + "', "
                                                                     + aWindow.FStartHeight + ", "
                                                                     + aWindow.FEndHeight + ", "
@@ -264,7 +264,7 @@ namespace SunspaceDealerDesktop
                                             aCommand.ExecuteNonQuery();
 
                                             //Then make the specific base item entry based on type of window
-                                            switch (aWindow.WindowType)
+                                            switch (aWindow.WindowStyle)
                                             {
                                                 //Note, Vinyl and Glass are only accessible at this point as a transom
                                                 //So we assume they're window entries
@@ -275,9 +275,9 @@ namespace SunspaceDealerDesktop
                                                                             + k + ", "
                                                                             + -1 + ", " //This is not in a vent, this is just solid vinyl
                                                                             + 0 + ", " //This is a window, so it is 0
-                                                                            + aWindow.StartHeight + ", "
-                                                                            + aWindow.EndHeight + ", "
-                                                                            + aWindow.Length + ", '"
+                                                                            + aWindow.LeftHeight + ", "
+                                                                            + aWindow.RightHeight + ", "
+                                                                            + aWindow.Width + ", '"
                                                                             + aWindow.Colour + "', "
                                                                             + aWindow.SpreaderBar
                                                                             + ");";
@@ -292,9 +292,9 @@ namespace SunspaceDealerDesktop
                                                                             + -1 + ", " //This is not a vent, just solid glass
                                                                             + 0 + ", " //This is a window
                                                                             + "Single Glaze" + "', "
-                                                                            + aWindow.StartHeight + ", "
-                                                                            + aWindow.EndHeight + ", "
-                                                                            + aWindow.Length + ", '"
+                                                                            + aWindow.LeftHeight + ", "
+                                                                            + aWindow.RightHeight + ", "
+                                                                            + aWindow.Width + ", '"
                                                                             + aWindow.Colour + "', "
                                                                             + 0 + ", "
                                                                             + 0
@@ -312,9 +312,9 @@ namespace SunspaceDealerDesktop
                                                                                 + k + ", "
                                                                                 + vents + ", " //This is not in a vent, this is just solid vinyl
                                                                                 + 0 + ", " //This is a window, so it is 0
-                                                                                + aWindow.StartHeight + ", "
-                                                                                + aWindow.EndHeight + ", "
-                                                                                + aWindow.Length + ", '"
+                                                                                + aWindow.LeftHeight + ", "
+                                                                                + aWindow.RightHeight + ", "
+                                                                                + aWindow.Width + ", '"
                                                                                 + myColour + "', "
                                                                                 + aWindow.SpreaderBar
                                                                                 + ");";
@@ -329,9 +329,9 @@ namespace SunspaceDealerDesktop
                                                                             + k + ", "
                                                                             + -1 + ", " //This is not in a vent, this is just solid vinyl
                                                                             + 0 + ", " //This is a window, so it is 0
-                                                                            + aWindow.StartHeight + ", "
-                                                                            + aWindow.EndHeight + ", "
-                                                                            + aWindow.Length + ", '"
+                                                                            + aWindow.LeftHeight + ", "
+                                                                            + aWindow.RightHeight + ", "
+                                                                            + aWindow.Width + ", '"
                                                                             + aWindow.Colour + "', "
                                                                             + aWindow.SpreaderBar
                                                                             + ");";
@@ -345,9 +345,9 @@ namespace SunspaceDealerDesktop
                                                                             + k + ", "
                                                                             + -1 + ", " //This is not in a vent, this is just solid vinyl
                                                                             + 0 + ", " //This is a window, so it is 0
-                                                                            + aWindow.StartHeight + ", "
-                                                                            + aWindow.EndHeight + ", "
-                                                                            + aWindow.Length + ", '"
+                                                                            + aWindow.LeftHeight + ", "
+                                                                            + aWindow.RightHeight + ", "
+                                                                            + aWindow.Width + ", '"
                                                                             + aWindow.Colour + "', "
                                                                             + aWindow.SpreaderBar
                                                                             + ");";
@@ -367,9 +367,9 @@ namespace SunspaceDealerDesktop
                                                                             + k + ", "
                                                                             + 0 + ", '" //This is a window, so 0
                                                                             + aWindow.ScreenType + "', "
-                                                                            + aWindow.StartHeight + ", "
-                                                                            + aWindow.EndHeight + ", "
-                                                                            + aWindow.Length + ", '"
+                                                                            + aWindow.LeftHeight + ", "
+                                                                            + aWindow.RightHeight + ", "
+                                                                            + aWindow.Width + ", '"
                                                                             + "In" + "'" //A screen window is inside mount, whereas a screen on a window of another type is outside mounted (handled below)
                                                                             + ");";
                                                     aCommand.ExecuteNonQuery();
@@ -385,9 +385,9 @@ namespace SunspaceDealerDesktop
                                                                         + k + ", "
                                                                         + 0 + ", '" //This is a window, so 0
                                                                         + aWindow.ScreenType + "', "
-                                                                        + aWindow.StartHeight + ", "
-                                                                        + aWindow.EndHeight + ", "
-                                                                        + aWindow.Length + ", '"
+                                                                        + aWindow.LeftHeight + ", "
+                                                                        + aWindow.RightHeight + ", "
+                                                                        + aWindow.Width + ", '"
                                                                         + "Out" + "'" //This screen is a screen in addition to a window, so it will be an outside mounted screen on an inside mounted window
                                                                         + ");";
                                                 aCommand.ExecuteNonQuery();
@@ -416,7 +416,7 @@ namespace SunspaceDealerDesktop
                                                 for (int doorNum = 1; doorNum < 2; doorNum++)
                                                 {
                                                     Window doorWindow = aDoor.DoorWindow;
-                                                    switch (doorWindow.WindowType)
+                                                    switch (doorWindow.WindowStyle)
                                                     {
                                                         #region old by-door
                                                         //case "Full Screen":
@@ -446,9 +446,9 @@ namespace SunspaceDealerDesktop
                                                                                     + k + ", "
                                                                                     + -1 + ", " //This is not in a vent, this is just solid vinyl
                                                                                     + doorNum + ", " //This is a window, so it is 0
-                                                                                    + doorWindow.StartHeight + ", "
-                                                                                    + doorWindow.EndHeight + ", "
-                                                                                    + doorWindow.Length + ", '"
+                                                                                    + doorWindow.LeftHeight + ", "
+                                                                                    + doorWindow.RightHeight + ", "
+                                                                                    + doorWindow.Width + ", '"
                                                                                     + doorWindow.Colour + "', "
                                                                                     + doorWindow.SpreaderBar 
                                                                                     + ");";
@@ -463,9 +463,9 @@ namespace SunspaceDealerDesktop
                                                                                     + -1 + ", " //This is not a vent, just solid glass
                                                                                     + doorNum + ", '" //This is a window
                                                                                     + "Single Glaze" + "', "
-                                                                                    + doorWindow.StartHeight + ", "
-                                                                                    + doorWindow.EndHeight + ", "
-                                                                                    + doorWindow.Length + ", '"
+                                                                                    + doorWindow.LeftHeight + ", "
+                                                                                    + doorWindow.RightHeight + ", "
+                                                                                    + doorWindow.Width + ", '"
                                                                                     + doorWindow.Colour + "', "
                                                                                     + 0 + ", "
                                                                                     + 0
@@ -482,9 +482,9 @@ namespace SunspaceDealerDesktop
                                                                                         + k + ", "
                                                                                         + vents + ", " //This is not in a vent, this is just solid vinyl
                                                                                         + doorNum + ", " //This is a window, so it is 0
-                                                                                        + doorWindow.StartHeight + ", "
-                                                                                        + doorWindow.EndHeight + ", "
-                                                                                        + doorWindow.Length + ", '"
+                                                                                        + doorWindow.LeftHeight + ", "
+                                                                                        + doorWindow.RightHeight + ", "
+                                                                                        + doorWindow.Width + ", '"
                                                                                         + doorWindow.Colour.Substring(vents, 1) + "', "
                                                                                         + doorWindow.SpreaderBar
                                                                                         + ");";
@@ -499,9 +499,9 @@ namespace SunspaceDealerDesktop
                                                                                     + k + ", "
                                                                                     + -1 + ", " //This is not in a vent, this is just solid vinyl
                                                                                     + doorNum + ", " //This is a window, so it is 0
-                                                                                    + doorWindow.StartHeight + ", "
-                                                                                    + doorWindow.EndHeight + ", "
-                                                                                    + doorWindow.Length + ", '"
+                                                                                    + doorWindow.LeftHeight + ", "
+                                                                                    + doorWindow.RightHeight + ", "
+                                                                                    + doorWindow.Width + ", '"
                                                                                     + doorWindow.Colour + "', "
                                                                                     + doorWindow.SpreaderBar 
                                                                                     + ");";
@@ -515,9 +515,9 @@ namespace SunspaceDealerDesktop
                                                                                     + k + ", "
                                                                                     + -1 + ", " //This is not in a vent, this is just solid vinyl
                                                                                     + doorNum + ", " //This is a window, so it is 0
-                                                                                    + doorWindow.StartHeight + ", "
-                                                                                    + doorWindow.EndHeight + ", "
-                                                                                    + doorWindow.Length + ", '"
+                                                                                    + doorWindow.LeftHeight + ", "
+                                                                                    + doorWindow.RightHeight + ", "
+                                                                                    + doorWindow.Width + ", '"
                                                                                     + doorWindow.Colour + "', "
                                                                                     + doorWindow.SpreaderBar 
                                                                                     + ");";
@@ -537,9 +537,9 @@ namespace SunspaceDealerDesktop
                                                                                     + k + ", "
                                                                                     + doorNum + ", '" //This is a window, so 0
                                                                                     + doorWindow.ScreenType + "', "
-                                                                                    + doorWindow.StartHeight + ", "
-                                                                                    + doorWindow.EndHeight + ", "
-                                                                                    + doorWindow.Length + ", '"
+                                                                                    + doorWindow.LeftHeight + ", "
+                                                                                    + doorWindow.RightHeight + ", "
+                                                                                    + doorWindow.Width + ", '"
                                                                                     + "In" + "'" //A screen window is inside mount, whereas a screen on a window of another type is outside mounted (handled below)
                                                                                     + ");";
                                                             aCommand.ExecuteNonQuery();
@@ -566,9 +566,9 @@ namespace SunspaceDealerDesktop
                                                                                 + -1 + ", " //This is not a vent, just solid glass
                                                                                 + 1 + ", " //This is a window
                                                                                 + "Single Glaze" + "', "
-                                                                                + doorWindow.StartHeight + ", "
-                                                                                + doorWindow.EndHeight + ", "
-                                                                                + doorWindow.Length + ", '"
+                                                                                + doorWindow.LeftHeight + ", "
+                                                                                + doorWindow.RightHeight + ", "
+                                                                                + doorWindow.Width + ", '"
                                                                                 + doorWindow.Colour + "', "
                                                                                 + 0 + ", "
                                                                                 + 0
@@ -583,9 +583,9 @@ namespace SunspaceDealerDesktop
                                                                                 + -1 + ", " //This is not a vent, just solid glass
                                                                                 + 1 + ", " //This is a window
                                                                                 + "Single Glaze" + "', "
-                                                                                + doorWindow.StartHeight + ", "
-                                                                                + doorWindow.EndHeight + ", "
-                                                                                + doorWindow.Length + ", '"
+                                                                                + doorWindow.LeftHeight + ", "
+                                                                                + doorWindow.RightHeight + ", "
+                                                                                + doorWindow.Width + ", '"
                                                                                 + doorWindow.Colour + "', "
                                                                                 + 0 + ", "
                                                                                 + 0 
