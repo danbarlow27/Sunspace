@@ -21,6 +21,7 @@ namespace SunspaceDealerDesktop
         private string gutterColour;
         private string stripeColour;
         private int numberSupports;
+        private int extraDownspouts;
         private double projection;
         private double width;
         private List<RoofModule> roofModules; //a list of roof modules that make up this roof
@@ -41,12 +42,13 @@ namespace SunspaceDealerDesktop
             GutterColour = "";
             StripeColour = "";
             NumberSupports=0;
+            ExtraDownspouts=0;
             Projection=0;
             Width=0;
             RoofModules = new List<RoofModule>();
         }
 
-        public Roof(string sentType, string sentInteriorSkin, string sentExteriorSkin, double sentThickness, bool sentFireProtection, bool sentThermadeck, bool sentGutters, bool sentGutterPro, string sentGutterColour, string sentStripeColour, int sentNumberSupports, double sentProjection, double sentWidth, List<RoofModule> sentModules)
+        public Roof(string sentType, string sentInteriorSkin, string sentExteriorSkin, double sentThickness, bool sentFireProtection, bool sentThermadeck, bool sentGutters, bool sentGutterPro, string sentGutterColour, string sentStripeColour, int sentNumberSupports, int sentExtraDownspouts, double sentProjection, double sentWidth, List<RoofModule> sentModules)
         {
             Type = sentType;
             InteriorSkin = sentInteriorSkin;
@@ -59,6 +61,7 @@ namespace SunspaceDealerDesktop
             GutterColour = sentGutterColour;
             StripeColour = sentStripeColour;
             NumberSupports = sentNumberSupports;
+            ExtraDownspouts = sentExtraDownspouts;
             Projection = sentProjection;
             Width = sentWidth;
             RoofModules = sentModules;
@@ -222,6 +225,19 @@ namespace SunspaceDealerDesktop
             set
             {
                 numberSupports = value;
+            }
+        }
+
+        public int ExtraDownspouts
+        {
+            get
+            {
+                return extraDownspouts;
+            }
+
+            set
+            {
+                extraDownspouts = value;
             }
         }
 

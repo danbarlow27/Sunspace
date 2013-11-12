@@ -31,6 +31,8 @@ namespace SunspaceDealerDesktop
         public string canProvJ = new JavaScriptSerializer().Serialize(Constants.PROVINCE_LIST);
         public string canCodesJ = new JavaScriptSerializer().Serialize(Constants.PROVINCE_CODES);
 
+        public string unavailableProjectNames;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["loggedIn"] == null)
@@ -94,10 +96,28 @@ namespace SunspaceDealerDesktop
 
                 //add this customer list to the session so we don't have to constantly query on refreshes
                 Session.Add("ddlExistingCustomer", ddlExistingCustomer);
+
+                //Get list of projects that belong to this dealer
+                sdsCustomers.SelectCommand = "SELECT project_name FROM projects WHERE user_id=" + Session["dealer_id"];
+
+                //assign the table names to the dataview object
+                DataView dvExistingProjects = (DataView)sdsCustomers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+                //loop through all results, adding each customer to the dropdown list
+                List<String> lstUnavailable = new List<String>();
+                for (int i = 0; i < dvExistingProjects.Count; i++)
+                {
+                    lstUnavailable.Add(dvExistingProjects[i][0].ToString());
+                }
+
+                //add this customer list to the session so we don't have to constantly query on refreshes
+                Session.Add("unavailableProjectNames", lstUnavailable);
+                unavailableProjectNames = new JavaScriptSerializer().Serialize(lstUnavailable);
             }
             else
             {
                 ddlExistingCustomer = (DropDownList)Session["ddlExistingCustomer"];
+                unavailableProjectNames = new JavaScriptSerializer().Serialize((List<String>)Session["lstUnavailable"]);
             }
             
 
