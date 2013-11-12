@@ -14,7 +14,7 @@
                 document.getElementById('<%=hidSystem.ClientID%>').value = "Traditional";
                 document.getElementById('<%=hidThickness.ClientID%>').value = $('#<%=ddlThickness.ClientID%>').val();
                 document.getElementById('<%=hidAcrylicColour.ClientID%>').value = "";
-                document.getElementById('<%=hidStripeColour.ClientID%>').value = $('#<%=ddlThickness.ClientID%>').val();
+                document.getElementById('<%=hidStripeColour.ClientID%>').value = $('#<%=ddlStripeColour.ClientID%>').val();
                 $('#<%=btnQuestion2.ClientID%>').show();
                 $('#<%=btnQuestion2SkipNext.ClientID%>').hide();
             }
@@ -96,7 +96,7 @@
                 document.getElementById("<%=hidGutterPro.ClientID%>").value = "No";
             }
             
-            document.getElementById("<%=hidGutterPro.ClientID%>").value = $('#<%=ddlExtraDownspouts.ClientID%>').val();
+            document.getElementById("<%=hidExtraDownspouts.ClientID%>").value = $('#<%=ddlExtraDownspouts.ClientID%>').val();
         }
     </script>
 

@@ -608,22 +608,60 @@ namespace SunspaceDealerDesktop
                     #endregion
 
                     #region Roof
-                    if (Session["newProjectHasRoof"].ToString() != "")
+                    if (Session["newProjectHasRoof"].ToString() == "Yes")
                     {
                         Roof aRoof = (Roof)Session["completedRoof"];
-                        aCommand.CommandText = "INSERT INTO roofs(project_id, roof_index, roof_type, interior_skin, exterior_skin, thickness, fire_protection, thermadeck, acrylic, gutter, gutter_pro, gutter_colour, projection, width) VALUES()"
+
+                        int fireProtection = 0;
+                        if (aRoof.FireProtection == true)
+                        {
+                            fireProtection = 1;
+                        }
+
+                        int thermadeck = 0;
+                        if (aRoof.Thermadeck == true)
+                        {
+                            thermadeck = 1;
+                        }
+
+                        int acrylicBool = 0;
+                        if (aRoof.Type.Contains("Acrylic"))
+                        {
+                            acrylicBool = 1;
+                        }
+
+                        int gutterBool = 0;
+                        if (aRoof.Gutters == true)
+                        {
+                            gutterBool = 1;
+                        }
+
+                        int gutterProBool = 0;
+                        if (aRoof.GutterPro == true)
+                        {
+                            gutterProBool = 1;
+                        }
+
+                        string roofType = Session["newProjectRoofType"].ToString();
+                        if (roofType.Contains("Gable"))
+                        {
+                            roofType = "Gable";
+                        }
+                        aCommand.CommandText = "INSERT INTO roofs(project_id, roof_index, roof_type, interior_skin, exterior_skin, thickness, fire_protection, thermadeck, acrylic, gutter, gutter_pro, gutter_colour, number_supports, stripe_colour, projection, width) VALUES("
                                                 + project_id + ", "
                                                 + 0 + ", '"
-                                                + Session["newProjectRoofType"] + "', '"
+                                                + roofType + "', '"
                                                 + aRoof.InteriorSkin + "', '" 
                                                 + aRoof.ExteriorSkin + "', " 
                                                 + aRoof.Thickness + ", "
-                                                + aRoof.FireProtection + ", "
-                                                + aRoof.Thermadeck + ", "
-                                                + 0 + ", " //CHANGEME
-                                                + aRoof.Gutters + ", "
-                                                + aRoof.GutterPro + ", '"
+                                                + fireProtection + ", "
+                                                + thermadeck + ", "
+                                                + acrylicBool + ", "
+                                                + gutterBool + ", "
+                                                + gutterProBool + ", '"
                                                 + aRoof.GutterColour + "', "
+                                                + aRoof.NumberSupports + ", '"
+                                                + aRoof.StripeColour + "', "
                                                 + aRoof.Projection + ", "
                                                 + aRoof.Width
                                                 + ");";
@@ -650,7 +688,7 @@ namespace SunspaceDealerDesktop
                                 roof_view = "GR";
                             }
 
-                            aCommand.CommandText = "INSERT INTO roof_modules(project_id, roof_index, roof_view, interior_skin, exterior_skin, number_items, projection, width) VALUES()"
+                            aCommand.CommandText = "INSERT INTO roof_modules(project_id, roof_index, roof_view, interior_skin, exterior_skin, number_items, projection, width) VALUES("
                                                 + project_id + ", "
                                                 + 0 + ", '"
                                                 + roof_view + "', '"
@@ -665,7 +703,7 @@ namespace SunspaceDealerDesktop
                             //We also enter the roof items
                             for (int roofItems=0; roofItems < aRoof.RoofModules[roofModules].RoofItems.Count; roofItems++)
                             {
-                                aCommand.CommandText = "INSERT INTO roof_items(project_id, roof_index, roof_view, item_index, roof_item, projection, width) VALUES()"
+                                aCommand.CommandText = "INSERT INTO roof_items(project_id, roof_index, roof_view, item_index, roof_item, projection, width) VALUES("
                                                 + project_id + ", "
                                                 + 0 + ", '"
                                                 + roof_view + "', "
@@ -675,6 +713,41 @@ namespace SunspaceDealerDesktop
                                                 + aRoof.RoofModules[roofModules].RoofItems[roofItems].Width
                                                 + ");";
                                 aCommand.ExecuteNonQuery();
+
+                                if (aRoof.RoofModules[roofModules].RoofItems[roofItems].ItemType == "Foam Panel")
+                                {
+                                    aCommand.CommandText = "INSERT INTO foam_panels(project_id, roof_index, roof_view, item_index, interior_skin, exterior_skin, projection, width, set_back, skylight, fanbeam) VALUES("
+                                                + project_id + ", "
+                                                + 0 + ", '"
+                                                + roof_view + "', "
+                                                + roofItems + ", '"
+                                                + aRoof.InteriorSkin + "', '"
+                                                + aRoof.ExteriorSkin + "', "
+                                                + aRoof.RoofModules[roofModules].RoofItems[roofItems].Projection + ", "
+                                                + aRoof.RoofModules[roofModules].RoofItems[roofItems].Width + ", "
+                                                + 0 + ", " //what is normal set_back?
+                                                + aRoof.RoofModules[roofModules].RoofItems[roofItems].SkyLight + ", "
+                                                + aRoof.RoofModules[roofModules].RoofItems[roofItems].FanBeam
+                                                + ");";
+                                    aCommand.ExecuteNonQuery();
+                                }
+
+                                if (aRoof.RoofModules[roofModules].RoofItems[roofItems].ItemType == "Acrylic Panel")
+                                {
+                                    aCommand.CommandText = "INSERT INTO acrylic_panels(project_id, roof_index, roof_view, item_index, panel_colour, projection, width, set_back) VALUES("
+                                                + project_id + ", "
+                                                + 0 + ", '"
+                                                + roof_view + "', "
+                                                + roofItems + ", '"
+                                                + "CHANGEME" + "', "
+                                                + aRoof.RoofModules[roofModules].RoofItems[roofItems].Projection + ", "
+                                                + aRoof.RoofModules[roofModules].RoofItems[roofItems].Width + ", "
+                                                + 0 + ", " //what is normal set_back?
+                                                + aRoof.RoofModules[roofModules].RoofItems[roofItems].SkyLight + ", "
+                                                + aRoof.RoofModules[roofModules].RoofItems[roofItems].FanBeam
+                                                + ");";
+                                    aCommand.ExecuteNonQuery();
+                                }
                             }
                         }
                     }
@@ -683,7 +756,69 @@ namespace SunspaceDealerDesktop
                     #region Floor
                     if (Session["newProjectPrefabFloor"] != "")
                     {
+                        if (Session["floorType"].ToString() == "Thermadeck")
+                        {
+                            int vapourBarrier = 0;
+                            if (Session["floorVapourBarrier"].ToString() == "true")
+                            {
+                                vapourBarrier = 1;
+                            }
+                            aCommand.CommandText = "INSERT INTO floors(project_id, floor_index, floor_type, projection, width, thickness, number_items, vapor_barrier) VALUES("
+                                                    + project_id + ", "
+                                                    + 0 + ", "
+                                                    + "'Thermadeck'" + ", "
+                                                    + Convert.ToSingle(Session["floorProjection"]) + ", "
+                                                    + Convert.ToSingle(Session["floorWidth"]) + ", "
+                                                    + Convert.ToSingle(Session["floorThickness"]) + ", "
+                                                    + Convert.ToInt32(Session["floorPanelNumber"]) + ", "
+                                                    + vapourBarrier
+                                                    + ");";
+                            aCommand.ExecuteNonQuery();
 
+                            for (int i = 0; i < Convert.ToInt32(Session["floorPanelNumber"]); i++)
+                            {
+                                float panelWidth = Constants.THERMADECK_PANEL_WIDTH;
+                                float leftSetBack = Convert.ToSingle(Session["floorJointSetback"]);
+                                float rightSetBack = Convert.ToSingle(Session["floorJointSetback"]);
+
+                                if (i == Convert.ToInt32(Session["floorPanelNumber"])-1)
+                                {
+                                    panelWidth = Convert.ToSingle(Session["floorLastPanelSize"]);
+                                    rightSetBack = Convert.ToSingle(Session["floorSidesSetback"]);
+                                }
+
+                                if (i == 0)
+                                {
+                                    leftSetBack = Convert.ToSingle(Session["floorSidesSetback"]);
+                                }
+
+                                aCommand.CommandText = "INSERT INTO thermadeck_panels(project_id, roof_index, roof_view, item_index, projection, width, set_back, back_setback, front_setback, right_setback, left_setback) VALUES("
+                                                    + project_id + ", "
+                                                    + 0 + ", "
+                                                    + "'F'" + ", "
+                                                    + i + ", "
+                                                    + Convert.ToSingle(Session["floorProjection"]) + ", "
+                                                    + panelWidth + ", "
+                                                    + 0 + ", " //What is normal set_back? Soffit length?
+                                                    + Convert.ToSingle(Session["floorLedgerSetback"]) + ", "
+                                                    + Convert.ToSingle(Session["floorFrontSetback"]) + ", "
+                                                    + rightSetBack + ", "
+                                                    + leftSetBack
+                                                    + ");";
+                                aCommand.ExecuteNonQuery();
+                            }
+                        }
+                            //Session.Add("floorType", ddlFloorType.SelectedValue);
+                            //Session.Add("floorProjection", txtProjectionDisplay.Text);
+                            //Session.Add("floorWidth", txtWidthDisplay.Text);
+                            //Session.Add("floorThickness", ddlFloorThickness.SelectedValue);
+                            //Session.Add("floorVapourBarrier", chkVapourBarrier.Checked);
+                            //Session.Add("floorPanelNumber", panelNumber);
+                            //Session.Add("floorLastPanelSize", lastPanelSize);
+                        //Session.Add("floorLedgerSetback", txtLedgerSetback + ddlLedgerSetbackInches.SelectedValue);
+                        //Session.Add("floorFrontSetback", txtFrontSetback + ddlFrontSetbackInches.SelectedValue);
+                        //Session.Add("floorSidesSetback", txtSidesSetback + ddlSidesSetbackInches.SelectedValue);
+                        //Session.Add("floorJointSetback", txtJointSetback + ddlJointSetbackInches.SelectedValue);
                     }
                     #endregion
                     //lblError.Text = "Successfully Updated!\n\n";
