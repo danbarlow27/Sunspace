@@ -35,6 +35,7 @@
         <div id="paging-wrapper">    
             <div id="paging"> 
                 <h2>Roof Specifications</h2>
+                <asp:PlaceHolder ID="lblRoofPager" runat="server"></asp:PlaceHolder>  
             </div> <%-- end #paging --%>      
         </div>
 
