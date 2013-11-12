@@ -3944,32 +3944,32 @@ namespace SunspaceDealerDesktop
                                 aDoor.Punch = aDoor.FEndHeight;
 
                                 Window doorWindow = new Window();
-                                doorWindow.WindowType = Request.Form["hidWall" + i + "Door" + j + "style"];
+                                doorWindow.WindowStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
                                 doorWindow.FLength = aDoor.FLength - 11.5f; //11.5 is the amount of door between edge of door and start of window (both sides totalled to 11.5)
-                                doorWindow.Length = doorWindow.FLength - 2.125f;
+                                doorWindow.Width = doorWindow.FLength - 2.125f;
                                 doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight - aDoor.Kickplate - 4; //4 corresponds to the amount of framing at a bottom of a door
-                                doorWindow.StartHeight = doorWindow.EndHeight = aDoor.FStartHeight - aDoor.Kickplate - 4 - 2.125f;
+                                doorWindow.LeftHeight = doorWindow.RightHeight = aDoor.FStartHeight - aDoor.Kickplate - 4 - 2.125f;
                                 doorWindow.ItemType = "Window";
                                 doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
 
                                 //Spreaderbar logic
-                                if (doorWindow.WindowType == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
+                                if (doorWindow.WindowStyle == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
                                 {
                                     doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2); //Find center of window, then place center of spreader bar at that position (by subtracting half of it)
                                     doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
                                 }
-                                if (doorWindow.WindowType == "Horizontal Roller" && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
+                                if (doorWindow.WindowStyle == "Horizontal Roller" && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
                                 {
                                     doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
                                 }
-                                if (doorWindow.WindowType == "Vinyl")
+                                if (doorWindow.WindowStyle == "Vinyl")
                                 {
                                     if (doorWindow.FLength > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FEndHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FStartHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED)
                                     {
                                         //If length is longer, vertical bar, else horizontal bar
-                                        if (doorWindow.Length >= doorWindow.FEndHeight && doorWindow.Length >= doorWindow.FStartHeight)
+                                        if (doorWindow.Width >= doorWindow.FEndHeight && doorWindow.Width >= doorWindow.FStartHeight)
                                         {
                                             doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2);
                                         }
@@ -3996,9 +3996,9 @@ namespace SunspaceDealerDesktop
                                 aDoor.Punch = aDoor.FEndHeight;
 
                                 Window doorWindow = new Window();
-                                doorWindow.WindowType = Request.Form["hidWall" + i + "Door" + j + "style"];
+                                doorWindow.WindowStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
                                 //doorWindow.FLength = aDoor.FLength - SOMEVALUE;
-                                doorWindow.Length = doorWindow.FLength - 2.125f;
+                                doorWindow.Width = doorWindow.FLength - 2.125f;
                                 //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
                                 //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
                                 doorWindow.ItemType = "Window";
@@ -4007,20 +4007,20 @@ namespace SunspaceDealerDesktop
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
                                 //Spreaderbar logic
-                                if (doorWindow.WindowType == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
+                                if (doorWindow.WindowStyle == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
                                 {
                                     doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2); //Find center of window, then place center of spreader bar at that position (by subtracting half of it)
                                 }
-                                if (doorWindow.WindowType == "Horizontal Roller" && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
+                                if (doorWindow.WindowStyle == "Horizontal Roller" && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
                                 {
                                     doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
                                 }
-                                if (doorWindow.WindowType == "Vinyl")
+                                if (doorWindow.WindowStyle == "Vinyl")
                                 {
                                     if (doorWindow.FLength > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FEndHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FStartHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED)
                                     {
                                         //If length is longer, vertical bar, else horizontal bar
-                                        if (doorWindow.Length >= doorWindow.FEndHeight && doorWindow.Length >= doorWindow.FStartHeight)
+                                        if (doorWindow.Width >= doorWindow.FEndHeight && doorWindow.Width >= doorWindow.FStartHeight)
                                         {
                                             doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2);
                                         }
@@ -4041,9 +4041,9 @@ namespace SunspaceDealerDesktop
                                 aDoor.Punch = aDoor.FEndHeight;
 
                                 Window doorWindow = new Window();
-                                doorWindow.WindowType = Request.Form["hidWall" + i + "Door" + j + "style"];
+                                doorWindow.WindowStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
                                 //doorWindow.FLength = aDoor.FLength - SOMEVALUE;
-                                doorWindow.Length = doorWindow.FLength - 2.125f;
+                                doorWindow.Width = doorWindow.FLength - 2.125f;
                                 //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
                                 //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
                                 doorWindow.ItemType = "Window";
@@ -4073,12 +4073,12 @@ namespace SunspaceDealerDesktop
                                     //Set window properties
                                     Window aWindow = new Window();
                                     aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
-                                    aWindow.EndHeight = aWindow.StartHeight = windowInfo[1] - 2.125f; //Framing size
+                                    aWindow.RightHeight = aWindow.LeftHeight = windowInfo[1] - 2.125f; //Framing size
                                     aWindow.Colour = Request.Form["MainContent_hidWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
                                     aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                     aWindow.ItemType = "Window";
-                                    aWindow.Length = aMod.Length - 2;
-                                    aWindow.WindowType = (string)Session["newProjectTransomType"];
+                                    aWindow.Width = aMod.Length - 2;
+                                    aWindow.WindowStyle = (string)Session["newProjectTransomType"];
                                     aWindow.SpreaderBar = -1;
 
                                     //Add remaining area to first window
@@ -4086,8 +4086,8 @@ namespace SunspaceDealerDesktop
                                     {
                                         aWindow.FEndHeight += windowInfo[2];
                                         aWindow.FStartHeight += windowInfo[2];
-                                        aWindow.EndHeight += windowInfo[2];
-                                        aWindow.StartHeight += windowInfo[2];
+                                        aWindow.RightHeight += windowInfo[2];
+                                        aWindow.LeftHeight += windowInfo[2];
                                     }
                                     modularItems.Add(aWindow);
                                 }
@@ -4100,12 +4100,12 @@ namespace SunspaceDealerDesktop
                                     //Set window properties
                                     Window aWindow = new Window();
                                     aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
-                                    aWindow.EndHeight = aWindow.StartHeight = windowInfo[1] - 2.125f;
+                                    aWindow.RightHeight = aWindow.LeftHeight = windowInfo[1] - 2.125f;
                                     aWindow.Colour = Request.Form["MainContent_hidWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
                                     aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                     aWindow.ItemType = "Window";
-                                    aWindow.Length = aMod.Length - 2;
-                                    aWindow.WindowType = (string)Session["newProjectTransomType"];
+                                    aWindow.Width = aMod.Length - 2;
+                                    aWindow.WindowStyle = (string)Session["newProjectTransomType"];
                                     aWindow.SpreaderBar = -1;
 
                                     //Add remaining area to first window
@@ -4113,8 +4113,8 @@ namespace SunspaceDealerDesktop
                                     {
                                         aWindow.FEndHeight += windowInfo[2];
                                         aWindow.FStartHeight += windowInfo[2];
-                                        aWindow.EndHeight += windowInfo[2];
-                                        aWindow.StartHeight += windowInfo[2];
+                                        aWindow.RightHeight += windowInfo[2];
+                                        aWindow.LeftHeight += windowInfo[2];
                                     }
                                     //If last window, we need to change a height to make it sloped
                                     if (currentWindow == windowInfo[0] - 1)
@@ -4123,13 +4123,13 @@ namespace SunspaceDealerDesktop
                                         if (wallStartHeight == Math.Max(wallStartHeight, wallEndHeight))
                                         {
                                             aWindow.FEndHeight = aWindow.FEndHeight - (modStartHeight - modEndHeight);
-                                            aWindow.EndHeight = aWindow.EndHeight - (modStartHeight - modEndHeight);
+                                            aWindow.RightHeight = aWindow.RightHeight - (modStartHeight - modEndHeight);
                                         }
                                         //Otherwise we lower start height
                                         else
                                         {
                                             aWindow.FStartHeight = aWindow.FStartHeight - (modEndHeight - modStartHeight);
-                                            aWindow.StartHeight = aWindow.StartHeight - (modEndHeight - modStartHeight);
+                                            aWindow.LeftHeight = aWindow.LeftHeight - (modEndHeight - modStartHeight);
                                         }
                                     }
                                     modularItems.Add(aWindow);

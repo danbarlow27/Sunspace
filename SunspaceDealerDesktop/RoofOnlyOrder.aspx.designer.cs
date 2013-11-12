@@ -22,6 +22,15 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblRoofDetails;
         
         /// <summary>
+        /// RoofOptions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder RoofOptions;
+        
+        /// <summary>
         /// btnQuestion3 control.
         /// </summary>
         /// <remarks>
@@ -29,6 +38,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnQuestion3;
+        
+        /// <summary>
+        /// lblRoofPager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder lblRoofPager;
         
         /// <summary>
         /// txtErrorMessage control.

@@ -437,15 +437,15 @@ namespace SunspaceDealerDesktop
                             //Create the window
                             Window aWindow = new Window();
                             aWindow.FEndHeight = aWindow.FStartHeight = windowHeight; //CHANGEME hardcoded 2.125
-                            aWindow.EndHeight = aWindow.StartHeight = windowHeight - 2.125f;
+                            aWindow.RightHeight = aWindow.LeftHeight = windowHeight - 2.125f;
                             aWindow.FLength = aMod.Length - 2;
-                            aWindow.Length = aWindow.FLength - 2.125f; //CHANGEME hardcoded
+                            aWindow.Width = aWindow.FLength - 2.125f; //CHANGEME hardcoded
                             aWindow.Colour = windowColour;
                             aWindow.FrameColour = framingColour;
                             aWindow.ItemType = "Window";
                             aWindow.NumVents = numberOfVents;
                             aWindow.ScreenType = screenType; //fixt
-                            aWindow.WindowType = windowType;
+                            aWindow.WindowStyle = windowType;
 
                             //Check for spreader bar boolean
                             if (windowType == "Vertical 4 Track" && aWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
@@ -461,7 +461,7 @@ namespace SunspaceDealerDesktop
                                 if (aWindow.FLength > Constants.TRANSOM_SPREADER_BAR_REQUIRED || aWindow.FEndHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED || aWindow.FStartHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED)
                                 {
                                     //If length is longer, vertical bar, else horizontal bar
-                                    if (aWindow.Length >= aWindow.FEndHeight && aWindow.Length >= aWindow.FStartHeight)
+                                    if (aWindow.Width >= aWindow.FEndHeight && aWindow.Width >= aWindow.FStartHeight)
                                     {
                                         aWindow.SpreaderBar = (aWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2);
                                     }
@@ -490,23 +490,23 @@ namespace SunspaceDealerDesktop
                                     //Set window properties
                                     Window aTransom = new Window();
                                     aTransom.FEndHeight = aTransom.FStartHeight = transomInfo[1]; //Window with frame
-                                    aTransom.EndHeight = aTransom.StartHeight = transomInfo[1] - 2.125f; //Window itself
+                                    aTransom.RightHeight = aTransom.LeftHeight = transomInfo[1] - 2.125f; //Window itself
                                     aTransom.Colour = windowColour;
                                     aTransom.ItemType = "Window";
-                                    aTransom.Length = aMod.Length - 2;
-                                    aTransom.WindowType = transomType;
+                                    aTransom.Width = aMod.Length - 2;
+                                    aTransom.WindowStyle = transomType;
                                     if (currentWindow == 0)
                                     {
                                         aTransom.FEndHeight += transomInfo[2];
                                         aTransom.FStartHeight += transomInfo[2];
-                                        aTransom.EndHeight += transomInfo[2];
-                                        aTransom.StartHeight += transomInfo[2];
+                                        aTransom.RightHeight += transomInfo[2];
+                                        aTransom.LeftHeight += transomInfo[2];
                                     }
 
                                     if (aTransom.FLength > Constants.TRANSOM_SPREADER_BAR_REQUIRED || aTransom.FEndHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED || aTransom.FStartHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED)
                                     {
                                         //If length is longer, vertical bar, else horizontal bar
-                                        if (aTransom.Length > aTransom.FEndHeight && aTransom.Length > aTransom.FStartHeight)
+                                        if (aTransom.Width > aTransom.FEndHeight && aTransom.Width > aTransom.FStartHeight)
                                         {
                                             aTransom.SpreaderBar = (aTransom.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2);
                                         }
@@ -527,19 +527,19 @@ namespace SunspaceDealerDesktop
                                     //Set window properties
                                     Window aTransom = new Window();
                                     aTransom.FEndHeight = aTransom.FStartHeight = transomInfo[1];
-                                    aTransom.EndHeight = aTransom.StartHeight = transomInfo[1] - 2.125f;
+                                    aTransom.RightHeight = aTransom.LeftHeight = transomInfo[1] - 2.125f;
                                     aTransom.Colour = windowColour;
                                     aTransom.ItemType = "Window";
                                     aTransom.FLength = aMod.Length - 2;
-                                    aTransom.Length = aMod.Length - 2 - 2.125f;
-                                    aTransom.WindowType = transomType;
+                                    aTransom.Width = aMod.Length - 2 - 2.125f;
+                                    aTransom.WindowStyle = transomType;
                                     //Add remaining area to first window
                                     if (currentWindow == 0)
                                     {
                                         aTransom.FEndHeight += transomInfo[2];
                                         aTransom.FStartHeight += transomInfo[2];
-                                        aTransom.EndHeight += transomInfo[2];
-                                        aTransom.StartHeight += transomInfo[2];
+                                        aTransom.RightHeight += transomInfo[2];
+                                        aTransom.LeftHeight += transomInfo[2];
                                     }
                                     //If last window, we need to change a height to make it sloped
                                     if (currentWindow == transomInfo[0] - 1)
@@ -548,13 +548,13 @@ namespace SunspaceDealerDesktop
                                         if (modStartWallHeight == Math.Max(modStartWallHeight, modEndWallHeight))
                                         {
                                             aTransom.FEndHeight -= (modStartWallHeight - modEndWallHeight);
-                                            aTransom.EndHeight -= (modStartWallHeight - modEndWallHeight);
+                                            aTransom.RightHeight -= (modStartWallHeight - modEndWallHeight);
                                         }
                                         //Otherwise we lower start height
                                         else
                                         {
                                             aTransom.FStartHeight -= (modEndWallHeight - modStartWallHeight);
-                                            aTransom.StartHeight -= (modEndWallHeight - modStartWallHeight);
+                                            aTransom.LeftHeight -= (modEndWallHeight - modStartWallHeight);
                                         }
                                     }
                                     aMod.ModularItems.Add(aTransom);

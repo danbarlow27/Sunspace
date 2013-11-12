@@ -14,6 +14,7 @@ namespace SunspaceDealerDesktop
         private double thickness;
         private bool fireProtection;
         private bool thermadeck;
+        private bool alumSkinOSB;
         private bool acrylic;
         private bool gutters;
         private bool gutterPro;

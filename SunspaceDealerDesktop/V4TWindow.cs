@@ -1,49 +1,52 @@
-﻿using System;
+﻿
+/// dummy class, will add proper attributes and methods during the back-end phase
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace SunspaceDealerDesktop
 {
-    public class Window : ModuleItem
+    public class V4TWindow : VinylWindow 
     {
         #region Attributes
-        private string windowStyle;
+        private string windowType;
         private string screenType;
-        private float leftHeight;
-        private float rightHeight;
-        private float width;
+        private float startHeight;
+        private float endHeight;
+        private float length;
         private string frameColour;
-        private float spreaderBar; //this is in vinyl window class, but here also to suppress errors
-        private int numVents; //this is in vinyl window class, but here also to suppress errors
+        private float spreaderBar;
+        private int numVents;
         #endregion
 
         #region Constructors
 
-        public Window()
+        public V4TWindow()
         {
-            WindowStyle = "";
+            WindowType = "";
             ScreenType = "";
-            LeftHeight = 0.0f;
-            RightHeight = 0.0f;
-            Width = 0.0f;
+            StartHeight = 0.0f;
+            EndHeight = 0.0f;
+            Length = 0.0f;
             FrameColour = "";
-            //SpreaderBar = -1f;
-            //NumVents = 0;
+            SpreaderBar = -1f;
+            NumVents = 0;
         }
 
         #endregion
 
         #region Accessors
-        public string WindowStyle
+        public string WindowType
         {
             get
             {
-                return windowStyle;
+                return windowType;
             }
             set
             {
-                windowStyle = value;
+                windowType = value;
             }
         }
 
@@ -59,39 +62,39 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public float LeftHeight
+        public float StartHeight
         {
             get
             {
-                return leftHeight;
+                return startHeight;
             }
             set
             {
-                leftHeight = value;
+                startHeight = value;
             }
         }
 
-        public float RightHeight
+        public float EndHeight
         {
             get
             {
-                return rightHeight;
+                return endHeight;
             }
             set
             {
-                rightHeight = value;
+                endHeight = value;
             }
         }
 
-        public float Width
+        public float Length
         {
             get
             {
-                return width;
+                return length;
             }
             set
             {
-                width = value;
+                length = value;
             }
         }
 
@@ -107,7 +110,7 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public float SpreaderBar  //this is in vinyl window class, but here also to suppress errors
+        public float SpreaderBar
         {
             get
             {
@@ -119,7 +122,7 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public int NumVents  //this is in vinyl window class, but here also to suppress errors
+        public int NumVents
         {
             get
             {

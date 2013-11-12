@@ -437,6 +437,13 @@ div.tblWallLengths table {
 
 /* #endregion */
 
+/* LABEL FORMATTING */
+.labelFormatting {
+    display:inline-block;
+    width:140px;
+    vertical-align:top;
+}
+
 
 
 /******************************************

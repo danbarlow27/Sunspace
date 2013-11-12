@@ -103,7 +103,7 @@ namespace SunspaceDealerDesktop
 
                 Label windowTitleLBL = new Label();
                 windowTitleLBL.ID = "lblWindowTitle" + title;
-                windowTitleLBL.Text = "Select Window Details:";
+                windowTitleLBL.Text = "Select Window Details";
                 windowTitleLBL.Attributes.Add("style", "font-weight:bold;");
 
                 windowTitleLBLCell.Controls.Add(windowTitleLBL);
@@ -128,7 +128,7 @@ namespace SunspaceDealerDesktop
 
                 Label windowSpreaderBarLBL = new Label();
                 windowSpreaderBarLBL.ID = "lblWindowSpreaderBarRad" + title;
-                windowSpreaderBarLBL.Text = " Spreader Bar";
+                windowSpreaderBarLBL.Text = " Spreader Bar:";
 
                 CheckBox windowSpreaderBarCHK = new CheckBox();
                 windowSpreaderBarCHK.ID = "chkWindowSpreaderBar" + title;
@@ -152,7 +152,7 @@ namespace SunspaceDealerDesktop
 
                 Label windowStyleLBL = new Label();
                 windowStyleLBL.ID = "lblWindowStyle" + title;
-                windowStyleLBL.Text = "Style";
+                windowStyleLBL.Text = "Style:";
 
                 DropDownList windowStyleDDL = new DropDownList();
                 windowStyleDDL.ID = "ddlWindowStyle" + title;
@@ -164,14 +164,12 @@ namespace SunspaceDealerDesktop
 
                     ListItem v4t = new ListItem("Vertical 4 Track", "Vertical 4 Track");
                     ListItem h2t = new ListItem("Horizontal 2 Track", "Horizontal 2 Track");
-                    ListItem h3t = new ListItem("Horizontal 3 Track", "Horizontal 3 Track");
                     ListItem h4t = new ListItem("Horizontal 4 Track", "Horizontal 4 Track");
                     ListItem fixedLite = new ListItem("Vinyl Fixed Lite", "Vinyl Fixed Lite");
                     ListItem trap = new ListItem("Vinyl Trapezoid", "Vinyl Trapezoid");
 
                     windowStyleDDL.Items.Add(v4t);
                     windowStyleDDL.Items.Add(h2t);
-                    windowStyleDDL.Items.Add(h3t);
                     windowStyleDDL.Items.Add(h4t);
                     windowStyleDDL.Items.Add(fixedLite);
                     windowStyleDDL.Items.Add(trap);
@@ -261,6 +259,53 @@ namespace SunspaceDealerDesktop
                 windowHeightRow.Cells.Add(windowHeightDDLCell);
 
                 #endregion
+
+
+                #region Table:Sixth Row Window "As-if" Height (tblWindowDetails)
+
+                TableRow windowAsIfHeightRow = new TableRow();
+                windowAsIfHeightRow.ID = "rowWindowAsIfHeight" + title;
+                windowAsIfHeightRow.Attributes.Add("style", "display:none;");
+                TableCell windowAsIfHeightLBLCell = new TableCell();
+                TableCell windowAsIfHeightTXTCell = new TableCell();
+                TableCell windowAsIfHeightDDLCell = new TableCell();
+
+                Label windowAsIfHeightLBL = new Label();
+                windowAsIfHeightLBL.ID = "lblWindowAsIfHeight" + title;
+                windowAsIfHeightLBL.Text = "Build As If:";
+
+                TextBox windowAsIfHeightTXT = new TextBox();
+                windowAsIfHeightTXT.ID = "txtWindowAsIfHeight" + title;
+                windowAsIfHeightTXT.CssClass = "txtField txtWindowInput";
+                windowAsIfHeightTXT.Attributes.Add("maxlength", "3");
+                windowAsIfHeightTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+
+                DropDownList inchAsIfHeight = new DropDownList();
+                inchAsIfHeight.ID = "ddlWindowAsIfHeight" + title;
+                inchAsIfHeight.Items.Add(lst0);
+                inchAsIfHeight.Items.Add(lst18);
+                inchAsIfHeight.Items.Add(lst14);
+                inchAsIfHeight.Items.Add(lst38);
+                inchAsIfHeight.Items.Add(lst12);
+                inchAsIfHeight.Items.Add(lst58);
+                inchAsIfHeight.Items.Add(lst34);
+                inchAsIfHeight.Items.Add(lst78);
+
+                windowAsIfHeightLBL.AssociatedControlID = "txtWindowAsIfHeight" + title;
+
+
+                windowAsIfHeightLBLCell.Controls.Add(windowAsIfHeightLBL);
+                windowAsIfHeightTXTCell.Controls.Add(windowAsIfHeightTXT);
+                windowAsIfHeightDDLCell.Controls.Add(inchAsIfHeight);
+
+                tblWindowDetails.Rows.Add(windowAsIfHeightRow);
+
+                windowAsIfHeightRow.Cells.Add(windowAsIfHeightLBLCell);
+                windowAsIfHeightRow.Cells.Add(windowAsIfHeightTXTCell);
+                windowAsIfHeightRow.Cells.Add(windowAsIfHeightDDLCell);
+
+                #endregion
+
 
                 #region Table:Sixth Row Trapezoid Window Left Height (tblWindowDetails)
 
@@ -402,20 +447,19 @@ namespace SunspaceDealerDesktop
 
                 #region Table:Twelfth Row Window V4T Number Of Vents (tblWindowDetails)
 
-                TableRow windowNumberOfVentsRow = new TableRow();
-                windowNumberOfVentsRow.ID = "rowWindowNumberOfVents" + title;
-                windowNumberOfVentsRow.Attributes.Add("style", "display:none;");
-                TableCell windowNumberOfVentsLBLCell = new TableCell();
-                TableCell windowNumberOfVentsDDLCell = new TableCell();
+                TableRow windowV4TNumberOfVentsRow = new TableRow();
+                windowV4TNumberOfVentsRow.ID = "rowWindowV4TNumberOfVents" + title;
+                windowV4TNumberOfVentsRow.Attributes.Add("style", "display:none;");
+                TableCell windowV4TNumberOfVentsLBLCell = new TableCell();
+                TableCell windowV4TNumberOfVentsDDLCell = new TableCell();
 
-                Label windowNumberOfVentsLBL = new Label();
-                windowNumberOfVentsLBL.ID = "lblNumberOfVents" + title;
-                windowNumberOfVentsLBL.Text = "V4T Number Of Vents:";
+                Label windowV4TNumberOfVentsLBL = new Label();
+                windowV4TNumberOfVentsLBL.ID = "lblV4TNumberOfVents" + title;
+                windowV4TNumberOfVentsLBL.Text = "Number Of Vents:";
 
-                DropDownList windowNumberOfVentsDDL = new DropDownList();
-                windowNumberOfVentsDDL.ID = "ddlWindowNumberOfVents" + title;
-                windowNumberOfVentsDDL.Attributes.Add("onchange", "windowStyle('" + title + "');");
-                //ListItem V2 = new ListItem("2", "2");
+                DropDownList windowV4TNumberOfVentsDDL = new DropDownList();
+                windowV4TNumberOfVentsDDL.ID = "ddlWindowV4TNumberOfVents" + title;
+                windowV4TNumberOfVentsDDL.Attributes.Add("onchange", "windowStyle('" + title + "');");
                 ListItem V3 = new ListItem("3", "3");
                 ListItem V4 = new ListItem("4", "4");
                 ListItem V6S = new ListItem("6 Stereo", "6");
@@ -423,27 +467,30 @@ namespace SunspaceDealerDesktop
                 ListItem V9S = new ListItem("9 Stereo", "9");
                 ListItem V12S = new ListItem("12 Stereo", "12");
 
-                windowNumberOfVentsDDL.Items.Add(V3);
-                windowNumberOfVentsDDL.Items.Add(V4);
-                windowNumberOfVentsDDL.Items.Add(V6S);
-                windowNumberOfVentsDDL.Items.Add(V8S);
-                windowNumberOfVentsDDL.Items.Add(V9S);
-                windowNumberOfVentsDDL.Items.Add(V12S);
+                windowV4TNumberOfVentsDDL.Items.Add(V3);
+                windowV4TNumberOfVentsDDL.Items.Add(V4);
+                windowV4TNumberOfVentsDDL.Items.Add(V6S);
+                windowV4TNumberOfVentsDDL.Items.Add(V8S);
+                windowV4TNumberOfVentsDDL.Items.Add(V9S);
+                windowV4TNumberOfVentsDDL.Items.Add(V12S);
 
-                windowNumberOfVentsLBL.AssociatedControlID = "ddlWindowNumberOfVents" + title;
+                windowV4TNumberOfVentsLBL.AssociatedControlID = "ddlWindowV4TNumberOfVents" + title;
 
-                windowNumberOfVentsLBLCell.Controls.Add(windowNumberOfVentsLBL);
-                windowNumberOfVentsDDLCell.Controls.Add(windowNumberOfVentsDDL);
+                windowV4TNumberOfVentsLBLCell.Controls.Add(windowV4TNumberOfVentsLBL);
+                windowV4TNumberOfVentsDDLCell.Controls.Add(windowV4TNumberOfVentsDDL);
 
-                windowNumberOfVentsRow.Cells.Add(windowNumberOfVentsLBLCell);
-                windowNumberOfVentsRow.Cells.Add(windowNumberOfVentsDDLCell);
+                windowV4TNumberOfVentsRow.Cells.Add(windowV4TNumberOfVentsLBLCell);
+                windowV4TNumberOfVentsRow.Cells.Add(windowV4TNumberOfVentsDDLCell);
+
+                #endregion
+
 
                 #region Uneven Vents Checkbox
 
                 TableCell windowUnevenVentsCHKCell = new TableCell();
                 windowUnevenVentsCHKCell.Attributes.Add("style", "display:none;");
                 windowUnevenVentsCHKCell.ID = "cellWindowUnevenVents" + title;
-                
+
                 Label windowUnevenVentsLBLChk = new Label();
                 windowUnevenVentsLBLChk.ID = "lblWindowUnevenVents" + title;
 
@@ -463,11 +510,135 @@ namespace SunspaceDealerDesktop
                 windowUnevenVentsCHKCell.Controls.Add(windowUnevenVentsLBLChk);
                 windowUnevenVentsCHKCell.Controls.Add(windowUnevenVentsLBL);
 
-                windowNumberOfVentsRow.Cells.Add(windowUnevenVentsCHKCell);
+                windowV4TNumberOfVentsRow.Cells.Add(windowUnevenVentsCHKCell);
+
+
+                tblWindowDetails.Rows.Add(windowV4TNumberOfVentsRow);
 
                 #endregion
 
-                tblWindowDetails.Rows.Add(windowNumberOfVentsRow);
+                
+                #region H4T number of vents
+
+                TableRow windowH4TNumberOfVentsRow = new TableRow();
+                windowH4TNumberOfVentsRow.ID = "rowWindowH4TNumberOfVents" + title;
+                windowH4TNumberOfVentsRow.Attributes.Add("style", "display:none;");
+                TableCell windowH4TNumberOfVentsLBLCell = new TableCell();
+                TableCell windowH4TNumberOfVentsDDLCell = new TableCell();
+
+                Label windowH4TNumberOfVentsLBL = new Label();
+                windowH4TNumberOfVentsLBL.ID = "lblH4TNumberOfVents" + title;
+                windowH4TNumberOfVentsLBL.Text = "Number Of Vents:";
+
+                DropDownList windowH4TNumberOfVentsDDL = new DropDownList();
+                windowH4TNumberOfVentsDDL.ID = "ddlWindowH4TNumberOfVents" + title;
+                windowH4TNumberOfVentsDDL.Attributes.Add("onchange", "windowStyle('" + title + "');");
+                
+                windowH4TNumberOfVentsDDL.Items.Add(V3);
+                windowH4TNumberOfVentsDDL.Items.Add(V4);
+                
+                windowH4TNumberOfVentsLBL.AssociatedControlID = "ddlWindowH4TNumberOfVents" + title;
+
+                windowH4TNumberOfVentsLBLCell.Controls.Add(windowH4TNumberOfVentsLBL);
+                windowH4TNumberOfVentsDDLCell.Controls.Add(windowH4TNumberOfVentsDDL);
+
+                windowH4TNumberOfVentsRow.Cells.Add(windowH4TNumberOfVentsLBLCell);
+                windowH4TNumberOfVentsRow.Cells.Add(windowH4TNumberOfVentsDDLCell);
+
+                tblWindowDetails.Rows.Add(windowH4TNumberOfVentsRow);
+
+                #endregion
+
+                #region Table:Eight Row Window Uneven vent top bottom both rad (tblWindowDetails)
+
+                TableRow windowTopBottomBothRadRow = new TableRow();
+                windowTopBottomBothRadRow.ID = "rowWindowTopBottomBothRad" + title;
+                windowTopBottomBothRadRow.Attributes.Add("style", "display:none;");
+                                
+                #region rad top
+
+                TableCell windowTopRadCell = new TableCell();
+                
+                Label windowTopRadLBLRad = new Label();
+                windowTopRadLBLRad.ID = "lblWindowTopRad" + title;
+
+                Label windowTopRadLBL = new Label();
+                windowTopRadLBL.ID = "lblWindowTopRadRad" + title;
+                windowTopRadLBL.Text = "Top";
+
+                RadioButton windowTopRadRAD = new RadioButton();
+                windowTopRadRAD.ID = "radWindowTopRad" + title;
+                windowTopRadRAD.Attributes.Add("value", "top");
+                windowTopRadRAD.GroupName = "Uneven" + title;
+                windowTopRadRAD.Attributes.Add("onclick", "windowStyle('" + title + "');");
+
+                windowTopRadLBLRad.AssociatedControlID = "radWindowTopRad" + title;
+                windowTopRadLBL.AssociatedControlID = "radWindowTopRad" + title;
+                
+                windowTopRadCell.Controls.Add(windowTopRadRAD);
+                windowTopRadCell.Controls.Add(windowTopRadLBLRad);
+                windowTopRadCell.Controls.Add(windowTopRadLBL);
+
+                #endregion
+
+                #region rad bottom
+
+                TableCell windowBottomRadCell = new TableCell();
+
+                Label windowBottomRadLBLRad = new Label();
+                windowBottomRadLBLRad.ID = "lblWindowBottomRad" + title;
+
+                Label windowBottomRadLBL = new Label();
+                windowBottomRadLBL.ID = "lblWindowBottomRadRad" + title;
+                windowBottomRadLBL.Text = "Bottom";
+
+                RadioButton windowBottomRadRAD = new RadioButton();
+                windowBottomRadRAD.ID = "radWindowBottomRad" + title;
+                windowBottomRadRAD.Attributes.Add("value", "bottom");
+                windowBottomRadRAD.GroupName = "Uneven" + title;
+                windowBottomRadRAD.Attributes.Add("onclick", "windowStyle('" + title + "');");
+                windowBottomRadRAD.Checked = true;
+
+                windowBottomRadLBLRad.AssociatedControlID = "radWindowBottomRad" + title;
+                windowBottomRadLBL.AssociatedControlID = "radWindowBottomRad" + title;
+
+                windowBottomRadCell.Controls.Add(windowBottomRadRAD);
+                windowBottomRadCell.Controls.Add(windowBottomRadLBLRad);
+                windowBottomRadCell.Controls.Add(windowBottomRadLBL);
+
+                #endregion
+
+                #region rad both
+
+                TableCell windowBothRadCell = new TableCell();
+
+                Label windowBothRadLBLRad = new Label();
+                windowBothRadLBLRad.ID = "lblWindowBothRad" + title;
+
+                Label windowBothRadLBL = new Label();
+                windowBothRadLBL.ID = "lblWindowBothRadRad" + title;
+                windowBothRadLBL.Text = "Both";
+
+                RadioButton windowBothRadRAD = new RadioButton();
+                windowBothRadRAD.ID = "radWindowBothRad" + title;
+                windowBothRadRAD.Attributes.Add("value", "both");
+                windowBothRadRAD.GroupName = "Uneven" + title;
+                windowBothRadRAD.Attributes.Add("onclick", "windowStyle('" + title + "');");
+
+                windowBothRadLBLRad.AssociatedControlID = "radWindowBothRad" + title;
+                windowBothRadLBL.AssociatedControlID = "radWindowBothRad" + title;
+
+                windowBothRadCell.Controls.Add(windowBothRadRAD);
+                windowBothRadCell.Controls.Add(windowBothRadLBLRad);
+                windowBothRadCell.Controls.Add(windowBothRadLBL);
+
+                #endregion
+
+                tblWindowDetails.Rows.Add(windowTopBottomBothRadRow);
+
+                windowTopBottomBothRadRow.Cells.Add(windowTopRadCell);
+                windowTopBottomBothRadRow.Cells.Add(windowBottomRadCell);
+                windowTopBottomBothRadRow.Cells.Add(windowBothRadCell);
 
                 #endregion
 
@@ -673,6 +844,40 @@ namespace SunspaceDealerDesktop
 
                 #endregion
 
+                #region Table:Sixteenth Row Window NOT V4T Vinyl Tint (tblWindowDetails)
+
+                TableRow windowTintNoMixedRow = new TableRow();
+                windowTintNoMixedRow.ID = "rowWindowTintNoMixed" + title;
+                windowTintNoMixedRow.Attributes.Add("style", "display:none;");
+                TableCell windowTintNoMixedLBLCell = new TableCell();
+                TableCell windowTintNoMixedDDLCell = new TableCell();
+
+                Label windowTintNoMixedLBL = new Label();
+                windowTintNoMixedLBL.ID = "lblWindowTintNoMixed" + title;
+                windowTintNoMixedLBL.Text = title + "Tint:";
+
+                DropDownList windowTintNoMixedDDL = new DropDownList();
+                windowTintNoMixedDDL.ID = "ddlWindowTintNoMixed" + title;
+                windowTintNoMixedDDL.Attributes.Add("onchange", "windowStyle('" + title + "');");
+
+                for (int j = 0; j < Constants.DOOR_V4T_VINYL_OPTIONS.Count() - 1; j++)
+                {
+                    windowTintNoMixedDDL.Items.Add(new ListItem(Constants.DOOR_V4T_VINYL_OPTIONS[j], Constants.DOOR_V4T_VINYL_OPTIONS[j]));
+                }
+                
+                //windowTintNoMixedDDL.Attributes.Add("onchange", "checkQuestion3()");
+                windowTintNoMixedLBL.AssociatedControlID = "ddlWindowTintNoMixed" + title;
+
+                windowTintNoMixedLBLCell.Controls.Add(windowTintNoMixedLBL);
+                windowTintNoMixedDDLCell.Controls.Add(windowTintNoMixedDDL);
+
+                tblWindowDetails.Rows.Add(windowTintNoMixedRow);
+
+                windowTintNoMixedRow.Cells.Add(windowTintNoMixedLBLCell);
+                windowTintNoMixedRow.Cells.Add(windowTintNoMixedDDLCell);
+
+                #endregion
+
                 #region Table:Third Row Color of Window (tblWindowDetails)
 
                 TableRow colourOfWindowRow = new TableRow();
@@ -794,7 +999,7 @@ namespace SunspaceDealerDesktop
 
                 Label windowScreenOptionsLBL = new Label();
                 windowScreenOptionsLBL.ID = "lblWindowScreenOptions" + title;
-                windowScreenOptionsLBL.Text = "Window Screen Option:";
+                windowScreenOptionsLBL.Text = "Screen:";
 
                 DropDownList windowScreenOptionsDDL = new DropDownList();
                 windowScreenOptionsDDL.ID = "ddlWindowScreenOptions" + title;
@@ -804,12 +1009,14 @@ namespace SunspaceDealerDesktop
                 ListItem betterVueInsect = new ListItem("Better Vue Insect Screen", "Better Vue Insect Screen");
                 ListItem solarInsect = new ListItem("Solar Insect Screening", "Solar Insect Screening");
                 ListItem tuff = new ListItem("Tuff Screen", "Tuff Screen");
+                ListItem noScreen = new ListItem("No Screen", "No Screen");
 
                 windowScreenOptionsDDL.Items.Add(standard);
                 windowScreenOptionsDDL.Items.Add(noSeeUms);
                 windowScreenOptionsDDL.Items.Add(betterVueInsect);
                 windowScreenOptionsDDL.Items.Add(solarInsect);
                 windowScreenOptionsDDL.Items.Add(tuff);
+                windowScreenOptionsDDL.Items.Add(noScreen);
 
                 //for (int j = 0; j < Constants.SCREEN_TYPES.Count(); j++)
                 //{
@@ -884,182 +1091,185 @@ namespace SunspaceDealerDesktop
                         windowsOrdered = (List<Window>)Session["windowsOrdered"];
                     }
 
-                    if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeCabana")
+                    if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeVinyl")
                     {
-                        //Window aWindow = getCabanaWindowFromForm();
-                        //windowsOrdered.Add(aWindow);
+                        Window aWindow = getVinylWindowFromForm();
+                        windowsOrdered.Add(aWindow);
                     }
-                    else if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeFrench")
+                    else if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeGlass")
                     {
-                        //Window aWindow = getFrenchWindowFromForm();
-                        //windowsOrdered.Add(aWindow);
+                        Window aWindow = getGlassWindowFromForm();
+                        windowsOrdered.Add(aWindow);
                     }
-                    else if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypePatio")
+                    else if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeScreen")
                     {
-                        //Window aWindow = getPatioWindowFromForm();
-                        //windowsOrdered.Add(aWindow);
+                        Window aWindow = getScreenWindowFromForm();
+                        windowsOrdered.Add(aWindow);
                     }
                     Session.Add("windowsOrdered", windowsOrdered);
                 }
                 #endregion
 
-                //populateSideBar(findNumberOfWindowTypes());
+                populateSideBar(findNumberOfWindowTypes());
 
 
             }
         }
 
 
-        #region getDoorFromForm methods
-        /*
+        #region getWindowFromForm methods
         /// <summary>
-        /// This function creates a CabanaWindow object and stores the
+        /// This function creates a VinylWindow object and stores the
         /// information entered on the page.
         /// </summary>
-        /// <returns>CabanaWindow aWindow</returns>
-        protected CabanaWindow getCabanaWindowFromForm()
+        /// <returns>VinylWindow aWindow</returns>
+        protected VinylWindow getVinylWindowFromForm()
         {
-            CabanaWindow aWindow = new CabanaWindow();
+            VinylWindow aWindow = new VinylWindow();
             //moduleitem attributes
             aWindow.FEndHeight = aWindow.FStartHeight = 0;
             aWindow.FLength = 0;
-            aWindow.Colour = Request.Form["ctl00$MainContent$ddlWindowColourCabana"];
-            aWindow.ItemType = "Window";
+            aWindow.Colour = Request.Form["ctl00$MainContent$ddlWindowColourVinyl"];
+            aWindow.ItemType = "Vinyl Window";
 
             //base attributes
-            aWindow.WindowType = "Cabana";
-            aWindow.WindowStyle = Request.Form["ctl00$MainContent$ddlWindowStyleCabana"];
-            aWindow.Kickplate = float.Parse(Request.Form["ctl00$MainContent$ddlWindowKickplateCabana"]);
+            //aWindow.WindowStyle = "Vinyl";
+            aWindow.WindowStyle = Request.Form["ctl00$MainContent$ddlWindowStyleVinyl"];
+            //aWindow.Kickplate = float.Parse(Request.Form["ctl00$MainContent$ddlWindowKickplateVinyl"]);
 
-            //cabana attributes
-            aWindow.Height = float.Parse(Request.Form["ctl00$MainContent$ddlWindowHeightCabana"]);
-            aWindow.Length = float.Parse(Request.Form["ctl00$MainContent$ddlWindowWidthCabana"]);
-            aWindow.GlassTint = Request.Form["ctl00$MainContent$ddlWindowGlassTintCabana"];
-            if (aWindow.WindowStyle == "Vertical 4 Track")
+            //vinyl attributes
+            if (aWindow.WindowStyle == "Vinyl Trapezoid")
             {
-                aWindow.VinylTint = Request.Form["ctl00$MainContent$ddlWindowVinylTintCabana"];
-                aWindow.WindowWindow = new Window();
-                aWindow.WindowWindow.NumVents = int.Parse(Request.Form["ctl00$MainContent$ddlWindowNumberOfVentsCabana"]);
-                if (aWindow.VinylTint == "Mixed")
-                {
-                    if (aWindow.WindowWindow.NumVents == 2)
-                    {
-                        aWindow.VinylTint = Request.Form["ctl00$MainContent$ddlWindowTint0Cabana"] + Request.Form["ctl00$MainContent$ddlWindowTint1Cabana"];
-                    }
-                    else if (aWindow.WindowWindow.NumVents == 3)
-                    {
-                        aWindow.VinylTint = Request.Form["ctl00$MainContent$ddlWindowTint0Cabana"]
-                            + Request.Form["ctl00$MainContent$ddlWindowTint1Cabana"]
-                            + Request.Form["ctl00$MainContent$ddlWindowTint2Cabana"];
-                    }
-                    else if (aWindow.WindowWindow.NumVents == 4)
-                    {
-                        aWindow.VinylTint = Request.Form["ctl00$MainContent$ddlWindowTint0Cabana"]
-                            + Request.Form["ctl00$MainContent$ddlWindowTint1Cabana"]
-                            + Request.Form["ctl00$MainContent$ddlWindowTint2Cabana"]
-                            + Request.Form["ctl00$MainContent$ddlWindowTint3Cabana"];
-                    }
-                }
+                aWindow.LeftHeight = float.Parse(Request.Form["ctl00$MainContent$ddlWindowLeftHeightVinyl"]);
+                aWindow.RightHeight = float.Parse(Request.Form["ctl00$MainContent$ddlWindowRightHeightVinyl"]);
             }
             else
             {
-                aWindow.ScreenType = Request.Form["ctl00$MainContent$ddlWindowScreenOptionsCabana"];
+                aWindow.LeftHeight = 
+                    aWindow.RightHeight = float.Parse(Request.Form["ctl00$MainContent$ddlWindowHeightVinyl"]);
             }
-            aWindow.Hinge = Request.Form["ctl00$MainContent$WindowHingeCabana"];
-            aWindow.Swing = Request.Form["ctl00$MainContent$SwingInOutCabana"];
-            aWindow.HardwareType = Request.Form["ctl00$MainContent$ddlWindowHardwareCabana"];
+            
+            aWindow.Width = float.Parse(Request.Form["ctl00$MainContent$ddlWindowWidthVinyl"]);
+            //aWindow.GlassTint = Request.Form["ctl00$MainContent$ddlWindowGlassTintVinyl"];
+            //if (aWindow.WindowStyle == "Vertical 4 Track")
+            //{
+            aWindow.VinylTint = Request.Form["ctl00$MainContent$ddlWindowVinylTintVinyl"];
+                //aWindow.WindowWindow = new Window();
 
-            return aWindow;
-        }
 
-        /// <summary>
-        /// This function creates a FrenchWindow object and stores the
-        /// information entered on the page.
-        /// </summary>
-        /// <returns>FrenchWindow aWindow</returns>
-        protected FrenchWindow getFrenchWindowFromForm()
-        {
-            FrenchWindow aWindow = new FrenchWindow();
-            //moduleitem attributes
-            aWindow.FEndHeight = aWindow.FStartHeight = 0;
-            aWindow.FLength = 0;
-            aWindow.Colour = Request.Form["ctl00$MainContent$ddlWindowColourFrench"];
-            aWindow.ItemType = "Window";
+            aWindow.NumVents = (aWindow.WindowStyle == "Vertical 4 Track") ? int.Parse(Request.Form["ctl00$MainContent$ddlWindowV4TNumberOfVentsVinyl"]) :
+                               (aWindow.WindowStyle == "Horizontal 4 Track") ? int.Parse(Request.Form["ctl00$MainContent$ddlWindowH4TNumberOfVentsVinyl"]) :
+                               (aWindow.WindowStyle == "Horizontal 2 Track") ? 2 : 0;
+            
 
-            //base attributes
-            aWindow.WindowType = "French";
-            aWindow.WindowStyle = Request.Form["ctl00$MainContent$ddlWindowStyleFrench"];
-            aWindow.Kickplate = float.Parse(Request.Form["ctl00$MainContent$ddlWindowKickplateFrench"]);
-
-            //french attributes
-            aWindow.Height = float.Parse(Request.Form["ctl00$MainContent$ddlWindowHeightFrench"]);
-            aWindow.Length = float.Parse(Request.Form["ctl00$MainContent$ddlWindowWidthFrench"]);
-            aWindow.GlassTint = Request.Form["ctl00$MainContent$ddlWindowGlassTintFrench"];
-            if (aWindow.WindowStyle == "Vertical 4 Track")
+            if (aWindow.VinylTint == "Mixed")
             {
-                aWindow.VinylTint = Request.Form["ctl00$MainContent$ddlWindowVinylTintFrench"];
-                aWindow.WindowWindow = new Window();
-                aWindow.WindowWindow.NumVents = int.Parse(Request.Form["ctl00$MainContent$ddlWindowNumberOfVentsFrench"]);
-                if (aWindow.VinylTint == "Mixed")
+                if (aWindow.NumVents == 2)
                 {
-                    if (aWindow.WindowWindow.NumVents == 2)
-                    {
-                        aWindow.VinylTint = Request.Form["ctl00$MainContent$ddlWindowTint0French"]
-                            + Request.Form["ctl00$MainContent$ddlWindowTint1French"];
-                    }
-                    else if (aWindow.WindowWindow.NumVents == 3)
-                    {
-                        aWindow.VinylTint = Request.Form["ctl00$MainContent$ddlWindowTint0French"]
-                            + Request.Form["ctl00$MainContent$ddlWindowTint1French"]
-                            + Request.Form["ctl00$MainContent$ddlWindowTint2French"];
-                    }
-                    else if (aWindow.WindowWindow.NumVents == 4)
-                    {
-                        aWindow.VinylTint = Request.Form["ctl00$MainContent$ddlWindowTint0French"]
-                            + Request.Form["ctl00$MainContent$ddlWindowTint1French"]
-                            + Request.Form["ctl00$MainContent$ddlWindowTint2French"]
-                            + Request.Form["ctl00$MainContent$ddlWindowTint3French"];
-                    }
+                    aWindow.VinylTint = Request.Form["ctl00$MainContent$ddlWindowTint0Vinyl"] + Request.Form["ctl00$MainContent$ddlWindowTint1Vinyl"];
+                }
+                else if (aWindow.NumVents == 3)
+                {
+                    aWindow.VinylTint = Request.Form["ctl00$MainContent$ddlWindowTint0Vinyl"]
+                        + Request.Form["ctl00$MainContent$ddlWindowTint1Vinyl"]
+                        + Request.Form["ctl00$MainContent$ddlWindowTint2Vinyl"];
+                }
+                else if (aWindow.NumVents == 4)
+                {
+                    aWindow.VinylTint = Request.Form["ctl00$MainContent$ddlWindowTint0Vinyl"]
+                        + Request.Form["ctl00$MainContent$ddlWindowTint1Vinyl"]
+                        + Request.Form["ctl00$MainContent$ddlWindowTint2Vinyl"]
+                        + Request.Form["ctl00$MainContent$ddlWindowTint3Vinyl"];
                 }
             }
-            aWindow.ScreenType = Request.Form["ctl00$MainContent$ddlWindowScreenOptionsFrench"];
-            aWindow.OperatingWindow = Request.Form["ctl00$MainContent$PrimaryOperatorFrench"];
-            aWindow.Swing = Request.Form["ctl00$MainContent$SwingInOutFrench"];
-            aWindow.HardwareType = Request.Form["ctl00$MainContent$ddlWindowHardwareFrench"];
+            //}
+            //else
+            //{
+            aWindow.ScreenType = Request.Form["ctl00$MainContent$ddlWindowScreenOptionsVinyl"];
+            //}
+            //aWindow.Hinge = Request.Form["ctl00$MainContent$WindowHingeVinyl"];
+            //aWindow.Swing = Request.Form["ctl00$MainContent$SwingInOutVinyl"];
+            //aWindow.HardwareType = Request.Form["ctl00$MainContent$ddlWindowHardwareVinyl"];
 
             return aWindow;
         }
 
+        
         /// <summary>
-        /// This function creates a PatioWindow object and stores the
+        /// This function creates a GlassWindow object and stores the
         /// information entered on the page.
         /// </summary>
-        /// <returns>PatioWindow aWindow</returns>
-        protected PatioWindow getPatioWindowFromForm()
+        /// <returns>GlassWindow aWindow</returns>
+        protected GlassWindow getGlassWindowFromForm()
         {
-            PatioWindow aWindow = new PatioWindow();
+            GlassWindow aWindow = new GlassWindow();
             //moduleitem attributes
             aWindow.FEndHeight = aWindow.FStartHeight = 0;
             aWindow.FLength = 0;
-            aWindow.Colour = Request.Form["ctl00$MainContent$ddlWindowColourPatio"];
-            aWindow.ItemType = "Window";
+            aWindow.Colour = Request.Form["ctl00$MainContent$ddlWindowColourGlass"];
+            aWindow.ItemType = "Glass Window";
 
             //base attributes
-            aWindow.WindowType = "Patio";
-            aWindow.WindowStyle = Request.Form["ctl00$MainContent$ddlWindowStylePatio"];
-            //aWindow.ScreenType = ""; //CHANGEME
-            aWindow.Kickplate = float.Parse(Request.Form["ctl00$MainContent$ddlWindowKickplatePatio"]);
+            //aWindow.WindowStyle = "Glass";
+            aWindow.WindowStyle = Request.Form["ctl00$MainContent$ddlWindowStyleGlass"];
+            //aWindow.Kickplate = float.Parse(Request.Form["ctl00$MainContent$ddlWindowKickplateGlass"]);
 
-            //patio attributes
-            aWindow.Height = float.Parse(Request.Form["ctl00$MainContent$ddlWindowHeightPatio"]);
-            aWindow.Length = float.Parse(Request.Form["ctl00$MainContent$ddlWindowWidthPatio"]);
-            aWindow.GlassTint = Request.Form["ctl00$MainContent$ddlWindowGlassTintPatio"];
-            //aWindow.ScreenType = ""; //CHANGEME
-            aWindow.OperatingWindow = Request.Form["ctl00$MainContent$PrimaryOperatorPatio"];
+            //glass attributes
+
+            if (aWindow.WindowStyle == "Aluminum Framed Trapezoid" || aWindow.WindowStyle == "PVC Framed Single Glazed Trapezoid")
+            {
+                aWindow.LeftHeight = float.Parse(Request.Form["ctl00$MainContent$ddlWindowLeftHeightGlass"]);
+                aWindow.RightHeight = float.Parse(Request.Form["ctl00$MainContent$ddlWindowRightHeightGlass"]);
+            }
+            else
+            {
+                aWindow.LeftHeight = 
+                    aWindow.RightHeight = float.Parse(Request.Form["ctl00$MainContent$ddlWindowHeightGlass"]);
+            }
+            
+            aWindow.Width = float.Parse(Request.Form["ctl00$MainContent$ddlWindowWidthGlass"]);
+            aWindow.GlassTint = Request.Form["ctl00$MainContent$ddlWindowGlassTintGlass"];
+
+            aWindow.ScreenType = Request.Form["ctl00$MainContent$ddlWindowScreenOptionsGlass"];
+            //aWindow.OperatingWindow = Request.Form["ctl00$MainContent$PrimaryOperatorGlass"];
+            //aWindow.Swing = Request.Form["ctl00$MainContent$SwingInOutGlass"];
+            //aWindow.HardwareType = Request.Form["ctl00$MainContent$ddlWindowHardwareGlass"];
 
             return aWindow;
         }
-        */
+
+        
+        /// <summary>
+        /// This function creates a ScreenWindow object and stores the
+        /// information entered on the page.
+        /// </summary>
+        /// <returns>ScreenWindow aWindow</returns>
+        protected ScreenWindow getScreenWindowFromForm()
+        {
+            ScreenWindow aWindow = new ScreenWindow();
+            //moduleitem attributes
+            aWindow.FEndHeight = aWindow.FStartHeight = 0;
+            aWindow.FLength = 0;
+            aWindow.Colour = Request.Form["ctl00$MainContent$ddlWindowColourScreen"];
+            aWindow.ItemType = "Screen Window";
+
+            //base attributes
+            aWindow.WindowStyle = "Screen";
+            aWindow.WindowStyle = Request.Form["ctl00$MainContent$ddlWindowStyleScreen"];
+            //aWindow.ScreenType = ""; //CHANGEME
+            //aWindow.Kickplate = float.Parse(Request.Form["ctl00$MainContent$ddlWindowKickplateScreen"]);
+
+            //screen attributes
+            aWindow.LeftHeight = 
+                aWindow.RightHeight = float.Parse(Request.Form["ctl00$MainContent$ddlWindowHeightScreen"]);
+            
+            aWindow.Length = float.Parse(Request.Form["ctl00$MainContent$ddlWindowWidthScreen"]);
+            //aWindow.GlassTint = Request.Form["ctl00$MainContent$ddlWindowGlassTintScreen"];
+            aWindow.ScreenType = Request.Form["ctl00$MainContent$ddlWindowScreenOptionsScreen"];
+            //aWindow.OperatingWindow = Request.Form["ctl00$MainContent$PrimaryOperatorScreen"];
+
+            return aWindow;
+        }
         #endregion
 
 
@@ -1067,29 +1277,29 @@ namespace SunspaceDealerDesktop
         /// This function is used to find the amount of each type of 
         /// window that has been ordered.
         /// </summary>
-        /// <returns>Tuple<int,int,int>(cabanaCount,frenchCount,patioCount)</returns>
+        /// <returns>Tuple<int,int,int>(vinylCount,glassCount,screenCount)</returns>
         /// NOTE Tuple items:
-        /// Item1:Cabana window count
-        /// Item2:French window count
-        /// Item3:Patio window count
+        /// Item1:Vinyl window count
+        /// Item2:Glass window count
+        /// Item3:Screen window count
         private Tuple<int, int, int> findNumberOfWindowTypes()
         {
             int vinylCount = 0, glassCount = 0, screenCount = 0;
             windowsOrdered.ForEach(delegate(Window windowChecked)
             {
-                //if (windowChecked is CabanaWindow)
+                if (windowChecked is VinylWindow)
                     vinylCount++;
-                //else if (windowChecked is FrenchWindow)
+                else if (windowChecked is GlassWindow)
                     glassCount++;
-                //else if (windowChecked is PatioWindow)
+                else if (windowChecked is ScreenWindow)
                     screenCount++;
             });
-            //System.Diagnostics.Debug.Write("This is the cabana count: " + cabanaCount);
+            //System.Diagnostics.Debug.Write("This is the vinyl count: " + vinylCount);
             return new Tuple<int, int, int>(vinylCount, glassCount, screenCount);
         }
 
         #region populate side bar
-        /*
+        
         /// <summary>
         /// This function is used to populate the side bar which displays
         /// information regarding how many windows of each type have been ordered,
@@ -1106,94 +1316,116 @@ namespace SunspaceDealerDesktop
 
             if (windowTypeCounts.Item1 > 0)
             {
-                lblWindowPager.Controls.Add(new LiteralControl("<li id='cabanaWindows'>"));
+                lblWindowPager.Controls.Add(new LiteralControl("<li id='vinylWindows'>"));
 
 
-                Label cabanaLabel = new Label();
-                cabanaLabel.ID = "lblCabanaWindows";
-                cabanaLabel.Text = "Cabana Windows Ordered " + windowTypeCounts.Item1;
-                lblWindowPager.Controls.Add(cabanaLabel);
+                Label vinylLabel = new Label();
+                //vinylLabel.ID = "lblVinylWindows";
+                vinylLabel.Text = "Vinyl Windows Ordered " + windowTypeCounts.Item1;
+                lblWindowPager.Controls.Add(vinylLabel);
 
                 count = 1;
 
-                #region Creating Cabana window pager items
+                #region Creating Vinyl window pager items
                 foreach (Window aWindow in windowsOrdered)
                 {
-                    if (aWindow.WindowType == "Cabana")
+                    if (aWindow.ItemType == "Vinyl Window")
                     {
                         lblWindowPager.Controls.Add(new LiteralControl("<div class='toggleContent'>"));
 
-                        //CabanaWindow aCabana = (CabanaWindow)aWindow;
+                        VinylWindow aVinyl = (VinylWindow)aWindow;
 
-                        Label cabanaCurrentWindow = new Label();
-                        cabanaCurrentWindow.ID = "lblCabanaCabana" + count;
-                        cabanaCurrentWindow.Text = "Cabana Window " + count;
-                        lblWindowPager.Controls.Add(cabanaCurrentWindow);
+                        Label vinylCurrentWindow = new Label();
+                        //vinylCurrentWindow.ID = "lblVinylVinyl" + count;
+                        vinylCurrentWindow.Text = "Vinyl Window " + count;
+                        lblWindowPager.Controls.Add(vinylCurrentWindow);
 
-                        Label cabanaStyle = new Label();
-                        cabanaStyle.ID = "lblCabanaStyle" + count;
-                        //cabanaStyle.Text = "Style: " + aCabana.WindowStyle;
-                        lblWindowPager.Controls.Add(cabanaStyle);
+                        Label vinylStyle = new Label();
+                        //vinylStyle.ID = "lblVinylStyle" + count;
+                        vinylStyle.Text = "Style: " + aVinyl.WindowStyle;
+                        lblWindowPager.Controls.Add(vinylStyle);
 
-                        Label cabanaColour = new Label();
-                        cabanaColour.ID = "lblCabanaColour" + count;
-                        //cabanaColour.Text = "Colour: " + aCabana.Colour;
-                        lblWindowPager.Controls.Add(cabanaColour);
+                        Label vinylColour = new Label();
+                        //vinylColour.ID = "lblVinylColour" + count;
+                        vinylColour.Text = "Frame Colour: " + aVinyl.Colour;
+                        lblWindowPager.Controls.Add(vinylColour);
 
-                        Label cabanaKickplate = new Label();
-                        cabanaKickplate.ID = "lblCabanaKickplate" + count;
-                        //cabanaKickplate.Text = "Kickplate: " + String.Format("{0}", aCabana.Kickplate);
-                        lblWindowPager.Controls.Add(cabanaKickplate);
+                        //Label vinylKickplate = new Label();
+                        //vinylKickplate.ID = "lblVinylKickplate" + count;
+                        //vinylKickplate.Text = "Kickplate: " + String.Format("{0}", aVinyl.Kickplate);
+                        //lblWindowPager.Controls.Add(vinylKickplate);
 
-                        Label cabanaHeight = new Label();
-                        cabanaHeight.ID = "lblCabanaHeight" + count;
-                        //cabanaHeight.Text = "Height: " + String.Format("{0}", aCabana.Height);
-                        lblWindowPager.Controls.Add(cabanaHeight);
+                        if (aWindow.WindowStyle == "Vinyl Trapezoid")
+                        {
+                            Label vinylLeftHeight = new Label();
+                            //vinylLeftHeight.ID = "lblVinylLeftHeight" + count;
+                            vinylLeftHeight.Text = "Left Height: " + String.Format("{0}", aVinyl.LeftHeight);
+                            lblWindowPager.Controls.Add(vinylLeftHeight);
 
-                        Label cabanaLength = new Label();
-                        cabanaLength.ID = "lblCabanaLength" + count;
-                        //cabanaLength.Text = "Width: " + String.Format("{0}", aCabana.Length);
-                        lblWindowPager.Controls.Add(cabanaLength);
+                            Label vinylRightHeight = new Label();
+                            //vinylRightHeight.ID = "lblVinylRightHeight" + count;
+                            vinylRightHeight.Text = "Right Height: " + String.Format("{0}", aVinyl.RightHeight);
+                            lblWindowPager.Controls.Add(vinylRightHeight);
+                        }
+                        else
+                        {
+                            Label vinylHeight = new Label();
+                            //vinylHeight.ID = "lblVinylHeight" + count;
+                            vinylHeight.Text = "Height: " + String.Format("{0}", aVinyl.LeftHeight);
+                            lblWindowPager.Controls.Add(vinylHeight);
+                        }
 
-                        Label cabanaGlassTint = new Label();
-                        cabanaGlassTint.ID = "lblCabanaGlassTint" + count;
-                        //cabanaGlassTint.Text = "Glass Tint: " + aCabana.GlassTint;
-                        lblWindowPager.Controls.Add(cabanaGlassTint);
+                        Label vinylLength = new Label();
+                        //vinylLength.ID = "lblVinylLength" + count;
+                        vinylLength.Text = "Width: " + String.Format("{0}", aVinyl.Width);
+                        lblWindowPager.Controls.Add(vinylLength);
 
-                        //if (aCabana.WindowStyle == "Vertical 4 Track")
+                        //Label vinylGlassTint = new Label();
+                        //vinylGlassTint.ID = "lblVinylGlassTint" + count;
+                        //vinylGlassTint.Text = "Glass Tint: " + aVinyl.GlassTint;
+                        //lblWindowPager.Controls.Add(vinylGlassTint);
+
+                        //if (aVinyl.WindowStyle == "Vertical 4 Track")
                         //{
-                            Label cabanaNumVents = new Label();
-                            cabanaNumVents.ID = "lblCabanaNumVents" + count;
-                           // cabanaNumVents.Text = "No. Vents: " + String.Format("{0}", aCabana.WindowWindow.NumVents);
-                            lblWindowPager.Controls.Add(cabanaNumVents);
+                            Label vinylNumVents = new Label();
+                            //vinylNumVents.ID = "lblVinylNumVents" + count;
+                            vinylNumVents.Text = "No. Vents: " + String.Format("{0}", aVinyl.NumVents);
+                            lblWindowPager.Controls.Add(vinylNumVents);
+                        //}
+                            Label vinylVinylTint = new Label();
+                            //vinylVinylTint.ID = "lblVinylVinylTint" + count;
+                            vinylVinylTint.Text = "Vinyl Tint: " + aVinyl.VinylTint;
+                            lblWindowPager.Controls.Add(vinylVinylTint);
+                        
+                        //else
+                        //{
+                            Label vinylScreenType = new Label();
+                            //vinylScreenType.ID = "lblVinylScreenType" + count;
+                            vinylScreenType.Text = "Screen Type: " + aVinyl.ScreenType;
+                            lblWindowPager.Controls.Add(vinylScreenType);
+                        //}
 
-                            Label cabanaVinylTint = new Label();
-                            cabanaVinylTint.ID = "lblCabanaVinylTint" + count;
-                            //cabanaVinylTint.Text = "Vinyl Tint: " + aCabana.VinylTint;
-                            lblWindowPager.Controls.Add(cabanaVinylTint);
-                        }
-                        else
-                        {
-                            Label cabanaScreenType = new Label();
-                            cabanaScreenType.ID = "lblCabanaScreenType" + count;
-                            //cabanaScreenType.Text = "Screen Type: " + aCabana.ScreenType;
-                            lblWindowPager.Controls.Add(cabanaScreenType);
-                        }
 
-                        Label cabanaHinge = new Label();
-                        cabanaHinge.ID = "lblCabanaHinge" + count;
-                        //cabanaHinge.Text = "Hinge: " + aCabana.Hinge;
-                        lblWindowPager.Controls.Add(cabanaHinge);
+                            Label vinylSpreaderBar = new Label();
+                            //vinylSpreaderBar.ID = "lblVinylSpreaderBar" + count;
+                            vinylSpreaderBar.Text = "Spreader Bar: " + aVinyl.SpreaderBar;
+                            lblWindowPager.Controls.Add(vinylSpreaderBar);
 
-                        Label cabanaSwing = new Label();
-                        cabanaSwing.ID = "lblCabanaSwing" + count;
-                        //cabanaSwing.Text = "Swing: " + aCabana.Swing;
-                        lblWindowPager.Controls.Add(cabanaSwing);
 
-                        Label cabanaHardwareType = new Label();
-                        cabanaHardwareType.ID = "lblCabanaHardwareType" + count;
-                        //cabanaHardwareType.Text = "Hardware: " + aCabana.HardwareType;
-                        lblWindowPager.Controls.Add(cabanaHardwareType);
+                        //Label vinylHinge = new Label();
+                        //vinylHinge.ID = "lblVinylHinge" + count;
+                        //vinylHinge.Text = "Hinge: " + aVinyl.Hinge;
+                        //lblWindowPager.Controls.Add(vinylHinge);
+
+                        //Label vinylSwing = new Label();
+                        //vinylSwing.ID = "lblVinylSwing" + count;
+                        //vinylSwing.Text = "Swing: " + aVinyl.Swing;
+                        //lblWindowPager.Controls.Add(vinylSwing);
+
+                        //Label vinylHardwareType = new Label();
+                        //vinylHardwareType.ID = "lblVinylHardwareType" + count;
+                        //vinylHardwareType.Text = "Hardware: " + aVinyl.HardwareType;
+                        //lblWindowPager.Controls.Add(vinylHardwareType);
 
 
                         lblWindowPager.Controls.Add(new LiteralControl("</div>"));
@@ -1204,187 +1436,206 @@ namespace SunspaceDealerDesktop
                 #endregion
 
                 lblWindowPager.Controls.Add(new LiteralControl("</li>"));
-            }
-        
-            if (windowTypeCounts.Item2 > 0)
-            {
-                lblWindowPager.Controls.Add(new LiteralControl("<li id='frenchWindows'>"));
 
-                Label frenchLabel = new Label();
-                frenchLabel.ID = "lblFrenchWindows";
-                frenchLabel.Text = "French Windows Ordered " + windowTypeCounts.Item2;
-                lblWindowPager.Controls.Add(frenchLabel);
 
-                count = 1;
-
-                #region Creating French window pager items
-                foreach (Window aWindow in windowsOrdered)
+                if (windowTypeCounts.Item2 > 0)
                 {
-                    if (aWindow.WindowType == "French")
+                    lblWindowPager.Controls.Add(new LiteralControl("<li id='glassWindows'>"));
+
+                    Label glassLabel = new Label();
+                    glassLabel.ID = "lblGlassWindows";
+                    glassLabel.Text = "Glass Windows Ordered " + windowTypeCounts.Item2;
+                    lblWindowPager.Controls.Add(glassLabel);
+
+                    count = 1;
+
+                    #region Creating Glass window pager items
+                    foreach (Window aWindow in windowsOrdered)
                     {
-                        lblWindowPager.Controls.Add(new LiteralControl("<div class='toggleContent'>"));
-
-                        FrenchWindow aFrench = (FrenchWindow)aWindow;
-
-                        Label frenchCurrentWindow = new Label();
-                        frenchCurrentWindow.ID = "lblFrenchFrench" + count;
-                        frenchCurrentWindow.Text = "French Window " + count;
-                        lblWindowPager.Controls.Add(frenchCurrentWindow);
-
-                        Label frenchStyle = new Label();
-                        frenchStyle.ID = "lblFrenchStyle" + count;
-                        frenchStyle.Text = "Style: " + aFrench.WindowStyle;
-                        lblWindowPager.Controls.Add(frenchStyle);
-
-                        Label frenchColour = new Label();
-                        frenchColour.ID = "lblFrenchColour" + count;
-                        frenchColour.Text = "Colour: " + aFrench.Colour;
-                        lblWindowPager.Controls.Add(frenchColour);
-
-                        Label frenchKickplate = new Label();
-                        frenchKickplate.ID = "lblFrenchKickplate" + count;
-                        frenchKickplate.Text = "Kickplate: " + String.Format("{0}", aFrench.Kickplate);
-                        lblWindowPager.Controls.Add(frenchKickplate);
-
-                        Label frenchHeight = new Label();
-                        frenchHeight.ID = "lblFrenchHeight" + count;
-                        frenchHeight.Text = "Height: " + String.Format("{0}", aFrench.Height);
-                        lblWindowPager.Controls.Add(frenchHeight);
-
-                        Label frenchLength = new Label();
-                        frenchLength.ID = "lblFrenchLength" + count;
-                        frenchLength.Text = "Width: " + String.Format("{0}", aFrench.Length);
-                        lblWindowPager.Controls.Add(frenchLength);
-
-                        Label frenchGlassTint = new Label();
-                        frenchGlassTint.ID = "lblFrenchGlassTint" + count;
-                        frenchGlassTint.Text = "Glass Tint: " + aFrench.GlassTint;
-                        lblWindowPager.Controls.Add(frenchGlassTint);
-
-                        if (aFrench.WindowStyle == "Vertical 4 Track")
+                        if (aWindow.ItemType == "Glass Window")
                         {
-                            Label frenchNumVents = new Label();
-                            frenchNumVents.ID = "lblFrenchNumVents" + count;
-                            frenchNumVents.Text = "No. Vents: " + String.Format("{0}", aFrench.WindowWindow.NumVents);
-                            lblWindowPager.Controls.Add(frenchNumVents);
+                            lblWindowPager.Controls.Add(new LiteralControl("<div class='toggleContent'>"));
 
-                            Label frenchVinylTint = new Label();
-                            frenchVinylTint.ID = "lblFrenchVinylTint" + count;
-                            frenchVinylTint.Text = "Vinyl Tint: " + aFrench.VinylTint;
-                            lblWindowPager.Controls.Add(frenchVinylTint);
+                            GlassWindow aGlass = (GlassWindow)aWindow;
+
+                            Label glassCurrentWindow = new Label();
+                            glassCurrentWindow.ID = "lblGlassGlass" + count;
+                            glassCurrentWindow.Text = "Glass Window " + count;
+                            lblWindowPager.Controls.Add(glassCurrentWindow);
+
+                            Label glassStyle = new Label();
+                            glassStyle.ID = "lblGlassStyle" + count;
+                            glassStyle.Text = "Style: " + aGlass.WindowStyle;
+                            lblWindowPager.Controls.Add(glassStyle);
+
+                            Label glassColour = new Label();
+                            glassColour.ID = "lblGlassColour" + count;
+                            glassColour.Text = "Frame Colour: " + aGlass.Colour;
+                            lblWindowPager.Controls.Add(glassColour);
+
+                            //Label glassKickplate = new Label();
+                            //glassKickplate.ID = "lblGlassKickplate" + count;
+                            //glassKickplate.Text = "Kickplate: " + String.Format("{0}", aGlass.Kickplate);
+                            //lblWindowPager.Controls.Add(glassKickplate);
+
+                            if (aWindow.WindowStyle == "Aluminum Framed Trapezoid" || aWindow.WindowStyle == "PVC Framed Single Glazed Trapezoid")
+                            {
+                                Label glassLeftHeight = new Label();
+                                glassLeftHeight.ID = "lblGlassLeftHeight" + count;
+                                glassLeftHeight.Text = "Left Height: " + String.Format("{0}", aGlass.LeftHeight);
+                                lblWindowPager.Controls.Add(glassLeftHeight);
+
+                                Label glassRightHeight = new Label();
+                                glassRightHeight.ID = "lblGlassRightHeight" + count;
+                                glassRightHeight.Text = "Right Height: " + String.Format("{0}", aGlass.RightHeight);
+                                lblWindowPager.Controls.Add(glassRightHeight);
+                            }
+                            else
+                            {
+                                Label glassHeight = new Label();
+                                glassHeight.ID = "lblGlassHeight" + count;
+                                glassHeight.Text = "Height: " + String.Format("{0}", aGlass.LeftHeight);
+                                lblWindowPager.Controls.Add(glassHeight);
+                            }
+
+                            Label glassLength = new Label();
+                            glassLength.ID = "lblGlassLength" + count;
+                            glassLength.Text = "Width: " + String.Format("{0}", aGlass.Width);
+                            lblWindowPager.Controls.Add(glassLength);
+
+                            Label glassGlassTint = new Label();
+                            glassGlassTint.ID = "lblGlassGlassTint" + count;
+                            glassGlassTint.Text = "Glass Tint: " + aGlass.GlassTint;
+                            lblWindowPager.Controls.Add(glassGlassTint);
+
+                            //if (aGlass.WindowStyle == "Vertical 4 Track")
+                            //{
+                            //Label glassNumVents = new Label();
+                            //glassNumVents.ID = "lblGlassNumVents" + count;
+                            //glassNumVents.Text = "No. Vents: " + String.Format("{0}", aGlass.NumVents);
+                            //lblWindowPager.Controls.Add(glassNumVents);
+
+                            //Label glassVinylTint = new Label();
+                            //glassVinylTint.ID = "lblGlassVinylTint" + count;
+                            //glassVinylTint.Text = "Glass Tint: " + aGlass.GlassTint;
+                            //lblWindowPager.Controls.Add(glassVinylTint);
+                            //}
+                            //else
+                            //{
+                            Label glassScreenType = new Label();
+                            glassScreenType.ID = "lblGlassScreenType" + count;
+                            glassScreenType.Text = "Screen Type: " + aGlass.ScreenType;
+                            lblWindowPager.Controls.Add(glassScreenType);
+                            //}
+
+                            //Label glassOperatingWindow = new Label();
+                            //glassOperatingWindow.ID = "lblGlassOperatingWindow" + count;
+                            //glassOperatingWindow.Text = "Operating Window: " + aGlass.OperatingWindow;
+                            //lblWindowPager.Controls.Add(glassOperatingWindow);
+
+                            //Label glassSwing = new Label();
+                            //glassSwing.ID = "lblGlassSwing" + count;
+                            //glassSwing.Text = "Swing: " + aGlass.Swing;
+                            //lblWindowPager.Controls.Add(glassSwing);
+
+                            //Label glassHardwareType = new Label();
+                            //glassHardwareType.ID = "lblGlassHardwareType" + count;
+                            //glassHardwareType.Text = "Hardware: " + aGlass.HardwareType;
+                            //lblWindowPager.Controls.Add(glassHardwareType);
+
+                            lblWindowPager.Controls.Add(new LiteralControl("</div>"));
+
+                            count++;
                         }
-                        else
-                        {
-                            Label frenchScreenType = new Label();
-                            frenchScreenType.ID = "lblFrenchScreenType" + count;
-                            frenchScreenType.Text = "Screen Type: " + aFrench.ScreenType;
-                            lblWindowPager.Controls.Add(frenchScreenType);
-                        }
-
-                        Label frenchOperatingWindow = new Label();
-                        frenchOperatingWindow.ID = "lblFrenchOperatingWindow" + count;
-                        frenchOperatingWindow.Text = "Operating Window: " + aFrench.OperatingWindow;
-                        lblWindowPager.Controls.Add(frenchOperatingWindow);
-
-                        Label frenchSwing = new Label();
-                        frenchSwing.ID = "lblFrenchSwing" + count;
-                        frenchSwing.Text = "Swing: " + aFrench.Swing;
-                        lblWindowPager.Controls.Add(frenchSwing);
-
-                        Label frenchHardwareType = new Label();
-                        frenchHardwareType.ID = "lblFrenchHardwareType" + count;
-                        frenchHardwareType.Text = "Hardware: " + aFrench.HardwareType;
-                        lblWindowPager.Controls.Add(frenchHardwareType);
-
-                        lblWindowPager.Controls.Add(new LiteralControl("</div>"));
-
-                        count++;
                     }
+                    #endregion
+
+                    lblWindowPager.Controls.Add(new LiteralControl("</li>"));
                 }
-                #endregion
 
-                lblWindowPager.Controls.Add(new LiteralControl("</li>"));
-            }
-          
-            if (windowTypeCounts.Item3 > 0)
-            {
-                lblWindowPager.Controls.Add(new LiteralControl("<li id='patioWindows'>"));
-
-                Label patioLabel = new Label();
-                patioLabel.ID = "lblPatioWindows";
-                patioLabel.Text = "Patio Windows Ordered " + windowTypeCounts.Item3;
-                lblWindowPager.Controls.Add(patioLabel);
-
-                count = 1;
-
-                #region Creating Patio window pager items
-                foreach (Window aWindow in windowsOrdered)
+                if (windowTypeCounts.Item3 > 0)
                 {
-                    if (aWindow.WindowType == "Patio")
+                    lblWindowPager.Controls.Add(new LiteralControl("<li id='screenWindows'>"));
+
+                    Label screenLabel = new Label();
+                    screenLabel.ID = "lblScreenWindows";
+                    screenLabel.Text = "Screen Windows Ordered " + windowTypeCounts.Item3;
+                    lblWindowPager.Controls.Add(screenLabel);
+
+                    count = 1;
+
+                    #region Creating Screen window pager items
+                    foreach (Window aWindow in windowsOrdered)
                     {
-                        lblWindowPager.Controls.Add(new LiteralControl("<div class='toggleContent'>"));
+                        if (aWindow.WindowStyle == "Screen")
+                        {
+                            lblWindowPager.Controls.Add(new LiteralControl("<div class='toggleContent'>"));
 
-                        PatioWindow aPatio = (PatioWindow)aWindow;
+                            ScreenWindow aScreen = (ScreenWindow)aWindow;
 
-                        Label patioCurrentWindow = new Label();
-                        patioCurrentWindow.ID = "lblPatioPatio" + count;
-                        patioCurrentWindow.Text = "Patio Window " + count;
-                        lblWindowPager.Controls.Add(patioCurrentWindow);
+                            Label screenCurrentWindow = new Label();
+                            screenCurrentWindow.ID = "lblScreenScreen" + count;
+                            screenCurrentWindow.Text = "Screen Window " + count;
+                            lblWindowPager.Controls.Add(screenCurrentWindow);
 
-                        Label patioStyle = new Label();
-                        patioStyle.ID = "lblPatioStyle" + count;
-                        patioStyle.Text = "Style: " + aPatio.WindowStyle;
-                        lblWindowPager.Controls.Add(patioStyle);
+                            Label screenStyle = new Label();
+                            screenStyle.ID = "lblScreenStyle" + count;
+                            screenStyle.Text = "Style: " + aScreen.WindowStyle;
+                            lblWindowPager.Controls.Add(screenStyle);
 
-                        Label patioColour = new Label();
-                        patioColour.ID = "lblPatioColour" + count;
-                        patioColour.Text = "Colour: " + aPatio.Colour;
-                        lblWindowPager.Controls.Add(patioColour);
+                            Label screenColour = new Label();
+                            screenColour.ID = "lblScreenColour" + count;
+                            screenColour.Text = "Frame Colour: " + aScreen.Colour;
+                            lblWindowPager.Controls.Add(screenColour);
 
-                        Label patioKickplate = new Label();
-                        patioKickplate.ID = "lblPatioKickplate" + count;
-                        patioKickplate.Text = "Kickplate: " + String.Format("{0}", aPatio.Kickplate);
-                        lblWindowPager.Controls.Add(patioKickplate);
+                            //Label screenKickplate = new Label();
+                            //screenKickplate.ID = "lblScreenKickplate" + count;
+                            //screenKickplate.Text = "Kickplate: " + String.Format("{0}", aScreen.Kickplate);
+                            //lblWindowPager.Controls.Add(screenKickplate);
 
-                        Label patioHeight = new Label();
-                        patioHeight.ID = "lblPatioHeight" + count;
-                        patioHeight.Text = "Height: " + String.Format("{0}", aPatio.Height);
-                        lblWindowPager.Controls.Add(patioHeight);
 
-                        Label patioLength = new Label();
-                        patioLength.ID = "lblPatioLength" + count;
-                        patioLength.Text = "Width: " + String.Format("{0}", aPatio.Length);
-                        lblWindowPager.Controls.Add(patioLength);
+                            Label screenHeight = new Label();
+                            screenHeight.ID = "lblScreenHeight" + count;
+                            screenHeight.Text = "Height: " + String.Format("{0}", aScreen.LeftHeight);
+                            lblWindowPager.Controls.Add(screenHeight);
 
-                        Label patioGlassTint = new Label();
-                        patioGlassTint.ID = "lblPatioGlassTint" + count;
-                        patioGlassTint.Text = "Glass Tint: " + aPatio.GlassTint;
-                        lblWindowPager.Controls.Add(patioGlassTint);
 
-                        Label patioScreenType = new Label();
-                        patioScreenType.ID = "lblPatioScreenType" + count;
-                        patioScreenType.Text = "Screen Type: " + aPatio.ScreenType;
-                        lblWindowPager.Controls.Add(patioScreenType);
+                            Label screenLength = new Label();
+                            screenLength.ID = "lblScreenLength" + count;
+                            screenLength.Text = "Width: " + String.Format("{0}", aScreen.Length);
+                            lblWindowPager.Controls.Add(screenLength);
 
-                        Label patioOperatingWindow = new Label();
-                        patioOperatingWindow.ID = "lblPatioOperatingWindow" + count;
-                        patioOperatingWindow.Text = "Operating Window: " + aPatio.OperatingWindow;
-                        lblWindowPager.Controls.Add(patioOperatingWindow);
+                            //Label screenGlassTint = new Label();
+                            //screenGlassTint.ID = "lblScreenGlassTint" + count;
+                            //screenGlassTint.Text = "Glass Tint: " + aScreen.GlassTint;
+                            //lblWindowPager.Controls.Add(screenGlassTint);
 
-                        lblWindowPager.Controls.Add(new LiteralControl("</div>"));
+                            Label screenScreenType = new Label();
+                            screenScreenType.ID = "lblScreenScreenType" + count;
+                            screenScreenType.Text = "Screen Type: " + aScreen.ScreenType;
+                            lblWindowPager.Controls.Add(screenScreenType);
 
-                        count++;
+                            //Label screenOperatingWindow = new Label();
+                            //screenOperatingWindow.ID = "lblScreenOperatingWindow" + count;
+                            //screenOperatingWindow.Text = "Operating Window: " + aScreen.OperatingWindow;
+                            //lblWindowPager.Controls.Add(screenOperatingWindow);
+
+                            lblWindowPager.Controls.Add(new LiteralControl("</div>"));
+
+                            count++;
+                        }
                     }
-                }
-                #endregion
-        
-                lblWindowPager.Controls.Add(new LiteralControl("</li>"));
-            }
+                    #endregion
 
-            lblWindowPager.Controls.Add(new LiteralControl("</ul>"));
+                    lblWindowPager.Controls.Add(new LiteralControl("</li>"));
+                }
+
+                lblWindowPager.Controls.Add(new LiteralControl("</ul>"));
+
+            }
 
         }
-*/
+
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
