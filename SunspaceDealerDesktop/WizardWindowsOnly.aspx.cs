@@ -1155,7 +1155,13 @@ namespace SunspaceDealerDesktop
             //{
             aWindow.VinylTint = Request.Form["ctl00$MainContent$ddlWindowVinylTintVinyl"];
                 //aWindow.WindowWindow = new Window();
-            aWindow.NumVents = int.Parse(Request.Form["ctl00$MainContent$ddlWindowNumberOfVentsVinyl"]);
+
+
+            aWindow.NumVents = (aWindow.WindowStyle == "Vertical 4 Track") ? int.Parse(Request.Form["ctl00$MainContent$ddlWindowV4TNumberOfVentsVinyl"]) :
+                               (aWindow.WindowStyle == "Horizontal 4 Track") ? int.Parse(Request.Form["ctl00$MainContent$ddlWindowH4TNumberOfVentsVinyl"]) :
+                               (aWindow.WindowStyle == "Horizontal 2 Track") ? 2 : 0;
+            
+
             if (aWindow.VinylTint == "Mixed")
             {
                 if (aWindow.NumVents == 2)
@@ -1314,7 +1320,7 @@ namespace SunspaceDealerDesktop
 
 
                 Label vinylLabel = new Label();
-                vinylLabel.ID = "lblVinylWindows";
+                //vinylLabel.ID = "lblVinylWindows";
                 vinylLabel.Text = "Vinyl Windows Ordered " + windowTypeCounts.Item1;
                 lblWindowPager.Controls.Add(vinylLabel);
 
@@ -1330,17 +1336,17 @@ namespace SunspaceDealerDesktop
                         VinylWindow aVinyl = (VinylWindow)aWindow;
 
                         Label vinylCurrentWindow = new Label();
-                        vinylCurrentWindow.ID = "lblVinylVinyl" + count;
+                        //vinylCurrentWindow.ID = "lblVinylVinyl" + count;
                         vinylCurrentWindow.Text = "Vinyl Window " + count;
                         lblWindowPager.Controls.Add(vinylCurrentWindow);
 
                         Label vinylStyle = new Label();
-                        vinylStyle.ID = "lblVinylStyle" + count;
+                        //vinylStyle.ID = "lblVinylStyle" + count;
                         vinylStyle.Text = "Style: " + aVinyl.WindowStyle;
                         lblWindowPager.Controls.Add(vinylStyle);
 
                         Label vinylColour = new Label();
-                        vinylColour.ID = "lblVinylColour" + count;
+                        //vinylColour.ID = "lblVinylColour" + count;
                         vinylColour.Text = "Frame Colour: " + aVinyl.Colour;
                         lblWindowPager.Controls.Add(vinylColour);
 
@@ -1352,25 +1358,25 @@ namespace SunspaceDealerDesktop
                         if (aWindow.WindowStyle == "Vinyl Trapezoid")
                         {
                             Label vinylLeftHeight = new Label();
-                            vinylLeftHeight.ID = "lblVinylLeftHeight" + count;
+                            //vinylLeftHeight.ID = "lblVinylLeftHeight" + count;
                             vinylLeftHeight.Text = "Left Height: " + String.Format("{0}", aVinyl.LeftHeight);
                             lblWindowPager.Controls.Add(vinylLeftHeight);
 
                             Label vinylRightHeight = new Label();
-                            vinylRightHeight.ID = "lblVinylRightHeight" + count;
+                            //vinylRightHeight.ID = "lblVinylRightHeight" + count;
                             vinylRightHeight.Text = "Right Height: " + String.Format("{0}", aVinyl.RightHeight);
                             lblWindowPager.Controls.Add(vinylRightHeight);
                         }
                         else
                         {
                             Label vinylHeight = new Label();
-                            vinylHeight.ID = "lblVinylHeight" + count;
+                            //vinylHeight.ID = "lblVinylHeight" + count;
                             vinylHeight.Text = "Height: " + String.Format("{0}", aVinyl.LeftHeight);
                             lblWindowPager.Controls.Add(vinylHeight);
                         }
 
                         Label vinylLength = new Label();
-                        vinylLength.ID = "lblVinylLength" + count;
+                        //vinylLength.ID = "lblVinylLength" + count;
                         vinylLength.Text = "Width: " + String.Format("{0}", aVinyl.Width);
                         lblWindowPager.Controls.Add(vinylLength);
 
@@ -1379,25 +1385,32 @@ namespace SunspaceDealerDesktop
                         //vinylGlassTint.Text = "Glass Tint: " + aVinyl.GlassTint;
                         //lblWindowPager.Controls.Add(vinylGlassTint);
 
-                        if (aVinyl.WindowStyle == "Vertical 4 Track")
-                        {
+                        //if (aVinyl.WindowStyle == "Vertical 4 Track")
+                        //{
                             Label vinylNumVents = new Label();
-                            vinylNumVents.ID = "lblVinylNumVents" + count;
+                            //vinylNumVents.ID = "lblVinylNumVents" + count;
                             vinylNumVents.Text = "No. Vents: " + String.Format("{0}", aVinyl.NumVents);
                             lblWindowPager.Controls.Add(vinylNumVents);
-                        }
+                        //}
                             Label vinylVinylTint = new Label();
-                            vinylVinylTint.ID = "lblVinylVinylTint" + count;
+                            //vinylVinylTint.ID = "lblVinylVinylTint" + count;
                             vinylVinylTint.Text = "Vinyl Tint: " + aVinyl.VinylTint;
                             lblWindowPager.Controls.Add(vinylVinylTint);
                         
                         //else
                         //{
                             Label vinylScreenType = new Label();
-                            vinylScreenType.ID = "lblVinylScreenType" + count;
+                            //vinylScreenType.ID = "lblVinylScreenType" + count;
                             vinylScreenType.Text = "Screen Type: " + aVinyl.ScreenType;
                             lblWindowPager.Controls.Add(vinylScreenType);
                         //}
+
+
+                            Label vinylSpreaderBar = new Label();
+                            //vinylSpreaderBar.ID = "lblVinylSpreaderBar" + count;
+                            vinylSpreaderBar.Text = "Spreader Bar: " + aVinyl.SpreaderBar;
+                            lblWindowPager.Controls.Add(vinylSpreaderBar);
+
 
                         //Label vinylHinge = new Label();
                         //vinylHinge.ID = "lblVinylHinge" + count;
