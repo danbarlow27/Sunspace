@@ -98,13 +98,18 @@ namespace SunspaceDealerDesktop
 
             if (ddlFloorType.SelectedValue == "Thermadeck")
             {
-                panelNumber = Convert.ToInt32(Convert.ToSingle(txtWidthDisplay.Text) / Constants.THERMADECK_PANEL_WIDTH);
+                float tempFloat = Convert.ToSingle(txtWidthDisplay.Text) / Constants.THERMADECK_PANEL_WIDTH;
+                panelNumber = (int)tempFloat;
                 float panelFloat = Convert.ToSingle(txtWidthDisplay.Text) / Constants.THERMADECK_PANEL_WIDTH;
 
                 if (panelFloat > panelNumber)
                 {
                     lastPanelSize = Convert.ToSingle(txtWidthDisplay.Text) - (panelNumber * Constants.THERMADECK_PANEL_WIDTH);
                     panelNumber++;
+                }
+                else
+                {
+                    lastPanelSize = Constants.THERMADECK_PANEL_WIDTH;
                 }
             }
 
@@ -125,10 +130,10 @@ namespace SunspaceDealerDesktop
             Session.Add("floorPanelNumber", panelNumber);
             Session.Add("floorLastPanelSize", lastPanelSize);
 
-            Session.Add("floorLedgerSetback", txtLedgerSetback + ddlLedgerSetbackInches.SelectedValue);
-            Session.Add("floorFrontSetback", txtFrontSetback + ddlFrontSetbackInches.SelectedValue);
-            Session.Add("floorSidesSetback", txtSidesSetback + ddlSidesSetbackInches.SelectedValue);
-            Session.Add("floorJointSetback", txtJointSetback + ddlJointSetbackInches.SelectedValue);
+            Session.Add("floorLedgerSetback", (Convert.ToSingle(txtLedgerSetback.Text) + Convert.ToSingle(ddlLedgerSetbackInches.SelectedValue)));
+            Session.Add("floorFrontSetback", (Convert.ToSingle(txtFrontSetback.Text) + Convert.ToSingle(ddlFrontSetbackInches.SelectedValue)));
+            Session.Add("floorSidesSetback", (Convert.ToSingle(txtSidesSetback.Text) + Convert.ToSingle(ddlSidesSetbackInches.SelectedValue)));
+            Session.Add("floorJointSetback", (Convert.ToSingle(txtJointSetback.Text) + Convert.ToSingle(ddlJointSetbackInches.SelectedValue)));
 
             //Now I know there's a column x row grid of panels
             Response.Redirect("ProjectPreview.aspx");

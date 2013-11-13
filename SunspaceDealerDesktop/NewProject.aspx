@@ -223,10 +223,31 @@
 
             //if its not blank, its valid
             if (document.getElementById("<%=hidProjectName.ClientID%>").value != "") {
-                //valid, so update pager and enable button
-                $('#<%=lblProjectNameAnswer.ClientID%>').text(document.getElementById("<%=hidProjectName.ClientID%>").value);
-                document.getElementById('pagerTwo').style.display = "inline";
-                document.getElementById('<%=btnQuestion2.ClientID%>').disabled = false;
+                var checkProjectName = true;
+                var anArray =  <%= unavailableProjectNames %>;
+
+                console.log("Declared");
+                for (var i=0;i<anArray.length;i++)
+                {
+                    console.log("Unavailable: " + anArray[i]);
+                    if (anArray[i] == document.getElementById("<%=hidProjectName.ClientID%>").value)
+                    {
+                        checkProjectName = false;
+                    }
+                }
+
+                if (checkProjectName == true)
+                {
+                    //valid, so update pager and enable button
+                    $('#<%=lblProjectNameAnswer.ClientID%>').text(document.getElementById("<%=hidProjectName.ClientID%>").value);
+                    document.getElementById('pagerTwo').style.display = "inline";
+                    document.getElementById('<%=btnQuestion2.ClientID%>').disabled = false;
+                }
+                else
+                {
+                    //error styling or something
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value = "Project name either invalid, or is already chosen.";
+                }
             }
             else {
                 //error styling or something

@@ -371,7 +371,7 @@
                 <h1>
                     <asp:Label ID="lblWindowDetails" runat="server" Text="Window Details"></asp:Label>
                 </h1>        
-                              
+    
                 <ul class="toggleOptions">
                     <asp:PlaceHolder ID="WindowOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
