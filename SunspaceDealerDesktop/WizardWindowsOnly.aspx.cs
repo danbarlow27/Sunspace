@@ -1086,9 +1086,10 @@ namespace SunspaceDealerDesktop
                 #region PostBack functionality to store windows
                 if (IsPostBack)
                 {
+                    System.Diagnostics.Debug.Write("This");
                     if ((List<Window>)Session["windowsOrdered"] != null)
-                    {
-                        windowsOrdered = (List<Window>)Session["windowsOrdered"];
+                    {                        
+                        windowsOrdered = (List<Window>)Session["windowsOrdered"];                        
                     }
 
                     if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeVinyl")
