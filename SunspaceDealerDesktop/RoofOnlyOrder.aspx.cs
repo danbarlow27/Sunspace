@@ -239,7 +239,7 @@ namespace SunspaceDealerDesktop
                         RoofOptions.Controls.Add(roofSunspaceGableLBLCheck);
                         RoofOptions.Controls.Add(roofSunspaceGableLBL);
 
-                        RoofOptions.Controls.Add(new LiteralControl("</li>"));
+                        RoofOptions.Controls.Add(new LiteralControl("</li>"));                        
 
                     }
                     #endregion
@@ -340,6 +340,35 @@ namespace SunspaceDealerDesktop
                         {
                             roofStripeColourDDL.Items.Add(new ListItem(Constants.ROOF_STRIPE_COLOURS[i], Constants.ROOF_STRIPE_COLOURS[i]));
                         }
+
+                        TableRow roofPanelTypeRow = new TableRow();
+                        TableCell roofPanelTypeLBLCell = new TableCell();
+                        TableCell roofPanelTypeDDLCell = new TableCell();
+
+                        Label panelTypeLabel = new Label();
+                        panelTypeLabel.ID = "lblPanelType" + title;
+                        panelTypeLabel.Text = "Panel Type: ";
+                        panelTypeLabel.AssociatedControlID = "ddlPanelType" + title;
+                        panelTypeLabel.CssClass = "labelFormatting";
+
+                        DropDownList panelTypeDropDown = new DropDownList();
+                        panelTypeDropDown.ID = "ddlPanelType" + title;
+                        panelTypeDropDown.CssClass = "txtField txtInput";
+
+                        for (int i = 0; i < Constants.ROOF_EXTRUSION_TYPE.Length; i++)
+                        {
+                            panelTypeDropDown.Items.Add(new ListItem(Constants.ROOF_EXTRUSION_TYPE[i], Constants.ROOF_EXTRUSION_TYPE[i]));
+                        }
+
+                        roofPanelTypeLBLCell.Controls.Add(panelTypeLabel);
+
+                        roofPanelTypeDDLCell.Controls.Add(panelTypeDropDown);
+
+                        tblRoofDetails.Rows.Add(roofPanelTypeRow);
+
+                        roofPanelTypeRow.Cells.Add(roofPanelTypeLBLCell);
+
+                        roofPanelTypeRow.Cells.Add(roofPanelTypeDDLCell);
 
                     }
                     #endregion
@@ -501,29 +530,77 @@ namespace SunspaceDealerDesktop
 
         private Roof getStudioFromForm()
         {
+            RoofItem aRoofItem = new RoofItem();
+            RoofModule aRoofModule = new RoofModule();
             Roof aRoof = new Roof();
+
+            //Variables that will be used to build the roof
+            float panelWidth;
+            string panelType;
+            string panelBeamType;
+            float panelBeamWidth;
+            float numberOfPanels;
+            float itemWidthTotal;
+            List<RoofItem> itemList = new List<RoofItem>();
+            float roofProjection = float.Parse(Request.Form["ctl00$MainContent$txtProjectionStudio"]);
+            float roofWidth = float.Parse(Request.Form["ctl00$MainContent$txtWidthStudio"]);
+
             string roofStyle = Request.Form["ctl00$MainContent$roofStyleRadiosStudio"];
 
-            aRoof.Type = "Studio";
-            aRoof.Width = float.Parse(Request.Form["ctl00$MainContent$txtWidthStudio"]);
-            aRoof.Projection = float.Parse(Request.Form["ctl00$MainContent$txtProjectionStudio"]);
+            //aRoof.Type = "Studio";
+            //aRoof.Width = float.Parse(Request.Form["ctl00$MainContent$txtWidthStudio"]);
+            //aRoof.Projection = float.Parse(Request.Form["ctl00$MainContent$txtProjectionStudio"]);
             //aRoof.Soffit = float.Parse(Request.Form["ctl00$MainContent$txtSoffitStudio"]);        DOESN'T EXIST IN ROOF.CS            
 
             if (roofStyle == "Alum. Skin or O.S.B.")
             {
-                aRoof.StripeColour = Request.Form["ctl00$MainContent$ddlRoofStripeColourStudioAlum. Skin or O.S.B."];
-                aRoof.Thickness = float.Parse(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessStudioAlum. Skin or O.S.B."]);
+                panelWidth = Constants.FOAM_PANEL_WIDTH;
+                panelType = "Foam Panel";
+                //aRoof.StripeColour = Request.Form["ctl00$MainContent$ddlRoofStripeColourStudioAlum. Skin or O.S.B."];
+                //aRoof.Thickness = float.Parse(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessStudioAlum. Skin or O.S.B."]);
             }
             else if (roofStyle == "Acrylic T-Bar System")
             {
+                panelBeamType = "T-Bar";
+                panelWidth = Constants.ACRYLIC_PANEL_WIDTH;
+                panelType = "Acrylic Panel";
                 //aRoof.AcrylicColour = Request.Form["ctl00$MainContent$ddlRoofAcrylicColourStudioAcrylic T-Bar System"];
-                aRoof.Thickness = float.Parse(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessStudioAcrylic T-Bar System"]);
+                //aRoof.Thickness = float.Parse(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessStudioAcrylic T-Bar System"]);
             }
             else
             {
+                panelBeamType = "None";
+                panelWidth = Constants.THERMADECK_PANEL_WIDTH;
+                panelType = "Thermadeck Panel";
                 //aRoof.MetalVapourBarrier = Request.Form["ctl00$MainContent$chkRoofBarrierStudioThermadeck System"];
-                aRoof.Thickness = float.Parse(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessStudioThermadeck System"]);
+                //aRoof.Thickness = float.Parse(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessStudioThermadeck System"]);
             }
+
+            numberOfPanels = (float)Math.Ceiling(roofWidth / panelWidth); //If it requires 'part' of a panel, that is essentially another panel, just cut. Cut will be handled later.
+
+            //if (roofStyle != "Thermadeck")
+            //{
+            //    //Add the first panel, because if we loop adding panel+seperator, we will end with one extra
+            //    itemList.Add(new RoofItem(panelType, roofProjection, panelWidth, -1f, -1f));
+
+            //    //loop adding seperator then panels, minus one iteration because one panel is already added
+            //    for (int i = 0; i < (numberOfPanels - 1); i++)
+            //    {
+            //        itemList.Add(new RoofItem(panelBeamType, roofProjection, (float)panelBeamWidth, -1f, -1f));
+            //        itemList.Add(new RoofItem(panelType, roofProjection, panelWidth, -1f, -1f));
+            //    }
+            //}
+            ////if it is thermadeck
+            //else
+            //{
+            //    for (int i = 0; i < numberOfPanels; i++)
+            //    {
+            //        itemList.Add(new RoofItem(panelType, roofProjection, panelWidth, -1f, -1f));
+            //    }
+            //}
+
+            itemWidthTotal = 0;
+
             return aRoof;
         }
         
