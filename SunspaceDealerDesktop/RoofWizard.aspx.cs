@@ -307,7 +307,7 @@ namespace SunspaceDealerDesktop
                 }
 
                 //changeme hardcoded supports to 0
-                Roof aRoof = new Roof("Dealer Gable", hidInteriorRoofSkin.Value, hidExteriorRoofSkin.Value, Convert.ToSingle(hidThickness.Value), isFireProtected, isThermadeck, hasGutters, gutterPro, gutterColour, hidStripeColour.Value, 0, Convert.ToInt32(hidExtraDownspouts.Value), roofProjection, roofWidth, gableModules);
+                Roof aRoof = new Roof("Dealer Gable", hidInteriorRoofSkin.Value, hidExteriorRoofSkin.Value, Convert.ToSingle(hidThickness.Value), isFireProtected, isThermadeck, hasGutters, gutterPro, gutterColour, hidStripeColour.Value, hidAcrylicColour.Value, 0, Convert.ToInt32(hidExtraDownspouts.Value), roofProjection, roofWidth, gableModules);
                 Session.Add("completedRoof", aRoof);
 
                 Response.Redirect("SkylightWizard.aspx");
@@ -394,7 +394,7 @@ namespace SunspaceDealerDesktop
                 }
 
                 //changeme hardcoded supports to 0
-                Roof aRoof = new Roof("Studio", hidInteriorRoofSkin.Value, hidExteriorRoofSkin.Value, Convert.ToSingle(hidThickness.Value), isFireProtected, isThermadeck, hasGutters, gutterPro, gutterColour, hidStripeColour.Value, 0, Convert.ToInt32(hidExtraDownspouts.Value), roofProjection, roofWidth, aModuleList);
+                Roof aRoof = new Roof("Studio", hidInteriorRoofSkin.Value, hidExteriorRoofSkin.Value, Convert.ToSingle(hidThickness.Value), isFireProtected, isThermadeck, hasGutters, gutterPro, gutterColour, hidStripeColour.Value, hidAcrylicColour.Value, 0, Convert.ToInt32(hidExtraDownspouts.Value), roofProjection, roofWidth, aModuleList);
                 Session.Add("completedRoof", aRoof);
 
                 Response.Redirect("SkylightWizard.aspx");

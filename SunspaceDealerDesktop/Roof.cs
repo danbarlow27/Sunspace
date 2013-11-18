@@ -20,6 +20,7 @@ namespace SunspaceDealerDesktop
         private bool gutterPro;
         private string gutterColour;
         private string stripeColour;
+        private string acrylicColour;
         private int numberSupports;
         private int extraDownspouts;
         private double projection;
@@ -41,6 +42,7 @@ namespace SunspaceDealerDesktop
             GutterPro=false;
             GutterColour = "";
             StripeColour = "";
+            AcrylicColour = "";
             NumberSupports=0;
             ExtraDownspouts=0;
             Projection=0;
@@ -48,7 +50,7 @@ namespace SunspaceDealerDesktop
             RoofModules = new List<RoofModule>();
         }
 
-        public Roof(string sentType, string sentInteriorSkin, string sentExteriorSkin, double sentThickness, bool sentFireProtection, bool sentThermadeck, bool sentGutters, bool sentGutterPro, string sentGutterColour, string sentStripeColour, int sentNumberSupports, int sentExtraDownspouts, double sentProjection, double sentWidth, List<RoofModule> sentModules)
+        public Roof(string sentType, string sentInteriorSkin, string sentExteriorSkin, double sentThickness, bool sentFireProtection, bool sentThermadeck, bool sentGutters, bool sentGutterPro, string sentGutterColour, string sentStripeColour, string sentAcrylicColour, int sentNumberSupports, int sentExtraDownspouts, double sentProjection, double sentWidth, List<RoofModule> sentModules)
         {
             Type = sentType;
             InteriorSkin = sentInteriorSkin;
@@ -60,6 +62,7 @@ namespace SunspaceDealerDesktop
             GutterPro = sentGutterPro;
             GutterColour = sentGutterColour;
             StripeColour = sentStripeColour;
+            AcrylicColour = sentAcrylicColour;
             NumberSupports = sentNumberSupports;
             ExtraDownspouts = sentExtraDownspouts;
             Projection = sentProjection;
@@ -212,6 +215,19 @@ namespace SunspaceDealerDesktop
             set
             {
                 stripeColour = value;
+            }
+        }
+
+        public string AcrylicColour
+        {
+            get
+            {
+                return acrylicColour;
+            }
+
+            set
+            {
+                acrylicColour = value;
             }
         }
 

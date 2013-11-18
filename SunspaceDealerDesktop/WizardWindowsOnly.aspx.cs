@@ -1141,7 +1141,36 @@ namespace SunspaceDealerDesktop
                 WindowOptions.Controls.Add(new LiteralControl("</div>"));
 
                 WindowOptions.Controls.Add(new LiteralControl("</li>"));
+                
+                #region PostBack functionality to store windows
+                if (IsPostBack)
+                {
+                    System.Diagnostics.Debug.Write("This");
+                    if ((List<Window>)Session["windowsOrdered"] != null)
+                    {                        
+                        windowsOrdered = (List<Window>)Session["windowsOrdered"];                        
+                    }
 
+                    if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeVinyl")
+                    {
+                        Window aWindow = getVinylWindowFromForm();
+                        windowsOrdered.Add(aWindow);
+                    }
+                    else if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeGlass")
+                    {
+                        Window aWindow = getGlassWindowFromForm();
+                        windowsOrdered.Add(aWindow);
+                    }
+                    else if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeScreen")
+                    {
+                        Window aWindow = getScreenWindowFromForm();
+                        windowsOrdered.Add(aWindow);
+                    }
+                    Session.Add("windowsOrdered", windowsOrdered);
+                }
+                #endregion
+
+                populateSideBar(findNumberOfWindowTypes());
             }
         }
 

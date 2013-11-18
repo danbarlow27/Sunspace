@@ -1354,7 +1354,6 @@ namespace SunspaceDealerDesktop
             {
                 lblDoorPager.Controls.Add(new LiteralControl("<li id='cabanaDoors'>"));
                 
-
                 Label cabanaLabel = new Label();
                 cabanaLabel.ID = "lblCabanaDoors";
                 cabanaLabel.Text = "Cabana Doors Ordered " + doorTypeCounts.Item1;

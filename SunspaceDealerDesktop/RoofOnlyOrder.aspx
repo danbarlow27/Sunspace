@@ -21,7 +21,7 @@
                     <asp:PlaceHolder ID="RoofOptions" runat="server"></asp:PlaceHolder>
                 </ul>            
 
-                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Done"/>
+                <asp:Button ID="btnRoof" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Done"/>
 
             </div>
             <%-- end #slide3 --%>
@@ -34,8 +34,12 @@
     <div id="sidebar">
         <div id="paging-wrapper">    
             <div id="paging"> 
+                
                 <h2>Roof Specifications</h2>
-                <asp:PlaceHolder ID="lblRoofPager" runat="server"></asp:PlaceHolder>  
+                
+                <ul class="toggleOptions">
+                    <asp:PlaceHolder ID="lblRoofPager" runat="server"></asp:PlaceHolder>
+                </ul>
             </div> <%-- end #paging --%>      
         </div>
 
