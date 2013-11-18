@@ -133,12 +133,16 @@ namespace SunspaceDealerDesktop
                 windowDLOLBL.Text = "DLO";
                 windowDLOLBL.ForeColor = System.Drawing.Color.Blue;
                 windowDLOLBL.Attributes.Add("onclick", "this.innerText = (this.innerText === 'DLO') ? 'Tip to Tip' : 'DLO';");
-              
+                windowDLOLBL.Attributes.Add("onmouseover", "this.style.cursor='pointer'");
+                windowDLOLBL.Attributes.Add("onmouseout", "this.style.cursor='auto'");
+
                 Label windowDeductionsLBL = new Label();
                 windowDeductionsLBL.ID = "lblWindowDeductions" + title;
                 windowDeductionsLBL.Text = "No Deductions";
                 windowDeductionsLBL.ForeColor = System.Drawing.Color.Blue;
                 windowDeductionsLBL.Attributes.Add("onclick", "this.innerText = (this.innerText === 'No Deductions') ? 'Deduct 1/8\"' : (this.innerText === 'Deduct 1/8\"') ? 'Deduct 1/4\"' : (this.innerText === 'Deduct 1/4\"') ? 'Deduct 3/8\"' : (this.innerText === 'Deduct 3/8\"') ? 'Deduct 1/2\"' : 'No Deductions';");
+                windowDeductionsLBL.Attributes.Add("onmouseover", "this.style.cursor='pointer'");
+                windowDLOLBL.Attributes.Add("onmouseout", "this.style.cursor='auto'");
 
                 windowTitleLBLCell.Controls.Add(windowTitleLBL);
                 windowDLOLBLCell.Controls.Add(windowDLOLBL);
@@ -272,7 +276,7 @@ namespace SunspaceDealerDesktop
                 windowHeightTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
 
                 DropDownList inchHeight = new DropDownList();
-                inchHeight.ID = "ddlWindowHeight" + title;
+                inchHeight.ID = "ddlWindowHeight"   + title;
                 inchHeight.Items.Add(lst0);
                 inchHeight.Items.Add(lst18);
                 inchHeight.Items.Add(lst14);
