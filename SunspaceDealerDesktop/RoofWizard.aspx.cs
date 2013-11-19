@@ -439,6 +439,7 @@ namespace SunspaceDealerDesktop
                 panelBeamType = "T-Bar";
                 panelWidth = Constants.ACRYLIC_PANEL_WIDTH;
                 panelType = "Acrylic Panel";
+                Session.Add("roofAcrylicPanelColour", hidAcrylicColour.Value);
             }
             else
             {
@@ -540,6 +541,7 @@ namespace SunspaceDealerDesktop
                 panelBeamType = "T-Bar";
                 panelWidth = Constants.ACRYLIC_PANEL_WIDTH;
                 panelType = "Acrylic Panel";
+                Session.Add("roofAcrylicPanelColour", hidAcrylicColour.Value);
             }
             else
             {
