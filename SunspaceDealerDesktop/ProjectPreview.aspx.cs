@@ -12,9 +12,33 @@ namespace SunspaceDealerDesktop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            List<Wall> listOfWalls = (List<Wall>)Session["listOfWalls"];
             //maybe a large textarea
-            //project deatils
+            //project details
+            LiteralControl projectTitle = new LiteralControl();
+            projectTitle.Text = "<h1>Project Details:</h1>";
+            phProjectTitle.Controls.Add(projectTitle);
+
+            Label projectType = new Label();
+            projectType.Text = "Type: " + Session["newProjectProjectType"].ToString();
+            phProject.Controls.Add(projectType);
+
+            Label projectName = new Label();
+            projectName.Text = "Name: " + Session["newProjectProjectNAme"].ToString();
+            phProject.Controls.Add(projectName);
+
+            Label projectModel = new Label();
+            projectModel.Text = listOfWalls[0].ModelType;
+            phProject.Controls.Add(projectModel);
+
             //wall details
+            LiteralControl wallTitle = new LiteralControl();
+            wallTitle.Text = "<h1>Wall Details:</h1>";
+            phWallsTitle.Controls.Add(wallTitle);
+
+            Label wallCount = new Label();
+            wallCount.Text = "# of walls: " + listOfWalls.Count.ToString();
+            phWalls.Controls.Add(wallCount);
             // --> linear item details
             // -->--> module item details
             //floor details
@@ -739,12 +763,10 @@ namespace SunspaceDealerDesktop
                                                 + 0 + ", '"
                                                 + roof_view + "', "
                                                 + roofItems + ", '"
-                                                + "CHANGEME" + "', "
+                                                + Session["roofAcrylicPanelColour"] + "', "
                                                 + aRoof.RoofModules[roofModules].RoofItems[roofItems].Projection + ", "
                                                 + aRoof.RoofModules[roofModules].RoofItems[roofItems].Width + ", "
-                                                + 0 + ", " //what is normal set_back?
-                                                + aRoof.RoofModules[roofModules].RoofItems[roofItems].SkyLight + ", "
-                                                + aRoof.RoofModules[roofModules].RoofItems[roofItems].FanBeam
+                                                + 0 //what is normal set_back?
                                                 + ");";
                                     aCommand.ExecuteNonQuery();
                                 }

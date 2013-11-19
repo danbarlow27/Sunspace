@@ -133,12 +133,16 @@ namespace SunspaceDealerDesktop
                 windowDLOLBL.Text = "DLO";
                 windowDLOLBL.ForeColor = System.Drawing.Color.Blue;
                 windowDLOLBL.Attributes.Add("onclick", "this.innerText = (this.innerText === 'DLO') ? 'Tip to Tip' : 'DLO';");
-              
+                windowDLOLBL.Attributes.Add("onmouseover", "this.style.cursor='pointer'");
+                windowDLOLBL.Attributes.Add("onmouseout", "this.style.cursor='auto'");
+
                 Label windowDeductionsLBL = new Label();
                 windowDeductionsLBL.ID = "lblWindowDeductions" + title;
                 windowDeductionsLBL.Text = "No Deductions";
                 windowDeductionsLBL.ForeColor = System.Drawing.Color.Blue;
                 windowDeductionsLBL.Attributes.Add("onclick", "this.innerText = (this.innerText === 'No Deductions') ? 'Deduct 1/8\"' : (this.innerText === 'Deduct 1/8\"') ? 'Deduct 1/4\"' : (this.innerText === 'Deduct 1/4\"') ? 'Deduct 3/8\"' : (this.innerText === 'Deduct 3/8\"') ? 'Deduct 1/2\"' : 'No Deductions';");
+                windowDeductionsLBL.Attributes.Add("onmouseover", "this.style.cursor='pointer'");
+                windowDLOLBL.Attributes.Add("onmouseout", "this.style.cursor='auto'");
 
                 windowTitleLBLCell.Controls.Add(windowTitleLBL);
                 windowDLOLBLCell.Controls.Add(windowDLOLBL);
@@ -272,7 +276,7 @@ namespace SunspaceDealerDesktop
                 windowHeightTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
 
                 DropDownList inchHeight = new DropDownList();
-                inchHeight.ID = "ddlWindowHeight" + title;
+                inchHeight.ID = "ddlWindowHeight"   + title;
                 inchHeight.Items.Add(lst0);
                 inchHeight.Items.Add(lst18);
                 inchHeight.Items.Add(lst14);
@@ -1137,7 +1141,36 @@ namespace SunspaceDealerDesktop
                 WindowOptions.Controls.Add(new LiteralControl("</div>"));
 
                 WindowOptions.Controls.Add(new LiteralControl("</li>"));
+                
+                #region PostBack functionality to store windows
+                if (IsPostBack)
+                {
+                    System.Diagnostics.Debug.Write("This");
+                    if ((List<Window>)Session["windowsOrdered"] != null)
+                    {                        
+                        windowsOrdered = (List<Window>)Session["windowsOrdered"];                        
+                    }
 
+                    if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeVinyl")
+                    {
+                        Window aWindow = getVinylWindowFromForm();
+                        windowsOrdered.Add(aWindow);
+                    }
+                    else if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeGlass")
+                    {
+                        Window aWindow = getGlassWindowFromForm();
+                        windowsOrdered.Add(aWindow);
+                    }
+                    else if (Request.Form["ctl00$MainContent$windowTypeRadios"] == "radTypeScreen")
+                    {
+                        Window aWindow = getScreenWindowFromForm();
+                        windowsOrdered.Add(aWindow);
+                    }
+                    Session.Add("windowsOrdered", windowsOrdered);
+                }
+                #endregion
+
+                populateSideBar(findNumberOfWindowTypes());
             }
         }
 
