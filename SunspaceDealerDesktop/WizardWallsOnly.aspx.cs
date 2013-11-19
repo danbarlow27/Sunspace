@@ -65,16 +65,16 @@ namespace SunspaceDealerDesktop
             if (Session["loggedIn"] == null)
             {
                 //uncomment me when login functionality is working
-                Response.Redirect("Login.aspx");
+                //Response.Redirect("Login.aspx");
                 //Session.Add("loggedIn", "userA");
             }
 
-            string[] gableCheck = (string[])Session["newProjectArray"];
-            if (gableCheck[26] == "Dealer Gable" || gableCheck[26] == "Sunspace Gable")
-            {
-                Session.Add("isGable", "True");
-                gableType = (string)Session["newProjectRoofType"];
-            }
+            //string[] gableCheck = (string[])Session["newProjectArray"];
+            //if (gableCheck[26] == "Dealer Gable" || gableCheck[26] == "Sunspace Gable")
+            //{
+            //    Session.Add("isGable", "True");
+            //    gableType = (string)Session["newProjectRoofType"];
+            //}
             /****VALIDATION CONSTANTS***/
 
             #region DOOR VALIDATION CONSTANTS
@@ -190,11 +190,11 @@ namespace SunspaceDealerDesktop
             //Session["coordList"] = "200,275,300,300,G,S/100,375,150,150,E,S/100,100,150,300,P,W/100,200,300,300,P,S/275,375,300,300,P,S/375,375,300,150,P,E/";
             /**********************************************************/
             coordList = (string)Session["lineInfo"]; //get the string from the session and store it in a local variable for further use                                    
-            strWalls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
-            wallDetails = new string[strWalls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
+            //strWalls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
+            //wallDetails = new string[strWalls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
             currentModel = (string)Session["model"];
             soffitLength = Convert.ToSingle(Session["soffitLength"]);
-            int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
+            //int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
             
 
             //populate the array with all the wall details for each wall
@@ -204,40 +204,40 @@ namespace SunspaceDealerDesktop
             /***************************************************************************/
             int hiddenDivWallRequirementNumber = 0;
 
-            for (int i = 0; i < strWalls.Count(); i++) //run through all the walls in the array
-            {
-                string[] tempDetails = strWalls[i].Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the given wall string into its individual detail items and store it in temporary array
+            //for (int i = 0; i < strWalls.Count(); i++) //run through all the walls in the array
+            //{
+            //    string[] tempDetails = strWalls[i].Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the given wall string into its individual detail items and store it in temporary array
 
-                for (int j = 0; j < tempDetails.Count(); j++) //for each item in the tempDetails array
-                {
-                    wallDetails[i, j] = tempDetails[j]; //store it in the appropriate spot for the appropriate line in the wallDetails array 
-                }
-            }
+            //    for (int j = 0; j < tempDetails.Count(); j++) //for each item in the tempDetails array
+            //    {
+            //        wallDetails[i, j] = tempDetails[j]; //store it in the appropriate spot for the appropriate line in the wallDetails array 
+            //    }
+            //}
                                     
-            for (int i = 1; i <= strWalls.Count(); i++) //for each wall in walls 
-            {
-                //if (wallDetails[i - 1, 4] == "E") //wall type is existing
-                //{
-                //    existingWallCount++; //increment the existing wall counter
-                //    populateTblExisting(i, existingWallCount); //populate the existing walls table on slide 1
-                //}
-                //else //wall type is proposed
-                if (wallDetails[i - 1, 4] == "P")
-                {
-                    hiddenDivWallRequirementNumber++;
-                    displayedWallCount++; //increment the proposed wall counter
-                    populateTblProposed(i, displayedWallCount); //populate the proposed walls table on slide 1                    
-                    populateWallDoorOptions(i, displayedWallCount); //populate slide 3 with appropriate proposed wall door options
-                }
-                //else if (wallDetails[i - 1, 4] == "G")
-                //{
-                //    hiddenDivWallRequirementNumber++;
-                //    Session["isGable"] = true;
-                //    populateTblProposedGable(i, displayedWallCount); //populate the gable post table on slide 1
-                //}
-            }
+            //for (int i = 1; i <= strWalls.Count(); i++) //for each wall in walls 
+            //{
+            //    //if (wallDetails[i - 1, 4] == "E") //wall type is existing
+            //    //{
+            //    //    existingWallCount++; //increment the existing wall counter
+            //    //    populateTblExisting(i, existingWallCount); //populate the existing walls table on slide 1
+            //    //}
+            //    //else //wall type is proposed
+            //    if (wallDetails[i - 1, 4] == "P")
+            //    {
+            //        hiddenDivWallRequirementNumber++;
+            //        displayedWallCount++; //increment the proposed wall counter
+            //        populateTblProposed(i, displayedWallCount); //populate the proposed walls table on slide 1                    
+            //        populateWallDoorOptions(i, displayedWallCount); //populate slide 3 with appropriate proposed wall door options
+            //    }
+            //    //else if (wallDetails[i - 1, 4] == "G")
+            //    //{
+            //    //    hiddenDivWallRequirementNumber++;
+            //    //    Session["isGable"] = true;
+            //    //    populateTblProposedGable(i, displayedWallCount); //populate the gable post table on slide 1
+            //    //}
+            //}
 
-            hiddenFieldsDiv.InnerHtml = createHiddenFields(strWalls.Count()); //create hidden fields on page load dynamically, pass it number of walls
+            //hiddenFieldsDiv.InnerHtml = createHiddenFields(strWalls.Count()); //create hidden fields on page load dynamically, pass it number of walls
             
             populateTblWallHeights();
 
@@ -593,543 +593,543 @@ namespace SunspaceDealerDesktop
 
         protected void populateTblWallHeights()
         {
-            bool isGable = false;
-
-            for (int i = 1; i <= strWalls.Count(); i++) //for each wall in walls 
-            {
-                if (wallDetails[i - 1, 4] == "G")
-                {
-                    isGable = true;
-                    break;
-                }
-            }
-
-            if (isGable)
-            {
-                #region Table Row # Side Walls Same Height
-                TableRow sideWallsRow = new TableRow();
-                TableCell sideWallsLabelCell = new TableCell();
-                TableCell sideWallsCheckAutoHeightCell = new TableCell();
-
-                Label sideWallsLabel = new Label();
-                sideWallsLabel.ID = "lblSideWalls";
-                sideWallsLabel.Text = "Side Walls Same Height:";
-
-                CheckBox sideWallsAutoHeight = new CheckBox();
-                sideWallsAutoHeight.ID = "chkAutoWalls";
-                sideWallsAutoHeight.Checked = false;
-
-                Label sideWallsCheckLabel = new Label();
-                sideWallsCheckLabel.ID = "lblCheckWallsSAmeClickable";
-                sideWallsCheckLabel.AssociatedControlID = "chkAutoWalls";
-                #endregion
-
-                #region Table Row # Side Walls Same Height
-                sideWallsLabelCell.Controls.Add(sideWallsLabel);
-                sideWallsCheckAutoHeightCell.Controls.Add(sideWallsAutoHeight);
-                sideWallsCheckAutoHeightCell.Controls.Add(sideWallsCheckLabel);
-                //sideWallsCheckAutoHeightCell.Controls.Add(sideWallsTextLabel);
-
-                tblWallHeights.Rows.Add(sideWallsRow);
-
-                sideWallsRow.Cells.Add(sideWallsLabelCell);
-                sideWallsRow.Cells.Add(sideWallsCheckAutoHeightCell);
-                #endregion
-
-                #region Table Row # Left Wall Height
-                TableRow leftWallHeightRow = new TableRow();
-                TableCell leftWallLabelCell = new TableCell();
-                TableCell leftWallTextboxCell = new TableCell();
-                TableCell leftWallDropDownInchesCell = new TableCell();
-                TableCell leftWallRadioAutoFillCell = new TableCell();
-
-                Label leftWallLabel = new Label();
-                leftWallLabel.ID = "lblLeftWallHeight";
-                leftWallLabel.Text = "Left Wall Height:";
-
-                TextBox leftWallTextbox = new TextBox();
-                leftWallTextbox.ID = "txtLeftWallHeight";
-                leftWallTextbox.CssClass = "txtField txtInput";
-                leftWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
-                leftWallTextbox.Attributes.Add("onblur", "resetWalls()");
-                leftWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
-                leftWallTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
-                leftWallTextbox.MaxLength = 3;
-
-                DropDownList leftWallInchSpecific = new DropDownList();
-                leftWallInchSpecific.ID = "leftWallInchSpecificDDL";
-                leftWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
-                leftWallInchSpecific.Items.Add(lst0);
-                leftWallInchSpecific.Items.Add(lst18);
-                leftWallInchSpecific.Items.Add(lst14);
-                leftWallInchSpecific.Items.Add(lst38);
-                leftWallInchSpecific.Items.Add(lst12);
-                leftWallInchSpecific.Items.Add(lst58);
-                leftWallInchSpecific.Items.Add(lst34);
-                leftWallInchSpecific.Items.Add(lst78);
-
-                RadioButton leftWallRadioAutoFill = new RadioButton();
-                leftWallRadioAutoFill.ID = "radAutoLeftWallHeight";
-                leftWallRadioAutoFill.GroupName = "wallHeightsSlopes";
-
-                Label leftWallRadioLabel = new Label();
-                leftWallRadioLabel.ID = "lblRadioLeftWallClickable";
-                leftWallRadioLabel.AssociatedControlID = "radAutoLeftWallHeight";
-
-                Label leftWallRadioTextLabel = new Label();
-                leftWallRadioTextLabel.ID = "lblRadioLeftWallText";
-                leftWallRadioTextLabel.AssociatedControlID = "radAutoLeftWallHeight";
-                leftWallRadioTextLabel.Text = "Auto Populate";
-
-                leftWallLabel.AssociatedControlID = "txtLeftWallHeight";
-                #endregion
-
-                #region Table Row # Right Wall Height
-                TableRow rightWallHeightRow = new TableRow();
-                TableCell rightWallLabelCell = new TableCell();
-                TableCell rightWallTextboxCell = new TableCell();
-                TableCell rightWallDropDownInchesCell = new TableCell();
-                TableCell rightWallRadioAutoFillCell = new TableCell();
-
-                Label rightWallLabel = new Label();
-                rightWallLabel.ID = "lblRightWallHeight";
-                rightWallLabel.Text = "Right Wall Height:";
-
-                TextBox rightWallTextbox = new TextBox();
-                rightWallTextbox.ID = "txtRightWallHeight";
-                rightWallTextbox.CssClass = "txtField txtInput";
-                rightWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
-                rightWallTextbox.Attributes.Add("onblur", "resetWalls()");
-                rightWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
-                rightWallTextbox.ID = "txtRightWallHeight";
-                rightWallTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
-                rightWallTextbox.MaxLength = 3;
-
-                DropDownList rightWallInchSpecific = new DropDownList();
-                rightWallInchSpecific.ID = "rightWallInchSpecificDDL";
-                rightWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
-                rightWallInchSpecific.Items.Add(lst0);
-                rightWallInchSpecific.Items.Add(lst18);
-                rightWallInchSpecific.Items.Add(lst14);
-                rightWallInchSpecific.Items.Add(lst38);
-                rightWallInchSpecific.Items.Add(lst12);
-                rightWallInchSpecific.Items.Add(lst58);
-                rightWallInchSpecific.Items.Add(lst34);
-                rightWallInchSpecific.Items.Add(lst78);
-
-                RadioButton rightWallRadioAutoFill = new RadioButton();
-                rightWallRadioAutoFill.ID = "radAutoRightWallHeight";
-                rightWallRadioAutoFill.GroupName = "wallHeightsSlopes";
-
-                Label rightWallRadioLabel = new Label();
-                rightWallRadioLabel.ID = "lblRadioRightWallClickable";
-                rightWallRadioLabel.AssociatedControlID = "radAutoRightWallHeight";
-
-                Label rightWallRadioTextLabel = new Label();
-                rightWallRadioTextLabel.ID = "lblRadioRightWallText";
-                rightWallRadioTextLabel.AssociatedControlID = "radAutoRightWallHeight";
-                rightWallRadioTextLabel.Text = "Auto Populate";
-
-                rightWallLabel.AssociatedControlID = "txtRightWallHeight";
-                #endregion
-
-                #region Table Row # Gable Post Height
-                TableRow gablePostHeightRow = new TableRow();
-                TableCell gablePostLabelCell = new TableCell();
-                TableCell gablePostTextboxCell = new TableCell();
-                TableCell gablePostDropDownInchesCell = new TableCell();
-                TableCell gablePostRadioAutoFillCell = new TableCell();
-
-                Label gablePostLabel = new Label();
-                gablePostLabel.ID = "lblGablePostHeight";
-                gablePostLabel.Text = "Gable Post Height:";
-
-                TextBox gablePostTextbox = new TextBox();
-                gablePostTextbox.ID = "txtGablePostHeight";
-                gablePostTextbox.CssClass = "txtField txtInput";
-                gablePostTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
-                gablePostTextbox.Attributes.Add("onblur", "resetWalls()");
-                gablePostTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
-                gablePostTextbox.ID = "txtGablePostHeight";
-                gablePostTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
-                gablePostTextbox.MaxLength = 3;
-
-                DropDownList gablePostInchSpecific = new DropDownList();
-                gablePostInchSpecific.ID = "gablePostInchSpecificDDL";
-                gablePostInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
-                gablePostInchSpecific.Items.Add(lst0);
-                gablePostInchSpecific.Items.Add(lst18);
-                gablePostInchSpecific.Items.Add(lst14);
-                gablePostInchSpecific.Items.Add(lst38);
-                gablePostInchSpecific.Items.Add(lst12);
-                gablePostInchSpecific.Items.Add(lst58);
-                gablePostInchSpecific.Items.Add(lst34);
-                gablePostInchSpecific.Items.Add(lst78);
-
-                RadioButton gablePostRadioAutoFill = new RadioButton();
-                gablePostRadioAutoFill.ID = "radAutoGablePostHeight";
-                gablePostRadioAutoFill.GroupName = "wallHeightsSlopes";
-
-                Label gablePostRadioLabel = new Label();
-                gablePostRadioLabel.ID = "lblRadioGablePostClickable";
-                gablePostRadioLabel.AssociatedControlID = "radAutoGablePostHeight";
-
-                Label gablePostRadioTextLabel = new Label();
-                gablePostRadioTextLabel.ID = "lblRadioGablePostText";
-                gablePostRadioTextLabel.AssociatedControlID = "radAutoGablePostHeight";
-                gablePostRadioTextLabel.Text = "Auto Populate";
-
-                gablePostLabel.AssociatedControlID = "txtGablePostHeight";
-                #endregion
-
-                #region Table Row # Left Roof Slope
-                TableRow leftRoofSlopeRow = new TableRow();
-                TableCell leftRoofSlopeLabelCell = new TableCell();
-                TableCell leftRoofSlopeTextboxCell = new TableCell();
-                TableCell leftRoofSlopeRunLabelCell = new TableCell();
-                TableCell leftRoofSlopeRadioAutoFillCell = new TableCell();
-                leftRoofSlopeRadioAutoFillCell.RowSpan = 2;
-
-                Label leftRoofSlopeLabel = new Label();
-                leftRoofSlopeLabel.ID = "lblLeftRoofSlope";
-                leftRoofSlopeLabel.Text = "Left Roof Slope:";
-
-                TextBox leftRoofSlopeTextbox = new TextBox();
-                leftRoofSlopeTextbox.ID = "txtLeftRoofSlope";
-                leftRoofSlopeTextbox.CssClass = "txtField txtInput";
-                leftRoofSlopeTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
-                leftRoofSlopeTextbox.Attributes.Add("onblur", "resetWalls()");
-                leftRoofSlopeTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
-                leftRoofSlopeTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
-                leftRoofSlopeTextbox.MaxLength = 6;
-
-                Label leftRoofSlopeRunLabel = new Label();
-                leftRoofSlopeRunLabel.ID = "lblLeftRoofRunSlope";
-                leftRoofSlopeRunLabel.Text = "/12";
-
-                RadioButton leftRoofSlopeRadioAutoFill = new RadioButton();
-                leftRoofSlopeRadioAutoFill.ID = "radAutoRoofSlope";
-                leftRoofSlopeRadioAutoFill.GroupName = "wallHeightsSlopes";
-                leftRoofSlopeRadioAutoFill.Checked = true;
-
-                Label leftRoofSlopeRadioLabel = new Label();
-                leftRoofSlopeRadioLabel.ID = "lblRadioRoofSlopeClickable";
-                leftRoofSlopeRadioLabel.AssociatedControlID = "radAutoRoofSlope";
-
-                Label leftRoofSlopeRadioTextLabel = new Label();
-                leftRoofSlopeRadioTextLabel.ID = "lblRadioRoofSlopeText";
-                leftRoofSlopeRadioTextLabel.AssociatedControlID = "radAutoRoofSlope";
-                leftRoofSlopeRadioTextLabel.Text = "Auto Populate";
-
-                leftRoofSlopeLabel.AssociatedControlID = "txtLeftRoofSlope";
-                #endregion
-
-                #region Table Row # Right Roof Slope
-                TableRow rightRoofSlopeRow = new TableRow();
-                TableCell rightRoofSlopeLabelCell = new TableCell();
-                TableCell rightRoofSlopeTextboxCell = new TableCell();
-                TableCell rightRoofSlopeRunLabelCell = new TableCell();
-                TableCell rightRoofSlopeRadioAutoFillCell = new TableCell();
-
-                Label rightRoofSlopeLabel = new Label();
-                rightRoofSlopeLabel.ID = "lblRightRoofSlope";
-                rightRoofSlopeLabel.Text = "Right Roof Slope:";
-
-                TextBox rightRoofSlopeTextbox = new TextBox();
-                rightRoofSlopeTextbox.ID = "txtRightRoofSlope";
-                rightRoofSlopeTextbox.CssClass = "txtField txtInput";
-                rightRoofSlopeTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
-                rightRoofSlopeTextbox.Attributes.Add("onblur", "resetWalls()");
-                rightRoofSlopeTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
-                rightRoofSlopeTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
-                rightRoofSlopeTextbox.MaxLength = 6;
-
-                Label rightRoofSlopeRunLabel = new Label();
-                rightRoofSlopeRunLabel.ID = "lblRightRoofRunSlope";
-                rightRoofSlopeRunLabel.Text = "/12";
-
-                rightRoofSlopeLabel.AssociatedControlID = "txtRightRoofSlope";
-                #endregion
-
-                #region Table Row # Back Wall Height Added
-                leftWallLabelCell.Controls.Add(leftWallLabel);
-                leftWallTextboxCell.Controls.Add(leftWallTextbox);
-                leftWallDropDownInchesCell.Controls.Add(leftWallInchSpecific);
-                leftWallRadioAutoFillCell.Controls.Add(leftWallRadioAutoFill);
-                leftWallRadioAutoFillCell.Controls.Add(leftWallRadioLabel);
-                leftWallRadioAutoFillCell.Controls.Add(leftWallRadioTextLabel);
-
-                tblWallHeights.Rows.Add(leftWallHeightRow);
-
-                leftWallHeightRow.Cells.Add(leftWallLabelCell);
-                leftWallHeightRow.Cells.Add(leftWallTextboxCell);
-                leftWallHeightRow.Cells.Add(leftWallDropDownInchesCell);
-                leftWallHeightRow.Cells.Add(leftWallRadioAutoFillCell);
-                #endregion
-
-                #region Table Row # Front Wall Height Added
-                rightWallLabelCell.Controls.Add(rightWallLabel);
-                rightWallTextboxCell.Controls.Add(rightWallTextbox);
-                rightWallDropDownInchesCell.Controls.Add(rightWallInchSpecific);
-                rightWallRadioAutoFillCell.Controls.Add(rightWallRadioAutoFill);
-                rightWallRadioAutoFillCell.Controls.Add(rightWallRadioLabel);
-                rightWallRadioAutoFillCell.Controls.Add(rightWallRadioTextLabel);
-
-                tblWallHeights.Rows.Add(rightWallHeightRow);
-
-                rightWallHeightRow.Cells.Add(rightWallLabelCell);
-                rightWallHeightRow.Cells.Add(rightWallTextboxCell);
-                rightWallHeightRow.Cells.Add(rightWallDropDownInchesCell);
-                rightWallHeightRow.Cells.Add(rightWallRadioAutoFillCell);
-                #endregion
-
-                #region Table Row # Gable Post Height Added
-                gablePostLabelCell.Controls.Add(gablePostLabel);
-                gablePostTextboxCell.Controls.Add(gablePostTextbox);
-                gablePostDropDownInchesCell.Controls.Add(gablePostInchSpecific);
-                gablePostRadioAutoFillCell.Controls.Add(gablePostRadioAutoFill);
-                gablePostRadioAutoFillCell.Controls.Add(gablePostRadioLabel);
-                gablePostRadioAutoFillCell.Controls.Add(gablePostRadioTextLabel);
-
-                tblWallHeights.Rows.Add(gablePostHeightRow);
-
-                gablePostHeightRow.Cells.Add(gablePostLabelCell);
-                gablePostHeightRow.Cells.Add(gablePostTextboxCell);
-                gablePostHeightRow.Cells.Add(gablePostDropDownInchesCell);
-                gablePostHeightRow.Cells.Add(gablePostRadioAutoFillCell);
-                #endregion
-
-                #region Table Row # Left Roof Slope Added
-                leftRoofSlopeLabelCell.Controls.Add(leftRoofSlopeLabel);
-                leftRoofSlopeTextboxCell.Controls.Add(leftRoofSlopeTextbox);
-                leftRoofSlopeRunLabelCell.Controls.Add(leftRoofSlopeRunLabel);
-                leftRoofSlopeRadioAutoFillCell.Controls.Add(leftRoofSlopeRadioAutoFill);
-                leftRoofSlopeRadioAutoFillCell.Controls.Add(leftRoofSlopeRadioLabel);
-                leftRoofSlopeRadioAutoFillCell.Controls.Add(leftRoofSlopeRadioTextLabel);
-
-                tblWallHeights.Rows.Add(leftRoofSlopeRow);
-
-                leftRoofSlopeRow.Cells.Add(leftRoofSlopeLabelCell);
-                leftRoofSlopeRow.Cells.Add(leftRoofSlopeTextboxCell);
-                leftRoofSlopeRow.Cells.Add(leftRoofSlopeRunLabelCell);
-                leftRoofSlopeRow.Cells.Add(leftRoofSlopeRadioAutoFillCell);
-                #endregion
-
-                #region Table Row # Right Roof Slope Added
-                rightRoofSlopeLabelCell.Controls.Add(rightRoofSlopeLabel);
-                rightRoofSlopeTextboxCell.Controls.Add(rightRoofSlopeTextbox);
-                rightRoofSlopeRunLabelCell.Controls.Add(rightRoofSlopeRunLabel);
-
-                tblWallHeights.Rows.Add(rightRoofSlopeRow);
-
-                rightRoofSlopeRow.Cells.Add(rightRoofSlopeLabelCell);
-                rightRoofSlopeRow.Cells.Add(rightRoofSlopeTextboxCell);
-                rightRoofSlopeRow.Cells.Add(rightRoofSlopeRunLabelCell);
-                #endregion
-
-                string hiddenString = "";
-                hiddenString += "<input id=\"hidLeftWallHeight\" type=\"hidden\" runat=\"server\" />";
-                hiddenString += "<input id=\"hidRightWallHeight\" type=\"hidden\" runat=\"server\" />";
-                hiddenString += "<input id=\"hidGableWallHeight\" type=\"hidden\" runat=\"server\" />";
-                hiddenString += "<input id=\"hidLeftRoofSlope\" type=\"hidden\" runat=\"server\" />";
-                hiddenString += "<input id=\"hidRightRoofSlope\" type=\"hidden\" runat=\"server\" />";
-
-                hiddenFieldsDiv.InnerHtml += hiddenString;
-            }
-            else {
-                #region Table Row # Back Wall Height
-                TableRow backWallHeightRow = new TableRow();
-                TableCell backWallLabelCell = new TableCell();
-                TableCell backWallTextboxCell = new TableCell();
-                TableCell backWallDropDownInchesCell = new TableCell();
-                TableCell backWallRadioAutoFillCell = new TableCell();
-
-                Label backWallLabel = new Label();
-                backWallLabel.ID = "lblBackWallHeight";
-                backWallLabel.Text = "Back Wall Height:";
-
-                TextBox backWallTextbox = new TextBox();
-                backWallTextbox.ID = "txtBackWallHeight";
-                backWallTextbox.CssClass = "txtField txtInput";
-                backWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
-                backWallTextbox.Attributes.Add("onblur", "resetWalls()");
-                //backWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
-                backWallTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
-                backWallTextbox.MaxLength = 3;
-
-                DropDownList backWallInchSpecific = new DropDownList();
-                backWallInchSpecific.ID = "backWallInchSpecificDDL";
-                backWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
-                backWallInchSpecific.Items.Add(lst0);
-                backWallInchSpecific.Items.Add(lst18);
-                backWallInchSpecific.Items.Add(lst14);
-                backWallInchSpecific.Items.Add(lst38);
-                backWallInchSpecific.Items.Add(lst12);
-                backWallInchSpecific.Items.Add(lst58);
-                backWallInchSpecific.Items.Add(lst34);
-                backWallInchSpecific.Items.Add(lst78);
-
-                RadioButton backWallRadioAutoFill = new RadioButton();
-                backWallRadioAutoFill.ID = "radAutoBackWallHeight";
-                backWallRadioAutoFill.GroupName = "wallHeightsSlopes";
-
-                Label backWallRadioLabel = new Label();
-                backWallRadioLabel.ID = "lblRadioBackWallClickable";
-                backWallRadioLabel.AssociatedControlID = "radAutoBackWallHeight";
-
-                Label backWallRadioTextLabel = new Label();
-                backWallRadioTextLabel.ID = "lblRadioBackWallText";
-                backWallRadioTextLabel.AssociatedControlID = "radAutoBackWallHeight";
-                backWallRadioTextLabel.Text = "Auto Populate";
-
-                backWallLabel.AssociatedControlID = "txtBackWallHeight";
-                #endregion
-
-                #region Table Row # Front Wall Height
-                TableRow frontWallHeightRow = new TableRow();
-                TableCell frontWallLabelCell = new TableCell();
-                TableCell frontWallTextboxCell = new TableCell();
-                TableCell frontWallDropDownInchesCell = new TableCell();
-                TableCell frontWallRadioAutoFillCell = new TableCell();
-
-                Label frontWallLabel = new Label();
-                frontWallLabel.ID = "lblFrontWallHeight";
-                frontWallLabel.Text = "Front Wall Height:";
-
-                TextBox frontWallTextbox = new TextBox();
-                frontWallTextbox.ID = "txtFrontWallHeight";
-                frontWallTextbox.CssClass = "txtField txtInput";
-                frontWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
-                frontWallTextbox.Attributes.Add("onblur", "resetWalls()");
-                frontWallTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
-                //frontWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
-                frontWallTextbox.MaxLength = 3;
-
-                DropDownList frontWallInchSpecific = new DropDownList();
-                frontWallInchSpecific.ID = "frontWallInchSpecificDDL";
-                frontWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
-                frontWallInchSpecific.Items.Add(lst0);
-                frontWallInchSpecific.Items.Add(lst18);
-                frontWallInchSpecific.Items.Add(lst14);
-                frontWallInchSpecific.Items.Add(lst38);
-                frontWallInchSpecific.Items.Add(lst12);
-                frontWallInchSpecific.Items.Add(lst58);
-                frontWallInchSpecific.Items.Add(lst34);
-                frontWallInchSpecific.Items.Add(lst78);
-
-                RadioButton frontWallRadioAutoFill = new RadioButton();
-                frontWallRadioAutoFill.ID = "radAutoFrontWallHeight";
-                frontWallRadioAutoFill.GroupName = "wallHeightsSlopes";
-
-                Label frontWallRadioLabel = new Label();
-                frontWallRadioLabel.ID = "lblRadioFrontWallClickable";
-                frontWallRadioLabel.AssociatedControlID = "radAutoFrontWallHeight";
-
-                Label frontWallRadioTextLabel = new Label();
-                frontWallRadioTextLabel.ID = "lblRadioFrontWallText";
-                frontWallRadioTextLabel.AssociatedControlID = "radAutoFrontWallHeight";
-                frontWallRadioTextLabel.Text = "Auto Populate";
-
-                frontWallLabel.AssociatedControlID = "txtFrontWallHeight";
-                #endregion
-
-                #region Table Row # Wall Slope
-                TableRow roofSlopeRow = new TableRow();
-                TableCell roofSlopeLabelCell = new TableCell();
-                TableCell roofSlopeTextboxCell = new TableCell();
-                TableCell roofSlopeRunLabelCell = new TableCell();
-                TableCell roofSlopeRadioAutoFillCell = new TableCell();
-
-                Label roofSlopeLabel = new Label();
-                roofSlopeLabel.ID = "lblRoofSlope";
-                roofSlopeLabel.Text = "Roof Slope:";
-
-                TextBox roofSlopeTextbox = new TextBox();
-                roofSlopeTextbox.ID = "txtRoofSlope";
-                roofSlopeTextbox.CssClass = "txtField txtInput";
-                roofSlopeTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
-                roofSlopeTextbox.Attributes.Add("onblur", "resetWalls()");
-                roofSlopeTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
-                //roofSlopeTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
-                frontWallTextbox.MaxLength = 6;
-
-                Label roofSlopeRunLabel = new Label();
-                roofSlopeRunLabel.ID = "lblWallRunSlope";
-                roofSlopeRunLabel.Text = "/12";
-
-                RadioButton roofSlopeRadioAutoFill = new RadioButton();
-                roofSlopeRadioAutoFill.ID = "radAutoRoofSlope";
-                roofSlopeRadioAutoFill.GroupName = "wallHeightsSlopes";
-                roofSlopeRadioAutoFill.Checked = true;
-
-                Label roofSlopeRadioLabel = new Label();
-                roofSlopeRadioLabel.ID = "lblRadioRoofSlopeClickable";
-                roofSlopeRadioLabel.AssociatedControlID = "radAutoRoofSlope";
-
-                Label roofSlopeRadioTextLabel = new Label();
-                roofSlopeRadioTextLabel.ID = "lblRadioRoofSlopeText";
-                roofSlopeRadioTextLabel.AssociatedControlID = "radAutoRoofSlope";
-                roofSlopeRadioTextLabel.Text = "Auto Populate";
-
-                roofSlopeLabel.AssociatedControlID = "txtRoofSlope";
-                #endregion
-
-
-                #region Table Row # Back Wall Height Added
-                backWallLabelCell.Controls.Add(backWallLabel);
-                backWallTextboxCell.Controls.Add(backWallTextbox);
-                backWallDropDownInchesCell.Controls.Add(backWallInchSpecific);
-                backWallRadioAutoFillCell.Controls.Add(backWallRadioAutoFill);
-                backWallRadioAutoFillCell.Controls.Add(backWallRadioLabel);
-                backWallRadioAutoFillCell.Controls.Add(backWallRadioTextLabel);
-
-                tblWallHeights.Rows.Add(backWallHeightRow);
-
-                backWallHeightRow.Cells.Add(backWallLabelCell);
-                backWallHeightRow.Cells.Add(backWallTextboxCell);
-                backWallHeightRow.Cells.Add(backWallDropDownInchesCell);
-                backWallHeightRow.Cells.Add(backWallRadioAutoFillCell);
-                #endregion
-
-                #region Table Row # Front Wall Height Added
-                frontWallLabelCell.Controls.Add(frontWallLabel);
-                frontWallTextboxCell.Controls.Add(frontWallTextbox);
-                frontWallDropDownInchesCell.Controls.Add(frontWallInchSpecific);
-                frontWallRadioAutoFillCell.Controls.Add(frontWallRadioAutoFill);
-                frontWallRadioAutoFillCell.Controls.Add(frontWallRadioLabel);
-                frontWallRadioAutoFillCell.Controls.Add(frontWallRadioTextLabel);
-
-                tblWallHeights.Rows.Add(frontWallHeightRow);
-
-                frontWallHeightRow.Cells.Add(frontWallLabelCell);
-                frontWallHeightRow.Cells.Add(frontWallTextboxCell);
-                frontWallHeightRow.Cells.Add(frontWallDropDownInchesCell);
-                frontWallHeightRow.Cells.Add(frontWallRadioAutoFillCell);
-                #endregion
-
-                #region Table Row # Wall Slope Added
-                roofSlopeLabelCell.Controls.Add(roofSlopeLabel);
-                roofSlopeTextboxCell.Controls.Add(roofSlopeTextbox);
-                roofSlopeRunLabelCell.Controls.Add(roofSlopeRunLabel);
-                roofSlopeRadioAutoFillCell.Controls.Add(roofSlopeRadioAutoFill);
-                roofSlopeRadioAutoFillCell.Controls.Add(roofSlopeRadioLabel);
-                roofSlopeRadioAutoFillCell.Controls.Add(roofSlopeRadioTextLabel);
-
-                tblWallHeights.Rows.Add(roofSlopeRow);
-
-                roofSlopeRow.Cells.Add(roofSlopeLabelCell);
-                roofSlopeRow.Cells.Add(roofSlopeTextboxCell);
-                roofSlopeRow.Cells.Add(roofSlopeRunLabelCell);
-                roofSlopeRow.Cells.Add(roofSlopeRadioAutoFillCell);
-                #endregion
-
-                string hiddenString = "";
-                hiddenString += "<input id=\"hidFrontWallHeight\" type=\"hidden\" runat=\"server\" />";
-                hiddenString += "<input id=\"hidBackWallHeight\" type=\"hidden\" runat=\"server\" />";
-                hiddenString += "<input id=\"hidRoofSlope\" type=\"hidden\" runat=\"server\" />";
-
-                hiddenFieldsDiv.InnerHtml += hiddenString;
-            }
+            //bool isGable = false;
+
+            //for (int i = 1; i <= strWalls.Count(); i++) //for each wall in walls 
+            //{
+            //    if (wallDetails[i - 1, 4] == "G")
+            //    {
+            //        isGable = true;
+            //        break;
+            //    }
+            //}
+
+            //if (isGable)
+            //{
+            //    #region Table Row # Side Walls Same Height
+            //    TableRow sideWallsRow = new TableRow();
+            //    TableCell sideWallsLabelCell = new TableCell();
+            //    TableCell sideWallsCheckAutoHeightCell = new TableCell();
+
+            //    Label sideWallsLabel = new Label();
+            //    sideWallsLabel.ID = "lblSideWalls";
+            //    sideWallsLabel.Text = "Side Walls Same Height:";
+
+            //    CheckBox sideWallsAutoHeight = new CheckBox();
+            //    sideWallsAutoHeight.ID = "chkAutoWalls";
+            //    sideWallsAutoHeight.Checked = false;
+
+            //    Label sideWallsCheckLabel = new Label();
+            //    sideWallsCheckLabel.ID = "lblCheckWallsSAmeClickable";
+            //    sideWallsCheckLabel.AssociatedControlID = "chkAutoWalls";
+            //    #endregion
+
+            //    #region Table Row # Side Walls Same Height
+            //    sideWallsLabelCell.Controls.Add(sideWallsLabel);
+            //    sideWallsCheckAutoHeightCell.Controls.Add(sideWallsAutoHeight);
+            //    sideWallsCheckAutoHeightCell.Controls.Add(sideWallsCheckLabel);
+            //    //sideWallsCheckAutoHeightCell.Controls.Add(sideWallsTextLabel);
+
+            //    tblWallHeights.Rows.Add(sideWallsRow);
+
+            //    sideWallsRow.Cells.Add(sideWallsLabelCell);
+            //    sideWallsRow.Cells.Add(sideWallsCheckAutoHeightCell);
+            //    #endregion
+
+            //    #region Table Row # Left Wall Height
+            //    TableRow leftWallHeightRow = new TableRow();
+            //    TableCell leftWallLabelCell = new TableCell();
+            //    TableCell leftWallTextboxCell = new TableCell();
+            //    TableCell leftWallDropDownInchesCell = new TableCell();
+            //    TableCell leftWallRadioAutoFillCell = new TableCell();
+
+            //    Label leftWallLabel = new Label();
+            //    leftWallLabel.ID = "lblLeftWallHeight";
+            //    leftWallLabel.Text = "Left Wall Height:";
+
+            //    TextBox leftWallTextbox = new TextBox();
+            //    leftWallTextbox.ID = "txtLeftWallHeight";
+            //    leftWallTextbox.CssClass = "txtField txtInput";
+            //    leftWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+            //    leftWallTextbox.Attributes.Add("onblur", "resetWalls()");
+            //    leftWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
+            //    leftWallTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            //    leftWallTextbox.MaxLength = 3;
+
+            //    DropDownList leftWallInchSpecific = new DropDownList();
+            //    leftWallInchSpecific.ID = "leftWallInchSpecificDDL";
+            //    leftWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+            //    leftWallInchSpecific.Items.Add(lst0);
+            //    leftWallInchSpecific.Items.Add(lst18);
+            //    leftWallInchSpecific.Items.Add(lst14);
+            //    leftWallInchSpecific.Items.Add(lst38);
+            //    leftWallInchSpecific.Items.Add(lst12);
+            //    leftWallInchSpecific.Items.Add(lst58);
+            //    leftWallInchSpecific.Items.Add(lst34);
+            //    leftWallInchSpecific.Items.Add(lst78);
+
+            //    RadioButton leftWallRadioAutoFill = new RadioButton();
+            //    leftWallRadioAutoFill.ID = "radAutoLeftWallHeight";
+            //    leftWallRadioAutoFill.GroupName = "wallHeightsSlopes";
+
+            //    Label leftWallRadioLabel = new Label();
+            //    leftWallRadioLabel.ID = "lblRadioLeftWallClickable";
+            //    leftWallRadioLabel.AssociatedControlID = "radAutoLeftWallHeight";
+
+            //    Label leftWallRadioTextLabel = new Label();
+            //    leftWallRadioTextLabel.ID = "lblRadioLeftWallText";
+            //    leftWallRadioTextLabel.AssociatedControlID = "radAutoLeftWallHeight";
+            //    leftWallRadioTextLabel.Text = "Auto Populate";
+
+            //    leftWallLabel.AssociatedControlID = "txtLeftWallHeight";
+            //    #endregion
+
+            //    #region Table Row # Right Wall Height
+            //    TableRow rightWallHeightRow = new TableRow();
+            //    TableCell rightWallLabelCell = new TableCell();
+            //    TableCell rightWallTextboxCell = new TableCell();
+            //    TableCell rightWallDropDownInchesCell = new TableCell();
+            //    TableCell rightWallRadioAutoFillCell = new TableCell();
+
+            //    Label rightWallLabel = new Label();
+            //    rightWallLabel.ID = "lblRightWallHeight";
+            //    rightWallLabel.Text = "Right Wall Height:";
+
+            //    TextBox rightWallTextbox = new TextBox();
+            //    rightWallTextbox.ID = "txtRightWallHeight";
+            //    rightWallTextbox.CssClass = "txtField txtInput";
+            //    rightWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+            //    rightWallTextbox.Attributes.Add("onblur", "resetWalls()");
+            //    rightWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
+            //    rightWallTextbox.ID = "txtRightWallHeight";
+            //    rightWallTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            //    rightWallTextbox.MaxLength = 3;
+
+            //    DropDownList rightWallInchSpecific = new DropDownList();
+            //    rightWallInchSpecific.ID = "rightWallInchSpecificDDL";
+            //    rightWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+            //    rightWallInchSpecific.Items.Add(lst0);
+            //    rightWallInchSpecific.Items.Add(lst18);
+            //    rightWallInchSpecific.Items.Add(lst14);
+            //    rightWallInchSpecific.Items.Add(lst38);
+            //    rightWallInchSpecific.Items.Add(lst12);
+            //    rightWallInchSpecific.Items.Add(lst58);
+            //    rightWallInchSpecific.Items.Add(lst34);
+            //    rightWallInchSpecific.Items.Add(lst78);
+
+            //    RadioButton rightWallRadioAutoFill = new RadioButton();
+            //    rightWallRadioAutoFill.ID = "radAutoRightWallHeight";
+            //    rightWallRadioAutoFill.GroupName = "wallHeightsSlopes";
+
+            //    Label rightWallRadioLabel = new Label();
+            //    rightWallRadioLabel.ID = "lblRadioRightWallClickable";
+            //    rightWallRadioLabel.AssociatedControlID = "radAutoRightWallHeight";
+
+            //    Label rightWallRadioTextLabel = new Label();
+            //    rightWallRadioTextLabel.ID = "lblRadioRightWallText";
+            //    rightWallRadioTextLabel.AssociatedControlID = "radAutoRightWallHeight";
+            //    rightWallRadioTextLabel.Text = "Auto Populate";
+
+            //    rightWallLabel.AssociatedControlID = "txtRightWallHeight";
+            //    #endregion
+
+            //    #region Table Row # Gable Post Height
+            //    TableRow gablePostHeightRow = new TableRow();
+            //    TableCell gablePostLabelCell = new TableCell();
+            //    TableCell gablePostTextboxCell = new TableCell();
+            //    TableCell gablePostDropDownInchesCell = new TableCell();
+            //    TableCell gablePostRadioAutoFillCell = new TableCell();
+
+            //    Label gablePostLabel = new Label();
+            //    gablePostLabel.ID = "lblGablePostHeight";
+            //    gablePostLabel.Text = "Gable Post Height:";
+
+            //    TextBox gablePostTextbox = new TextBox();
+            //    gablePostTextbox.ID = "txtGablePostHeight";
+            //    gablePostTextbox.CssClass = "txtField txtInput";
+            //    gablePostTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+            //    gablePostTextbox.Attributes.Add("onblur", "resetWalls()");
+            //    gablePostTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
+            //    gablePostTextbox.ID = "txtGablePostHeight";
+            //    gablePostTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            //    gablePostTextbox.MaxLength = 3;
+
+            //    DropDownList gablePostInchSpecific = new DropDownList();
+            //    gablePostInchSpecific.ID = "gablePostInchSpecificDDL";
+            //    gablePostInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+            //    gablePostInchSpecific.Items.Add(lst0);
+            //    gablePostInchSpecific.Items.Add(lst18);
+            //    gablePostInchSpecific.Items.Add(lst14);
+            //    gablePostInchSpecific.Items.Add(lst38);
+            //    gablePostInchSpecific.Items.Add(lst12);
+            //    gablePostInchSpecific.Items.Add(lst58);
+            //    gablePostInchSpecific.Items.Add(lst34);
+            //    gablePostInchSpecific.Items.Add(lst78);
+
+            //    RadioButton gablePostRadioAutoFill = new RadioButton();
+            //    gablePostRadioAutoFill.ID = "radAutoGablePostHeight";
+            //    gablePostRadioAutoFill.GroupName = "wallHeightsSlopes";
+
+            //    Label gablePostRadioLabel = new Label();
+            //    gablePostRadioLabel.ID = "lblRadioGablePostClickable";
+            //    gablePostRadioLabel.AssociatedControlID = "radAutoGablePostHeight";
+
+            //    Label gablePostRadioTextLabel = new Label();
+            //    gablePostRadioTextLabel.ID = "lblRadioGablePostText";
+            //    gablePostRadioTextLabel.AssociatedControlID = "radAutoGablePostHeight";
+            //    gablePostRadioTextLabel.Text = "Auto Populate";
+
+            //    gablePostLabel.AssociatedControlID = "txtGablePostHeight";
+            //    #endregion
+
+            //    #region Table Row # Left Roof Slope
+            //    TableRow leftRoofSlopeRow = new TableRow();
+            //    TableCell leftRoofSlopeLabelCell = new TableCell();
+            //    TableCell leftRoofSlopeTextboxCell = new TableCell();
+            //    TableCell leftRoofSlopeRunLabelCell = new TableCell();
+            //    TableCell leftRoofSlopeRadioAutoFillCell = new TableCell();
+            //    leftRoofSlopeRadioAutoFillCell.RowSpan = 2;
+
+            //    Label leftRoofSlopeLabel = new Label();
+            //    leftRoofSlopeLabel.ID = "lblLeftRoofSlope";
+            //    leftRoofSlopeLabel.Text = "Left Roof Slope:";
+
+            //    TextBox leftRoofSlopeTextbox = new TextBox();
+            //    leftRoofSlopeTextbox.ID = "txtLeftRoofSlope";
+            //    leftRoofSlopeTextbox.CssClass = "txtField txtInput";
+            //    leftRoofSlopeTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+            //    leftRoofSlopeTextbox.Attributes.Add("onblur", "resetWalls()");
+            //    leftRoofSlopeTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
+            //    leftRoofSlopeTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            //    leftRoofSlopeTextbox.MaxLength = 6;
+
+            //    Label leftRoofSlopeRunLabel = new Label();
+            //    leftRoofSlopeRunLabel.ID = "lblLeftRoofRunSlope";
+            //    leftRoofSlopeRunLabel.Text = "/12";
+
+            //    RadioButton leftRoofSlopeRadioAutoFill = new RadioButton();
+            //    leftRoofSlopeRadioAutoFill.ID = "radAutoRoofSlope";
+            //    leftRoofSlopeRadioAutoFill.GroupName = "wallHeightsSlopes";
+            //    leftRoofSlopeRadioAutoFill.Checked = true;
+
+            //    Label leftRoofSlopeRadioLabel = new Label();
+            //    leftRoofSlopeRadioLabel.ID = "lblRadioRoofSlopeClickable";
+            //    leftRoofSlopeRadioLabel.AssociatedControlID = "radAutoRoofSlope";
+
+            //    Label leftRoofSlopeRadioTextLabel = new Label();
+            //    leftRoofSlopeRadioTextLabel.ID = "lblRadioRoofSlopeText";
+            //    leftRoofSlopeRadioTextLabel.AssociatedControlID = "radAutoRoofSlope";
+            //    leftRoofSlopeRadioTextLabel.Text = "Auto Populate";
+
+            //    leftRoofSlopeLabel.AssociatedControlID = "txtLeftRoofSlope";
+            //    #endregion
+
+            //    #region Table Row # Right Roof Slope
+            //    TableRow rightRoofSlopeRow = new TableRow();
+            //    TableCell rightRoofSlopeLabelCell = new TableCell();
+            //    TableCell rightRoofSlopeTextboxCell = new TableCell();
+            //    TableCell rightRoofSlopeRunLabelCell = new TableCell();
+            //    TableCell rightRoofSlopeRadioAutoFillCell = new TableCell();
+
+            //    Label rightRoofSlopeLabel = new Label();
+            //    rightRoofSlopeLabel.ID = "lblRightRoofSlope";
+            //    rightRoofSlopeLabel.Text = "Right Roof Slope:";
+
+            //    TextBox rightRoofSlopeTextbox = new TextBox();
+            //    rightRoofSlopeTextbox.ID = "txtRightRoofSlope";
+            //    rightRoofSlopeTextbox.CssClass = "txtField txtInput";
+            //    rightRoofSlopeTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+            //    rightRoofSlopeTextbox.Attributes.Add("onblur", "resetWalls()");
+            //    rightRoofSlopeTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
+            //    rightRoofSlopeTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            //    rightRoofSlopeTextbox.MaxLength = 6;
+
+            //    Label rightRoofSlopeRunLabel = new Label();
+            //    rightRoofSlopeRunLabel.ID = "lblRightRoofRunSlope";
+            //    rightRoofSlopeRunLabel.Text = "/12";
+
+            //    rightRoofSlopeLabel.AssociatedControlID = "txtRightRoofSlope";
+            //    #endregion
+
+            //    #region Table Row # Back Wall Height Added
+            //    leftWallLabelCell.Controls.Add(leftWallLabel);
+            //    leftWallTextboxCell.Controls.Add(leftWallTextbox);
+            //    leftWallDropDownInchesCell.Controls.Add(leftWallInchSpecific);
+            //    leftWallRadioAutoFillCell.Controls.Add(leftWallRadioAutoFill);
+            //    leftWallRadioAutoFillCell.Controls.Add(leftWallRadioLabel);
+            //    leftWallRadioAutoFillCell.Controls.Add(leftWallRadioTextLabel);
+
+            //    tblWallHeights.Rows.Add(leftWallHeightRow);
+
+            //    leftWallHeightRow.Cells.Add(leftWallLabelCell);
+            //    leftWallHeightRow.Cells.Add(leftWallTextboxCell);
+            //    leftWallHeightRow.Cells.Add(leftWallDropDownInchesCell);
+            //    leftWallHeightRow.Cells.Add(leftWallRadioAutoFillCell);
+            //    #endregion
+
+            //    #region Table Row # Front Wall Height Added
+            //    rightWallLabelCell.Controls.Add(rightWallLabel);
+            //    rightWallTextboxCell.Controls.Add(rightWallTextbox);
+            //    rightWallDropDownInchesCell.Controls.Add(rightWallInchSpecific);
+            //    rightWallRadioAutoFillCell.Controls.Add(rightWallRadioAutoFill);
+            //    rightWallRadioAutoFillCell.Controls.Add(rightWallRadioLabel);
+            //    rightWallRadioAutoFillCell.Controls.Add(rightWallRadioTextLabel);
+
+            //    tblWallHeights.Rows.Add(rightWallHeightRow);
+
+            //    rightWallHeightRow.Cells.Add(rightWallLabelCell);
+            //    rightWallHeightRow.Cells.Add(rightWallTextboxCell);
+            //    rightWallHeightRow.Cells.Add(rightWallDropDownInchesCell);
+            //    rightWallHeightRow.Cells.Add(rightWallRadioAutoFillCell);
+            //    #endregion
+
+            //    #region Table Row # Gable Post Height Added
+            //    gablePostLabelCell.Controls.Add(gablePostLabel);
+            //    gablePostTextboxCell.Controls.Add(gablePostTextbox);
+            //    gablePostDropDownInchesCell.Controls.Add(gablePostInchSpecific);
+            //    gablePostRadioAutoFillCell.Controls.Add(gablePostRadioAutoFill);
+            //    gablePostRadioAutoFillCell.Controls.Add(gablePostRadioLabel);
+            //    gablePostRadioAutoFillCell.Controls.Add(gablePostRadioTextLabel);
+
+            //    tblWallHeights.Rows.Add(gablePostHeightRow);
+
+            //    gablePostHeightRow.Cells.Add(gablePostLabelCell);
+            //    gablePostHeightRow.Cells.Add(gablePostTextboxCell);
+            //    gablePostHeightRow.Cells.Add(gablePostDropDownInchesCell);
+            //    gablePostHeightRow.Cells.Add(gablePostRadioAutoFillCell);
+            //    #endregion
+
+            //    #region Table Row # Left Roof Slope Added
+            //    leftRoofSlopeLabelCell.Controls.Add(leftRoofSlopeLabel);
+            //    leftRoofSlopeTextboxCell.Controls.Add(leftRoofSlopeTextbox);
+            //    leftRoofSlopeRunLabelCell.Controls.Add(leftRoofSlopeRunLabel);
+            //    leftRoofSlopeRadioAutoFillCell.Controls.Add(leftRoofSlopeRadioAutoFill);
+            //    leftRoofSlopeRadioAutoFillCell.Controls.Add(leftRoofSlopeRadioLabel);
+            //    leftRoofSlopeRadioAutoFillCell.Controls.Add(leftRoofSlopeRadioTextLabel);
+
+            //    tblWallHeights.Rows.Add(leftRoofSlopeRow);
+
+            //    leftRoofSlopeRow.Cells.Add(leftRoofSlopeLabelCell);
+            //    leftRoofSlopeRow.Cells.Add(leftRoofSlopeTextboxCell);
+            //    leftRoofSlopeRow.Cells.Add(leftRoofSlopeRunLabelCell);
+            //    leftRoofSlopeRow.Cells.Add(leftRoofSlopeRadioAutoFillCell);
+            //    #endregion
+
+            //    #region Table Row # Right Roof Slope Added
+            //    rightRoofSlopeLabelCell.Controls.Add(rightRoofSlopeLabel);
+            //    rightRoofSlopeTextboxCell.Controls.Add(rightRoofSlopeTextbox);
+            //    rightRoofSlopeRunLabelCell.Controls.Add(rightRoofSlopeRunLabel);
+
+            //    tblWallHeights.Rows.Add(rightRoofSlopeRow);
+
+            //    rightRoofSlopeRow.Cells.Add(rightRoofSlopeLabelCell);
+            //    rightRoofSlopeRow.Cells.Add(rightRoofSlopeTextboxCell);
+            //    rightRoofSlopeRow.Cells.Add(rightRoofSlopeRunLabelCell);
+            //    #endregion
+
+            //    string hiddenString = "";
+            //    hiddenString += "<input id=\"hidLeftWallHeight\" type=\"hidden\" runat=\"server\" />";
+            //    hiddenString += "<input id=\"hidRightWallHeight\" type=\"hidden\" runat=\"server\" />";
+            //    hiddenString += "<input id=\"hidGableWallHeight\" type=\"hidden\" runat=\"server\" />";
+            //    hiddenString += "<input id=\"hidLeftRoofSlope\" type=\"hidden\" runat=\"server\" />";
+            //    hiddenString += "<input id=\"hidRightRoofSlope\" type=\"hidden\" runat=\"server\" />";
+
+            //    hiddenFieldsDiv.InnerHtml += hiddenString;
+            //}
+            //else {
+            //    #region Table Row # Back Wall Height
+            //    TableRow backWallHeightRow = new TableRow();
+            //    TableCell backWallLabelCell = new TableCell();
+            //    TableCell backWallTextboxCell = new TableCell();
+            //    TableCell backWallDropDownInchesCell = new TableCell();
+            //    TableCell backWallRadioAutoFillCell = new TableCell();
+
+            //    Label backWallLabel = new Label();
+            //    backWallLabel.ID = "lblBackWallHeight";
+            //    backWallLabel.Text = "Back Wall Height:";
+
+            //    TextBox backWallTextbox = new TextBox();
+            //    backWallTextbox.ID = "txtBackWallHeight";
+            //    backWallTextbox.CssClass = "txtField txtInput";
+            //    backWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+            //    backWallTextbox.Attributes.Add("onblur", "resetWalls()");
+            //    //backWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
+            //    backWallTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            //    backWallTextbox.MaxLength = 3;
+
+            //    DropDownList backWallInchSpecific = new DropDownList();
+            //    backWallInchSpecific.ID = "backWallInchSpecificDDL";
+            //    backWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+            //    backWallInchSpecific.Items.Add(lst0);
+            //    backWallInchSpecific.Items.Add(lst18);
+            //    backWallInchSpecific.Items.Add(lst14);
+            //    backWallInchSpecific.Items.Add(lst38);
+            //    backWallInchSpecific.Items.Add(lst12);
+            //    backWallInchSpecific.Items.Add(lst58);
+            //    backWallInchSpecific.Items.Add(lst34);
+            //    backWallInchSpecific.Items.Add(lst78);
+
+            //    RadioButton backWallRadioAutoFill = new RadioButton();
+            //    backWallRadioAutoFill.ID = "radAutoBackWallHeight";
+            //    backWallRadioAutoFill.GroupName = "wallHeightsSlopes";
+
+            //    Label backWallRadioLabel = new Label();
+            //    backWallRadioLabel.ID = "lblRadioBackWallClickable";
+            //    backWallRadioLabel.AssociatedControlID = "radAutoBackWallHeight";
+
+            //    Label backWallRadioTextLabel = new Label();
+            //    backWallRadioTextLabel.ID = "lblRadioBackWallText";
+            //    backWallRadioTextLabel.AssociatedControlID = "radAutoBackWallHeight";
+            //    backWallRadioTextLabel.Text = "Auto Populate";
+
+            //    backWallLabel.AssociatedControlID = "txtBackWallHeight";
+            //    #endregion
+
+            //    #region Table Row # Front Wall Height
+            //    TableRow frontWallHeightRow = new TableRow();
+            //    TableCell frontWallLabelCell = new TableCell();
+            //    TableCell frontWallTextboxCell = new TableCell();
+            //    TableCell frontWallDropDownInchesCell = new TableCell();
+            //    TableCell frontWallRadioAutoFillCell = new TableCell();
+
+            //    Label frontWallLabel = new Label();
+            //    frontWallLabel.ID = "lblFrontWallHeight";
+            //    frontWallLabel.Text = "Front Wall Height:";
+
+            //    TextBox frontWallTextbox = new TextBox();
+            //    frontWallTextbox.ID = "txtFrontWallHeight";
+            //    frontWallTextbox.CssClass = "txtField txtInput";
+            //    frontWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+            //    frontWallTextbox.Attributes.Add("onblur", "resetWalls()");
+            //    frontWallTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            //    //frontWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
+            //    frontWallTextbox.MaxLength = 3;
+
+            //    DropDownList frontWallInchSpecific = new DropDownList();
+            //    frontWallInchSpecific.ID = "frontWallInchSpecificDDL";
+            //    frontWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+            //    frontWallInchSpecific.Items.Add(lst0);
+            //    frontWallInchSpecific.Items.Add(lst18);
+            //    frontWallInchSpecific.Items.Add(lst14);
+            //    frontWallInchSpecific.Items.Add(lst38);
+            //    frontWallInchSpecific.Items.Add(lst12);
+            //    frontWallInchSpecific.Items.Add(lst58);
+            //    frontWallInchSpecific.Items.Add(lst34);
+            //    frontWallInchSpecific.Items.Add(lst78);
+
+            //    RadioButton frontWallRadioAutoFill = new RadioButton();
+            //    frontWallRadioAutoFill.ID = "radAutoFrontWallHeight";
+            //    frontWallRadioAutoFill.GroupName = "wallHeightsSlopes";
+
+            //    Label frontWallRadioLabel = new Label();
+            //    frontWallRadioLabel.ID = "lblRadioFrontWallClickable";
+            //    frontWallRadioLabel.AssociatedControlID = "radAutoFrontWallHeight";
+
+            //    Label frontWallRadioTextLabel = new Label();
+            //    frontWallRadioTextLabel.ID = "lblRadioFrontWallText";
+            //    frontWallRadioTextLabel.AssociatedControlID = "radAutoFrontWallHeight";
+            //    frontWallRadioTextLabel.Text = "Auto Populate";
+
+            //    frontWallLabel.AssociatedControlID = "txtFrontWallHeight";
+            //    #endregion
+
+            //    #region Table Row # Wall Slope
+            //    TableRow roofSlopeRow = new TableRow();
+            //    TableCell roofSlopeLabelCell = new TableCell();
+            //    TableCell roofSlopeTextboxCell = new TableCell();
+            //    TableCell roofSlopeRunLabelCell = new TableCell();
+            //    TableCell roofSlopeRadioAutoFillCell = new TableCell();
+
+            //    Label roofSlopeLabel = new Label();
+            //    roofSlopeLabel.ID = "lblRoofSlope";
+            //    roofSlopeLabel.Text = "Roof Slope:";
+
+            //    TextBox roofSlopeTextbox = new TextBox();
+            //    roofSlopeTextbox.ID = "txtRoofSlope";
+            //    roofSlopeTextbox.CssClass = "txtField txtInput";
+            //    roofSlopeTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+            //    roofSlopeTextbox.Attributes.Add("onblur", "resetWalls()");
+            //    roofSlopeTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+            //    //roofSlopeTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
+            //    frontWallTextbox.MaxLength = 6;
+
+            //    Label roofSlopeRunLabel = new Label();
+            //    roofSlopeRunLabel.ID = "lblWallRunSlope";
+            //    roofSlopeRunLabel.Text = "/12";
+
+            //    RadioButton roofSlopeRadioAutoFill = new RadioButton();
+            //    roofSlopeRadioAutoFill.ID = "radAutoRoofSlope";
+            //    roofSlopeRadioAutoFill.GroupName = "wallHeightsSlopes";
+            //    roofSlopeRadioAutoFill.Checked = true;
+
+            //    Label roofSlopeRadioLabel = new Label();
+            //    roofSlopeRadioLabel.ID = "lblRadioRoofSlopeClickable";
+            //    roofSlopeRadioLabel.AssociatedControlID = "radAutoRoofSlope";
+
+            //    Label roofSlopeRadioTextLabel = new Label();
+            //    roofSlopeRadioTextLabel.ID = "lblRadioRoofSlopeText";
+            //    roofSlopeRadioTextLabel.AssociatedControlID = "radAutoRoofSlope";
+            //    roofSlopeRadioTextLabel.Text = "Auto Populate";
+
+            //    roofSlopeLabel.AssociatedControlID = "txtRoofSlope";
+            //    #endregion
+
+
+            //    #region Table Row # Back Wall Height Added
+            //    backWallLabelCell.Controls.Add(backWallLabel);
+            //    backWallTextboxCell.Controls.Add(backWallTextbox);
+            //    backWallDropDownInchesCell.Controls.Add(backWallInchSpecific);
+            //    backWallRadioAutoFillCell.Controls.Add(backWallRadioAutoFill);
+            //    backWallRadioAutoFillCell.Controls.Add(backWallRadioLabel);
+            //    backWallRadioAutoFillCell.Controls.Add(backWallRadioTextLabel);
+
+            //    tblWallHeights.Rows.Add(backWallHeightRow);
+
+            //    backWallHeightRow.Cells.Add(backWallLabelCell);
+            //    backWallHeightRow.Cells.Add(backWallTextboxCell);
+            //    backWallHeightRow.Cells.Add(backWallDropDownInchesCell);
+            //    backWallHeightRow.Cells.Add(backWallRadioAutoFillCell);
+            //    #endregion
+
+            //    #region Table Row # Front Wall Height Added
+            //    frontWallLabelCell.Controls.Add(frontWallLabel);
+            //    frontWallTextboxCell.Controls.Add(frontWallTextbox);
+            //    frontWallDropDownInchesCell.Controls.Add(frontWallInchSpecific);
+            //    frontWallRadioAutoFillCell.Controls.Add(frontWallRadioAutoFill);
+            //    frontWallRadioAutoFillCell.Controls.Add(frontWallRadioLabel);
+            //    frontWallRadioAutoFillCell.Controls.Add(frontWallRadioTextLabel);
+
+            //    tblWallHeights.Rows.Add(frontWallHeightRow);
+
+            //    frontWallHeightRow.Cells.Add(frontWallLabelCell);
+            //    frontWallHeightRow.Cells.Add(frontWallTextboxCell);
+            //    frontWallHeightRow.Cells.Add(frontWallDropDownInchesCell);
+            //    frontWallHeightRow.Cells.Add(frontWallRadioAutoFillCell);
+            //    #endregion
+
+            //    #region Table Row # Wall Slope Added
+            //    roofSlopeLabelCell.Controls.Add(roofSlopeLabel);
+            //    roofSlopeTextboxCell.Controls.Add(roofSlopeTextbox);
+            //    roofSlopeRunLabelCell.Controls.Add(roofSlopeRunLabel);
+            //    roofSlopeRadioAutoFillCell.Controls.Add(roofSlopeRadioAutoFill);
+            //    roofSlopeRadioAutoFillCell.Controls.Add(roofSlopeRadioLabel);
+            //    roofSlopeRadioAutoFillCell.Controls.Add(roofSlopeRadioTextLabel);
+
+            //    tblWallHeights.Rows.Add(roofSlopeRow);
+
+            //    roofSlopeRow.Cells.Add(roofSlopeLabelCell);
+            //    roofSlopeRow.Cells.Add(roofSlopeTextboxCell);
+            //    roofSlopeRow.Cells.Add(roofSlopeRunLabelCell);
+            //    roofSlopeRow.Cells.Add(roofSlopeRadioAutoFillCell);
+            //    #endregion
+
+            //    string hiddenString = "";
+            //    hiddenString += "<input id=\"hidFrontWallHeight\" type=\"hidden\" runat=\"server\" />";
+            //    hiddenString += "<input id=\"hidBackWallHeight\" type=\"hidden\" runat=\"server\" />";
+            //    hiddenString += "<input id=\"hidRoofSlope\" type=\"hidden\" runat=\"server\" />";
+
+            //    hiddenFieldsDiv.InnerHtml += hiddenString;
+            //}
         }
 
         protected void populateWallDoorOptions(int i, int proposedWallCount)
@@ -4621,35 +4621,35 @@ namespace SunspaceDealerDesktop
 
         protected void populatePreviewSlide()
         {
-            //wallPreviewPlaceholder.Controls.Add(new LiteralControl("<h3>Wall details with current settings:</h3>"));
-            //Add a line for each wall
-            int wallCount = 0;
+            ////wallPreviewPlaceholder.Controls.Add(new LiteralControl("<h3>Wall details with current settings:</h3>"));
+            ////Add a line for each wall
+            //int wallCount = 0;
 
-            for (int i = 0; i < strWalls.Length; i++)
-            {
-                //CHANGE THIS BASED ON COMMA SPLIT
-                if (wallDetails[i, 4] == "P")
-                {
-                    wallPreviewPlaceholder.Controls.Add(new LiteralControl("<li>"));
-                    Label wallNumber = new Label();
-                    wallNumber.Text = "Wall: " + (wallCount + 1);
-                    wallNumber.ID = "lblPreviewPrefix" + wallCount;
-                    wallPreviewPlaceholder.Controls.Add(wallNumber);
+            //for (int i = 0; i < strWalls.Length; i++)
+            //{
+            //    //CHANGE THIS BASED ON COMMA SPLIT
+            //    if (wallDetails[i, 4] == "P")
+            //    {
+            //        wallPreviewPlaceholder.Controls.Add(new LiteralControl("<li>"));
+            //        Label wallNumber = new Label();
+            //        wallNumber.Text = "Wall: " + (wallCount + 1);
+            //        wallNumber.ID = "lblPreviewPrefix" + wallCount;
+            //        wallPreviewPlaceholder.Controls.Add(wallNumber);
 
-                    Label outputArea = new Label();
-                    outputArea.ID = "lblOutputArea" + (wallCount);
-                    outputArea.Text = "Default";
-                    outputArea.Attributes.Add("runat", "server");
-                    outputArea.AssociatedControlID = "lblPreviewPrefix" + wallCount;
-                    wallPreviewPlaceholder.Controls.Add(outputArea);
-                    wallPreviewPlaceholder.Controls.Add(new LiteralControl("</li>"));
+            //        Label outputArea = new Label();
+            //        outputArea.ID = "lblOutputArea" + (wallCount);
+            //        outputArea.Text = "Default";
+            //        outputArea.Attributes.Add("runat", "server");
+            //        outputArea.AssociatedControlID = "lblPreviewPrefix" + wallCount;
+            //        wallPreviewPlaceholder.Controls.Add(outputArea);
+            //        wallPreviewPlaceholder.Controls.Add(new LiteralControl("</li>"));
 
-                    //now create hidden fields for each
-                    hiddenWallInfo.InnerHtml += "<input id=\"hidWall" + wallCount + "WindowInfo\" type=\"hidden\" runat=\"server\" name=\"hidWall" + wallCount + "WindowInfo\"/>";
+            //        //now create hidden fields for each
+            //        hiddenWallInfo.InnerHtml += "<input id=\"hidWall" + wallCount + "WindowInfo\" type=\"hidden\" runat=\"server\" name=\"hidWall" + wallCount + "WindowInfo\"/>";
 
-                    wallCount++;
-                }
-            }
+            //        wallCount++;
+            //    }
+            //}
 
         }
     }

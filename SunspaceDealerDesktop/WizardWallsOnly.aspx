@@ -2348,6 +2348,90 @@ function sunshadeToggle()
 
         <div class="slide-wrapper">
             
+
+            <%-- QUESTION 0 - Wall Model 
+            ======================================== --%>
+            <div id="slide0" class="slide">
+
+                <h1>
+                    <%-- Label for question 1 (wall lengths) --%>
+                    <asp:Label ID="lblWallDetails" runat="server" Text="Please enter the wall details"></asp:Label>
+                </h1>        
+                              
+                <%-- div to store and organize the tables for textboxes and dropdowns for each wall length 
+                    number of rows in the 2 tables below are added dynamically in the codebehind--%>
+                <div id="divWallDetails" class="tblWallLengths" runat="server" >
+                    
+                    <%-- table for wall details, contains input fields for length, height, and model type as well as left and right fillers --%>
+                    <asp:Table ID="tblWallDetails" runat="server">
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:Label runat="server" Text="Model: "></asp:Label>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:DropDownList ID="ddlModel" runat="server">
+                                    <asp:ListItem Text="M100" Value="M100" />   
+                                    <asp:ListItem Text="M200" Value="M200" />
+                                    <asp:ListItem Text="M300" Value="M300" />
+                                    <asp:ListItem Text="M400" Value="M400" />
+                                </asp:DropDownList>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        
+                        <asp:TableRow  style="text-align:center">
+                            <asp:TableCell></asp:TableCell>
+                            <%-- column headings --%>
+                            <asp:TableCell ColumnSpan="2">
+                                Left Filler
+                            </asp:TableCell>
+                            <asp:TableCell ColumnSpan="2">
+                                Length
+                            </asp:TableCell>
+                            <asp:TableCell ColumnSpan="2">
+                                Right Filler
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell>
+
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:TextBox ID="txtLeftFiller" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
+                            </asp:TableCell>
+                            <asp:TableCell>
+
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:TextBox ID="TextBox1" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
+                            </asp:TableCell>
+                            <asp:TableCell>
+
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:TextBox ID="txtRightFiller" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:Label ID="lblHeight" runat="server" Text="Height: "></asp:Label>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:TextBox ID="txtHeight" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
+                    <%-- end of wall details table --%>
+                </div>
+                <%-- end of div for wall details tables --%>
+
+    
+                <%-- button to go to the next question --%>
+                <asp:Button ID="btnQuestion0" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
+
+            </div> 
+            <%-- end #slide0 --%>
+
+
             <%-- QUESTION 1 - Wall Lengths
             ======================================== --%>
             <div id="slide1" class="slide">
