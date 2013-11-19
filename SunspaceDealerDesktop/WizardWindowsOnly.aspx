@@ -28,6 +28,9 @@
             }
         }
 
+        function spreaderBarChecked() {
+
+        }
 
         function validateUnevenVents(size) {
 
