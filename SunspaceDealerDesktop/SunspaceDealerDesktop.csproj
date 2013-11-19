@@ -256,6 +256,7 @@
     <Content Include="Scripts\WindowSlideFunctions.js" />
     <Content Include="SkylightWizard.aspx" />
     <Content Include="Spoof.aspx" />
+    <Content Include="WizardFloorOnlyOrder.aspx" />
     <Content Include="WizardFloors.aspx" />
     <Content Include="WizardWallsAndMods.aspx" />
     <Content Include="NoIcons.Master" />
@@ -537,6 +538,13 @@
     <Compile Include="VinylWindow.cs" />
     <Compile Include="Wall.cs" />
     <Compile Include="Window.cs" />
+    <Compile Include="WizardFloorOnlyOrder.aspx.cs">
+      <DependentUpon>WizardFloorOnlyOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WizardFloorOnlyOrder.aspx.designer.cs">
+      <DependentUpon>WizardFloorOnlyOrder.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WizardFloors.aspx.cs">
       <DependentUpon>WizardFloors.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
