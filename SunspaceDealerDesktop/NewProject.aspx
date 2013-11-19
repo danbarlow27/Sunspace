@@ -667,8 +667,6 @@
         //This function populates and changes the values of the dropdown lists containing framing colours and skins on slide 4
         //It is called for initial population
         function newProjectChangeColours() {
-            console.log("new project change colours");
-            
             modelNumber = document.getElementById("<%=hidModelNumber.ClientID%>");
             ddlFramingColour = document.getElementById("<%=ddlFramingColour.ClientID%>");
             ddlFramingColour.options.length = 0;
@@ -725,13 +723,13 @@
             //I didn't want to tack that on to this function, so I just made a new one and called it from here.
             //One function, one purpose.
             newProjectPopulateKneewallTransom();
+            newProjectTransomStyleChanged();
             return true;
         }
 
         //this function is called whenever frame colour is changed, and will update the remaining dropdowns for interior/exterior colours and skins
         //corresponding to the chosen frame colour.
         function newProjectCascadeColours() {
-            console.log("Cascading Colours");
             ddlFramingColour = document.getElementById("<%= ddlFramingColour.ClientID %>");
             
             if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "White")
@@ -916,6 +914,7 @@
 
         function newProjectTransomStyleChanged()
         {
+            console.log("this one");
             ddlTransomTypes = document.getElementById("<%=ddlTransomType.ClientID%>");
             ddlTransomTints = document.getElementById("<%=ddlTransomTint.ClientID%>");
             ddlTransomTints.options.length = 0;
