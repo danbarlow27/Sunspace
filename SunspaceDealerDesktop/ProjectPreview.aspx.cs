@@ -770,6 +770,37 @@ namespace SunspaceDealerDesktop
                                                 + ");";
                                     aCommand.ExecuteNonQuery();
                                 }
+
+                                if (aRoof.RoofModules[roofModules].RoofItems[roofItems].ItemType == "Thermadeck Panel")
+                                {
+                                    float leftSetBack = Convert.ToSingle(Session["roofJointSetback"]);
+                                    float rightSetBack = Convert.ToSingle(Session["roofJointSetback"]);
+
+                                    if (roofItems == aRoof.RoofModules[roofModules].RoofItems.Count - 1)
+                                    {
+                                        rightSetBack = Convert.ToSingle(Session["roofSidesSetback"]);
+                                    }
+
+                                    if (roofItems == 0)
+                                    {
+                                        leftSetBack = Convert.ToSingle(Session["roofSidesSetback"]);
+                                    }
+
+                                    aCommand.CommandText = "INSERT INTO thermadeck_panels(project_id, roof_index, roof_view, item_index, projection, width, set_back, back_setback, front_setback, right_setback, left_setback) VALUES("
+                                                        + project_id + ", "
+                                                        + 0 + ", '"
+                                                        + roof_view + "', "
+                                                        + roofItems + ", "
+                                                        + aRoof.RoofModules[roofModules].RoofItems[roofItems].Projection + ", "
+                                                        + aRoof.RoofModules[roofModules].RoofItems[roofItems].Width + ", "
+                                                        + 0 + ", " //What is normal set_back? Soffit length?
+                                                        + Convert.ToSingle(Session["roofLedgerSetback"]) + ", "
+                                                        + Convert.ToSingle(Session["roofFrontSetback"]) + ", "
+                                                        + rightSetBack + ", "
+                                                        + leftSetBack
+                                                        + ");";
+                                    aCommand.ExecuteNonQuery();
+                                }
                             }
                         }
                     }

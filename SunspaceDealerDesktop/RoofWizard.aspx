@@ -31,6 +31,71 @@
                 document.getElementById('<%=hidThickness.ClientID%>').value = $('#<%=ddlThermadeckThickness.ClientID%>').val();
                 $('#<%=btnQuestion2.ClientID%>').hide();
                 $('#<%=btnQuestion2SkipNext.ClientID%>').show();
+
+                document.getElementById('<%=btnQuestion2.ClientID%>').disabled = true;                    
+                document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = true;
+
+                var confirmValid = true;
+                var error = "";
+
+                if ($('#<%=txtLedgerSetback.ClientID%>').val() != "") {
+                    if (isNaN($('#<%=txtLedgerSetback.ClientID%>').val())) {
+                        confirmValid = false;
+                        error += "Your ledger setback is invalid. Please enter a valid number of inches.<br/>";
+                    }
+                    else {
+                        document.getElementById('<%=hidLedgerSetback.ClientID%>').value = parseFloat(document.getElementById('<%=txtLedgerSetback.ClientID%>').value) + parseFloat(document.getElementById('<%=ddlLedgerSetbackInches.ClientID%>').value);
+                    }
+                }
+                else {
+                    error += "Your ledger setback is empty. Please enter a ledger setback.<br/>";
+                }
+
+                if ($('#<%=txtFrontSetback.ClientID%>').val() != "") {
+                    if (isNaN($('#<%=txtFrontSetback.ClientID%>').val())) {
+                        confirmValid = false;
+                        error += "Your front setback is invalid. Please enter a valid number of inches.<br/>";
+                    }
+                    else {
+                        document.getElementById('<%=hidFrontSetback.ClientID%>').value = parseFloat(document.getElementById('<%=txtFrontSetback.ClientID%>').value) + parseFloat(document.getElementById('<%=ddlFrontSetbackInches.ClientID%>').value);
+                    }
+                }
+                else {
+                    error += "Your front setback is empty. Please enter a front setback.<br/>";
+                }
+
+                if ($('#<%=txtSidesSetback.ClientID%>').val() != "") {
+                    if (isNaN($('#<%=txtSidesSetback.ClientID%>').val())) {
+                        confirmValid = false;
+                        error += "Your sides setback is invalid. Please enter a valid number of inches.<br/>";
+                    }
+                    else {
+                        document.getElementById('<%=hidSidesSetback.ClientID%>').value = parseFloat(document.getElementById('<%=txtSidesSetback.ClientID%>').value) + parseFloat(document.getElementById('<%=ddlSidesSetbackInches.ClientID%>').value);                    }
+                }
+                else {
+                    error += "Your side setbacks are empty. Please enter side setbacks.<br/>";
+                }
+
+                if ($('#<%=txtJointSetback.ClientID%>').val() != "") {
+                    if (isNaN($('#<%=txtJointSetback.ClientID%>').val())) {
+                        confirmValid = false;
+                        error += "Your joint setback is invalid. Please enter a valid number of inches.<br/>";
+                    }
+                    else {
+                        document.getElementById('<%=hidJointSetback.ClientID%>').value = parseFloat(document.getElementById('<%=txtJointSetback.ClientID%>').value) + parseFloat(document.getElementById('<%=ddlJointSetbackInches.ClientID%>').value);
+                    }
+                }
+                else {
+                    error += "Your joint setback is empty. Please enter a joint setback.<br/>";
+                }
+
+                if (confirmValid == true) {
+                    document.getElementById('<%=btnQuestion2.ClientID%>').disabled = false;                    
+                    document.getElementById('<%=btnQuestion2SkipNext.ClientID%>').disabled = false;
+                }
+                else {
+                    document.getElementById('<%=lblPagerSetbackAnswer.ClientID%>').innerHTML = error;
+                }
             }
         }
 
@@ -164,6 +229,57 @@
                                     <asp:Label ID="lblThermadeckThickness" runat="server" Text="Panel Thickness:"></asp:Label>
                                     <asp:DropDownList ID="ddlThermadeckThickness" runat="server" OnChange="roofWizardCheckQuestion1()"></asp:DropDownList>
                                 </li>
+                                <li>
+                                    <asp:Table ID="tblSetback" CssClass="tblTxtFields" runat="server">
+                                        <asp:TableRow style="display:inherit">
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblLedger" Text="Ledger: " runat="server"></asp:Label>
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtLedgerSetback" onkeyup="roofWizardCheckQuestion1()" runat="server"></asp:TextBox>
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlLedgerSetbackInches" OnChange="roofWizardCheckQuestion1()" runat="server"></asp:DropDownList>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow style="display:inherit">
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblFront" Text="Front: " runat="server"></asp:Label>
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtFrontSetback" onkeyup="roofWizardCheckQuestion1()" runat="server"></asp:TextBox>
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlFrontSetbackInches" OnChange="roofWizardCheckQuestion1()" runat="server"></asp:DropDownList>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow style="display:inherit">
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblSides" Text="Sides: " runat="server"></asp:Label>
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtSidesSetback" onkeyup="roofWizardCheckQuestion1()" runat="server"></asp:TextBox>
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlSidesSetbackInches" OnChange="roofWizardCheckQuestion1()" runat="server"></asp:DropDownList>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow style="display:inherit">
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblJoint" Text="Joint: " runat="server"></asp:Label>
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtJointSetback" onkeyup="roofWizardCheckQuestion1()" runat="server"></asp:TextBox>
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlJointSetbackInches" OnChange="roofWizardCheckQuestion1()" runat="server"></asp:DropDownList>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+                                    </asp:Table>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -264,10 +380,47 @@
         </div>
     </div>
     
+    <div id="sidebar">
+        <div id="paging-wrapper">    
+            <div id="paging"> 
+                <h2>Floor Specifications</h2>
+
+                <ul>
+                    <%-- MINI CANVAS (HIGHLIGHTS CURRENT WALL)
+                    ======================================== --%>
+                    <div style="position:inherit; text-align:center; top:0px; right:0px;" id="mySunroom">
+
+                    </div>
+                    <div style="display: none" id="pagerOne">
+                        <li>
+                            <a href="#" data-slide="#slide1" class="slidePanel">
+                                <asp:Label ID="lblPagerSquareFootage" runat="server" Text="Floor Square Footage"></asp:Label>
+                                <asp:Label ID="lblPagerSquareFootageDisplay" runat="server" Text=""></asp:Label>
+                            </a>
+                        </li>
+                    </div> 
+                    
+                    <div style="display: none" id="pagerTwo">
+                        <li>
+                            <a href="#" data-slide="#slide2" class="slidePanel">
+                                <asp:Label ID="lblPagerSetbackAnswer" runat="server"></asp:Label>
+                            </a>
+                        </li>          
+                    </div>                  
+                </ul>    
+            </div>    
+        </div>
+    </div>
+
     <input id="hidSystem" type="hidden" runat="server" />
     <input id="hidThickness" type="hidden" runat="server" />
     <input id="hidAcrylicColour" type="hidden" runat="server" />
     <input id="hidStripeColour" type="hidden" runat="server" />
+    
+    <input id="hidLedgerSetback" type="hidden" runat="server" />
+    <input id="hidFrontSetback" type="hidden" runat="server" />
+    <input id="hidSidesSetback" type="hidden" runat="server" />
+    <input id="hidJointSetback" type="hidden" runat="server" />
 
     <input id="hidProjection" type="hidden" runat="server" />
     <input id="hidWidth" type="hidden" runat="server" />

@@ -174,7 +174,7 @@ namespace SunspaceDealerDesktop
                 CheckBox windowSpreaderBarCHK = new CheckBox();
                 windowSpreaderBarCHK.ID = "chkWindowSpreaderBar" + title;
                 windowSpreaderBarCHK.Attributes.Add("value", "SpreaderBar");
-                //windowSpreaderBarCHK.Attributes.Add("onclick", "windowStyle('" + title + "');");
+                windowSpreaderBarCHK.Attributes.Add("onclick", "spreaderBarChecked();");
 
                 windowSpreaderBarLBLChk.AssociatedControlID = "chkWindowSpreaderBar" + title;
                 windowSpreaderBarLBL.AssociatedControlID = "chkWindowSpreaderBar" + title;

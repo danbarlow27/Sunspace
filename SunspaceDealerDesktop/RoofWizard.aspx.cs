@@ -158,6 +158,42 @@ namespace SunspaceDealerDesktop
                 ddlOverhangInches.Items.Add(lst58);
                 ddlOverhangInches.Items.Add(lst34);
                 ddlOverhangInches.Items.Add(lst78);
+
+                ddlLedgerSetbackInches.Items.Add(lst0);
+                ddlLedgerSetbackInches.Items.Add(lst18);
+                ddlLedgerSetbackInches.Items.Add(lst14);
+                ddlLedgerSetbackInches.Items.Add(lst38);
+                ddlLedgerSetbackInches.Items.Add(lst12);
+                ddlLedgerSetbackInches.Items.Add(lst58);
+                ddlLedgerSetbackInches.Items.Add(lst34);
+                ddlLedgerSetbackInches.Items.Add(lst78);
+
+                ddlFrontSetbackInches.Items.Add(lst0);
+                ddlFrontSetbackInches.Items.Add(lst18);
+                ddlFrontSetbackInches.Items.Add(lst14);
+                ddlFrontSetbackInches.Items.Add(lst38);
+                ddlFrontSetbackInches.Items.Add(lst12);
+                ddlFrontSetbackInches.Items.Add(lst58);
+                ddlFrontSetbackInches.Items.Add(lst34);
+                ddlFrontSetbackInches.Items.Add(lst78);
+
+                ddlSidesSetbackInches.Items.Add(lst0);
+                ddlSidesSetbackInches.Items.Add(lst18);
+                ddlSidesSetbackInches.Items.Add(lst14);
+                ddlSidesSetbackInches.Items.Add(lst38);
+                ddlSidesSetbackInches.Items.Add(lst12);
+                ddlSidesSetbackInches.Items.Add(lst58);
+                ddlSidesSetbackInches.Items.Add(lst34);
+                ddlSidesSetbackInches.Items.Add(lst78);
+
+                ddlJointSetbackInches.Items.Add(lst0);
+                ddlJointSetbackInches.Items.Add(lst18);
+                ddlJointSetbackInches.Items.Add(lst14);
+                ddlJointSetbackInches.Items.Add(lst38);
+                ddlJointSetbackInches.Items.Add(lst12);
+                ddlJointSetbackInches.Items.Add(lst58);
+                ddlJointSetbackInches.Items.Add(lst34);
+                ddlJointSetbackInches.Items.Add(lst78);                
                 #endregion
             }
 
@@ -184,7 +220,12 @@ namespace SunspaceDealerDesktop
 
             //We also get slope of room, and soffit length
             float roofSlope = Convert.ToSingle(Session["roofSlope"]);
-            float soffitLength = Convert.ToSingle(Session["soffitLength"]);            
+            float soffitLength = Convert.ToSingle(Session["soffitLength"]);
+
+            Session.Add("roofLedgerSetback", hidLedgerSetback.Value);
+            Session.Add("roofFrontSetback", hidFrontSetback.Value);
+            Session.Add("roofSidesSetback", hidSidesSetback.Value);
+            Session.Add("roofJointSetback", hidJointSetback.Value);
 
             #region Gable System
             //if gable, we need two studio roof systems and additional logic
@@ -275,13 +316,17 @@ namespace SunspaceDealerDesktop
                 bool hasGutters = false;
                 bool gutterPro = false;
 
-                if (hidPanelType.Value.Contains("FP"))
+                if (hidPanelType.Value.Contains("FP") && hidSystem.Value == "Traditional")
                 {
                     isFireProtected = true;
                 }
 
                 if (hidSystem.Value == "Thermadeck")
                 {
+                    if (chkBarrier.Checked == true)
+                    {
+                        isFireProtected = true;
+                    }
                     isThermadeck = true;
                 }
 
@@ -362,13 +407,17 @@ namespace SunspaceDealerDesktop
                 bool hasGutters = false;
                 bool gutterPro = false;
 
-                if (hidPanelType.Value.Contains("FP"))
+                if (hidPanelType.Value.Contains("FP") && hidSystem.Value == "Traditional")
                 {
                     isFireProtected = true;
                 }
 
                 if (hidSystem.Value == "Thermadeck")
                 {
+                    if (chkBarrier.Checked == true)
+                    {
+                        isFireProtected = true;
+                    }
                     isThermadeck = true;
                 }
 
