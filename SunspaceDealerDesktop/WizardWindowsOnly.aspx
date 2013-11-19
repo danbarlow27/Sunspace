@@ -29,7 +29,52 @@
         }
 
 
-        function validateUnevenVents() {
+        function validateUnevenVents(size) {
+
+            size += ''; //covert the given number to string
+            var decimal = size.split("."); //split the number at the decimal point
+            decimal[1] = "0." + decimal[1]; //add "0." to the decimal values to make a valid decimal number
+
+            /******************************/
+            //these constants below will have to be 
+            //moved to a constants file, or at least
+            //have global scope within this file.
+            var ONE_SIXTEENTH = 0.1667;
+            var TWO_SIXTEENTH = 0.125;
+            var THREE_SIXTEENTH = 0.1875;
+            var FOUR_SIXTEENTH = 0.25;
+            var FIVE_SIXTEENTH = 0.3125;
+            var SIX_SIXTEENTH = 0.375;
+            var SEVEN_SIXTEENTH = 0.4375;
+            var EIGHT_SIXTEENTH = 0.5;
+            var NINE_SIXTEENTH = 0.5625;
+            var TEN_SIXTEENTH = 0.625;
+            var ELEVEN_SIXTEENTH = 0.6875;
+            var TWELVE_SIXTEENTH = 0.75;
+            var THIRTEEN_SIXTEENTH = 0.8125;
+            var FOURTEEN_SIXTEENTH = 0.875;
+            var FIFTEEN_SIXTEENTH = 0.9375;
+            /******************************/
+
+            //reset the decimal value if its not exactly an eighth
+            //round it down to the nearest eighth
+            decimal[1] = (decimal[1] >= FIFTEEN_SIXTEENTH) ? FIFTEEN_SIXTEENTH :
+                (decimal[1] >= FOURTEEN_SIXTEENTH) ? FOURTEEN_SIXTEENTH :
+                (decimal[1] >= THIRTEEN_SIXTEENTH) ? THIRTEEN_SIXTEENTH :
+                (decimal[1] >= TWELVE_SIXTEENTH) ? TWELVE_SIXTEENTH :
+                (decimal[1] >= ELEVEN_SIXTEENTH) ? ELEVEN_SIXTEENTH :
+                (decimal[1] >= TEN_SIXTEENTH) ? TEN_SIXTEENTH :
+                (decimal[1] >= NINE_SIXTEENTH) ? NINE_SIXTEENTH :
+                (decimal[1] >= EIGHT_SIXTEENTH) ? EIGHT_SIXTEENTH :
+                (decimal[1] >= SEVEN_SIXTEENTH) ? SEVEN_SIXTEENTH :
+                (decimal[1] >= SIX_SIXTEENTH) ? SIX_SIXTEENTH :
+                (decimal[1] >= FIVE_SIXTEENTH) ? FIVE_SIXTEENTH :
+                (decimal[1] >= FOUR_SIXTEENTH) ? FOUR_SIXTEENTH :
+                (decimal[1] >= THREE_SIXTEENTH) ? THREE_SIXTEENTH :
+                (decimal[1] >= TWO_SIXTEENTH) ? TWO_SIXTEENTH :
+                (decimal[1] >= ONE_SIXTEENTH) ? ONE_SIXTEENTH : 0;
+
+            return decimal; //return the corrected decimal value as an array of two elements, 0: value before the decimal, 1: value after the decimal
 
             ///add uneven vents validation code here
 
@@ -125,14 +170,29 @@
 
                             document.getElementById('MainContent_rowWindowAsIfHeight' + type).style.display = 'inherit';
                             document.getElementById('MainContent_rowWindowTopBottomBothRad' + type).style.display = 'inherit';
-
+                            document.getElementById('MainContent_txtWindowAsIfHeight' + type).value = document.getElementById('MainContent_txtWindowHeight' + type).value;
+                            document.getElementById('MainContent_ddlWindowAsIfHeight' + type).selectedIndex = document.getElementById('MainContent_ddlWindowHeight' + type).selectedIndex; 
 
                             if (document.getElementById('MainContent_radWindowBothRad' + type).checked) {
 
                                 var sizeOfEachVent = document.getElementById('MainContent_txtWindowAsIfHeight' + type).value / vinylRows;
 
-                                document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = sizeOfEachVent;
-                                document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = sizeOfEachVent;
+                                var validSize = validateUnevenVents(sizeOfEachVent);
+
+                                document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = validSize[0];
+                                document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = validSize[0];
+
+                                //select the decimal value from the ddl
+                                for (var i = 0; i < document.getElementById("MainContent_ddlWindowTopVentHeight" + type).length - 1 ; i++) { //run through each element of the dropdown
+                                    if ((validSize[1] += '') == ("0" + document.getElementById("MainContent_ddlWindowTopVentHeight" + type).options[i].value)) //if the value in the dropdown list matches the decimal value
+                                        document.getElementById("MainContent_ddlWindowTopVentHeight" + type).selectedIndex = i; //select the index of that value
+                                }
+
+                                //select the decimal value from the ddl 
+                                for (var i = 0; i < document.getElementById("MainContent_ddlWindowBottomVentHeight" + type).length - 1 ; i++) { //run through each element of the dropdown
+                                    if ((validSize[1] += '') == ("0" + document.getElementById("MainContent_ddlWindowBottomVentHeight" + type).options[i].value)) //if the value in the dropdown list matches the decimal value
+                                        document.getElementById("MainContent_ddlWindowBottomVentHeight" + type).selectedIndex = i; //select the index of that value
+                                }
 
                                 document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'inherit';
                                 document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'inherit';
