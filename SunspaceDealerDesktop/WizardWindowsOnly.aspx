@@ -28,7 +28,32 @@
             }
         }
 
-        function spreaderBarChecked() {
+        function spreaderBar() {
+            alert("ahoj spreader bar");
+        }
+
+        function dlo() {
+            alert("ahoj DLO");
+        }
+
+        function deductions() {
+            alert("ahoj deductions");
+        }
+
+        function recalculate() {
+            //everything including vent sizes, DLO/Deductions, etc.
+            alert("ahoj recalculate");
+        }
+
+        function bothUneven() {
+
+        }
+
+        function tintOptions() {
+
+        }
+
+        function outsideMount() {
 
         }
 
