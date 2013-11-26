@@ -96,37 +96,21 @@ namespace SunspaceDealerDesktop
 
                         RoofOptions.Controls.Add(new LiteralControl("<li>"));
 
-                        //Label frontHeightLabel = new Label();
-                        //frontHeightLabel.ID = "lblFrontHeight" + title;
-                        //frontHeightLabel.Text = "Front Height: ";
-                        //frontHeightLabel.AssociatedControlID = "txtFrontHeight" + title;
-                        //frontHeightLabel.CssClass = "labelFormatting";
+                        Label numberOfSupportsLabel = new Label();
+                        numberOfSupportsLabel.ID = "lblNumberOfSupports" + title;
+                        numberOfSupportsLabel.Text = "Number Of Support: ";
+                        numberOfSupportsLabel.AssociatedControlID = "txtNumberOfSupports" + title;
+                        numberOfSupportsLabel.CssClass = "labelFormatting";
 
-                        //TextBox frontHeightTextbox = new TextBox();
-                        //frontHeightTextbox.ID = "txtFrontHeight" + title;
-                        //frontHeightTextbox.CssClass = "txtField txtInput";
+                        TextBox numberOfSupportsTextbox = new TextBox();
+                        numberOfSupportsTextbox.ID = "txtNumberOfSupports" + title;
+                        numberOfSupportsTextbox.CssClass = "txtField txtInput";
+                        numberOfSupportsTextbox.ToolTip = "This is the number of supports to hold up the studio roof";
 
-                        //RoofOptions.Controls.Add(frontHeightLabel);
-                        //RoofOptions.Controls.Add(frontHeightTextbox);
+                        RoofOptions.Controls.Add(numberOfSupportsLabel);
+                        RoofOptions.Controls.Add(numberOfSupportsTextbox);
 
-                        //RoofOptions.Controls.Add(new LiteralControl("</li>"));
-
-                        //RoofOptions.Controls.Add(new LiteralControl("<li>"));
-
-                        //Label backHeightLabel = new Label();
-                        //backHeightLabel.ID = "lblBackHeight" + title;
-                        //backHeightLabel.Text = "Back Height: ";
-                        //backHeightLabel.AssociatedControlID = "txtBackHeight" + title;
-                        //backHeightLabel.CssClass = "labelFormatting";
-
-                        //TextBox backHeightTextbox = new TextBox();
-                        //backHeightTextbox.ID = "txtBackHeight" + title;
-                        //backHeightTextbox.CssClass = "txtField txtInput";
-
-                        //RoofOptions.Controls.Add(backHeightLabel);
-                        //RoofOptions.Controls.Add(backHeightTextbox);
-
-                        //RoofOptions.Controls.Add(new LiteralControl("</li>"));                        
+                        RoofOptions.Controls.Add(new LiteralControl("</li>"));
 
                     }
                     #endregion
@@ -134,6 +118,23 @@ namespace SunspaceDealerDesktop
                     #region Gable Dimensions and Specifics
                     else if (roofStyle == 0 && title == "Gable") 
                     {
+                        RoofOptions.Controls.Add(new LiteralControl("<li>"));
+
+                        Label widthLabel = new Label();
+                        widthLabel.ID = "lblWidth" + title;
+                        widthLabel.Text = "Width: ";
+                        widthLabel.AssociatedControlID = "txtWidth" + title;
+                        widthLabel.CssClass = "labelFormatting";
+
+                        TextBox widthTextbox = new TextBox();
+                        widthTextbox.ID = "txtWidth" + title;
+                        widthTextbox.CssClass = "txtField txtInput";
+
+                        RoofOptions.Controls.Add(widthLabel);
+                        RoofOptions.Controls.Add(widthTextbox);
+
+                        RoofOptions.Controls.Add(new LiteralControl("</li>"));
+
                         RoofOptions.Controls.Add(new LiteralControl("<li>"));
 
                         Label leftProjectionLabel = new Label();
@@ -170,77 +171,23 @@ namespace SunspaceDealerDesktop
 
                         RoofOptions.Controls.Add(new LiteralControl("</li>"));
 
-                        //RoofOptions.Controls.Add(new LiteralControl("<li>"));
+                        RoofOptions.Controls.Add(new LiteralControl("<li>"));
 
-                        //Label heightLeftLabel = new Label();
-                        //heightLeftLabel.ID = "lblHeightLeft" + title;
-                        //heightLeftLabel.Text = "Left Height: ";
-                        //heightLeftLabel.AssociatedControlID = "txtHeightLeft" + title;
-                        //heightLeftLabel.CssClass = "labelFormatting";
+                        Label numberOfSupportsLabel = new Label();
+                        numberOfSupportsLabel.ID = "lblNumberOfSupports" + title;
+                        numberOfSupportsLabel.Text = "Number Of Support: ";
+                        numberOfSupportsLabel.AssociatedControlID = "txtNumberOfSupports" + title;
+                        numberOfSupportsLabel.CssClass = "labelFormatting";
 
-                        //TextBox heightLeftTextbox = new TextBox();
-                        //heightLeftTextbox.ID = "txtHeightLeft" + title;
-                        //heightLeftTextbox.CssClass = "txtField txtInput";
-                        //heightLeftTextbox.ToolTip = "Left height is the distance between the ground and the bottom part of the left side of the roof";
+                        TextBox numberOfSupportsTextbox = new TextBox();
+                        numberOfSupportsTextbox.ID = "txtNumberOfSupports" + title;
+                        numberOfSupportsTextbox.CssClass = "txtField txtInput";
+                        numberOfSupportsTextbox.ToolTip = "This is the number of supports to hold up the gable roof";
 
-                        //RoofOptions.Controls.Add(heightLeftLabel);
-                        //RoofOptions.Controls.Add(heightLeftTextbox);
+                        RoofOptions.Controls.Add(numberOfSupportsLabel);
+                        RoofOptions.Controls.Add(numberOfSupportsTextbox);
 
-                        //RoofOptions.Controls.Add(new LiteralControl("</li>"));
-
-                        //RoofOptions.Controls.Add(new LiteralControl("<li>"));
-
-                        //Label heightRightLabel = new Label();
-                        //heightRightLabel.ID = "lblHeightRight" + title;
-                        //heightRightLabel.Text = "Right Height: ";
-                        //heightRightLabel.AssociatedControlID = "txtHeightRight" + title;
-                        //heightRightLabel.CssClass = "labelFormatting";
-
-                        //TextBox heightRightTextbox = new TextBox();
-                        //heightRightTextbox.ID = "txtHeightRight" + title;
-                        //heightRightTextbox.CssClass = "txtField txtInput";
-                        //heightRightTextbox.ToolTip = "Right height is the distance between the ground and the bottom part of the right side of the roof";
-
-                        //RoofOptions.Controls.Add(heightRightLabel);
-                        //RoofOptions.Controls.Add(heightRightTextbox);
-
-                        //RoofOptions.Controls.Add(new LiteralControl("</li>"));
-
-                        //RoofOptions.Controls.Add(new LiteralControl("<li>"));
-
-                        //Label peakRightLabel = new Label();
-                        //peakRightLabel.ID = "lblPeakHeight" + title;
-                        //peakRightLabel.Text = "Peak Height: ";
-                        //peakRightLabel.AssociatedControlID = "txtPeak" + title;
-                        //peakRightLabel.CssClass = "labelFormatting";
-
-                        //TextBox peakRightTextbox = new TextBox();
-                        //peakRightTextbox.ID = "txtPeak" + title;
-                        //peakRightTextbox.CssClass = "txtField txtInput";
-                        //peakRightTextbox.ToolTip = "Peak height is the height of where the gable post would be";
-
-                        //RoofOptions.Controls.Add(peakRightLabel);
-                        //RoofOptions.Controls.Add(peakRightTextbox);
-
-                        //RoofOptions.Controls.Add(new LiteralControl("</li>"));
-
-                        //RoofOptions.Controls.Add(new LiteralControl("<li>"));
-
-                        //CheckBox roofSunspaceGableCHK = new CheckBox();
-                        //roofSunspaceGableCHK.ID = "chkRoofSunspaceGable" + title + radioTitle;
-                        //Label roofSunspaceGableLBLCheck = new Label();
-                        //roofSunspaceGableLBLCheck.ID = "lblSunspaceGableCheck" + title + radioTitle;
-                        //roofSunspaceGableLBLCheck.AssociatedControlID = "chkRoofSunspaceGable" + title + radioTitle;
-                        //Label roofSunspaceGableLBL = new Label();
-                        //roofSunspaceGableLBL.ID = "lblSunspaceGable" + title + radioTitle;
-                        //roofSunspaceGableLBL.AssociatedControlID = "chkRoofSunspaceGable" + title + radioTitle;
-                        //roofSunspaceGableLBL.Text = "Sunspace Gable";
-
-                        //RoofOptions.Controls.Add(roofSunspaceGableCHK);
-                        //RoofOptions.Controls.Add(roofSunspaceGableLBLCheck);
-                        //RoofOptions.Controls.Add(roofSunspaceGableLBL);
-
-                        //RoofOptions.Controls.Add(new LiteralControl("</li>"));
+                        RoofOptions.Controls.Add(new LiteralControl("</li>"));
 
                     }
                     #endregion
@@ -249,38 +196,6 @@ namespace SunspaceDealerDesktop
 
                     if (roofStyle == 0)
                     {
-
-                        //RoofOptions.Controls.Add(new LiteralControl("<li>"));
-
-                        //Label overhangLabel = new Label();
-                        //overhangLabel.ID = "lblOverhang" + title;
-                        //overhangLabel.Text = "Overhang Length:";
-
-                        //RoofOptions.Controls.Add(overhangLabel);
-
-                        //RoofOptions.Controls.Add(new LiteralControl("</li>"));
-
-                        //RoofOptions.Controls.Add(new LiteralControl("<li>"));
-
-                        //TextBox txtOverhang = new TextBox();
-                        //txtOverhang.ID = "txtOverhang" + title;
-                        //txtOverhang.CssClass = "txtField txtInput";
-
-                        //DropDownList ddlOverhang = new DropDownList();
-                        //ddlOverhang.ID = "ddlOverhang" + title;
-                        //ddlOverhang.CssClass = "txtField txtInput";
-
-                        //List<ListItem> fractionOverhang = GlobalFunctions.FractionOptions();
-
-                        //for (int i = 0; i < fractionOverhang.Count; i++)
-                        //{
-                        //    ddlOverhang.Items.Add(fractionOverhang[i]);
-                        //}
-
-                        //RoofOptions.Controls.Add(txtOverhang);
-                        //RoofOptions.Controls.Add(ddlOverhang);
-
-                        //RoofOptions.Controls.Add(new LiteralControl("</li>"));
 
                         RoofOptions.Controls.Add(new LiteralControl("<li>"));
 
@@ -397,7 +312,7 @@ namespace SunspaceDealerDesktop
 
                         RadioButton gutterNoRadio = new RadioButton();
                         gutterNoRadio.ID = "radGutterNo" + title + radioTitle;
-                        gutterNoRadio.GroupName = "roofGutterRadios";
+                        gutterNoRadio.GroupName = "roofGutterRadios" + title;
                         gutterNoRadio.Checked = true;
 
                         Label gutterNoLabelRadio = new Label();
@@ -756,20 +671,46 @@ namespace SunspaceDealerDesktop
                 {
                     Roof aRoof = buildStudioRoof();
                     //System.Diagnostics.Debug.WriteLine(
-                    //    aRoof.Acrylic + " | " 
-                    //    + aRoof.AcrylicColour + " | " 
-                    //    + aRoof.ExteriorSkin + " | " 
-                    //    + aRoof.ExtraDownspouts + " | " 
-                    //    + aRoof.FireProtection + " | " 
-                    //    + aRoof.GutterColour + " | " 
-                    //    + aRoof.GutterPro + " | " 
-                    //    + aRoof.Gutters + " | " 
-                    //    + aRoof.InteriorSkin);
+                    //    aRoof.Acrylic + " | "
+                    //    + aRoof.AcrylicColour + " | "
+                    //    + aRoof.ExteriorSkin + " | "
+                    //    + aRoof.ExtraDownspouts + " | "
+                    //    + aRoof.FireProtection + " | "
+                    //    + aRoof.GutterColour + " | "
+                    //    + aRoof.GutterPro + " | "
+                    //    + aRoof.Gutters + " | "
+                    //    + aRoof.InteriorSkin + " | "
+                    //    + aRoof.NumberSupports + " | "
+                    //    + aRoof.Projection + " | "
+                    //    + aRoof.RoofModules + " | "
+                    //    + aRoof.StripeColour + " | "
+                    //    + aRoof.Thermadeck + " | "
+                    //    + aRoof.Thickness + " | "
+                    //    + aRoof.Type + " | "
+                    //    + aRoof.Width);
                     roofsOrdered.Add(aRoof);
                 }
                 else if (Request.Form["ctl00$MainContent$roofTypeRadios"] == "radTypeGable") 
                 {
                     Roof aRoof = buildGableRoof();
+                    //System.Diagnostics.Debug.WriteLine(
+                    //    aRoof.Acrylic + " | "
+                    //    + aRoof.AcrylicColour + " | "
+                    //    + aRoof.ExteriorSkin + " | "
+                    //    + aRoof.ExtraDownspouts + " | "
+                    //    + aRoof.FireProtection + " | "
+                    //    + aRoof.GutterColour + " | "
+                    //    + aRoof.GutterPro + " | "
+                    //    + aRoof.Gutters + " | "
+                    //    + aRoof.InteriorSkin + " | "
+                    //    + aRoof.NumberSupports + " | "
+                    //    + aRoof.Projection + " | "
+                    //    + aRoof.RoofModules + " | "
+                    //    + aRoof.StripeColour + " | "
+                    //    + aRoof.Thermadeck + " | "
+                    //    + aRoof.Thickness + " | "
+                    //    + aRoof.Type + " | "
+                    //    + aRoof.Width);
                     roofsOrdered.Add(aRoof);
                 }
 
@@ -778,8 +719,6 @@ namespace SunspaceDealerDesktop
                 Session.Add("roofsOrdered", roofsOrdered);
             }
             #endregion
-                        
-            populateSideBar(findNumberOfRoofTypes());
         }
 
         private RoofModule buildStudioRoofModule(float roofProjection, float roofWidth)
@@ -900,6 +839,153 @@ namespace SunspaceDealerDesktop
             return aModule;
         }
 
+        private List<RoofModule> buildGableRoofModule(float roofLeftProjection, float roofRightProjection, float roofWidth)
+        {
+            //Variables that will be used to build the roof module
+            float panelWidth;
+            string panelBeamType;
+            string panelType;
+            float panelBeamWidth;
+            float numberOfPanels;
+            float itemWidthTotal;
+            float projectionLeft = roofLeftProjection;
+            float projectionRight = roofRightProjection;
+            List<RoofItem> itemList = new List<RoofItem>();
+            List<RoofItem> gableList = new List<RoofItem>();
+            List<RoofModule> moduleList = new List<RoofModule>();
+            string roofStyle = Request.Form["ctl00$MainContent$roofStyleRadiosStudio"];
+            //float roofFrontHeight = float.Parse(Request.Form["ctl00$MainContent$txtFrontHeightStudio"]);    //May not be needed since no slope is required
+            //float roofBackHeight = float.Parse(Request.Form["ctl00$MainContent$txtBackHeightStudio"]);      //May not be needed since no slope is required
+            string panelExteriorSkin;
+            string panelInteriorSkin;
+
+            if (roofStyle == "Alum. Skin or O.S.B.")
+            {
+                panelType = Request.Form["ctl00$MainContent$ddlPanelTypeStudio"];
+                panelExteriorSkin = Request.Form["ctl00$MainContent$ddlExteriorSkinStudio"];
+                panelInteriorSkin = Request.Form["ctl00$MainContent$ddlInteriorSkinStudio"];
+            }
+            else
+            {
+                panelType = "Pressure Cap";
+                if (roofStyle == "Thermadeck System")
+                {
+                    //Thermadeck systems must be osb/osb
+                    panelExteriorSkin = "OSB";
+                    panelInteriorSkin = "OSB";
+                }
+                else
+                {
+                    panelExteriorSkin = Request.Form["ctl00$MainContent$ddlExteriorSkinStudio"];
+                    panelInteriorSkin = Request.Form["ctl00$MainContent$ddlInteriorSkinStudio"];
+                }
+            }
+
+            if (panelType.Contains("I-Beam"))
+            {
+                panelBeamType = "I-Beam";
+                panelBeamWidth = Constants.ROOF_IBEAM_WIDTH;
+            }
+            else if (panelType.Contains("Pressure Cap"))
+            {
+                panelBeamType = "Pressure Cap";
+                panelBeamWidth = Constants.ROOF_PRESSURECAP_WIDTH;
+            }
+            else
+            {
+                panelBeamType = "Thermadeck";
+                //Thermadeck uses wood underneath the panels, so there is essentially no width to seperator beams
+                panelBeamWidth = 0f;
+            }
+
+            if (roofStyle == "Alum. Skin or O.S.B.")
+            {
+                panelWidth = Constants.FOAM_PANEL_WIDTH;
+                panelType = "Foam Panel";
+            }
+            else if (roofStyle == "Acrylic T-Bar System")
+            {
+                panelBeamType = "T-Bar";
+                panelWidth = Constants.ACRYLIC_PANEL_WIDTH;
+                panelType = "Acrylic Panel";
+            }
+            else
+            {
+                panelBeamType = "None";
+                panelWidth = Constants.THERMADECK_PANEL_WIDTH;
+                panelType = "Thermadeck Panel";
+            }
+
+            //build roof objects
+            numberOfPanels = (float)Math.Ceiling(roofWidth / panelWidth); //If it requires 'part' of a panel, that is essentially another panel, just cut. Cut will be handled later.
+            
+            if (roofStyle != "Thermadeck")
+            {
+                //Add the first panel, because if we loop adding panel+seperator, we will end with one extra
+                //We use roofProjection / 2 for the following, because this is just one side of the gable roof, thus half the projection
+                itemList.Add(new RoofItem(panelType, projectionLeft, panelWidth, -1f, -1f));
+
+                //loop adding seperator then panels, minus one iteration because one panel is already added
+                for (int i = 0; i < (numberOfPanels - 1); i++)
+                {
+                    itemList.Add(new RoofItem(panelBeamType, projectionLeft, (float)panelBeamWidth, -1f, -1f));
+                    itemList.Add(new RoofItem(panelType, projectionLeft, panelWidth, -1f, -1f));
+                }
+            }
+            //if it is thermadeck
+            else
+            {
+                for (int i = 0; i < numberOfPanels; i++)
+                {
+                    itemList.Add(new RoofItem(panelType, projectionLeft, panelWidth, -1f, -1f));
+                }
+            }
+            itemWidthTotal = 0;
+
+            //Total width of items
+            for (int i = 0; i < itemList.Count; i++)
+            {
+                itemWidthTotal += itemList[i].Width;
+            }
+
+            //If this width doesn't fit perfectly (is more than roof width) we'll need to make a cut on the last panel
+            if (itemWidthTotal > roofWidth)
+            {
+                //at .count-1 to get last item, which should be the final panel
+                //We subtract the difference that the panel exceeds to make the 'cut'
+                itemList[itemList.Count - 1].Width -= (itemWidthTotal - roofWidth);
+            }
+
+            if (roofStyle == "Thermadeck")
+            {
+                //Thermadeck systems must be osb/osb
+                panelExteriorSkin = "OSB";
+                panelInteriorSkin = "OSB";
+            }
+
+            moduleList = new List<RoofModule>();
+            RoofModule aModule = new RoofModule(projectionLeft, roofWidth, panelInteriorSkin, panelExteriorSkin, itemList);
+            moduleList.Add(aModule);
+
+            //We make a second module with the reverse roof items, because the gable is mirrored on the other side
+            for (int i = (itemList.Count - 1); i >= 0; i--)
+            {
+                gableList.Add(itemList[i]);
+            }
+
+            //Now set the duplication to their actual projections
+            for (int i = 0; i < gableList.Count; i++)
+            {
+                gableList[i].Projection = projectionRight;
+            }
+
+            RoofModule aSecondModule = new RoofModule(projectionRight, roofWidth, panelInteriorSkin, panelExteriorSkin, gableList);
+
+            moduleList.Add(aSecondModule);
+
+            return moduleList;
+        }
+
         private Roof buildStudioRoof() {
             Roof aRoof;
 
@@ -911,6 +997,7 @@ namespace SunspaceDealerDesktop
             int extraDownSpouts = int.Parse(Request.Form["ctl00$MainContent$ddlExtraDownspoutsStudio"]);
             float roofWidth = float.Parse(Request.Form["ctl00$MainContent$txtWidthStudio"]);
             float roofProjection = float.Parse(Request.Form["ctl00$MainContent$txtProjectionStudio"]);
+            int roofSupports = int.Parse(Request.Form["ctl00$MainContent$txtNumberOfSupportsStudio"]);
             //float overhang = float.Parse(Request.Form["ctl00$MainContent$txtOverhangStudio"]);
 
             string stripeColour;
@@ -995,7 +1082,7 @@ namespace SunspaceDealerDesktop
             }
             
             //changeme hardcoded supports to 0
-            aRoof = new Roof("Studio", panelInteriorSkin, panelExteriorSkin, panelThickness, isFireProtected, isThermadeck, hasGutters, gutterPro, gutterColour, stripeColour, acrylicColour, 0, extraDownSpouts, roofProjection, roofWidth, aModuleList);
+            aRoof = new Roof("Studio", panelInteriorSkin, panelExteriorSkin, panelThickness, isFireProtected, isThermadeck, hasGutters, gutterPro, gutterColour, stripeColour, acrylicColour, roofSupports, extraDownSpouts, roofProjection, roofWidth, aModuleList);
             Session.Add("completedRoof", aRoof);
 
             //Response.Redirect("SkylightWizard.aspx");
@@ -1012,19 +1099,22 @@ namespace SunspaceDealerDesktop
             bool hasGutters = false;
             bool gutterPro = false;
 
-            int extraDownSpouts = int.Parse(Request.Form["ctl00$MainContent$ddlExtraDownspoutsStudio"]);
-            float roofWidth = float.Parse(Request.Form["ctl00$MainContent$txtWidthStudio"]);
-            float roofProjection = float.Parse(Request.Form["ctl00$MainContent$txtProjectionStudio"]);
-            //float overhang = float.Parse(Request.Form["ctl00$MainContent$txtOverhangStudio"]);
+            int extraDownSpouts = int.Parse(Request.Form["ctl00$MainContent$ddlExtraDownspoutsGable"]);
+            float roofWidth = float.Parse(Request.Form["ctl00$MainContent$txtWidthGable"]);
+            float roofLeftProjection = float.Parse(Request.Form["ctl00$MainContent$txtLeftProjectionGable"]);
+            float roofRightProjection = float.Parse(Request.Form["ctl00$MainContent$txtRightProjectionGable"]);
+            float roofProjection;
+            int roofSupports = int.Parse(Request.Form["ctl00$MainContent$txtNumberOfSupportsGable"]);
+            //float overhang = float.Parse(Request.Form["ctl00$MainContent$txtOverhangGable"]);
 
             string stripeColour;
             string acrylicColour;
 
             string gutter = Request.Form["ctl00$MainContent$roofGutterRadios"];
-            string gutterProField = Request.Form["ctl00$MainContent$chkRoofGutterProGuttersStudio"];
-            string gutterColour = Request.Form["ctl00$MainContent$ddlGutterColoursStudio"];
+            string gutterProField = Request.Form["ctl00$MainContent$chkRoofGutterProGuttersGable"];
+            string gutterColour = Request.Form["ctl00$MainContent$ddlGutterColoursGable"];
 
-            string roofStyle = Request.Form["ctl00$MainContent$roofStyleRadiosStudio"];
+            string roofStyle = Request.Form["ctl00$MainContent$roofStyleRadiosGable"];
 
             float panelThickness;
             string panelExteriorSkin;
@@ -1033,21 +1123,21 @@ namespace SunspaceDealerDesktop
 
             if (roofStyle == "Alum. Skin or O.S.B.")
             {
-                stripeColour = Request.Form["ctl00$MainContent$ddlRoofStripeColourStudioAlum. Skin or O.S.B."];
+                stripeColour = Request.Form["ctl00$MainContent$ddlRoofStripeColourGableAlum. Skin or O.S.B."];
                 acrylicColour = "";
-                panelType = Request.Form["ctl00$MainContent$ddlPanelTypeStudio"];
-                panelExteriorSkin = Request.Form["ctl00$MainContent$ddlExteriorSkinStudio"];
-                panelInteriorSkin = Request.Form["ctl00$MainContent$ddlInteriorSkinStudio"];
-                panelThickness = Convert.ToSingle(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessStudioAlum. Skin or O.S.B."]);
+                panelType = Request.Form["ctl00$MainContent$ddlPanelTypeGable"];
+                panelExteriorSkin = Request.Form["ctl00$MainContent$ddlExteriorSkinGable"];
+                panelInteriorSkin = Request.Form["ctl00$MainContent$ddlInteriorSkinGable"];
+                panelThickness = Convert.ToSingle(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessGableAlum. Skin or O.S.B."]);
             }
             else if (roofStyle == "Acrylic T-Bar System")
             {
                 stripeColour = "";
-                acrylicColour = Request.Form["ctl00$MainContent$ddlRoofAcrylicColourStudioAcrylic T-Bar System"];
+                acrylicColour = Request.Form["ctl00$MainContent$ddlRoofAcrylicColourGableAcrylic T-Bar System"];
                 panelType = "Pressure Cap";
-                panelExteriorSkin = Request.Form["ctl00$MainContent$ddlExteriorSkinStudio"];
-                panelInteriorSkin = Request.Form["ctl00$MainContent$ddlInteriorSkinStudio"];
-                panelThickness = Convert.ToSingle(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessStudioAcrylic T-Bar System"]);
+                panelExteriorSkin = Request.Form["ctl00$MainContent$ddlExteriorSkinGable"];
+                panelInteriorSkin = Request.Form["ctl00$MainContent$ddlInteriorSkinGable"];
+                panelThickness = Convert.ToSingle(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessGableAcrylic T-Bar System"]);
             }
             else
             {
@@ -1057,20 +1147,15 @@ namespace SunspaceDealerDesktop
                 //Thermadeck systems must be osb/osb
                 panelExteriorSkin = "OSB";
                 panelInteriorSkin = "OSB";
-                panelThickness = Convert.ToSingle(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessStudioThermadeck System"]);
+                panelThickness = Convert.ToSingle(Request.Form["ctl00$MainContent$ddlRoofPanelThicknessGableThermadeck System"]);
             }
 
-            //Calculate actual width and projection based on overhang value
-            //roofProjection += (overhang);
-            //roofWidth += (overhang * 2);
-
-            //Now that we have roof rojection and width, add it to session.
-            Session.Add("roofProjection", roofProjection);
+            Session.Add("roofLeftProjection", roofLeftProjection);
+            Session.Add("roofRightProjection", roofRightProjection);
             Session.Add("roofWidth", roofWidth);
 
             //A studio roof will only have one list entry, while a gable will have two
-            List<RoofModule> aModuleList = new List<RoofModule>();
-            aModuleList.Add(buildStudioRoofModule(roofProjection, roofWidth));
+            List<RoofModule> gableModules = buildGableRoofModule(roofLeftProjection, roofRightProjection, roofWidth);
 
             if (panelType.Contains("FP"))
             {
@@ -1082,7 +1167,7 @@ namespace SunspaceDealerDesktop
                 isThermadeck = true;
             }
 
-            if (gutter == "radGutterYesStudio")
+            if (gutter == "radGutterYesGable")
             {
                 hasGutters = true;
             }
@@ -1098,75 +1183,15 @@ namespace SunspaceDealerDesktop
                 extraDownSpouts = 0;
             }
 
+            roofProjection = roofLeftProjection + roofRightProjection;
+
             //changeme hardcoded supports to 0
-            aRoof = new Roof("Gable", panelInteriorSkin, panelExteriorSkin, panelThickness, isFireProtected, isThermadeck, hasGutters, gutterPro, gutterColour, stripeColour, acrylicColour, 0, extraDownSpouts, roofProjection, roofWidth, aModuleList);
+            aRoof = new Roof("Gable", panelInteriorSkin, panelExteriorSkin, panelThickness, isFireProtected, isThermadeck, hasGutters, gutterPro, gutterColour, stripeColour, acrylicColour, roofSupports, extraDownSpouts, roofProjection, roofWidth, gableModules);
             Session.Add("completedRoof", aRoof);
 
             //Response.Redirect("SkylightWizard.aspx");
 
             return aRoof;
-        }
-                
-        private Tuple<int, int> findNumberOfRoofTypes()
-        {
-            int studioCount = 0, gableCount = 0;
-            roofsOrdered.ForEach(delegate(Roof roofChecked)
-            {
-                if (roofChecked.Type == "Studio")
-                    studioCount++;
-                else if (roofChecked.Type == "Gable")
-                    gableCount++;
-            });
-            return new Tuple<int, int>(studioCount, gableCount);
-        }
-
-        private void populateSideBar(Tuple<int, int> roofTypeCounts)
-        {
-
-            int count;
-
-            lblRoofPager.Controls.Add(new LiteralControl("<ul class='toggleOptions'>"));
-
-            if (roofTypeCounts.Item1 > 0)
-            {
-                lblRoofPager.Controls.Add(new LiteralControl("<li id='studioRoofs'>"));
-
-                Label studioLabel = new Label();
-                studioLabel.ID = "lblStudioRoofs";
-                studioLabel.Text = "Studio Roofs Ordered " + roofTypeCounts.Item1;
-                lblRoofPager.Controls.Add(studioLabel);
-
-                count = 1;
-
-                #region Creating studio roof pager items
-                foreach (Roof aRoof in roofsOrdered)
-                {
-                    if (aRoof.Type == "Studio")
-                    {
-                        lblRoofPager.Controls.Add(new LiteralControl("<div class='toggleContent'>"));
-
-                        Label studioCurrentRoof = new Label();
-                        studioCurrentRoof.ID = "lblRoof" + aRoof.Type + count;
-                        studioCurrentRoof.Text = aRoof.Type + " Roof " + count;
-                        lblRoofPager.Controls.Add(studioCurrentRoof);
-
-                        Label studioStyle = new Label();
-                        studioStyle.ID = "lbl" + aRoof.Type + "Type" + count;
-                        studioStyle.Text = "Type: " + aRoof.Type;
-                        lblRoofPager.Controls.Add(studioStyle);
-
-                        lblRoofPager.Controls.Add(new LiteralControl("</div>"));
-
-                        count++;
-                    }
-                }
-                #endregion
-
-                lblRoofPager.Controls.Add(new LiteralControl("</li>"));
-            }
-
-            lblRoofPager.Controls.Add(new LiteralControl("</ul>"));
-
         }
     }
 }
