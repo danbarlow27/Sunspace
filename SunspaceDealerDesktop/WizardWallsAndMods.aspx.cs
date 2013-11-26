@@ -3907,7 +3907,7 @@ namespace SunspaceDealerDesktop
                                     anHChannel.StartHeight = anHChannel.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
                                     anHChannel.Length = 2.5f;
                                     //CHANGEME if driftwood
-                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH + linearItems[0].Length;
                                     linearItems.Add(anHChannel);
                                 }
                                 else
@@ -3916,7 +3916,7 @@ namespace SunspaceDealerDesktop
                                     aBoxHeader.ItemType = "BoxHeader";
                                     aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
                                     aBoxHeader.Length = 3.25f;
-                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH + linearItems[0].Length;
                                     linearItems.Add(aBoxHeader);
                                 }
                             }
@@ -3925,7 +3925,7 @@ namespace SunspaceDealerDesktop
                             aMod.ItemType = "Mod";
                             aMod.ModType = Constants.MOD_TYPE_DOOR;
                             aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
-                            aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
+                            aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]) + linearItems[0].Length;
                             aMod.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
                             aMod.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
                             aMod.Sunshade = Convert.ToBoolean(Request.Form["MainContent_hidSunshade"]);
