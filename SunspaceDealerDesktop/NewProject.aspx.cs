@@ -262,53 +262,53 @@ namespace SunspaceDealerDesktop
             //Move all hidden fields into this array, then put array on the session
             string[] newProjectArray = new string[28];
 
-            newProjectArray[0] = hidCountry.Value.ToString();
-            newProjectArray[1] = hidExisting.Value.ToString();
-            newProjectArray[2] = hidFirstName.Value.ToString();
-            newProjectArray[3] = hidLastName.Value.ToString();
-            newProjectArray[4] = hidAddress.Value.ToString();
-            newProjectArray[5] = hidProvState.Value.ToString();
-            newProjectArray[6] = hidCity.Value.ToString();
-            newProjectArray[7] = hidZip.Value.ToString();
-            newProjectArray[8] = hidPhone.Value.ToString();
-            newProjectArray[9] = hidCell.Value.ToString();
-            newProjectArray[10] = hidEmail.Value.ToString();
-            newProjectArray[11] = hidProjectName.Value.ToString();
-            Session.Add("newProjectProjectName", hidProjectName.Value.ToString());
-            newProjectArray[12] = hidProjectType.Value.ToString();
-            Session.Add("newProjectProjectType", hidProjectType.Value.ToString());
-            newProjectArray[13] = hidModelNumber.Value.ToString();
-            newProjectArray[14] = hidKneewallType.Value.ToString();
-            Session.Add("newProjectKneewallType", hidKneewallType.Value.ToString());
-            newProjectArray[15] = hidKneewallHeight.Value.ToString();
-            Session.Add("newProjectKneewallHeight", hidKneewallHeight.Value.ToString());
-            Session.Add("newProjectKneewallTint", hidKneewallTint.Value.ToString());
-            newProjectArray[16] = hidTransomType.Value.ToString();
-            Session.Add("newProjectTransomType", hidTransomType.Value.ToString());
-            newProjectArray[17] = hidTransomHeight.Value.ToString();
-            newProjectArray[18] = hidFramingColour.Value.ToString();
-            Session.Add("newProjectFramingColour", hidFramingColour.Value.ToString());
-            newProjectArray[19] = hidInteriorColour.Value.ToString();
-            newProjectArray[20] = hidInteriorSkin.Value.ToString();
-            Session.Add("newProjectInteriorSkin", hidInteriorSkin.Value.ToString());
-            newProjectArray[21] = hidExteriorColour.Value.ToString();
-            newProjectArray[22] = hidExteriorSkin.Value.ToString();
-            Session.Add("newProjectExteriorSkin", hidExteriorSkin.Value.ToString());
-            newProjectArray[23] = hidFoamProtected.Value.ToString();
-            newProjectArray[24] = hidPrefabFloor.Value.ToString();
-            Session.Add("newProjectPrefabFloor", hidPrefabFloor.Value.ToString());
-            newProjectArray[25] = hidRoof.Value.ToString();
-            Session.Add("newProjectHasRoof", hidRoof.Value.ToString());
-            newProjectArray[26] = hidRoofType.Value.ToString();
-            Session.Add("newProjectRoofType", hidRoofType.Value.ToString());
-            newProjectArray[27] = hidLayoutSelection.Value.ToString();
-            Session.Add("newProjectTransomTint", hidTransomTint.Value.ToString());
+            newProjectArray[0] = GlobalFunctions.escapeSqlString(hidCountry.Value.ToString());
+            newProjectArray[1] = GlobalFunctions.escapeSqlString(hidExisting.Value.ToString());
+            newProjectArray[2] = GlobalFunctions.escapeSqlString(hidFirstName.Value.ToString());
+            newProjectArray[3] = GlobalFunctions.escapeSqlString(hidLastName.Value.ToString());
+            newProjectArray[4] = GlobalFunctions.escapeSqlString(hidAddress.Value.ToString());
+            newProjectArray[5] = GlobalFunctions.escapeSqlString(hidProvState.Value.ToString());
+            newProjectArray[6] = GlobalFunctions.escapeSqlString(hidCity.Value.ToString());
+            newProjectArray[7] = GlobalFunctions.escapeSqlString(hidZip.Value.ToString());
+            newProjectArray[8] = GlobalFunctions.escapeSqlString(hidPhone.Value.ToString());
+            newProjectArray[9] = GlobalFunctions.escapeSqlString(hidCell.Value.ToString());
+            newProjectArray[10] = GlobalFunctions.escapeSqlString(hidEmail.Value.ToString());
+            newProjectArray[11] = GlobalFunctions.escapeSqlString(hidProjectName.Value.ToString());
+            Session.Add("newProjectProjectName", GlobalFunctions.escapeSqlString(hidProjectName.Value.ToString()));
+            newProjectArray[12] = GlobalFunctions.escapeSqlString(hidProjectType.Value.ToString());
+            Session.Add("newProjectProjectType", GlobalFunctions.escapeSqlString(hidProjectType.Value.ToString()));
+            newProjectArray[13] = GlobalFunctions.escapeSqlString(hidModelNumber.Value.ToString());
+            newProjectArray[14] = GlobalFunctions.escapeSqlString(hidKneewallType.Value.ToString());
+            Session.Add("newProjectKneewallType", GlobalFunctions.escapeSqlString(hidKneewallType.Value.ToString()));
+            newProjectArray[15] = GlobalFunctions.escapeSqlString(hidKneewallHeight.Value.ToString());
+            Session.Add("newProjectKneewallHeight", GlobalFunctions.escapeSqlString(hidKneewallHeight.Value.ToString()));
+            Session.Add("newProjectKneewallTint", GlobalFunctions.escapeSqlString(hidKneewallTint.Value.ToString()));
+            newProjectArray[16] = GlobalFunctions.escapeSqlString(hidTransomType.Value.ToString());
+            Session.Add("newProjectTransomType", GlobalFunctions.escapeSqlString(hidTransomType.Value.ToString()));
+            newProjectArray[17] = GlobalFunctions.escapeSqlString(hidTransomHeight.Value.ToString());
+            newProjectArray[18] = GlobalFunctions.escapeSqlString(hidFramingColour.Value.ToString());
+            Session.Add("newProjectFramingColour", GlobalFunctions.escapeSqlString(hidFramingColour.Value.ToString()));
+            newProjectArray[19] = GlobalFunctions.escapeSqlString(hidInteriorColour.Value.ToString());
+            newProjectArray[20] = GlobalFunctions.escapeSqlString(hidInteriorSkin.Value.ToString());
+            Session.Add("newProjectInteriorSkin", GlobalFunctions.escapeSqlString(hidInteriorSkin.Value.ToString()));
+            newProjectArray[21] = GlobalFunctions.escapeSqlString(hidExteriorColour.Value.ToString());
+            newProjectArray[22] = GlobalFunctions.escapeSqlString(hidExteriorSkin.Value.ToString());
+            Session.Add("newProjectExteriorSkin", GlobalFunctions.escapeSqlString(hidExteriorSkin.Value.ToString()));
+            newProjectArray[23] = GlobalFunctions.escapeSqlString(hidFoamProtected.Value.ToString());
+            newProjectArray[24] = GlobalFunctions.escapeSqlString(hidPrefabFloor.Value.ToString());
+            Session.Add("newProjectPrefabFloor", GlobalFunctions.escapeSqlString(hidPrefabFloor.Value.ToString()));
+            newProjectArray[25] = GlobalFunctions.escapeSqlString(hidRoof.Value.ToString());
+            Session.Add("newProjectHasRoof", GlobalFunctions.escapeSqlString(hidRoof.Value.ToString()));
+            newProjectArray[26] = GlobalFunctions.escapeSqlString(hidRoofType.Value.ToString());
+            Session.Add("newProjectRoofType", GlobalFunctions.escapeSqlString(hidRoofType.Value.ToString()));
+            newProjectArray[27] = GlobalFunctions.escapeSqlString(hidLayoutSelection.Value.ToString());
+            Session.Add("newProjectTransomTint", GlobalFunctions.escapeSqlString(hidTransomTint.Value.ToString()));
 
-            Session.Add("model", hidModelNumber.Value.ToString());
-            Session.Add("kneewallType", hidKneewallType.Value.ToString());
-            Session.Add("kneewallHeight", hidKneewallHeight.Value.ToString());
-            Session.Add("transomType", hidTransomType.Value.ToString());
-            Session.Add("transomHeight", hidTransomHeight.Value.ToString());
+            Session.Add("model", GlobalFunctions.escapeSqlString(hidModelNumber.Value.ToString()));
+            Session.Add("kneewallType", GlobalFunctions.escapeSqlString(hidKneewallType.Value.ToString()));
+            Session.Add("kneewallHeight", GlobalFunctions.escapeSqlString(hidKneewallHeight.Value.ToString()));
+            Session.Add("transomType", GlobalFunctions.escapeSqlString(hidTransomType.Value.ToString()));
+            Session.Add("transomHeight", GlobalFunctions.escapeSqlString(hidTransomHeight.Value.ToString()));
 
             Session.Add("floorVapourBarrier", "");
 
@@ -320,7 +320,7 @@ namespace SunspaceDealerDesktop
             }
             else
             {
-                Session.Add("soffitLength", hidSoffitLength.Value.ToString());
+                Session.Add("soffitLength", GlobalFunctions.escapeSqlString(hidSoffitLength.Value.ToString()));
             }
 
             //If custom is selected, send to drawing tool
@@ -485,8 +485,10 @@ namespace SunspaceDealerDesktop
 
             string sqlInsert = "INSERT INTO customers (dealer_id,first_name,last_name,address,city,prov_city,country,zip_postal,main_phone,cell_phone,email,accept_email)"
             + "VALUES("
-            + Convert.ToInt32(Session["dealer_id"].ToString()) + ",'" + hidFirstName.Value + "','" + hidLastName.Value + "','" + hidAddress.Value + "','" + hidCity.Value + "','"
-            + hidProvState.Value + "','" + hidCountry.Value + "','" + hidZip.Value + "','" + hidPhone.Value + "','" + hidCell.Value + "','" + hidEmail.Value + "',"
+            + Convert.ToInt32(GlobalFunctions.escapeSqlString(Session["dealer_id"].ToString())) + ",'" + GlobalFunctions.escapeSqlString(hidFirstName.Value) + "','" + GlobalFunctions.escapeSqlString(hidLastName.Value)
+            + "','" + GlobalFunctions.escapeSqlString(hidAddress.Value) + "','" + GlobalFunctions.escapeSqlString(hidCity.Value) + "','"
+            + GlobalFunctions.escapeSqlString(hidProvState.Value) + "','" + GlobalFunctions.escapeSqlString(hidCountry.Value) + "','" + GlobalFunctions.escapeSqlString(hidZip.Value) + "','" + GlobalFunctions.escapeSqlString(hidPhone.Value)
+            + "','" + GlobalFunctions.escapeSqlString(hidCell.Value) + "','" + GlobalFunctions.escapeSqlString(hidEmail.Value) + "',"
             + 1 + ")";
 
             sdsCustomers.InsertCommand = sqlInsert;

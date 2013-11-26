@@ -34,7 +34,7 @@ namespace SunspaceDealerDesktop
             else
             {
                 //If entered, get name and password for querying db
-                string userName = txtUsername.Text;
+                string userName = GlobalFunctions.escapeSqlString(txtUsername.Text);
                 string userHash = GlobalFunctions.CalculateSHAHash(txtPassword.Text);
 
                 //Get the customers assosciated with this dealer. status=1 requires it to be an active account.

@@ -449,5 +449,30 @@ namespace SunspaceDealerDesktop
             float[] anArray = { roundedWindowSize, windowCounter, spaceRemaining }; /* * windowCounter */
             return (anArray);
         }
+
+        /**
+         * This function will take a string, and escape any possibly damaging character to SQL code
+         */ 
+        public static string escapeSqlString(string sentString)
+        {
+            string escapedString = "";
+
+            for (int i = 0; i < sentString.Length; i++)
+            {
+                string currentChar = sentString.Substring(i, 1);
+
+                if (currentChar.All(Char.IsLetterOrDigit))
+                {
+                    escapedString += currentChar;
+                }
+                else
+                {
+                    escapedString += @"\"; //Adds the escape character to the string in front of this character
+                    escapedString += currentChar;
+                }
+            }
+
+            return escapedString;
+        }
     }
 }

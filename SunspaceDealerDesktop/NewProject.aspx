@@ -343,6 +343,20 @@
                     //kneewall height error handling
                     document.getElementById("<%=txtErrorMessage.ClientID%>").value = "The kneewall height you entered is not a valid number.";
                 }
+                else
+                {
+                    if (document.getElementById("<%=ddlKneewallType.ClientID%>").value == "Glass")
+                    {
+                        if(document.getElementById("<%=txtKneewallHeight.ClientID%>").value <20)
+                        {
+                            document.getElementById("<%=txtErrorMessage.ClientID%>").value = "Glass kneewalls must be 20 inches or greater in height.";
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
             }
             else {
                 document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You must enter a kneewall height to proceed.";
