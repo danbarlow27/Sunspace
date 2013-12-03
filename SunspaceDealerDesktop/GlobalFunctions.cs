@@ -461,7 +461,7 @@ namespace SunspaceDealerDesktop
             {
                 string currentChar = sentString.Substring(i, 1);
 
-                if (currentChar.All(Char.IsLetterOrDigit))
+                if (currentChar.All(Char.IsLetterOrDigit) || currentChar == " ")
                 {
                     escapedString += currentChar;
                 }

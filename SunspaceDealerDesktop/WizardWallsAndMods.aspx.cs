@@ -3954,11 +3954,19 @@ namespace SunspaceDealerDesktop
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
 
+                                if (doorWindow.WindowStyle == "Vertical 4 Track")
+                                {
+                                    doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
+                                }
+                                if (doorWindow.WindowStyle == "Horizontal Roller")
+                                {
+                                    doorWindow.NumVents = 2;
+                                }
+
                                 //Spreaderbar logic
                                 if (doorWindow.WindowStyle == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
                                 {
                                     doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2); //Find center of window, then place center of spreader bar at that position (by subtracting half of it)
-                                    doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
                                 }
                                 if (doorWindow.WindowStyle == "Horizontal Roller" && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
                                 {
@@ -4006,6 +4014,16 @@ namespace SunspaceDealerDesktop
                                 doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
+
+                                if (doorWindow.WindowStyle == "Vertical 4 Track")
+                                {
+                                    doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
+                                }
+                                if (doorWindow.WindowStyle == "Horizontal Roller")
+                                {
+                                    doorWindow.NumVents = 2;
+                                }
+
                                 //Spreaderbar logic
                                 if (doorWindow.WindowStyle == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
                                 {
@@ -4162,10 +4180,14 @@ namespace SunspaceDealerDesktop
                             }
                         }
 
-                        int numberOfVents=0;
+                        int numberOfVents = 0;
                         if (hidWindowType.Value == "Vertical 4 Track" || hidWindowType.Value == "Vertical Four Track")
                         {
                             numberOfVents = hidWindowColour.Value.Length;
+                        }
+                        if (hidWindowType.Value == "Horizontal Roller" || hidWindowType.Value == "Horizontal 2 Track")
+                        {
+                            numberOfVents = 2;
                         }
                         ////Now we add the windows that fill the rest of the space
                         //string windowInfoString = Request.Form["hidWall" + i + "WindowInfo"];
@@ -4309,6 +4331,10 @@ namespace SunspaceDealerDesktop
                         if (hidWindowType.Value == "Vertical 4 Track" || hidWindowType.Value == "Vertical Four Track")
                         {
                             numberOfVents = hidWindowColour.Value.Length;
+                        }
+                        if (hidWindowType.Value == "Horizontal Roller" || hidWindowType.Value == "Horizontal 2 Track")
+                        {
+                            numberOfVents = 2;
                         }
                         ////Now we add the windows that fill the rest of the space
                         //string windowInfoString = Request.Form["hidWall" + i + "WindowInfo"];
@@ -4526,7 +4552,7 @@ namespace SunspaceDealerDesktop
             //base attributes
             aDoor.DoorType = "Cabana";
             aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
-            aDoor.ScreenType = ""; //CHANGEME
+            aDoor.ScreenType = hidScreenType.Value; //CHANGEME
             aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
 
             //cabana attributes
@@ -4534,7 +4560,7 @@ namespace SunspaceDealerDesktop
             aDoor.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "width"]);
             aDoor.GlassTint = Request.Form["hidWall" + i + "Door" + j + "glassTint"];
             aDoor.VinylTint = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
-            aDoor.ScreenType = ""; //CHANGEME
+            aDoor.ScreenType = hidScreenType.Value; //CHANGEME
             aDoor.Hinge = Request.Form["hidWall" + i + "Door" + j + "hinge"];
             aDoor.Swing = Request.Form["hidWall" + i + "Door" + j + "swing"];
             aDoor.HardwareType = Request.Form["hidWall" + i + "Door" + j + "hardware"];
@@ -4558,7 +4584,7 @@ namespace SunspaceDealerDesktop
             //base attributes
             aDoor.DoorType = "French";
             aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
-            aDoor.ScreenType = ""; //CHANGEME
+            aDoor.ScreenType = hidScreenType.Value; //CHANGEME
             aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
 
             //french attributes
@@ -4566,7 +4592,7 @@ namespace SunspaceDealerDesktop
             aDoor.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "width"]);
             aDoor.GlassTint = Request.Form["hidWall" + i + "Door" + j + "glassTint"];
             aDoor.VinylTint = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
-            aDoor.ScreenType = ""; //CHANGEME
+            aDoor.ScreenType = hidScreenType.Value; //CHANGEME
             aDoor.OperatingDoor = Request.Form["hidWall" + i + "Door" + j + "operator"];
             aDoor.Swing = Request.Form["hidWall" + i + "Door" + j + "swing"];
             aDoor.HardwareType = Request.Form["hidWall" + i + "Door" + j + "hardware"];
@@ -4586,7 +4612,7 @@ namespace SunspaceDealerDesktop
             //base attributes
             aDoor.DoorType = "Patio";
             aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
-            aDoor.ScreenType = ""; //CHANGEME
+            aDoor.ScreenType = hidScreenType.Value; //CHANGEME
             aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
             
             //patio attributes
@@ -4594,7 +4620,7 @@ namespace SunspaceDealerDesktop
             aDoor.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "width"]);
             aDoor.GlassTint = Request.Form["hidWall" + i + "Door" + j + "glassTint"];
             //aDoor.VinylTint = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
-            aDoor.ScreenType = ""; //CHANGEME
+            aDoor.ScreenType = hidScreenType.Value; //CHANGEME
             aDoor.OperatingDoor = Request.Form["hidWall" + i + "Door" + j + "operator"];
             //aDoor.Hinge = Request.Form["hidWall" + i + "Door" + j + "hinge"];
             //aDoor.Swing = Request.Form["hidWall" + i + "Door" + j + "swing"];

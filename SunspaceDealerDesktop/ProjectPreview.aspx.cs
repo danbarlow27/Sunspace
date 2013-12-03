@@ -347,35 +347,23 @@ namespace SunspaceDealerDesktop
                                                     break;
 
                                                 case "Horizontal 2 Track":
-                                                    aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
-                                                                            + project_id + ", "
-                                                                            + linearCounter + ", "
-                                                                            + k + ", "
-                                                                            + -1 + ", " //This is not in a vent, this is just solid vinyl
-                                                                            + 0 + ", " //This is a window, so it is 0
-                                                                            + aWindow.LeftHeight + ", "
-                                                                            + aWindow.RightHeight + ", "
-                                                                            + aWindow.Width + ", '"
-                                                                            + aWindow.Colour + "', "
-                                                                            + aWindow.SpreaderBar
-                                                                            + ");";
-                                                    aCommand.ExecuteNonQuery();
-                                                    break;
-
                                                 case "Horizontal Roller":
-                                                    aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
-                                                                            + project_id + ", "
-                                                                            + linearCounter + ", "
-                                                                            + k + ", "
-                                                                            + -1 + ", " //This is not in a vent, this is just solid vinyl
-                                                                            + 0 + ", " //This is a window, so it is 0
-                                                                            + aWindow.LeftHeight + ", "
-                                                                            + aWindow.RightHeight + ", "
-                                                                            + aWindow.Width + ", '"
-                                                                            + aWindow.Colour + "', "
-                                                                            + aWindow.SpreaderBar
-                                                                            + ");";
-                                                    aCommand.ExecuteNonQuery();
+                                                    for (int numVents = 0; numVents < aWindow.NumVents; numVents++)
+                                                    {
+                                                        aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                                                + project_id + ", "
+                                                                                + linearCounter + ", "
+                                                                                + k + ", "
+                                                                                + numVents + ", " //This is not in a vent, this is just solid vinyl
+                                                                                + 0 + ", " //This is a window, so it is 0
+                                                                                + aWindow.LeftHeight + ", "
+                                                                                + aWindow.RightHeight + ", "
+                                                                                + aWindow.Width + ", '"
+                                                                                + aWindow.Colour + "', "
+                                                                                + aWindow.SpreaderBar
+                                                                                + ");";
+                                                        aCommand.ExecuteNonQuery();
+                                                    }
                                                     break;
 
                                                 //case "Single Slider":
@@ -401,7 +389,7 @@ namespace SunspaceDealerDesktop
                                             }
 
                                             //Then if required, a screen table entry
-                                            if (aWindow.ScreenType != "No Screen")
+                                            if (aWindow.ScreenType != "No Screen" && aWindow.ScreenType.Length>1)
                                             {
                                                 aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length, mount) VALUES("
                                                                         + project_id + ", "
@@ -807,7 +795,7 @@ namespace SunspaceDealerDesktop
                     #endregion
 
                     #region Floor
-                    if (Session["newProjectPrefabFloor"] != "")
+                    if (Session["newProjectPrefabFloor"] == "Yes")
                     {
                         if (Session["floorType"].ToString() == "Thermadeck")
                         {
