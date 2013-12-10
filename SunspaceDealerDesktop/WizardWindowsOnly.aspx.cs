@@ -19,21 +19,21 @@ namespace SunspaceDealerDesktop
         protected ListItem lst78 = new ListItem("7/8", ".875");
 
 
-        protected ListItem lst116 = new ListItem("1/16", ".1667");
-        protected ListItem lst216 = new ListItem("1/8", ".125");
-        protected ListItem lst316 = new ListItem("3/16", ".1875");//
-        protected ListItem lst416 = new ListItem("1/4", ".25");
-        protected ListItem lst516 = new ListItem("5/16", ".3125");
-        protected ListItem lst616 = new ListItem("3/8", ".375");
-        protected ListItem lst716 = new ListItem("7/16", ".4375");
-        protected ListItem lst816 = new ListItem("1/2", ".5");
-        protected ListItem lst916 = new ListItem("9/16", ".5625");
-        protected ListItem lst1016 = new ListItem("5/8", ".625");//
-        protected ListItem lst1116 = new ListItem("11/16", ".6875");
-        protected ListItem lst1216 = new ListItem("3/4", ".75");
-        protected ListItem lst1316 = new ListItem("13/16", ".8125");
-        protected ListItem lst1416 = new ListItem("7/8", ".875");
-        protected ListItem lst1516 = new ListItem("15/16", ".9375");
+        //protected ListItem lst116 = new ListItem("1/16", ".1667");
+        //protected ListItem lst216 = new ListItem("1/8", ".125");
+        //protected ListItem lst316 = new ListItem("3/16", ".1875");//
+        //protected ListItem lst416 = new ListItem("1/4", ".25");
+        //protected ListItem lst516 = new ListItem("5/16", ".3125");
+        //protected ListItem lst616 = new ListItem("3/8", ".375");
+        //protected ListItem lst716 = new ListItem("7/16", ".4375");
+        //protected ListItem lst816 = new ListItem("1/2", ".5");
+        //protected ListItem lst916 = new ListItem("9/16", ".5625");
+        //protected ListItem lst1016 = new ListItem("5/8", ".625");//
+        //protected ListItem lst1116 = new ListItem("11/16", ".6875");
+        //protected ListItem lst1216 = new ListItem("3/4", ".75");
+        //protected ListItem lst1316 = new ListItem("13/16", ".8125");
+        //protected ListItem lst1416 = new ListItem("7/8", ".875");
+        //protected ListItem lst1516 = new ListItem("15/16", ".9375");
         
         List<Window> windowsOrdered = new List<Window>();
 
@@ -180,7 +180,7 @@ namespace SunspaceDealerDesktop
                     for (int j = 0; j < Constants.VINYL_WINDOW_TYPES_FOR_WINDOWS_ONLY_ORDER.Count(); j++)
                     {
                         windowStyleDDL.Items.Add(new ListItem(Constants.VINYL_WINDOW_TYPES_FOR_WINDOWS_ONLY_ORDER[j], Constants.VINYL_WINDOW_TYPES_FOR_WINDOWS_ONLY_ORDER[j]));
-                        windowStyleDDL.Attributes.Add("onchange", "windowStyleChanged('" + Constants.VINYL_WINDOW_TYPES_FOR_WINDOWS_ONLY_ORDER[j] + "');");
+                        windowStyleDDL.Attributes.Add("onchange", "windowVinylStyleChanged(document.getElementById('MainContent_ddlWindowStyleVinyl').options[document.getElementById('MainContent_ddlWindowStyleVinyl').selectedIndex].value);");
                     }
                 }
                 else if (title == "Glass")
@@ -188,7 +188,7 @@ namespace SunspaceDealerDesktop
                     for (int j = 0; j < Constants.GLASS_WINDOW_TYPES_FOR_WINDOWS_ONLY_ORDER.Count(); j++)
                     {
                         windowStyleDDL.Items.Add(new ListItem(Constants.GLASS_WINDOW_TYPES_FOR_WINDOWS_ONLY_ORDER[j], Constants.GLASS_WINDOW_TYPES_FOR_WINDOWS_ONLY_ORDER[j]));
-                        windowStyleDDL.Attributes.Add("onchange", "windowStyleChanged('"+ title +"','" + Constants.GLASS_WINDOW_TYPES_FOR_WINDOWS_ONLY_ORDER[j] + "');");
+                        windowStyleDDL.Attributes.Add("onchange", "windowGlassStyleChanged(document.getElementById('MainContent_ddlWindowStyleGlass').options[document.getElementById('MainContent_ddlWindowStyleGlass').selectedIndex].value);");
                     }
                 }
                 else if (title == "Screen")
@@ -517,7 +517,7 @@ namespace SunspaceDealerDesktop
                     #region Uneven Vents Checkbox
 
                     TableCell windowUnevenVentsCHKCell = new TableCell();
-                    windowUnevenVentsCHKCell.Attributes.Add("style", "display:none;");
+                    //windowUnevenVentsCHKCell.Attributes.Add("style", "display:none;");
                     windowUnevenVentsCHKCell.ID = "cellWindowUnevenVents" + title;
 
                     Label windowUnevenVentsLBLChk = new Label();
