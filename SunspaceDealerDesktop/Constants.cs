@@ -364,6 +364,10 @@ namespace SunspaceDealerDesktop
         public static string[] MODEL_300_WINDOW_TYPES = { "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
         public static string[] MODEL_400_WINDOW_TYPES = { "Horizontal Roller", "Single Slider", "Fixed Vinyl", "Fixed Glass" };
 
+        public static string[] VINYL_WINDOW_TYPES_FOR_WINDOWS_ONLY_ORDER = { "Vertical 4 Track", "Horizontal 2 Track", "Horizontal 4 Track", "Vinyl Fixed Lite", "Vinyl Trapezoid" };
+        public static string[] GLASS_WINDOW_TYPES_FOR_WINDOWS_ONLY_ORDER = { "Aluminum XX Horizontal Roller", "Alumimum Framed Picture", "Aluminum Framed Trapezoid", "PVC XO Single Glazed Horizontal Roller", "PVC Framed Single Glazed Picture", "PVC Framed Single Glazed Trapezoid" };
+
+
         #region MIN_WIDTH_BUILDABLE
         public static float V4T_2V_MIN_WIDTH_BUILDABLE = 12.0F;
         public static float V4T_3V_MIN_WIDTH_BUILDABLE = 12.0F;
