@@ -3,7 +3,33 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">    
     <script src="Scripts/GlobalFunctions.js"></script>
     <script src="Scripts/Validation.js"></script>
+
     <script>
+
+        function displayButton(number, style) {
+            if ($('#MainContent_txtNumberOfSupportsStudio').val() == '0') {
+                document.getElementById('btnAddAnotherSize' + number + style).style.display = "none";
+            }
+            else {
+                document.getElementById('btnAddAnotherSize' + number + style).style.display = "inherit";
+            }
+        }
+
+        function displayMoreSizes(numberToDisplay, style) {
+            var number = parseInt(numberToDisplay) - 1;
+
+            document.getElementById('liNumberOfSupports' + numberToDisplay).style.display = "inherit";
+            document.getElementById('btnAddAnotherSize' + number.toString() + style).style.display = "none";
+            document.getElementById('btnLessSizes' + number.toString() + style).style.display = "none";
+        }
+
+        function displayLessSizes(numberToDisplay, style) {
+            var number = parseInt(numberToDisplay) - 1;
+
+            document.getElementById('liNumberOfSupports' + numberToDisplay).style.display = "none";
+            document.getElementById('btnAddAnotherSize' + number.toString() + style).style.display = "inherit";
+            document.getElementById('btnLessSizes' + number.toString() + style).style.display = "inherit";
+        }
 
     </script>
 

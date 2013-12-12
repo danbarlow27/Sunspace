@@ -543,9 +543,11 @@ namespace SunspaceDealerDesktop
         public static string[] ROOF_STRIPE_COLOURS = { "No Stripe", "Country Blue", "Black", "Burgundy", "Hunter Green", "Purple", "Turquoise", "Slate Grey", "Beige", "Brown" };
         public static string[] ROOF_ACRYLIC_COLOURS = { "Clear", "Bronze", "Solar Cool White", "Heat Stop Cool Blue" };
 
-        public static string[] ROOF_EXTRUSION_TYPE = { "I-Beam", "I-Beam FP", "I-Beam OSB", "I-Beam OSB/OSB", "Pressure Cap", "Pressure Cap FP", "Pressure Cap OSB", "Pressure Cap OSB/OSB" };
+        public static string[] ROOF_EXTRUSION_TYPE = { "I-Beam", "I-Beam FP", "I-Beam OSB", "I-Beam OSB/OSB", "Pressure Cap", "Pressure Cap FP", "Pressure Cap OSB", "Pressure Cap OSB/OSB" };        
         public const float ROOF_IBEAM_WIDTH = 0.5f;
         public const float ROOF_PRESSURECAP_WIDTH = 0.625f;
+
+        public static string[] ROOF_SUPPORT_HEIGHTS = { "7", "8", "9", "10" };
         #endregion
 
         #region Floors
