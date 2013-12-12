@@ -173,6 +173,17 @@
             if (checked) {
                 document.getElementById('MainContent_rowWindowAsIfHeightVinyl').style.display = 'inherit';
                 document.getElementById('MainContent_rowWindowTopBottomBothRadVinyl').style.display = 'inherit';
+                document.getElementById('MainContent_rowWindowTitleVinyl').style.display = 'inherit';
+                document.getElementById('MainContent_rowWindowStyleVinyl').style.display = 'inherit';
+                document.getElementById('MainContent_rowWindowHeightVinyl').style.display = 'inherit';
+                document.getElementById('MainContent_rowWindowWidthVinyl').style.display = 'inherit';
+                document.getElementById('MainContent_rowWindowV4TNumberOfVentsVinyl').style.display = 'inherit';
+                document.getElementById('MainContent_rowWindowTintNoMixedVinyl').style.display = 'inherit';
+                document.getElementById('MainContent_rowWindowColourVinyl').style.display = 'inherit';
+                document.getElementById('MainContent_rowWindowInsideMountVinyl').style.display = 'inherit';
+                document.getElementById('MainContent_rowWindowOutsideMountVinyl').style.display = 'inherit';
+                document.getElementById('MainContent_rowWindowScreenOptionsVinyl').style.display = 'inherit';
+
 
                 if (document.getElementById('MainContent_txtWindowAsIfHeightVinyl').value === '')
                     document.getElementById('MainContent_txtWindowAsIfHeightVinyl').value = document.getElementById('MainContent_txtWindowHeightVinyl').value;
