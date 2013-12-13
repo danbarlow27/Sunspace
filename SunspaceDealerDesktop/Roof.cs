@@ -73,7 +73,7 @@ namespace SunspaceDealerDesktop
         }
 
         //Constructor for WizardRoofOnly contains additional field for list of roof supports
-        public Roof(string sentType, string sentInteriorSkin, string sentExteriorSkin, double sentThickness, bool sentFireProtection, bool sentThermadeck, bool sentGutters, bool sentGutterPro, string sentGutterColour, string sentStripeColour, string sentAcrylicColour, int sentNumberSupports, int sentExtraDownspouts, double sentProjection, double sentWidth, List<RoofSupport> sentSupports, List<RoofModule> sentModules)
+        public Roof(string sentType, string sentInteriorSkin, string sentExteriorSkin, double sentThickness, bool sentFireProtection, bool sentThermadeck, bool sentGutters, bool sentGutterPro, string sentGutterColour, string sentStripeColour, string sentAcrylicColour, int sentExtraDownspouts, double sentProjection, double sentWidth, List<RoofSupport> sentSupports, List<RoofModule> sentModules)
         {
             Type = sentType;
             InteriorSkin = sentInteriorSkin;
@@ -86,7 +86,6 @@ namespace SunspaceDealerDesktop
             GutterColour = sentGutterColour;
             StripeColour = sentStripeColour;
             AcrylicColour = sentAcrylicColour;
-            NumberSupports = sentNumberSupports;
             ExtraDownspouts = sentExtraDownspouts;
             Projection = sentProjection;
             Width = sentWidth;
