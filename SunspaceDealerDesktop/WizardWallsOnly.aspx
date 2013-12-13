@@ -16,8 +16,8 @@
         var PATIO_DOOR_MAX_HEIGHT = '<%= Session["PATIO_DOOR_MAX_HEIGHT"] %>';
         var MODEL_100_200_300_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_100_200_300_TRANSOM_MINIMUM_SIZE"] %>';
         var MODEL_400_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_400_TRANSOM_MINIMUM_SIZE"] %>';
-        var BOXHEADER_LENGTH = <%= BOXHEADER_LENGTH %>;
-        var BOXHEADER_RECEIVER_LENGTH = <%= BOXHEADER_RECEIVER_LENGTH %>;
+        var BOXHEADER_LENGTH = '<%= BOXHEADER_LENGTH %>';
+        var BOXHEADER_RECEIVER_LENGTH = '<%= BOXHEADER_RECEIVER_LENGTH %>';
         //var MIN_WINDOW_WIDTH = 
         //var MAX_WINDOW_WIDTH = 
         //var MIN_MOD_WIDTH = MIN_WINDOW_WIDTH + 2;
@@ -2413,10 +2413,18 @@ function sunshadeToggle()
                         </asp:TableRow>
                         <asp:TableRow>
                             <asp:TableCell>
-                                <asp:Label ID="lblHeight" runat="server" Text="Height: "></asp:Label>
+                                <asp:Label ID="lblStartHeight" runat="server" Text="Start Height: "></asp:Label>
                             </asp:TableCell>
                             <asp:TableCell>
-                                <asp:TextBox ID="txtHeight" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
+                                <asp:TextBox ID="txtStartHeight" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:Label ID="lblEndHeight" runat="server" Text="End Height: "></asp:Label>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:TextBox ID="txtEndHeight" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
                             </asp:TableCell>
                         </asp:TableRow>
                     </asp:Table>
@@ -2426,109 +2434,15 @@ function sunshadeToggle()
 
     
                 <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion0" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion0" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide0 --%>
 
-
-            <%-- QUESTION 1 - Wall Lengths
+             <%-- QUESTION 1 - DOOR OPTIONS/DETAILS
             ======================================== --%>
+
             <div id="slide1" class="slide">
-
-                <h1>
-                    <%-- Label for question 1 (wall lengths) --%>
-                    <asp:Label ID="lblQuestion1" runat="server" Text="Please enter the wall lengths"></asp:Label>
-                </h1>        
-                              
-                <%-- div to store and organize the tables for textboxes and dropdowns for each wall length 
-                    number of rows in the 2 tables below are added dynamically in the codebehind--%>
-                <div id="tableWallLengths" class="tblWallLengths" runat="server" >
-                    <%-- first table for existing walls, only contains input fields for lengths --%>
-                    <%--<asp:Table ID="tblExistingWalls" runat="server">
-                        <asp:TableRow>
-                            <%-- table headings --%>
-                           <%--<asp:TableHeaderCell >
-                                Existing Walls
-                            </asp:TableHeaderCell>--%>
-                        <%--</asp:TableRow>
-                        <asp:TableRow>--%>
-                            <%--<asp:TableCell></asp:TableCell>--%>
-                            <%-- column headings --%>
-                            <%--<asp:TableCell ColumnSpan="6" >
-                                Length
-                            </asp:TableCell>--%>
-                        <%--</asp:TableRow>--%>
-                    <%--</asp:Table>--%>
-                    <%-- end of existing walls table --%>
-                    
-                    <%-- second table for proposed walls, contains input fields for lengths, as well as left and right fillers --%>
-                    <asp:Table ID="tblProposedWalls" runat="server">
-                        <%--<asp:TableRow>--%>
-                            <%-- table headings --%>
-                            <%--<asp:TableHeaderCell >
-                                Proposed Walls
-                            </asp:TableHeaderCell>
-                        </asp:TableRow>--%>
-                        
-                        <asp:TableRow  style="text-align:center">
-                            <asp:TableCell></asp:TableCell>
-                            <%-- column headings --%>
-                            <asp:TableCell ColumnSpan="2">
-                                Left Filler
-                            </asp:TableCell>
-                            <asp:TableCell ColumnSpan="2">
-                                Length
-                            </asp:TableCell>
-                            <asp:TableCell ColumnSpan="2">
-                                Right Filler
-                            </asp:TableCell>
-                        </asp:TableRow>
-                    </asp:Table>
-                    <%-- end of proposed walls table --%>
-                </div>
-                <%-- end of div for lenghts tables --%>
-
-    
-                <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
-
-            </div> 
-            <%-- end #slide1 --%>
-
-            <%-- QUESTION 2 - Wall Heights and Roof Slope
-            ======================================== --%>
-            <div id="slide2" class="slide">
-
-                <h1>
-                                    <%-- Label for question 2 (wall heights and roof slope) --%>
-                    <asp:Label ID="lblQuestion2" runat="server" Text="Please enter the wall heights"></asp:Label>
-                </h1>
-           
-                        <div id="Div1" class="tblWallLengths" runat="server" >
-                            <ul>
-                                <li>
-                                    <%-- table contains textboxes, dropdowns, and radio buttons for user input --%>
-                                    <asp:Table ID="tblWallHeights" runat="server">
-
-                                       
-                                    </asp:Table>
-                                    <%-- end of heights table --%>
-                                </li>
-                            </ul>            
-                        </div> <%-- end .toggleContent --%>
-
-                <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion2" OnClientClick="determineStartAndEndHeightOfEachWall(gable)" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
-
-            </div> 
-            <%-- end #slide2 --%>
-
-
-             <%-- QUESTION 3 - DOOR OPTIONS/DETAILS
-            ======================================== --%>
-
-            <div id="slide3" class="slide">
                 <h1>
                     <asp:Label ID="lblDoorDetails" runat="server" Text="Door Details"></asp:Label>
                 </h1>        
@@ -2537,15 +2451,15 @@ function sunshadeToggle()
                     <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question"/>
+                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question"/>
 
             </div>
-            <%-- end #slide3 --%>
+            <%-- end #slide1 --%>
 
 
-             <%-- QUESTION 4 - WINDOW OPTIONS/DETAILS
+             <%-- QUESTION 2 - WINDOW OPTIONS/DETAILS
             ======================================== --%>
-            <div id="slide4" class="slide">
+            <div id="slide2" class="slide">
                 <h1>
                     <asp:Label ID="lblWindowDetails" runat="server" Text="Window Details"></asp:Label>
                 </h1>        
@@ -2557,14 +2471,14 @@ function sunshadeToggle()
                     <asp:PlaceHolder ID="plcSunshade" runat="server"></asp:PlaceHolder>           
                 </ul>  
                  
-                <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" OnClientClick="WindowPreparation();return false;"/>     
+                <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" OnClientClick="WindowPreparation();return false;"/>     
             </div>
-            <%-- end #slide4 --%>
+            <%-- end #slide2 --%>
 
 
-            <%-- QUESTION 5 - WALL PREVIEW PAGE
+            <%-- QUESTION 3 - WALL PREVIEW PAGE
             ======================================== --%>
-            <div id="slide5" class="slide">
+            <div id="slide3" class="slide">
                 <h1>
                     <asp:Label ID="lblWallPreview" runat="server" Text="Wall Preview:"></asp:Label>
                 </h1>        
@@ -2576,7 +2490,7 @@ function sunshadeToggle()
                 <asp:Button ID="btnSubmit" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
 
             </div>
-            <%-- end #slide5 --%>
+            <%-- end #slide3 --%>
 
         </div> <%-- end .slide-wrapper --%>
 
