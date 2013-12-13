@@ -26,51 +26,13 @@
     ======================================== --%>
     <div class="scrollbox">
 
-        <asp:Table ID="tblSavedProjects" class="tblSavedProjects sortable" runat="server">
-            <asp:TableHeaderRow TableSection="TableHeader">
-                <asp:TableHeaderCell CssClass="thSortable">Project Name</asp:TableHeaderCell>
-                <asp:TableHeaderCell CssClass="thSortable">Last Modified</asp:TableHeaderCell>
-                <asp:TableHeaderCell CssClass="sorttable_nosort">&nbsp;</asp:TableHeaderCell>
-                <asp:TableHeaderCell CssClass="sorttable_nosort">Add to Estimate</asp:TableHeaderCell>
-            </asp:TableHeaderRow>
-
-            <asp:TableRow>
-                <asp:TableCell>
-                    <asp:Label ID="lblProjectName1" runat="server" Text="Project Name"></asp:Label>
-                </asp:TableCell>
-                <asp:TableCell sorttable_customkey="20130503">
-                    <asp:Label ID="Label1" runat="server" Text="May 3, 2013"></asp:Label>
-                </asp:TableCell>
-                <asp:TableCell>
-                    <asp:HyperLink ID="lnkDelete" CssClass="btnDelete" runat="server">Delete</asp:HyperLink>
-                </asp:TableCell>
-                <asp:TableCell>
-                    <asp:CheckBox ID="chkAddToEstimate1" runat="server" />
-                    <asp:Label ID="lblAddToCartCheckbox" AssociatedControlID="chkAddToEstimate1" runat="server"></asp:Label>
-                </asp:TableCell>
-            </asp:TableRow>
-
-            <asp:TableRow>
-                <asp:TableCell>
-                    <asp:Label ID="Label2" runat="server" Text="Project Name 2"></asp:Label>
-                </asp:TableCell>
-                <asp:TableCell sorttable_customkey="20130531">
-                    <asp:Label ID="Label3" runat="server" Text="May 31, 2013"></asp:Label>
-                </asp:TableCell>
-                <asp:TableCell>
-                    <asp:HyperLink ID="HyperLink1" CssClass="btnDelete" runat="server">Delete</asp:HyperLink>
-                </asp:TableCell>
-                <asp:TableCell>
-                    <asp:CheckBox ID="chkAddToEstimate2" runat="server" />
-                    <asp:Label ID="Label4" AssociatedControlID="chkAddToEstimate2" runat="server"></asp:Label>
-                </asp:TableCell>
-            </asp:TableRow>
-
-        </asp:Table>
+        <asp:PlaceHolder ID="phProjectList" runat="server"></asp:PlaceHolder>
    
     </div> <%-- end .scrollBox --%>
 
     <asp:Button ID="btnAddToEstimate" CssClass="btnSubmit btnAddToEstimate" runat="server" Text="Add to Estimate" />
+
+    <asp:SqlDataSource ID="sdsProjectList" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>"></asp:SqlDataSource>
 
     <script>
         $(function () {
