@@ -372,6 +372,10 @@ namespace SunspaceDealerDesktop
         public static float V4T_2V_MIN_WIDTH_BUILDABLE = 12.0F;
         public static float V4T_3V_MIN_WIDTH_BUILDABLE = 12.0F;
         public static float V4T_4V_MIN_WIDTH_BUILDABLE = 12.0F;
+        public static float V4T_6V_MIN_WIDTH_BUILDABLE = 26.5F;
+        public static float V4T_8V_MIN_WIDTH_BUILDABLE = 26.5F;
+        public static float V4T_9V_MIN_WIDTH_BUILDABLE = 41.0F;
+        public static float V4T_12V_MIN_WIDTH_BUILDABLE = 41.0F;
         public static float HORIZONTAL_ROLLER_MIN_WIDTH_BUILDABLE = 18.0F;
         public static float VINYL_LITE_MIN_WIDTH_BUILDABLE = 4.125F;
         public static float VINYL_TRAP_MIN_WIDTH_BUILDABLE = 4.125F;
@@ -390,6 +394,10 @@ namespace SunspaceDealerDesktop
         public static float V4T_2V_MIN_WIDTH_WARRANTY = 24.0F;
         public static float V4T_3V_MIN_WIDTH_WARRANTY = 24.0F;
         public static float V4T_4V_MIN_WIDTH_WARRANTY = 24.0F;
+        public static float V4T_6V_MIN_WIDTH_WARRANTY = 54.0F;
+        public static float V4T_8V_MIN_WIDTH_WARRANTY = 54.0F;
+        public static float V4T_9V_MIN_WIDTH_WARRANTY = 78.0F;
+        public static float V4T_12V_MIN_WIDTH_WARRANTY = 78.0F;
         public static float HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY = 24.0F;
         public static float VINYL_LITE_MIN_WIDTH_WARRANTY = 4.125F;
         public static float VINYL_TRAP_MIN_WIDTH_WARRANTY = 4.125F;
@@ -408,6 +416,10 @@ namespace SunspaceDealerDesktop
         public static float V4T_2V_MAX_WIDTH_BUILDABLE = 66.0F;
         public static float V4T_3V_MAX_WIDTH_BUILDABLE = 66.0F;
         public static float V4T_4V_MAX_WIDTH_BUILDABLE = 66.0F;
+        public static float V4T_6V_MAX_WIDTH_BUILDABLE = 120.0F;
+        public static float V4T_8V_MAX_WIDTH_BUILDABLE = 120.0F;
+        public static float V4T_9V_MAX_WIDTH_BUILDABLE = 180.0F;
+        public static float V4T_12V_MAX_WIDTH_BUILDABLE = 180.0F;
         public static float HORIZONTAL_ROLLER_MAX_WIDTH_BUILDABLE = 192.0F;
         public static float VINYL_LITE_MAX_WIDTH_BUILDABLE = 192.0F;
         public static float VINYL_TRAP_MAX_WIDTH_BUILDABLE = 192.0F;
@@ -426,6 +438,10 @@ namespace SunspaceDealerDesktop
         public static float V4T_2V_MAX_WIDTH_WARRANTY = 54.0F;
         public static float V4T_3V_MAX_WIDTH_WARRANTY = 54.0F;
         public static float V4T_4V_MAX_WIDTH_WARRANTY = 54.0F;
+        public static float V4T_6V_MAX_WIDTH_WARRANTY = 108.0F;
+        public static float V4T_8V_MAX_WIDTH_WARRANTY = 108.0F;
+        public static float V4T_9V_MAX_WIDTH_WARRANTY = 144.0F;
+        public static float V4T_12V_MAX_WIDTH_WARRANTY = 144.0F;
         public static float HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY = 114.0F;
         public static float VINYL_LITE_MAX_WIDTH_WARRANTY = 114.0F;
         public static float VINYL_TRAP_MAX_WIDTH_WARRANTY = 102.0F;
@@ -445,6 +461,10 @@ namespace SunspaceDealerDesktop
         public static float V4T_2V_MIN_HEIGHT_BUILDABLE = 18.0F;
         public static float V4T_3V_MIN_HEIGHT_BUILDABLE = 18.0F;
         public static float V4T_4V_MIN_HEIGHT_BUILDABLE = 44.0F;
+        public static float V4T_6V_MIN_HEIGHT_BUILDABLE = 44.0F;
+        public static float V4T_8V_MIN_HEIGHT_BUILDABLE = 44.0F;
+        public static float V4T_9V_MIN_HEIGHT_BUILDABLE = 44.0F;
+        public static float V4T_12V_MIN_HEIGHT_BUILDABLE = 44.0F;
         public static float HORIZONTAL_ROLLER_MIN_HEIGHT_BUILDABLE = 18.0F;
         public static float VINYL_LITE_MIN_HEIGHT_BUILDABLE = 4.125F;
         public static float VINYL_TRAP_MIN_HEIGHT_BUILDABLE = 4.125F;
@@ -462,7 +482,11 @@ namespace SunspaceDealerDesktop
         #region MIN_HEIGHT_WARRANTY
         public static float V4T_2V_MIN_HEIGHT_WARRANTY = 36.0F;
         public static float V4T_3V_MIN_HEIGHT_WARRANTY = 44.0F;
-        public static float V4T_4V_MIN_HEIGHT_WARRANTY = 56.0F; 
+        public static float V4T_4V_MIN_HEIGHT_WARRANTY = 56.0F;
+        public static float V4T_6V_MIN_HEIGHT_WARRANTY = 44.0F;
+        public static float V4T_8V_MIN_HEIGHT_WARRANTY = 56.0F;
+        public static float V4T_9V_MIN_HEIGHT_WARRANTY = 44.0F;
+        public static float V4T_12V_MIN_HEIGHT_WARRANTY = 56.0F;
         public static float HORIZONTAL_ROLLER_MIN_HEIGHT_WARRANTY = 24.0F; 
         public static float VINYL_LITE_MIN_HEIGHT_WARRANTY = 4.125F;
         public static float VINYL_TRAP_MIN_HEIGHT_WARRANTY = 4.125F;
@@ -481,6 +505,10 @@ namespace SunspaceDealerDesktop
         public static float V4T_2V_MAX_HEIGHT_BUILDABLE = 114.0F;
         public static float V4T_3V_MAX_HEIGHT_BUILDABLE = 114.0F;
         public static float V4T_4V_MAX_HEIGHT_BUILDABLE = 114.0F;
+        public static float V4T_6V_MAX_HEIGHT_BUILDABLE = 114.0F;
+        public static float V4T_8V_MAX_HEIGHT_BUILDABLE = 114.0F;
+        public static float V4T_9V_MAX_HEIGHT_BUILDABLE = 114.0F;
+        public static float V4T_12V_MAX_HEIGHT_BUILDABLE = 114.0F;
         public static float HORIZONTAL_ROLLER_MAX_HEIGHT_BUILDABLE = 108.0F; 
         public static float VINYL_LITE_MAX_HEIGHT_BUILDABLE = 114.0F;
         public static float VINYL_TRAP_MAX_HEIGHT_BUILDABLE = 78.0F; 
@@ -499,6 +527,10 @@ namespace SunspaceDealerDesktop
         public static float V4T_2V_MAX_HEIGHT_WARRANTY = 102.0F;
         public static float V4T_3V_MAX_HEIGHT_WARRANTY = 102.0F;
         public static float V4T_4V_MAX_HEIGHT_WARRANTY = 102.0F;
+        public static float V4T_6V_MAX_HEIGHT_WARRANTY = 102.0F;
+        public static float V4T_8V_MAX_HEIGHT_WARRANTY = 102.0F;
+        public static float V4T_9V_MAX_HEIGHT_WARRANTY = 102.0F;
+        public static float V4T_12V_MAX_HEIGHT_WARRANTY = 102.0F;
         public static float HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY = 114.0F;
         public static float VINYL_LITE_MAX_HEIGHT_WARRANTY = 114.0F;
         public static float VINYL_TRAP_MAX_HEIGHT_WARRANTY = 78.0F;

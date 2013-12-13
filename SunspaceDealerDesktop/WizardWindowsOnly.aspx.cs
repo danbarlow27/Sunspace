@@ -19,22 +19,190 @@ namespace SunspaceDealerDesktop
         protected ListItem lst78 = new ListItem("7/8", ".875");
 
 
-        //protected ListItem lst116 = new ListItem("1/16", ".1667");
-        //protected ListItem lst216 = new ListItem("1/8", ".125");
-        //protected ListItem lst316 = new ListItem("3/16", ".1875");//
-        //protected ListItem lst416 = new ListItem("1/4", ".25");
-        //protected ListItem lst516 = new ListItem("5/16", ".3125");
-        //protected ListItem lst616 = new ListItem("3/8", ".375");
-        //protected ListItem lst716 = new ListItem("7/16", ".4375");
-        //protected ListItem lst816 = new ListItem("1/2", ".5");
-        //protected ListItem lst916 = new ListItem("9/16", ".5625");
-        //protected ListItem lst1016 = new ListItem("5/8", ".625");//
-        //protected ListItem lst1116 = new ListItem("11/16", ".6875");
-        //protected ListItem lst1216 = new ListItem("3/4", ".75");
-        //protected ListItem lst1316 = new ListItem("13/16", ".8125");
-        //protected ListItem lst1416 = new ListItem("7/8", ".875");
-        //protected ListItem lst1516 = new ListItem("15/16", ".9375");
-        
+        #region MIN_WIDTH_BUILDABLE
+        //protected float V4T_2V_MIN_WIDTH_BUILDABLE = 12.0F;
+        protected float V4T_3V_MIN_WIDTH_BUILDABLE = Constants.V4T_3V_MIN_WIDTH_BUILDABLE;
+        protected float V4T_4V_MIN_WIDTH_BUILDABLE = Constants.V4T_4V_MIN_WIDTH_BUILDABLE;
+        protected float V4T_6V_MIN_WIDTH_BUILDABLE = Constants.V4T_6V_MIN_WIDTH_BUILDABLE;
+        protected float V4T_8V_MIN_WIDTH_BUILDABLE = Constants.V4T_8V_MIN_WIDTH_BUILDABLE;
+        protected float V4T_9V_MIN_WIDTH_BUILDABLE = Constants.V4T_9V_MIN_WIDTH_BUILDABLE;
+        protected float V4T_12V_MIN_WIDTH_BUILDABLE = Constants.V4T_12V_MIN_WIDTH_BUILDABLE;
+        protected float HORIZONTAL_ROLLER_MIN_WIDTH_BUILDABLE = Constants.HORIZONTAL_ROLLER_MIN_WIDTH_BUILDABLE;
+        protected float VINYL_LITE_MIN_WIDTH_BUILDABLE = Constants.VINYL_LITE_MIN_WIDTH_BUILDABLE;
+        protected float VINYL_TRAP_MIN_WIDTH_BUILDABLE = Constants.VINYL_TRAP_MIN_WIDTH_BUILDABLE;
+
+        protected float DOUBLE_SLIDER_MIN_WIDTH_BUILDABLE = Constants.DOUBLE_SLIDER_MIN_WIDTH_BUILDABLE;
+        protected float DOUBLE_SLIDER_LITE_MIN_WIDTH_BUILDABLE = Constants.DOUBLE_SLIDER_LITE_MIN_WIDTH_BUILDABLE;
+        protected float DOUBLE_SLIDER_TRAP_MIN_WIDTH_BUILDABLE = Constants.DOUBLE_SLIDER_TRAP_MIN_WIDTH_BUILDABLE;
+
+        protected float SINGLE_SLIDER_MIN_WIDTH_BUILDABLE = Constants.SINGLE_SLIDER_MIN_WIDTH_BUILDABLE;
+        protected float SINGLE_SLIDER_LITE_MIN_WIDTH_BUILDABLE = Constants.SINGLE_SLIDER_LITE_MIN_WIDTH_BUILDABLE;
+        protected float SINGLE_SLIDER_TRAP_MIN_WIDTH_BUILDABLE = Constants.SINGLE_SLIDER_TRAP_MIN_WIDTH_BUILDABLE;
+
+        protected float SCREEN_MIN_WIDTH_BUILDABLE = Constants.SCREEN_MIN_WIDTH_BUILDABLE;
+        #endregion
+        #region MIN_WIDTH_WARRANTY
+        //protected float V4T_2V_MIN_WIDTH_WARRANTY = 24.0F;
+        protected float V4T_3V_MIN_WIDTH_WARRANTY = Constants.V4T_3V_MIN_WIDTH_WARRANTY;
+        protected float V4T_4V_MIN_WIDTH_WARRANTY = Constants.V4T_4V_MIN_WIDTH_WARRANTY;
+        protected float V4T_6V_MIN_WIDTH_WARRANTY = Constants.V4T_6V_MIN_WIDTH_WARRANTY;
+        protected float V4T_8V_MIN_WIDTH_WARRANTY = Constants.V4T_8V_MIN_WIDTH_WARRANTY;
+        protected float V4T_9V_MIN_WIDTH_WARRANTY = Constants.V4T_9V_MIN_WIDTH_WARRANTY;
+        protected float V4T_12V_MIN_WIDTH_WARRANTY = Constants.V4T_12V_MIN_WIDTH_WARRANTY;
+        protected float HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY = Constants.HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY;
+        protected float VINYL_LITE_MIN_WIDTH_WARRANTY = Constants.VINYL_LITE_MIN_WIDTH_WARRANTY;
+        protected float VINYL_TRAP_MIN_WIDTH_WARRANTY = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY;
+
+        protected float DOUBLE_SLIDER_MIN_WIDTH_WARRANTY = Constants.DOUBLE_SLIDER_MIN_WIDTH_WARRANTY;
+        protected float DOUBLE_SLIDER_LITE_MIN_WIDTH_WARRANTY = Constants.DOUBLE_SLIDER_LITE_MIN_WIDTH_WARRANTY;
+        protected float DOUBLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY = Constants.DOUBLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY;
+
+        protected float SINGLE_SLIDER_MIN_WIDTH_WARRANTY = Constants.SINGLE_SLIDER_MIN_WIDTH_WARRANTY;
+        protected float SINGLE_SLIDER_LITE_MIN_WIDTH_WARRANTY = Constants.SINGLE_SLIDER_LITE_MIN_WIDTH_WARRANTY;
+        protected float SINGLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY = Constants.SINGLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY;
+
+        protected float SCREEN_MIN_WIDTH_WARRANTY = Constants.SCREEN_MIN_WIDTH_WARRANTY;
+        #endregion
+        #region MAX_WIDTH_BUILDABLE
+        //protected float V4T_2V_MAX_WIDTH_BUILDABLE = 66.0F;
+        protected float V4T_3V_MAX_WIDTH_BUILDABLE = Constants.V4T_3V_MAX_WIDTH_BUILDABLE;
+        protected float V4T_4V_MAX_WIDTH_BUILDABLE = Constants.V4T_4V_MAX_WIDTH_BUILDABLE;
+        protected float V4T_6V_MAX_WIDTH_BUILDABLE = Constants.V4T_6V_MAX_WIDTH_BUILDABLE;
+        protected float V4T_8V_MAX_WIDTH_BUILDABLE = Constants.V4T_8V_MAX_WIDTH_BUILDABLE;
+        protected float V4T_9V_MAX_WIDTH_BUILDABLE = Constants.V4T_9V_MAX_WIDTH_BUILDABLE;
+        protected float V4T_12V_MAX_WIDTH_BUILDABLE = Constants.V4T_12V_MAX_WIDTH_BUILDABLE;
+        protected float HORIZONTAL_ROLLER_MAX_WIDTH_BUILDABLE = Constants.HORIZONTAL_ROLLER_MAX_WIDTH_BUILDABLE;
+        protected float VINYL_LITE_MAX_WIDTH_BUILDABLE = Constants.VINYL_LITE_MAX_WIDTH_BUILDABLE;
+        protected float VINYL_TRAP_MAX_WIDTH_BUILDABLE = Constants.VINYL_TRAP_MAX_WIDTH_BUILDABLE;
+
+        protected float DOUBLE_SLIDER_MAX_WIDTH_BUILDABLE = Constants.DOUBLE_SLIDER_MAX_WIDTH_BUILDABLE;
+        protected float DOUBLE_SLIDER_LITE_MAX_WIDTH_BUILDABLE = Constants.DOUBLE_SLIDER_LITE_MAX_WIDTH_BUILDABLE;
+        protected float DOUBLE_SLIDER_TRAP_MAX_WIDTH_BUILDABLE = Constants.DOUBLE_SLIDER_TRAP_MAX_WIDTH_BUILDABLE;
+
+        protected float SINGLE_SLIDER_MAX_WIDTH_BUILDABLE = Constants.SINGLE_SLIDER_MAX_WIDTH_BUILDABLE;
+        protected float SINGLE_SLIDER_LITE_MAX_WIDTH_BUILDABLE = Constants.SINGLE_SLIDER_LITE_MAX_WIDTH_BUILDABLE;
+        protected float SINGLE_SLIDER_TRAP_MAX_WIDTH_BUILDABLE = Constants.SINGLE_SLIDER_TRAP_MAX_WIDTH_BUILDABLE;
+
+        protected float SCREEN_MAX_WIDTH_BUILDABLE = Constants.SCREEN_MAX_WIDTH_BUILDABLE;
+        #endregion
+        #region MAX_WIDTH_WARRANTY
+        //protected float V4T_2V_MAX_WIDTH_WARRANTY = 54.0F;
+        protected float V4T_3V_MAX_WIDTH_WARRANTY = Constants.V4T_3V_MAX_WIDTH_WARRANTY;
+        protected float V4T_4V_MAX_WIDTH_WARRANTY = Constants.V4T_4V_MAX_WIDTH_WARRANTY;
+        protected float V4T_6V_MAX_WIDTH_WARRANTY = Constants.V4T_6V_MAX_WIDTH_WARRANTY;
+        protected float V4T_8V_MAX_WIDTH_WARRANTY = Constants.V4T_8V_MAX_WIDTH_WARRANTY;
+        protected float V4T_9V_MAX_WIDTH_WARRANTY = Constants.V4T_9V_MAX_WIDTH_WARRANTY;
+        protected float V4T_12V_MAX_WIDTH_WARRANTY = Constants.V4T_12V_MAX_WIDTH_WARRANTY;
+        protected float HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY = Constants.HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY;
+        protected float VINYL_LITE_MAX_WIDTH_WARRANTY = Constants.VINYL_LITE_MAX_WIDTH_WARRANTY;
+        protected float VINYL_TRAP_MAX_WIDTH_WARRANTY = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
+
+        protected float DOUBLE_SLIDER_MAX_WIDTH_WARRANTY = Constants.DOUBLE_SLIDER_MAX_WIDTH_WARRANTY;
+        protected float DOUBLE_SLIDER_LITE_MAX_WIDTH_WARRANTY = Constants.DOUBLE_SLIDER_LITE_MAX_WIDTH_WARRANTY;
+        protected float DOUBLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY = Constants.DOUBLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY;
+
+        protected float SINGLE_SLIDER_MAX_WIDTH_WARRANTY = Constants.SINGLE_SLIDER_MAX_WIDTH_WARRANTY;
+        protected float SINGLE_SLIDER_LITE_MAX_WIDTH_WARRANTY = Constants.SINGLE_SLIDER_LITE_MAX_WIDTH_WARRANTY;
+        protected float SINGLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY = Constants.SINGLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY;
+
+        protected float SCREEN_MAX_WIDTH_WARRANTY = Constants.SCREEN_MAX_WIDTH_WARRANTY;
+        #endregion
+
+        #region MIN_HEIGHT_BUILDABLE
+        //protected float V4T_2V_MIN_HEIGHT_BUILDABLE = 18.0F;
+        protected float V4T_3V_MIN_HEIGHT_BUILDABLE = Constants.V4T_3V_MIN_HEIGHT_BUILDABLE;
+        protected float V4T_4V_MIN_HEIGHT_BUILDABLE = Constants.V4T_4V_MIN_HEIGHT_BUILDABLE;
+        protected float V4T_6V_MIN_HEIGHT_BUILDABLE = Constants.V4T_6V_MIN_HEIGHT_BUILDABLE;
+        protected float V4T_8V_MIN_HEIGHT_BUILDABLE = Constants.V4T_8V_MIN_HEIGHT_BUILDABLE;
+        protected float V4T_9V_MIN_HEIGHT_BUILDABLE = Constants.V4T_9V_MIN_HEIGHT_BUILDABLE;
+        protected float V4T_12V_MIN_HEIGHT_BUILDABLE = Constants.V4T_12V_MIN_HEIGHT_BUILDABLE;
+        protected float HORIZONTAL_ROLLER_MIN_HEIGHT_BUILDABLE = Constants.HORIZONTAL_ROLLER_MIN_HEIGHT_BUILDABLE;
+        protected float VINYL_LITE_MIN_HEIGHT_BUILDABLE = Constants.VINYL_LITE_MIN_HEIGHT_BUILDABLE;
+        protected float VINYL_TRAP_MIN_HEIGHT_BUILDABLE = Constants.VINYL_TRAP_MIN_HEIGHT_BUILDABLE;
+
+        protected float DOUBLE_SLIDER_MIN_HEIGHT_BUILDABLE = Constants.DOUBLE_SLIDER_MIN_HEIGHT_BUILDABLE;
+        protected float DOUBLE_SLIDER_LITE_MIN_HEIGHT_BUILDABLE = Constants.DOUBLE_SLIDER_LITE_MIN_HEIGHT_BUILDABLE;
+        protected float DOUBLE_SLIDER_TRAP_MIN_HEIGHT_BUILDABLE = Constants.DOUBLE_SLIDER_TRAP_MIN_HEIGHT_BUILDABLE;
+
+        protected float SINGLE_SLIDER_MIN_HEIGHT_BUILDABLE = Constants.SINGLE_SLIDER_MIN_HEIGHT_BUILDABLE;
+        protected float SINGLE_SLIDER_LITE_MIN_HEIGHT_BUILDABLE = Constants.SINGLE_SLIDER_LITE_MIN_HEIGHT_BUILDABLE;
+        protected float SINGLE_SLIDER_TRAP_MIN_HEIGHT_BUILDABLE = Constants.SINGLE_SLIDER_TRAP_MIN_HEIGHT_BUILDABLE;
+
+        protected float SCREEN_MIN_HEIGHT_BUILDABLE = Constants.SCREEN_MIN_HEIGHT_BUILDABLE;
+        #endregion
+        #region MIN_HEIGHT_WARRANTY
+        //protected float V4T_2V_MIN_HEIGHT_WARRANTY = 36.0F;
+        protected float V4T_3V_MIN_HEIGHT_WARRANTY = Constants.V4T_3V_MIN_HEIGHT_WARRANTY;
+        protected float V4T_4V_MIN_HEIGHT_WARRANTY = Constants.V4T_4V_MIN_HEIGHT_WARRANTY;
+        protected float V4T_6V_MIN_HEIGHT_WARRANTY = Constants.V4T_6V_MIN_HEIGHT_WARRANTY;
+        protected float V4T_8V_MIN_HEIGHT_WARRANTY = Constants.V4T_8V_MIN_HEIGHT_WARRANTY;
+        protected float V4T_9V_MIN_HEIGHT_WARRANTY = Constants.V4T_9V_MIN_HEIGHT_WARRANTY;
+        protected float V4T_12V_MIN_HEIGHT_WARRANTY = Constants.V4T_12V_MIN_HEIGHT_WARRANTY;
+        protected float HORIZONTAL_ROLLER_MIN_HEIGHT_WARRANTY = Constants.HORIZONTAL_ROLLER_MIN_HEIGHT_WARRANTY;
+        protected float VINYL_LITE_MIN_HEIGHT_WARRANTY = Constants.VINYL_LITE_MIN_HEIGHT_WARRANTY;
+        protected float VINYL_TRAP_MIN_HEIGHT_WARRANTY = Constants.VINYL_TRAP_MIN_HEIGHT_WARRANTY;
+
+        protected float DOUBLE_SLIDER_MIN_HEIGHT_WARRANTY = Constants.DOUBLE_SLIDER_MIN_HEIGHT_WARRANTY;
+        protected float DOUBLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY = Constants.DOUBLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY;
+        protected float DOUBLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY = Constants.DOUBLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY;
+
+        protected float SINGLE_SLIDER_MIN_HEIGHT_WARRANTY = Constants.SINGLE_SLIDER_MIN_HEIGHT_WARRANTY;
+        protected float SINGLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY = Constants.SINGLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY;
+        protected float SINGLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY = Constants.SINGLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY;
+
+        protected float SCREEN_MIN_HEIGHT_WARRANTY = Constants.SCREEN_MIN_HEIGHT_WARRANTY;
+        #endregion
+        #region MAX_HEIGHT_BUILDABLE
+        //protected float V4T_2V_MAX_HEIGHT_BUILDABLE = 114.0F;
+        protected float V4T_3V_MAX_HEIGHT_BUILDABLE = Constants.V4T_3V_MAX_HEIGHT_BUILDABLE;
+        protected float V4T_4V_MAX_HEIGHT_BUILDABLE = Constants.V4T_4V_MAX_HEIGHT_BUILDABLE;
+        protected float V4T_6V_MAX_HEIGHT_BUILDABLE = Constants.V4T_6V_MAX_HEIGHT_BUILDABLE;
+        protected float V4T_8V_MAX_HEIGHT_BUILDABLE = Constants.V4T_8V_MAX_HEIGHT_BUILDABLE;
+        protected float V4T_9V_MAX_HEIGHT_BUILDABLE = Constants.V4T_9V_MAX_HEIGHT_BUILDABLE;
+        protected float V4T_12V_MAX_HEIGHT_BUILDABLE = Constants.V4T_12V_MAX_HEIGHT_BUILDABLE;
+        protected float HORIZONTAL_ROLLER_MAX_HEIGHT_BUILDABLE = Constants.HORIZONTAL_ROLLER_MAX_HEIGHT_BUILDABLE;
+        protected float VINYL_LITE_MAX_HEIGHT_BUILDABLE = Constants.VINYL_LITE_MAX_HEIGHT_BUILDABLE;
+        protected float VINYL_TRAP_MAX_HEIGHT_BUILDABLE = Constants.VINYL_TRAP_MAX_HEIGHT_BUILDABLE;
+
+        protected float DOUBLE_SLIDER_MAX_HEIGHT_BUILDABLE = Constants.DOUBLE_SLIDER_MAX_HEIGHT_BUILDABLE;
+        protected float DOUBLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE = Constants.DOUBLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE;
+        protected float DOUBLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE = Constants.DOUBLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE;
+
+        protected float SINGLE_SLIDER_MAX_HEIGHT_BUILDABLE = Constants.SINGLE_SLIDER_MAX_HEIGHT_BUILDABLE;
+        protected float SINGLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE = Constants.SINGLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE;
+        protected float SINGLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE = Constants.SINGLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE;
+
+        protected float SCREEN_MAX_HEIGHT_BUILDABLE = Constants.SCREEN_MAX_HEIGHT_BUILDABLE;
+        #endregion
+        #region MAX_HEIGHT_WARRANTY
+        //protected float V4T_2V_MAX_HEIGHT_WARRANTY = 102.0F;
+        protected float V4T_3V_MAX_HEIGHT_WARRANTY = Constants.V4T_3V_MAX_HEIGHT_WARRANTY;
+        protected float V4T_4V_MAX_HEIGHT_WARRANTY = Constants.V4T_4V_MAX_HEIGHT_WARRANTY;
+        protected float V4T_6V_MAX_HEIGHT_WARRANTY = Constants.V4T_6V_MAX_HEIGHT_WARRANTY;
+        protected float V4T_8V_MAX_HEIGHT_WARRANTY = Constants.V4T_8V_MAX_HEIGHT_WARRANTY;
+        protected float V4T_9V_MAX_HEIGHT_WARRANTY = Constants.V4T_9V_MAX_HEIGHT_WARRANTY;
+        protected float V4T_12V_MAX_HEIGHT_WARRANTY = Constants.V4T_12V_MAX_HEIGHT_WARRANTY;
+        protected float HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY = Constants.HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY;
+        protected float VINYL_LITE_MAX_HEIGHT_WARRANTY = Constants.VINYL_LITE_MAX_HEIGHT_WARRANTY;
+        protected float VINYL_TRAP_MAX_HEIGHT_WARRANTY = Constants.VINYL_TRAP_MAX_HEIGHT_WARRANTY;
+
+        protected float DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY = Constants.DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY;
+        protected float DOUBLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY = Constants.DOUBLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY;
+        protected float DOUBLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY = Constants.DOUBLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY;
+
+        protected float SINGLE_SLIDER_MAX_HEIGHT_WARRANTY = Constants.SINGLE_SLIDER_MAX_HEIGHT_WARRANTY;
+        protected float SINGLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY = Constants.SINGLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY;
+        protected float SINGLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY = Constants.SINGLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY;
+
+        protected float SCREEN_MAX_HEIGHT_WARRANTY = Constants.SCREEN_MAX_HEIGHT_WARRANTY;
+        #endregion
+
+        #region SPREADER_BAR_NEEDED
+        protected float V4T_SPREADER_BAR_NEEDED = Constants.V4T_SPREADER_BAR_NEEDED;
+        protected float HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED = Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED;
+
+        #endregion
+
         List<Window> windowsOrdered = new List<Window>();
 
         protected void addMixedTintDropdowns(string title, Table tblWindowDetails)
@@ -42,7 +210,7 @@ namespace SunspaceDealerDesktop
             for (int j = 0; j < 4; j++)
             {
                 TableRow mixedWindowTintRow = new TableRow();
-                //mixedWindowTintRow.Attributes.Add("style", "display: inherit;");
+                //mixedWindowTintRow.Attributes.Add("style", "display: table-row;");
                 mixedWindowTintRow.ID = "row" + j + "WindowTint" + title;
                 mixedWindowTintRow.Attributes.Add("style", "display:none;");
                 TableCell mixedWindowTintLabelCell = new TableCell();
@@ -89,6 +257,9 @@ namespace SunspaceDealerDesktop
                 RadioButton typeRadio = new RadioButton();
                 typeRadio.ID = "radType" + title; //Adding appropriate id to window type radio button
                 typeRadio.GroupName = "windowTypeRadios";         //Adding group name for all window types
+                if (title == "Vinyl") typeRadio.Attributes.Add("onclick", "windowVinylStyleChanged(document.getElementById('MainContent_ddlWindowStyleVinyl').options[document.getElementById('MainContent_ddlWindowStyleVinyl').selectedIndex].value);");
+                if (title == "Glass") typeRadio.Attributes.Add("onclick", "windowVinylStyleChanged(document.getElementById('MainContent_ddlWindowStyleGlass').options[document.getElementById('MainContent_ddlWindowStyleGlass').selectedIndex].value);");
+                if (title == "Screen") typeRadio.Attributes.Add("onclick", "windowVinylStyleChanged(document.getElementById('MainContent_ddlWindowStyleScreen').options[document.getElementById('MainContent_ddlWindowStyleScreen').selectedIndex].value);");
                 //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed('" + title + "')"); //On click event to display the proper fields/rows
 
 
@@ -233,7 +404,7 @@ namespace SunspaceDealerDesktop
                     windowSpreaderBarCHKCell.Controls.Add(windowSpreaderBarCHK);
                     windowSpreaderBarCHKCell.Controls.Add(windowSpreaderBarLBLChk);
                     windowSpreaderBarCHKCell.Controls.Add(windowSpreaderBarLBL);
-                    windowSpreaderBarCHKCell.Attributes.Add("style", "display:inherit;");
+                    windowSpreaderBarCHKCell.Attributes.Add("style", "display:table-row;");
 
                     windowStyleRow.Cells.Add(windowSpreaderBarCHKCell);
                 }
@@ -490,7 +661,7 @@ namespace SunspaceDealerDesktop
 
                     DropDownList windowV4TNumberOfVentsDDL = new DropDownList();
                     windowV4TNumberOfVentsDDL.ID = "ddlWindowV4TNumberOfVents" + title;
-                    windowV4TNumberOfVentsDDL.Attributes.Add("onchange", "windowStyle('" + title + "');");
+                    windowV4TNumberOfVentsDDL.Attributes.Add("onchange", "tintOptionsChanged();");
                     ListItem V3 = new ListItem("3", "3");
                     ListItem V4 = new ListItem("4", "4");
                     ListItem V6S = new ListItem("6 Stereo", "6");
@@ -568,7 +739,7 @@ namespace SunspaceDealerDesktop
 
                     DropDownList windowH4TNumberOfVentsDDL = new DropDownList();
                     windowH4TNumberOfVentsDDL.ID = "ddlWindowH4TNumberOfVents" + title;
-                    windowH4TNumberOfVentsDDL.Attributes.Add("onchange", "windowStyle('" + title + "');");
+                    windowH4TNumberOfVentsDDL.Attributes.Add("onchange", "tintOptionsChanged();");
 
                     windowH4TNumberOfVentsDDL.Items.Add(V3);
                     windowH4TNumberOfVentsDDL.Items.Add(V4);
@@ -1034,7 +1205,7 @@ namespace SunspaceDealerDesktop
                     windowOutsideMountRAD.Attributes.Add("value", "OSM");
                     windowOutsideMountRAD.GroupName = "Mount" + title;
                     windowOutsideMountRAD.Checked = true;
-                    windowOutsideMountRAD.Attributes.Add("onclick", "document.getElementById('MainContent_rowWindowScreenOptionsVinyl').style.display = 'inherit';;");
+                    windowOutsideMountRAD.Attributes.Add("onclick", "document.getElementById('MainContent_rowWindowScreenOptionsVinyl').style.display = 'table-row';;");
 
                     windowOutsideMountLBLRad.AssociatedControlID = "radWindowOutsideMount" + title;
                     windowOutsideMountLBL.AssociatedControlID = "radWindowOutsideMount" + title;
@@ -1102,7 +1273,7 @@ namespace SunspaceDealerDesktop
 
                 TableRow windowButtonRow = new TableRow();
                 windowButtonRow.ID = "rowAddWindow" + title;
-                windowButtonRow.Attributes.Add("style", "display:inherit;");
+                windowButtonRow.Attributes.Add("style", "display:table-row;");
                 TableCell windowAddButtonCell = new TableCell();
                 TableCell windowFillButtonCell = new TableCell();
 

@@ -3,42 +3,187 @@
     <script src="Scripts/GlobalFunctions.js"></script>
     <script src="Scripts/Validation.js"></script>
     <script>
+        var V4T_3V_MIN_WIDTH_BUILDABLE = <%= V4T_3V_MIN_WIDTH_BUILDABLE%>;
+        var V4T_4V_MIN_WIDTH_BUILDABLE = <%= V4T_4V_MIN_WIDTH_BUILDABLE%>;
+        var V4T_6V_MIN_WIDTH_BUILDABLE = <%= V4T_6V_MIN_WIDTH_BUILDABLE%>;
+        var V4T_8V_MIN_WIDTH_BUILDABLE = <%= V4T_8V_MIN_WIDTH_BUILDABLE%>;
+        var V4T_9V_MIN_WIDTH_BUILDABLE = <%= V4T_9V_MIN_WIDTH_BUILDABLE%>;
+        var V4T_12V_MIN_WIDTH_BUILDABLE = <%= V4T_12V_MIN_WIDTH_BUILDABLE%>;
+        var HORIZONTAL_ROLLER_MIN_WIDTH_BUILDABLE = <%= HORIZONTAL_ROLLER_MIN_WIDTH_BUILDABLE%>;
+        var VINYL_LITE_MIN_WIDTH_BUILDABLE = <%= VINYL_LITE_MIN_WIDTH_BUILDABLE%>;
+        var VINYL_TRAP_MIN_WIDTH_BUILDABLE = <%= VINYL_TRAP_MIN_WIDTH_BUILDABLE%>;
 
-        var spreaderBar = 0.0;
+        var DOUBLE_SLIDER_MIN_WIDTH_BUILDABLE = <%= DOUBLE_SLIDER_MIN_WIDTH_BUILDABLE%>;
+        var DOUBLE_SLIDER_LITE_MIN_WIDTH_BUILDABLE = <%= DOUBLE_SLIDER_LITE_MIN_WIDTH_BUILDABLE%>;
+        var DOUBLE_SLIDER_TRAP_MIN_WIDTH_BUILDABLE = <%= DOUBLE_SLIDER_TRAP_MIN_WIDTH_BUILDABLE%>;
+
+        var SINGLE_SLIDER_MIN_WIDTH_BUILDABLE = <%= SINGLE_SLIDER_MIN_WIDTH_BUILDABLE%>;
+        var SINGLE_SLIDER_LITE_MIN_WIDTH_BUILDABLE = <%= SINGLE_SLIDER_LITE_MIN_WIDTH_BUILDABLE%>;
+        var SINGLE_SLIDER_TRAP_MIN_WIDTH_BUILDABLE = <%= SINGLE_SLIDER_TRAP_MIN_WIDTH_BUILDABLE%>;
+
+        var SCREEN_MIN_WIDTH_BUILDABLE = <%= SCREEN_MIN_WIDTH_BUILDABLE%>;
+
+        var V4T_3V_MIN_WIDTH_WARRANTY = <%= V4T_3V_MIN_WIDTH_WARRANTY%>;
+        var V4T_4V_MIN_WIDTH_WARRANTY = <%= V4T_4V_MIN_WIDTH_WARRANTY%>;
+        var V4T_6V_MIN_WIDTH_WARRANTY = <%= V4T_6V_MIN_WIDTH_WARRANTY%>;
+        var V4T_8V_MIN_WIDTH_WARRANTY = <%= V4T_8V_MIN_WIDTH_WARRANTY%>;
+        var V4T_9V_MIN_WIDTH_WARRANTY = <%= V4T_9V_MIN_WIDTH_WARRANTY%>;
+        var V4T_12V_MIN_WIDTH_WARRANTY = <%= V4T_12V_MIN_WIDTH_WARRANTY%>;
+        var HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY = <%= HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY%>;
+        var VINYL_LITE_MIN_WIDTH_WARRANTY = <%= VINYL_LITE_MIN_WIDTH_WARRANTY%>;
+        var VINYL_TRAP_MIN_WIDTH_WARRANTY = <%= VINYL_TRAP_MIN_WIDTH_WARRANTY%>;
+
+        var DOUBLE_SLIDER_MIN_WIDTH_WARRANTY = <%= DOUBLE_SLIDER_MIN_WIDTH_WARRANTY%>;
+        var DOUBLE_SLIDER_LITE_MIN_WIDTH_WARRANTY = <%= DOUBLE_SLIDER_LITE_MIN_WIDTH_WARRANTY%>;
+        var DOUBLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY = <%= DOUBLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY%>;
+
+        var SINGLE_SLIDER_MIN_WIDTH_WARRANTY = <%= SINGLE_SLIDER_MIN_WIDTH_WARRANTY%>;
+        var SINGLE_SLIDER_LITE_MIN_WIDTH_WARRANTY = <%= SINGLE_SLIDER_LITE_MIN_WIDTH_WARRANTY%>;
+        var SINGLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY = <%= SINGLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY%>;
+
+        var SCREEN_MIN_WIDTH_WARRANTY = <%= SCREEN_MIN_WIDTH_WARRANTY%>;
+
+        var V4T_3V_MAX_WIDTH_BUILDABLE = <%= V4T_3V_MAX_WIDTH_BUILDABLE%>;
+        var V4T_4V_MAX_WIDTH_BUILDABLE = <%= V4T_4V_MAX_WIDTH_BUILDABLE%>;
+        var V4T_6V_MAX_WIDTH_BUILDABLE = <%= V4T_6V_MAX_WIDTH_BUILDABLE%>;
+        var V4T_8V_MAX_WIDTH_BUILDABLE = <%= V4T_8V_MAX_WIDTH_BUILDABLE%>;
+        var V4T_9V_MAX_WIDTH_BUILDABLE = <%= V4T_9V_MAX_WIDTH_BUILDABLE%>;
+        var V4T_12V_MAX_WIDTH_BUILDABLE = <%= V4T_12V_MAX_WIDTH_BUILDABLE%>;
+        var HORIZONTAL_ROLLER_MAX_WIDTH_BUILDABLE = <%= HORIZONTAL_ROLLER_MAX_WIDTH_BUILDABLE%>;
+        var VINYL_LITE_MAX_WIDTH_BUILDABLE = <%= VINYL_LITE_MAX_WIDTH_BUILDABLE%>;
+        var VINYL_TRAP_MAX_WIDTH_BUILDABLE = <%= VINYL_TRAP_MAX_WIDTH_BUILDABLE%>;
+
+        var DOUBLE_SLIDER_MAX_WIDTH_BUILDABLE = <%= DOUBLE_SLIDER_MAX_WIDTH_BUILDABLE%>;
+        var DOUBLE_SLIDER_LITE_MAX_WIDTH_BUILDABLE = <%= DOUBLE_SLIDER_LITE_MAX_WIDTH_BUILDABLE%>;
+        var DOUBLE_SLIDER_TRAP_MAX_WIDTH_BUILDABLE = <%= DOUBLE_SLIDER_TRAP_MAX_WIDTH_BUILDABLE%>;
+
+        var SINGLE_SLIDER_MAX_WIDTH_BUILDABLE = <%= SINGLE_SLIDER_MAX_WIDTH_BUILDABLE%>;
+        var SINGLE_SLIDER_LITE_MAX_WIDTH_BUILDABLE = <%= SINGLE_SLIDER_LITE_MAX_WIDTH_BUILDABLE%>;
+        var SINGLE_SLIDER_TRAP_MAX_WIDTH_BUILDABLE = <%= SINGLE_SLIDER_TRAP_MAX_WIDTH_BUILDABLE%>;
+
+        var SCREEN_MAX_WIDTH_BUILDABLE = <%= SCREEN_MAX_WIDTH_BUILDABLE%>;
+
+        var V4T_3V_MAX_WIDTH_WARRANTY = <%= V4T_3V_MAX_WIDTH_WARRANTY%>;
+        var V4T_4V_MAX_WIDTH_WARRANTY = <%= V4T_4V_MAX_WIDTH_WARRANTY%>;
+        var V4T_6V_MAX_WIDTH_WARRANTY = <%= V4T_6V_MAX_WIDTH_WARRANTY%>;
+        var V4T_8V_MAX_WIDTH_WARRANTY = <%= V4T_8V_MAX_WIDTH_WARRANTY%>;
+        var V4T_9V_MAX_WIDTH_WARRANTY = <%= V4T_9V_MAX_WIDTH_WARRANTY%>;
+        var V4T_12V_MAX_WIDTH_WARRANTY = <%= V4T_12V_MAX_WIDTH_WARRANTY%>;
+        var HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY = <%= HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY%>;
+        var VINYL_LITE_MAX_WIDTH_WARRANTY = <%= VINYL_LITE_MAX_WIDTH_WARRANTY%>;
+        var VINYL_TRAP_MAX_WIDTH_WARRANTY = <%= VINYL_TRAP_MAX_WIDTH_WARRANTY%>;
+
+        var DOUBLE_SLIDER_MAX_WIDTH_WARRANTY = <%= DOUBLE_SLIDER_MAX_WIDTH_WARRANTY%>;
+        var DOUBLE_SLIDER_LITE_MAX_WIDTH_WARRANTY = <%= DOUBLE_SLIDER_LITE_MAX_WIDTH_WARRANTY%>;
+        var DOUBLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY = <%= DOUBLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY%>;
+
+        var SINGLE_SLIDER_MAX_WIDTH_WARRANTY = <%= SINGLE_SLIDER_MAX_WIDTH_WARRANTY%>;
+        var SINGLE_SLIDER_LITE_MAX_WIDTH_WARRANTY = <%= SINGLE_SLIDER_LITE_MAX_WIDTH_WARRANTY%>;
+        var SINGLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY = <%= SINGLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY%>;
+
+        var SCREEN_MAX_WIDTH_WARRANTY = <%= SCREEN_MAX_WIDTH_WARRANTY%>;
+
+        var V4T_3V_MIN_HEIGHT_BUILDABLE = <%= V4T_3V_MIN_HEIGHT_BUILDABLE%>;
+        var V4T_4V_MIN_HEIGHT_BUILDABLE = <%= V4T_4V_MIN_HEIGHT_BUILDABLE%>;
+        var V4T_6V_MIN_HEIGHT_BUILDABLE = <%= V4T_6V_MIN_HEIGHT_BUILDABLE%>;
+        var V4T_8V_MIN_HEIGHT_BUILDABLE = <%= V4T_8V_MIN_HEIGHT_BUILDABLE%>;
+        var V4T_9V_MIN_HEIGHT_BUILDABLE = <%= V4T_9V_MIN_HEIGHT_BUILDABLE%>;
+        var V4T_12V_MIN_HEIGHT_BUILDABLE = <%= V4T_12V_MIN_HEIGHT_BUILDABLE%>;
+        var HORIZONTAL_ROLLER_MIN_HEIGHT_BUILDABLE = <%= HORIZONTAL_ROLLER_MIN_HEIGHT_BUILDABLE%>;
+        var VINYL_LITE_MIN_HEIGHT_BUILDABLE = <%= VINYL_LITE_MIN_HEIGHT_BUILDABLE%>;
+        var VINYL_TRAP_MIN_HEIGHT_BUILDABLE = <%= VINYL_TRAP_MIN_HEIGHT_BUILDABLE%>;
+
+        var DOUBLE_SLIDER_MIN_HEIGHT_BUILDABLE = <%= DOUBLE_SLIDER_MIN_HEIGHT_BUILDABLE%>;
+        var DOUBLE_SLIDER_LITE_MIN_HEIGHT_BUILDABLE = <%= DOUBLE_SLIDER_LITE_MIN_HEIGHT_BUILDABLE%>;
+        var DOUBLE_SLIDER_TRAP_MIN_HEIGHT_BUILDABLE = <%= DOUBLE_SLIDER_TRAP_MIN_HEIGHT_BUILDABLE%>;
+
+        var SINGLE_SLIDER_MIN_HEIGHT_BUILDABLE = <%= SINGLE_SLIDER_MIN_HEIGHT_BUILDABLE%>;
+        var SINGLE_SLIDER_LITE_MIN_HEIGHT_BUILDABLE = <%= SINGLE_SLIDER_LITE_MIN_HEIGHT_BUILDABLE%>;
+        var SINGLE_SLIDER_TRAP_MIN_HEIGHT_BUILDABLE = <%= SINGLE_SLIDER_TRAP_MIN_HEIGHT_BUILDABLE%>;
+
+        var SCREEN_MIN_HEIGHT_BUILDABLE = <%= SCREEN_MIN_HEIGHT_BUILDABLE%>;
+
+        var V4T_3V_MIN_HEIGHT_WARRANTY = <%= V4T_3V_MIN_HEIGHT_WARRANTY%>;
+        var V4T_4V_MIN_HEIGHT_WARRANTY = <%= V4T_4V_MIN_HEIGHT_WARRANTY%>;
+        var V4T_6V_MIN_HEIGHT_WARRANTY = <%= V4T_6V_MIN_HEIGHT_WARRANTY%>;
+        var V4T_8V_MIN_HEIGHT_WARRANTY = <%= V4T_8V_MIN_HEIGHT_WARRANTY%>;
+        var V4T_9V_MIN_HEIGHT_WARRANTY = <%= V4T_9V_MIN_HEIGHT_WARRANTY%>;
+        var V4T_12V_MIN_HEIGHT_WARRANTY = <%= V4T_12V_MIN_HEIGHT_WARRANTY%>;
+        var HORIZONTAL_ROLLER_MIN_HEIGHT_WARRANTY = <%= HORIZONTAL_ROLLER_MIN_HEIGHT_WARRANTY%>;
+        var VINYL_LITE_MIN_HEIGHT_WARRANTY = <%= VINYL_LITE_MIN_HEIGHT_WARRANTY%>;
+        var VINYL_TRAP_MIN_HEIGHT_WARRANTY = <%= VINYL_TRAP_MIN_HEIGHT_WARRANTY%>;
+
+        var DOUBLE_SLIDER_MIN_HEIGHT_WARRANTY = <%= DOUBLE_SLIDER_MIN_HEIGHT_WARRANTY%>;
+        var DOUBLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY = <%= DOUBLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY%>;
+        var DOUBLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY = <%= DOUBLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY%>;
+
+        var SINGLE_SLIDER_MIN_HEIGHT_WARRANTY = <%= SINGLE_SLIDER_MIN_HEIGHT_WARRANTY%>;
+        var SINGLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY = <%= SINGLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY%>;
+        var SINGLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY = <%= SINGLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY%>;
+
+        var SCREEN_MIN_HEIGHT_WARRANTY = <%= SCREEN_MIN_HEIGHT_WARRANTY%>;
+
+        var V4T_3V_MAX_HEIGHT_BUILDABLE = <%= V4T_3V_MAX_HEIGHT_BUILDABLE%>;
+        var V4T_4V_MAX_HEIGHT_BUILDABLE = <%= V4T_4V_MAX_HEIGHT_BUILDABLE%>;
+        var V4T_6V_MAX_HEIGHT_BUILDABLE = <%= V4T_6V_MAX_HEIGHT_BUILDABLE%>;
+        var V4T_8V_MAX_HEIGHT_BUILDABLE = <%= V4T_8V_MAX_HEIGHT_BUILDABLE%>;
+        var V4T_9V_MAX_HEIGHT_BUILDABLE = <%= V4T_9V_MAX_HEIGHT_BUILDABLE%>;
+        var V4T_12V_MAX_HEIGHT_BUILDABLE = <%= V4T_12V_MAX_HEIGHT_BUILDABLE%>;
+        var HORIZONTAL_ROLLER_MAX_HEIGHT_BUILDABLE = <%= HORIZONTAL_ROLLER_MAX_HEIGHT_BUILDABLE%>;
+        var VINYL_LITE_MAX_HEIGHT_BUILDABLE = <%= VINYL_LITE_MAX_HEIGHT_BUILDABLE%>;
+        var VINYL_TRAP_MAX_HEIGHT_BUILDABLE = <%= VINYL_TRAP_MAX_HEIGHT_BUILDABLE%>;
+
+        var DOUBLE_SLIDER_MAX_HEIGHT_BUILDABLE = <%= DOUBLE_SLIDER_MAX_HEIGHT_BUILDABLE%>;
+        var DOUBLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE = <%= DOUBLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE%>;
+        var DOUBLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE = <%= DOUBLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE%>;
+
+        var SINGLE_SLIDER_MAX_HEIGHT_BUILDABLE = <%= SINGLE_SLIDER_MAX_HEIGHT_BUILDABLE%>;
+        var SINGLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE = <%= SINGLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE%>;
+        var SINGLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE = <%= SINGLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE%>;
+
+        var SCREEN_MAX_HEIGHT_BUILDABLE = <%= SCREEN_MAX_HEIGHT_BUILDABLE%>;
+
+        var V4T_3V_MAX_HEIGHT_WARRANTY = <%= V4T_3V_MAX_HEIGHT_WARRANTY%>;
+        var V4T_4V_MAX_HEIGHT_WARRANTY = <%= V4T_4V_MAX_HEIGHT_WARRANTY%>;
+        var V4T_6V_MAX_HEIGHT_WARRANTY = <%= V4T_6V_MAX_HEIGHT_WARRANTY%>;
+        var V4T_8V_MAX_HEIGHT_WARRANTY = <%= V4T_8V_MAX_HEIGHT_WARRANTY%>;
+        var V4T_9V_MAX_HEIGHT_WARRANTY = <%= V4T_9V_MAX_HEIGHT_WARRANTY%>;
+        var V4T_12V_MAX_HEIGHT_WARRANTY = <%= V4T_12V_MAX_HEIGHT_WARRANTY%>;
+        var HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY = <%= HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY%>;
+        var VINYL_LITE_MAX_HEIGHT_WARRANTY = <%= VINYL_LITE_MAX_HEIGHT_WARRANTY%>;
+        var VINYL_TRAP_MAX_HEIGHT_WARRANTY = <%= VINYL_TRAP_MAX_HEIGHT_WARRANTY%>;
+
+        var DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY = <%= DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY%>;
+        var DOUBLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY = <%= DOUBLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY%>;
+        var DOUBLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY = <%= DOUBLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY%>;
+
+        var SINGLE_SLIDER_MAX_HEIGHT_WARRANTY = <%= SINGLE_SLIDER_MAX_HEIGHT_WARRANTY%>;
+        var SINGLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY = <%= SINGLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY%>;
+        var SINGLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY = <%= SINGLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY%>;
+
+        var SCREEN_MAX_HEIGHT_WARRANTY = <%= SCREEN_MAX_HEIGHT_WARRANTY%>;
+
+
+        var V4T_SPREADER_BAR_NEEDED = <%= V4T_SPREADER_BAR_NEEDED%>;
+        var HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED = <%= HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED%>;
+
+
+        var spreaderBar = -1;
         var dlo = 2.0;
         var deductions = 0.0;
         var tint;
         var ventHeight;
         var ventWidth;
 
-        /**
-        *customDimension
-        *Checks the drop down selection on change, if the selection is custom, displays additional fields,
-        *else custom field is hidden (i.e. css style.display = none)
-        *@param wallNumber - holds an integer to know which wall is currently being affected
-        *@param type - gets the type of window selected (i.e. Cabana, French, Patio, Opening Only (No Window));
-        *@param dimension - gets the dimension currently being called (i.e Width, Height)
-        */
-        function customDimension(type, dimension) {
+        var MIN_WIDTH_BUILDABLE;
+        var MAX_WIDTH_BUILDABLE;
+        var MIN_HEIGHT_BUILDABLE;
+        var MAX_HEIGHT_BUILDABLE;
+        var MIN_WIDTH_WARRANTY;
+        var MAX_WIDTH_WARRANTY;
+        var MIN_HEIGHT_WARRANTY;
+        var MAX_HEIGHT_WARRANTY;
 
-            //Get the respective drop downs selected value, store it into dimensionDDL variable
-            var dimensionDDL = document.getElementById('MainContent_ddlWindow' + dimension + type).options[document.getElementById('MainContent_ddlWindow' + dimension + type).selectedIndex].value;
-
-            //If the selected value is custom (i.e. cWidth, etc), perform block
-            if (document.getElementById('MainContent_radType' + type).checked && dimensionDDL == 'c' + dimension) {
-                //Set display style of respective row to "inherit"
-                document.getElementById('MainContent_rowWindowCustom' + dimension + type).style.display = 'inherit';
-            }
-            else {
-                //Set display style of respective row to "none"
-                document.getElementById('MainContent_rowWindowCustom' + dimension + type).style.display = 'none';
-            }
-        }
-
-        //function spreaderBar() {
-        //    //maybe not necessary
-        //    alert("ahoj spreader bar");
-        //}
 
         function dloClicked(labelText) {
             switch (labelText) {
@@ -105,60 +250,55 @@
             
             if(typeof(asIf)==='undefined') asIf = false;
 
-            var ventCount = document.getElementById('MainContent_ddlWindowV4TNumberOfVentsVinyl').options[document.getElementById('MainContent_ddlWindowV4TNumberOfVentsVinyl').selectedIndex].value;
-            //var vinylRows = (ventCount == 12) ? 4 :
-            //    (ventCount == 9) ? 3 :
-            //    (ventCount == 8) ? 4 :
-            //    (ventCount == 6) ? 3 :
-            //    (ventCount == 4) ? 4 : 
-            //    (ventCount == 3) ? 3 : 2;            
-            var windowWidth = document.getElementById('MainContent_txtWindowWidthVinyl').value + document.getElementById('MainContent_ddlWindowWidthVinyl').options[document.getElementById('MainContent_ddlWindowWidthVinyl').selectedIndex].value;
-            var windowHeight = (asIf) ? document.getElementById('MainContent_txtWindowAsIfHeightVinyl').value + document.getElementById('MainContent_ddlWindowAsIfHeightVinyl').options[document.getElementById('MainContent_ddlWindowAsIfHeightVinyl').selectedIndex].value : 
-                                        document.getElementById('MainContent_txtWindowHeightVinyl').value + document.getElementById('MainContent_ddlWindowHeightVinyl').options[document.getElementById('MainContent_ddlWindowHeightVinyl').selectedIndex].value;
-            
-            if (ventCount > 8) { 
-                ventWidth = (windowWidth - 1.5625 - 2.75) / 3;
-            }
-            else if (ventCount > 4) {
-                ventWidth = (windowWidth - 1.5625 - 1.6875) / 2;
-            }
-            else {
-                ventWidth = windowWidth - 1.5625;
-            }
-
-            if (ventCount % 4 === 0) {
-                ventHeight = (windowHeight + 2.187) / 4;
-            }
-            else if (ventCount % 3 === 0) {
-                ventHeight = (windowHeight + 1.3125) / 3;
-            }
-            else {
-                ventHeight = (windowHeight + 0.4375) / 2;
-            }
-                        
-            ventHeight =  Math.round(ventHeight * 100) / 100;
-            ventWidth = Math.round(ventWidth * 100) / 100;
-        }
-
-        function bothUnevenClicked() {
-            
             if (validateInteger(document.getElementById('MainContent_txtWindowHeightVinyl')) && //height is a valid integer
                 validateInteger(document.getElementById('MainContent_txtWindowAsIfHeightVinyl')) && //as-if height is a valid integer
                 validateInteger(document.getElementById('MainContent_txtWindowWidthVinyl'))) { //width is a valid integer
 
-                getHeightAndWidthOfEachVent(true);
-                
-                document.getElementById('MainContent_txtWindowTopVentHeightVinyl').value = ventHeight;
-                document.getElementById('MainContent_txtWindowBottomVentHeightVinyl').value = ventHeight;
 
-                document.getElementById('MainContent_rowWindowUnevenVentsTopVinyl').style.display = 'inherit';
-                document.getElementById('MainContent_rowWindowUnevenVentsBottomVinyl').style.display = 'inherit';
+                var ventCount = document.getElementById('MainContent_ddlWindowV4TNumberOfVentsVinyl').options[document.getElementById('MainContent_ddlWindowV4TNumberOfVentsVinyl').selectedIndex].value;
+                var windowWidth = document.getElementById('MainContent_txtWindowWidthVinyl').value + document.getElementById('MainContent_ddlWindowWidthVinyl').options[document.getElementById('MainContent_ddlWindowWidthVinyl').selectedIndex].value;
+                var windowHeight = (asIf) ? document.getElementById('MainContent_txtWindowAsIfHeightVinyl').value + document.getElementById('MainContent_ddlWindowAsIfHeightVinyl').options[document.getElementById('MainContent_ddlWindowAsIfHeightVinyl').selectedIndex].value : 
+                                            document.getElementById('MainContent_txtWindowHeightVinyl').value + document.getElementById('MainContent_ddlWindowHeightVinyl').options[document.getElementById('MainContent_ddlWindowHeightVinyl').selectedIndex].value;
+            
+                if (ventCount > 8) { 
+                    ventWidth = (windowWidth - 1.5625 - 2.75) / 3;
+                }
+                else if (ventCount > 4) {
+                    ventWidth = (windowWidth - 1.5625 - 1.6875) / 2;
+                }
+                else {
+                    ventWidth = windowWidth - 1.5625;
+                }
+
+                if (ventCount % 4 === 0) {
+                    ventHeight = (windowHeight + 2.187) / 4;
+                }
+                else if (ventCount % 3 === 0) {
+                    ventHeight = (windowHeight + 1.3125) / 3;
+                }
+                else {
+                    ventHeight = (windowHeight + 0.4375) / 2;
+                }
+                        
+                ventHeight =  Math.round(ventHeight * 100) / 100;
+                ventWidth = Math.round(ventWidth * 100) / 100;
             }
+
             else {
                 //error: please input a valid Height and Build-As-If Height
                 alert("enter some numbers you fool!");
                 document.getElementById('MainContent_radWindowBottomRadVinyl').checked = true;
             }
+        }
+            
+        function bothUnevenClicked() {
+                getHeightAndWidthOfEachVent(true);
+                
+                document.getElementById('MainContent_txtWindowTopVentHeightVinyl').value = ventHeight;
+                document.getElementById('MainContent_txtWindowBottomVentHeightVinyl').value = ventHeight;
+
+                document.getElementById('MainContent_rowWindowUnevenVentsTopVinyl').style.display = 'table-row';
+                document.getElementById('MainContent_rowWindowUnevenVentsBottomVinyl').style.display = 'table-row';
         }
 
         function topOrBottomUnevenClicked(){
@@ -171,19 +311,8 @@
 
         function unevenVentsChecked(checked) {
             if (checked) {
-                document.getElementById('MainContent_rowWindowAsIfHeightVinyl').style.display = 'inherit';
-                document.getElementById('MainContent_rowWindowTopBottomBothRadVinyl').style.display = 'inherit';
-                document.getElementById('MainContent_rowWindowTitleVinyl').style.display = 'inherit';
-                document.getElementById('MainContent_rowWindowStyleVinyl').style.display = 'inherit';
-                document.getElementById('MainContent_rowWindowHeightVinyl').style.display = 'inherit';
-                document.getElementById('MainContent_rowWindowWidthVinyl').style.display = 'inherit';
-                document.getElementById('MainContent_rowWindowV4TNumberOfVentsVinyl').style.display = 'inherit';
-                document.getElementById('MainContent_rowWindowTintNoMixedVinyl').style.display = 'inherit';
-                document.getElementById('MainContent_rowWindowColourVinyl').style.display = 'inherit';
-                document.getElementById('MainContent_rowWindowInsideMountVinyl').style.display = 'inherit';
-                document.getElementById('MainContent_rowWindowOutsideMountVinyl').style.display = 'inherit';
-                document.getElementById('MainContent_rowWindowScreenOptionsVinyl').style.display = 'inherit';
-
+                document.getElementById('MainContent_rowWindowAsIfHeightVinyl').style.display = 'table-row';
+                document.getElementById('MainContent_rowWindowTopBottomBothRadVinyl').style.display = 'table-row';
 
                 if (document.getElementById('MainContent_txtWindowAsIfHeightVinyl').value === '')
                     document.getElementById('MainContent_txtWindowAsIfHeightVinyl').value = document.getElementById('MainContent_txtWindowHeightVinyl').value;
@@ -222,7 +351,7 @@
                     document.getElementById('MainContent_row' + i + 'WindowTintVinyl').style.display = 'none';
                 }
                 for (var i = 0; i < vinylRows; i++) {
-                    document.getElementById('MainContent_row' + i + 'WindowTintVinyl').style.display = 'inherit';
+                    document.getElementById('MainContent_row' + i + 'WindowTintVinyl').style.display = 'table-row';
                 }
             }
 
@@ -231,7 +360,7 @@
                     document.getElementById('MainContent_row' + i + 'WindowTintVinyl').style.display = 'none';
                 }
                 for (var i = 0; i < vinylRows; i++) {
-                    document.getElementById('MainContent_row' + i + 'WindowTintVinyl').style.display = 'inherit';
+                    document.getElementById('MainContent_row' + i + 'WindowTintVinyl').style.display = 'table-row';
                 }
             }
             else {
@@ -244,53 +373,156 @@
         function outsideMountChecked(checked) {
             if (typeof (checked) === 'undefined') checked = false;
 
-            if (checked) {
-                document.getElementById('MainContent_rowWindowScreenOptionsVinyl').style.display = 'inherit';
-                //document.getElementById('MainContent_
-            }
+            if (checked) 
+                document.getElementById('MainContent_rowWindowScreenOptionsVinyl').style.display = 'table-row';
             else
                 document.getElementById('MainContent_rowWindowScreenOptionsVinyl').style.display = 'none';
         }
 
-        function windowVinylStyleChanged(dropdownValue) {
+        function windowVinylStyleChanged(dropdownValue) { 
 
-            alert(dropdownValue);
+            switch (dropdownValue) {
+                case "Vertical 4 Track":
+                    var vents = document.getElementById('MainContent_ddlWindowV4TNumberOfVentsVinyl').options[document.getElementById('MainContent_ddlWindowV4TNumberOfVentsVinyl').selectedIndex].value;
+                    
+                    switch (vents) {
+                        case 3:
+                            MIN_WIDTH_BUILDABLE = V4T_3V_MIN_WIDTH_BUILDABLE;
+                            MAX_WIDTH_BUILDABLE = V4T_3V_MAX_WIDTH_BUILDABLE;
+                            MIN_HEIGHT_BUILDABLE = V4T_3V_MIN_HEIGHT_BUILDABLE;
+                            MAX_HEIGHT_BUILDABLE = V4T_3V_MAX_HEIGHT_BUILDABLE;
+                            MIN_WIDTH_WARRANTY = V4T_3V_MIN_WIDTH_WARRANTY;
+                            MAX_WIDTH_WARRANTY = V4T_3V_MAX_WIDTH_WARRANTY;
+                            MIN_HEIGHT_WARRANTY = V4T_3V_MIN_HEIGHT_WARRANTY;
+                            MAX_HEIGHT_WARRANTY = V4T_3V_MAX_HEIGHT_WARRANTY;
+                            break;
+                        case 4:
+                            MIN_WIDTH_BUILDABLE = V4T_4V_MIN_WIDTH_BUILDABLE;
+                            MAX_WIDTH_BUILDABLE = V4T_4V_MAX_WIDTH_BUILDABLE;
+                            MIN_HEIGHT_BUILDABLE = V4T_4V_MIN_HEIGHT_BUILDABLE;
+                            MAX_HEIGHT_BUILDABLE = V4T_4V_MAX_HEIGHT_BUILDABLE;
+                            MIN_WIDTH_WARRANTY = V4T_4V_MIN_WIDTH_WARRANTY;
+                            MAX_WIDTH_WARRANTY = V4T_4V_MAX_WIDTH_WARRANTY;
+                            MIN_HEIGHT_WARRANTY = V4T_4V_MIN_HEIGHT_WARRANTY;
+                            MAX_HEIGHT_WARRANTY = V4T_4V_MAX_HEIGHT_WARRANTY;
+                            break;
+                        case 6:
+                            MIN_WIDTH_BUILDABLE = V4T_6V_MIN_WIDTH_BUILDABLE;
+                            MAX_WIDTH_BUILDABLE = V4T_6V_MAX_WIDTH_BUILDABLE;
+                            MIN_HEIGHT_BUILDABLE = V4T_6V_MIN_HEIGHT_BUILDABLE;
+                            MAX_HEIGHT_BUILDABLE = V4T_6V_MAX_HEIGHT_BUILDABLE;
+                            MIN_WIDTH_WARRANTY = V4T_6V_MIN_WIDTH_WARRANTY;
+                            MAX_WIDTH_WARRANTY = V4T_6V_MAX_WIDTH_WARRANTY;
+                            MIN_HEIGHT_WARRANTY = V4T_6V_MIN_HEIGHT_WARRANTY;
+                            MAX_HEIGHT_WARRANTY = V4T_6V_MAX_HEIGHT_WARRANTY;
+                            break;
+                        case 8:
+                            MIN_WIDTH_BUILDABLE = V4T_8V_MIN_WIDTH_BUILDABLE;
+                            MAX_WIDTH_BUILDABLE = V4T_8V_MAX_WIDTH_BUILDABLE;
+                            MIN_HEIGHT_BUILDABLE = V4T_8V_MIN_HEIGHT_BUILDABLE;
+                            MAX_HEIGHT_BUILDABLE = V4T_8V_MAX_HEIGHT_BUILDABLE;
+                            MIN_WIDTH_WARRANTY = V4T_8V_MIN_WIDTH_WARRANTY;
+                            MAX_WIDTH_WARRANTY = V4T_8V_MAX_WIDTH_WARRANTY;
+                            MIN_HEIGHT_WARRANTY = V4T_8V_MIN_HEIGHT_WARRANTY;
+                            MAX_HEIGHT_WARRANTY = V4T_8V_MAX_HEIGHT_WARRANTY;
+                            break;
+                        case 9:
+                            MIN_WIDTH_BUILDABLE = V4T_9V_MIN_WIDTH_BUILDABLE;
+                            MAX_WIDTH_BUILDABLE = V4T_9V_MAX_WIDTH_BUILDABLE;
+                            MIN_HEIGHT_BUILDABLE = V4T_9V_MIN_HEIGHT_BUILDABLE;
+                            MAX_HEIGHT_BUILDABLE = V4T_9V_MAX_HEIGHT_BUILDABLE;
+                            MIN_WIDTH_WARRANTY = V4T_9V_MIN_WIDTH_WARRANTY;
+                            MAX_WIDTH_WARRANTY = V4T_9V_MAX_WIDTH_WARRANTY;
+                            MIN_HEIGHT_WARRANTY = V4T_9V_MIN_HEIGHT_WARRANTY;
+                            MAX_HEIGHT_WARRANTY = V4T_9V_MAX_HEIGHT_WARRANTY;
+                            break;
+                        case 12:
+                            MIN_WIDTH_BUILDABLE = V4T_12V_MIN_WIDTH_BUILDABLE;
+                            MAX_WIDTH_BUILDABLE = V4T_12V_MAX_WIDTH_BUILDABLE;
+                            MIN_HEIGHT_BUILDABLE = V4T_12V_MIN_HEIGHT_BUILDABLE;
+                            MAX_HEIGHT_BUILDABLE = V4T_12V_MAX_HEIGHT_BUILDABLE;
+                            MIN_WIDTH_WARRANTY = V4T_12V_MIN_WIDTH_WARRANTY;
+                            MAX_WIDTH_WARRANTY = V4T_12V_MAX_WIDTH_WARRANTY;
+                            MIN_HEIGHT_WARRANTY = V4T_12V_MIN_HEIGHT_WARRANTY;
+                            MAX_HEIGHT_WARRANTY = V4T_12V_MAX_HEIGHT_WARRANTY;
+                            break;
+                    }
+                    break;
+                case "Horizontal 2 Track":
+                case "Horizontal 4 Track":
+                    MIN_WIDTH_BUILDABLE = HORIZONTAL_ROLLER_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = HORIZONTAL_ROLLER_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = HORIZONTAL_ROLLER_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = HORIZONTAL_ROLLER_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = HORIZONTAL_ROLLER_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = HORIZONTAL_ROLLER_MAX_HEIGHT_WARRANTY;
+                    break;
+                case "Vinyl Fixed Lite":
+                    MIN_WIDTH_BUILDABLE = VINYL_LITE_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = VINYL_LITE_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = VINYL_LITE_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = VINYL_LITE_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = VINYL_LITE_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = VINYL_LITE_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = VINYL_LITE_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = VINYL_LITE_MAX_HEIGHT_WARRANTY;
+                    break;
+                case "Vinyl Fixed Trapezoid":
+                    MIN_WIDTH_BUILDABLE = VINYL_TRAP_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = VINYL_TRAP_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = VINYL_TRAP_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = VINYL_TRAP_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = VINYL_TRAP_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = VINYL_TRAP_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = VINYL_TRAP_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = VINYL_TRAP_MAX_HEIGHT_WARRANTY;
+                    break;
+            }
+
 
             if (dropdownValue === "Vertical 4 Track" ||
                 dropdownValue === "Horizontal 2 Track" || 
                 dropdownValue === "Horizontal 3 Track" || 
                 dropdownValue === "Horizontal 4 Track") {
                     
-                document.getElementById('MainContent_rowWindowHeightVinyl').style.display = 'inherit';
+                document.getElementById('MainContent_rowWindowHeightVinyl').style.display = 'table-row';
                 document.getElementById('MainContent_rowWindowLeftHeightVinyl').style.display = 'none';
                 document.getElementById('MainContent_rowWindowRightHeightVinyl').style.display = 'none';
 
                 if (dropdownValue === "Vertical 4 Track") {
-                    document.getElementById('MainContent_rowWindowInsideMountVinyl').style.display = 'inherit';
-                    document.getElementById('MainContent_rowWindowOutsideMountVinyl').style.display = 'inherit';
-                    document.getElementById('MainContent_cellWindowUnevenVentsVinyl').style.display = 'inherit';
-                    document.getElementById('MainContent_cellWindowSpreaderBarVinyl').style.display = 'inherit';
-                    document.getElementById('MainContent_rowWindowV4TNumberOfVentsVinyl').style.display = 'inherit';
+                    document.getElementById('MainContent_rowWindowInsideMountVinyl').style.display = 'table-row';
+                    document.getElementById('MainContent_rowWindowOutsideMountVinyl').style.display = 'table-row';
+                    document.getElementById('MainContent_cellWindowUnevenVentsVinyl').style.display = 'table-row';
+                    document.getElementById('MainContent_cellWindowSpreaderBarVinyl').style.display = 'table-row';
+                    document.getElementById('MainContent_rowWindowV4TNumberOfVentsVinyl').style.display = 'table-row';
                     document.getElementById('MainContent_rowWindowH4TNumberOfVentsVinyl').style.display = 'none';
-                    document.getElementById('MainContent_rowWindowTintVinyl').style.display = 'inherit';
+                    document.getElementById('MainContent_rowWindowTintVinyl').style.display = 'table-row';
                     document.getElementById('MainContent_rowWindowTintNoMixedVinyl').style.display = 'none';
                 }
                 else if (dropdownValue === "Horizontal 2 Track" ||
                          dropdownValue === "Horizontal 4 Track") {
+
                     document.getElementById('MainContent_rowWindowInsideMountVinyl').style.display = 'none';
                     document.getElementById('MainContent_rowWindowOutsideMountVinyl').style.display = 'none';
                     document.getElementById('MainContent_cellWindowUnevenVentsVinyl').style.display = 'none';
-                    document.getElementById('MainContent_cellWindowSpreaderBarVinyl').style.display = 'inherit';
+                    document.getElementById('MainContent_cellWindowSpreaderBarVinyl').style.display = 'table-row';
                     document.getElementById('MainContent_rowWindowV4TNumberOfVentsVinyl').style.display = 'none';
-                    document.getElementById('MainContent_rowWindowScreenOptionsVinyl').style.display = 'inherit';
+                    document.getElementById('MainContent_rowWindowScreenOptionsVinyl').style.display = 'table-row';
                     document.getElementById('MainContent_rowWindowTintVinyl').style.display = 'none';
-                    document.getElementById('MainContent_rowWindowTintNoMixedVinyl').style.display = 'inherit';
+                    document.getElementById('MainContent_rowWindowTintNoMixedVinyl').style.display = 'table-row';
                     document.getElementById('MainContent_rowWindowTopBottomBothRadVinyl').style.display = 'none';
                     document.getElementById('MainContent_rowWindowAsIfHeightVinyl').style.display = 'none';
                     document.getElementById('MainContent_txtWindowTopVentHeightVinyl').value = '';
                     document.getElementById('MainContent_txtWindowBottomVentHeightVinyl').value = '';
                     document.getElementById('MainContent_rowWindowUnevenVentsTopVinyl').style.display = 'none';
                     document.getElementById('MainContent_rowWindowUnevenVentsBottomVinyl').style.display = 'none';
+
+                    if (dropdownValue === "Horizontal 4 Track")
+                        document.getElementById('MainContent_rowWindowH4TNumberOfVentsVinyl').style.display = 'table-row';
+                    else
+                        document.getElementById('MainContent_rowWindowH4TNumberOfVentsVinyl').style.display = 'none';
                 }
             }
             else if (dropdownValue == 'Vinyl Trapezoid' || dropdownValue == 'Vinyl Fixed Lite') {
@@ -299,25 +531,25 @@
                     document.getElementById('MainContent_row' + i + 'WindowTintVinyl').style.display = 'none';
 
                 document.getElementById('MainContent_rowWindowTintVinyl').style.display = 'none';
-                document.getElementById('MainContent_rowWindowTintNoMixedVinyl').style.display = 'inherit';
+                document.getElementById('MainContent_rowWindowTintNoMixedVinyl').style.display = 'table-row';
                 document.getElementById('MainContent_rowWindowTopBottomBothRadVinyl').style.display = 'none';
                 document.getElementById('MainContent_rowWindowAsIfHeightVinyl').style.display = 'none';
                 document.getElementById('MainContent_txtWindowTopVentHeightVinyl').value = '';
                 document.getElementById('MainContent_txtWindowBottomVentHeightVinyl').value = '';
                 document.getElementById('MainContent_rowWindowUnevenVentsTopVinyl').style.display = 'none';
                 document.getElementById('MainContent_rowWindowUnevenVentsBottomVinyl').style.display = 'none';
-                document.getElementById('MainContent_rowWindowHeightVinyl').style.display = 'inherit';
+                document.getElementById('MainContent_rowWindowHeightVinyl').style.display = 'table-row';
                 document.getElementById('MainContent_rowWindowLeftHeightVinyl').style.display = 'none';
                 document.getElementById('MainContent_rowWindowRightHeightVinyl').style.display = 'none';
 
 
                 if (dropdownValue == 'Vinyl Trapezoid') {
                     document.getElementById('MainContent_rowWindowHeightVinyl').style.display = 'none';
-                    document.getElementById('MainContent_rowWindowLeftHeightVinyl').style.display = 'inherit';
-                    document.getElementById('MainContent_rowWindowRightHeightVinyl').style.display = 'inherit';
+                    document.getElementById('MainContent_rowWindowLeftHeightVinyl').style.display = 'table-row';
+                    document.getElementById('MainContent_rowWindowRightHeightVinyl').style.display = 'table-row';
                 }
                 else {
-                    document.getElementById('MainContent_rowWindowHeightVinyl').style.display = 'inherit';
+                    document.getElementById('MainContent_rowWindowHeightVinyl').style.display = 'table-row';
                     document.getElementById('MainContent_rowWindowLeftHeightVinyl').style.display = 'none';
                     document.getElementById('MainContent_rowWindowRightHeightVinyl').style.display = 'none';
                 }
@@ -336,361 +568,102 @@
                 document.getElementById('MainContent_rowWindowH4TNumberOfVentsVinyl').style.display = 'none';
             }
         }
-        //        //else, perform block
-        //    //else if (type === "Glass") {
-        //    //    document.getElementById('MainContent_rowWindowTint' + type).style.display = 'inherit';
-
-        //        if (dropdownValue == 'Aluminum Framed Trapezoid' || dropdownValue == 'PVC Framed Single Glazed Trapezoid') {
-        //            document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowLeftHeight' + type).style.display = 'inherit';
-        //            document.getElementById('MainContent_rowWindowRightHeight' + type).style.display = 'inherit';
-        //        }
-        //        //else {
-        //        //    document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'inherit';
-        //        //    document.getElementById('MainContent_rowWindowLeftHeight' + type).style.display = 'none';
-        //        //    document.getElementById('MainContent_rowWindowRightHeight' + type).style.display = 'none';
-        //        //}
-            
-        //    else {
-        //        document.getElementById('MainContent_rowWindowInsideMount' + type).style.display = 'none';
-        //        document.getElementById('MainContent_rowWindowOutsideMount' + type).style.display = 'none';
-        //        document.getElementById('MainContent_cellWindowUnevenVents' + type).style.display = 'none';
-        //        document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'none';
-        //        document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = '';
-        //        document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
-        //        document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
-        //        document.getElementById('MainContent_rowWindowTint' + type).style.display = 'none';
-        //        document.getElementById('MainContent_rowWindowV4TNumberOfVents' + type).style.display = 'none';
-        //        document.getElementById('MainContent_rowWindowH4TNumberOfVents' + type).style.display = 'none';
-        //        document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'none';
-        //        document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'none';
-        //        document.getElementById('MainContent_rowWindowTintNoMixed' + type).style.display = 'none';
-        //        document.getElementById('MainContent_rowWindowTopBottomBothRad' + type).style.display = 'none';
-        //        document.getElementById('MainContent_rowWindowAsIfHeight' + type).style.display = 'none';
-        //    }
-
-        //}
-
-        //function validateUnevenVents(size) {
-
-        //    size += ''; //covert the given number to string
-        //    var decimal = size.split("."); //split the number at the decimal point
-        //    decimal[1] = "0." + decimal[1]; //add "0." to the decimal values to make a valid decimal number
-
-        //    /******************************/
-        //    //these constants below will have to be 
-        //    //moved to a constants file, or at least
-        //    //have global scope within this file.
-        //    var ONE_SIXTEENTH = 0.1667;
-        //    var TWO_SIXTEENTH = 0.125;
-        //    var THREE_SIXTEENTH = 0.1875;
-        //    var FOUR_SIXTEENTH = 0.25;
-        //    var FIVE_SIXTEENTH = 0.3125;
-        //    var SIX_SIXTEENTH = 0.375;
-        //    var SEVEN_SIXTEENTH = 0.4375;
-        //    var EIGHT_SIXTEENTH = 0.5;
-        //    var NINE_SIXTEENTH = 0.5625;
-        //    var TEN_SIXTEENTH = 0.625;
-        //    var ELEVEN_SIXTEENTH = 0.6875;
-        //    var TWELVE_SIXTEENTH = 0.75;
-        //    var THIRTEEN_SIXTEENTH = 0.8125;
-        //    var FOURTEEN_SIXTEENTH = 0.875;
-        //    var FIFTEEN_SIXTEENTH = 0.9375;
-        //    /******************************/
-
-        //    //reset the decimal value if its not exactly an eighth
-        //    //round it down to the nearest eighth
-        //    decimal[1] = (decimal[1] >= FIFTEEN_SIXTEENTH) ? FIFTEEN_SIXTEENTH :
-        //        (decimal[1] >= FOURTEEN_SIXTEENTH) ? FOURTEEN_SIXTEENTH :
-        //        (decimal[1] >= THIRTEEN_SIXTEENTH) ? THIRTEEN_SIXTEENTH :
-        //        (decimal[1] >= TWELVE_SIXTEENTH) ? TWELVE_SIXTEENTH :
-        //        (decimal[1] >= ELEVEN_SIXTEENTH) ? ELEVEN_SIXTEENTH :
-        //        (decimal[1] >= TEN_SIXTEENTH) ? TEN_SIXTEENTH :
-        //        (decimal[1] >= NINE_SIXTEENTH) ? NINE_SIXTEENTH :
-        //        (decimal[1] >= EIGHT_SIXTEENTH) ? EIGHT_SIXTEENTH :
-        //        (decimal[1] >= SEVEN_SIXTEENTH) ? SEVEN_SIXTEENTH :
-        //        (decimal[1] >= SIX_SIXTEENTH) ? SIX_SIXTEENTH :
-        //        (decimal[1] >= FIVE_SIXTEENTH) ? FIVE_SIXTEENTH :
-        //        (decimal[1] >= FOUR_SIXTEENTH) ? FOUR_SIXTEENTH :
-        //        (decimal[1] >= THREE_SIXTEENTH) ? THREE_SIXTEENTH :
-        //        (decimal[1] >= TWO_SIXTEENTH) ? TWO_SIXTEENTH :
-        //        (decimal[1] >= ONE_SIXTEENTH) ? ONE_SIXTEENTH : 0;
-
-        //    return decimal; //return the corrected decimal value as an array of two elements, 0: value before the decimal, 1: value after the decimal
-
-        //    ///add uneven vents validation code here
-
-        //}
-
-        /**
-        *windowStyle
-        *Window style function is triggered when the user selects Vertical Four Track, 
-        *vinyl tint becomes displayed, since Vertical Four Track is the only window style
-        *that has vinyl tint options
-        *@param type - holds the type of window selected (i.e. Cabana, French, Patio, Opening Only (No Window));
-        *@param wallNumber - holds an integer to know which wall is currently being affected
-        */
-        //function windowStyleChanged(type, dropdownValue) {
-
-        //    alert(type + ", " + dropdownValue);
-        //    //var windowStyleDDL = document.getElementById('MainContent_ddlWindowStyle' + type).options[document.getElementById('MainContent_ddlWindowStyle' + type).selectedIndex].value;
-
-        //    if (type === "Vinyl") {
-
-        //        //Get value of window style drop down
-        //        //var windowTintsDDL = document.getElementById('MainContent_ddlWindowTint' + type).options[document.getElementById('MainContent_ddlWindowTint' + type).selectedIndex].value;
-        //        //var windowVentsDDL = document.getElementById('MainContent_ddlWindowV4TNumberOfVents' + type).options[document.getElementById('MainContent_ddlWindowV4TNumberOfVents' + type).selectedIndex].value;
-        //        var vinylRows = (windowVentsDDL == 12) ? 4 :
-        //                        (windowVentsDDL == 9) ? 3 :
-        //                        (windowVentsDDL == 8) ? 4 :
-        //                        (windowVentsDDL == 6) ? 3 :
-        //                        (windowVentsDDL == 4) ? 4 : 3;
-
-        //        var tempVents;
-
-        //        if (dropdownValue === "Vertical 4 Track" ||
-        //            dropdownValue === "Horizontal 2 Track" || 
-        //            dropdownValue === "Horizontal 3 Track" || 
-        //            dropdownValue === "Horizontal 4 Track") {
-                    
-        //            document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'inherit';
-        //            document.getElementById('MainContent_rowWindowLeftHeight' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowRightHeight' + type).style.display = 'none';
-
-        //            if (dropdownValue === "Vertical 4 Track") {
-        //                document.getElementById('MainContent_rowWindowInsideMount' + type).style.display = 'inherit';
-        //                document.getElementById('MainContent_rowWindowOutsideMount' + type).style.display = 'inherit';
-        //                document.getElementById('MainContent_cellWindowUnevenVents' + type).style.display = 'inherit';
-        //                document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'inherit';
-        //                document.getElementById('MainContent_rowWindowV4TNumberOfVents' + type).style.display = 'inherit';
-        //                document.getElementById('MainContent_rowWindowH4TNumberOfVents' + type).style.display = 'none';
-        //                document.getElementById('MainContent_rowWindowTint' + type).style.display = 'inherit';
-        //                document.getElementById('MainContent_rowWindowTintNoMixed' + type).style.display = 'none';
-
-        //                windowVentsDDL = document.getElementById('MainContent_ddlWindowV4TNumberOfVents' + type).options[document.getElementById('MainContent_ddlWindowV4TNumberOfVents' + type).selectedIndex].value;
-        //                vinylRows = (windowVentsDDL == 12) ? 4 :
-        //                        (windowVentsDDL == 9) ? 3 :
-        //                        (windowVentsDDL == 8) ? 4 :
-        //                        (windowVentsDDL == 6) ? 3 :
-        //                        (windowVentsDDL == 4) ? 4 : 3;
 
 
-        //                if (tempVents != windowVentsDDL) {
-        //                    tempVents = windowVentsDDL;
-        //                    for (var i = 0; i < 4; i++) {
-        //                        document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
-        //                    }
-        //                    for (var i = 0; i < vinylRows; i++) {
-        //                        document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'inherit';
-        //                    }
-        //                }
+        function windowGlassStyleChanged(dropdownValue) {
 
-        //                if (windowTintsDDL == "Mixed") {
-        //                    for (var i = 0; i < 4; i++) {
-        //                        document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
-        //                    }
-        //                    for (var i = 0; i < vinylRows; i++) {
-        //                        document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'inherit';
-        //                    }
-        //                }
-        //                else {
-        //                    for (var i = 0; i < 4; i++) {
-        //                        document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
-        //                    }
-        //                }
-        //            }
-        //            else if (dropdownValue === "Horizontal 2 Track" ||
-        //                     dropdownValue === "Horizontal 4 Track") {
-        //                document.getElementById('MainContent_rowWindowInsideMount' + type).style.display = 'none';
-        //                document.getElementById('MainContent_rowWindowOutsideMount' + type).style.display = 'none';
-        //                document.getElementById('MainContent_cellWindowUnevenVents' + type).style.display = 'none';
-        //                document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'inherit';
-        //                document.getElementById('MainContent_rowWindowV4TNumberOfVents' + type).style.display = 'none';
-        //                document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'inherit';
-        //                document.getElementById('MainContent_rowWindowTint' + type).style.display = 'none';
-        //                document.getElementById('MainContent_rowWindowTintNoMixed' + type).style.display = 'inherit';
-        //                document.getElementById('MainContent_rowWindowTopBottomBothRad' + type).style.display = 'none';
-        //                document.getElementById('MainContent_rowWindowAsIfHeight' + type).style.display = 'none';
-        //                document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = '';
-        //                document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
-        //                document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'none';
-        //                document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
-
-        //                if (dropdownValue === "Horizontal 2 Track") {
-        //                    windowVentsDDL = vinylRows = 2;
-        //                    document.getElementById('MainContent_rowWindowH4TNumberOfVents' + type).style.display = 'none';
-        //                }  
-        //                else if (dropdownValue === "Horizontal 4 Track") {
-        //                    document.getElementById('MainContent_rowWindowH4TNumberOfVents' + type).style.display = 'inherit';
-        //                    windowVentsDDL = vinylRows = document.getElementById('MainContent_ddlWindowH4TNumberOfVents' + type).options[document.getElementById('MainContent_ddlWindowH4TNumberOfVents' + type).selectedIndex].value;
-        //                }
-
-        //                for (var i = 0; i < 4; i++) 
-        //                    document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
-
-        //            }
-        //            else {
-        //                document.getElementById('MainContent_rowWindowInsideMount' + type).style.display = 'none';
-        //                document.getElementById('MainContent_rowWindowOutsideMount' + type).style.display = 'none';
-        //                document.getElementById('MainContent_cellWindowUnevenVents' + type).style.display = 'none';
-        //                document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'none';
-        //                document.getElementById('MainContent_rowWindowV4TNumberOfVents' + type).style.display = 'none';
-        //                document.getElementById('MainContent_rowWindowH4TNumberOfVents' + type).style.display = 'none';
-        //                document.getElementById('MainContent_rowWindowAsIfHeight' + type).style.display = 'none';
-        //                document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = '';
-        //                document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
-        //                document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'none';
-        //                document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
-        //            }
-        //        }
-        //        else if (dropdownValue == 'Vinyl Trapezoid' || dropdownValue == 'Vinyl Fixed Lite') {
-
-        //            for (var i = 0; i < 4; i++)
-        //                document.getElementById('MainContent_row' + i + 'WindowTint' + type).style.display = 'none';
-
-        //            document.getElementById('MainContent_rowWindowTint' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowTintNoMixed' + type).style.display = 'inherit';
-        //            document.getElementById('MainContent_rowWindowTopBottomBothRad' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowAsIfHeight' + type).style.display = 'none';
-        //            document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = '';
-        //            document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
-        //            document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'inherit';
-        //            document.getElementById('MainContent_rowWindowLeftHeight' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowRightHeight' + type).style.display = 'none';
-
-
-        //            if (dropdownValue == 'Vinyl Trapezoid') {
-        //                document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'none';
-        //                document.getElementById('MainContent_rowWindowLeftHeight' + type).style.display = 'inherit';
-        //                document.getElementById('MainContent_rowWindowRightHeight' + type).style.display = 'inherit';
-        //            }
-        //            else {
-        //                document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'inherit';
-        //                document.getElementById('MainContent_rowWindowLeftHeight' + type).style.display = 'none';
-        //                document.getElementById('MainContent_rowWindowRightHeight' + type).style.display = 'none';
-        //            }
-
-        //            document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowInsideMount' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowOutsideMount' + type).style.display = 'none';
-        //            document.getElementById('MainContent_cellWindowUnevenVents' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'none';
-        //            document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = '';
-        //            document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
-        //            document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
-        //            document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowTint' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowV4TNumberOfVents' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowH4TNumberOfVents' + type).style.display = 'none';
-        //        }
-        //            //else, perform block
-        //        else {
-        //            document.getElementById('MainContent_rowWindowInsideMount' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowOutsideMount' + type).style.display = 'none';
-        //            document.getElementById('MainContent_cellWindowUnevenVents' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowUnevenVentsTop' + type).style.display = 'none';
-        //            document.getElementById('MainContent_txtWindowTopVentHeight' + type).value = '';
-        //            document.getElementById('MainContent_rowWindowUnevenVentsBottom' + type).style.display = 'none';
-        //            document.getElementById('MainContent_txtWindowBottomVentHeight' + type).value = '';
-        //            document.getElementById('MainContent_rowWindowTint' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowV4TNumberOfVents' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowH4TNumberOfVents' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowScreenOptions' + type).style.display = 'none';
-        //            document.getElementById('MainContent_cellWindowSpreaderBar' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowTintNoMixed' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowTopBottomBothRad' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowAsIfHeight' + type).style.display = 'none';
-        //        }
-        //    }
-        //    else if (type === "Glass") {
-        //        document.getElementById('MainContent_rowWindowTint' + type).style.display = 'inherit';
-
-        //        if (dropdownValue == 'Aluminum Framed Trapezoid' || dropdownValue == 'PVC Framed Single Glazed Trapezoid') {
-        //            document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowLeftHeight' + type).style.display = 'inherit';
-        //            document.getElementById('MainContent_rowWindowRightHeight' + type).style.display = 'inherit';
-        //        }
-        //        else {
-        //            document.getElementById('MainContent_rowWindowHeight' + type).style.display = 'inherit';
-        //            document.getElementById('MainContent_rowWindowLeftHeight' + type).style.display = 'none';
-        //            document.getElementById('MainContent_rowWindowRightHeight' + type).style.display = 'none';
-        //        }
-
-        //    }
-        //    else {
-        //        document.getElementById('MainContent_rowWindowTint' + type).style.display = 'none';
-        //    }
-
-        //}
-
-
-
-        /**
-        *typeOfRowsDisplayed
-        *This function finds which type of window is selected and displays the appropriate fields
-        *from a table hidden from the user
-        *@param type - gets the type of window selected (i.e. Cabana, French, Patio, Opening Only (No Window))
-        *@param wallNumber - holds an integer to know which wall is currently being affected
-        */
-        function typeRowsDisplayed(type) {
-
-            alert(type);
-
-            /****START:TABLE ROWS BY ID****/
-            var windowTitle = document.getElementById("MainContent_rowWindowTitle" + type);
-            var windowStyleTable = document.getElementById("MainContent_rowWindowStyle" + type);
-            var windowTint = document.getElementById("MainContent_rowWindowTint" + type);
-            //var windowNumberOfVents = document.getElementById("MainContent_rowWindowNumberOfVents" + type);
-            var windowColour = document.getElementById("MainContent_rowWindowColour" + type);
-            var windowHeight = document.getElementById("MainContent_rowWindowHeight" + type);
-            var windowWidth = document.getElementById("MainContent_rowWindowWidth" + type);
-            var windowScreenOptions = document.getElementById("MainContent_rowWindowScreenOptions" + type);
-            
-            /****END:TABLE ROWS BY ID****/
-
-            //If type is Cabana, display the appropriate fields
-            if (type == "Vinyl") {
-                /****FIELDS TO DISPLAY****/
-                //General
-                windowTitle.style.display = "inherit";
-                windowStyleTable.style.display = "inherit";
-                windowColour.style.display = "inherit";
-                windowHeight.style.display = "inherit";
-                windowWidth.style.display = "inherit";
-                //alert(document.getElementById('MainContent_ddlWindowStyle' + type).options[document.getElementById('MainContent_ddlWindowStyle' + type).selectedIndex].value);
-                windowStyleChanged(document.getElementById('MainContent_ddlWindowStyle' + type).options[document.getElementById('MainContent_ddlWindowStyle' + type).selectedIndex].value);
+            switch (dropdownValue) {
+                case "PVC XO Single Glazed Horizontal Roller":
+                    MIN_WIDTH_BUILDABLE = SINGLE_SLIDER_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = SINGLE_SLIDER_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = SINGLE_SLIDER_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = SINGLE_SLIDER_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = SINGLE_SLIDER_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = SINGLE_SLIDER_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = SINGLE_SLIDER_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = SINGLE_SLIDER_MAX_HEIGHT_WARRANTY;
+                    break;
+                case "Aluminum Framed Picture":
+                    MIN_WIDTH_BUILDABLE = SINGLE_SLIDER_LITE_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = SINGLE_SLIDER_LITE_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = SINGLE_SLIDER_LITE_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = SINGLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = SINGLE_SLIDER_LITE_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = SINGLE_SLIDER_LITE_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = SINGLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = SINGLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY;
+                    break;
+                case "Aluminum Framed Trapezoid":
+                    MIN_WIDTH_BUILDABLE = SINGLE_SLIDER_TRAP_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = SINGLE_SLIDER_TRAP_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = SINGLE_SLIDER_TRAP_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = SINGLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = SINGLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = SINGLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = SINGLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = SINGLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY;
+                    break;
+                case "Aluminum XX Horizontal Roller":
+                    MIN_WIDTH_BUILDABLE = DOUBLE_SLIDER_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = DOUBLE_SLIDER_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = DOUBLE_SLIDER_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = DOUBLE_SLIDER_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = DOUBLE_SLIDER_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = DOUBLE_SLIDER_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = DOUBLE_SLIDER_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = DOUBLE_SLIDER_MAX_HEIGHT_WARRANTY;
+                    break;
+                case "PVC Framed Single Glazed Picture":
+                    MIN_WIDTH_BUILDABLE = DOUBLE_SLIDER_LITE_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = DOUBLE_SLIDER_LITE_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = DOUBLE_SLIDER_LITE_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = DOUBLE_SLIDER_LITE_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = DOUBLE_SLIDER_LITE_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = DOUBLE_SLIDER_LITE_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = DOUBLE_SLIDER_LITE_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = DOUBLE_SLIDER_LITE_MAX_HEIGHT_WARRANTY;
+                    break;
+                case "PVC Framed Single Glazed Trapezoid":
+                    MIN_WIDTH_BUILDABLE = DOUBLE_SLIDER_TRAP_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = DOUBLE_SLIDER_TRAP_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = DOUBLE_SLIDER_TRAP_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = DOUBLE_SLIDER_TRAP_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = DOUBLE_SLIDER_TRAP_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = DOUBLE_SLIDER_TRAP_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = DOUBLE_SLIDER_TRAP_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = DOUBLE_SLIDER_TRAP_MAX_HEIGHT_WARRANTY;
+                    break;
             }
-                //If type is French, display the appropriate fields
-            else if (type == "Glass") {
 
-                //General
-                windowTitle.style.display = "inherit";
-                windowStyleTable.style.display = "inherit";
-                windowColour.style.display = "inherit";
-                windowHeight.style.display = "inherit";
-                windowWidth.style.display = "inherit";
-
-                windowStyle(type);
+            if (dropdownValue == 'Aluminum Framed Trapezoid' || dropdownValue == 'PVC Framed Single Glazed Trapezoid') {
+                document.getElementById('MainContent_rowWindowHeightGlass').style.display = 'none';
+                document.getElementById('MainContent_rowWindowLeftHeightGlass').style.display = 'table-row';
+                document.getElementById('MainContent_rowWindowRightHeightGlass').style.display = 'table-row';
             }
-                //If type is Patio, display the appropriate fields
-            else if (type == "Screen") {
-
-                windowTitle.style.display = "inherit";
-                windowStyleTable.style.display = "inherit";
-                windowColour.style.display = "inherit";
-                windowHeight.style.display = "inherit";
-                windowWidth.style.display = "inherit";
-
-                windowGlassTint.style.display = "inherit";
-                windowScreenOptions.style.display = "inherit";
-
-                windowStyle(type);
+            else {
+                document.getElementById('MainContent_rowWindowHeightGlass').style.display = 'table-row';
+                document.getElementById('MainContent_rowWindowLeftHeightGlass').style.display = 'none';
+                document.getElementById('MainContent_rowWindowRightHeightGlass').style.display = 'none';
             }
-                //If type is NoWindow, display the appropriate fields
-            
         }
+
+        function windowScreenStyleChanged(dropdownValue) {
+
+            switch (dropdownValue) {
+                case "Screen Fixed Lite":
+                    MIN_WIDTH_BUILDABLE = SCREEN_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = SCREEN_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = SCREEN_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = SCREEN_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = SCREEN_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = SCREEN_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = SCREEN_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = SCREEN_MAX_HEIGHT_WARRANTY;
+                    break;
+            }
+        }
+
+
     </script>
 
     <div class="slide-window" id="slide-window" >
