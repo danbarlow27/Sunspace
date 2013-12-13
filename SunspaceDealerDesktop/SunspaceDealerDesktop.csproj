@@ -373,6 +373,7 @@
     </Compile>
     <Compile Include="Customer.cs" />
     <Compile Include="Door.cs" />
+    <Compile Include="RoofSupport.cs" />
     <Compile Include="WizardDoorOnly.aspx.cs">
       <DependentUpon>WizardDoorOnly.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

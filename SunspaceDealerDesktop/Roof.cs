@@ -25,6 +25,7 @@ namespace SunspaceDealerDesktop
         private int extraDownspouts;
         private double projection;
         private double width;
+        private List<RoofSupport> roofSupports; //a list of roof supports
         private List<RoofModule> roofModules; //a list of roof modules that make up this roof
         #endregion
 
@@ -47,6 +48,7 @@ namespace SunspaceDealerDesktop
             ExtraDownspouts=0;
             Projection=0;
             Width=0;
+            RoofSupports = new List<RoofSupport>();
             RoofModules = new List<RoofModule>();
         }
 
@@ -67,6 +69,27 @@ namespace SunspaceDealerDesktop
             ExtraDownspouts = sentExtraDownspouts;
             Projection = sentProjection;
             Width = sentWidth;
+            RoofModules = sentModules;
+        }
+
+        //Constructor for WizardRoofOnly contains additional field for list of roof supports
+        public Roof(string sentType, string sentInteriorSkin, string sentExteriorSkin, double sentThickness, bool sentFireProtection, bool sentThermadeck, bool sentGutters, bool sentGutterPro, string sentGutterColour, string sentStripeColour, string sentAcrylicColour, int sentExtraDownspouts, double sentProjection, double sentWidth, List<RoofSupport> sentSupports, List<RoofModule> sentModules)
+        {
+            Type = sentType;
+            InteriorSkin = sentInteriorSkin;
+            ExteriorSkin = sentExteriorSkin;
+            Thickness = sentThickness;
+            FireProtection = sentFireProtection;
+            Thermadeck = sentThermadeck;
+            Gutters = sentGutters;
+            GutterPro = sentGutterPro;
+            GutterColour = sentGutterColour;
+            StripeColour = sentStripeColour;
+            AcrylicColour = sentAcrylicColour;
+            ExtraDownspouts = sentExtraDownspouts;
+            Projection = sentProjection;
+            Width = sentWidth;
+            RoofSupports = sentSupports;
             RoofModules = sentModules;
         }
         #endregion
@@ -280,6 +303,19 @@ namespace SunspaceDealerDesktop
             set
             {
                 width = value;
+            }
+        }
+
+        public List<RoofSupport> RoofSupports
+        {
+            get
+            {
+                return roofSupports;
+            }
+
+            set
+            {
+                roofSupports = value;
             }
         }
 
