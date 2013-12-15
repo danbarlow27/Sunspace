@@ -240,7 +240,7 @@ namespace SunspaceDealerDesktop
             //hiddenFieldsDiv.InnerHtml = createHiddenFields(strWalls.Count()); //create hidden fields on page load dynamically, pass it number of walls
             
             populateTblWallHeights();
-
+            populateWallDoorOptions(1,1); 
             //do the windows stuff
             windowOptions();
 
