@@ -422,7 +422,7 @@ namespace SunspaceDealerDesktop
             cell6.Controls.Add(txtRightFiller); //append the right filler textbox in cell 6
             cell7.Controls.Add(ddlRightInchFractions); //append the right filler dropdown list in cell 7
 
-            tblProposedWalls.Rows.Add(row); //append the row to the proposed walls table
+            //tblProposedWalls.Rows.Add(row); //append the row to the proposed walls table
 
             //append all the cells to the row
             row.Cells.Add(cell1); 
@@ -538,7 +538,7 @@ namespace SunspaceDealerDesktop
             cell6.Controls.Add(txtRightFiller); //append the right filler textbox in cell 6
             cell7.Controls.Add(ddlRightInchFractions); //append the right filler dropdown list in cell 7
 
-            tblProposedWalls.Rows.Add(row); //append the row to the proposed walls table
+            //tblProposedWalls.Rows.Add(row); //append the row to the proposed walls table
 
             //append all the cells to the row
             row.Cells.Add(cell1); 
