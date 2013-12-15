@@ -35,13 +35,18 @@ namespace SunspaceWizard
             aTableRow.Controls.Add(aTableCell);
 
             TableHeaderCell aTableCell2 = new TableHeaderCell();
-            aTableCell.CssClass = "thSortable";
-            aTableCell.Controls.Add(new LiteralControl("Last Modified&nbsp"));
+            aTableCell2.CssClass = "thSortable";
+            aTableCell2.Controls.Add(new LiteralControl("Last Modified"));
             aTableRow.Controls.Add(aTableCell2);
 
+            TableHeaderCell aTableCellA = new TableHeaderCell();
+            aTableCellA.CssClass = "thSortable";
+            aTableCellA.Controls.Add(new LiteralControl("&nbsp"));
+            aTableRow.Controls.Add(aTableCellA);
+
             TableHeaderCell aTableCell3 = new TableHeaderCell();
-            aTableCell.CssClass = "sorttable_nosort";
-            aTableCell.Controls.Add(new LiteralControl("Add to Estimate"));
+            aTableCell3.CssClass = "sorttable_nosort";
+            aTableCell3.Controls.Add(new LiteralControl("Add to Estimate"));
             aTableRow.Controls.Add(aTableCell3);
 
             tblSavedProjects.Controls.Add(aTableRow);
@@ -77,11 +82,11 @@ namespace SunspaceWizard
 
                 Label projectEstimate = new Label();
                 projectEstimate.AssociatedControlID = "chkAddToEstimate" + i;
-                projectEstimate.Text = dvProjectList[i][0].ToString();
+                //projectEstimate.Text = dvProjectList[i][0].ToString();
                 projectsEstimateCell.Controls.Add(projectEstimate);
                 projectsTableRow.Controls.Add(projectsEstimateCell);
 
-                phProjectList.Controls.Add(projectsTableRow);
+                tblSavedProjects.Controls.Add(projectsTableRow);
                 //phProjectList.Controls.Add(new LiteralControl("<br/>"));
             }
 

@@ -19,6 +19,8 @@ namespace SunspaceDealerDesktop
         protected ListItem lst78 = new ListItem("7/8", ".875");
 
 
+        #region validation constants
+
         #region MIN_WIDTH_BUILDABLE
         //protected float V4T_2V_MIN_WIDTH_BUILDABLE = 12.0F;
         protected float V4T_3V_MIN_WIDTH_BUILDABLE = Constants.V4T_3V_MIN_WIDTH_BUILDABLE;
@@ -203,6 +205,8 @@ namespace SunspaceDealerDesktop
 
         #endregion
 
+        #endregion
+
         List<Window> windowsOrdered = new List<Window>();
 
         protected void addMixedTintDropdowns(string title, Table tblWindowDetails)
@@ -258,8 +262,8 @@ namespace SunspaceDealerDesktop
                 typeRadio.ID = "radType" + title; //Adding appropriate id to window type radio button
                 typeRadio.GroupName = "windowTypeRadios";         //Adding group name for all window types
                 if (title == "Vinyl") typeRadio.Attributes.Add("onclick", "windowVinylStyleChanged(document.getElementById('MainContent_ddlWindowStyleVinyl').options[document.getElementById('MainContent_ddlWindowStyleVinyl').selectedIndex].value);");
-                if (title == "Glass") typeRadio.Attributes.Add("onclick", "windowVinylStyleChanged(document.getElementById('MainContent_ddlWindowStyleGlass').options[document.getElementById('MainContent_ddlWindowStyleGlass').selectedIndex].value);");
-                if (title == "Screen") typeRadio.Attributes.Add("onclick", "windowVinylStyleChanged(document.getElementById('MainContent_ddlWindowStyleScreen').options[document.getElementById('MainContent_ddlWindowStyleScreen').selectedIndex].value);");
+                if (title == "Glass") typeRadio.Attributes.Add("onclick", "windowGlassStyleChanged(document.getElementById('MainContent_ddlWindowStyleGlass').options[document.getElementById('MainContent_ddlWindowStyleGlass').selectedIndex].value);");
+                if (title == "Screen") typeRadio.Attributes.Add("onclick", "windowScreenStyleChanged(document.getElementById('MainContent_ddlWindowStyleScreen').options[document.getElementById('MainContent_ddlWindowStyleScreen').selectedIndex].value);");
                 //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed('" + title + "')"); //On click event to display the proper fields/rows
 
 
