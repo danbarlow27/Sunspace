@@ -2434,7 +2434,7 @@ function sunshadeToggle()
 
     
                 <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion0" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion0" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" OnClick="btnQuestion0_Click" />
 
             </div> 
             <%-- end #slide0 --%>

@@ -192,7 +192,10 @@ namespace SunspaceDealerDesktop
             coordList = (string)Session["lineInfo"]; //get the string from the session and store it in a local variable for further use                                    
             //strWalls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
             //wallDetails = new string[strWalls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
-            currentModel = (string)Session["model"];
+            
+            //currentModel = (string)Session["model"];
+            currentModel = "M100"; // HARD CODED CURRENTMODEL - Remove after New Project redirects to walls only
+
             soffitLength = Convert.ToSingle(Session["soffitLength"]);
             //int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
             
@@ -433,7 +436,9 @@ namespace SunspaceDealerDesktop
             row.Cells.Add(cell6);
             row.Cells.Add(cell7);
             
-        }        
+        } 
+       
+
 
         protected void populateTblProposedGable(int i, int displayedWallCount)
         {
@@ -4651,6 +4656,11 @@ namespace SunspaceDealerDesktop
             //    }
             //}
 
+        }
+
+        protected void btnQuestion0_Click(object sender, EventArgs e)
+        {
+            // Was testing to populate on click - TODO: Remove this event handler
         }
     }
 }
