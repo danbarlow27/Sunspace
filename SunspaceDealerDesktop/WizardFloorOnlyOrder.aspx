@@ -142,6 +142,7 @@
                 <asp:Button ID="btnQuestion2" Enabled="false" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Done" OnClick="btnQuestion1_Click" />
             </div>
             <%-- end #slide3 --%>
+            <asp:SqlDataSource ID="sdsFloors" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [floors]"></asp:SqlDataSource>
         </div> <%-- end .slide-wrapper --%>
 
     </div> 

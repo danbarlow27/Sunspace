@@ -32,7 +32,6 @@ namespace SunspaceDealerDesktop
             //                <ul>
             //                    <li>
             //                        <h3>Enter customer details:</h3>
-
             //                        <asp:Table ID="tblNewCustomerInfo" CssClass="tblTxtFields" runat="server">
             //                            <asp:TableRow>
             //                                <asp:TableCell>

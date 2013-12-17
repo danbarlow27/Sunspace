@@ -168,14 +168,14 @@
         var HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED = <%= HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED%>;
 
 
-        var spreaderBar = -1;
-        var dlo = 2.0;
-        var deductions = 0.0;
-        var tint;
-        var ventHeight;
-        var ventWidth;
+        var spreaderBar = -1; // value for the placement of spreader bar on the window; -1 denotes no spreaderbar
+        var dlo = 2.0; // day light opening, window size for 2 inches if option selected
+        var deductions = 0.0; // any deductions to be applied to the size of the window
+        var tint; // tint values
+        var ventHeight; //height of each vent
+        var ventWidth; //width of each vent
 
-        var MIN_WIDTH_BUILDABLE;
+        var MIN_WIDTH_BUILDABLE; 
         var MAX_WIDTH_BUILDABLE;
         var MIN_HEIGHT_BUILDABLE;
         var MAX_HEIGHT_BUILDABLE;
@@ -184,7 +184,13 @@
         var MIN_HEIGHT_WARRANTY;
         var MAX_HEIGHT_WARRANTY;
 
+        var errorMessage = document.getElementById("MainContent_txtErrorMessage");
 
+        /**
+        This function gets called when dlo/tip to tip label is clicked
+        It adjusts the value of dlo appropriately
+        @param labelText - "DLO" or "Tip to Tip"
+        */
         function dloClicked(labelText) {
             switch (labelText) {
                 case "DLO":
@@ -196,6 +202,11 @@
             }
         }
 
+        /**
+        This function gets called when deductions label is clicked
+        It adjusts the value of deductions appropriately
+        @param labelText - "Deduct 1/4", "Deduct 1/8", "Deduct 3/8", "Deduct 1/2", "No Deductions"
+        */
         function deductionsClicked(labelText) {
             switch (labelText) {
                 case "Deduct 1/8\"":
@@ -216,27 +227,72 @@
             }
         }
 
+        /*
+        This function re validates and re calculates the values of height and width of the window and vent sizes
+        */
         function recalculate() {
+
+            var height = document.getElementById('MainContent_txtWindowHeightVinyl').value;
+            var asIfHeight = document.getElementById('MainContent_txtWindowAsIfHeightVinyl').value;
+            var width = document.getElementById('MainContent_txtWindowWidthVinyl').value;
+
+            if(!validateInteger(asIfHeight)) asIfHeight = height; //if asIfHeight = null, set the value of height to it
+
+            if (!validateInteger(height) || //height is not a valid integer
+                !validateInteger(asIfHeight) || //as-if height is not a valid integer
+                !validateInteger(width)) { //width is not a valid integer
+
+                //error: please input a valid Height and Build-As-If Height
+                //alert("enter some numbers you fool!");
+                errorMessage.innerHTML = "enter some numbers you foo!";
+                document.getElementById('MainContent_radWindowBottomRadVinyl').checked = true;
+                topOrBottomUnevenClicked();
+            }
+            else if (width < MIN_WIDTH_BUILDABLE || width > MAX_WIDTH_BUILDABLE ||
+                 height < MIN_HEIGHT_BUILDABLE || height > MAX_HEIGHT_BUILDABLE ||
+                 asIfHeight < MIN_HEIGHT_BUILDABLE || asIfHeight > MAX_HEIGHT_BUILDABLE) {
+                //error: please input a valid Height and Build-As-If Height
+                //alert("not buildable!");
+                errorMessage.innerHTML = "not buildable";
+                document.getElementById('MainContent_radWindowBottomRadVinyl').checked = true;
+                topOrBottomUnevenClicked();
+            }
+            else if (width < MIN_WIDTH_WARRANTY || width > MAX_WIDTH_WARRANTY ||
+                 height < MIN_HEIGHT_WARRANTY || height > MAX_HEIGHT_WARRANTY ||
+                 asIfHeight < MIN_HEIGHT_WARRANTY || asIfHeight > MAX_HEIGHT_WARRANTY) {
+                //error: please input a valid Height and Build-As-If Height
+                //alert("buildable but not under warranty!");
+                errorMessage.innerHTML = "buildable but not under warranty";
+                document.getElementById('MainContent_radWindowBottomRadVinyl').checked = true;
+                topOrBottomUnevenClicked();
+            }
+            else {
+                getHeightAndWidthOfEachVent(true);
+            }
             //everything including vent sizes, DLO/Deductions, etc.
-            //alert("recalculate");
         }
 
 
-        function validateInteger(textbox) {
+        /*
+        This function checks if a value is a valid integer
+        @param value - value to be checked
+        @return valid - true or false
+        */
+        function validateInteger(value) {
 
             var valid;
-            if (isNaN(textbox.value)) {
+            if (isNaN(value)) {
                 valid = false;
             }
             else { //is a number
-                if (textbox.value.indexOf('.') === -1) { //doesn't contain a period
+                if (value.indexOf('.') === -1) { //doesn't contain a period
                     valid = true;
                 }
                 else {
                     valid = false;
                 }
 
-                if (textbox.value <= 0) {  //negative number or zero
+                if (value <= 0) {  //negative number or zero
                     valid = false;
                 }
                 else { //positive number
@@ -246,61 +302,66 @@
             return valid;
         }
 
+        /*
+        This function gets the height and width of each vent on a V4T window
+        This code is the replica of Dan H's code
+        @param asIf - build as if value given (true or false)
+        */
         function getHeightAndWidthOfEachVent(asIf) {
             
-            if(typeof(asIf)==='undefined') asIf = false;
+            if(typeof(asIf)==='undefined') asIf = false; //if asIf not specified set it by default to false
 
-            if (validateInteger(document.getElementById('MainContent_txtWindowHeightVinyl')) && //height is a valid integer
-                validateInteger(document.getElementById('MainContent_txtWindowAsIfHeightVinyl')) && //as-if height is a valid integer
-                validateInteger(document.getElementById('MainContent_txtWindowWidthVinyl'))) { //width is a valid integer
-
-
-                var ventCount = document.getElementById('MainContent_ddlWindowV4TNumberOfVentsVinyl').options[document.getElementById('MainContent_ddlWindowV4TNumberOfVentsVinyl').selectedIndex].value;
-                var windowWidth = document.getElementById('MainContent_txtWindowWidthVinyl').value + document.getElementById('MainContent_ddlWindowWidthVinyl').options[document.getElementById('MainContent_ddlWindowWidthVinyl').selectedIndex].value;
-                var windowHeight = (asIf) ? document.getElementById('MainContent_txtWindowAsIfHeightVinyl').value + document.getElementById('MainContent_ddlWindowAsIfHeightVinyl').options[document.getElementById('MainContent_ddlWindowAsIfHeightVinyl').selectedIndex].value : 
-                                            document.getElementById('MainContent_txtWindowHeightVinyl').value + document.getElementById('MainContent_ddlWindowHeightVinyl').options[document.getElementById('MainContent_ddlWindowHeightVinyl').selectedIndex].value;
+            var ventCount = document.getElementById('MainContent_ddlWindowV4TNumberOfVentsVinyl').options[document.getElementById('MainContent_ddlWindowV4TNumberOfVentsVinyl').selectedIndex].value;
+            var windowWidth = document.getElementById('MainContent_txtWindowWidthVinyl').value + document.getElementById('MainContent_ddlWindowWidthVinyl').options[document.getElementById('MainContent_ddlWindowWidthVinyl').selectedIndex].value;
+            var windowHeight = (asIf) ? document.getElementById('MainContent_txtWindowAsIfHeightVinyl').value + document.getElementById('MainContent_ddlWindowAsIfHeightVinyl').options[document.getElementById('MainContent_ddlWindowAsIfHeightVinyl').selectedIndex].value : 
+                                        document.getElementById('MainContent_txtWindowHeightVinyl').value + document.getElementById('MainContent_ddlWindowHeightVinyl').options[document.getElementById('MainContent_ddlWindowHeightVinyl').selectedIndex].value;
             
-                if (ventCount > 8) { 
-                    ventWidth = (windowWidth - 1.5625 - 2.75) / 3;
-                }
-                else if (ventCount > 4) {
-                    ventWidth = (windowWidth - 1.5625 - 1.6875) / 2;
-                }
-                else {
-                    ventWidth = windowWidth - 1.5625;
-                }
-
-                if (ventCount % 4 === 0) {
-                    ventHeight = (windowHeight + 2.187) / 4;
-                }
-                else if (ventCount % 3 === 0) {
-                    ventHeight = (windowHeight + 1.3125) / 3;
-                }
-                else {
-                    ventHeight = (windowHeight + 0.4375) / 2;
-                }
-                        
-                ventHeight =  Math.round(ventHeight * 100) / 100;
-                ventWidth = Math.round(ventWidth * 100) / 100;
+            if (ventCount > 8) { 
+                ventWidth = (windowWidth - 1.5625 - 2.75) / 3;
             }
-
+            else if (ventCount > 4) {
+                ventWidth = (windowWidth - 1.5625 - 1.6875) / 2;
+            }
             else {
-                //error: please input a valid Height and Build-As-If Height
-                alert("enter some numbers you fool!");
-                document.getElementById('MainContent_radWindowBottomRadVinyl').checked = true;
+                ventWidth = windowWidth - 1.5625;
             }
+
+            if (ventCount % 4 === 0) {
+                ventHeight = (windowHeight + 2.187) / 4;
+            }
+            else if (ventCount % 3 === 0) {
+                ventHeight = (windowHeight + 1.3125) / 3;
+            }
+            else {
+                ventHeight = (windowHeight + 0.4375) / 2;
+            }
+                        
+            ventHeight =  Math.round(ventHeight * 100) / 100;
+            ventWidth = Math.round(ventWidth * 100) / 100;
+            
         }
             
+        /*
+        This function gets called when the user selects both uneven vents radio button
+        It displays the appropriate rows and recalculates all the values
+        */
         function bothUnevenClicked() {
-                getHeightAndWidthOfEachVent(true);
+            //getHeightAndWidthOfEachVent(true);
                 
-                document.getElementById('MainContent_txtWindowTopVentHeightVinyl').value = ventHeight;
-                document.getElementById('MainContent_txtWindowBottomVentHeightVinyl').value = ventHeight;
+            document.getElementById('MainContent_txtWindowTopVentHeightVinyl').value = ventHeight;
+            document.getElementById('MainContent_txtWindowBottomVentHeightVinyl').value = ventHeight;
 
-                document.getElementById('MainContent_rowWindowUnevenVentsTopVinyl').style.display = 'table-row';
-                document.getElementById('MainContent_rowWindowUnevenVentsBottomVinyl').style.display = 'table-row';
+            document.getElementById('MainContent_rowWindowUnevenVentsTopVinyl').style.display = 'table-row';
+            document.getElementById('MainContent_rowWindowUnevenVentsBottomVinyl').style.display = 'table-row';
+
+            recalculate();
+
         }
 
+        /*
+        This function gets called when the user selects top or bottom uneven vents radio button
+        It hides the appropriate rows (undoes what bothUnevenClicked() did)
+        */
         function topOrBottomUnevenClicked(){
             document.getElementById('MainContent_txtWindowTopVentHeightVinyl').value = '';
             document.getElementById('MainContent_txtWindowBottomVentHeightVinyl').value = '';
@@ -309,6 +370,11 @@
             document.getElementById('MainContent_rowWindowUnevenVentsBottomVinyl').style.display = 'none';
         }
 
+        /*
+        This function gets called when uneven vents check box is clicked
+        It hides and displays appropriate rows depending on whether the checkbox is checked or unchecked
+        @param checked - true or false
+        */
         function unevenVentsChecked(checked) {
             if (checked) {
                 document.getElementById('MainContent_rowWindowAsIfHeightVinyl').style.display = 'table-row';
@@ -334,6 +400,10 @@
             }
         }
 
+        /*
+        This function gets called when tint options are changed
+        It displays appropriate number of mixed tint rows based on the user selections
+        */
         function tintOptionsChanged() {
             var tempVents;
             var tintValue = document.getElementById('MainContent_ddlWindowTintVinyl').options[document.getElementById('MainContent_ddlWindowTintVinyl').selectedIndex].value;
@@ -370,8 +440,13 @@
             }
         }
 
+        /*
+        This function gets called when inside and outside mount radio buttons are clicked
+        It hides and displays the appropriate rows depending on which radio button is clicked
+        @param checked - true/false, outsideMount checked or unchecked
+        */
         function outsideMountChecked(checked) {
-            if (typeof (checked) === 'undefined') checked = false;
+            if (typeof (checked) === 'undefined') checked = false; //if no value given, set it to false
 
             if (checked) 
                 document.getElementById('MainContent_rowWindowScreenOptionsVinyl').style.display = 'table-row';
@@ -379,74 +454,85 @@
                 document.getElementById('MainContent_rowWindowScreenOptionsVinyl').style.display = 'none';
         }
 
+        //BOOKMARK
+
+        function windowVinylNumberOfVentsChanged(vents) {
+            switch (vents) { //this switch statement checks the number of vents selected in a V4T type of window, and sets the validation constants to the values for a V4T window with that many vents
+                case "3":
+                    MIN_WIDTH_BUILDABLE = V4T_3V_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = V4T_3V_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = V4T_3V_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = V4T_3V_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = V4T_3V_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = V4T_3V_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = V4T_3V_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = V4T_3V_MAX_HEIGHT_WARRANTY;
+                    break;
+                case "4":
+                    MIN_WIDTH_BUILDABLE = V4T_4V_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = V4T_4V_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = V4T_4V_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = V4T_4V_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = V4T_4V_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = V4T_4V_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = V4T_4V_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = V4T_4V_MAX_HEIGHT_WARRANTY;
+                    break;
+                case "6":
+                    MIN_WIDTH_BUILDABLE = V4T_6V_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = V4T_6V_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = V4T_6V_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = V4T_6V_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = V4T_6V_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = V4T_6V_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = V4T_6V_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = V4T_6V_MAX_HEIGHT_WARRANTY;
+                    break;
+                case "8":
+                    MIN_WIDTH_BUILDABLE = V4T_8V_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = V4T_8V_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = V4T_8V_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = V4T_8V_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = V4T_8V_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = V4T_8V_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = V4T_8V_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = V4T_8V_MAX_HEIGHT_WARRANTY;
+                    break;
+                case "9":
+                    MIN_WIDTH_BUILDABLE = V4T_9V_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = V4T_9V_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = V4T_9V_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = V4T_9V_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = V4T_9V_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = V4T_9V_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = V4T_9V_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = V4T_9V_MAX_HEIGHT_WARRANTY;
+                    break;
+                case "12":
+                    MIN_WIDTH_BUILDABLE = V4T_12V_MIN_WIDTH_BUILDABLE;
+                    MAX_WIDTH_BUILDABLE = V4T_12V_MAX_WIDTH_BUILDABLE;
+                    MIN_HEIGHT_BUILDABLE = V4T_12V_MIN_HEIGHT_BUILDABLE;
+                    MAX_HEIGHT_BUILDABLE = V4T_12V_MAX_HEIGHT_BUILDABLE;
+                    MIN_WIDTH_WARRANTY = V4T_12V_MIN_WIDTH_WARRANTY;
+                    MAX_WIDTH_WARRANTY = V4T_12V_MAX_WIDTH_WARRANTY;
+                    MIN_HEIGHT_WARRANTY = V4T_12V_MIN_HEIGHT_WARRANTY;
+                    MAX_HEIGHT_WARRANTY = V4T_12V_MAX_HEIGHT_WARRANTY;
+                    break;
+            }
+        }
+
+
+        /*
+        This function gets called when the window style is changed for vinyl windows
+        It hides and displays all appropriate rows for that type of window and sets all the default values for the validation constants
+        @param dropdownValue - the style of vinyl window selected (V4T, H2T, H4T, Fixed, Trapezoid)
+        */
         function windowVinylStyleChanged(dropdownValue) { 
 
-            switch (dropdownValue) {
+            switch (dropdownValue) { // this switch statement checks the window style selected and sets values of that particular window style to the validation constants
                 case "Vertical 4 Track":
-                    var vents = document.getElementById('MainContent_ddlWindowV4TNumberOfVentsVinyl').options[document.getElementById('MainContent_ddlWindowV4TNumberOfVentsVinyl').selectedIndex].value;
-                    
-                    switch (vents) {
-                        case 3:
-                            MIN_WIDTH_BUILDABLE = V4T_3V_MIN_WIDTH_BUILDABLE;
-                            MAX_WIDTH_BUILDABLE = V4T_3V_MAX_WIDTH_BUILDABLE;
-                            MIN_HEIGHT_BUILDABLE = V4T_3V_MIN_HEIGHT_BUILDABLE;
-                            MAX_HEIGHT_BUILDABLE = V4T_3V_MAX_HEIGHT_BUILDABLE;
-                            MIN_WIDTH_WARRANTY = V4T_3V_MIN_WIDTH_WARRANTY;
-                            MAX_WIDTH_WARRANTY = V4T_3V_MAX_WIDTH_WARRANTY;
-                            MIN_HEIGHT_WARRANTY = V4T_3V_MIN_HEIGHT_WARRANTY;
-                            MAX_HEIGHT_WARRANTY = V4T_3V_MAX_HEIGHT_WARRANTY;
-                            break;
-                        case 4:
-                            MIN_WIDTH_BUILDABLE = V4T_4V_MIN_WIDTH_BUILDABLE;
-                            MAX_WIDTH_BUILDABLE = V4T_4V_MAX_WIDTH_BUILDABLE;
-                            MIN_HEIGHT_BUILDABLE = V4T_4V_MIN_HEIGHT_BUILDABLE;
-                            MAX_HEIGHT_BUILDABLE = V4T_4V_MAX_HEIGHT_BUILDABLE;
-                            MIN_WIDTH_WARRANTY = V4T_4V_MIN_WIDTH_WARRANTY;
-                            MAX_WIDTH_WARRANTY = V4T_4V_MAX_WIDTH_WARRANTY;
-                            MIN_HEIGHT_WARRANTY = V4T_4V_MIN_HEIGHT_WARRANTY;
-                            MAX_HEIGHT_WARRANTY = V4T_4V_MAX_HEIGHT_WARRANTY;
-                            break;
-                        case 6:
-                            MIN_WIDTH_BUILDABLE = V4T_6V_MIN_WIDTH_BUILDABLE;
-                            MAX_WIDTH_BUILDABLE = V4T_6V_MAX_WIDTH_BUILDABLE;
-                            MIN_HEIGHT_BUILDABLE = V4T_6V_MIN_HEIGHT_BUILDABLE;
-                            MAX_HEIGHT_BUILDABLE = V4T_6V_MAX_HEIGHT_BUILDABLE;
-                            MIN_WIDTH_WARRANTY = V4T_6V_MIN_WIDTH_WARRANTY;
-                            MAX_WIDTH_WARRANTY = V4T_6V_MAX_WIDTH_WARRANTY;
-                            MIN_HEIGHT_WARRANTY = V4T_6V_MIN_HEIGHT_WARRANTY;
-                            MAX_HEIGHT_WARRANTY = V4T_6V_MAX_HEIGHT_WARRANTY;
-                            break;
-                        case 8:
-                            MIN_WIDTH_BUILDABLE = V4T_8V_MIN_WIDTH_BUILDABLE;
-                            MAX_WIDTH_BUILDABLE = V4T_8V_MAX_WIDTH_BUILDABLE;
-                            MIN_HEIGHT_BUILDABLE = V4T_8V_MIN_HEIGHT_BUILDABLE;
-                            MAX_HEIGHT_BUILDABLE = V4T_8V_MAX_HEIGHT_BUILDABLE;
-                            MIN_WIDTH_WARRANTY = V4T_8V_MIN_WIDTH_WARRANTY;
-                            MAX_WIDTH_WARRANTY = V4T_8V_MAX_WIDTH_WARRANTY;
-                            MIN_HEIGHT_WARRANTY = V4T_8V_MIN_HEIGHT_WARRANTY;
-                            MAX_HEIGHT_WARRANTY = V4T_8V_MAX_HEIGHT_WARRANTY;
-                            break;
-                        case 9:
-                            MIN_WIDTH_BUILDABLE = V4T_9V_MIN_WIDTH_BUILDABLE;
-                            MAX_WIDTH_BUILDABLE = V4T_9V_MAX_WIDTH_BUILDABLE;
-                            MIN_HEIGHT_BUILDABLE = V4T_9V_MIN_HEIGHT_BUILDABLE;
-                            MAX_HEIGHT_BUILDABLE = V4T_9V_MAX_HEIGHT_BUILDABLE;
-                            MIN_WIDTH_WARRANTY = V4T_9V_MIN_WIDTH_WARRANTY;
-                            MAX_WIDTH_WARRANTY = V4T_9V_MAX_WIDTH_WARRANTY;
-                            MIN_HEIGHT_WARRANTY = V4T_9V_MIN_HEIGHT_WARRANTY;
-                            MAX_HEIGHT_WARRANTY = V4T_9V_MAX_HEIGHT_WARRANTY;
-                            break;
-                        case 12:
-                            MIN_WIDTH_BUILDABLE = V4T_12V_MIN_WIDTH_BUILDABLE;
-                            MAX_WIDTH_BUILDABLE = V4T_12V_MAX_WIDTH_BUILDABLE;
-                            MIN_HEIGHT_BUILDABLE = V4T_12V_MIN_HEIGHT_BUILDABLE;
-                            MAX_HEIGHT_BUILDABLE = V4T_12V_MAX_HEIGHT_BUILDABLE;
-                            MIN_WIDTH_WARRANTY = V4T_12V_MIN_WIDTH_WARRANTY;
-                            MAX_WIDTH_WARRANTY = V4T_12V_MAX_WIDTH_WARRANTY;
-                            MIN_HEIGHT_WARRANTY = V4T_12V_MIN_HEIGHT_WARRANTY;
-                            MAX_HEIGHT_WARRANTY = V4T_12V_MAX_HEIGHT_WARRANTY;
-                            break;
-                    }
+                    //determine the max and min sizes based on the number of vents in a V4T window
+                    windowVinylNumberOfVentsChanged(document.getElementById('MainContent_ddlWindowV4TNumberOfVentsVinyl').options[document.getElementById('MainContent_ddlWindowV4TNumberOfVentsVinyl').selectedIndex].value);
                     break;
                 case "Horizontal 2 Track":
                 case "Horizontal 4 Track":
@@ -700,6 +786,6 @@
         </div>
 
         <%--<asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label>--%>
-        <textarea id="txtErrorMessage" class="txtErrorMessage" disabled="disabled" rows="5" runat="server"></textarea>
+        <textarea id="txtErrorMessage" class="txtErrorMessage"  rows="5" runat="server"></textarea>
     </div>
 </asp:Content>
