@@ -485,8 +485,8 @@ namespace SunspaceDealerDesktop
 
                 for (int i = 0; i < listOfWalls.Count; i++)
                 {
-                    accordion.Controls.Add(new LiteralControl("<li>"));
-
+                    //accordion.Controls.Add(new LiteralControl("<li onclick=alert("+(i+1)+");>"));
+                    accordion.Controls.Add(new LiteralControl("<li onclick=drawWall(document.getElementById('MainContent_txtWidth" + (i + 1) + "').value,document.getElementById('MainContent_lblStartHeightDisplay" + (i + 1) + "').innerHTML,document.getElementById('MainContent_lblEndHeightDisplay" + (i + 1) + "').innerHTML);>"));
                     Label accordionLabel = new Label();
                     accordionLabel.ID = "lblWall" + (i + 1) + "Label";
                     accordionLabel.Text = listOfWalls[i].Name;

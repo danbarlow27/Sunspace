@@ -244,7 +244,7 @@
 
                 //error: please input a valid Height and Build-As-If Height
                 //alert("enter some numbers you fool!");
-                errorMessage.value = "enter some numbers you foo!";
+                errorMessage.innerHTML = "enter some numbers you foo!";
                 document.getElementById('MainContent_radWindowBottomRadVinyl').checked = true;
                 topOrBottomUnevenClicked();
             }
@@ -253,7 +253,7 @@
                  asIfHeight < MIN_HEIGHT_BUILDABLE || asIfHeight > MAX_HEIGHT_BUILDABLE) {
                 //error: please input a valid Height and Build-As-If Height
                 //alert("not buildable!");
-                errorMessage.value = "not buildable";
+                errorMessage.innerHTML = "not buildable";
                 document.getElementById('MainContent_radWindowBottomRadVinyl').checked = true;
                 topOrBottomUnevenClicked();
             }
@@ -262,7 +262,7 @@
                  asIfHeight < MIN_HEIGHT_WARRANTY || asIfHeight > MAX_HEIGHT_WARRANTY) {
                 //error: please input a valid Height and Build-As-If Height
                 //alert("buildable but not under warranty!");
-                errorMessage.value = "buildable but not under warranty";
+                errorMessage.innerHTML = "buildable but not under warranty";
                 document.getElementById('MainContent_radWindowBottomRadVinyl').checked = true;
                 topOrBottomUnevenClicked();
             }

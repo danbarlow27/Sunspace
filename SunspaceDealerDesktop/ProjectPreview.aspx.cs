@@ -22,7 +22,7 @@ namespace SunspaceDealerDesktop
             phProject.Controls.Add(new LiteralControl("<br/>"));
 
             Label projectType = new Label();
-            projectType.Text = "Type: " + Session["newProjectProjectType"].ToString();
+            //projectType.Text = "Type: " + Session["newProjectProjectType"].ToString();
             phProject.Controls.Add(projectType);
 
             phProject.Controls.Add(new LiteralControl("<br/>"));
