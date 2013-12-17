@@ -10,7 +10,6 @@
         }
 
         function newProjectCheckQuestion1() {
-            console.log("onkeyup slide1");
             var ddlCustomerCountry = document.getElementById("<%=ddlCustomerCountry.ClientID%>").value;
             var zipLabel = document.getElementById("<%=lblCustomerZip.ClientID%>");
             var zipText = document.getElementById("<%=txtCustomerZip.ClientID%>");
@@ -202,7 +201,7 @@
                 //if selected value from dropdown is not the generic, it is a valid choice
                 if (document.getElementById("<%=ddlExistingCustomer.ClientID%>").value != "Choose a Customer...") {
                     //valid, so update pager and enable button
-                    $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("Existing - " + $('#<%=ddlExistingCustomer.ClientID%>').val());
+                    $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("Existing - " + $('#<%=ddlExistingCustomer.ClientID%>').text());
                     document.getElementById("<%=hidExisting.ClientID%>").value = $('#<%=ddlExistingCustomer.ClientID%>').val();
                     document.getElementById('pagerOne').style.display = "inline";
                     document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
