@@ -383,6 +383,7 @@
     <Compile Include="ProjectEditor.aspx.designer.cs">
       <DependentUpon>ProjectEditor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="RoofSupport.cs" />
     <Compile Include="WizardDoorOnly.aspx.cs">
       <DependentUpon>WizardDoorOnly.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -618,7 +619,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>63232</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:49597/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

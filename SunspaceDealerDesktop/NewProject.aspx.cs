@@ -80,7 +80,7 @@ namespace SunspaceDealerDesktop
                 }
 
                 //Get list of customers that belong to this dealer
-                sdsCustomers.SelectCommand = "SELECT first_name, last_name, email FROM customers WHERE dealer_id=" + Session["dealer_id"] + "ORDER BY last_name, first_name";                
+                sdsCustomers.SelectCommand = "SELECT first_name, last_name, email, customer_id FROM customers WHERE dealer_id=" + Session["dealer_id"] + "ORDER BY last_name, first_name";                
 
                 //assign the table names to the dataview object
                 DataView dvExistingCustomers = (DataView)sdsCustomers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
@@ -91,7 +91,8 @@ namespace SunspaceDealerDesktop
                 //loop through all results, adding each customer to the dropdown list
                 for (int i = 0; i < dvExistingCustomers.Count; i++)
                 {
-                    ddlExistingCustomer.Items.Add(dvExistingCustomers[i][0].ToString() + " " + dvExistingCustomers[i][1].ToString() + "(" + dvExistingCustomers[i][2].ToString() + ")");
+                    ListItem aListItem = new ListItem(dvExistingCustomers[i][1].ToString() + "(" + dvExistingCustomers[i][2].ToString() + ")", dvExistingCustomers[i][3].ToString());
+                    ddlExistingCustomer.Items.Add(aListItem);
                 }
 
                 //add this customer list to the session so we don't have to constantly query on refreshes
@@ -264,6 +265,7 @@ namespace SunspaceDealerDesktop
 
             newProjectArray[0] = GlobalFunctions.escapeSqlString(hidCountry.Value.ToString());
             newProjectArray[1] = GlobalFunctions.escapeSqlString(hidExisting.Value.ToString());
+            Session.Add("customer_id", hidExisting.Value.ToString());
             newProjectArray[2] = GlobalFunctions.escapeSqlString(hidFirstName.Value.ToString());
             newProjectArray[3] = GlobalFunctions.escapeSqlString(hidLastName.Value.ToString());
             newProjectArray[4] = GlobalFunctions.escapeSqlString(hidAddress.Value.ToString());

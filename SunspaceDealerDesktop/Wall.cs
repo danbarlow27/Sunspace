@@ -322,12 +322,17 @@ namespace SunspaceDealerDesktop
 
                         switch (windowType)
                         {
-                            case "Vinyl":
+                            case "Fixed Vinyl":
                                 MIN_MOD_WIDTH = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
                                 MAX_MOD_WIDTH = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
                                 break;
 
-                            case "Glass":
+                            case "Fixed Glass 2\"":
+                                MIN_MOD_WIDTH = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                                MAX_MOD_WIDTH = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
+                                break;
+                        
+                            case "Fixed Glass 3\"":
                                 MIN_MOD_WIDTH = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
                                 MAX_MOD_WIDTH = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
                                 break;
@@ -338,10 +343,6 @@ namespace SunspaceDealerDesktop
                                 break;
 
                             case "Horizontal 2 Track":
-                                MIN_MOD_WIDTH = Constants.HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
-                                MAX_MOD_WIDTH = Constants.HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY;
-                                break;
-
                             case "Horizontal Roller":
                                 MIN_MOD_WIDTH = Constants.HORIZONTAL_ROLLER_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
                                 MAX_MOD_WIDTH = Constants.HORIZONTAL_ROLLER_MAX_WIDTH_WARRANTY;
@@ -355,6 +356,16 @@ namespace SunspaceDealerDesktop
                             case "Double Slider":
                                 MIN_MOD_WIDTH = Constants.DOUBLE_SLIDER_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
                                 MAX_MOD_WIDTH = Constants.DOUBLE_SLIDER_MAX_WIDTH_WARRANTY;
+                                break;
+
+                            case "Open Wall":
+                                MIN_MOD_WIDTH = Constants.V4T_4V_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                                MAX_MOD_WIDTH = Constants.V4T_4V_MAX_WIDTH_WARRANTY;
+                                break;
+
+                            case "Solid Wall":
+                                MIN_MOD_WIDTH = Constants.V4T_4V_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
+                                MAX_MOD_WIDTH = Constants.V4T_4V_MAX_WIDTH_WARRANTY;
                                 break;
 
                             case "Screen":
