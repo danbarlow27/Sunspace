@@ -28,7 +28,7 @@ namespace SunspaceDealerDesktop
             phProject.Controls.Add(new LiteralControl("<br/>"));
 
             Label projectName = new Label();
-            projectName.Text = "Name: " + Session["newProjectProjectNAme"].ToString();
+            projectName.Text = "Name: " + Session["newProjectProjectName"].ToString();
             phProject.Controls.Add(projectName);
 
             phProject.Controls.Add(new LiteralControl("<br/>"));
@@ -472,7 +472,7 @@ namespace SunspaceDealerDesktop
                                                     aCommand.ExecuteNonQuery();
                                                     break;
                                                 case "Glass":
-                                                    aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES()"
+                                                    aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES("
                                                                             + project_id + ", "
                                                                             + linearCounter + ", "
                                                                             + k + ", "
@@ -531,7 +531,7 @@ namespace SunspaceDealerDesktop
                                                     break;
 
                                                 case "Glass":
-                                                    aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES()"
+                                                    aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES("
                                                                             + project_id + ", "
                                                                             + linearCounter + ", "
                                                                             + k + ", "
@@ -690,7 +690,7 @@ namespace SunspaceDealerDesktop
                                                             break;
 
                                                         case "Glass":
-                                                            aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES()"
+                                                            aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES("
                                                                                     + project_id + ", "
                                                                                     + linearCounter + ", "
                                                                                     + k + ", "
@@ -793,7 +793,7 @@ namespace SunspaceDealerDesktop
                                                 switch (aDoor.DoorStyle)
                                                 {
                                                     case "Aluminum Storm Screen":
-                                                        aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES()"
+                                                        aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES("
                                                                                 + project_id + ", "
                                                                                 + linearCounter + ", "
                                                                                 + k + ", "
@@ -810,7 +810,7 @@ namespace SunspaceDealerDesktop
                                                         aCommand.ExecuteNonQuery();
                                                         break;
                                                     case "Aluminum Storm Glass":
-                                                        aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES()"
+                                                        aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES("
                                                                                 + project_id + ", "
                                                                                 + linearCounter + ", "
                                                                                 + k + ", "
@@ -1091,6 +1091,7 @@ namespace SunspaceDealerDesktop
                 }
                 catch (Exception ex)
                 {
+                    int hi;
                     //lblError.Text = "Commit Exception Type: " + ex.GetType();
                     //lblError.Text += "  Message: " + ex.Message;
 

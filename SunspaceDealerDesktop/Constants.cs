@@ -583,6 +583,7 @@ namespace SunspaceDealerDesktop
         public const float ROOF_IBEAM_WIDTH = 0.5f;
         public const float ROOF_PRESSURECAP_WIDTH = 0.625f;
 
+        public static string[] ROOF_SUPPORT_TYPES = { "Fluted", "Railing" };
         public static string[] ROOF_SUPPORT_HEIGHTS = { "7", "8", "9", "10" };
         #endregion
 

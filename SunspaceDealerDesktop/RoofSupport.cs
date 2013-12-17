@@ -9,18 +9,27 @@ namespace SunspaceDealerDesktop
     public class RoofSupport
     {
         #region Attributes
-        private int height;
+        private int height;     //7', 8', 9', 10'
+        private int width;      //3", 6"
+        private string type;    //Fluted (3"), Railing (6")
         #endregion
 
+        #region Constructors
         public RoofSupport() {
-            height = 0;
+            Height = 0;
+            Width = 0;
+            Type = "";
         }
 
-        public RoofSupport(int sentHeight)
+        public RoofSupport(int sentHeight, int sentWidth, string sentType)
         {
-            height = sentHeight;
+            Height = sentHeight;
+            Width = sentWidth;
+            Type = sentType;
         }
+        #endregion
 
+        #region Accessor
         public int Height
         {
             get
@@ -33,5 +42,32 @@ namespace SunspaceDealerDesktop
                 height = value;
             }
         }
+
+        public int Width
+        {
+            get
+            {
+                return width;
+            }
+
+            set
+            {
+                width = value;
+            }
+        }
+
+        public string Type
+        {
+            get
+            {
+                return type;
+            }
+
+            set
+            {
+                type = value;
+            }
+        }
+        #endregion
     }
 }
