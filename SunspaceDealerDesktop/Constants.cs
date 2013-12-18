@@ -584,6 +584,8 @@ namespace SunspaceDealerDesktop
         public const float ROOF_PRESSURECAP_WIDTH = 0.625f;
 
         public static string[] ROOF_SUPPORT_TYPES = { "Fluted", "Railing" };
+        public static int ROOF_SUPPORT_FLUTED_SIZE = 3;
+        public static int ROOF_SUPPORT_RAILING_SIZE = 5;
         public static string[] ROOF_SUPPORT_HEIGHTS = { "7", "8", "9", "10" };
         #endregion
 
