@@ -34,6 +34,9 @@ namespace SunspaceDealerDesktop
         public string gableType = "";
 
         protected List<Wall> walls = new List<Wall>();
+        //fractions list for dropdowns
+        protected List<ListItem> fractionList = GlobalFunctions.FractionOptions();
+
         //ListItems to be used in multiple dropdown lists for decimal points
         //This should eventually be stored in the constants file
         protected ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
@@ -43,7 +46,7 @@ namespace SunspaceDealerDesktop
         protected ListItem lst12 = new ListItem("1/2", ".5");
         protected ListItem lst58 = new ListItem("5/8", ".625");
         protected ListItem lst34 = new ListItem("3/4", ".75");
-        protected ListItem lst78 = new ListItem("7/8", ".875");
+        protected ListItem lst78 = new ListItem("7/8", ".875");        
 
         protected string currentModel;
         protected float soffitLength;
@@ -61,13 +64,41 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             Page.Form.DefaultButton = "";
-
             if (Session["loggedIn"] == null)
             {
                 //uncomment me when login functionality is working
                 //Response.Redirect("Login.aspx");
                 //Session.Add("loggedIn", "userA");
             }
+
+            #region Populate inches dropdowns
+
+            for (int i = 0; i < fractionList.Count; i++)
+            {
+                ddlLeftFillerInches.Items.Add(fractionList[i]);
+            }
+
+            for (int i = 0; i < fractionList.Count; i++)
+            {
+                ddlRightFillerInches.Items.Add(fractionList[i]);
+            }
+
+            for (int i = 0; i < fractionList.Count; i++)
+            {
+                ddlLengthInches.Items.Add(fractionList[i]);
+            }
+
+            for (int i = 0; i < fractionList.Count; i++)
+            {
+                ddlStartHeightInches.Items.Add(fractionList[i]);
+            }
+
+            for (int i = 0; i < fractionList.Count; i++)
+            {
+                ddlEndHeightInches.Items.Add(fractionList[i]);
+            }
+
+            #endregion
 
             //string[] gableCheck = (string[])Session["newProjectArray"];
             //if (gableCheck[26] == "Dealer Gable" || gableCheck[26] == "Sunspace Gable")
@@ -193,8 +224,7 @@ namespace SunspaceDealerDesktop
             //strWalls = coordList.Split(lineDelimiter, StringSplitOptions.RemoveEmptyEntries); //split the string received from session and store it into an array of strings with individual line details
             //wallDetails = new string[strWalls.Count(),6]; //a two dimensional array to store the the details of each line individually as seperate elements ... 6 represents the number of detail items for each line
             
-            //currentModel = (string)Session["model"];
-            currentModel = "M100"; // HARD CODED CURRENTMODEL - Remove after New Project redirects to walls only
+            currentModel = (string)Session["model"];
 
             soffitLength = Convert.ToSingle(Session["soffitLength"]);
             //int existingWallCount = 0; //used to determine how many existing walls are in a drawing 
@@ -436,9 +466,7 @@ namespace SunspaceDealerDesktop
             row.Cells.Add(cell6);
             row.Cells.Add(cell7);
             
-        } 
-       
-
+        }        
 
         protected void populateTblProposedGable(int i, int displayedWallCount)
         {

@@ -40,13 +40,13 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Table tblWallDetails;
         
         /// <summary>
-        /// ddlModel control.
+        /// lblLeftFiller control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlModel;
+        protected global::System.Web.UI.WebControls.Label lblLeftFiller;
         
         /// <summary>
         /// txtLeftFiller control.
@@ -58,13 +58,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txtLeftFiller;
         
         /// <summary>
-        /// TextBox1 control.
+        /// ddlLeftFillerInches control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlLeftFillerInches;
+        
+        /// <summary>
+        /// lblRightFiller control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRightFiller;
         
         /// <summary>
         /// txtRightFiller control.
@@ -74,6 +83,42 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRightFiller;
+        
+        /// <summary>
+        /// ddlRightFillerInches control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlRightFillerInches;
+        
+        /// <summary>
+        /// lblLength control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLength;
+        
+        /// <summary>
+        /// txtLength control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtLength;
+        
+        /// <summary>
+        /// ddlLengthInches control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlLengthInches;
         
         /// <summary>
         /// lblStartHeight control.
@@ -94,6 +139,15 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.TextBox txtStartHeight;
         
         /// <summary>
+        /// ddlStartHeightInches control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlStartHeightInches;
+        
+        /// <summary>
         /// lblEndHeight control.
         /// </summary>
         /// <remarks>
@@ -110,6 +164,15 @@ namespace SunspaceDealerDesktop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEndHeight;
+        
+        /// <summary>
+        /// ddlEndHeightInches control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlEndHeightInches;
         
         /// <summary>
         /// btnQuestion0 control.
