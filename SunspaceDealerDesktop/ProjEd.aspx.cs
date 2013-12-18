@@ -60,7 +60,7 @@ namespace SunspaceDealerDesktop
             int obstructions;
             bool fire_protection;
 
-            int linearIndex;
+            int linear_index = 0;
             string linear_type;
             float linear_start_height;
             float linear_end_height;
@@ -120,7 +120,7 @@ namespace SunspaceDealerDesktop
                     linear_type = Convert.ToString(aReader[1]);
                     linear_start_height = Convert.ToSingle(aReader[2]);
                     linear_end_height = Convert.ToSingle(aReader[3]);
-                    length = Convert.ToSingle(aReader[4]);
+                    linear_length = Convert.ToSingle(aReader[4]);
                     frame_colour = Convert.ToString(aReader[5]);
                     sex = Convert.ToString(aReader[6]);
                     fixed_location = Convert.ToSingle(aReader[7]);
