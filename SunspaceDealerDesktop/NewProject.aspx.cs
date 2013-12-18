@@ -486,6 +486,7 @@ namespace SunspaceDealerDesktop
                 insertNewCustomer();
             }
 
+            Session.Add("newProjectKneewallHeight", hidKneewallHeight.Value.ToString());
             Session.Add("model", hidModelNumber.Value.ToString());
 
             //required session stuff before forwarding
