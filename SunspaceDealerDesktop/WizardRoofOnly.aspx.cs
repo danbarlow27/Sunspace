@@ -11,9 +11,7 @@ namespace SunspaceDealerDesktop
     {
         //fractions list for dropdowns
         private List<ListItem> fractionList = GlobalFunctions.FractionOptions();
-
-        List<Roof> roofsOrdered = new List<Roof>();
-
+                
         protected void Page_Load(object sender, EventArgs e)
         {
             #region Loop to display roof types as radio buttons
@@ -876,59 +874,18 @@ namespace SunspaceDealerDesktop
             #region PostBack functionality to store roofs
             if (IsPostBack)
             {
-                if ((List<Roof>)Session["roofsOrdered"] != null)
-                {
-                    roofsOrdered = (List<Roof>)Session["roofsOrdered"];
-                }
+                Roof aRoof = new Roof();
 
                 if (Request.Form["ctl00$MainContent$roofTypeRadios"] == "radTypeStudio")
                 {
-                    Roof aRoof = buildStudioRoof();
-                    //System.Diagnostics.Debug.WriteLine(
-                    //    aRoof.Acrylic + " | "
-                    //    + aRoof.AcrylicColour + " | "
-                    //    + aRoof.ExteriorSkin + " | "
-                    //    + aRoof.ExtraDownspouts + " | "
-                    //    + aRoof.FireProtection + " | "
-                    //    + aRoof.GutterColour + " | "
-                    //    + aRoof.GutterPro + " | "
-                    //    + aRoof.Gutters + " | "
-                    //    + aRoof.InteriorSkin + " | "
-                    //    + aRoof.Projection + " | "
-                    //    + aRoof.RoofModules + " | "
-                    //    + aRoof.StripeColour + " | "
-                    //    + aRoof.Thermadeck + " | "
-                    //    + aRoof.Thickness + " | "
-                    //    + aRoof.Type + " | "
-                    //    + aRoof.Width);
-                    roofsOrdered.Add(aRoof);
+                    aRoof = buildStudioRoof();
                 }
                 else if (Request.Form["ctl00$MainContent$roofTypeRadios"] == "radTypeGable") 
                 {
-                    Roof aRoof = buildGableRoof();
-                    //System.Diagnostics.Debug.WriteLine(
-                    //    aRoof.Acrylic + " | "
-                    //    + aRoof.AcrylicColour + " | "
-                    //    + aRoof.ExteriorSkin + " | "
-                    //    + aRoof.ExtraDownspouts + " | "
-                    //    + aRoof.FireProtection + " | "
-                    //    + aRoof.GutterColour + " | "
-                    //    + aRoof.GutterPro + " | "
-                    //    + aRoof.Gutters + " | "
-                    //    + aRoof.InteriorSkin + " | "
-                    //    + aRoof.Projection + " | "
-                    //    + aRoof.RoofModules + " | "
-                    //    + aRoof.StripeColour + " | "
-                    //    + aRoof.Thermadeck + " | "
-                    //    + aRoof.Thickness + " | "
-                    //    + aRoof.Type + " | "
-                    //    + aRoof.Width);
-                    roofsOrdered.Add(aRoof);
+                    aRoof = buildGableRoof();
                 }
 
-                //System.Diagnostics.Debug.Write(roofsOrdered[0].Type);
-
-                Session.Add("roofsOrdered", roofsOrdered);
+                Session["completedRoof"] = aRoof;
             }
             #endregion
         }
@@ -1325,7 +1282,7 @@ namespace SunspaceDealerDesktop
             aRoof = new Roof("Studio", panelInteriorSkin, panelExteriorSkin, panelThickness, isFireProtected, isThermadeck, hasGutters, gutterPro, gutterColour, stripeColour, acrylicColour, extraDownSpouts, roofProjection, roofWidth, supportList, aModuleList);
             Session.Add("completedRoof", aRoof);
 
-            //Response.Redirect("SkylightWizard.aspx");
+            Response.Redirect("WizardRoofOnlySkylight.aspx");
 
             return aRoof;
         }
@@ -1444,7 +1401,7 @@ namespace SunspaceDealerDesktop
             aRoof = new Roof("Gable", panelInteriorSkin, panelExteriorSkin, panelThickness, isFireProtected, isThermadeck, hasGutters, gutterPro, gutterColour, stripeColour, acrylicColour, extraDownSpouts, roofProjection, roofWidth, supportList, gableModules);
             Session.Add("completedRoof", aRoof);
 
-            //Response.Redirect("SkylightWizard.aspx");
+            Response.Redirect("WizardRoofOnlySkylight.aspx");
 
             return aRoof;
         }

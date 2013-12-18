@@ -63,6 +63,8 @@
         }
 
         function newProjectCheckQuestion1() {
+            document.getElementById('<%=btnQuestion3.ClientID%>').style.display="inline";
+            document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').style.display="none";
             var ddlCustomerCountry = document.getElementById("<%=ddlCustomerCountry.ClientID%>").value;
             var zipLabel = document.getElementById("<%=lblCustomerZip.ClientID%>");
             var zipText = document.getElementById("<%=txtCustomerZip.ClientID%>");
@@ -304,6 +306,9 @@
                 document.getElementById("<%=hidProjectType.ClientID%>").value = "Sunroom";
                 $('#<%=lblProjectTypeAnswer.ClientID%>').text(document.getElementById("<%=hidProjectType.ClientID%>").value + " of Model " + document.getElementById("<%=hidModelNumber.ClientID%>").value);
 
+                document.getElementById('<%=btnQuestion3.ClientID%>').style.display="inline";
+                document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').style.display="none";
+
                 //selected sunroom, so hide the walls only button, and re-show the normal button
                 document.getElementById('<%=btnQuestion4.ClientID%>').style.display="inline";
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="none";
@@ -336,11 +341,34 @@
                 //two hidden values type and model#
                 document.getElementById("<%=hidProjectType.ClientID%>").value = "Walls";
                 $('#<%=lblProjectTypeAnswer.ClientID%>').text(document.getElementById("<%=hidProjectType.ClientID%>").value + " of Model " + document.getElementById("<%=hidModelNumber.ClientID%>").value);
+                                
+                document.getElementById('<%=btnQuestion3.ClientID%>').style.display="inline";
+                document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').style.display="none";
 
                 //selected walls, so hide the sunroom button, and re-show the walls button
                 document.getElementById('<%=btnQuestion4.ClientID%>').style.display="none";
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="inline";
             }
+            else{              
+                document.getElementById('<%=btnQuestion3.ClientID%>').style.display="none";
+                document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').style.display="inline";
+            }
+            
+            if ($('#<%=radProjectWindows.ClientID%>').is(':checked')) {
+                document.getElementById("<%=hidProjectType.ClientID%>").value = "Windows";
+            }
+            else if ($('#<%=radProjectDoors.ClientID%>').is(':checked')) {
+                document.getElementById("<%=hidProjectType.ClientID%>").value = "Door";
+            }
+            else if ($('#<%=radProjectFlooring.ClientID%>').is(':checked')) {
+                document.getElementById("<%=hidProjectType.ClientID%>").value = "Flooring";
+            }
+            else if ($('#<%=radProjectRoof.ClientID%>').is(':checked')) {
+                document.getElementById("<%=hidProjectType.ClientID%>").value = "Roof";
+            }
+
+            console.log(document.getElementById("<%=hidProjectType.ClientID%>").value);
+
             //Now that we know what type of project they have, we can call this function for the colour dropdowns on the next slide
             newProjectChangeColours();
             return false;
@@ -402,7 +430,6 @@
                 document.getElementById('<%=btnQuestion4.ClientID%>').style.display="none";
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="inline";
             }
-
 
             return false;
         }
@@ -1234,64 +1261,34 @@
 
                     <%-- Window Only --%>
                     <li>
-                        <asp:RadioButton ID="radProjectWindows" GroupName="projectType" runat="server" />
+                        <asp:RadioButton ID="radProjectWindows" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectWindowsRadio" AssociatedControlID="radProjectWindows" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectWindows" AssociatedControlID="radProjectWindows" runat="server" Text="Windows"></asp:Label>
                     </li> 
                     
                     <%-- Door only --%>
                     <li>
-                        <asp:RadioButton ID="radProjectDoors" GroupName="projectType" runat="server" />
+                        <asp:RadioButton ID="radProjectDoors" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectDoorsRadio" AssociatedControlID="radProjectDoors" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectDoors" AssociatedControlID="radProjectDoors" runat="server" Text="Doors"></asp:Label>
                     </li>
                     
                     <%-- Floor only --%>
                     <li>
-                        <asp:RadioButton ID="radProjectFlooring" GroupName="projectType" runat="server" />
+                        <asp:RadioButton ID="radProjectFlooring" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectFlooringRadio" AssociatedControlID="radProjectFlooring" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectFlooring" AssociatedControlID="radProjectFlooring" runat="server" Text="Flooring"></asp:Label>
                     </li>
                     
                     <%-- Roof only --%>
                     <li>
-                        <asp:RadioButton ID="radProjectRoof" GroupName="projectType" runat="server" />
+                        <asp:RadioButton ID="radProjectRoof" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectRoofRadio" AssociatedControlID="radProjectRoof" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectRoof" AssociatedControlID="radProjectRoof" runat="server" Text="Roof"></asp:Label>
-
-                        <div class="toggleContent">
-                            <ul class="checkboxes">
-                                <li>
-                                    <asp:RadioButton ID="radRoofIBeam" GroupName="roofType" runat="server" />
-                                    <asp:Label ID="lblRoofIBeamRadio" AssociatedControlID="radRoofIBeam" runat="server"></asp:Label>
-                                    <asp:Label ID="lblRoofIBeam" AssociatedControlID="radRoofIBeam" runat="server" Text="I-Beam"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:RadioButton ID="radRoofPressureCap" GroupName="roofType" runat="server" />
-                                    <asp:Label ID="lblRoofPressureCapRadio" AssociatedControlID="radRoofPressureCap" runat="server"></asp:Label>
-                                    <asp:Label ID="lblRoofPressureCap" AssociatedControlID="radRoofPressureCap" runat="server" Text="Pressure Cap"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:RadioButton ID="radRoofInterlocking" GroupName="roofType" runat="server" />
-                                    <asp:Label ID="lblRoofInterlockingRadio" AssociatedControlID="radRoofInterlocking" runat="server"></asp:Label>
-                                    <asp:Label ID="lblRoofInterlocking" AssociatedControlID="radRoofInterlocking" runat="server" Text="Interlocking"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:RadioButton ID="radRoofAcrylic" GroupName="roofType" runat="server" />
-                                    <asp:Label ID="lblRoofAcrylicRadio" AssociatedControlID="radRoofAcrylic" runat="server"></asp:Label>
-                                    <asp:Label ID="lblRoofAcrylic" AssociatedControlID="radRoofAcrylic" runat="server" Text="Acrylic"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:RadioButton ID="radRoofOSB" GroupName="roofType" runat="server" />
-                                    <asp:Label ID="lblRoofOSBRadio" AssociatedControlID="radRoofOSB" runat="server"></asp:Label>
-                                    <asp:Label ID="lblRoofOSB" AssociatedControlID="radRoofOSB" runat="server" Text="OSB/OSB"></asp:Label>
-                                </li>
-                            </ul>            
-                        </div>
                     </li>  
                                         
                     <%-- Showroom --%>                 
-                    <li>
+                    <%--<li>
                         <asp:RadioButton ID="radSunroomModelShowroom" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblSunroomModelShowroomRadio" AssociatedControlID="radSunroomModelShowroom" runat="server"></asp:Label>
                         <asp:Label ID="lblSunroomModelShowroom" AssociatedControlID="radSunroomModelShowroom" runat="server" Text="Showroom"></asp:Label>
@@ -1320,7 +1317,7 @@
                                 </li>
                             </ul>            
                         </div>
-                    </li>
+                    </li>--%>
                     
                     <%-- Component Order --%>
                     <li>
@@ -1330,7 +1327,8 @@
                     </li> 
                 </ul> 
 
-                <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3_OrderOnly" Enabled="true" CssClass="btnSubmit float-right slidePanel" OnClick="btnQuestion3_OrderOnly_Click" runat="server" Text="Next Question" />
             </div> 
             
             <%-- Slide 4 - Styling Options --%>
