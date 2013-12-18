@@ -9,17 +9,19 @@ namespace SunspaceDealerDesktop
     {
         #region Attributes
 
+        private string wallType; //type of wall - existing, proposed, full gable wall, partial gable wall, gable post
+        private string modelType;
         private float length; //length of the wall in inches
+        private string orientation; //N, NE, E, S, SE, NW, SW, W
+        private float setBack;
+        private string name; //Name of the wall – For project editor referencing
         private int firstItemIndex; //Index of First Item in Wall
         private int lastItemIndex; //Index of Last Item in Wall
-        private string orientation; //N, NE, E, S, SE, NW, SW, W
-        private string name; //Name of the wall – For project editor referencing
-        private string wallType; //type of wall - existing, proposed, full gable wall, partial gable wall, gable post
-        private string modelType; 
         private float startHeight; //Start height of the wall
         private float endHeight; //End height of the wall
         private float soffitLength; //Soffit length (only for fascia install)
         private float gablePeak;
+        private bool fireProtection;
         private float totalCornerLength;
         private float totalReceiverLength;
         //private float slope; //slope of the roof that is sitting on this wall
@@ -599,6 +601,33 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Accessors
+
+        public string WallType
+        {
+            get
+            {
+                return wallType;
+            }
+
+            set
+            {
+                wallType = value;
+            }
+        }
+
+        public string ModelType
+        {
+            get
+            {
+                return modelType;
+            }
+
+            set
+            {
+                modelType = value;
+            }
+        }
+
         public float Length
         {
             get
@@ -609,6 +638,45 @@ namespace SunspaceDealerDesktop
             set
             {
                 length = value;
+            }
+        }
+
+        public string Orientation
+        {
+            get
+            {
+                return orientation;
+            }
+
+            set
+            {
+                orientation = value;
+            }
+        }
+
+        public float SetBack
+        {
+            get
+            {
+                return setBack;
+            }
+
+            set
+            {
+                setBack = value;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+
+            set
+            {
+                name = value;
             }
         }
         
@@ -635,45 +703,6 @@ namespace SunspaceDealerDesktop
             set
             {
                 lastItemIndex = value;
-            }
-        }
-
-        public string Orientation
-        {
-            get
-            {
-                return orientation;
-            }
-
-            set
-            {
-                orientation = value;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-
-            set
-            {
-                name = value;
-            }
-        }
-
-        public string WallType
-        {
-            get
-            {
-                return wallType;
-            }
-
-            set
-            {
-                wallType = value;
             }
         }
 
@@ -716,6 +745,31 @@ namespace SunspaceDealerDesktop
             }
         }
 
+        public float GablePeak
+        {
+            get
+            {
+                return gablePeak;
+            }
+
+            set
+            {
+                gablePeak = value;
+            }
+        }
+
+        public bool FireProtection
+        {
+            get
+            {
+                return fireProtection;
+            }
+            set
+            {
+                fireProtection = value;
+            }
+        }
+
         public float TotalCornerLength
         {
             get
@@ -742,18 +796,6 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        //public float Slope
-        //{
-        //    get
-        //    {
-        //        return slope;
-        //    }
-
-        //    set
-        //    {
-        //        slope = value;
-        //    }
-        //}
 
         public List<LinearItem> LinearItems
         {
@@ -781,31 +823,11 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        public string ModelType
-        {
-            get
-            {
-                return modelType;
-            }
 
-            set
-            {
-                modelType = value;
-            }
-        }
 
-        public float GablePeak
-        {
-            get
-            {
-                return gablePeak;
-            }
 
-            set
-            {
-                gablePeak = value;
-            }
-        }
+
+
         #endregion
     }
 }

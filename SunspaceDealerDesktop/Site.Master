@@ -63,10 +63,10 @@
     ======================================== --%>
     <div id="body">
         <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
+        <asp:ContentPlaceHolder runat="server" ID="SecondaryNavigation" />
+        <asp:ContentPlaceHolder runat="server" ID="ModOverlay" />
         <section class="content-wrapper">
-            
-            <asp:ContentPlaceHolder runat="server" ID="MainContent" />
-           
+            <asp:ContentPlaceHolder runat="server" ID="MainContent" />          
         </section>       
     </div>
     
@@ -81,110 +81,6 @@
     </form>
 
 
-    <script>
-        $(document).ready(function () {
-
-            // slide navigation 
-            $('.slidePanel').click(function () {
-
-                // set active item link
-                //$('.slidePanel').removeClass('selected');
-                //$(this).addClass('selected');
-
-                // get current slide, for resizePanel() function
-                var current = $(this);
-
-                // scroll page to selected slide
-                $('.slide-window').scrollTo($(this).attr('data-slide'), 600);
-
-                //$(this).siblings('.toggleOptions').find('.toggleContent').slideUp(400);
-                //slide(current);
-
-                // cancel the link default behaviour
-                return false;
-            });
-
-            function slide(current) {
-                // scroll page to selected slide
-                $('.slide-window').scrollTo($(this).attr('data-slide'), 600);
-            }
-
-
-            // toggle visibility of radio button (accordion) options
-            $('ul.toggleOptions > li > input[type="radio"]').click(function () {
-                // toggle (show/hide) clicked radio button option 
-                $(this).siblings('.toggleContent').slideToggle(400);
-
-                // hide other options
-                $(this).parent().siblings().children('.toggleContent').slideUp(400);
-            });
-
-            $('ul.toggleOptions > li > span').click(function () {
-                // toggle (show/hide) clicked radio button option 
-                $(this).siblings('.toggleContent').slideToggle(400);
-
-                // hide other options
-                $(this).parent().siblings().children('.toggleContent').slideUp(400);
-            });
-
-            
-            // set height of content wrapper
-            //var contentWrapperHeight = $(window).height() - 100;
-            //$('.content-wrapper').css('height', contentWrapperHeight);
-
-            // set max height of scrollbox div
-            var scrollHeight = $(window).height() - 280; 
-            $('.scrollbox').css('max-height', scrollHeight);
-
-            // set max height of paging div
-            var pagingHeight = $('.slide-window').height() - 20;
-            $('#paging-wrapper').css('max-height', pagingHeight);
-
-            // set width of slide paging container
-            var pagingWidth = $('.content-wrapper').width() - $('.slide-window').width() - 30;
-            $('#paging-wrapper').css('width', pagingWidth);
-
-                      
-            function resizePanel() {
-                //get the browser width and height
-                width = $(window).width();
-                height = $(window).height();
-                //get the mask width: width * total of items
-                mask_width = width * $('.slide').length;
-
-                //set the dimension    
-                $('.slide-window, .slide').css({ width: width, height: height });
-                $('.slide-wrapper').css({ width: mask_width, height: height });
-
-                //if the item is displayed incorrectly, set it to the corrent pos
-                $('.slide-window').scrollTo($('.selected').attr('href'), 0);
-
-            }
-            
-
-            // window resize events
-            $(window).resize(function () {
-                //call the resizePanel function
-                //resizePanel();
-
-                // set height of content wrapper
-                //var contentWrapperHeight = $(window).height() - 100;
-                //$('.content-wrapper').css('height', contentWrapperHeight);
-
-                // set max height of scrollbox div
-                var scrollHeight = $(window).height() - 280; 
-                $('.scrollbox').css('max-height', scrollHeight);
-
-                // set max height of paging div
-                var pagingHeight = $('.slide-window').height() - 20;
-                $('#paging-wrapper').css('max-height', pagingHeight);
-
-                // set width of slide paging container
-                var pagingWidth = $('.content-wrapper').width() - $('.slide-window').width() - 30;
-                $('#paging-wrapper').css('width', pagingWidth);
-            });
-
-        });
-    </script>
+    <script src="Scripts/init.js"></script>
 </body>
 </html>

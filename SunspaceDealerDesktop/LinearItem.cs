@@ -10,10 +10,15 @@ namespace SunspaceDealerDesktop
         #region Attributes
         private int linearIndex;
         private string itemType; //Mod, boxheader, chase, etc.
-        private float fixedLocation; //The position (in inches) this item is in the wall
         private float startHeight;
         private float endHeight;
         private float length;
+        private string frameColour;
+        private string sex;
+        private float fixedLocation; //The position (in inches) this item is in the wall
+        private bool attachedTo;
+        
+
         #endregion
 
         #region Constructors
@@ -30,6 +35,7 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Accessors
+
         public int LinearIndex
         {
             get
@@ -54,17 +60,7 @@ namespace SunspaceDealerDesktop
                 itemType = value;
             }
         }
-        public float FixedLocation
-        {
-            get
-            {
-                return fixedLocation;
-            }
-            set
-            {
-                fixedLocation = value;
-            }
-        }
+
         public float StartHeight
         {
             get
@@ -88,6 +84,7 @@ namespace SunspaceDealerDesktop
                 endHeight = value;
             }
         }
+
         public float Length
         {
             get
@@ -99,6 +96,55 @@ namespace SunspaceDealerDesktop
                 length = value;
             }
         }
+
+        public string FrameColour
+        {
+            get 
+            {
+                return frameColour;
+            }
+            set
+            {
+                frameColour = value;
+            }
+        }
+
+        public string Sex
+        {
+            get
+            {
+                return sex;
+            }
+            set
+            {
+                sex = value;
+            }
+        }
+
+        public float FixedLocation
+        {
+            get
+            {
+                return fixedLocation;
+            }
+            set
+            {
+                fixedLocation = value;
+            }
+        }
+
+        public bool AttachedTo
+        {
+            get
+            {
+                return attachedTo;
+            }
+            set
+            {
+                attachedTo = value;
+            }
+        }
+        
         #endregion
     }
 }

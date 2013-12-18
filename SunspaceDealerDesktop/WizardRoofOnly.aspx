@@ -75,6 +75,7 @@
             }
 
             $('#MainContent_txtNumberOfSupports1' + style).val(Math.ceil(recommendAmount));
+            $('#MainContent_txtErrorMessage').val('The recommend amount of supports(' + Math.ceil(recommendAmount) + ') has been inputted into the Number Of Supports field');
         }
 
         //Displays "Add More Sizes" when the values in the textbox is not 0
@@ -92,8 +93,6 @@
         //Display more sizes for supports, changes the css of the LI tags
         function displayMoreSizes(numberToDisplay, style) {
             var number = parseInt(numberToDisplay) - 1;
-
-            
 
             //Set display to inherit to show LI tag and hide previous button to add another size
             document.getElementById('liNumberOfSupports' + numberToDisplay + style).style.display="inherit";
@@ -200,7 +199,7 @@
         <div id="paging-wrapper">    
             <div id="paging"> 
                 
-                <h2>Roof Specifications</h2>
+                <h2>Notifications and Error Messages</h2>
                 
                 <ul class="toggleOptions">
                     <asp:PlaceHolder ID="lblRoofPager" runat="server"></asp:PlaceHolder>
@@ -210,5 +209,4 @@
 
         <textarea id="txtErrorMessage" class="txtErrorMessage" disabled="disabled" rows="5" runat="server"></textarea>
     </div>
-    <div id="hiddenFieldsDiv" runat="server"></div>
 </asp:Content>
