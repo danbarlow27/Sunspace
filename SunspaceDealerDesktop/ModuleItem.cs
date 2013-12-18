@@ -79,18 +79,18 @@ namespace SunspaceDealerDesktop
                 fLength = value;
             }
         }
-        //public string Colour
-        //{
-        //    get
-        //    {
-        //        return colour;
-        //    }
+        public string Colour
+        {
+            get
+            {
+                return colour;
+            }
 
-        //    set
-        //    {
-        //        colour = value;
-        //    }
-        //}
+            set
+            {
+                colour = value;
+           }
+        }
         #endregion
     }
 }
