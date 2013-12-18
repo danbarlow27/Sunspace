@@ -62,16 +62,17 @@
 
                 calculationValue = width > projection ? width : projection;
 
-                recommendAmount = 2 * calculationValue / (6 * 12);
+                recommendAmount = calculationValue / (6 * 12);
             }
             else {
                 width = $('#MainContent_txtWidth' + style).val();
-                projectionLeft = $('#MainContent_txtLeftProjection' + style).val();
-                projectionRight = $('#MainContent_txtRightProjection' + style).val();
+                projectionLeft = parseInt($('#MainContent_txtLeftProjection' + style).val());
+                projectionRight = parseInt($('#MainContent_txtRightProjection' + style).val());
 
                 calculationValue = width > (projectionLeft + projectionRight) ? width : (projectionLeft + projectionRight);
 
                 recommendAmount = 2 * calculationValue / (6 * 12);
+
             }
 
             $('#MainContent_txtNumberOfSupports1' + style).val(Math.ceil(recommendAmount));
@@ -172,6 +173,7 @@
     </script>
 
     <div class="slide-window" id="slide-window" >
+
         <div class="slide-wrapper">
             <%-- QUESTION 3 - ROOF OPTIONS/DETAILS
             ======================================== --%>
@@ -191,6 +193,7 @@
             <%-- end #slide3 --%>
 
          </div>
+
     </div>
 
 <%-- SLIDE PAGING (QUESTION NAVIGATION)

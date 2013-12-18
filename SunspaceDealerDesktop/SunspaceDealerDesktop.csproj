@@ -261,6 +261,7 @@
     <Content Include="Spoof.aspx" />
     <Content Include="WizardFloorOnlyOrder.aspx" />
     <Content Include="WizardFloors.aspx" />
+    <Content Include="WizardRoofOnlySkylight.aspx" />
     <Content Include="WizardWallsAndMods.aspx" />
     <Content Include="NoIcons.Master" />
     <Content Include="WizardWallsOnly.aspx" />
@@ -563,6 +564,13 @@
     </Compile>
     <Compile Include="WizardFloors.aspx.designer.cs">
       <DependentUpon>WizardFloors.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WizardRoofOnlySkylight.aspx.cs">
+      <DependentUpon>WizardRoofOnlySkylight.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WizardRoofOnlySkylight.aspx.designer.cs">
+      <DependentUpon>WizardRoofOnlySkylight.aspx</DependentUpon>
     </Compile>
     <Compile Include="WizardWallsAndMods.aspx.cs">
       <DependentUpon>WizardWallsAndMods.aspx</DependentUpon>

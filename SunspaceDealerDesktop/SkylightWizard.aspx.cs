@@ -239,6 +239,7 @@ namespace SunspaceDealerDesktop
                 panelSizes = new JavaScriptSerializer().Serialize(panelSizeArray);
             }
         }
+
         protected void btnQuestion1_Click(object sender, EventArgs e)
         {
             Roof aRoof = (Roof)Session["completedRoof"];
