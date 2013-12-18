@@ -13,258 +13,277 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             List<Wall> listOfWalls = (List<Wall>)Session["listOfWalls"];
-            //maybe a large textarea
-            //project details
-            LiteralControl projectTitle = new LiteralControl();
-            projectTitle.Text = "<h1>Project Details:</h1>";
-            phProjectTitle.Controls.Add(projectTitle);
+            Table aTable = new Table();
+            TableRow aTableRow = new TableRow();
+            TableCell aTableCell = new TableCell();
 
-            phProject.Controls.Add(new LiteralControl("<br/>"));
+            phProject.Controls.Add(new LiteralControl("<ul class=\"toggleOptions\">"));
+            phProject.Controls.Add(new LiteralControl("<li>"));
+            phProject.Controls.Add(new LiteralControl("<div class=\"toggleContent\">"));
+            phProject.Controls.Add(new LiteralControl("<ul>"));
+            phProject.Controls.Add(new LiteralControl("<li>"));
+            phProject.Controls.Add(new LiteralControl("<h3>Project Details:</h3>"));
+            //phProject.Controls.Add(aTableCell);
+            //phProject.Controls.Add(aTableRow);
+            phProject.Controls.Add(aTable);
+            //<ul class="toggleOptions">
+            //        <li>
+            //            <div class="toggleContent">
+            //                <ul>
+            //                    <li>
+            //                        <h3>Enter customer details:</h3>
+            //                        <asp:Table ID="tblNewCustomerInfo" CssClass="tblTxtFields" runat="server">
+            //                            <asp:TableRow>
+            //                                <asp:TableCell>
+            //                                    <asp:Label ID
 
-            Label projectType = new Label();
-            //projectType.Text = "Type: " + Session["newProjectProjectType"].ToString();
-            phProject.Controls.Add(projectType);
+              #region older
+//            //maybe a large textarea
+//            //project details
+//            LiteralControl projectTitle = new LiteralControl();
+//            projectTitle.Text = "<h1>Project Details:</h1>";
+//            phProjectTitle.Controls.Add(projectTitle);
 
-            phProject.Controls.Add(new LiteralControl("<br/>"));
+//            phProject.Controls.Add(new LiteralControl("<br/>"));
 
-            Label projectName = new Label();
-            projectName.Text = "Name: " + Session["newProjectProjectNAme"].ToString();
-            phProject.Controls.Add(projectName);
+//            Label projectType = new Label();
+//            projectType.Text = "Type: " + Session["newProjectProjectType"].ToString();
+//            phProject.Controls.Add(projectType);
 
-            phProject.Controls.Add(new LiteralControl("<br/>"));
+//            phProject.Controls.Add(new LiteralControl("<br/>"));
 
-            Label projectModel = new Label();
-            projectModel.Text = listOfWalls[0].ModelType;
-            phProject.Controls.Add(projectModel);
+//            Label projectName = new Label();
+//            projectName.Text = "Name: " + Session["newProjectProjectNAme"].ToString();
+//            phProject.Controls.Add(projectName);
 
-            phProject.Controls.Add(new LiteralControl("<br/>"));
+//            phProject.Controls.Add(new LiteralControl("<br/>"));
 
-            //wall details
-            LiteralControl wallTitle = new LiteralControl();
-            wallTitle.Text = "<h1>Wall Details:</h1>";
-            phWalls.Controls.Add(wallTitle);
+//            Label projectModel = new Label();
+//            projectModel.Text = listOfWalls[0].ModelType;
+//            phProject.Controls.Add(projectModel);
 
-            phWalls.Controls.Add(new LiteralControl("<br/>"));
+//            phProject.Controls.Add(new LiteralControl("<br/>"));
 
-            Label wallCount = new Label();
-            wallCount.Text = "# of walls: " + listOfWalls.Count.ToString();
-            phWalls.Controls.Add(wallCount);
+//            //wall details
+//            LiteralControl wallTitle = new LiteralControl();
+//            wallTitle.Text = "<h1>Wall Details:</h1>";
+//            phWalls.Controls.Add(wallTitle);
 
-            phWalls.Controls.Add(new LiteralControl("<br/>"));
+//            phWalls.Controls.Add(new LiteralControl("<br/>"));
 
-            for (int i = 0; i < listOfWalls.Count; i++)
-            {
-                LiteralControl wallHeader = new LiteralControl();
-                wallTitle.Text = "<h1>Wall " + (i+1) + ":</h1>";
-                phWalls.Controls.Add(wallTitle);
+//            Label wallCount = new Label();
+//            wallCount.Text = "# of walls: " + listOfWalls.Count.ToString();
+//            phWalls.Controls.Add(wallCount);
 
-                phWalls.Controls.Add(new LiteralControl("<br/>"));
+//            phWalls.Controls.Add(new LiteralControl("<br/>"));
 
-                Label wallType = new Label();
-                wallType.Text = "type: " + listOfWalls[i].WallType;
-                phWalls.Controls.Add(wallType);
+//            Table aTable = new Table();
 
-                phWalls.Controls.Add(new LiteralControl("<br/>"));
+//            for (int i = 0; i < listOfWalls.Count; i++)
+//            {
+//                TableRow aTableRow = new TableRow();
+//                TableCell aTableCell = new TableCell();
 
-                Label wallLength = new Label();
-                wallLength.Text = "length: " + listOfWalls[i].Length;
-                phWalls.Controls.Add(wallLength);
+//                LiteralControl wallHeader = new LiteralControl();
+//                wallTitle.Text = "<h1>Wall " + (i+1) + ":</h1>";
+//                aTableCell.Controls.Add(wallTitle);
 
-                phWalls.Controls.Add(new LiteralControl("<br/>"));
+//                aTableCell.Controls.Add(new LiteralControl("<br/>"));
 
-                Label wallStartHeight = new Label();
-                wallStartHeight.Text = "start height: " + listOfWalls[i].StartHeight;
-                phWalls.Controls.Add(wallStartHeight);
+//                Label wallType = new Label();
+//                wallType.Text = "type: " + listOfWalls[i].WallType;
+//                aTableCell.Controls.Add(wallType);
 
-                phWalls.Controls.Add(new LiteralControl("<br/>"));
+//                aTableCell.Controls.Add(new LiteralControl("<br/>"));
 
-                Label wallEndHeight = new Label();
-                wallEndHeight.Text = "end height: " + listOfWalls[i].EndHeight;
-                phWalls.Controls.Add(wallEndHeight);
+//                Label wallLength = new Label();
+//                wallLength.Text = "length: " + listOfWalls[i].Length;
+//                aTableCell.Controls.Add(wallLength);
 
-                phWalls.Controls.Add(new LiteralControl("<br/>"));
+//                aTableCell.Controls.Add(new LiteralControl("<br/>"));
 
-                Label wallOrientation = new Label();
-                wallOrientation.Text = "orientation: " + listOfWalls[i].Orientation;
-                phWalls.Controls.Add(wallOrientation);
+//                Label wallOrientation = new Label();
+//                wallOrientation.Text = "orientation: " + listOfWalls[i].Orientation;
+//                aTableCell.Controls.Add(wallOrientation);
 
-                phWalls.Controls.Add(new LiteralControl("<br/>"));
+//                aTableCell.Controls.Add(new LiteralControl("<br/>"));
 
-                Label wallSoffit = new Label();
-                wallSoffit.Text = "soffit: " + listOfWalls[i].SoffitLength;
-                phWalls.Controls.Add(wallSoffit);
+//                Label wallSoffit = new Label();
+//                wallSoffit.Text = "soffit: " + listOfWalls[i].SoffitLength;
+//                aTableCell.Controls.Add(wallSoffit);
 
-                phWalls.Controls.Add(new LiteralControl("<br/>"));
+//                aTableCell.Controls.Add(new LiteralControl("<br/>"));
 
-                LiteralControl wallLinearHeader = new LiteralControl();
-                wallLinearHeader.Text = "<h1>Wall " + (i + 1) + " items:</h1>";
-                phWalls.Controls.Add(wallLinearHeader);
+//                LiteralControl wallLinearHeader = new LiteralControl();
+//                wallLinearHeader.Text = "<h1>Wall " + (i + 1) + " items:</h1>";
+//                aTableCell.Controls.Add(wallLinearHeader);
 
-                phWalls.Controls.Add(new LiteralControl("<br/>"));
+//                aTableCell.Controls.Add(new LiteralControl("<br/>"));
 
-                for (int j = 0; j < listOfWalls[i].LinearItems.Count; j++)
-                {
-                    Label wallItemType = new Label();
-                    wallItemType.Text = "type: " + listOfWalls[i].LinearItems[j].ItemType;
-                    phWalls.Controls.Add(wallItemType);
+//                for (int j = 0; j < listOfWalls[i].LinearItems.Count; j++)
+//                {
+//                    Label wallItemType = new Label();
+//                    wallItemType.Text = "type: " + listOfWalls[i].LinearItems[j].ItemType;
+//                    phWalls.Controls.Add(wallItemType);
 
-                    phWalls.Controls.Add(new LiteralControl("<br/>"));
+//                    phWalls.Controls.Add(new LiteralControl("<br/>"));
 
-                    Label wallItemLength = new Label();
-                    wallItemLength.Text = "length: " + listOfWalls[i].LinearItems[j].Length;
-                    phWalls.Controls.Add(wallItemLength);
+//                    Label wallItemLength = new Label();
+//                    wallItemLength.Text = "length: " + listOfWalls[i].LinearItems[j].Length;
+//                    phWalls.Controls.Add(wallItemLength);
 
-                    phWalls.Controls.Add(new LiteralControl("<br/>"));
+//                    phWalls.Controls.Add(new LiteralControl("<br/>"));
 
-                    Label wallItemStartHeight = new Label();
-                    wallItemStartHeight.Text = "start height: " + listOfWalls[i].LinearItems[j].StartHeight;
-                    phWalls.Controls.Add(wallItemStartHeight);
+//                    Label wallItemStartHeight = new Label();
+//                    wallItemStartHeight.Text = "start height: " + listOfWalls[i].LinearItems[j].StartHeight;
+//                    phWalls.Controls.Add(wallItemStartHeight);
 
-                    phWalls.Controls.Add(new LiteralControl("<br/>"));
+//                    phWalls.Controls.Add(new LiteralControl("<br/>"));
 
-                    Label wallItemEndHeight = new Label();
-                    wallItemEndHeight.Text = "end height: " + listOfWalls[i].LinearItems[j].EndHeight;
-                    phWalls.Controls.Add(wallItemEndHeight);
+//                    Label wallItemEndHeight = new Label();
+//                    wallItemEndHeight.Text = "end height: " + listOfWalls[i].LinearItems[j].EndHeight;
+//                    phWalls.Controls.Add(wallItemEndHeight);
 
-                    phWalls.Controls.Add(new LiteralControl("<br/>"));
+//                    phWalls.Controls.Add(new LiteralControl("<br/>"));
 
-                    Label wallItemOrientation = new Label();
-                    wallItemOrientation.Text = "orientation: " + listOfWalls[i].LinearItems[j].FixedLocation;
-                    phWalls.Controls.Add(wallItemOrientation);
+//                    Label wallItemOrientation = new Label();
+//                    wallItemOrientation.Text = "orientation: " + listOfWalls[i].LinearItems[j].FixedLocation;
+//                    phWalls.Controls.Add(wallItemOrientation);
 
-                    phWalls.Controls.Add(new LiteralControl("<br/>"));
-                    phWalls.Controls.Add(new LiteralControl("<br/>"));
+//                    phWalls.Controls.Add(new LiteralControl("<br/>"));
+//                    phWalls.Controls.Add(new LiteralControl("<br/>"));
 
-                    // -->--> module item details
-                }
-            }
+//                    // -->--> module item details
+//                }
+//            }
 
-            //floor details
-            if (Session["newProjectPrefabFloor"].ToString() == "Yes")
-            {
-                LiteralControl floorTitle = new LiteralControl();
-                floorTitle.Text = "<h1>Floor Details:</h1>";
-                phFloorTitle.Controls.Add(floorTitle);
+//            //floor details
+//            if (Session["newProjectPrefabFloor"].ToString() == "Yes")
+//            {
+//                LiteralControl floorTitle = new LiteralControl();
+//                floorTitle.Text = "<h1>Floor Details:</h1>";
+//                phFloorTitle.Controls.Add(floorTitle);
 
-                phFloor.Controls.Add(new LiteralControl("<br/>"));
+//                phFloor.Controls.Add(new LiteralControl("<br/>"));
 
-                Label floorType = new Label();
-                floorType.Text = "Type: " + Session["floorType"].ToString();
-                phFloor.Controls.Add(floorType);
+//                Label floorType = new Label();
+//                floorType.Text = "Type: " + Session["floorType"].ToString();
+//                phFloor.Controls.Add(floorType);
 
-                phFloor.Controls.Add(new LiteralControl("<br/>"));
+//                phFloor.Controls.Add(new LiteralControl("<br/>"));
 
-                Label floorProjection = new Label();
-                floorProjection.Text = "Projection: " + Session["floorProjection"].ToString();
-                phFloor.Controls.Add(floorProjection);
+//                Label floorProjection = new Label();
+//                floorProjection.Text = "Projection: " + Session["floorProjection"].ToString();
+//                phFloor.Controls.Add(floorProjection);
 
-                phFloor.Controls.Add(new LiteralControl("<br/>"));
+//                phFloor.Controls.Add(new LiteralControl("<br/>"));
 
-                Label floorWidth = new Label();
-                floorWidth.Text = "Width: " + Session["floorWidth"].ToString();
-                phFloor.Controls.Add(floorWidth);
+//                Label floorWidth = new Label();
+//                floorWidth.Text = "Width: " + Session["floorWidth"].ToString();
+//                phFloor.Controls.Add(floorWidth);
 
-                phFloor.Controls.Add(new LiteralControl("<br/>"));
+//                phFloor.Controls.Add(new LiteralControl("<br/>"));
 
-                Label floorThickness = new Label();
-                floorThickness.Text = "Thickness: " + Session["floorThickness"].ToString();
-                phFloor.Controls.Add(floorThickness);
+//                Label floorThickness = new Label();
+//                floorThickness.Text = "Thickness: " + Session["floorThickness"].ToString();
+//                phFloor.Controls.Add(floorThickness);
 
-                phFloor.Controls.Add(new LiteralControl("<br/>"));
+//                phFloor.Controls.Add(new LiteralControl("<br/>"));
 
-                Label floorVapourBarrier = new Label();
-                floorVapourBarrier.Text = "Vapour Barrier: " + Session["floorVapourBarrier"].ToString();
-                phFloor.Controls.Add(floorVapourBarrier);
+//                Label floorVapourBarrier = new Label();
+//                floorVapourBarrier.Text = "Vapour Barrier: " + Session["floorVapourBarrier"].ToString();
+//                phFloor.Controls.Add(floorVapourBarrier);
 
-                phFloor.Controls.Add(new LiteralControl("<br/>"));
+//                phFloor.Controls.Add(new LiteralControl("<br/>"));
 
-                Label floorPanelNumber = new Label();
-                floorPanelNumber.Text = "# of panels: " + Session["floorPanelNumber"].ToString();
-                phFloor.Controls.Add(floorPanelNumber);
+//                Label floorPanelNumber = new Label();
+//                floorPanelNumber.Text = "# of panels: " + Session["floorPanelNumber"].ToString();
+//                phFloor.Controls.Add(floorPanelNumber);
 
-                phFloor.Controls.Add(new LiteralControl("<br/>"));
+//                phFloor.Controls.Add(new LiteralControl("<br/>"));
 
-                Label floorLedgerSetback = new Label();
-                floorLedgerSetback.Text = "Ledger Setback: " + Session["floorLedgerSetback"].ToString();
-                phFloor.Controls.Add(floorLedgerSetback);
+//                Label floorLedgerSetback = new Label();
+//                floorLedgerSetback.Text = "Ledger Setback: " + Session["floorLedgerSetback"].ToString();
+//                phFloor.Controls.Add(floorLedgerSetback);
 
-                phFloor.Controls.Add(new LiteralControl("<br/>"));
+//                phFloor.Controls.Add(new LiteralControl("<br/>"));
 
-                Label floorFrontSetback = new Label();
-                floorFrontSetback.Text = "Front Setback: " + Session["floorFrontSetback"].ToString();
-                phFloor.Controls.Add(floorFrontSetback);
+//                Label floorFrontSetback = new Label();
+//                floorFrontSetback.Text = "Front Setback: " + Session["floorFrontSetback"].ToString();
+//                phFloor.Controls.Add(floorFrontSetback);
 
-                phFloor.Controls.Add(new LiteralControl("<br/>"));
+//                phFloor.Controls.Add(new LiteralControl("<br/>"));
 
-                Label floorSidesSetback = new Label();
-                floorSidesSetback.Text = "Sides Setback: " + Session["floorSidesSetback"].ToString();
-                phFloor.Controls.Add(floorSidesSetback);
+//                Label floorSidesSetback = new Label();
+//                floorSidesSetback.Text = "Sides Setback: " + Session["floorSidesSetback"].ToString();
+//                phFloor.Controls.Add(floorSidesSetback);
 
-                phFloor.Controls.Add(new LiteralControl("<br/>"));
+//                phFloor.Controls.Add(new LiteralControl("<br/>"));
 
-                Label floorJointSetback = new Label();
-                floorJointSetback.Text = "Joint Setback: " + Session["floorJointSetback"].ToString();
-                phFloor.Controls.Add(floorJointSetback);
+//                Label floorJointSetback = new Label();
+//                floorJointSetback.Text = "Joint Setback: " + Session["floorJointSetback"].ToString();
+//                phFloor.Controls.Add(floorJointSetback);
 
-                phFloor.Controls.Add(new LiteralControl("<br/>"));
-            }
+//                phFloor.Controls.Add(new LiteralControl("<br/>"));
+//            }
 
-            //roof details
-            if (Session["newProjectHasRoof"].ToString() == "Yes")
-            {
-                Roof aRoof = (Roof) Session["completedRoof"];
+//            //roof details
+//            if (Session["newProjectHasRoof"].ToString() == "Yes")
+//            {
+//                Roof aRoof = (Roof) Session["completedRoof"];
 
-                LiteralControl roofTitle = new LiteralControl();
-                roofTitle.Text = "<h1>Roof Details:</h1>";
-                phRoofTitle.Controls.Add(roofTitle);
+//                LiteralControl roofTitle = new LiteralControl();
+//                roofTitle.Text = "<h1>Roof Details:</h1>";
+//                phRoofTitle.Controls.Add(roofTitle);
 
-                phRoof.Controls.Add(new LiteralControl("<br/>"));
+//                phRoof.Controls.Add(new LiteralControl("<br/>"));
 
-                Label roofType = new Label();
-                roofType.Text = "Type: " + aRoof.Type;
-                phRoof.Controls.Add(roofType);
+//                Label roofType = new Label();
+//                roofType.Text = "Type: " + aRoof.Type;
+//                phRoof.Controls.Add(roofType);
 
-                phRoof.Controls.Add(new LiteralControl("<br/>"));
+//                phRoof.Controls.Add(new LiteralControl("<br/>"));
 
-                Label roofProjection = new Label();
-                roofProjection.Text = "Projection: " + aRoof.Projection;
-                phRoof.Controls.Add(roofProjection);
+//                Label roofProjection = new Label();
+//                roofProjection.Text = "Projection: " + aRoof.Projection;
+//                phRoof.Controls.Add(roofProjection);
 
-                phRoof.Controls.Add(new LiteralControl("<br/>"));
+//                phRoof.Controls.Add(new LiteralControl("<br/>"));
 
-                Label roofWidth = new Label();
-                roofWidth.Text = "Width: " + aRoof.Width;
-                phRoof.Controls.Add(roofWidth);
+//                Label roofWidth = new Label();
+//                roofWidth.Text = "Width: " + aRoof.Width;
+//                phRoof.Controls.Add(roofWidth);
 
-                phRoof.Controls.Add(new LiteralControl("<br/>"));
+//                phRoof.Controls.Add(new LiteralControl("<br/>"));
 
-                Label roofThickness = new Label();
-                roofThickness.Text = "Thickness: " + aRoof.Thickness;
-                phRoof.Controls.Add(roofThickness);
+//                Label roofThickness = new Label();
+//                roofThickness.Text = "Thickness: " + aRoof.Thickness;
+//                phRoof.Controls.Add(roofThickness);
 
-                phRoof.Controls.Add(new LiteralControl("<br/>"));
+//                phRoof.Controls.Add(new LiteralControl("<br/>"));
 
-                Label roofGutters = new Label();
-                roofGutters.Text = "Gutters: " + aRoof.Gutters;
-                phRoof.Controls.Add(roofGutters);
+//                Label roofGutters = new Label();
+//                roofGutters.Text = "Gutters: " + aRoof.Gutters;
+//                phRoof.Controls.Add(roofGutters);
 
-                phRoof.Controls.Add(new LiteralControl("<br/>"));
+//                phRoof.Controls.Add(new LiteralControl("<br/>"));
 
-                if (aRoof.Gutters == true)
-                {
-                    Label roofGuttersPro = new Label();
-                    roofGuttersPro.Text = "Gutter Pro: " + aRoof.GutterPro;
-                    phRoof.Controls.Add(roofGuttersPro);
+//                if (aRoof.Gutters == true)
+//                {
+//                    Label roofGuttersPro = new Label();
+//                    roofGuttersPro.Text = "Gutter Pro: " + aRoof.GutterPro;
+//                    phRoof.Controls.Add(roofGuttersPro);
 
-                    phRoof.Controls.Add(new LiteralControl("<br/>"));
+//                    phRoof.Controls.Add(new LiteralControl("<br/>"));
 
-                    Label roofGutterColour = new Label();
-                    roofGutterColour.Text = "Gutter Colour: " + aRoof.GutterColour;
-                    phRoof.Controls.Add(roofGutterColour);
+//                    Label roofGutterColour = new Label();
+//                    roofGutterColour.Text = "Gutter Colour: " + aRoof.GutterColour;
+//                    phRoof.Controls.Add(roofGutterColour);
 
-                    phRoof.Controls.Add(new LiteralControl("<br/>"));
-                }
-            }
+//                    phRoof.Controls.Add(new LiteralControl("<br/>"));
+//                }
+//            }
+#endregion
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -472,7 +491,7 @@ namespace SunspaceDealerDesktop
                                                     aCommand.ExecuteNonQuery();
                                                     break;
                                                 case "Glass":
-                                                    aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES()"
+                                                    aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES("
                                                                             + project_id + ", "
                                                                             + linearCounter + ", "
                                                                             + k + ", "
@@ -531,7 +550,7 @@ namespace SunspaceDealerDesktop
                                                     break;
 
                                                 case "Glass":
-                                                    aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES()"
+                                                    aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES("
                                                                             + project_id + ", "
                                                                             + linearCounter + ", "
                                                                             + k + ", "
@@ -690,7 +709,7 @@ namespace SunspaceDealerDesktop
                                                             break;
 
                                                         case "Glass":
-                                                            aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES()"
+                                                            aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES("
                                                                                     + project_id + ", "
                                                                                     + linearCounter + ", "
                                                                                     + k + ", "
@@ -793,7 +812,7 @@ namespace SunspaceDealerDesktop
                                                 switch (aDoor.DoorStyle)
                                                 {
                                                     case "Aluminum Storm Screen":
-                                                        aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES()"
+                                                        aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES("
                                                                                 + project_id + ", "
                                                                                 + linearCounter + ", "
                                                                                 + k + ", "
@@ -810,7 +829,7 @@ namespace SunspaceDealerDesktop
                                                         aCommand.ExecuteNonQuery();
                                                         break;
                                                     case "Aluminum Storm Glass":
-                                                        aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES()"
+                                                        aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES("
                                                                                 + project_id + ", "
                                                                                 + linearCounter + ", "
                                                                                 + k + ", "
@@ -1091,6 +1110,7 @@ namespace SunspaceDealerDesktop
                 }
                 catch (Exception ex)
                 {
+                    int hi;
                     //lblError.Text = "Commit Exception Type: " + ex.GetType();
                     //lblError.Text += "  Message: " + ex.Message;
 

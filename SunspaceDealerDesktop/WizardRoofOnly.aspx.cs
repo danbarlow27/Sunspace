@@ -241,6 +241,7 @@ namespace SunspaceDealerDesktop
                         numberOfSupportsTextbox1.Text = "0";
                         numberOfSupportsTextbox1.CssClass = "txtField txtInput";
                         numberOfSupportsTextbox1.MaxLength = 2;
+                        numberOfSupportsTextbox1.Attributes.Add("style", "width:150px");
                         numberOfSupportsTextbox1.Attributes.Add("onkeyup", "displayButton('" + 1 + "','" + title + "')");
                         numberOfSupportsTextbox1.ToolTip = "This is the number of supports to hold up the studio roof";
 
@@ -255,9 +256,20 @@ namespace SunspaceDealerDesktop
                             ddlRoofSupports1.Items.Add(new ListItem(Constants.ROOF_SUPPORT_HEIGHTS[i] + "'", Constants.ROOF_SUPPORT_HEIGHTS[i]));
                         }
 
+                        DropDownList ddlRoofSupportsType1 = new DropDownList();
+                        ddlRoofSupportsType1.ID = "ddlRoofSupportsType1" + title;
+                        ddlRoofSupportsType1.CssClass = "txtField txtInput";
+                        ddlRoofSupportsType1.Attributes.Add("style", "width:100px");
+
+                        for (int i = 0; i < Constants.ROOF_SUPPORT_TYPES.Length; i++)
+                        {
+                            ddlRoofSupportsType1.Items.Add(new ListItem(Constants.ROOF_SUPPORT_TYPES[i], Constants.ROOF_SUPPORT_TYPES[i]));
+                        }
+
                         RoofOptions.Controls.Add(numberOfSupportsLabel1);
                         RoofOptions.Controls.Add(numberOfSupportsTextbox1);
                         RoofOptions.Controls.Add(ddlRoofSupports1);
+                        RoofOptions.Controls.Add(ddlRoofSupportsType1);
                         RoofOptions.Controls.Add(new LiteralControl("<br/>"));
                         RoofOptions.Controls.Add(new LiteralControl("<input type='button' id='btnAddAnotherSize1" + title + "' value='Add Another Support Size' class='btnSubmit' style='display:none' onclick='displayMoreSizes(\"" + 2 + "\", \"" + title + "\")' title='This will open new textboxes for other sized supports'>"));                        
 
@@ -275,6 +287,7 @@ namespace SunspaceDealerDesktop
                         numberOfSupportsTextbox2.ID = "txtNumberOfSupports2" + title;
                         numberOfSupportsTextbox2.CssClass = "txtField txtInput";
                         numberOfSupportsTextbox2.MaxLength = 2;
+                        numberOfSupportsTextbox2.Attributes.Add("style", "width:150px");
                         numberOfSupportsTextbox2.ToolTip = "This is the number of supports to hold up the studio roof";
 
                         DropDownList ddlRoofSupports2 = new DropDownList();
@@ -288,9 +301,20 @@ namespace SunspaceDealerDesktop
                             ddlRoofSupports2.Items.Add(new ListItem(Constants.ROOF_SUPPORT_HEIGHTS[i] + "'", Constants.ROOF_SUPPORT_HEIGHTS[i]));
                         }
 
+                        DropDownList ddlRoofSupportsType2 = new DropDownList();
+                        ddlRoofSupportsType2.ID = "ddlRoofSupportsType2" + title;
+                        ddlRoofSupportsType2.CssClass = "txtField txtInput";
+                        ddlRoofSupportsType2.Attributes.Add("style", "width:100px");
+
+                        for (int i = 0; i < Constants.ROOF_SUPPORT_TYPES.Length; i++)
+                        {
+                            ddlRoofSupportsType2.Items.Add(new ListItem(Constants.ROOF_SUPPORT_TYPES[i], Constants.ROOF_SUPPORT_TYPES[i]));
+                        }
+
                         RoofOptions.Controls.Add(numberOfSupportsLabel2);
                         RoofOptions.Controls.Add(numberOfSupportsTextbox2);
                         RoofOptions.Controls.Add(ddlRoofSupports2);
+                        RoofOptions.Controls.Add(ddlRoofSupportsType2);
                         RoofOptions.Controls.Add(new LiteralControl("<br/>"));
                         RoofOptions.Controls.Add(new LiteralControl("<input type='button' id='btnAddAnotherSize2" + title + "' value='Add Another Support Size' class='btnSubmit' onclick='displayMoreSizes(\"" + 3 + "\", \"" + title + "\")' title='This will open new textboxes for other sized supports'>"));
                         RoofOptions.Controls.Add(new LiteralControl("<input type='button' id='btnLessSizes2" + title + "' value='Less Support Sizes' class='btnSubmit' onclick='displayLessSizes(\"" + 2 + "\", \"" + title + "\"); disableSelectedIndices(\"" + title + "\")'>"));
@@ -309,6 +333,7 @@ namespace SunspaceDealerDesktop
                         numberOfSupportsTextbox3.ID = "txtNumberOfSupports3" + title;
                         numberOfSupportsTextbox3.CssClass = "txtField txtInput";
                         numberOfSupportsTextbox3.MaxLength = 2;
+                        numberOfSupportsTextbox3.Attributes.Add("style", "width:150px");
                         numberOfSupportsTextbox3.ToolTip = "This is the number of supports to hold up the studio roof";
 
                         DropDownList ddlRoofSupports3 = new DropDownList();
@@ -322,9 +347,20 @@ namespace SunspaceDealerDesktop
                             ddlRoofSupports3.Items.Add(new ListItem(Constants.ROOF_SUPPORT_HEIGHTS[i] + "'", Constants.ROOF_SUPPORT_HEIGHTS[i]));
                         }
 
+                        DropDownList ddlRoofSupportsType3 = new DropDownList();
+                        ddlRoofSupportsType3.ID = "ddlRoofSupportsType3" + title;
+                        ddlRoofSupportsType3.CssClass = "txtField txtInput";
+                        ddlRoofSupportsType3.Attributes.Add("style", "width:100px");
+
+                        for (int i = 0; i < Constants.ROOF_SUPPORT_TYPES.Length; i++)
+                        {
+                            ddlRoofSupportsType3.Items.Add(new ListItem(Constants.ROOF_SUPPORT_TYPES[i], Constants.ROOF_SUPPORT_TYPES[i]));
+                        }
+
                         RoofOptions.Controls.Add(numberOfSupportsLabel3);
                         RoofOptions.Controls.Add(numberOfSupportsTextbox3);
                         RoofOptions.Controls.Add(ddlRoofSupports3);
+                        RoofOptions.Controls.Add(ddlRoofSupportsType3);
                         RoofOptions.Controls.Add(new LiteralControl("<br/>"));
                         RoofOptions.Controls.Add(new LiteralControl("<input type='button' id='btnAddAnotherSize3" + title + "' value='Add Another Support Size' class='btnSubmit' onclick='displayMoreSizes(\"" + 4 + "\", \"" + title + "\")' title='This will open new textboxes for other sized supports'>"));
                         RoofOptions.Controls.Add(new LiteralControl("<input type='button' id='btnLessSizes3" + title + "' value='Less Support Sizes' class='btnSubmit' onclick='displayLessSizes(\"" + 3 + "\", \"" + title + "\")'>"));
@@ -343,6 +379,7 @@ namespace SunspaceDealerDesktop
                         numberOfSupportsTextbox4.ID = "txtNumberOfSupports4" + title;
                         numberOfSupportsTextbox4.CssClass = "txtField txtInput";
                         numberOfSupportsTextbox4.MaxLength = 2;
+                        numberOfSupportsTextbox4.Attributes.Add("style", "width:150px");
                         numberOfSupportsTextbox4.ToolTip = "This is the number of supports to hold up the studio roof";
 
                         DropDownList ddlRoofSupports4 = new DropDownList();
@@ -356,9 +393,20 @@ namespace SunspaceDealerDesktop
                             ddlRoofSupports4.Items.Add(new ListItem(Constants.ROOF_SUPPORT_HEIGHTS[i] + "'", Constants.ROOF_SUPPORT_HEIGHTS[i]));
                         }
 
+                        DropDownList ddlRoofSupportsType4 = new DropDownList();
+                        ddlRoofSupportsType4.ID = "ddlRoofSupportsType4" + title;
+                        ddlRoofSupportsType4.CssClass = "txtField txtInput";
+                        ddlRoofSupportsType4.Attributes.Add("style", "width:100px");
+
+                        for (int i = 0; i < Constants.ROOF_SUPPORT_TYPES.Length; i++)
+                        {
+                            ddlRoofSupportsType4.Items.Add(new ListItem(Constants.ROOF_SUPPORT_TYPES[i], Constants.ROOF_SUPPORT_TYPES[i]));
+                        }
+
                         RoofOptions.Controls.Add(numberOfSupportsLabel4);
                         RoofOptions.Controls.Add(numberOfSupportsTextbox4);
                         RoofOptions.Controls.Add(ddlRoofSupports4);
+                        RoofOptions.Controls.Add(ddlRoofSupportsType4);
                         RoofOptions.Controls.Add(new LiteralControl("<br/>"));
                         RoofOptions.Controls.Add(new LiteralControl("<input type='button' id='btnLessSizes4" + title + "' value='Less Support Sizes' class='btnSubmit' onclick='displayLessSizes(\"" + 4 + "\", \"" + title + "\")'>"));
 
@@ -885,10 +933,12 @@ namespace SunspaceDealerDesktop
             #endregion
         }
 
-        private List<RoofSupport> buildRoofSupports(int amount, int size){
+        private List<RoofSupport> buildRoofSupports(int amount, int size, string type){
             List<RoofSupport> supportList = new List<RoofSupport>();
 
-            RoofSupport aSupport = new RoofSupport(size);
+            int width = type == "Fluted" ? 3 : 6;
+
+            RoofSupport aSupport = new RoofSupport(size, 3, type);
 
             for (int i = 0; i < amount; i++) {
                 supportList.Add(aSupport);
@@ -1174,17 +1224,18 @@ namespace SunspaceDealerDesktop
             float roofWidth = float.Parse(Request.Form["ctl00$MainContent$txtWidthStudio"]);
             float roofProjection = float.Parse(Request.Form["ctl00$MainContent$txtProjectionStudio"]);
 
+            string roofSupportType = Request.Form["ctl00$MainContent$txtProjectionStudio"];
             List<RoofSupport> supportList = new List<RoofSupport>();
 
             for (int i = 1; i <= 4; i++)
             {
                 if (Request.Form["ctl00$MainContent$txtNumberOfSupports" + i + "Studio"] != "")
                 {
-                    int roofSupports1 = int.Parse(Request.Form["ctl00$MainContent$txtNumberOfSupports" + Convert.ToString(i) + "Studio"]);
-                    int roofSupports1Size = int.Parse(Request.Form["ctl00$MainContent$ddlRoofSupports" + Convert.ToString(i) + "Studio"]);
+                    int roofSupports = int.Parse(Request.Form["ctl00$MainContent$txtNumberOfSupports" + Convert.ToString(i) + "Studio"]);
+                    int roofSupportsSize = int.Parse(Request.Form["ctl00$MainContent$ddlRoofSupports" + Convert.ToString(i) + "Studio"]);
 
-                    if (roofSupports1 != 0)
-                        supportList.AddRange(buildRoofSupports(roofSupports1, roofSupports1Size));
+                    if (roofSupports != 0)
+                        supportList.AddRange(buildRoofSupports(roofSupports, roofSupportsSize, roofSupportType));
                 }
             }
 
@@ -1294,6 +1345,7 @@ namespace SunspaceDealerDesktop
             float roofRightProjection = float.Parse(Request.Form["ctl00$MainContent$txtRightProjectionGable"]);
             float roofProjection;
 
+            string roofSupportType = Request.Form["ctl00$MainContent$txtProjectionGable"];
             List<RoofSupport> supportList = new List<RoofSupport>();
 
             for (int i = 1; i <= 4; i++)
@@ -1304,7 +1356,7 @@ namespace SunspaceDealerDesktop
                     int roofSupports1Size = int.Parse(Request.Form["ctl00$MainContent$ddlRoofSupports" + Convert.ToString(i) + "Gable"]);
 
                     if (roofSupports1 != 0)
-                        supportList.AddRange(buildRoofSupports(roofSupports1, roofSupports1Size));
+                        supportList.AddRange(buildRoofSupports(roofSupports1, roofSupports1Size, roofSupportType));
                 }
             }
 
