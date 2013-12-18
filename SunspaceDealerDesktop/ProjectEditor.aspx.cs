@@ -14,6 +14,8 @@ namespace SunspaceDealerDesktop
         {
             using (SqlConnection aConnection = new SqlConnection(sdsDBConnection.ConnectionString))
             {
+
+
                 aConnection.Open();
                 SqlCommand aCommand = aConnection.CreateCommand();
                 SqlTransaction aTransaction;
@@ -26,6 +28,43 @@ namespace SunspaceDealerDesktop
                 // to Command object for a pending local transaction
                 aCommand.Connection = aConnection;
                 aCommand.Transaction = aTransaction;
+
+                try
+                {
+
+
+
+
+
+
+
+
+
+
+
+                    aTransaction.Commit();
+                }
+
+                catch (Exception ex)
+                {
+                    //lblError.Text = "Commit Exception Type: " + ex.GetType();
+                    //lblError.Text += "  Message: " + ex.Message;
+
+                    // Attempt to roll back the transaction. 
+                    try
+                    {
+                        aTransaction.Rollback();
+                    }
+                    catch (Exception ex2)
+                    {
+                        // This catch block will handle any errors that may have occurred 
+                        // on the server that would cause the rollback to fail, such as 
+                        // a closed connection.
+                        //lblError.Text = "Rollback Exception Type: " + ex2.GetType();
+                        //lblError.Text += "  Message: " + ex2.Message;
+                    }
+                }
+
             }
         }
     }
