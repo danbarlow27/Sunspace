@@ -111,8 +111,8 @@ namespace SunspaceDealerDesktop
 
 
                     //Get linear items
-                    aCommand.CommandText = "SELECT linear_type, start_height, end_height, length, frame_colour, sex, fixed_location, attached_to "
-                                            + "FROM linear_items WHERE project_id = '" + project_id + "' AND linear_index = '" + linear_index + "'";
+                    //aCommand.CommandText = "SELECT linear_type, start_height, end_height, length, frame_colour, sex, fixed_location, attached_to "
+                    //                        + "FROM linear_items WHERE project_id = '" + project_id + "' AND linear_index = '" + linear_index + "'";
                     aReader = aCommand.ExecuteReader();
                     aReader.Read();
 
