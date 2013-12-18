@@ -31,16 +31,20 @@ namespace SunspaceDealerDesktop
 
                 try
                 {
-
-
-
-
-
-
-
-
-
-
+                    Window aWindow = new Window();
+                    switch (aWindow.WindowStyle)
+                    {
+                        case "Vinyl":
+                            break;
+                        case "Screen":
+                            break;
+                        case "Glass":
+                            break;
+                        case "V4T":
+                            break;
+                        case "H2T":
+                            break;
+                    }
 
                     aTransaction.Commit();
                 }
