@@ -2363,53 +2363,39 @@ function sunshadeToggle()
                 <div id="divWallDetails" class="tblWallLengths" runat="server" >
                     
                     <%-- table for wall details, contains input fields for length, height, and model type as well as left and right fillers --%>
-                    <asp:Table ID="tblWallDetails" runat="server">
-                        <asp:TableRow>
+                    <asp:Table ID="tblWallDetails" runat="server">                       
+                        <asp:TableRow>                            
                             <asp:TableCell>
-                                <asp:Label runat="server" Text="Model: "></asp:Label>
-                            </asp:TableCell>
-                            <asp:TableCell>
-                                <asp:DropDownList ID="ddlModel" runat="server">
-                                    <asp:ListItem Text="M100" Value="M100" />   
-                                    <asp:ListItem Text="M200" Value="M200" />
-                                    <asp:ListItem Text="M300" Value="M300" />
-                                    <asp:ListItem Text="M400" Value="M400" />
-                                </asp:DropDownList>
-                            </asp:TableCell>
-                        </asp:TableRow>
-                        
-                        <asp:TableRow  style="text-align:center">
-                            <asp:TableCell></asp:TableCell>
-                            <%-- column headings --%>
-                            <asp:TableCell ColumnSpan="2">
-                                Left Filler
-                            </asp:TableCell>
-                            <asp:TableCell ColumnSpan="2">
-                                Length
-                            </asp:TableCell>
-                            <asp:TableCell ColumnSpan="2">
-                                Right Filler
-                            </asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow>
-                            <asp:TableCell>
-
+                                <asp:Label ID="lblLeftFiller" runat="server" Text="Left Filler: "></asp:Label>
                             </asp:TableCell>
                             <asp:TableCell>
                                 <asp:TextBox ID="txtLeftFiller" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
-                            </asp:TableCell>
+                            </asp:TableCell>   
                             <asp:TableCell>
-
-                            </asp:TableCell>
-                            <asp:TableCell>
-                                <asp:TextBox ID="TextBox1" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
-                            </asp:TableCell>
-                            <asp:TableCell>
-
+                                <asp:DropDownList ID="ddlLeftFillerInches" runat="server"></asp:DropDownList>
+                            </asp:TableCell>                        
+                        </asp:TableRow>
+                        <asp:TableRow>
+                             <asp:TableCell>
+                                <asp:Label ID="lblRightFiller" runat="server" Text="Right Filler: "></asp:Label>
                             </asp:TableCell>
                             <asp:TableCell>
                                 <asp:TextBox ID="txtRightFiller" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
-                            </asp:TableCell>
+                            </asp:TableCell>  
+                            <asp:TableCell>
+                                <asp:DropDownList ID="ddlRightFillerInches" runat="server"></asp:DropDownList>
+                            </asp:TableCell>                          
+                        </asp:TableRow>
+                        <asp:TableRow>
+                             <asp:TableCell>
+                               <asp:Label ID="lblLength" runat="server" Text="Length: "></asp:Label>
+                            </asp:TableCell>                            
+                            <asp:TableCell>
+                                <asp:TextBox ID="txtLength" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
+                            </asp:TableCell> 
+                            <asp:TableCell>
+                                <asp:DropDownList ID="ddlLengthInches" runat="server"></asp:DropDownList>
+                            </asp:TableCell>                           
                         </asp:TableRow>
                         <asp:TableRow>
                             <asp:TableCell>
@@ -2418,6 +2404,9 @@ function sunshadeToggle()
                             <asp:TableCell>
                                 <asp:TextBox ID="txtStartHeight" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
                             </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:DropDownList ID="ddlStartHeightInches" runat="server"></asp:DropDownList>
+                            </asp:TableCell>
                         </asp:TableRow>
                         <asp:TableRow>
                             <asp:TableCell>
@@ -2425,6 +2414,9 @@ function sunshadeToggle()
                             </asp:TableCell>
                             <asp:TableCell>
                                 <asp:TextBox ID="txtEndHeight" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:DropDownList ID="ddlEndHeightInches" runat="server"></asp:DropDownList>
                             </asp:TableCell>
                         </asp:TableRow>
                     </asp:Table>
