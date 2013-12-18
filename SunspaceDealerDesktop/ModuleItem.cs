@@ -13,7 +13,7 @@ namespace SunspaceDealerDesktop
         private float fStartHeight = 0f;         //Item height including frame: 79.125" (stored value: 79.125)
         private float fEndHeight = 0f;         //Item height including frame: 79.125" (stored value: 79.125)
         private float fLength = 0f;         //Item lenth including frame: 32.125" (stored value: 32.125)
-        //private string colour = null;       //Door colour: White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey (stored value: White)
+        private string colour = null;       //Door colour: White, Driftwood, Bronze, Green, Black, Ivory, Cherrywood, Grey (stored value: White)
         #endregion
 
         #region Constructor
