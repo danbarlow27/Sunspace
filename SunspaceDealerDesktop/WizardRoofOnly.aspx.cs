@@ -936,7 +936,7 @@ namespace SunspaceDealerDesktop
         private List<RoofSupport> buildRoofSupports(int amount, int size, string type){
             List<RoofSupport> supportList = new List<RoofSupport>();
 
-            int width = type == "Fluted" ? 3 : 6;
+            int width = type == "Fluted" ? Constants.ROOF_SUPPORT_FLUTED_SIZE : Constants.ROOF_SUPPORT_RAILING_SIZE;
 
             RoofSupport aSupport = new RoofSupport(size, 3, type);
 
@@ -1352,11 +1352,11 @@ namespace SunspaceDealerDesktop
             {
                 if (Request.Form["ctl00$MainContent$txtNumberOfSupports" + i + "Gable"] != "")
                 {
-                    int roofSupports1 = int.Parse(Request.Form["ctl00$MainContent$txtNumberOfSupports" + Convert.ToString(i) + "Gable"]);
-                    int roofSupports1Size = int.Parse(Request.Form["ctl00$MainContent$ddlRoofSupports" + Convert.ToString(i) + "Gable"]);
+                    int roofSupports = int.Parse(Request.Form["ctl00$MainContent$txtNumberOfSupports" + Convert.ToString(i) + "Gable"]);
+                    int roofSupportsSize = int.Parse(Request.Form["ctl00$MainContent$ddlRoofSupports" + Convert.ToString(i) + "Gable"]);
 
-                    if (roofSupports1 != 0)
-                        supportList.AddRange(buildRoofSupports(roofSupports1, roofSupports1Size, roofSupportType));
+                    if (roofSupports != 0)
+                        supportList.AddRange(buildRoofSupports(roofSupports, roofSupportsSize, roofSupportType));
                 }
             }
 
