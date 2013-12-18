@@ -9,6 +9,59 @@
             window.location.replace("Home.aspx");
         }
 
+        function toggleCountry(){
+
+            var ddlCustomerCountry = document.getElementById("<%=ddlCustomerCountry.ClientID%>").value;
+            var zipLabel = document.getElementById("<%=lblCustomerZip.ClientID%>");
+            var zipText = document.getElementById("<%=txtCustomerZip.ClientID%>");
+            var provStateLabel = document.getElementById("<%=lblCustomerProvState.ClientID%>");
+
+            var country = document.getElementById("<%=ddlCustomerCountry.ClientID%>").value;
+            console.log("Changing to " + country);
+
+            if (country == "USA")
+            {                
+                var ddlProvState = document.getElementById("<%=ddlCustomerProvState.ClientID%>");
+                var stateArray = <%= usStatesJ %>;
+                var stateCodeArray = <%= usCodesJ %>;
+
+                ddlProvState.options.length = 0;
+
+                for (var i=0;i<stateArray.length;i++)
+                {
+                    var anOption = new Option(stateArray[i], stateCodeArray[i]);
+                    ddlProvState.options.add(anOption);
+                }
+
+                provStateLabel.innerHTML = "State";
+
+                zipText.setAttribute("MaxLength", "5");
+                zipLabel.innerHTML = "Zip Code";
+            }
+            else
+            {
+                var ddlProvState = document.getElementById("<%=ddlCustomerProvState.ClientID%>");
+                var canProvArray = <%= canProvJ %>;
+                var canCodeArray = <%= canCodesJ %>;
+
+                ddlProvState.options.length = 0;
+
+                for (var i=0;i<canProvArray.length;i++)
+                {
+                    var anOption = new Option(canProvArray[i], canCodeArray[i]);
+                    ddlProvState.options.add(anOption);
+                }
+
+                var postalCode = document.getElementById("<%=hidZip.ClientID%>").value;
+                var postCheck = checkPostalCode(postalCode);
+
+                provStateLabel.innerHTML = "Province";
+
+                zipText.setAttribute("MaxLength", "6");
+                zipLabel.innerHTML = "Postal Code";
+            }
+        }
+
         function newProjectCheckQuestion1() {
             document.getElementById('<%=btnQuestion3.ClientID%>').style.display="inline";
             document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').style.display="none";
@@ -63,23 +116,6 @@
                 //check zipcode
                 if (ddlCustomerCountry == "USA")
                 {
-                    var ddlProvState = document.getElementById("<%=ddlCustomerProvState.ClientID%>");
-                    var stateArray = <%= usStatesJ %>;
-                    var stateCodeArray = <%= usCodesJ %>;
-
-                    ddlProvState.options.length = 0;
-
-                    for (var i=0;i<stateArray.length;i++)
-                    {
-                        var anOption = new Option(stateArray[i], stateCodeArray[i]);
-                        ddlProvState.options.add(anOption);
-                    }
-
-                    provStateLabel.innerHTML = "State";
-
-                    zipText.setAttribute("MaxLength", "5");
-                    zipLabel.innerHTML = "Zip Code";
-
                     var zipCode = document.getElementById("<%=hidZip.ClientID%>").value;
 
                     //if zip code is not valid numeric, or it is not 5 digits, it is not valid
@@ -90,31 +126,11 @@
                     else if (isNaN(zipCode) || zipCode.length < 5) {
                         document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Zip Code you entered is not valid.\n";
                     }
-            }
+                }
 
                 //check postal code
-            if (ddlCustomerCountry == "CAN")
-            {
-                var ddlProvState = document.getElementById("<%=ddlCustomerProvState.ClientID%>");
-                    var canProvArray = <%= canProvJ %>;
-                    var canCodeArray = <%= canCodesJ %>;
-
-                    ddlProvState.options.length = 0;
-
-                    for (var i=0;i<canProvArray.length;i++)
-                    {
-                        var anOption = new Option(canProvArray[i], canCodeArray[i]);
-                        ddlProvState.options.add(anOption);
-                    }
-
-                    var postalCode = document.getElementById("<%=hidZip.ClientID%>").value;
-                    var postCheck = checkPostalCode(postalCode);
-
-                    provStateLabel.innerHTML = "Province";
-
-                    zipText.setAttribute("MaxLength", "6");
-                    zipLabel.innerHTML = "Postal Code";
-
+                if (ddlCustomerCountry == "CAN")
+                {
                     if (document.getElementById("<%=txtCustomerZip.ClientID%>").value == "")
                     {
                         document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Postal Code is required.\n";
@@ -203,7 +219,7 @@
                 //if selected value from dropdown is not the generic, it is a valid choice
                 if (document.getElementById("<%=ddlExistingCustomer.ClientID%>").value != "Choose a Customer...") {
                     //valid, so update pager and enable button
-                    $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("Existing - " + $('#<%=ddlExistingCustomer.ClientID%>').text());
+                    $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("Existing - " + $('#<%=ddlExistingCustomer.ClientID%>').find('option:selected').text());
                     document.getElementById("<%=hidExisting.ClientID%>").value = $('#<%=ddlExistingCustomer.ClientID%>').val();
                     document.getElementById('pagerOne').style.display = "inline";
                     document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
@@ -1022,7 +1038,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlCustomerCountry" OnChange="newProjectCheckQuestion1()" runat="server"></asp:DropDownList>
+                                                <asp:DropDownList ID="ddlCustomerCountry" OnChange="toggleCountry(); newProjectCheckQuestion1()" runat="server"></asp:DropDownList>
                                             </asp:TableCell>
                                         </asp:TableRow>
 

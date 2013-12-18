@@ -311,6 +311,7 @@ namespace SunspaceDealerDesktop
             Session.Add("kneewallHeight", GlobalFunctions.escapeSqlString(hidKneewallHeight.Value.ToString()));
             Session.Add("transomType", GlobalFunctions.escapeSqlString(hidTransomType.Value.ToString()));
             Session.Add("transomHeight", GlobalFunctions.escapeSqlString(hidTransomHeight.Value.ToString()));
+            Session.Add("transomColour", GlobalFunctions.escapeSqlString(hidTransomTint.Value.ToString()));
 
             Session.Add("floorVapourBarrier", "");
 
