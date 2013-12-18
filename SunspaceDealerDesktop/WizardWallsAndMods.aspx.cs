@@ -3961,6 +3961,7 @@ namespace SunspaceDealerDesktop
                                 if (doorWindow.WindowStyle == "Horizontal Roller")
                                 {
                                     doorWindow.NumVents = 2;
+                                    doorWindow.WindowStyle = "Horizontal Roller XO";
                                 }
 
                                 //Spreaderbar logic
@@ -3968,7 +3969,7 @@ namespace SunspaceDealerDesktop
                                 {
                                     doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2); //Find center of window, then place center of spreader bar at that position (by subtracting half of it)
                                 }
-                                if (doorWindow.WindowStyle == "Horizontal Roller" && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
+                                if (doorWindow.WindowStyle.Contains("Horizontal Roller") && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
                                 {
                                     doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
                                 }
@@ -4022,6 +4023,7 @@ namespace SunspaceDealerDesktop
                                 if (doorWindow.WindowStyle == "Horizontal Roller")
                                 {
                                     doorWindow.NumVents = 2;
+                                    doorWindow.WindowStyle = "Horizontal Roller XO";
                                 }
 
                                 //Spreaderbar logic
@@ -4029,7 +4031,7 @@ namespace SunspaceDealerDesktop
                                 {
                                     doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2); //Find center of window, then place center of spreader bar at that position (by subtracting half of it)
                                 }
-                                if (doorWindow.WindowStyle == "Horizontal Roller" && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
+                                if (doorWindow.WindowStyle.Contains("Horizontal Roller") && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
                                 {
                                     doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
                                 }

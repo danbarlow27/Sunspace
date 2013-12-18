@@ -466,6 +466,7 @@ namespace SunspaceDealerDesktop
                             if (windowType == "Horizontal Roller" && aWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
                             {
                                 aWindow.SpreaderBar = (aWindow.FEndHeight/2) - (Constants.SPREADER_BAR_SIZE/2);
+                                aWindow.WindowStyle = "Horizontal Roller XO";
                             }
                             if (windowType == "Vinyl")
                             {
