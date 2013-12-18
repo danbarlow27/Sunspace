@@ -190,6 +190,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Images\iconsNavEditor.png" />
+    <Content Include="ProjectEditor.aspx" />
+    <Content Include="Scripts\init.js" />
     <Content Include="WizardDoorOnly.aspx" />
     <Content Include="GenerateMods.aspx" />
     <Content Include="Home.aspx" />
@@ -373,6 +376,13 @@
     </Compile>
     <Compile Include="Customer.cs" />
     <Compile Include="Door.cs" />
+    <Compile Include="ProjectEditor.aspx.cs">
+      <DependentUpon>ProjectEditor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProjectEditor.aspx.designer.cs">
+      <DependentUpon>ProjectEditor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RoofSupport.cs" />
     <Compile Include="WizardDoorOnly.aspx.cs">
       <DependentUpon>WizardDoorOnly.aspx</DependentUpon>

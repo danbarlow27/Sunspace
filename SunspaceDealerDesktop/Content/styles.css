@@ -22,7 +22,7 @@ body {
 
 .content-wrapper {
     margin: 0 auto;
-    width: 80%;
+    width: 90%;
     position: relative;
 }
 
@@ -707,6 +707,169 @@ li > .toggleOptions > li {
 .tblSunroomLayout td {
     padding: 20px 0;
     position: relative;
+}
+
+
+
+/******************************************
+ * PROJECT EDITOR PAGE
+ ******************************************/
+
+/* NAVIGATION
+---------------------------------------- */
+
+.navEditor {
+    color: #000;
+    background: rgb(242, 235, 214);
+    height: 40px;
+    margin: -50px 0 40px;
+}
+
+.ulNavEditor {
+    position: relative;
+    display: inline-block;
+    
+}
+
+.ulNavEditor li,
+.ulNavEditor li input[type=submit] {
+    font-size: 1em;
+    text-transform: uppercase;
+    line-height: 40px;
+    color: #000;
+    background: rgb(242, 235, 214);
+    padding: 0 10px;
+    border: 0;
+    border-right: 1px solid rgba(171,139,101,.5);
+    
+    float: left;
+}
+
+.ulNavEditor li input[type=submit] {
+    height: 40px;
+}
+
+.ulNavEditor li a {
+    text-indent: 15px;
+    background: transparent url('../Images/iconsNavEditor.png') no-repeat left top;
+    background-size: 20px 400px;
+    padding: 0 10px;
+    display: block;
+}
+
+.ulNavEditor li a:hover,
+.ulNavEditor li a:active,
+.ulNavEditor li a:focus,
+.ulNavEditor li input[type=submit]:hover,
+.ulNavEditor li input[type=submit]:active,
+.ulNavEditor li input[type=submit]:focus {
+    color: rgba(171,139,101,1);
+}
+
+/*.ulNavEditor li.activeSubNav {
+    background-color: rgb(242, 235, 214) !important;
+}
+
+.inactiveSubNav {
+    background-color: #f8f5ea !important;
+}*/
+
+.ulNavEditor li:nth-child(2) a {
+    background-position: 0 0;
+}
+
+.ulNavEditor li:nth-child(3) a {
+    background-position: 0 -40px;
+}
+
+.ulNavEditor li li:nth-child(1) a {
+    background-position: 0 -80px;
+}
+
+.ulNavEditor li li:nth-child(2) a {
+    background-position: 0 -120px;
+}
+
+.ulNavEditor li li:nth-child(3) a {
+    background-position: 0 -160px;
+}
+
+.ulNavEditor li li:nth-child(4) a {
+    background-position: 0 -200px;
+}
+
+.ulNavEditor li li:nth-child(5) a {
+    background-position: 0 -240px;
+}
+
+.ulNavEditor li li:nth-child(6) a {
+    background-position: 0 -280px;
+}
+
+.ulNavEditor li li:nth-child(7) a {
+    background-position: 0 -320px;
+}
+
+.ulNavEditor li li:nth-child(8) a {
+    background-position: 0 -360px;
+}
+
+.ulNavEditor li ul {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+}
+
+
+/* OVERLAY POPUP WINDOW
+---------------------------------------- */
+
+.overlayBg {
+    background: rgba(0,0,0,.5);
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 90px;
+    left: 0;
+    z-index: 10;
+    display: none;
+}
+
+.overlayContainer {
+    background: #fff;
+    width: 100%;
+    padding: 4%;
+    border-top: 1px solid rgba(171,139,101,.5);
+    border-bottom: 1px solid rgba(171,139,101,.5);
+    /*box-shadow: 0 0 20px rgba(0,0,0,.1);*/
+    position: absolute;
+    top: 90px;
+    left: 0;
+    display: none;  
+    z-index: 11; 
+    box-sizing: border-box;
+}
+
+.overlayClose a {
+    font-size: .875em;
+    line-height: 1.5em;
+    text-align: center;
+    color: #cacece;
+    background: #fff;
+    display: block;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+}
+
+.overlayClose a span {
+    width: 1.5em;
+    height: 1.5em;
+    border: 1px solid #cacece;
+    border-radius: 1em;
+    display: inline-block;
 }
 
 
