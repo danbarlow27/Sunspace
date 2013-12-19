@@ -3950,13 +3950,20 @@ namespace SunspaceDealerDesktop
                                 doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight - aDoor.Kickplate - 4; //4 corresponds to the amount of framing at a bottom of a door
                                 doorWindow.LeftHeight = doorWindow.RightHeight = aDoor.FStartHeight - aDoor.Kickplate - 4 - 2.125f;
                                 doorWindow.ItemType = "Window";
-                                doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
 
-                                if (doorWindow.WindowStyle == "Vertical 4 Track")
+                                if (doorWindow.WindowStyle == "Vertical 4 Track" || doorWindow.WindowStyle.Contains("Vinyl"))
                                 {
+                                    doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
                                     doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
+                                }
+                                else if (!doorWindow.WindowStyle.Contains("Screen"))
+                                {
+                                    doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "glassTint"];
+                                }
+                                else {
+                                    doorWindow.Colour = "";
                                 }
                                 if (doorWindow.WindowStyle == "Horizontal Roller")
                                 {
@@ -4011,14 +4018,23 @@ namespace SunspaceDealerDesktop
                                 //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
                                 //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
                                 doorWindow.ItemType = "Window";
-                                //doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
-                                doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
 
-                                if (doorWindow.WindowStyle == "Vertical 4 Track")
+                                if (doorWindow.WindowStyle == "Vertical 4 Track" || doorWindow.WindowStyle.Contains("Vinyl"))
                                 {
-                                    doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
+                                    doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
+                                    if (doorWindow.WindowStyle == "Vertical 4 Track"){
+                                        doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
+                                    }
+                                }
+                                else if (!doorWindow.WindowStyle.Contains("Screen"))
+                                {
+                                    doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "glassTint"];
+                                }
+                                else
+                                {
+                                    doorWindow.Colour = "";
                                 }
                                 if (doorWindow.WindowStyle == "Horizontal Roller")
                                 {

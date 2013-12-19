@@ -287,7 +287,7 @@ function doorStyle(type, wallNumber) {
         //Change door screen options row display style to none
         document.getElementById('MainContent_rowDoorScreenOptions' + wallNumber + type).style.display = 'none';
     }
-    else if (doorStyleDDL == 'Full Screen' || doorStyleDDL == 'Screen')
+    else if (doorStyleDDL == 'Full Screen' || doorStyleDDL == 'Screen' || doorStyleDDL == 'Aluminum Storm Screen')
     {
         //Change door screen options row display style to inherit
         document.getElementById('MainContent_rowDoorScreenOptions' + wallNumber + type).style.display = 'inherit';
