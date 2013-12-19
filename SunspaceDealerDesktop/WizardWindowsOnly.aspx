@@ -411,34 +411,40 @@
             
             var actualValue;
 
-            if (sender === "top") {
+            if(value < 0 || value > (parseFloat(ventTopHeight) + parseFloat(ventBottomHeight))) { 
+                errorMessage.val("invalid change!");   
+            }
+            else {
 
-                if (parseFloat(value) > parseFloat(ventTopHeight)) {
-                    actualValue = parseFloat(value) - parseFloat(ventTopHeight);
-                    ventTopHeight = parseFloat(ventTopHeight) + parseFloat(actualValue);
-                    ventBottomHeight = parseFloat(ventBottomHeight) - parseFloat(value);
+                if (sender === "top") {
+
+                    if (parseFloat(value) > parseFloat(ventTopHeight)) {
+                        actualValue = parseFloat(value) - parseFloat(ventTopHeight);
+                        ventTopHeight = parseFloat(ventTopHeight) + parseFloat(actualValue);
+                        ventBottomHeight = parseFloat(ventBottomHeight) - parseFloat(actualValue);
+                    }
+                    else if (parseFloat(value) < parseFloat(ventTopHeight)) {
+                        actualValue = parseFloat(ventTopHeight) - parseFloat(value);
+                        ventTopHeight = parseFloat(ventTopHeight) - parseFloat(actualValue);
+                        ventBottomHeight = parseFloat(ventBottomHeight) + parseFloat(actualValue);
+                    }
                 }
-                else if (parseFloat(value) < parseFloat(ventTopHeight)) {
-                    actualValue = parseFloat(ventTopHeight) - parseFloat(value);
-                    ventTopHeight = parseFloat(ventTopHeight) - parseFloat(actualValue);
-                    ventBottomHeight = parseFloat(ventBottomHeight) + parseFloat(value);
+                else if (sender === "bottom") { 
+                    if (parseFloat(value) > parseFloat(ventTopHeight)) {
+                        actualValue = parseFloat(value) - parseFloat(ventBottomHeight);
+                        ventTopHeight = parseFloat(ventTopHeight) - parseFloat(actualValue);
+                        ventBottomHeight = parseFloat(ventBottomHeight) + parseFloat(actualValue);
+                    }
+                    else if (parseFloat(value) < parseFloat(ventTopHeight)) {
+                        actualValue = parseFloat(ventBottomHeight) - parseFloat(value);
+                        ventTopHeight = parseFloat(ventTopHeight) + parseFloat(actualValue);
+                        ventBottomHeight = parseFloat(ventBottomHeight) - parseFloat(actualValue);
+                    }
                 }
             }
-            else if (sender === "bottom") { 
-                if (parseFloat(value) > parseFloat(ventTopHeight)) {
-                    actualValue = parseFloat(value) - parseFloat(ventBottomHeight);
-                    ventTopHeight = parseFloat(ventTopHeight) - parseFloat(actualValue);
-                    ventBottomHeight = parseFloat(ventBottomHeight) + parseFloat(value);
-                }
-                else if (parseFloat(value) < parseFloat(ventTopHeight)) {
-                    actualValue = parseFloat(ventBottomHeight) - parseFloat(value);
-                    ventTopHeight = parseFloat(ventTopHeight) + parseFloat(actualValue);
-                    ventBottomHeight = parseFloat(ventBottomHeight) - parseFloat(value);
-                }
-            }
-
             $("#MainContent_txtWindowTopVentHeightVinyl").val(Math.round(parseFloat(ventTopHeight) * 100) / 100);
             $("#MainContent_txtWindowBottomVentHeightVinyl").val(Math.round(parseFloat(ventBottomHeight) * 100) / 100);
+            
         }
 
             

@@ -98,6 +98,8 @@ namespace SunspaceDealerDesktop
                             switch (linearItemType)
                             {
                                 case "Mod":
+                                    #region Mod
+
                                     List<ModuleItem> listOfModuleItems = new List<ModuleItem>();
 
                                     Mod aMod = new Mod();
@@ -275,8 +277,7 @@ namespace SunspaceDealerDesktop
                                                         
                                                         #endregion
                                                         break;
-
-                                                    case "Open": //change to window
+                                                    case "Open": 
                                                         #region Open Window
                                                         Window openWindow = new Window();
                                                         openWindow.ModuleIndex = moduleIndex;
@@ -292,7 +293,7 @@ namespace SunspaceDealerDesktop
                                                 #endregion
                                                 break;
                                             case "Door":
-                                                #region
+                                                #region Door
                                                 //Get door
                                                 aCommand.CommandText = "SELECT door_type, door_style, screen_type, height, length, door_colour, kick_plate FROM doors "
                                                                         + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "'";
@@ -303,14 +304,240 @@ namespace SunspaceDealerDesktop
                                                 string doorType = Convert.ToString(aReader[0]);
                                                 string doorStyle = Convert.ToString(aReader[1]);
                                                 string doorScreenType = Convert.ToString(aReader[2]);
-                                                float doorHeight = Convert.ToSingle(aReader[3]);
-                                                float doorLength = Convert.ToSingle(aReader[4]);
+                                                float doorFrameHeight = Convert.ToSingle(aReader[3]);
+                                                float doorFrameLength = Convert.ToSingle(aReader[4]);
                                                 string doorColour = Convert.ToString(aReader[5]);
                                                 float doorKickPlate = Convert.ToSingle(aReader[6]); 
 
                                                 aReader.Close();
 
-                                                //types of windows
+                                                //get the window in this door
+                                                aCommand.CommandText = "SELECT door_index, window_type, screen_type, start_height, end_height, length, window_colour, number_vents FROM windows "
+                                                                        + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "'";
+
+                                                aReader = aCommand.ExecuteReader();
+                                                aReader.Read();
+
+                                                VinylWindow aDoorWindow = new VinylWindow();
+
+                                                int doorIndex = Convert.ToInt32(aReader[0]);
+                                                aDoorWindow.WindowStyle = Convert.ToString(aReader[1]);
+                                                aDoorWindow.ScreenType = Convert.ToString(aReader[2]);
+                                                aDoorWindow.LeftHeight = Convert.ToSingle(aReader[3]);
+                                                aDoorWindow.RightHeight = Convert.ToSingle(aReader[4]);
+                                                aDoorWindow.Width = Convert.ToSingle(aReader[5]);
+                                                aDoorWindow.FrameColour = Convert.ToString(aReader[6]);
+                                                aDoorWindow.NumVents = Convert.ToInt32(aReader[7]); 
+
+                                                aReader.Close();
+
+                                                switch (aDoorWindow.WindowStyle) //door/window style
+                                                {
+                                                    case "Full Screen": //screen
+                                                        //nothing to do
+                                                        break;
+                                                    case "Vertical Four Track": //vinyl
+                                                        #region V4T
+                                                        List<float> listOfV4TVentHeights = new List<float>();
+
+                                                        //for each vinyl item in the in the vinyl window
+                                                        for (int l = 0; l < aDoorWindow.NumVents; l++)
+                                                        {
+
+                                                            //Get vinyl item
+                                                            aCommand.CommandText = "SELECT start_height, vinyl_tint, spreader_bar FROM vinyl_items "
+                                                                                    + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "' AND vent_index = '" + l + "'";
+
+                                                            aReader = aCommand.ExecuteReader();
+                                                            aReader.Read();
+
+                                                            listOfV4TVentHeights.Add(Convert.ToSingle(aReader[0]));
+                                                            aDoorWindow.VinylTint += Convert.ToString(aReader[1]);
+                                                            aDoorWindow.SpreaderBar = Convert.ToSingle(aReader[2]);
+
+                                                            aReader.Close();
+                                                        }
+
+                                                        aDoorWindow.VentHeights = listOfV4TVentHeights;
+                                                        #endregion
+                                                        break;
+                                                    case "Full View": //glass
+                                                        #region Full View
+                                                        //for (int l = 0; l < numVents; l++)
+                                                        //{
+
+                                                        //    //Get glass item
+                                                        //    aCommand.CommandText = "SELECT glass_type, glass_tint, tempered, operation FROM glass_items "
+                                                        //                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "' AND vent_index = '" + l + "'";
+
+                                                        //    aReader = aCommand.ExecuteReader();
+                                                        //    aReader.Read();
+
+                                                        //    //aDoorWindow.GlassType = Convert.ToString(aReader[0]);
+                                                        //    aDoorWindow.VinylTint += Convert.ToString(aReader[1]);
+                                                        //    //aDoorWindow.Tempered = Convert.ToBoolean(aReader[2]);
+                                                        //    //aDoorWindow.Operation += Convert.ToString(aReader[3]);
+
+                                                        //    aReader.Close();
+                                                        //}
+                                                        #endregion 
+                                                        break;
+                                                    case "Full View Colonial": //glass
+                                                        #region Full View Colonial
+                                                        //for (int l = 0; l < numVents; l++)
+                                                        //{
+
+                                                        //    //Get glass item
+                                                        //    aCommand.CommandText = "SELECT glass_type, glass_tint, tempered, operation FROM glass_items "
+                                                        //                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "' AND vent_index = '" + l + "'";
+
+                                                        //    aReader = aCommand.ExecuteReader();
+                                                        //    aReader.Read();
+
+                                                        //    //aDoorWindow.GlassType = Convert.ToString(aReader[0]);
+                                                        //    aDoorWindow.VinylTint += Convert.ToString(aReader[1]);
+                                                        //    //aDoorWindow.Tempered = Convert.ToBoolean(aReader[2]);
+                                                        //    //aDoorWindow.Operation += Convert.ToString(aReader[3]);
+
+                                                        //    aReader.Close();
+                                                        //}
+                                                        #endregion
+                                                        break;
+                                                    case "Half Lite": //glass
+                                                        #region Half Lite
+                                                        //for (int l = 0; l < numVents; l++)
+                                                        //{
+
+                                                        //    //Get glass item
+                                                        //    aCommand.CommandText = "SELECT glass_type, glass_tint, tempered, operation FROM glass_items "
+                                                        //                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "' AND vent_index = '" + l + "'";
+
+                                                        //    aReader = aCommand.ExecuteReader();
+                                                        //    aReader.Read();
+
+                                                        //    //aDoorWindow.GlassType = Convert.ToString(aReader[0]);
+                                                        //    aDoorWindow.VinylTint += Convert.ToString(aReader[1]);
+                                                        //    //aDoorWindow.Tempered = Convert.ToBoolean(aReader[2]);
+                                                        //    //aDoorWindow.Operation += Convert.ToString(aReader[3]);
+
+                                                        //    aReader.Close();
+                                                        //}
+                                                        #endregion
+                                                        break;
+                                                    case "Half Lite Venting": //glass
+                                                        #region Half Lite Venting
+                                                        //for (int l = 0; l < numVents; l++)
+                                                        //{
+
+                                                        //    //Get glass item
+                                                        //    aCommand.CommandText = "SELECT glass_type, glass_tint, tempered, operation FROM glass_items "
+                                                        //                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "' AND vent_index = '" + l + "'";
+
+                                                        //    aReader = aCommand.ExecuteReader();
+                                                        //    aReader.Read();
+
+                                                        //    //aDoorWindow.GlassType = Convert.ToString(aReader[0]);
+                                                        //    aDoorWindow.VinylTint += Convert.ToString(aReader[1]);
+                                                        //    //aDoorWindow.Tempered = Convert.ToBoolean(aReader[2]);
+                                                        //    //aDoorWindow.Operation += Convert.ToString(aReader[3]);
+
+                                                        //    aReader.Close();
+                                                        //}
+                                                        #endregion
+                                                        break;
+                                                    case "Half Lite with Mini Blinds": //glass
+                                                        #region Half Lite with Mini Blinds
+                                                        //for (int l = 0; l < numVents; l++)
+                                                        //{
+
+                                                        //    //Get glass item
+                                                        //    aCommand.CommandText = "SELECT glass_type, glass_tint, tempered, operation FROM glass_items "
+                                                        //                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "' AND vent_index = '" + l + "'";
+
+                                                        //    aReader = aCommand.ExecuteReader();
+                                                        //    aReader.Read();
+
+                                                        //    //aDoorWindow.GlassType = Convert.ToString(aReader[0]);
+                                                        //    aDoorWindow.VinylTint += Convert.ToString(aReader[1]);
+                                                        //    //aDoorWindow.Tempered = Convert.ToBoolean(aReader[2]);
+                                                        //    //aDoorWindow.Operation += Convert.ToString(aReader[3]);
+
+                                                        //    aReader.Close();
+                                                        //}
+                                                        #endregion
+                                                        break;
+                                                    case "Full View with Mini Blinds": //glass
+                                                        #region Full View with Mini Blinds
+                                                        //for (int l = 0; l < numVents; l++)
+                                                        //{
+
+                                                        //    //Get glass item
+                                                        //    aCommand.CommandText = "SELECT glass_type, glass_tint, tempered, operation FROM glass_items "
+                                                        //                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "' AND vent_index = '" + l + "'";
+
+                                                        //    aReader = aCommand.ExecuteReader();
+                                                        //    aReader.Read();
+
+                                                        //    //aDoorWindow.GlassType = Convert.ToString(aReader[0]);
+                                                        //    aDoorWindow.VinylTint += Convert.ToString(aReader[1]);
+                                                        //    //aDoorWindow.Tempered = Convert.ToBoolean(aReader[2]);
+                                                        //    //aDoorWindow.Operation += Convert.ToString(aReader[3]);
+
+                                                        //    aReader.Close();
+                                                        //}
+                                                        #endregion
+                                                        break;
+                                                    case "Aluminum Storm Screen": //screen
+                                                        //nothing to do
+                                                        break;
+                                                    case "Aluminum Storm Glass": //glass
+                                                        #region Aluminum Storm Glass
+                                                        //for (int l = 0; l < numVents; l++)
+                                                        //{
+
+                                                        //    //Get glass item
+                                                        //    aCommand.CommandText = "SELECT glass_type, glass_tint, tempered, operation FROM glass_items "
+                                                        //                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "' AND vent_index = '" + l + "'";
+
+                                                        //    aReader = aCommand.ExecuteReader();
+                                                        //    aReader.Read();
+
+                                                        //    //aDoorWindow.GlassType = Convert.ToString(aReader[0]);
+                                                        //    aDoorWindow.VinylTint += Convert.ToString(aReader[1]);
+                                                        //    //aDoorWindow.Tempered = Convert.ToBoolean(aReader[2]);
+                                                        //    //aDoorWindow.Operation += Convert.ToString(aReader[3]);
+
+                                                        //    aReader.Close();
+                                                        //}
+                                                        #endregion
+                                                        break;
+                                                    case "Vinyl Guard": //vinyl
+                                                        #region Vinyl Guard
+                                                        List<float> listOfVGVentHeights = new List<float>();
+
+                                                        //for each vinyl item in the in the vinyl window
+                                                        for (int l = 0; l < aDoorWindow.NumVents; l++)
+                                                        {
+
+                                                            //Get vinyl item
+                                                            aCommand.CommandText = "SELECT start_height, vinyl_tint, spreader_bar FROM vinyl_items "
+                                                                                    + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "' AND vent_index = '" + l + "'";
+
+                                                            aReader = aCommand.ExecuteReader();
+                                                            aReader.Read();
+
+                                                            listOfVGVentHeights.Add(Convert.ToSingle(aReader[0]));
+                                                            aDoorWindow.VinylTint += Convert.ToString(aReader[1]);
+                                                            aDoorWindow.SpreaderBar = Convert.ToSingle(aReader[2]);
+
+                                                            aReader.Close();
+                                                        }
+
+                                                        aDoorWindow.VentHeights = listOfVGVentHeights;
+                                                        #endregion
+                                                        break;
+                                                }
+                                                //types of doors
                                                 switch (doorType)
                                                 {
                                                     case "Cabana Door":
@@ -331,8 +558,8 @@ namespace SunspaceDealerDesktop
                                                         aCabanaDoor.DoorType = doorType;
                                                         aCabanaDoor.DoorStyle = doorStyle;
                                                         aCabanaDoor.ScreenType = doorScreenType;
-                                                        aCabanaDoor.Height = doorHeight;
-                                                        aCabanaDoor.Length = doorLength;
+                                                        aCabanaDoor.Height = doorFrameHeight;
+                                                        aCabanaDoor.Length = doorFrameLength;
                                                         aCabanaDoor.Colour = doorColour; //
                                                         aCabanaDoor.Kickplate = doorKickPlate; //
                                                         aCabanaDoor.GlassTint = Convert.ToString(aReader[0]);
@@ -364,8 +591,8 @@ namespace SunspaceDealerDesktop
                                                         aFrenchDoor.DoorType = doorType;
                                                         aFrenchDoor.DoorStyle = doorStyle;
                                                         aFrenchDoor.ScreenType = doorScreenType;
-                                                        aFrenchDoor.Height = doorHeight;
-                                                        aFrenchDoor.Length = doorLength;
+                                                        aFrenchDoor.Height = doorFrameHeight;
+                                                        aFrenchDoor.Length = doorFrameLength;
                                                         aFrenchDoor.Colour = doorColour; //
                                                         aFrenchDoor.Kickplate = doorKickPlate; // 
                                                         aFrenchDoor.GlassTint = Convert.ToString(aReader[0]);
@@ -397,8 +624,8 @@ namespace SunspaceDealerDesktop
                                                         aPatioDoor.DoorType = doorType;
                                                         aPatioDoor.DoorStyle = doorStyle;
                                                         aPatioDoor.ScreenType = doorScreenType;
-                                                        aPatioDoor.Height = doorHeight;
-                                                        aPatioDoor.Length = doorLength;
+                                                        aPatioDoor.Height = doorFrameHeight;
+                                                        aPatioDoor.Length = doorFrameLength;
                                                         aPatioDoor.Colour = doorColour; //
                                                         aPatioDoor.Kickplate = doorKickPlate; // 
                                                         aPatioDoor.GlassTint = Convert.ToString(aReader[0]);
@@ -422,8 +649,8 @@ namespace SunspaceDealerDesktop
                                                         aDoor.DoorType = doorType;
                                                         //aDoor.DoorStyle = doorStyle;
                                                         //aDoor.ScreenType = doorScreenType;
-                                                        aDoor.Height = doorHeight;
-                                                        aDoor.Length = doorLength;
+                                                        aDoor.Height = doorFrameHeight;
+                                                        aDoor.Length = doorFrameLength;
                                                         //aDoor.Colour = doorColour; //
                                                         //aDoor.Kickplate = doorKickPlate; // 
                                                         
@@ -437,14 +664,41 @@ namespace SunspaceDealerDesktop
 
                                                 #endregion
                                                 break;
-                                            case "Box Header": // make a class for horizontal
-                                                //horizontal box header?
-                                                break; // make a class
-                                            case "Panel Receiver": // make a class for horizontal
-                                                //horizontal panel receiver?
+                                            case "Box Header": // 
+                                                #region H BoxHeader
+                                                HBoxHeader hBoxHeader = new HBoxHeader();
+                                                hBoxHeader.ModuleIndex = moduleIndex;
+                                                hBoxHeader.ItemType = itemType;
+                                                hBoxHeader.FStartHeight = fStartHeight;
+                                                hBoxHeader.FEndHeight = fEndHeight;
+                                                hBoxHeader.FLength = fLength;
+
+                                                listOfModuleItems.Add(hBoxHeader); //add the modular item to the list
+                                                #endregion
+                                                break; // 
+                                            case "Receiver": // 
+                                                #region H Receiver
+                                                HReceiver hReceiver = new HReceiver();
+                                                hReceiver.ModuleIndex = moduleIndex;
+                                                hReceiver.ItemType = itemType;
+                                                hReceiver.FStartHeight = fStartHeight;
+                                                hReceiver.FEndHeight = fEndHeight;
+                                                hReceiver.FLength = fLength;
+
+                                                listOfModuleItems.Add(hReceiver); //add the modular item to the list
+                                                #endregion
                                                 break;
                                             case "Panel": // same as open wall window
-                                                // filler? 
+                                                #region Solid Wall Window
+                                                Window solid = new Window();
+                                                solid.ModuleIndex = moduleIndex;
+                                                solid.ItemType = itemType;
+                                                solid.FStartHeight = fStartHeight;
+                                                solid.FEndHeight = fEndHeight;
+                                                solid.FLength = fLength;
+
+                                                listOfModuleItems.Add(solid); //add the modular item to the list
+                                                #endregion
                                                 break;
                                         }
                                         aMod.ModularItems = listOfModuleItems;                                        
@@ -452,6 +706,7 @@ namespace SunspaceDealerDesktop
 
                                     listOfLinearItems.Add(aMod);//add the linear item to the list
 
+                                    #endregion
                                     break;
                                 case "Receiver": 
                                     #region Receiver
@@ -560,7 +815,20 @@ namespace SunspaceDealerDesktop
                                     #endregion
                                     break;
                                 case "Electrical Chase":
-                                    //no class //make a class (later)
+                                    #region ElectricalChase
+                                    ElectricalChase aElectricalChase = new ElectricalChase();
+                                    aElectricalChase.LinearIndex = linearIndex;
+                                    aElectricalChase.ItemType = linearItemType;
+                                    aElectricalChase.StartHeight = startHeight;
+                                    aElectricalChase.EndHeight = endHeight;
+                                    aElectricalChase.Length = length;
+                                    //aElectricalChase.FrameColour = frameColour;
+                                    aElectricalChase.Sex = "MM";
+                                    aElectricalChase.FixedLocation = fixedLocation; 
+                                    aElectricalChase.AttachedTo = attachedTo; 
+
+                                    listOfLinearItems.Add(aElectricalChase);//add the linear item to the list
+                                    #endregion
                                     break;
                                 case "H Channel":
                                     #region H Channel

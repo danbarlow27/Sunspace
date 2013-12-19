@@ -384,8 +384,12 @@
     </Compile>
     <Compile Include="Customer.cs" />
     <Compile Include="Door.cs" />
+    <Compile Include="ElectricalChase.cs" />
+    <Compile Include="HBoxHeader.cs" />
+    <Compile Include="HReceiver.cs" />
     <Compile Include="JSONTest.aspx.cs">
       <DependentUpon>JSONTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="JSONTest.aspx.designer.cs">
       <DependentUpon>JSONTest.aspx</DependentUpon>
