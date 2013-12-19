@@ -903,14 +903,14 @@ div.priceCalculatorWrapper .additionalChargesOverlay {
 }
 
 div.additionalChargesOverlay .content {
-    position: fixed;
+    position: absolute;
     height: 500px;
     width: 400px;
     background-color: rgb(242, 235, 214);
     top: 50%;
     left: 50%;
     margin-left: -200px !important;
-    margin-top: -250px !important;
+    margin-top: -300px !important;
     z-index:1005; 
 }
 
