@@ -56,9 +56,10 @@ namespace SunspaceWizard
                 TableRow projectsTableRow = new TableRow();
 
                 TableCell projectsNameCell = new TableCell();
-                Label projectName = new Label();
+                Button projectName = new Button();
                 projectName.Text = dvProjectList[i][0].ToString();
-                projectsNameCell.Controls.Add(projectName);
+                // projectName.
+                 projectsNameCell.Controls.Add(projectName);
                 projectsTableRow.Controls.Add(projectsNameCell);
 
                 TableCell projectsDateCell = new TableCell();
