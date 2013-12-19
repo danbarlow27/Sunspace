@@ -45,8 +45,6 @@ input[type=submit]:hover {
     cursor: pointer;
 }
 
-
-
 /******************************************
  * TEXT
  ******************************************/
@@ -906,13 +904,13 @@ div.priceCalculatorWrapper .additionalChargesOverlay {
 
 div.additionalChargesOverlay .content {
     position: fixed;
-    height: 300px;
+    height: 500px;
     width: 400px;
     background-color: rgb(242, 235, 214);
     top: 50%;
     left: 50%;
     margin-left: -200px !important;
-    margin-top: -150px !important;
+    margin-top: -250px !important;
     z-index:1005; 
 }
 
@@ -944,12 +942,17 @@ div.additionalChargesOverlay .content h3 {
     padding: 0 0 0 2em;
 }
 
-div.additionalChargesoverlay .additionalChargesLabel {
-    padding: 0 0 0 1em;
-}
-
-div.additionalChargesoverlay .additionalChargesTextField {
-    width: 50%;
+div.additionalChargesOverlay .button {
+    background-color: #000;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    cursor: pointer;
+    padding: 12px 24px;
+    margin: 0 2em;
 }
 
 /******************************************
@@ -978,4 +981,12 @@ div.additionalChargesoverlay .additionalChargesTextField {
 
 .clear-right-margin {
 	margin-right: 0;
+}
+
+.center {
+    text-align:center;
+}
+
+.maxWidth {
+    width:100%;
 }
