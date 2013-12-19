@@ -39,7 +39,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json">
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -385,7 +386,6 @@
     <Compile Include="Door.cs" />
     <Compile Include="JSONTest.aspx.cs">
       <DependentUpon>JSONTest.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="JSONTest.aspx.designer.cs">
       <DependentUpon>JSONTest.aspx</DependentUpon>
@@ -400,8 +400,6 @@
     <Compile Include="PriceCalculator.aspx.cs">
       <DependentUpon>PriceCalculator.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    <Compile Include="PriceCalculator.aspx.cs">
-      <DependentUpon>PriceCalculator.aspx</DependentUpon>
     </Compile>
     <Compile Include="PriceCalculator.aspx.designer.cs">
       <DependentUpon>PriceCalculator.aspx</DependentUpon>
@@ -557,6 +555,7 @@
     <Compile Include="Sunroom.cs" />
     <Compile Include="TestingHiddens.aspx.cs">
       <DependentUpon>TestingHiddens.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="TestingHiddens.aspx.designer.cs">
       <DependentUpon>TestingHiddens.aspx</DependentUpon>
@@ -629,9 +628,7 @@
       <DependentUpon>WizardWindowsOnly.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Account\Web.config" />
     <Content Include="Site.Master" />
