@@ -4011,7 +4011,7 @@ namespace SunspaceDealerDesktop
                                 //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
                                 //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
                                 doorWindow.ItemType = "Window";
-                                doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
+                                //doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
                                 doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;

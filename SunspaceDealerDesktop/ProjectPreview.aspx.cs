@@ -681,6 +681,12 @@ namespace SunspaceDealerDesktop
                                                                     + aDoor.Kickplate
                                                                     + ");";
                                             aCommand.ExecuteNonQuery();
+
+                                            if (aDoor.DoorType == "Patio")
+                                            {
+
+                                            }
+
                                             //Now make entry for the door window
                                             if (aDoor.DoorType != "Patio")
                                             {
@@ -744,6 +750,7 @@ namespace SunspaceDealerDesktop
                                                             aCommand.ExecuteNonQuery();
                                                             break;
 
+                                                        case "Vertical Four Track":
                                                         case "Vertical 4 Track":
                                                             for (int vents = 0; vents < doorWindow.NumVents; vents++)
                                                             {
