@@ -4615,7 +4615,7 @@ namespace SunspaceDealerDesktop
             aDoor.DoorType = "Patio";
             aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
             aDoor.ScreenType = hidScreenType.Value; //CHANGEME
-            aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
+            //aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
             
             //patio attributes
             aDoor.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "height"]);

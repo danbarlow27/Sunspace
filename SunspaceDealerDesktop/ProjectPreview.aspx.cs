@@ -684,7 +684,84 @@ namespace SunspaceDealerDesktop
 
                                             if (aDoor.DoorType == "Patio")
                                             {
+                                                PatioDoor aPatioDoor = (PatioDoor)aMod.ModularItems[k];
+                                                aCommand.CommandText = "INSERT INTO patio_doors(project_id, linear_index, module_index, door_index, screen_type, glass_tint, height, length, moving_door) VALUES("
+                                                                    + project_id + ", "
+                                                                    + linearCounter + ", "
+                                                                    + k + ", "
+                                                                    + 0 + ", '"
+                                                                    + aPatioDoor.ScreenType + "', '"
+                                                                    + aPatioDoor.GlassTint + "', "
+                                                                    + aPatioDoor.Height + ", "
+                                                                    + aPatioDoor.Length + ", "
+                                                                    + 1
+                                                                    + ");";
+                                                aCommand.ExecuteNonQuery();
 
+                                                aCommand.CommandText = "INSERT INTO patio_doors(project_id, linear_index, module_index, door_index, screen_type, glass_tint, height, length, moving_door) VALUES("
+                                                                    + project_id + ", "
+                                                                    + linearCounter + ", "
+                                                                    + k + ", "
+                                                                    + 1 + ", '"
+                                                                    + aPatioDoor.ScreenType + "', '"
+                                                                    + aPatioDoor.GlassTint + "', "
+                                                                    + aPatioDoor.Height + ", "
+                                                                    + aPatioDoor.Length + ", "
+                                                                    + 0
+                                                                    + ");";
+                                                aCommand.ExecuteNonQuery();
+                                            }
+                                            else if (aDoor.DoorType == "Cabana")
+                                            {
+                                                CabanaDoor aCabanaDoor = (CabanaDoor)aMod.ModularItems[k];
+                                                aCommand.CommandText = "INSERT INTO cabana_doors(project_id, linear_index, module_index, height, length, screen_type, glass_tint, hinge, swing, hardware_type) VALUES("
+                                                                    + project_id + ", "
+                                                                    + linearCounter + ", "
+                                                                    + k + ", "
+                                                                    + aCabanaDoor.Height + ", "
+                                                                    + aCabanaDoor.Length + ", '"
+                                                                    + aCabanaDoor.ScreenType + "', '"
+                                                                    + aCabanaDoor.GlassTint + "', '"
+                                                                    + aCabanaDoor.Hinge.Substring(0, 1) + "', '"
+                                                                    + aCabanaDoor.Swing + "', '"
+                                                                    + aCabanaDoor.HardwareType
+                                                                    + "');";
+                                                aCommand.ExecuteNonQuery();
+                                            }
+                                            else if (aDoor.DoorType == "French")
+                                            {
+                                                FrenchDoor aFrenchDoor = (FrenchDoor)aMod.ModularItems[k];
+                                                aCommand.CommandText = "INSERT INTO french_doors(project_id, linear_index, module_index, door_index, height, length, vinyl_tint, screen_type, glass_tint, swing, operator, hardware_type) VALUES("
+                                                                    + project_id + ", "
+                                                                    + linearCounter + ", "
+                                                                    + k + ", "
+                                                                    + 0 + ", "
+                                                                    + aFrenchDoor.Height + ", "
+                                                                    + aFrenchDoor.Length + ", '"
+                                                                    + aFrenchDoor.VinylTint + "', '"
+                                                                    + aFrenchDoor.ScreenType + "', '"
+                                                                    + aFrenchDoor.GlassTint + "', '"
+                                                                    + aFrenchDoor.Swing + "', "
+                                                                    + 0 + ", '"
+                                                                    + aFrenchDoor.HardwareType + "'"
+                                                                    + ");";
+                                                aCommand.ExecuteNonQuery();
+
+                                                aCommand.CommandText = "INSERT INTO french_doors(project_id, linear_index, module_index, door_index, height, length, vinyl_tint, screen_type, glass_tint, swing, operator, hardware_type) VALUES("
+                                                                    + project_id + ", "
+                                                                    + linearCounter + ", "
+                                                                    + k + ", "
+                                                                    + 1 + ", "
+                                                                    + aFrenchDoor.Height + ", "
+                                                                    + aFrenchDoor.Length + ", '"
+                                                                    + aFrenchDoor.VinylTint + "', '"
+                                                                    + aFrenchDoor.ScreenType + "', '"
+                                                                    + aFrenchDoor.GlassTint + "', '"
+                                                                    + aFrenchDoor.Swing + "', "
+                                                                    + 1 + ", '"
+                                                                    + aFrenchDoor.HardwareType + "'"
+                                                                    + ");";
+                                                aCommand.ExecuteNonQuery();
                                             }
 
                                             //Now make entry for the door window
