@@ -682,51 +682,36 @@ namespace SunspaceDealerDesktop
                                                                     + ");";
                                             aCommand.ExecuteNonQuery();
                                             //Now make entry for the door window
-                                            if (aDoor.DoorType != "Patio")
+                                            #region Cabana Door SQL Inserts
+                                            if (aDoor.DoorType == "Cabana")
                                             {
                                                 for (int doorNum = 1; doorNum < 2; doorNum++)
                                                 {
                                                     Window doorWindow = aDoor.DoorWindow;
                                                     switch (doorWindow.WindowStyle)
                                                     {
-                                                        #region old by-door
-                                                        //case "Full Screen":
-                                                        //    break;
-                                                        //case "Vertical Four Track":
-                                                        //case "Vertical 4 Track":
-                                                        //    break;
-                                                        //case "Full View":
-                                                        //    break;
-                                                        //case "Full View Colonial":
-                                                        //    break;
-                                                        //case "Half Lite":
-                                                        //    break;
-                                                        //case "Half Lite Venting":
-                                                        //    break;
-                                                        //case "Half Lite with Mini Blinds":
-                                                        //    break;
-                                                        //case "Full View with Mini Blinds":
-                                                        //    break;
-                                                        #endregion
-
                                                         #region new by-window
-                                                        case "Vinyl":
-                                                            aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
-                                                                                    + project_id + ", "
-                                                                                    + linearCounter + ", "
-                                                                                    + k + ", "
-                                                                                    + -1 + ", " //This is not in a vent, this is just solid vinyl
-                                                                                    + doorNum + ", " //This is a window, so it is 0
-                                                                                    + doorWindow.LeftHeight + ", "
-                                                                                    + doorWindow.RightHeight + ", "
-                                                                                    + doorWindow.Width + ", '"
-                                                                                    + doorWindow.Colour + "', "
-                                                                                    + doorWindow.SpreaderBar 
+                                                        case "Full Screen":
+                                                        case "Aluminum Storm Screen":
+                                                            aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length, mount) VALUES("
+                                                                                    + project_id + ", "             //Project ID
+                                                                                    + linearCounter + ", "          //Linear Index
+                                                                                    + k + ", "                      //Module Index
+                                                                                    + doorNum + ", "                //Door Index
+                                                                                    + aDoor.ScreenType + ", "       //Screen Type. This is a window, so it is 0
+                                                                                    + doorWindow.LeftHeight + ", "  //Start Height
+                                                                                    + doorWindow.RightHeight + ", " //End Height
+                                                                                    + doorWindow.Width + ", '"      //Length
+                                                                                    + "In" + "' "                   //Mount
                                                                                     + ");";
                                                             aCommand.ExecuteNonQuery();
                                                             break;
 
-                                                        case "Glass":
+                                                        case "Full View":
+                                                        case "Full View Colonial":
+                                                        case "Half Lite":
+                                                        case "Half Lite with Mini Blinds":
+                                                        case "Full View with Mini Blinds":
                                                             aCommand.CommandText = "INSERT INTO glass_items(project_id, linear_index, module_index, vent_index, door_index, glass_type, start_height, end_height, length, glass_tint, tempered, operation) VALUES("
                                                                                     + project_id + ", "
                                                                                     + linearCounter + ", "
@@ -763,7 +748,7 @@ namespace SunspaceDealerDesktop
                                                             }
                                                             break;
 
-                                                        case "Horizontal 2 Track":
+                                                        case "Vinyl Guard":
                                                             aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
                                                                                     + project_id + ", "
                                                                                     + linearCounter + ", "
@@ -774,47 +759,11 @@ namespace SunspaceDealerDesktop
                                                                                     + doorWindow.RightHeight + ", "
                                                                                     + doorWindow.Width + ", '"
                                                                                     + doorWindow.Colour + "', "
-                                                                                    + doorWindow.SpreaderBar 
+                                                                                    + doorWindow.SpreaderBar
                                                                                     + ");";
-                                                            aCommand.ExecuteNonQuery();
+                                                            aCommand.ExecuteNonQuery();                                            
                                                             break;
-
-                                                        case "Horizontal Roller":
-                                                            aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
-                                                                                    + project_id + ", "
-                                                                                    + linearCounter + ", "
-                                                                                    + k + ", "
-                                                                                    + -1 + ", " //This is not in a vent, this is just solid vinyl
-                                                                                    + doorNum + ", " //This is a window, so it is 0
-                                                                                    + doorWindow.LeftHeight + ", "
-                                                                                    + doorWindow.RightHeight + ", "
-                                                                                    + doorWindow.Width + ", '"
-                                                                                    + doorWindow.Colour + "', "
-                                                                                    + doorWindow.SpreaderBar 
-                                                                                    + ");";
-                                                            aCommand.ExecuteNonQuery();
-                                                            break;
-
-                                                        //case "Single Slider":
-                                                        //    break;
-
-                                                        //case "Double Slider":
-                                                        //    break;
-
-                                                        case "Screen":
-                                                            aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length, mount) VALUES("
-                                                                                    + project_id + ", "
-                                                                                    + linearCounter + ", "
-                                                                                    + k + ", "
-                                                                                    + doorNum + ", '" //This is a window, so 0
-                                                                                    + doorWindow.ScreenType + "', "
-                                                                                    + doorWindow.LeftHeight + ", "
-                                                                                    + doorWindow.RightHeight + ", "
-                                                                                    + doorWindow.Width + ", '"
-                                                                                    + "In" + "'" //A screen window is inside mount, whereas a screen on a window of another type is outside mounted (handled below)
-                                                                                    + ");";
-                                                            aCommand.ExecuteNonQuery();
-                                                            break;                                                            
+                                              
                                                         #endregion
                                                     }
                                                     //If not a french door, we'll only have 1 door, so just increment this to cheat out of the loop
@@ -824,6 +773,7 @@ namespace SunspaceDealerDesktop
                                                     }
                                                 }
                                             }
+#endregion
                                             else if (aDoor.DoorType == "Patio")
                                             {
                                                 Window doorWindow = aDoor.DoorWindow;
