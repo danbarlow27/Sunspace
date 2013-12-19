@@ -4018,14 +4018,15 @@ namespace SunspaceDealerDesktop
                                 //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
                                 //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
                                 doorWindow.ItemType = "Window";
-                                doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
 
                                 if (doorWindow.WindowStyle == "Vertical 4 Track" || doorWindow.WindowStyle.Contains("Vinyl"))
                                 {
                                     doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
-                                    doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
+                                    if (doorWindow.WindowStyle == "Vertical 4 Track"){
+                                        doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
+                                    }
                                 }
                                 else if (!doorWindow.WindowStyle.Contains("Screen"))
                                 {
