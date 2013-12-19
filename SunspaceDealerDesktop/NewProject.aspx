@@ -9,7 +9,62 @@
             window.location.replace("Home.aspx");
         }
 
+        function toggleCountry(){
+
+            var ddlCustomerCountry = document.getElementById("<%=ddlCustomerCountry.ClientID%>").value;
+            var zipLabel = document.getElementById("<%=lblCustomerZip.ClientID%>");
+            var zipText = document.getElementById("<%=txtCustomerZip.ClientID%>");
+            var provStateLabel = document.getElementById("<%=lblCustomerProvState.ClientID%>");
+
+            var country = document.getElementById("<%=ddlCustomerCountry.ClientID%>").value;
+            console.log("Changing to " + country);
+
+            if (country == "USA")
+            {                
+                var ddlProvState = document.getElementById("<%=ddlCustomerProvState.ClientID%>");
+                var stateArray = <%= usStatesJ %>;
+                var stateCodeArray = <%= usCodesJ %>;
+
+                ddlProvState.options.length = 0;
+
+                for (var i=0;i<stateArray.length;i++)
+                {
+                    var anOption = new Option(stateArray[i], stateCodeArray[i]);
+                    ddlProvState.options.add(anOption);
+                }
+
+                provStateLabel.innerHTML = "State";
+
+                zipText.setAttribute("MaxLength", "5");
+                zipLabel.innerHTML = "Zip Code";
+            }
+            else
+            {
+                var ddlProvState = document.getElementById("<%=ddlCustomerProvState.ClientID%>");
+                var canProvArray = <%= canProvJ %>;
+                var canCodeArray = <%= canCodesJ %>;
+
+                ddlProvState.options.length = 0;
+
+                for (var i=0;i<canProvArray.length;i++)
+                {
+                    var anOption = new Option(canProvArray[i], canCodeArray[i]);
+                    ddlProvState.options.add(anOption);
+                }
+
+                var postalCode = document.getElementById("<%=hidZip.ClientID%>").value;
+                var postCheck = checkPostalCode(postalCode);
+
+                provStateLabel.innerHTML = "Province";
+
+                zipText.setAttribute("MaxLength", "6");
+                zipLabel.innerHTML = "Postal Code";
+            }
+        }
+
         function newProjectCheckQuestion1() {
+            document.getElementById('<%=btnQuestion3.ClientID%>').style.display="inline";
+            document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').style.display="none";
             var ddlCustomerCountry = document.getElementById("<%=ddlCustomerCountry.ClientID%>").value;
             var zipLabel = document.getElementById("<%=lblCustomerZip.ClientID%>");
             var zipText = document.getElementById("<%=txtCustomerZip.ClientID%>");
@@ -61,23 +116,6 @@
                 //check zipcode
                 if (ddlCustomerCountry == "USA")
                 {
-                    var ddlProvState = document.getElementById("<%=ddlCustomerProvState.ClientID%>");
-                    var stateArray = <%= usStatesJ %>;
-                    var stateCodeArray = <%= usCodesJ %>;
-
-                    ddlProvState.options.length = 0;
-
-                    for (var i=0;i<stateArray.length;i++)
-                    {
-                        var anOption = new Option(stateArray[i], stateCodeArray[i]);
-                        ddlProvState.options.add(anOption);
-                    }
-
-                    provStateLabel.innerHTML = "State";
-
-                    zipText.setAttribute("MaxLength", "5");
-                    zipLabel.innerHTML = "Zip Code";
-
                     var zipCode = document.getElementById("<%=hidZip.ClientID%>").value;
 
                     //if zip code is not valid numeric, or it is not 5 digits, it is not valid
@@ -88,31 +126,11 @@
                     else if (isNaN(zipCode) || zipCode.length < 5) {
                         document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Zip Code you entered is not valid.\n";
                     }
-            }
+                }
 
                 //check postal code
-            if (ddlCustomerCountry == "CAN")
-            {
-                var ddlProvState = document.getElementById("<%=ddlCustomerProvState.ClientID%>");
-                    var canProvArray = <%= canProvJ %>;
-                    var canCodeArray = <%= canCodesJ %>;
-
-                    ddlProvState.options.length = 0;
-
-                    for (var i=0;i<canProvArray.length;i++)
-                    {
-                        var anOption = new Option(canProvArray[i], canCodeArray[i]);
-                        ddlProvState.options.add(anOption);
-                    }
-
-                    var postalCode = document.getElementById("<%=hidZip.ClientID%>").value;
-                    var postCheck = checkPostalCode(postalCode);
-
-                    provStateLabel.innerHTML = "Province";
-
-                    zipText.setAttribute("MaxLength", "6");
-                    zipLabel.innerHTML = "Postal Code";
-
+                if (ddlCustomerCountry == "CAN")
+                {
                     if (document.getElementById("<%=txtCustomerZip.ClientID%>").value == "")
                     {
                         document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Postal Code is required.\n";
@@ -201,7 +219,7 @@
                 //if selected value from dropdown is not the generic, it is a valid choice
                 if (document.getElementById("<%=ddlExistingCustomer.ClientID%>").value != "Choose a Customer...") {
                     //valid, so update pager and enable button
-                    $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("Existing - " + $('#<%=ddlExistingCustomer.ClientID%>').text());
+                    $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("Existing - " + $('#<%=ddlExistingCustomer.ClientID%>').find('option:selected').text());
                     document.getElementById("<%=hidExisting.ClientID%>").value = $('#<%=ddlExistingCustomer.ClientID%>').val();
                     document.getElementById('pagerOne').style.display = "inline";
                     document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
@@ -288,6 +306,9 @@
                 document.getElementById("<%=hidProjectType.ClientID%>").value = "Sunroom";
                 $('#<%=lblProjectTypeAnswer.ClientID%>').text(document.getElementById("<%=hidProjectType.ClientID%>").value + " of Model " + document.getElementById("<%=hidModelNumber.ClientID%>").value);
 
+                document.getElementById('<%=btnQuestion3.ClientID%>').style.display="inline";
+                document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').style.display="none";
+
                 //selected sunroom, so hide the walls only button, and re-show the normal button
                 document.getElementById('<%=btnQuestion4.ClientID%>').style.display="inline";
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="none";
@@ -320,11 +341,34 @@
                 //two hidden values type and model#
                 document.getElementById("<%=hidProjectType.ClientID%>").value = "Walls";
                 $('#<%=lblProjectTypeAnswer.ClientID%>').text(document.getElementById("<%=hidProjectType.ClientID%>").value + " of Model " + document.getElementById("<%=hidModelNumber.ClientID%>").value);
+                                
+                document.getElementById('<%=btnQuestion3.ClientID%>').style.display="inline";
+                document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').style.display="none";
 
                 //selected walls, so hide the sunroom button, and re-show the walls button
                 document.getElementById('<%=btnQuestion4.ClientID%>').style.display="none";
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="inline";
             }
+            else{              
+                document.getElementById('<%=btnQuestion3.ClientID%>').style.display="none";
+                document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').style.display="inline";
+            }
+            
+            if ($('#<%=radProjectWindows.ClientID%>').is(':checked')) {
+                document.getElementById("<%=hidProjectType.ClientID%>").value = "Windows";
+            }
+            else if ($('#<%=radProjectDoors.ClientID%>').is(':checked')) {
+                document.getElementById("<%=hidProjectType.ClientID%>").value = "Door";
+            }
+            else if ($('#<%=radProjectFlooring.ClientID%>').is(':checked')) {
+                document.getElementById("<%=hidProjectType.ClientID%>").value = "Flooring";
+            }
+            else if ($('#<%=radProjectRoof.ClientID%>').is(':checked')) {
+                document.getElementById("<%=hidProjectType.ClientID%>").value = "Roof";
+            }
+
+            console.log(document.getElementById("<%=hidProjectType.ClientID%>").value);
+
             //Now that we know what type of project they have, we can call this function for the colour dropdowns on the next slide
             newProjectChangeColours();
             return false;
@@ -383,10 +427,10 @@
             //When 'walls only' is selected, this will need additional logic to skip the next few slides
             //we'll do this by having a duplicate button in the same spot that goes to the desired slide
             if ($('#<%=radProjectWalls.ClientID%>').is(':checked')) {
+                document.getElementById("<%=hidKneewallHeight.ClientID%>").value = document.getElementById("<%=txtKneewallHeight.ClientID%>").value;
                 document.getElementById('<%=btnQuestion4.ClientID%>').style.display="none";
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="inline";
             }
-
 
             return false;
         }
@@ -994,7 +1038,7 @@
                                             </asp:TableCell>
 
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlCustomerCountry" OnChange="newProjectCheckQuestion1()" runat="server"></asp:DropDownList>
+                                                <asp:DropDownList ID="ddlCustomerCountry" OnChange="toggleCountry(); newProjectCheckQuestion1()" runat="server"></asp:DropDownList>
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -1218,64 +1262,34 @@
 
                     <%-- Window Only --%>
                     <li>
-                        <asp:RadioButton ID="radProjectWindows" GroupName="projectType" runat="server" />
+                        <asp:RadioButton ID="radProjectWindows" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectWindowsRadio" AssociatedControlID="radProjectWindows" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectWindows" AssociatedControlID="radProjectWindows" runat="server" Text="Windows"></asp:Label>
                     </li> 
                     
                     <%-- Door only --%>
                     <li>
-                        <asp:RadioButton ID="radProjectDoors" GroupName="projectType" runat="server" />
+                        <asp:RadioButton ID="radProjectDoors" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectDoorsRadio" AssociatedControlID="radProjectDoors" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectDoors" AssociatedControlID="radProjectDoors" runat="server" Text="Doors"></asp:Label>
                     </li>
                     
                     <%-- Floor only --%>
                     <li>
-                        <asp:RadioButton ID="radProjectFlooring" GroupName="projectType" runat="server" />
+                        <asp:RadioButton ID="radProjectFlooring" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectFlooringRadio" AssociatedControlID="radProjectFlooring" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectFlooring" AssociatedControlID="radProjectFlooring" runat="server" Text="Flooring"></asp:Label>
                     </li>
                     
                     <%-- Roof only --%>
                     <li>
-                        <asp:RadioButton ID="radProjectRoof" GroupName="projectType" runat="server" />
+                        <asp:RadioButton ID="radProjectRoof" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectRoofRadio" AssociatedControlID="radProjectRoof" runat="server"></asp:Label>
                         <asp:Label ID="lblProjectRoof" AssociatedControlID="radProjectRoof" runat="server" Text="Roof"></asp:Label>
-
-                        <div class="toggleContent">
-                            <ul class="checkboxes">
-                                <li>
-                                    <asp:RadioButton ID="radRoofIBeam" GroupName="roofType" runat="server" />
-                                    <asp:Label ID="lblRoofIBeamRadio" AssociatedControlID="radRoofIBeam" runat="server"></asp:Label>
-                                    <asp:Label ID="lblRoofIBeam" AssociatedControlID="radRoofIBeam" runat="server" Text="I-Beam"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:RadioButton ID="radRoofPressureCap" GroupName="roofType" runat="server" />
-                                    <asp:Label ID="lblRoofPressureCapRadio" AssociatedControlID="radRoofPressureCap" runat="server"></asp:Label>
-                                    <asp:Label ID="lblRoofPressureCap" AssociatedControlID="radRoofPressureCap" runat="server" Text="Pressure Cap"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:RadioButton ID="radRoofInterlocking" GroupName="roofType" runat="server" />
-                                    <asp:Label ID="lblRoofInterlockingRadio" AssociatedControlID="radRoofInterlocking" runat="server"></asp:Label>
-                                    <asp:Label ID="lblRoofInterlocking" AssociatedControlID="radRoofInterlocking" runat="server" Text="Interlocking"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:RadioButton ID="radRoofAcrylic" GroupName="roofType" runat="server" />
-                                    <asp:Label ID="lblRoofAcrylicRadio" AssociatedControlID="radRoofAcrylic" runat="server"></asp:Label>
-                                    <asp:Label ID="lblRoofAcrylic" AssociatedControlID="radRoofAcrylic" runat="server" Text="Acrylic"></asp:Label>
-                                </li>
-                                <li>
-                                    <asp:RadioButton ID="radRoofOSB" GroupName="roofType" runat="server" />
-                                    <asp:Label ID="lblRoofOSBRadio" AssociatedControlID="radRoofOSB" runat="server"></asp:Label>
-                                    <asp:Label ID="lblRoofOSB" AssociatedControlID="radRoofOSB" runat="server" Text="OSB/OSB"></asp:Label>
-                                </li>
-                            </ul>            
-                        </div>
                     </li>  
                                         
                     <%-- Showroom --%>                 
-                    <li>
+                    <%--<li>
                         <asp:RadioButton ID="radSunroomModelShowroom" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblSunroomModelShowroomRadio" AssociatedControlID="radSunroomModelShowroom" runat="server"></asp:Label>
                         <asp:Label ID="lblSunroomModelShowroom" AssociatedControlID="radSunroomModelShowroom" runat="server" Text="Showroom"></asp:Label>
@@ -1304,7 +1318,7 @@
                                 </li>
                             </ul>            
                         </div>
-                    </li>
+                    </li>--%>
                     
                     <%-- Component Order --%>
                     <li>
@@ -1314,7 +1328,8 @@
                     </li> 
                 </ul> 
 
-                <asp:Button ID="btnQuestion3" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3_OrderOnly" Enabled="true" CssClass="btnSubmit float-right slidePanel" OnClick="btnQuestion3_OrderOnly_Click" runat="server" Text="Next Question" />
             </div> 
             
             <%-- Slide 4 - Styling Options --%>
