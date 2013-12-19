@@ -39,10 +39,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -195,9 +191,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Images\iconsNavEditor.png" />
-    <Content Include="JSONTest.aspx" />
-    <Content Include="JSONTest2.aspx" />
-    <Content Include="PriceCalculator.aspx" />
     <Content Include="ProjectEditor.aspx" />
     <Content Include="Scripts\init.js" />
     <Content Include="WizardDoorOnly.aspx" />
@@ -384,26 +377,6 @@
     </Compile>
     <Compile Include="Customer.cs" />
     <Compile Include="Door.cs" />
-    <Compile Include="JSONTest.aspx.cs">
-      <DependentUpon>JSONTest.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="JSONTest.aspx.designer.cs">
-      <DependentUpon>JSONTest.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="JSONTest2.aspx.cs">
-      <DependentUpon>JSONTest2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="JSONTest2.aspx.designer.cs">
-      <DependentUpon>JSONTest2.aspx</DependentUpon>
-    <Compile Include="PriceCalculator.aspx.cs">
-      <DependentUpon>PriceCalculator.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PriceCalculator.aspx.designer.cs">
-      <DependentUpon>PriceCalculator.aspx</DependentUpon>
-    </Compile>
     <Compile Include="ProjectEditor.aspx.cs">
       <DependentUpon>ProjectEditor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -555,6 +528,7 @@
     <Compile Include="Sunroom.cs" />
     <Compile Include="TestingHiddens.aspx.cs">
       <DependentUpon>TestingHiddens.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="TestingHiddens.aspx.designer.cs">
       <DependentUpon>TestingHiddens.aspx</DependentUpon>
