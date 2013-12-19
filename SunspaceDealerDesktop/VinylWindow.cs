@@ -17,9 +17,12 @@ namespace SunspaceDealerDesktop
         //private float endHeight;
         //private float length;
         //private string frameColour;
-        private string vinylTint;
-        //private float spreaderBar;
-        //private int numVents;
+        private string vinylTint; //
+        private float spreaderBar;
+        private int numVents;
+        private List<float> ventHeights = new List<float>();
+        //private List<string> ventTints = new List<string>();
+
         #endregion
 
         #region Constructors
@@ -111,27 +114,51 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        //public float SpreaderBar
-        //{
-        //    get
-        //    {
-        //        return spreaderBar;
-        //    }
-        //    set
-        //    {
-        //        spreaderBar = value;
-        //    }
-        //}
+        public float SpreaderBar
+        {
+            get
+            {
+                return spreaderBar;
+            }
+            set
+            {
+                spreaderBar = value;
+            }
+        }
 
-        //public int NumVents
+        public int NumVents
+        {
+            get
+            {
+                return numVents;
+            }
+            set
+            {
+                numVents = value;
+            }
+        }
+
+        public List<float> VentHeights
+        {
+            get
+            {
+                return ventHeights;
+            }
+            set
+            {
+                ventHeights = value;
+            }
+        }
+
+        //public List<string> VentTints
         //{
         //    get
         //    {
-        //        return numVents;
+        //        return ventTints;
         //    }
         //    set
         //    {
-        //        numVents = value;
+        //        ventTints = value;
         //    }
         //}
 

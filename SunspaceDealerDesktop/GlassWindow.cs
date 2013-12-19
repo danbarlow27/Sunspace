@@ -17,6 +17,9 @@ namespace SunspaceDealerDesktop
         //private float endHeight;
         //private float length;
         private string glassTint;
+        private bool tempered;
+        private string operation;
+        private string glassType;
         //private float spreaderBar;
         //private int numVents;
         #endregion
@@ -107,6 +110,42 @@ namespace SunspaceDealerDesktop
             set
             {
                 glassTint = value;
+            }
+        }
+
+        public bool Tempered
+        {
+            get
+            {
+                return tempered;
+            }
+            set
+            {
+                tempered = value;
+            }
+        }
+
+        public string Operation
+        {
+            get
+            {
+                return operation;
+            }
+            set
+            {
+                operation = value;
+            }
+        }
+
+        public string GlassType
+        {
+            get
+            {
+                return glassType;
+            }
+            set
+            {
+                glassType = value;
             }
         }
 

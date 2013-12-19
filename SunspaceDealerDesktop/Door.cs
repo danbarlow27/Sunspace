@@ -10,6 +10,8 @@ namespace SunspaceDealerDesktop
         #region Attributes
         private string doorType = null;     //Door type: Cabana, French, Patio, NoDoor (stored value: Cabana)
         private string doorStyle = null;    //Door style: Full View, Vertical Four Track, Full View Colonial, etc... (stored value: Full View)
+        private float height;
+        private float length;
         private string screenType = null;   //Door screen type: Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen (stored value: Better Vue Insect Screen)
         private float kickplate = 0f;       //Door kickplate height: 6" (stored value: 6)
         private float punch = 0f;           //Door header punch location
@@ -78,6 +80,28 @@ namespace SunspaceDealerDesktop
             set
             {
                 punch = value;
+            }
+        }
+        public float Height
+        {
+            get
+            {
+                return height;
+            }
+            set
+            {
+                height = value;
+            }
+        }
+        public float Length
+        {
+            get
+            {
+                return length;
+            }
+            set
+            {
+                length = value;
             }
         }
         public Window DoorWindow
