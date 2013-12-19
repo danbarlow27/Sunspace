@@ -42,6 +42,7 @@ namespace SunspaceDealerDesktop
 
                     aReader.Close();
 
+                    //for each wall in the project
                     for (int i = 0; i < wallCount; i++)
                     {
                         aCommand.CommandText = "SELECT wall_type, model_type, total_length, orientation, set_back, name, first_item_index, last_item_index, start_height, end_height, soffit_length, gable_peak, obstructions, fire_protection "
@@ -71,7 +72,7 @@ namespace SunspaceDealerDesktop
 
                         List<LinearItem> listOfLinearItems = new List<LinearItem>();
 
-
+                        //for each linear item/mod in the wall
                         for (int j = aWall.FirstItemIndex; j < aWall.LastItemIndex; j++)
                         {
                             //Get linear items
@@ -120,6 +121,7 @@ namespace SunspaceDealerDesktop
 
                                     aReader.Close();
 
+                                    //for each modular item in the mod
                                     for (int k = 0; k < modCount; k++)
                                     {
                                         //Get linear items
@@ -184,6 +186,7 @@ namespace SunspaceDealerDesktop
 
                                                         List<float> listOfVentHeights = new List<float>();
 
+                                                        //for each vinyl item in the in the vinyl window
                                                         for (int l = 0; l < numVents; l++)
                                                         {
 
@@ -272,6 +275,19 @@ namespace SunspaceDealerDesktop
                                                         
                                                         #endregion
                                                         break;
+
+                                                    case "Open": //change to window
+                                                        #region Open Window
+                                                        Window openWindow = new Window();
+                                                        openWindow.ModuleIndex = moduleIndex;
+                                                        openWindow.ItemType = itemType;
+                                                        openWindow.FStartHeight = fStartHeight;
+                                                        openWindow.FEndHeight = fEndHeight;
+                                                        openWindow.FLength = fLength;
+
+                                                        listOfModuleItems.Add(openWindow); //add the modular item to the list
+                                                        #endregion
+                                                        break;
                                                 }
                                                 #endregion
                                                 break;
@@ -324,7 +340,7 @@ namespace SunspaceDealerDesktop
                                                         aCabanaDoor.Swing = Convert.ToString(aReader[2]);
                                                         aCabanaDoor.HardwareType = Convert.ToString(aReader[3]);
 
-                                                        listOfModuleItems.Add(aCabanaDoor);
+                                                        listOfModuleItems.Add(aCabanaDoor); //add the modular item to the list
 
                                                         aReader.Close();
 
@@ -357,7 +373,7 @@ namespace SunspaceDealerDesktop
                                                         aFrenchDoor.OperatingDoor = Convert.ToString(aReader[2]); ///this needs to be fixed, operator in db is bool and C# is string
                                                         aFrenchDoor.HardwareType = Convert.ToString(aReader[3]);
 
-                                                        listOfModuleItems.Add(aFrenchDoor);
+                                                        listOfModuleItems.Add(aFrenchDoor); //add the modular item to the list
 
                                                         aReader.Close();
 
@@ -388,7 +404,7 @@ namespace SunspaceDealerDesktop
                                                         aPatioDoor.GlassTint = Convert.ToString(aReader[0]);
                                                         aPatioDoor.MovingDoor = Convert.ToString(aReader[1]); ///this needs to be fixed, operator in db is bool and C# is string
 
-                                                        listOfModuleItems.Add(aPatioDoor);
+                                                        listOfModuleItems.Add(aPatioDoor); //add the modular item to the list
 
                                                         aReader.Close();
 
@@ -411,7 +427,7 @@ namespace SunspaceDealerDesktop
                                                         //aDoor.Colour = doorColour; //
                                                         //aDoor.Kickplate = doorKickPlate; // 
                                                         
-                                                        listOfModuleItems.Add(aDoor);
+                                                        listOfModuleItems.Add(aDoor); //add the modular item to the list
 
                                                         aReader.Close();
 
@@ -421,43 +437,33 @@ namespace SunspaceDealerDesktop
 
                                                 #endregion
                                                 break;
-                                            case "Box Header":
+                                            case "Box Header": // make a class for horizontal
                                                 //horizontal box header?
-                                                break;
-                                            case "Panel BoxHeader":
+                                                break; // make a class
+                                            case "Panel Receiver": // make a class for horizontal
                                                 //horizontal panel receiver?
                                                 break;
-                                            case "Open":
-                                                Door openDoor = new Door();
-                                                openDoor.ModuleIndex = moduleIndex;
-                                                openDoor.ItemType = itemType;
-                                                openDoor.FStartHeight = fStartHeight;
-                                                openDoor.FEndHeight = fEndHeight;
-                                                openDoor.FLength = fLength;
-                                                        
-                                                listOfModuleItems.Add(openDoor);        
-                                                break;
-                                            case "Screen":
+                                            //case "Screen":
                                                 //same as screen window?
-                                                break;
-                                            case "Glass":
-                                                //same as glass window?
-                                                break;
-                                            case "Vinyl":
-                                                //same as vinyl window?
-                                                break;
-                                            case "Panel":
+                                            //    break;
+                                            //case "Glass":
+                                            //    //same as glass window?
+                                            //    break;
+                                            //case "Vinyl":
+                                            //    //same as vinyl window?
+                                            //    break;
+                                            case "Panel": // same as open wall window
                                                 // filler? 
                                                 break;
                                         }
-
                                         aMod.ModularItems = listOfModuleItems;                                        
                                     }
 
-                                    listOfLinearItems.Add(aMod);
+                                    listOfLinearItems.Add(aMod);//add the linear item to the list
 
                                     break;
-                                case "1 Piece Receiver":
+                                case "Receiver": // change to receiver
+                                    #region Receiver
                                     BoxHeader aBoxHeader = new BoxHeader();
                                     aBoxHeader.LinearIndex = linearIndex;
                                     aBoxHeader.ItemType = linearItemType;
@@ -471,9 +477,11 @@ namespace SunspaceDealerDesktop
                                     aBoxHeader.IsReceiver = true;
                                     aBoxHeader.IsTwoPiece = false;
 
-                                    listOfLinearItems.Add(aBoxHeader);
+                                    listOfLinearItems.Add(aBoxHeader);//add the linear item to the list
+                                    #endregion 
                                     break;
                                 case "2 Piece Receiver":
+                                    #region 2 Piece Receiver
                                     aBoxHeader = new BoxHeader();
                                     aBoxHeader.LinearIndex = linearIndex;
                                     aBoxHeader.ItemType = linearItemType;
@@ -487,9 +495,11 @@ namespace SunspaceDealerDesktop
                                     aBoxHeader.IsReceiver = true;
                                     aBoxHeader.IsTwoPiece = true;
 
-                                    listOfLinearItems.Add(aBoxHeader);
+                                    listOfLinearItems.Add(aBoxHeader);//add the linear item to the list
+                                    #endregion
                                     break;
-                                case "Box Header":
+                                case "Box Header": // add a case: Box Headaer Receiver
+                                    #region Box Header
                                     aBoxHeader = new BoxHeader();
                                     aBoxHeader.LinearIndex = linearIndex;
                                     aBoxHeader.ItemType = linearItemType;
@@ -501,27 +511,29 @@ namespace SunspaceDealerDesktop
                                     aBoxHeader.FixedLocation = fixedLocation; 
                                     aBoxHeader.AttachedTo = attachedTo; 
                                     aBoxHeader.IsReceiver = false;
-                                    aBoxHeader.IsTwoPiece = false;
+                                    //aBoxHeader.IsTwoPiece = false;
 
-                                    listOfLinearItems.Add(aBoxHeader);
-
+                                    listOfLinearItems.Add(aBoxHeader);//add the linear item to the list
+                                    #endregion
                                     break;
                                 case "Filler":
+                                    #region Filler
                                     Filler aFiller = new Filler();
                                     aFiller.LinearIndex = linearIndex;
                                     aFiller.ItemType = linearItemType;
                                     aFiller.StartHeight = startHeight;
                                     aFiller.EndHeight = endHeight;
                                     aFiller.Length = length;
-                                    aFiller.FrameColour = frameColour;
-                                    aFiller.Sex = sex;
+                                    //aFiller.FrameColour = frameColour;
+                                    aFiller.Sex = "MM";
                                     aFiller.FixedLocation = fixedLocation; 
                                     aFiller.AttachedTo = attachedTo; 
 
-                                    listOfLinearItems.Add(aFiller);
-
+                                    listOfLinearItems.Add(aFiller);//add the linear item to the list
+                                    #endregion
                                     break;
                                 case "Corner Post":
+                                    #region Corner Post
                                     Corner aCorner = new Corner();
                                     aCorner.LinearIndex = linearIndex;
                                     aCorner.ItemType = linearItemType;
@@ -532,16 +544,17 @@ namespace SunspaceDealerDesktop
                                     aCorner.Sex = sex;
                                     aCorner.FixedLocation = fixedLocation;
                                     aCorner.AttachedTo = attachedTo; 
-                                    aCorner.AngleIs90 = true; //hard coded, because I don't know where its coming from
-                                    aCorner.OutsideCorner = true; // hard coded because I don't know where its coming from
+                                    //aCorner.AngleIs90 = true; //hard coded, because I don't know where its coming from
+                                    //aCorner.OutsideCorner = true; // hard coded because I don't know where its coming from
 
-                                    listOfLinearItems.Add(aCorner);
-
+                                    listOfLinearItems.Add(aCorner); //add the linear item to the list
+                                    #endregion
                                     break;
                                 case "Electrical Chase":
-                                    //no class
+                                    //no class //make a class (later)
                                     break;
                                 case "H Channel":
+                                    #region H Channel
                                     HChannel aHChannel = new HChannel();
                                     aHChannel.LinearIndex = linearIndex;
                                     aHChannel.ItemType = linearItemType;
@@ -553,18 +566,15 @@ namespace SunspaceDealerDesktop
                                     aHChannel.FixedLocation = fixedLocation;
                                     aHChannel.AttachedTo = attachedTo; 
  
-                                    listOfLinearItems.Add(aHChannel);
-
-                                    break;
-                                case "Gable Post":
-                                    //no class
+                                    listOfLinearItems.Add(aHChannel);//add the linear item to the list
+                                    #endregion
                                     break;
                             }
                         }
 
                         aWall.LinearItems = listOfLinearItems;
 
-                        listOfWalls.Add(aWall); //add the wall
+                        listOfWalls.Add(aWall); //add the wall to the list
                     }
 
                     aTransaction.Commit();
