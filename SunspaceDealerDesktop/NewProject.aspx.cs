@@ -311,6 +311,7 @@ namespace SunspaceDealerDesktop
             Session.Add("kneewallHeight", GlobalFunctions.escapeSqlString(hidKneewallHeight.Value.ToString()));
             Session.Add("transomType", GlobalFunctions.escapeSqlString(hidTransomType.Value.ToString()));
             Session.Add("transomHeight", GlobalFunctions.escapeSqlString(hidTransomHeight.Value.ToString()));
+            Session.Add("transomColour", GlobalFunctions.escapeSqlString(hidTransomTint.Value.ToString()));
 
             Session.Add("floorVapourBarrier", "");
 
@@ -452,16 +453,29 @@ namespace SunspaceDealerDesktop
             }
         }
 
-        protected void btnQuestion3_Click(object sender, EventArgs e)
-        {
-            if (radProjectRoof.Checked)
+        protected void btnQuestion3_OrderOnly_Click(object sender, EventArgs e)
+        {            
+            //if existing is blank, it must be a new customer
+            if (hidExisting.Value == "")
             {
-                //if existing is blank, it must be a new customer
-                if (hidExisting.Value == "")
-                {
-                    insertNewCustomer();
-                }
-                Response.Redirect("Home.aspx");
+                insertNewCustomer();
+            }
+
+            if (hidProjectType.Value == "Windows") 
+            {
+                Response.Redirect("WizardWindowsOnly.aspx");
+            }
+            else if (hidProjectType.Value == "Door")
+            {
+                Response.Redirect("WizardDoorOnly.aspx");
+            }
+            else if (hidProjectType.Value == "Flooring")
+            {
+                Response.Redirect("WizardFloorOnlyOrder.aspx");
+            }
+            else if (hidProjectType.Value == "Roof")
+            {
+                Response.Redirect("WizardRoofOnly.aspx");
             }
         }
 
@@ -472,8 +486,12 @@ namespace SunspaceDealerDesktop
             {
                 insertNewCustomer();
             }
+
+            Session.Add("newProjectKneewallHeight", hidKneewallHeight.Value.ToString());
+            Session.Add("model", hidModelNumber.Value.ToString());
+
             //required session stuff before forwarding
-            Response.Redirect("DoorOnlyOrder.aspx");
+            Response.Redirect("WizardWallsOnly.aspx");
         }
 
         //This function will add a new user to the customer database at an applicable time when the page is completed and has been posted back.

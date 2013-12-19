@@ -10,60 +10,42 @@
 namespace SunspaceDealerDesktop {
     
     
-    public partial class WizardWindowsOnly {
+    public partial class WizardRoofOnlySkylight {
         
         /// <summary>
-        /// lblWindowDetails control.
+        /// lblTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWindowDetails;
+        protected global::System.Web.UI.WebControls.Label lblTitle;
         
         /// <summary>
-        /// WindowOptions control.
+        /// panelOptionPlaceholder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder WindowOptions;
+        protected global::System.Web.UI.WebControls.PlaceHolder panelOptionPlaceholder;
         
         /// <summary>
-        /// btnQuestion3 control.
+        /// btnQuestion1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnQuestion3;
+        protected global::System.Web.UI.WebControls.Button btnQuestion1;
         
         /// <summary>
-        /// lblWindowPager control.
+        /// hiddenInputPlaceholder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder lblWindowPager;
-        
-        /// <summary>
-        /// lblErrorMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErrorMessage;
-        
-        /// <summary>
-        /// txtErrorMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtErrorMessage;
+        protected global::System.Web.UI.WebControls.PlaceHolder hiddenInputPlaceholder;
     }
 }

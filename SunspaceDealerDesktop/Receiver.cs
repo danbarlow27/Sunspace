@@ -9,7 +9,7 @@ namespace SunspaceDealerDesktop
     {
         private int itemIndex; //LinearItems Array Index
         private string colour; //Colour of the receiver
-        //bool isTwoPiece; //???????????
+        bool isTwoPiece; //???????????
 
         public Receiver() { }
 
@@ -36,6 +36,19 @@ namespace SunspaceDealerDesktop
             set
             {
                 colour = value.ToLower();
+            }
+        }
+
+        public bool IsTwoPiece
+        {
+            get
+            {
+                return isTwoPiece;
+            }
+
+            set
+            {
+                isTwoPiece = value;
             }
         }
     }

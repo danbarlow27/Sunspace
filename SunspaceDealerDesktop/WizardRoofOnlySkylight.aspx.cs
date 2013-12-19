@@ -9,9 +9,9 @@ using System.Web.Script.Serialization;
 
 namespace SunspaceDealerDesktop
 {
-    public partial class SkylightWizard : System.Web.UI.Page
+    public partial class WizardRoofOnlySkylight : System.Web.UI.Page
     {
-        public int totalPanels=0;
+        public int totalPanels = 0;
         public string panelSizes;
         public float SKYLIGHT_WIDTH = Constants.SKYLIGHT_WIDTH;
 
@@ -28,34 +28,6 @@ namespace SunspaceDealerDesktop
         {
             if (!IsPostBack)
             {
-                ////for both
-                //List<RoofItem> testItems = new List<RoofItem>();
-                //testItems.Add(new RoofItem("Foam Panel", 276f, 48f));
-                //testItems.Add(new RoofItem("I-Beam", 276f, 0.5f));
-                //testItems.Add(new RoofItem("Foam Panel", 276f, 48f));
-                //testItems.Add(new RoofItem("I-Beam", 276f, 0.5f));
-                //testItems.Add(new RoofItem("Foam Panel", 276f, 48f));
-                //testItems.Add(new RoofItem("I-Beam", 276f, 0.5f));
-                //testItems.Add(new RoofItem("Foam Panel", 276f, 44.5f));
-
-                ////for gable
-                //List<RoofItem> testItems2 = new List<RoofItem>();
-                //testItems2.Add(new RoofItem("Foam Panel", 276f, 44.5f));
-                //testItems2.Add(new RoofItem("I-Beam", 276f, 0.5f));
-                //testItems2.Add(new RoofItem("Foam Panel", 276f, 48f));
-                //testItems2.Add(new RoofItem("I-Beam", 276f, 0.5f));
-                //testItems2.Add(new RoofItem("Foam Panel", 276f, 48f));
-                //testItems2.Add(new RoofItem("I-Beam", 276f, 0.5f));
-                //testItems2.Add(new RoofItem("Foam Panel", 276f, 48f));
-
-                //List<RoofModule> testModules = new List<RoofModule>();
-                //testModules.Add(new RoofModule(276, 190, "osb", "osb", testItems));
-                //testModules.Add(new RoofModule(276, 190, "osb", "osb", testItems2));
-
-                //Roof testRoof = new Roof("Studio", "osb", "osb", 3, false, false, false, false, "White", "White", 0, 120, 120, testModules);
-                //Roof testRoof = new Roof("Dealer Gable", "osb", "osb", 3, false, false, false, false, "White", "White", 0, 120, 120, testModules);
-                //Session.Add("completedRoof", testRoof);
-
                 Roof aRoof = (Roof)Session["completedRoof"];
                 List<RoofModule> moduleList = aRoof.RoofModules;
 
@@ -64,7 +36,7 @@ namespace SunspaceDealerDesktop
                 int panelsProcessed = 0;
                 int numberOfPanels = 0;
                 //Loop for each roof module
-                for (int i=0;i<aRoof.RoofModules.Count;i++)
+                for (int i = 0; i < aRoof.RoofModules.Count; i++)
                 {
                     //At i's roof module, loop for all roof items to find number of panels
                     for (int j = 0; j < aRoof.RoofModules[i].RoofItems.Count(); j++)
@@ -75,7 +47,7 @@ namespace SunspaceDealerDesktop
                             panelSizeArray.Add(aRoof.RoofModules[i].RoofItems[j].Width);
                         }
                     }
-                    for (int j=0;j<numberOfPanels;j++)
+                    for (int j = 0; j < numberOfPanels; j++)
                     {
                         panelsProcessed++;
                         //Add all the controls a panel will need
@@ -120,7 +92,7 @@ namespace SunspaceDealerDesktop
                         //lblFanBeam.ToolTip = "The fan beam, as the name implies, is a beam that runs along projection of the roof panel in order to have a fan attached. It may be anywhere along the width of the panel as long as it is 12 inches away from either edge.";
                         lblFanBeam.AssociatedControlID = "chkFanBeam" + panelsProcessed;
                         panelOptionPlaceholder.Controls.Add(lblFanBeam);
-                        
+
                         panelOptionPlaceholder.Controls.Add(new LiteralControl("<br/>"));
 
                         Label lblFanBeamPosition = new Label();
@@ -131,6 +103,7 @@ namespace SunspaceDealerDesktop
                         TextBox txtFanBeam = new TextBox();
                         txtFanBeam.ID = "txtFanBeam" + panelsProcessed;
                         txtFanBeam.MaxLength = 3;
+                        txtFanBeam.CssClass = "txtField txtInput";
                         txtFanBeam.Attributes.Add("onkeyup", "skylightWizardCheckQuestion1()");
                         txtFanBeam.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                         panelOptionPlaceholder.Controls.Add(txtFanBeam);
@@ -151,6 +124,7 @@ namespace SunspaceDealerDesktop
                         Button btnFanBeamCenter = new Button();
                         btnFanBeamCenter.ID = "btnFanBeamCenter" + panelsProcessed;
                         btnFanBeamCenter.Text = "Centered";
+                        btnFanBeamCenter.CssClass = "btnSubmit";
                         btnFanBeamCenter.Attributes.Add("OnClick", "skylightWizardCenterFanBeam(" + panelsProcessed + "); return false");
                         btnFanBeamCenter.CausesValidation = false;
                         btnFanBeamCenter.UseSubmitBehavior = false;
@@ -185,6 +159,7 @@ namespace SunspaceDealerDesktop
                         TextBox txtSkylight = new TextBox();
                         txtSkylight.ID = "txtSkylight" + panelsProcessed;
                         txtSkylight.MaxLength = 3;
+                        txtSkylight.CssClass = "txtField txtInput";
                         txtSkylight.Attributes.Add("onkeyup", "skylightWizardCheckQuestion1()");
                         txtSkylight.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                         panelOptionPlaceholder.Controls.Add(txtSkylight);
@@ -205,6 +180,7 @@ namespace SunspaceDealerDesktop
                         Button btnSkylightCenter = new Button();
                         btnSkylightCenter.ID = "btnSkylightCenter" + panelsProcessed;
                         btnSkylightCenter.Text = "Centered";
+                        btnSkylightCenter.CssClass = "btnSubmit";
                         btnSkylightCenter.Attributes.Add("OnClick", "skylightWizardCenterSkylight(" + panelsProcessed + "); return false");
                         btnSkylightCenter.CausesValidation = false;
                         btnSkylightCenter.UseSubmitBehavior = false;
@@ -213,7 +189,7 @@ namespace SunspaceDealerDesktop
                         HtmlInputHidden hidHasBeam = new HtmlInputHidden();
                         hidHasBeam.ID = "hidHasBeam" + panelsProcessed;
                         hiddenInputPlaceholder.Controls.Add(hidHasBeam);
-                        
+
                         HtmlInputHidden hidBeamStart = new HtmlInputHidden();
                         hidBeamStart.ID = "hidBeamStart" + panelsProcessed;
                         hiddenInputPlaceholder.Controls.Add(hidBeamStart);
@@ -232,7 +208,7 @@ namespace SunspaceDealerDesktop
                         panelOptionPlaceholder.Controls.Add(new LiteralControl("</div>"));
                         panelOptionPlaceholder.Controls.Add(new LiteralControl("</li>"));
                     }
-                    totalPanels+= numberOfPanels;
+                    totalPanels += numberOfPanels;
                     numberOfPanels = 0;
                 }
 
@@ -278,14 +254,8 @@ namespace SunspaceDealerDesktop
             }
 
             Session["completedRoof"] = aRoof;
-            if (Session["newProjectPrefabFloor"].ToString() == "Yes")
-            {
-                Response.Redirect("WizardFloors.aspx");
-            }
-            else
-            {
-                Response.Redirect("ProjectPreview.aspx");
-            }
+
+            //Response.Redirect("Invoice.aspx");
         }
     }
 }

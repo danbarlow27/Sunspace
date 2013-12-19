@@ -75,17 +75,17 @@ namespace SunspaceDealerDesktop
 
             for (int i = 0; i < fractionList.Count; i++)
             {
-                ddlLeftFillerInches.Items.Add(fractionList[i]);
+                ddlWallLeftInchFractions.Items.Add(fractionList[i]);
             }
 
             for (int i = 0; i < fractionList.Count; i++)
             {
-                ddlRightFillerInches.Items.Add(fractionList[i]);
+                ddlWallRightInchFractions.Items.Add(fractionList[i]);
             }
 
             for (int i = 0; i < fractionList.Count; i++)
             {
-                ddlLengthInches.Items.Add(fractionList[i]);
+                ddlWallInchFractions.Items.Add(fractionList[i]);
             }
 
             for (int i = 0; i < fractionList.Count; i++)
@@ -3792,760 +3792,760 @@ namespace SunspaceDealerDesktop
         //}
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            //Create objects
-            List<Wall> listOfWalls = new List<Wall>();
+            ////Create objects
+            //List<Wall> listOfWalls = new List<Wall>();
 
-            int existingWallCount = 0;
-            Session.Add("roomWidth", hidRoomWidth.Value);
-            Session.Add("roomProjection", hidRoomProjection.Value);
+            //int existingWallCount = 0;
+            //Session.Add("roomWidth", hidRoomWidth.Value);
+            //Session.Add("roomProjection", hidRoomProjection.Value);
 
-            for (int i = 1; i <= strWalls.Length; i++)
-            {
-                //if blank its an existing wall, so skip it
-                if (Request.Form["hidWall" + i + "Length"] != "")
-                {
-                    Wall aWall = new Wall(); 
-                    aWall.Length = float.Parse(Request.Form["hidWall" + i + "Length"]);
-                    aWall.Orientation = Request.Form["hidWall" + i + "Orientation"];
-                    aWall.Name = "Wall " + (i-existingWallCount);
-                    aWall.WallType = "Proposed";
-                    aWall.ModelType = currentModel;
-                    aWall.StartHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "StartHeight"]));
-                    aWall.EndHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "EndHeight"]));
-                    aWall.SoffitLength = float.Parse(Request.Form["hidWall" + i + "SoffitLength"]);
-                    aWall.GablePeak = 0;
-
-                    listOfWalls.Add(aWall);
-                    //firstItemIndex,lastItemIndex handled below
-                    //totalCornerLength,totalReceiverLength unhandled
-                    //linearItems handled below
-                }
-                else
-                {
-                    existingWallCount++;
-                }
-            }
-            
-            //Loop for each wall
-            int linearPosition = 0;
-            int cheatCounter = 0;
-            //If it's a gable, we need to start one element past the normal point to account for the gable post being part of the wall list
-            int gableCompensation = 0;
-
-            if (gableType != "")
-            {
-                gableCompensation = 1;
-            }
-
-            for (int i = 1 + gableCompensation; i <= strWalls.Length; i++)
-            {
-                //A list of linear items to be added to each wall
-                List<LinearItem> linearItems = new List<LinearItem>();
-
-                if (wallDetails[i - 1, 4] == "P" || wallDetails[i - 1, 4] == "G")
-                {
-                    #region Wall Creation
-                    float wallStartHeight = (float.Parse(Request.Form["hidWall" + i + "StartHeight"]));
-                    float wallEndHeight = (float.Parse(Request.Form["hidWall" + i + "EndHeight"]));
-                    float wallLeftFiller = (float.Parse(Request.Form["hidWall" + i + "LeftFiller"]));
-                    float wallRightFiller = (float.Parse(Request.Form["hidWall" + i + "RightFiller"]));
-                    float wallDoorCount = Int32.Parse(Request.Form["hidWall" + i + "DoorCount"]);
-                    bool gableCheck = false;
-
-                    //If this is a gable front wall of some form (gbale wall, gablefrontwall)
-                    //Then we have no need for the corners that would be added
-                    if (gableType.Contains("Gable") && wallStartHeight < wallEndHeight)
-                    {
-                        gableCheck = true; 
-                        
-                        if (currentModel == "M400")
-                        {
-                            wallRightFiller -= 4.125f;
-                        }
-                        else
-                        {
-                            wallRightFiller -= 3.125f;
-                        }
-                    }
-
-                    //The same for the right gable wall
-                    if (gableType.Contains("Gable") && wallStartHeight > wallEndHeight)
-                    {
-                        gableCheck = true;
-
-                        if (currentModel == "M400")
-                        {
-                            wallLeftFiller -= 4.125f;
-                        }
-                        else
-                        {
-                            wallLeftFiller -= 3.125f;
-                        }
-                    }
-                    //if it has doors, do logic w/ doors, otherwise just directly go to window creation
-                    //CHANGEME 2,125/2 are hardcoded instead of constants
-                    if (wallDoorCount > 0)
-                    {
-                        //Left filler
-                        //The current program hasn't considered the space receievers or corner posts take up in a wall's length
-                        //So we're going to cheat it here by adding that 'space' to the fillers, and removing it later when the
-                        //Wall objects are being built, which is here.
-                        if (cheatCounter == 0)
-                        {
-                            wallLeftFiller -= 1;//CHANGEME receiver length
-                            Receiver aReceiver = new Receiver();
-                            aReceiver.ItemType = "Receiver";
-                            aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
-                            aReceiver.Length = 1f;
-                            aReceiver.FixedLocation = 0;
-                            linearItems.Insert(0,aReceiver);
-                            cheatCounter++;
-                        }
-                        else
-                        {
-                            //If this is a gable front wall of some form (gbale wall, gablefrontwall)
-                            //Then we have no need for the corners that would be added
-                            if (!(gableType.Contains("Gable") && wallStartHeight > wallEndHeight))
-                            {
-                                if (currentModel == "M400")
-                                {
-                                    Corner aCorner = new Corner();
-                                    aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
-                                    aCorner.Length = 4.125f;
-                                    aCorner.ItemType = "Corner";
-                                    wallLeftFiller -= aCorner.Length;
-                                    linearItems.Add(aCorner);
-                                }
-                                else
-                                {
-                                    Corner aCorner = new Corner();
-                                    aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
-                                    aCorner.Length = 3.125f;
-                                    aCorner.ItemType = "Corner";
-                                    wallLeftFiller -= aCorner.Length;
-                                    linearItems.Add(aCorner);
-                                }
-                                cheatCounter++;
-                            }
-                        }
-
-                        //loop for each door
-                        for (int j = 1; j <= wallDoorCount; j++)
-                        {
-                            if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Left" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
-                            {
-                                if (currentModel == "M400")
-                                {
-                                    HChannel anHChannel = new HChannel();
-                                    anHChannel.ItemType = "HChannel";
-                                    anHChannel.StartHeight = anHChannel.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                    anHChannel.Length = 2.5f;
-                                    //CHANGEME if driftwood
-                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
-                                    linearItems.Add(anHChannel);
-                                }
-                                else
-                                {
-                                    BoxHeader aBoxHeader = new BoxHeader();
-                                    aBoxHeader.ItemType = "BoxHeader";
-                                    aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                    aBoxHeader.Length = 3.25f;
-                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
-                                    linearItems.Add(aBoxHeader);
-                                }
-                            }
-
-                            Mod aMod = new Mod();//
-                            aMod.ItemType = "Mod";
-                            aMod.ModType = Constants.MOD_TYPE_DOOR;
-                            aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
-                            aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
-                            aMod.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
-                            aMod.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
-                            aMod.Sunshade = Convert.ToBoolean(Request.Form["MainContent_hidSunshade"]);
-                            aMod.SunshadeValance = (string)Request.Form["MainContent_hidValance"];
-                            aMod.SunshadeFabric = (string)Request.Form["MainContent_hidFabric"];
-                            aMod.SunshadeOpenness = (string)Request.Form["MainContent_hidOpenness"];
-                            aMod.SunshadeChain = (string)Request.Form["MainContent_hidChain"];
-
-
-                            List<ModuleItem> modularItems = new List<ModuleItem>();
-                            string doorType = Request.Form["hidWall" + i + "Door" + j + "type"];
-                            if (doorType == "Cabana")
-                            {
-                                //cast test? does it retain cabana info?
-                                Door aDoor = getCabanaDoorFromForm(i, j);
-                                aDoor.Punch = aDoor.FEndHeight;
-
-                                Window doorWindow = new Window();
-                                doorWindow.WindowStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
-                                doorWindow.FLength = aDoor.FLength - 11.5f; //11.5 is the amount of door between edge of door and start of window (both sides totalled to 11.5)
-                                doorWindow.Width = doorWindow.FLength - 2.125f;
-                                doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight - aDoor.Kickplate - 4; //4 corresponds to the amount of framing at a bottom of a door
-                                doorWindow.LeftHeight = doorWindow.RightHeight = aDoor.FStartHeight - aDoor.Kickplate - 4 - 2.125f;
-                                doorWindow.ItemType = "Window";
-                                doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
-                                doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
-                                doorWindow.SpreaderBar = -1;
-
-                                //Spreaderbar logic
-                                if (doorWindow.WindowStyle == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
-                                {
-                                    doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2); //Find center of window, then place center of spreader bar at that position (by subtracting half of it)
-                                    doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
-                                }
-                                if (doorWindow.WindowStyle == "Horizontal Roller" && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
-                                {
-                                    doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
-                                }
-                                if (doorWindow.WindowStyle == "Vinyl")
-                                {
-                                    if (doorWindow.FLength > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FEndHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FStartHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED)
-                                    {
-                                        //If length is longer, vertical bar, else horizontal bar
-                                        if (doorWindow.Width >= doorWindow.FEndHeight && doorWindow.Width >= doorWindow.FStartHeight)
-                                        {
-                                            doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2);
-                                        }
-                                        else
-                                        {
-                                            doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
-                                        }
-                                        //If dimensions are equal?
-                                    }
-                                }
-
-                                aDoor.DoorWindow = doorWindow;
-                                modularItems.Add(aDoor);
-                            }
-                            if (doorType == "Patio")
-                            {
-                                Door aDoor = getPatioDoorFromForm(i, j);
-                                aDoor.Punch = aDoor.FEndHeight;
-                                modularItems.Add(aDoor);
-                            }
-                            if (doorType == "French")
-                            {
-                                Door aDoor = getFrenchDoorFromForm(i, j);
-                                aDoor.Punch = aDoor.FEndHeight;
-
-                                Window doorWindow = new Window();
-                                doorWindow.WindowStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
-                                //doorWindow.FLength = aDoor.FLength - SOMEVALUE;
-                                doorWindow.Width = doorWindow.FLength - 2.125f;
-                                //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
-                                //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
-                                doorWindow.ItemType = "Window";
-                                doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
-                                doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
-                                doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
-                                doorWindow.SpreaderBar = -1;
-                                //Spreaderbar logic
-                                if (doorWindow.WindowStyle == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
-                                {
-                                    doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2); //Find center of window, then place center of spreader bar at that position (by subtracting half of it)
-                                }
-                                if (doorWindow.WindowStyle == "Horizontal Roller" && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
-                                {
-                                    doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
-                                }
-                                if (doorWindow.WindowStyle == "Vinyl")
-                                {
-                                    if (doorWindow.FLength > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FEndHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FStartHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED)
-                                    {
-                                        //If length is longer, vertical bar, else horizontal bar
-                                        if (doorWindow.Width >= doorWindow.FEndHeight && doorWindow.Width >= doorWindow.FStartHeight)
-                                        {
-                                            doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2);
-                                        }
-                                        else
-                                        {
-                                            doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
-                                        }
-                                        //If dimensions are equal?
-                                    }
-                                }
-
-                                aDoor.DoorWindow = doorWindow;
-                                modularItems.Add(aDoor);
-                            }
-                            if (doorType == "NoDoor")
-                            {
-                                Door aDoor = getNoDoorFromForm(i, j);
-                                aDoor.Punch = aDoor.FEndHeight;
-
-                                Window doorWindow = new Window();
-                                doorWindow.WindowStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
-                                //doorWindow.FLength = aDoor.FLength - SOMEVALUE;
-                                doorWindow.Width = doorWindow.FLength - 2.125f;
-                                //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
-                                //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
-                                doorWindow.ItemType = "Window";
-                                doorWindow.SpreaderBar = -1;
-
-                                aDoor.DoorWindow = doorWindow;
-                                modularItems.Add(aDoor);
-                            }
-
-                            //Extra door stuff here
-
-                            //now we add transom windows
-
-                            //The height of the wall at mod end and mod start
-                            float modStartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));//
-                            float modEndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
-
-                            //The space left is the total height of the wall at the highest point of the mod minus the current built mod's space (aMod.StartHeight which equals aMod.endHeight at this point
-                            //Minus the space the door punch takes up.
-                            float sendableHeight = Math.Max(modStartHeight, modEndHeight);
-                            float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows((sendableHeight - modularItems[0].FStartHeight - .25f), (string)Session["newProjectTransomType"]);
-                            if (modStartHeight == modEndHeight)
-                            {
-                                //rectangular window
-                                for (int currentWindow = 0; currentWindow < windowInfo[0]; currentWindow++)
-                                {
-                                    //Set window properties
-                                    Window aWindow = new Window();
-                                    aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
-                                    aWindow.RightHeight = aWindow.LeftHeight = windowInfo[1] - 2.125f; //Framing size
-                                    aWindow.Colour = Request.Form["MainContent_hidWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
-                                    aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
-                                    aWindow.ItemType = "Window";
-                                    aWindow.Width = aMod.Length - 2;
-                                    aWindow.WindowStyle = (string)Session["newProjectTransomType"];
-                                    aWindow.SpreaderBar = -1;
-
-                                    //Add remaining area to first window
-                                    if (currentWindow == 0)
-                                    {
-                                        aWindow.FEndHeight += windowInfo[2];
-                                        aWindow.FStartHeight += windowInfo[2];
-                                        aWindow.RightHeight += windowInfo[2];
-                                        aWindow.LeftHeight += windowInfo[2];
-                                    }
-                                    modularItems.Add(aWindow);
-                                }
-                            }
-                            else
-                            {
-                                //trap/triangle
-                                for (int currentWindow = 0; currentWindow < windowInfo[0]; currentWindow++)
-                                {
-                                    //Set window properties
-                                    Window aWindow = new Window();
-                                    aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
-                                    aWindow.RightHeight = aWindow.LeftHeight = windowInfo[1] - 2.125f;
-                                    aWindow.Colour = Request.Form["MainContent_hidWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
-                                    aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
-                                    aWindow.ItemType = "Window";
-                                    aWindow.Width = aMod.Length - 2;
-                                    aWindow.WindowStyle = (string)Session["newProjectTransomType"];
-                                    aWindow.SpreaderBar = -1;
-
-                                    //Add remaining area to first window
-                                    if (currentWindow == 0)
-                                    {
-                                        aWindow.FEndHeight += windowInfo[2];
-                                        aWindow.FStartHeight += windowInfo[2];
-                                        aWindow.RightHeight += windowInfo[2];
-                                        aWindow.LeftHeight += windowInfo[2];
-                                    }
-                                    //If last window, we need to change a height to make it sloped
-                                    if (currentWindow == windowInfo[0] - 1)
-                                    {
-                                        //If start wall is higher, we lower end height
-                                        if (wallStartHeight == Math.Max(wallStartHeight, wallEndHeight))
-                                        {
-                                            aWindow.FEndHeight = aWindow.FEndHeight - (modStartHeight - modEndHeight);
-                                            aWindow.RightHeight = aWindow.RightHeight - (modStartHeight - modEndHeight);
-                                        }
-                                        //Otherwise we lower start height
-                                        else
-                                        {
-                                            aWindow.FStartHeight = aWindow.FStartHeight - (modEndHeight - modStartHeight);
-                                            aWindow.LeftHeight = aWindow.LeftHeight - (modEndHeight - modStartHeight);
-                                        }
-                                    }
-                                    modularItems.Add(aWindow);
-                                }
-                            }
-                            aMod.ModularItems = modularItems;
-                            linearItems.Add(aMod);
-
-                            if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Right" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
-                            {
-                                if (currentModel == "M400")
-                                {
-                                    HChannel anHChannel = new HChannel();
-                                    anHChannel.StartHeight = anHChannel.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                    anHChannel.Length = 2.5f;
-                                    //CHANGEME if driftwood
-                                    anHChannel.ItemType = "HChannel";//
-                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
-                                    linearItems.Add(anHChannel);
-                                }
-                                else
-                                {
-                                    BoxHeader aBoxHeader = new BoxHeader();
-                                    aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                    aBoxHeader.Length = 3.25f;
-                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
-                                    aBoxHeader.ItemType = "BoxHeader";
-                                    linearItems.Add(aBoxHeader);
-                                }
-                            }
-                        }
-
-                        int numberOfVents=0;
-                        if (hidWindowType.Value == "Vertical 4 Track" || hidWindowType.Value == "Vertical Four Track")
-                        {
-                            numberOfVents = hidWindowColour.Value.Length;
-                        }
-                        ////Now we add the windows that fill the rest of the space
-                        //string windowInfoString = Request.Form["hidWall" + i + "WindowInfo"];
-                        //string[] windowInfoArray = windowInfoString.Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries);
-
-                        //Right filler
-                        //Since we don't want to add the same corner post that is shared between walls twice, at this point we're just going to remove from filler
-                        //and from wall length, so for example, a 130 length wall will actually be 126.875 and 'go into' the next corner post
-
-                        //We try to check next wall.  If it exists, this rightside will be a corner post. If it throws an error
-                        //this must be the last wall, so we only remove a receiver's worth from the right side.
-                        //try
-                        //{
-                        //    if (wallDetails[i - 1, 4] == "P")
-                        //    {
-                        //        if (currentModel == "M400")
-                        //        {
-                        //            wallRightFiller -= 4.125f;
-                        //        }
-                        //        else
-                        //        {
-                        //            wallRightFiller -= 3.125f;
-                        //        }
-                        //    }
-                        //}
-                        //catch (Exception ex)
-                        //{
-                        //    wallRightFiller -= 1f;
-                        //}
-
-                        
-                        //Now add the filler itself
-                        if (wallLeftFiller > 0)
-                        {
-                            Filler leftFiller = new Filler();
-                            leftFiller.Length = wallLeftFiller;
-                            //Surround this in a try, because partial gable right walls will not have an element 0.
-                            //In that case, the fixedlocation would be the start, 0.
-                            try
-                            {
-                                leftFiller.FixedLocation = linearItems[0].Length;
-                                leftFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
-                                leftFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation + leftFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
-                                leftFiller.ItemType = "Filler";
-                                linearItems.Insert(1, leftFiller); //Inserted as second element, after receiever or post
-                            }
-                            catch (Exception ex)
-                            {
-                                leftFiller.FixedLocation = 0;
-                                leftFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
-                                leftFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation + leftFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
-                                leftFiller.ItemType = "Filler";
-                                linearItems.Add(leftFiller); //Inserted as first element
-                            }
-                        }
-
-                        if (wallRightFiller > 0)
-                        {
-
-                            Filler rightFiller = new Filler();
-                            rightFiller.Length = wallRightFiller;
-                            rightFiller.FixedLocation = listOfWalls[linearPosition].Length - wallRightFiller;
-                            rightFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, rightFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
-                            rightFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, rightFiller.FixedLocation + rightFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
-                            rightFiller.ItemType = "Filler";
-                            linearItems.Add(rightFiller); 
-                        }
-                        //if (currentModel == "M400")
-                        //{
-                        //    Corner aCorner = new Corner();
-                        //    aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
-                        //    aCorner.Length = 4.125f;
-                        //    wallRightFiller -= aCorner.Length;
-                        //    linearItems.Add(aCorner);
-                        //}
-                        //else
-                        //{
-                        //    Corner aCorner = new Corner();
-                        //    aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
-                        //    aCorner.Length = 4.125f;
-                        //    wallRightFiller -= aCorner.Length;
-                        //    linearItems.Add(aCorner);
-                        //}
-
-                        //Now that we have all the linear items, we add to each wall
-                        listOfWalls[linearPosition].LinearItems = linearItems;
-
-                        listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
-                                                                         Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
-                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value);
-
-                        linearPosition++;
-                    }
-                    //This is a wall without doors
-                    else
-                    {
-                        //Left filler
-                        //The current program hasn't considered the space receievers or corner posts take up in a wall's length
-                        //So we're going to cheat it here by adding that 'space' to the fillers, and removing it later when the
-                        //Wall objects are being built, which is here.
-                        if (cheatCounter == 0)
-                        {
-                            wallLeftFiller -= 1;//CHANGEME receiver length
-                            Receiver aReceiver = new Receiver();
-                            aReceiver.ItemType = "Receiver";
-                            aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
-                            aReceiver.Length = 1f;
-                            aReceiver.FixedLocation = 0;
-                            linearItems.Insert(0, aReceiver);
-                            cheatCounter++;
-                        }
-                        else
-                        {                
-                            //If this is a gable front wall of some form (gbale wall, gablefrontwall)
-                            //Then we have no need for the corners that would be added
-                            if (!(gableType.Contains("Gable") && wallStartHeight > wallEndHeight))
-                            {
-                                if (currentModel == "M400")
-                                {
-                                    Corner aCorner = new Corner();
-                                    aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
-                                    aCorner.Length = 4.125f;
-                                    aCorner.ItemType = "Corner";
-                                    wallLeftFiller -= aCorner.Length;
-                                    linearItems.Add(aCorner);
-                                }
-                                else
-                                {
-                                    Corner aCorner = new Corner();
-                                    aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
-                                    aCorner.Length = 3.125f;
-                                    aCorner.ItemType = "Corner";
-                                    wallLeftFiller -= aCorner.Length;
-                                    linearItems.Add(aCorner);
-                                }
-                                cheatCounter++;
-                            }
-                        }
-
-                        int numberOfVents = 0;
-                        if (hidWindowType.Value == "Vertical 4 Track" || hidWindowType.Value == "Vertical Four Track")
-                        {
-                            numberOfVents = hidWindowColour.Value.Length;
-                        }
-                        ////Now we add the windows that fill the rest of the space
-                        //string windowInfoString = Request.Form["hidWall" + i + "WindowInfo"];
-                        //string[] windowInfoArray = windowInfoString.Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries);
-
-                        //Right filler
-                        //Since we don't want to add the same corner post that is shared between walls twice, at this point we're just going to remove from filler
-                        //and from wall length, so for example, a 130 length wall will actually be 126.875 and 'go into' the next corner post
-
-                        //We try to check next wall.  If it exists, this rightside will be a corner post. If it throws an error
-                        //this must be the last wall, so we only remove a receiver's worth from the right side.
-                        //try
-                        //{
-                        //    if (wallDetails[i - 1, 4] == "P")
-                        //    {
-                        //        if (currentModel == "M400")
-                        //        {
-                        //            wallRightFiller -= 4.125f;
-                        //        }
-                        //        else
-                        //        {
-                        //            wallRightFiller -= 3.125f;
-                        //        }
-                        //    }
-                        //}
-                        //catch (Exception ex)
-                        //{
-                        //    wallRightFiller -= 1f;
-                        //}
-
-                        //Now add the filler itself
-                        if (wallLeftFiller > 0)
-                        {
-                            Filler leftFiller = new Filler();
-                            leftFiller.Length = wallLeftFiller;
-                            //Surround this in a try, because partial gable right walls will not have an element 0.
-                            //In that case, the fixedlocation would be the start, 0.
-                            try
-                            {
-                                leftFiller.FixedLocation = linearItems[0].Length;
-                                leftFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
-                                leftFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation + leftFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
-                                leftFiller.ItemType = "Filler";
-                                linearItems.Insert(1, leftFiller); //Inserted as second element, after receiever or post
-                            }
-                            catch (Exception ex)
-                            {
-                                leftFiller.FixedLocation = 0;
-                                leftFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
-                                leftFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation + leftFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
-                                leftFiller.ItemType = "Filler";
-                                linearItems.Add(leftFiller); //Inserted as first element
-                            }
-                        }
-
-                        if (wallRightFiller > 0)
-                        {
-
-                            Filler rightFiller = new Filler();
-                            rightFiller.Length = wallRightFiller;
-                            rightFiller.FixedLocation = listOfWalls[linearPosition].Length - wallRightFiller;
-                            rightFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, rightFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
-                            rightFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, rightFiller.FixedLocation + rightFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
-                            rightFiller.ItemType = "Filler";
-                            linearItems.Add(rightFiller);
-                        }
-
-                        //if last wall, we have right side receiver
-                        if (i == strWalls.Length)
-                        {
-                            wallRightFiller -= 1;//CHANGEME receiver length
-                            Receiver aReceiver = new Receiver();
-                            aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, listOfWalls[listOfWalls.Count - 1].Length - 1, listOfWalls[listOfWalls.Count - 1].Length);
-                            aReceiver.Length = 1f;
-                            aReceiver.FixedLocation = listOfWalls[listOfWalls.Count - 1].Length - 1;
-                            listOfWalls[listOfWalls.Count - 1].LinearItems.Add(aReceiver);
-                            cheatCounter++;
-                        }
-
-                        listOfWalls[linearPosition].LinearItems = linearItems;
-
-                        listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
-                                                                         Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
-                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value);//
-                        linearPosition++;
-                    }
-                    #endregion
-                }
-            }
-
-            ////Add Area
-            //char[] areaStringDelimeter = { ',' };
-            //string areaString = Request.Form["hidWall" + i + "WindowInfo" + j];
-            //string[] areaInfo = areaString.Split(areaStringDelimeter, StringSplitOptions.RemoveEmptyEntries);
-
-            //Mod aMod = new Mod();
-            //aMod.ModType = "Window";
-            ////Height of the mod will be the minimum height for now, CHANGEME
-            //aMod.Height = Math.Min(float.Parse(Request.Form["hidWall" + i + "StartHeight"]), float.Parse(Request.Form["hidWall" + i + "EndHeight"]));
-            //aMod.Length = float.Parse(areaInfo[2]);
-
-            ////loop for 'number of windows'
-            //for (int k = 0; k <= Int32.Parse(areaInfo[1]); k++)
+            //for (int i = 1; i <= strWalls.Length; i++)
             //{
-            //    List<Object> aModItems = new List<Object>();
-            //    Window aWindow = new Window();
+            //    //if blank its an existing wall, so skip it
+            //    if (Request.Form["hidWall" + i + "Length"] != "")
+            //    {
+            //        Wall aWall = new Wall(); 
+            //        aWall.Length = float.Parse(Request.Form["hidWall" + i + "Length"]);
+            //        aWall.Orientation = Request.Form["hidWall" + i + "Orientation"];
+            //        aWall.Name = "Wall " + (i-existingWallCount);
+            //        aWall.WallType = "Proposed";
+            //        aWall.ModelType = currentModel;
+            //        aWall.StartHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "StartHeight"]));
+            //        aWall.EndHeight = GlobalFunctions.RoundDownToNearestEighthInch(float.Parse(Request.Form["hidWall" + i + "EndHeight"]));
+            //        aWall.SoffitLength = float.Parse(Request.Form["hidWall" + i + "SoffitLength"]);
+            //        aWall.GablePeak = 0;
+
+            //        listOfWalls.Add(aWall);
+            //        //firstItemIndex,lastItemIndex handled below
+            //        //totalCornerLength,totalReceiverLength unhandled
+            //        //linearItems handled below
+            //    }
+            //    else
+            //    {
+            //        existingWallCount++;
+            //    }
+            //}
+            
+            ////Loop for each wall
+            //int linearPosition = 0;
+            //int cheatCounter = 0;
+            ////If it's a gable, we need to start one element past the normal point to account for the gable post being part of the wall list
+            //int gableCompensation = 0;
+
+            //if (gableType != "")
+            //{
+            //    gableCompensation = 1;
             //}
 
-            //Add objects to session
-            //Forward to next page
+            //for (int i = 1 + gableCompensation; i <= strWalls.Length; i++)
+            //{
+            //    //A list of linear items to be added to each wall
+            //    List<LinearItem> linearItems = new List<LinearItem>();
 
-            //Last check, if it's a sunspace gable wall, the two gable walls are not seperate, but one entity, so we combine them
-            if (gableType == "Sunspace Gable")
-            {
-                for (int i = 0; i < listOfWalls.Count; i++)
-                {
-                    //If this is one of the walls touching the gable peak
-                    if (listOfWalls[i].StartHeight == listOfWalls[i+1].EndHeight)
-                    {
-                        //If start height is smaller, it's the first gable wall
-                        if (listOfWalls[i].StartHeight < listOfWalls[i].EndHeight)
-                        {
+            //    if (wallDetails[i - 1, 4] == "P" || wallDetails[i - 1, 4] == "G")
+            //    {
+            //        #region Wall Creation
+            //        float wallStartHeight = (float.Parse(Request.Form["hidWall" + i + "StartHeight"]));
+            //        float wallEndHeight = (float.Parse(Request.Form["hidWall" + i + "EndHeight"]));
+            //        float wallLeftFiller = (float.Parse(Request.Form["hidWall" + i + "LeftFiller"]));
+            //        float wallRightFiller = (float.Parse(Request.Form["hidWall" + i + "RightFiller"]));
+            //        float wallDoorCount = Int32.Parse(Request.Form["hidWall" + i + "DoorCount"]);
+            //        bool gableCheck = false;
 
-                            //Add the boxheader/receiever
-                            BoxHeader aBoxHeader = new BoxHeader();
-                            aBoxHeader.IsReceiver = true;
-                            aBoxHeader.FixedLocation = listOfWalls[i].Length;
-                            aBoxHeader.Length = 3.25f;
-                            aBoxHeader.ItemType = "BoxHeader";
-                            listOfWalls[i].LinearItems.Add(aBoxHeader);
-                            listOfWalls[i].Length += 3.25f;
-                            listOfWalls[i].GablePeak = listOfWalls[i + 1].StartHeight;
+            //        //If this is a gable front wall of some form (gbale wall, gablefrontwall)
+            //        //Then we have no need for the corners that would be added
+            //        if (gableType.Contains("Gable") && wallStartHeight < wallEndHeight)
+            //        {
+            //            gableCheck = true; 
+                        
+            //            if (currentModel == "M400")
+            //            {
+            //                wallRightFiller -= 4.125f;
+            //            }
+            //            else
+            //            {
+            //                wallRightFiller -= 3.125f;
+            //            }
+            //        }
 
-                            //Loop through next wall adding items
-                            //Remove corner post of second wall
-                            for (int j = 0; j < listOfWalls[i+1].LinearItems.Count; j++)
-                            {
-                                //Set the fixed location to the current length of the first wall, because we 'add on' to it.
-                                listOfWalls[i + 1].LinearItems[j].FixedLocation += listOfWalls[i].Length;
-                                //Now that location is changed, add the item to the wall itself
-                                listOfWalls[i].LinearItems.Add(listOfWalls[i + 1].LinearItems[j]);
-                                //Now that the item is in the wall, the wall is longer, so increase its length
-                                listOfWalls[i].Length += listOfWalls[i + 1].LinearItems[j].Length;
-                                //Adjust endheight to endheight of second wall
-                                listOfWalls[i].EndHeight = listOfWalls[i + 1].EndHeight;
-                            }
+            //        //The same for the right gable wall
+            //        if (gableType.Contains("Gable") && wallStartHeight > wallEndHeight)
+            //        {
+            //            gableCheck = true;
 
-                            //remove second wall entirely
-                            listOfWalls.RemoveAt(i + 1);
-                        }
+            //            if (currentModel == "M400")
+            //            {
+            //                wallLeftFiller -= 4.125f;
+            //            }
+            //            else
+            //            {
+            //                wallLeftFiller -= 3.125f;
+            //            }
+            //        }
+            //        //if it has doors, do logic w/ doors, otherwise just directly go to window creation
+            //        //CHANGEME 2,125/2 are hardcoded instead of constants
+            //        if (wallDoorCount > 0)
+            //        {
+            //            //Left filler
+            //            //The current program hasn't considered the space receievers or corner posts take up in a wall's length
+            //            //So we're going to cheat it here by adding that 'space' to the fillers, and removing it later when the
+            //            //Wall objects are being built, which is here.
+            //            if (cheatCounter == 0)
+            //            {
+            //                wallLeftFiller -= 1;//CHANGEME receiver length
+            //                Receiver aReceiver = new Receiver();
+            //                aReceiver.ItemType = "Receiver";
+            //                aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+            //                aReceiver.Length = 1f;
+            //                aReceiver.FixedLocation = 0;
+            //                linearItems.Insert(0,aReceiver);
+            //                cheatCounter++;
+            //            }
+            //            else
+            //            {
+            //                //If this is a gable front wall of some form (gbale wall, gablefrontwall)
+            //                //Then we have no need for the corners that would be added
+            //                if (!(gableType.Contains("Gable") && wallStartHeight > wallEndHeight))
+            //                {
+            //                    if (currentModel == "M400")
+            //                    {
+            //                        Corner aCorner = new Corner();
+            //                        aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+            //                        aCorner.Length = 4.125f;
+            //                        aCorner.ItemType = "Corner";
+            //                        wallLeftFiller -= aCorner.Length;
+            //                        linearItems.Add(aCorner);
+            //                    }
+            //                    else
+            //                    {
+            //                        Corner aCorner = new Corner();
+            //                        aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+            //                        aCorner.Length = 3.125f;
+            //                        aCorner.ItemType = "Corner";
+            //                        wallLeftFiller -= aCorner.Length;
+            //                        linearItems.Add(aCorner);
+            //                    }
+            //                    cheatCounter++;
+            //                }
+            //            }
 
-                        //We found it, now break out of loop before we out of range exception
-                        break;
-                    }
-                }
-            }
+            //            //loop for each door
+            //            for (int j = 1; j <= wallDoorCount; j++)
+            //            {
+            //                if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Left" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
+            //                {
+            //                    if (currentModel == "M400")
+            //                    {
+            //                        HChannel anHChannel = new HChannel();
+            //                        anHChannel.ItemType = "HChannel";
+            //                        anHChannel.StartHeight = anHChannel.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
+            //                        anHChannel.Length = 2.5f;
+            //                        //CHANGEME if driftwood
+            //                        anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+            //                        linearItems.Add(anHChannel);
+            //                    }
+            //                    else
+            //                    {
+            //                        BoxHeader aBoxHeader = new BoxHeader();
+            //                        aBoxHeader.ItemType = "BoxHeader";
+            //                        aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
+            //                        aBoxHeader.Length = 3.25f;
+            //                        aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+            //                        linearItems.Add(aBoxHeader);
+            //                    }
+            //                }
 
-            //Indexes
-            //Loop for each wall to set its linear indexes
-            int linearCounter=0;
+            //                Mod aMod = new Mod();//
+            //                aMod.ItemType = "Mod";
+            //                aMod.ModType = Constants.MOD_TYPE_DOOR;
+            //                aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
+            //                aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);
+            //                aMod.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
+            //                aMod.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
+            //                aMod.Sunshade = Convert.ToBoolean(Request.Form["MainContent_hidSunshade"]);
+            //                aMod.SunshadeValance = (string)Request.Form["MainContent_hidValance"];
+            //                aMod.SunshadeFabric = (string)Request.Form["MainContent_hidFabric"];
+            //                aMod.SunshadeOpenness = (string)Request.Form["MainContent_hidOpenness"];
+            //                aMod.SunshadeChain = (string)Request.Form["MainContent_hidChain"];
 
-            for (int i = 0; i < listOfWalls.Count; i++)
-            {
-                listOfWalls[i].FirstItemIndex = linearCounter;
-                for (int j = 0; j < listOfWalls[i].LinearItems.Count; j++)
-                {
-                    //First, lets set modular indexes
-                    if (listOfWalls[i].LinearItems[j].ItemType == "Mod")
-                    {
-                        //Get the mod, then loop for all its items
-                        Mod aMod = (Mod)listOfWalls[i].LinearItems[j];
-                        for (int k = 0; k < aMod.ModularItems.Count; k++)
-                        {
-                            aMod.ModularItems[k].ModuleIndex = (k+1);
-                        }
-                        listOfWalls[i].LinearItems[j] = aMod;
-                    }
 
-                    //now set this item's linear index
-                    listOfWalls[i].LinearItems[j].LinearIndex = linearCounter;
-                    linearCounter++;
-                }
+            //                List<ModuleItem> modularItems = new List<ModuleItem>();
+            //                string doorType = Request.Form["hidWall" + i + "Door" + j + "type"];
+            //                if (doorType == "Cabana")
+            //                {
+            //                    //cast test? does it retain cabana info?
+            //                    Door aDoor = getCabanaDoorFromForm(i, j);
+            //                    aDoor.Punch = aDoor.FEndHeight;
 
-                listOfWalls[i].LastItemIndex = linearCounter;
-                listOfWalls[i].Name = "Wall " + (i + 1);
-            }
+            //                    Window doorWindow = new Window();
+            //                    doorWindow.WindowStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
+            //                    doorWindow.FLength = aDoor.FLength - 11.5f; //11.5 is the amount of door between edge of door and start of window (both sides totalled to 11.5)
+            //                    doorWindow.Width = doorWindow.FLength - 2.125f;
+            //                    doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight - aDoor.Kickplate - 4; //4 corresponds to the amount of framing at a bottom of a door
+            //                    doorWindow.LeftHeight = doorWindow.RightHeight = aDoor.FStartHeight - aDoor.Kickplate - 4 - 2.125f;
+            //                    doorWindow.ItemType = "Window";
+            //                    doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
+            //                    doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
+            //                    doorWindow.SpreaderBar = -1;
 
-            Session.Add("listOfWalls", listOfWalls);
-            Session.Add("sunroomProjection", hidRoomProjection.Value);
-            Session.Add("sunroomWidth", hidRoomWidth.Value);
+            //                    //Spreaderbar logic
+            //                    if (doorWindow.WindowStyle == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
+            //                    {
+            //                        doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2); //Find center of window, then place center of spreader bar at that position (by subtracting half of it)
+            //                        doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
+            //                    }
+            //                    if (doorWindow.WindowStyle == "Horizontal Roller" && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
+            //                    {
+            //                        doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+            //                    }
+            //                    if (doorWindow.WindowStyle == "Vinyl")
+            //                    {
+            //                        if (doorWindow.FLength > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FEndHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FStartHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED)
+            //                        {
+            //                            //If length is longer, vertical bar, else horizontal bar
+            //                            if (doorWindow.Width >= doorWindow.FEndHeight && doorWindow.Width >= doorWindow.FStartHeight)
+            //                            {
+            //                                doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+            //                            }
+            //                            else
+            //                            {
+            //                                doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+            //                            }
+            //                            //If dimensions are equal?
+            //                        }
+            //                    }
 
-            if (Session["newProjectHasRoof"].ToString() == "Yes")
-            {
-                Response.Redirect("RoofWizard.aspx");
-            }
-            else if (Session["newProjectPrefabFloor"].ToString() == "Yes")
-            {
-                Response.Redirect("WizardFloors.aspx");
-            }
-            else
-            {
-                Response.Redirect("ProjectPreview.aspx");
-            }
+            //                    aDoor.DoorWindow = doorWindow;
+            //                    modularItems.Add(aDoor);
+            //                }
+            //                if (doorType == "Patio")
+            //                {
+            //                    Door aDoor = getPatioDoorFromForm(i, j);
+            //                    aDoor.Punch = aDoor.FEndHeight;
+            //                    modularItems.Add(aDoor);
+            //                }
+            //                if (doorType == "French")
+            //                {
+            //                    Door aDoor = getFrenchDoorFromForm(i, j);
+            //                    aDoor.Punch = aDoor.FEndHeight;
+
+            //                    Window doorWindow = new Window();
+            //                    doorWindow.WindowStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
+            //                    //doorWindow.FLength = aDoor.FLength - SOMEVALUE;
+            //                    doorWindow.Width = doorWindow.FLength - 2.125f;
+            //                    //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
+            //                    //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
+            //                    doorWindow.ItemType = "Window";
+            //                    doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
+            //                    doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
+            //                    doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
+            //                    doorWindow.SpreaderBar = -1;
+            //                    //Spreaderbar logic
+            //                    if (doorWindow.WindowStyle == "Vertical 4 Track" && doorWindow.FLength > Constants.V4T_SPREADER_BAR_NEEDED)
+            //                    {
+            //                        doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2); //Find center of window, then place center of spreader bar at that position (by subtracting half of it)
+            //                    }
+            //                    if (doorWindow.WindowStyle == "Horizontal Roller" && doorWindow.FLength > Constants.HORIZONTAL_ROLLER_SPREADER_BAR_NEEDED)
+            //                    {
+            //                        doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+            //                    }
+            //                    if (doorWindow.WindowStyle == "Vinyl")
+            //                    {
+            //                        if (doorWindow.FLength > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FEndHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED || doorWindow.FStartHeight > Constants.TRANSOM_SPREADER_BAR_REQUIRED)
+            //                        {
+            //                            //If length is longer, vertical bar, else horizontal bar
+            //                            if (doorWindow.Width >= doorWindow.FEndHeight && doorWindow.Width >= doorWindow.FStartHeight)
+            //                            {
+            //                                doorWindow.SpreaderBar = (doorWindow.FLength / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+            //                            }
+            //                            else
+            //                            {
+            //                                doorWindow.SpreaderBar = (doorWindow.FEndHeight / 2) - (Constants.SPREADER_BAR_SIZE / 2);
+            //                            }
+            //                            //If dimensions are equal?
+            //                        }
+            //                    }
+
+            //                    aDoor.DoorWindow = doorWindow;
+            //                    modularItems.Add(aDoor);
+            //                }
+            //                if (doorType == "NoDoor")
+            //                {
+            //                    Door aDoor = getNoDoorFromForm(i, j);
+            //                    aDoor.Punch = aDoor.FEndHeight;
+
+            //                    Window doorWindow = new Window();
+            //                    doorWindow.WindowStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
+            //                    //doorWindow.FLength = aDoor.FLength - SOMEVALUE;
+            //                    doorWindow.Width = doorWindow.FLength - 2.125f;
+            //                    //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
+            //                    //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
+            //                    doorWindow.ItemType = "Window";
+            //                    doorWindow.SpreaderBar = -1;
+
+            //                    aDoor.DoorWindow = doorWindow;
+            //                    modularItems.Add(aDoor);
+            //                }
+
+            //                //Extra door stuff here
+
+            //                //now we add transom windows
+
+            //                //The height of the wall at mod end and mod start
+            //                float modStartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));//
+            //                float modEndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
+
+            //                //The space left is the total height of the wall at the highest point of the mod minus the current built mod's space (aMod.StartHeight which equals aMod.endHeight at this point
+            //                //Minus the space the door punch takes up.
+            //                float sendableHeight = Math.Max(modStartHeight, modEndHeight);
+            //                float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows((sendableHeight - modularItems[0].FStartHeight - .25f), (string)Session["newProjectTransomType"]);
+            //                if (modStartHeight == modEndHeight)
+            //                {
+            //                    //rectangular window
+            //                    for (int currentWindow = 0; currentWindow < windowInfo[0]; currentWindow++)
+            //                    {
+            //                        //Set window properties
+            //                        Window aWindow = new Window();
+            //                        aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
+            //                        aWindow.RightHeight = aWindow.LeftHeight = windowInfo[1] - 2.125f; //Framing size
+            //                        aWindow.Colour = Request.Form["MainContent_hidWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
+            //                        aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
+            //                        aWindow.ItemType = "Window";
+            //                        aWindow.Width = aMod.Length - 2;
+            //                        aWindow.WindowStyle = (string)Session["newProjectTransomType"];
+            //                        aWindow.SpreaderBar = -1;
+
+            //                        //Add remaining area to first window
+            //                        if (currentWindow == 0)
+            //                        {
+            //                            aWindow.FEndHeight += windowInfo[2];
+            //                            aWindow.FStartHeight += windowInfo[2];
+            //                            aWindow.RightHeight += windowInfo[2];
+            //                            aWindow.LeftHeight += windowInfo[2];
+            //                        }
+            //                        modularItems.Add(aWindow);
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    //trap/triangle
+            //                    for (int currentWindow = 0; currentWindow < windowInfo[0]; currentWindow++)
+            //                    {
+            //                        //Set window properties
+            //                        Window aWindow = new Window();
+            //                        aWindow.FEndHeight = aWindow.FStartHeight = windowInfo[1];
+            //                        aWindow.RightHeight = aWindow.LeftHeight = windowInfo[1] - 2.125f;
+            //                        aWindow.Colour = Request.Form["MainContent_hidWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
+            //                        aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
+            //                        aWindow.ItemType = "Window";
+            //                        aWindow.Width = aMod.Length - 2;
+            //                        aWindow.WindowStyle = (string)Session["newProjectTransomType"];
+            //                        aWindow.SpreaderBar = -1;
+
+            //                        //Add remaining area to first window
+            //                        if (currentWindow == 0)
+            //                        {
+            //                            aWindow.FEndHeight += windowInfo[2];
+            //                            aWindow.FStartHeight += windowInfo[2];
+            //                            aWindow.RightHeight += windowInfo[2];
+            //                            aWindow.LeftHeight += windowInfo[2];
+            //                        }
+            //                        //If last window, we need to change a height to make it sloped
+            //                        if (currentWindow == windowInfo[0] - 1)
+            //                        {
+            //                            //If start wall is higher, we lower end height
+            //                            if (wallStartHeight == Math.Max(wallStartHeight, wallEndHeight))
+            //                            {
+            //                                aWindow.FEndHeight = aWindow.FEndHeight - (modStartHeight - modEndHeight);
+            //                                aWindow.RightHeight = aWindow.RightHeight - (modStartHeight - modEndHeight);
+            //                            }
+            //                            //Otherwise we lower start height
+            //                            else
+            //                            {
+            //                                aWindow.FStartHeight = aWindow.FStartHeight - (modEndHeight - modStartHeight);
+            //                                aWindow.LeftHeight = aWindow.LeftHeight - (modEndHeight - modStartHeight);
+            //                            }
+            //                        }
+            //                        modularItems.Add(aWindow);
+            //                    }
+            //                }
+            //                aMod.ModularItems = modularItems;
+            //                linearItems.Add(aMod);
+
+            //                if (Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Right" || Request.Form["hidWall" + i + "Door" + j + "boxHeader"] == "Both")
+            //                {
+            //                    if (currentModel == "M400")
+            //                    {
+            //                        HChannel anHChannel = new HChannel();
+            //                        anHChannel.StartHeight = anHChannel.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
+            //                        anHChannel.Length = 2.5f;
+            //                        //CHANGEME if driftwood
+            //                        anHChannel.ItemType = "HChannel";//
+            //                        anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+            //                        linearItems.Add(anHChannel);
+            //                    }
+            //                    else
+            //                    {
+            //                        BoxHeader aBoxHeader = new BoxHeader();
+            //                        aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
+            //                        aBoxHeader.Length = 3.25f;
+            //                        aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+            //                        aBoxHeader.ItemType = "BoxHeader";
+            //                        linearItems.Add(aBoxHeader);
+            //                    }
+            //                }
+            //            }
+
+            //            int numberOfVents=0;
+            //            if (hidWindowType.Value == "Vertical 4 Track" || hidWindowType.Value == "Vertical Four Track")
+            //            {
+            //                numberOfVents = hidWindowColour.Value.Length;
+            //            }
+            //            ////Now we add the windows that fill the rest of the space
+            //            //string windowInfoString = Request.Form["hidWall" + i + "WindowInfo"];
+            //            //string[] windowInfoArray = windowInfoString.Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries);
+
+            //            //Right filler
+            //            //Since we don't want to add the same corner post that is shared between walls twice, at this point we're just going to remove from filler
+            //            //and from wall length, so for example, a 130 length wall will actually be 126.875 and 'go into' the next corner post
+
+            //            //We try to check next wall.  If it exists, this rightside will be a corner post. If it throws an error
+            //            //this must be the last wall, so we only remove a receiver's worth from the right side.
+            //            //try
+            //            //{
+            //            //    if (wallDetails[i - 1, 4] == "P")
+            //            //    {
+            //            //        if (currentModel == "M400")
+            //            //        {
+            //            //            wallRightFiller -= 4.125f;
+            //            //        }
+            //            //        else
+            //            //        {
+            //            //            wallRightFiller -= 3.125f;
+            //            //        }
+            //            //    }
+            //            //}
+            //            //catch (Exception ex)
+            //            //{
+            //            //    wallRightFiller -= 1f;
+            //            //}
+
+                        
+            //            //Now add the filler itself
+            //            if (wallLeftFiller > 0)
+            //            {
+            //                Filler leftFiller = new Filler();
+            //                leftFiller.Length = wallLeftFiller;
+            //                //Surround this in a try, because partial gable right walls will not have an element 0.
+            //                //In that case, the fixedlocation would be the start, 0.
+            //                try
+            //                {
+            //                    leftFiller.FixedLocation = linearItems[0].Length;
+            //                    leftFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
+            //                    leftFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation + leftFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
+            //                    leftFiller.ItemType = "Filler";
+            //                    linearItems.Insert(1, leftFiller); //Inserted as second element, after receiever or post
+            //                }
+            //                catch (Exception ex)
+            //                {
+            //                    leftFiller.FixedLocation = 0;
+            //                    leftFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
+            //                    leftFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation + leftFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
+            //                    leftFiller.ItemType = "Filler";
+            //                    linearItems.Add(leftFiller); //Inserted as first element
+            //                }
+            //            }
+
+            //            if (wallRightFiller > 0)
+            //            {
+
+            //                Filler rightFiller = new Filler();
+            //                rightFiller.Length = wallRightFiller;
+            //                rightFiller.FixedLocation = listOfWalls[linearPosition].Length - wallRightFiller;
+            //                rightFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, rightFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
+            //                rightFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, rightFiller.FixedLocation + rightFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
+            //                rightFiller.ItemType = "Filler";
+            //                linearItems.Add(rightFiller); 
+            //            }
+            //            //if (currentModel == "M400")
+            //            //{
+            //            //    Corner aCorner = new Corner();
+            //            //    aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+            //            //    aCorner.Length = 4.125f;
+            //            //    wallRightFiller -= aCorner.Length;
+            //            //    linearItems.Add(aCorner);
+            //            //}
+            //            //else
+            //            //{
+            //            //    Corner aCorner = new Corner();
+            //            //    aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+            //            //    aCorner.Length = 4.125f;
+            //            //    wallRightFiller -= aCorner.Length;
+            //            //    linearItems.Add(aCorner);
+            //            //}
+
+            //            //Now that we have all the linear items, we add to each wall
+            //            listOfWalls[linearPosition].LinearItems = linearItems;
+
+            //            listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
+            //                                                             Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
+            //                                                             hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value);
+
+            //            linearPosition++;
+            //        }
+            //        //This is a wall without doors
+            //        else
+            //        {
+            //            //Left filler
+            //            //The current program hasn't considered the space receievers or corner posts take up in a wall's length
+            //            //So we're going to cheat it here by adding that 'space' to the fillers, and removing it later when the
+            //            //Wall objects are being built, which is here.
+            //            if (cheatCounter == 0)
+            //            {
+            //                wallLeftFiller -= 1;//CHANGEME receiver length
+            //                Receiver aReceiver = new Receiver();
+            //                aReceiver.ItemType = "Receiver";
+            //                aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+            //                aReceiver.Length = 1f;
+            //                aReceiver.FixedLocation = 0;
+            //                linearItems.Insert(0, aReceiver);
+            //                cheatCounter++;
+            //            }
+            //            else
+            //            {                
+            //                //If this is a gable front wall of some form (gbale wall, gablefrontwall)
+            //                //Then we have no need for the corners that would be added
+            //                if (!(gableType.Contains("Gable") && wallStartHeight > wallEndHeight))
+            //                {
+            //                    if (currentModel == "M400")
+            //                    {
+            //                        Corner aCorner = new Corner();
+            //                        aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+            //                        aCorner.Length = 4.125f;
+            //                        aCorner.ItemType = "Corner";
+            //                        wallLeftFiller -= aCorner.Length;
+            //                        linearItems.Add(aCorner);
+            //                    }
+            //                    else
+            //                    {
+            //                        Corner aCorner = new Corner();
+            //                        aCorner.StartHeight = aCorner.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, 0, listOfWalls[0].Length);
+            //                        aCorner.Length = 3.125f;
+            //                        aCorner.ItemType = "Corner";
+            //                        wallLeftFiller -= aCorner.Length;
+            //                        linearItems.Add(aCorner);
+            //                    }
+            //                    cheatCounter++;
+            //                }
+            //            }
+
+            //            int numberOfVents = 0;
+            //            if (hidWindowType.Value == "Vertical 4 Track" || hidWindowType.Value == "Vertical Four Track")
+            //            {
+            //                numberOfVents = hidWindowColour.Value.Length;
+            //            }
+            //            ////Now we add the windows that fill the rest of the space
+            //            //string windowInfoString = Request.Form["hidWall" + i + "WindowInfo"];
+            //            //string[] windowInfoArray = windowInfoString.Split(detailsDelimiter, StringSplitOptions.RemoveEmptyEntries);
+
+            //            //Right filler
+            //            //Since we don't want to add the same corner post that is shared between walls twice, at this point we're just going to remove from filler
+            //            //and from wall length, so for example, a 130 length wall will actually be 126.875 and 'go into' the next corner post
+
+            //            //We try to check next wall.  If it exists, this rightside will be a corner post. If it throws an error
+            //            //this must be the last wall, so we only remove a receiver's worth from the right side.
+            //            //try
+            //            //{
+            //            //    if (wallDetails[i - 1, 4] == "P")
+            //            //    {
+            //            //        if (currentModel == "M400")
+            //            //        {
+            //            //            wallRightFiller -= 4.125f;
+            //            //        }
+            //            //        else
+            //            //        {
+            //            //            wallRightFiller -= 3.125f;
+            //            //        }
+            //            //    }
+            //            //}
+            //            //catch (Exception ex)
+            //            //{
+            //            //    wallRightFiller -= 1f;
+            //            //}
+
+            //            //Now add the filler itself
+            //            if (wallLeftFiller > 0)
+            //            {
+            //                Filler leftFiller = new Filler();
+            //                leftFiller.Length = wallLeftFiller;
+            //                //Surround this in a try, because partial gable right walls will not have an element 0.
+            //                //In that case, the fixedlocation would be the start, 0.
+            //                try
+            //                {
+            //                    leftFiller.FixedLocation = linearItems[0].Length;
+            //                    leftFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
+            //                    leftFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation + leftFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
+            //                    leftFiller.ItemType = "Filler";
+            //                    linearItems.Insert(1, leftFiller); //Inserted as second element, after receiever or post
+            //                }
+            //                catch (Exception ex)
+            //                {
+            //                    leftFiller.FixedLocation = 0;
+            //                    leftFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
+            //                    leftFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, leftFiller.FixedLocation + leftFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
+            //                    leftFiller.ItemType = "Filler";
+            //                    linearItems.Add(leftFiller); //Inserted as first element
+            //                }
+            //            }
+
+            //            if (wallRightFiller > 0)
+            //            {
+
+            //                Filler rightFiller = new Filler();
+            //                rightFiller.Length = wallRightFiller;
+            //                rightFiller.FixedLocation = listOfWalls[linearPosition].Length - wallRightFiller;
+            //                rightFiller.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, rightFiller.FixedLocation, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's start point
+            //                rightFiller.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, rightFiller.FixedLocation + rightFiller.Length, listOfWalls[linearPosition].Length);//position corresponds to this wall's first item's length
+            //                rightFiller.ItemType = "Filler";
+            //                linearItems.Add(rightFiller);
+            //            }
+
+            //            //if last wall, we have right side receiver
+            //            if (i == strWalls.Length)
+            //            {
+            //                wallRightFiller -= 1;//CHANGEME receiver length
+            //                Receiver aReceiver = new Receiver();
+            //                aReceiver.StartHeight = aReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, listOfWalls[listOfWalls.Count - 1].Length - 1, listOfWalls[listOfWalls.Count - 1].Length);
+            //                aReceiver.Length = 1f;
+            //                aReceiver.FixedLocation = listOfWalls[listOfWalls.Count - 1].Length - 1;
+            //                listOfWalls[listOfWalls.Count - 1].LinearItems.Add(aReceiver);
+            //                cheatCounter++;
+            //            }
+
+            //            listOfWalls[linearPosition].LinearItems = linearItems;
+
+            //            listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
+            //                                                             Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
+            //                                                             hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value);//
+            //            linearPosition++;
+            //        }
+            //        #endregion
+            //    }
+            //}
+
+            //////Add Area
+            ////char[] areaStringDelimeter = { ',' };
+            ////string areaString = Request.Form["hidWall" + i + "WindowInfo" + j];
+            ////string[] areaInfo = areaString.Split(areaStringDelimeter, StringSplitOptions.RemoveEmptyEntries);
+
+            ////Mod aMod = new Mod();
+            ////aMod.ModType = "Window";
+            //////Height of the mod will be the minimum height for now, CHANGEME
+            ////aMod.Height = Math.Min(float.Parse(Request.Form["hidWall" + i + "StartHeight"]), float.Parse(Request.Form["hidWall" + i + "EndHeight"]));
+            ////aMod.Length = float.Parse(areaInfo[2]);
+
+            //////loop for 'number of windows'
+            ////for (int k = 0; k <= Int32.Parse(areaInfo[1]); k++)
+            ////{
+            ////    List<Object> aModItems = new List<Object>();
+            ////    Window aWindow = new Window();
+            ////}
+
+            ////Add objects to session
+            ////Forward to next page
+
+            ////Last check, if it's a sunspace gable wall, the two gable walls are not seperate, but one entity, so we combine them
+            //if (gableType == "Sunspace Gable")
+            //{
+            //    for (int i = 0; i < listOfWalls.Count; i++)
+            //    {
+            //        //If this is one of the walls touching the gable peak
+            //        if (listOfWalls[i].StartHeight == listOfWalls[i+1].EndHeight)
+            //        {
+            //            //If start height is smaller, it's the first gable wall
+            //            if (listOfWalls[i].StartHeight < listOfWalls[i].EndHeight)
+            //            {
+
+            //                //Add the boxheader/receiever
+            //                BoxHeader aBoxHeader = new BoxHeader();
+            //                aBoxHeader.IsReceiver = true;
+            //                aBoxHeader.FixedLocation = listOfWalls[i].Length;
+            //                aBoxHeader.Length = 3.25f;
+            //                aBoxHeader.ItemType = "BoxHeader";
+            //                listOfWalls[i].LinearItems.Add(aBoxHeader);
+            //                listOfWalls[i].Length += 3.25f;
+            //                listOfWalls[i].GablePeak = listOfWalls[i + 1].StartHeight;
+
+            //                //Loop through next wall adding items
+            //                //Remove corner post of second wall
+            //                for (int j = 0; j < listOfWalls[i+1].LinearItems.Count; j++)
+            //                {
+            //                    //Set the fixed location to the current length of the first wall, because we 'add on' to it.
+            //                    listOfWalls[i + 1].LinearItems[j].FixedLocation += listOfWalls[i].Length;
+            //                    //Now that location is changed, add the item to the wall itself
+            //                    listOfWalls[i].LinearItems.Add(listOfWalls[i + 1].LinearItems[j]);
+            //                    //Now that the item is in the wall, the wall is longer, so increase its length
+            //                    listOfWalls[i].Length += listOfWalls[i + 1].LinearItems[j].Length;
+            //                    //Adjust endheight to endheight of second wall
+            //                    listOfWalls[i].EndHeight = listOfWalls[i + 1].EndHeight;
+            //                }
+
+            //                //remove second wall entirely
+            //                listOfWalls.RemoveAt(i + 1);
+            //            }
+
+            //            //We found it, now break out of loop before we out of range exception
+            //            break;
+            //        }
+            //    }
+            //}
+
+            ////Indexes
+            ////Loop for each wall to set its linear indexes
+            //int linearCounter=0;
+
+            //for (int i = 0; i < listOfWalls.Count; i++)
+            //{
+            //    listOfWalls[i].FirstItemIndex = linearCounter;
+            //    for (int j = 0; j < listOfWalls[i].LinearItems.Count; j++)
+            //    {
+            //        //First, lets set modular indexes
+            //        if (listOfWalls[i].LinearItems[j].ItemType == "Mod")
+            //        {
+            //            //Get the mod, then loop for all its items
+            //            Mod aMod = (Mod)listOfWalls[i].LinearItems[j];
+            //            for (int k = 0; k < aMod.ModularItems.Count; k++)
+            //            {
+            //                aMod.ModularItems[k].ModuleIndex = (k+1);
+            //            }
+            //            listOfWalls[i].LinearItems[j] = aMod;
+            //        }
+
+            //        //now set this item's linear index
+            //        listOfWalls[i].LinearItems[j].LinearIndex = linearCounter;
+            //        linearCounter++;
+            //    }
+
+            //    listOfWalls[i].LastItemIndex = linearCounter;
+            //    listOfWalls[i].Name = "Wall " + (i + 1);
+            //}
+
+            //Session.Add("listOfWalls", listOfWalls);
+            //Session.Add("sunroomProjection", hidRoomProjection.Value);
+            //Session.Add("sunroomWidth", hidRoomWidth.Value);
+
+            //if (Session["newProjectHasRoof"].ToString() == "Yes")
+            //{
+            //    Response.Redirect("RoofWizard.aspx");
+            //}
+            //else if (Session["newProjectPrefabFloor"].ToString() == "Yes")
+            //{
+            //    Response.Redirect("WizardFloors.aspx");
+            //}
+            //else
+            //{
+            //    Response.Redirect("ProjectPreview.aspx");
+            //}
         }
 
         protected CabanaDoor getCabanaDoorFromForm(int i, int j)

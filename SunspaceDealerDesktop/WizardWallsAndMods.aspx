@@ -493,13 +493,13 @@
 
         //This array holds the name of all the properties attributed to walls
         //ADD AS NEEDED
-        var wallProperties = [
-            "wallId",
-            "length",
-            "height",
-            "doors",
-            "windows"
-        ]
+        //var wallProperties = [
+        //    "wallId",
+        //    "length",
+        //    "height",
+        //    "doors",
+        //    "windows"
+        //]
         
         /**
         *Adding onclick events to next question buttons

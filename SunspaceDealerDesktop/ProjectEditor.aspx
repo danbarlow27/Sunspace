@@ -126,6 +126,9 @@
         </ul>
 
     </div>   
+
+    <%--<asp:Label ID="lblError" runat="server"></asp:Label>--%>
+
 </asp:Content>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">

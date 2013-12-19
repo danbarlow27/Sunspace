@@ -487,26 +487,25 @@
         var roomWidth; //the width of the room from the far left to the far right
         var soffitLength = '<%= soffitLength %>'//hard coded for testing, will come from the previous pages in the wizard
         var RUN = 12; //a constant for run in calculating the slope, which is always 12 for slope over 12
-         
-        
+                 
         var walls = []; //array to store the walls
 
         //This array holds the name of all the properties attributed to walls
         //ADD AS NEEDED
-        var wallProperties = [
-            "wallId",
-            "length",
-            "height",
-            "doors",
-            "windows"
-        ]
+        //var wallProperties = [
+        //    "wallId",
+        //    "length",
+        //    "height",
+        //    "doors",
+        //    "windows"
+        //]
         
         /**
         *Adding onclick events to next question buttons
         */
         $(document).ready(function () {
             //$('#MainContent_btnQuestion2').click(determineStartAndEndHeightOfEachWall(gable));
-            $('#MainContent_btnQuestion2').click(loadWallData);
+            //$('#MainContent_btnQuestion0').click(loadWallData);
             $('#MainContent_btnSubmit').click(submitData);
 
             //$('#MainContent_txtWall1Length').val('20');
@@ -596,6 +595,10 @@
         */
         function loadWallData() {
 
+            console.log("In here");
+            var startHeight = parseFloat($('#MainContent_txtStartHeight').val()) + parseFloat($('#MainContent_ddlStartHeightInches :selected').val());
+            var endHeight = parseFloat($('#MainContent_txtEndHeight').val()) + parseFloat($('#MainContent_ddlEndHeightInches :selected').val());
+
             //New array of walls
             walls = [];
 
@@ -604,38 +607,34 @@
                 ["LeftFiller", "LeftInchFractions"],
                 ["Length", "InchFractions"],
                 ["RightFiller", "RightInchFractions"]
-            ];
+            ];            
 
-            //Loop through all the lines(walls)
-            for (var i = 1; i <= lineList.length; i++) {
-                //If the wall is of type "P" (proposed), perform this block
-                if (coordList[i - 1][4] === "P") {
+            //Create variable wall to hold hold the current walls id and various properties
+            var wall = {
+                "id": 1,
+                "startHeight": startHeight,
+                "endHeight": endHeight,
+                //"doors": [],
+                //"windows": []
+                "mods" : []
+            };
+            //For loop to get values from first slide controls, which are: Left Filler, Length, Right Filler.
+            //These are repeated for every proposed wall.
+            for (var inner = 0; inner < wallInfo.length; inner++) {
+                //Get the text box value of the current pair of controls
+                var valueText = parseFloat($('#MainContent_txtWall' + wallInfo[inner][0]).val());
+                //Get the drop down value of the current pair of controls
+                var valueDDL = parseFloat($('#MainContent_ddlWall' + wallInfo[inner][1]).val());
 
-                    //Create variable wall to hold hold the current walls id and various properties
-                    var wall = {
-                        "id": i,
-                        "startHeight": wallStartHeightArray[i - 1],
-                        "endHeight": wallEndHeightArray[i - 1],
-                        //"doors": [],
-                        //"windows": []
-                        "mods" : []
-                    };
-                    //For loop to get values from first slide controls, which are: Left Filler, Length, Right Filler.
-                    //These are repeated for every proposed wall.
-                    for (var inner = 0; inner < wallInfo.length; inner++) {
-                        //Get the text box value of the current pair of controls
-                        var valueText = parseFloat($('#MainContent_txtWall' + i + wallInfo[inner][0]).val());
-                        //Get the drop down value of the current pair of controls
-                        var valueDDL = parseFloat($('#MainContent_ddlWall' + i + wallInfo[inner][1]).val());
+                console.log('Text value: ' + $('#MainContent_txtWall' + wallInfo[inner][0]).val() + ' / DDL value: ' + $('#MainContent_ddlWall' + wallInfo[inner][1]).val());
 
-                        //Store the respective values to a property in wall, they are named as follows:
-                        //leftFiller, length, rightFiller
-                        wall[wallInfo[inner][0][0].toLowerCase() + wallInfo[inner][0].substr(1)] = parseFloat(valueText) + parseFloat(valueDDL);
-                    }
-                    //Store the current wall within the walls array
-                    walls[i] = wall;
-                }
+                //Store the respective values to a property in wall, they are named as follows:
+                //leftFiller, length, rightFiller
+                wall[wallInfo[inner][0][0].toLowerCase() + wallInfo[inner][0].substr(1)] = parseFloat(valueText) + parseFloat(valueDDL);
             }
+            //Store the current wall within the walls array
+            walls[i] = wall;               
+            
         }
         
         /**
@@ -2366,24 +2365,24 @@ function sunshadeToggle()
                     <asp:Table ID="tblWallDetails" runat="server">                       
                         <asp:TableRow>                            
                             <asp:TableCell>
-                                <asp:Label ID="lblLeftFiller" runat="server" Text="Left Filler: "></asp:Label>
+                                <asp:Label ID="lblWallLeftFiller" runat="server" Text="Left Filler: "></asp:Label>
                             </asp:TableCell>
                             <asp:TableCell>
-                                <asp:TextBox ID="txtLeftFiller" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
+                                <asp:TextBox ID="txtWallLeftFiller" runat="server" CssClass = "txtField txtLengthInput" Text="10"></asp:TextBox>
                             </asp:TableCell>   
                             <asp:TableCell>
-                                <asp:DropDownList ID="ddlLeftFillerInches" runat="server"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlWallLeftInchFractions" runat="server"></asp:DropDownList>
                             </asp:TableCell>                        
                         </asp:TableRow>
                         <asp:TableRow>
                              <asp:TableCell>
-                                <asp:Label ID="lblRightFiller" runat="server" Text="Right Filler: "></asp:Label>
+                                <asp:Label ID="lblWallRightFiller" runat="server" Text="Right Filler: "></asp:Label>
                             </asp:TableCell>
                             <asp:TableCell>
-                                <asp:TextBox ID="txtRightFiller" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
+                                <asp:TextBox ID="txtWallRightFiller" runat="server" CssClass = "txtField txtLengthInput" Text="10"></asp:TextBox>
                             </asp:TableCell>  
                             <asp:TableCell>
-                                <asp:DropDownList ID="ddlRightFillerInches" runat="server"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlWallRightInchFractions" runat="server"></asp:DropDownList>
                             </asp:TableCell>                          
                         </asp:TableRow>
                         <asp:TableRow>
@@ -2391,10 +2390,10 @@ function sunshadeToggle()
                                <asp:Label ID="lblLength" runat="server" Text="Length: "></asp:Label>
                             </asp:TableCell>                            
                             <asp:TableCell>
-                                <asp:TextBox ID="txtLength" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
+                                <asp:TextBox ID="txtWallLength" runat="server" CssClass = "txtField txtLengthInput" Text="200"></asp:TextBox>
                             </asp:TableCell> 
                             <asp:TableCell>
-                                <asp:DropDownList ID="ddlLengthInches" runat="server"></asp:DropDownList>
+                                <asp:DropDownList ID="ddlWallInchFractions" runat="server"></asp:DropDownList>
                             </asp:TableCell>                           
                         </asp:TableRow>
                         <asp:TableRow>
@@ -2402,7 +2401,7 @@ function sunshadeToggle()
                                 <asp:Label ID="lblStartHeight" runat="server" Text="Start Height: "></asp:Label>
                             </asp:TableCell>
                             <asp:TableCell>
-                                <asp:TextBox ID="txtStartHeight" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
+                                <asp:TextBox ID="txtStartHeight" runat="server" CssClass = "txtField txtLengthInput" Text="150"></asp:TextBox>
                             </asp:TableCell>
                             <asp:TableCell>
                                 <asp:DropDownList ID="ddlStartHeightInches" runat="server"></asp:DropDownList>
@@ -2413,7 +2412,7 @@ function sunshadeToggle()
                                 <asp:Label ID="lblEndHeight" runat="server" Text="End Height: "></asp:Label>
                             </asp:TableCell>
                             <asp:TableCell>
-                                <asp:TextBox ID="txtEndHeight" runat="server" CssClass = "txtField txtLengthInput"></asp:TextBox>
+                                <asp:TextBox ID="txtEndHeight" runat="server" CssClass = "txtField txtLengthInput" Text="100"></asp:TextBox>
                             </asp:TableCell>
                             <asp:TableCell>
                                 <asp:DropDownList ID="ddlEndHeightInches" runat="server"></asp:DropDownList>
@@ -2426,7 +2425,7 @@ function sunshadeToggle()
 
     
                 <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion0" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" OnClick="btnQuestion0_Click" />
+                <asp:Button ID="btnQuestion0" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide1" runat="server" Text="Next Question" OnClientClick="loadWallData()" />
 
             </div> 
             <%-- end #slide0 --%>

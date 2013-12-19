@@ -588,6 +588,7 @@ namespace SunspaceDealerDesktop
                                                     break;
 
                                                 case "Horizontal 2 Track":
+                                                case "Single Slider":
                                                 case "Horizontal Roller":
                                                     for (int numVents = 0; numVents < aWindow.NumVents; numVents++)
                                                     {
@@ -610,8 +611,25 @@ namespace SunspaceDealerDesktop
                                                 //case "Single Slider":
                                                 //    break;
 
-                                                //case "Double Slider":
-                                                //    break;
+                                                case "Double Slider":
+                                                    for (int numVents = 0; numVents < aWindow.NumVents; numVents++)
+                                                    {
+                                                        aWindow.WindowStyle = "Horizontal Roller XX";
+                                                        aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                                                + project_id + ", "
+                                                                                + linearCounter + ", "
+                                                                                + k + ", "
+                                                                                + numVents + ", " //This is not in a vent, this is just solid vinyl
+                                                                                + 0 + ", " //This is a window, so it is 0
+                                                                                + aWindow.LeftHeight + ", "
+                                                                                + aWindow.RightHeight + ", "
+                                                                                + aWindow.Width + ", '"
+                                                                                + aWindow.Colour + "', "
+                                                                                + aWindow.SpreaderBar
+                                                                                + ");";
+                                                        aCommand.ExecuteNonQuery();
+                                                    }
+                                                    break;
 
                                                 case "Screen":
                                                     aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length, mount) VALUES("
