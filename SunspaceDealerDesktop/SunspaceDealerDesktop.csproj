@@ -559,7 +559,6 @@
     <Compile Include="Sunroom.cs" />
     <Compile Include="TestingHiddens.aspx.cs">
       <DependentUpon>TestingHiddens.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="TestingHiddens.aspx.designer.cs">
       <DependentUpon>TestingHiddens.aspx</DependentUpon>
