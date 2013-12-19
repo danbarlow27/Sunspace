@@ -124,7 +124,7 @@ namespace SunspaceDealerDesktop
                                     //for each modular item in the mod
                                     for (int k = 0; k < modCount; k++)
                                     {
-                                        //Get linear items
+                                        //Get module items
                                          aCommand.CommandText = "SELECT module_index, item_type, start_height, end_height, length FROM moduleItems "
                                                         + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "'";
 
@@ -443,15 +443,6 @@ namespace SunspaceDealerDesktop
                                             case "Panel Receiver": // make a class for horizontal
                                                 //horizontal panel receiver?
                                                 break;
-                                            //case "Screen":
-                                                //same as screen window?
-                                            //    break;
-                                            //case "Glass":
-                                            //    //same as glass window?
-                                            //    break;
-                                            //case "Vinyl":
-                                            //    //same as vinyl window?
-                                            //    break;
                                             case "Panel": // same as open wall window
                                                 // filler? 
                                                 break;
@@ -462,7 +453,7 @@ namespace SunspaceDealerDesktop
                                     listOfLinearItems.Add(aMod);//add the linear item to the list
 
                                     break;
-                                case "Receiver": // change to receiver
+                                case "Receiver": 
                                     #region Receiver
                                     BoxHeader aBoxHeader = new BoxHeader();
                                     aBoxHeader.LinearIndex = linearIndex;
@@ -498,7 +489,7 @@ namespace SunspaceDealerDesktop
                                     listOfLinearItems.Add(aBoxHeader);//add the linear item to the list
                                     #endregion
                                     break;
-                                case "Box Header": // add a case: Box Headaer Receiver
+                                case "Box Header": // 
                                     #region Box Header
                                     aBoxHeader = new BoxHeader();
                                     aBoxHeader.LinearIndex = linearIndex;
@@ -511,6 +502,24 @@ namespace SunspaceDealerDesktop
                                     aBoxHeader.FixedLocation = fixedLocation; 
                                     aBoxHeader.AttachedTo = attachedTo; 
                                     aBoxHeader.IsReceiver = false;
+                                    //aBoxHeader.IsTwoPiece = false;
+
+                                    listOfLinearItems.Add(aBoxHeader);//add the linear item to the list
+                                    #endregion
+                                    break;
+                                case "Box Header Receiver": // 
+                                    #region Box Header Receiver
+                                    aBoxHeader = new BoxHeader();
+                                    aBoxHeader.LinearIndex = linearIndex;
+                                    aBoxHeader.ItemType = linearItemType;
+                                    aBoxHeader.StartHeight = startHeight;
+                                    aBoxHeader.EndHeight = endHeight;
+                                    aBoxHeader.Length = length;
+                                    aBoxHeader.FrameColour = frameColour;
+                                    aBoxHeader.Sex = sex;
+                                    aBoxHeader.FixedLocation = fixedLocation;
+                                    aBoxHeader.AttachedTo = attachedTo;
+                                    aBoxHeader.IsReceiver = true;
                                     //aBoxHeader.IsTwoPiece = false;
 
                                     listOfLinearItems.Add(aBoxHeader);//add the linear item to the list

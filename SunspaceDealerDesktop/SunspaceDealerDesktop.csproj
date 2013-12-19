@@ -191,6 +191,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Images\iconsNavEditor.png" />
+    <Content Include="JSONTest2.aspx" />
     <Content Include="PriceCalculator.aspx" />
     <Content Include="ProjectEditor.aspx" />
     <Content Include="Scripts\init.js" />
@@ -378,6 +379,13 @@
     </Compile>
     <Compile Include="Customer.cs" />
     <Compile Include="Door.cs" />
+    <Compile Include="JSONTest2.aspx.cs">
+      <DependentUpon>JSONTest2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="JSONTest2.aspx.designer.cs">
+      <DependentUpon>JSONTest2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PriceCalculator.aspx.cs">
       <DependentUpon>PriceCalculator.aspx</DependentUpon>
     </Compile>
