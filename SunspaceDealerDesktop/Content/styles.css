@@ -883,6 +883,76 @@ textarea {
 }
 
 /******************************************
+ * PRICE CALCULATOR
+ ******************************************/
+
+div.priceCalculatorWrapper .navEditor {
+    margin: -50px 0 0 0;
+}
+
+div.priceCalculatorWrapper .ulNavEditor li a {
+    text-indent: 0;
+    background: transparent;
+}
+
+div.priceCalculatorWrapper .additionalChargesOverlay {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    display: none;
+    z-index: 1000;
+}
+
+div.additionalChargesOverlay .content {
+    position: fixed;
+    height: 300px;
+    width: 400px;
+    background-color: rgb(242, 235, 214);
+    top: 50%;
+    left: 50%;
+    margin-left: -200px !important;
+    margin-top: -150px !important;
+    z-index:1005; 
+}
+
+div.additionalChargesOverlay .closeBar {
+    display: inline-block;
+    height: 50px;
+    width: 100%;
+    background-color: black;
+}
+
+div.additionalChargesOverlay .overlayClose {
+    cursor: pointer;
+    font-size: 1.25em;
+    text-transform: uppercase;
+    text-indent: 30px;
+    line-height: 50px;
+    color: #fff;
+    background: transparent url('../Images/iconsNav.png') no-repeat left top;
+    background-size: 36px 200px;
+    margin: 0 20px;
+    border: 0;
+    float: right;
+    display: block;
+    background-position: 0 -150px;
+    overflow:hidden;
+}
+
+div.additionalChargesOverlay .content h3 {
+    padding: 0 0 0 2em;
+}
+
+div.additionalChargesoverlay .additionalChargesLabel {
+    padding: 0 0 0 1em;
+}
+
+div.additionalChargesoverlay .additionalChargesTextField {
+    width: 50%;
+}
+
+/******************************************
  * GLOBAL FIXES
  ******************************************/
  

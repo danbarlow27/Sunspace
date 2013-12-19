@@ -172,8 +172,16 @@
         var dlo = 2.0; // day light opening, window size for 2 inches if option selected
         var deductions = 0.0; // any deductions to be applied to the size of the window
         var tint; // tint values
-        var ventHeight; //height of each vent
-        var ventWidth; //width of each vent
+        var ventHeight; //height vents
+
+        var ventTopHeight;
+        var vent2Height;
+        var vent3Height;
+        var ventBottomHeight;
+
+        var ventWidth; //width vents
+
+
 
         var MIN_WIDTH_BUILDABLE; 
         var MAX_WIDTH_BUILDABLE;
@@ -184,7 +192,8 @@
         var MIN_HEIGHT_WARRANTY;
         var MAX_HEIGHT_WARRANTY;
 
-        var errorMessage = document.getElementById("MainContent_txtErrorMessage");
+        //var errorMessage = $("#MainContent_txtErrorMessage");
+        var errorMessage = $("#MainContent_lblErrorMessage");
 
         /**
         This function gets called when dlo/tip to tip label is clicked
@@ -244,7 +253,7 @@
 
                 //error: please input a valid Height and Build-As-If Height
                 //alert("enter some numbers you fool!");
-                errorMessage.innerHTML = "enter some numbers you foo!";
+                errorMessage.text("enter some numbers you foo!");
                 document.getElementById('MainContent_radWindowBottomRadVinyl').checked = true;
                 topOrBottomUnevenClicked();
             }
@@ -253,7 +262,7 @@
                  asIfHeight < MIN_HEIGHT_BUILDABLE || asIfHeight > MAX_HEIGHT_BUILDABLE) {
                 //error: please input a valid Height and Build-As-If Height
                 //alert("not buildable!");
-                errorMessage.innerHTML = "not buildable";
+                errorMessage.text("not buildable");
                 document.getElementById('MainContent_radWindowBottomRadVinyl').checked = true;
                 topOrBottomUnevenClicked();
             }
@@ -262,7 +271,7 @@
                  asIfHeight < MIN_HEIGHT_WARRANTY || asIfHeight > MAX_HEIGHT_WARRANTY) {
                 //error: please input a valid Height and Build-As-If Height
                 //alert("buildable but not under warranty!");
-                errorMessage.innerHTML = "buildable but not under warranty";
+                errorMessage.text("buildable but not under warranty");
                 document.getElementById('MainContent_radWindowBottomRadVinyl').checked = true;
                 topOrBottomUnevenClicked();
             }
@@ -304,7 +313,8 @@
 
         /*
         This function gets the height and width of each vent on a V4T window
-        This code is the replica of Dan H's code
+        Part of this code is the replica of Dan H's code to get the height and width 
+        This function also determines and sets the size of each vent for an uneven vent window
         @param asIf - build as if value given (true or false)
         */
         function getHeightAndWidthOfEachVent(asIf) {
@@ -315,46 +325,135 @@
             var windowWidth = document.getElementById('MainContent_txtWindowWidthVinyl').value + document.getElementById('MainContent_ddlWindowWidthVinyl').options[document.getElementById('MainContent_ddlWindowWidthVinyl').selectedIndex].value;
             var windowHeight = (asIf) ? document.getElementById('MainContent_txtWindowAsIfHeightVinyl').value + document.getElementById('MainContent_ddlWindowAsIfHeightVinyl').options[document.getElementById('MainContent_ddlWindowAsIfHeightVinyl').selectedIndex].value : 
                                         document.getElementById('MainContent_txtWindowHeightVinyl').value + document.getElementById('MainContent_ddlWindowHeightVinyl').options[document.getElementById('MainContent_ddlWindowHeightVinyl').selectedIndex].value;
-            
+            var asIfHeight = document.getElementById('MainContent_txtWindowAsIfHeightVinyl').value + document.getElementById('MainContent_ddlWindowAsIfHeightVinyl').options[document.getElementById('MainContent_ddlWindowAsIfHeightVinyl').selectedIndex].value;
+            var height = document.getElementById('MainContent_txtWindowHeightVinyl').value + document.getElementById('MainContent_ddlWindowHeightVinyl').options[document.getElementById('MainContent_ddlWindowHeightVinyl').selectedIndex].value;
+
             if (ventCount > 8) { 
-                ventWidth = (windowWidth - 1.5625 - 2.75) / 3;
+                ventWidth = (parseFloat(windowWidth) - 1.5625 - 2.75) / 3;
             }
             else if (ventCount > 4) {
-                ventWidth = (windowWidth - 1.5625 - 1.6875) / 2;
+                ventWidth = (parseFloat(windowWidth) - 1.5625 - 1.6875) / 2;
             }
             else {
-                ventWidth = windowWidth - 1.5625;
+                ventWidth = parseFloat(windowWidth) - 1.5625;
             }
 
             if (ventCount % 4 === 0) {
-                ventHeight = (windowHeight + 2.187) / 4;
+                ventHeight = (parseFloat(windowHeight) + 2.187) / 4;
             }
             else if (ventCount % 3 === 0) {
-                ventHeight = (windowHeight + 1.3125) / 3;
+                ventHeight = (parseFloat(windowHeight) + 1.3125) / 3;
             }
             else {
-                ventHeight = (windowHeight + 0.4375) / 2;
+                ventHeight = (parseFloat(windowHeight) + 0.4375) / 2;
             }
                         
-            ventHeight =  Math.round(ventHeight * 100) / 100;
-            ventWidth = Math.round(ventWidth * 100) / 100;
+            ventHeight =  Math.round(parseFloat(ventHeight) * 100) / 100;
+            ventWidth = Math.round(parseFloat(ventWidth) * 100) / 100;
+
+            ventTopHeight = ventHeight;
+            vent2Height = ventHeight;
+            vent3Height = ventHeight;
+            ventBottomHeight = ventHeight;
+
+            if (parseFloat(height) > parseFloat(asIfHeight)) { //if height > as if height
+
+                var extraHeight = parseFloat(height) - parseFloat(asIfHeight); 
+                                 
+                if ($("#MainContent_radWindowTopRadVinyl").is(':checked')) {
+                    ventTopHeight = parseFloat(ventTopHeight) - parseFloat(extraHeight);
+                }
+                else if($("#MainContent_radWindowBottomRadVinyl").is(':checked')) {
+                    ventBottomHeight = parseFloat(ventBottomHeight) - parseFloat(extraHeight);
+                }
+                else if($("#MainContent_radWindowBothRadVinyl").is(':checked')) {
+                    ventTopHeight = parseFloat(ventTopHeight) - (Math.round((parseFloat(extraHeight) / 2) * 100) / 100);
+                    ventBottomHeight = parseFloat(ventBottomHeight) - (Math.round((parseFloat(extraHeight) / 2) * 100) / 100);
+                }
+            }
+            else if (parseFloat(asIfHeight) > parseFloat(height)) { // if as if height > height
+
+                var remainingHeight = parseFloat(asIfHeight) - parseFloat(height); 
+                                 
+                if ($("#MainContent_radWindowTopRadVinyl").is(':checked')) {
+                    ventTopHeight = parseFloat(ventTopHeight) + parseFloat(remainingHeight);
+                }
+                else if($("#MainContent_radWindowBottomRadVinyl").is(':checked')) {
+                    ventBottomHeight = parseFloat(ventBottomHeight) + parseFloat(remainingHeight);
+                }
+                else if($("#MainContent_radWindowBothRadVinyl").is(':checked')) {
+                    ventTopHeight = parseFloat(ventTopHeight) + (Math.round((parseFloat(remainingHeight) / 2) * 100) / 100);
+                    ventBottomHeight = parseFloat(ventBottomHeight) + (Math.round((parseFloat(remainingHeight) / 2) * 100) / 100);
+                }
+            }
+            else { //as if height === height, thus, not uneven
+
+                ventTopHeight = ventHeight;
+                vent2Height = ventHeight;
+                vent3Height = ventHeight;
+                ventBottomHeight = ventHeight;
+            }
+
+            $("#MainContent_txtWindowTopVentHeightVinyl").val(ventTopHeight);
+            $("#MainContent_txtWindowBottomVentHeightVinyl").val(ventBottomHeight);
             
         }
+
+
+        /**
+        This function gets called when values in the top uneven vent or bottom unevent vent
+        textboxes are changed. This function dynamically updates both textboxes (top and bottom)
+        with the appropriate values 
+        @param value - value in the textbox
+        @param sender - "top" or "bottom" the textbox which triggered this function
+        */
+        function adjustVentHeights(value, sender) {
+            
+            var actualValue;
+
+            if (sender === "top") {
+
+                if (parseFloat(value) > parseFloat(ventTopHeight)) {
+                    actualValue = parseFloat(value) - parseFloat(ventTopHeight);
+                    ventTopHeight = parseFloat(ventTopHeight) + parseFloat(actualValue);
+                    ventBottomHeight = parseFloat(ventBottomHeight) - parseFloat(value);
+                }
+                else if (parseFloat(value) < parseFloat(ventTopHeight)) {
+                    actualValue = parseFloat(ventTopHeight) - parseFloat(value);
+                    ventTopHeight = parseFloat(ventTopHeight) - parseFloat(actualValue);
+                    ventBottomHeight = parseFloat(ventBottomHeight) + parseFloat(value);
+                }
+            }
+            else if (sender === "bottom") { 
+                if (parseFloat(value) > parseFloat(ventTopHeight)) {
+                    actualValue = parseFloat(value) - parseFloat(ventBottomHeight);
+                    ventTopHeight = parseFloat(ventTopHeight) - parseFloat(actualValue);
+                    ventBottomHeight = parseFloat(ventBottomHeight) + parseFloat(value);
+                }
+                else if (parseFloat(value) < parseFloat(ventTopHeight)) {
+                    actualValue = parseFloat(ventBottomHeight) - parseFloat(value);
+                    ventTopHeight = parseFloat(ventTopHeight) + parseFloat(actualValue);
+                    ventBottomHeight = parseFloat(ventBottomHeight) - parseFloat(value);
+                }
+            }
+
+            $("#MainContent_txtWindowTopVentHeightVinyl").val(Math.round(parseFloat(ventTopHeight) * 100) / 100);
+            $("#MainContent_txtWindowBottomVentHeightVinyl").val(Math.round(parseFloat(ventBottomHeight) * 100) / 100);
+        }
+
             
         /*
         This function gets called when the user selects both uneven vents radio button
         It displays the appropriate rows and recalculates all the values
         */
         function bothUnevenClicked() {
-            //getHeightAndWidthOfEachVent(true);
+            getHeightAndWidthOfEachVent(true);
                 
-            document.getElementById('MainContent_txtWindowTopVentHeightVinyl').value = ventHeight;
-            document.getElementById('MainContent_txtWindowBottomVentHeightVinyl').value = ventHeight;
+            document.getElementById('MainContent_txtWindowTopVentHeightVinyl').value = ventTopHeight;
+            document.getElementById('MainContent_txtWindowBottomVentHeightVinyl').value = ventBottomHeight;
 
             document.getElementById('MainContent_rowWindowUnevenVentsTopVinyl').style.display = 'table-row';
             document.getElementById('MainContent_rowWindowUnevenVentsBottomVinyl').style.display = 'table-row';
-
-            recalculate();
 
         }
 
@@ -368,6 +467,8 @@
 
             document.getElementById('MainContent_rowWindowUnevenVentsTopVinyl').style.display = 'none';
             document.getElementById('MainContent_rowWindowUnevenVentsBottomVinyl').style.display = 'none';
+
+            getHeightAndWidthOfEachVent(true);
         }
 
         /*
@@ -454,8 +555,10 @@
                 document.getElementById('MainContent_rowWindowScreenOptionsVinyl').style.display = 'none';
         }
 
-        //BOOKMARK
 
+        /**
+        This function sets the appropriate MIX/MAX size values depending on the number of vents
+        */
         function windowVinylNumberOfVentsChanged(vents) {
             switch (vents) { //this switch statement checks the number of vents selected in a V4T type of window, and sets the validation constants to the values for a V4T window with that many vents
                 case "3":
@@ -655,7 +758,11 @@
             }
         }
 
-
+        /*
+        This function gets called when the window style is changed for glass windows
+        It hides and displays all appropriate rows for that type of window and sets all the default values for the validation constants
+        @param dropdownValue - the style of vinyl window selected 
+        */
         function windowGlassStyleChanged(dropdownValue) {
 
             switch (dropdownValue) {
@@ -733,6 +840,11 @@
             }
         }
 
+        /*
+        This function gets called when the window style is changed for screen windows
+        It hides and displays all appropriate rows for that type of window and sets all the default values for the validation constants
+        @param dropdownValue - the style of vinyl window selected
+        */
         function windowScreenStyleChanged(dropdownValue) {
 
             switch (dropdownValue) {
@@ -785,7 +897,7 @@
             </div> <%-- end #paging --%>      
         </div>
 
-        <%--<asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label>--%>
+        <asp:Label ID="lblErrorMessage" CssClass="lblErrorMessage" runat="server" Text="Label">Oh hello, I am an error message.</asp:Label>
         <textarea id="txtErrorMessage" class="txtErrorMessage"  rows="5" runat="server"></textarea>
     </div>
 </asp:Content>

@@ -427,6 +427,7 @@
             //When 'walls only' is selected, this will need additional logic to skip the next few slides
             //we'll do this by having a duplicate button in the same spot that goes to the desired slide
             if ($('#<%=radProjectWalls.ClientID%>').is(':checked')) {
+                document.getElementById("<%=hidKneewallHeight.ClientID%>").value = document.getElementById("<%=txtKneewallHeight.ClientID%>").value;
                 document.getElementById('<%=btnQuestion4.ClientID%>').style.display="none";
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="inline";
             }

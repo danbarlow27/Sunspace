@@ -40,58 +40,58 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Table tblWallDetails;
         
         /// <summary>
-        /// lblLeftFiller control.
+        /// lblWallLeftFiller control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLeftFiller;
+        protected global::System.Web.UI.WebControls.Label lblWallLeftFiller;
         
         /// <summary>
-        /// txtLeftFiller control.
+        /// txtWallLeftFiller control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtLeftFiller;
+        protected global::System.Web.UI.WebControls.TextBox txtWallLeftFiller;
         
         /// <summary>
-        /// ddlLeftFillerInches control.
+        /// ddlWallLeftInchFractions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlLeftFillerInches;
+        protected global::System.Web.UI.WebControls.DropDownList ddlWallLeftInchFractions;
         
         /// <summary>
-        /// lblRightFiller control.
+        /// lblWallRightFiller control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRightFiller;
+        protected global::System.Web.UI.WebControls.Label lblWallRightFiller;
         
         /// <summary>
-        /// txtRightFiller control.
+        /// txtWallRightFiller control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRightFiller;
+        protected global::System.Web.UI.WebControls.TextBox txtWallRightFiller;
         
         /// <summary>
-        /// ddlRightFillerInches control.
+        /// ddlWallRightInchFractions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlRightFillerInches;
+        protected global::System.Web.UI.WebControls.DropDownList ddlWallRightInchFractions;
         
         /// <summary>
         /// lblLength control.
@@ -103,22 +103,22 @@ namespace SunspaceDealerDesktop {
         protected global::System.Web.UI.WebControls.Label lblLength;
         
         /// <summary>
-        /// txtLength control.
+        /// txtWallLength control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtLength;
+        protected global::System.Web.UI.WebControls.TextBox txtWallLength;
         
         /// <summary>
-        /// ddlLengthInches control.
+        /// ddlWallInchFractions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlLengthInches;
+        protected global::System.Web.UI.WebControls.DropDownList ddlWallInchFractions;
         
         /// <summary>
         /// lblStartHeight control.

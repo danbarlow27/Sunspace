@@ -9,7 +9,7 @@ namespace SunspaceDealerDesktop
 {
     public partial class WizardWindowsOnly : System.Web.UI.Page
     {
-        protected ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
+        protected ListItem lst0 = new ListItem("---", ".0", true); //0, i.e. no decimal value, selected by default
         protected ListItem lst18 = new ListItem("1/8", ".125");
         protected ListItem lst14 = new ListItem("1/4", ".25");
         protected ListItem lst38 = new ListItem("3/8", ".375");//
@@ -311,7 +311,7 @@ namespace SunspaceDealerDesktop
                 windowDLOLBL.ID = "lblWindowDLO" + title;
                 windowDLOLBL.Text = "DLO";
                 windowDLOLBL.ForeColor = System.Drawing.Color.Blue;
-                windowDLOLBL.Attributes.Add("onclick", "this.innerText = (this.innerText === 'DLO') ? 'Tip to Tip' : 'DLO'; dloClicked(this.innerText);");
+                windowDLOLBL.Attributes.Add("onclick", "this.innerText = (this.innerText === 'DLO') ? 'Tip to Tip' : 'DLO'; dloClicked(this.innerText); recalculate();");
                 windowDLOLBL.Attributes.Add("onmouseover", "this.style.cursor='pointer'");
                 windowDLOLBL.Attributes.Add("onmouseout", "this.style.cursor='auto'");
 
@@ -319,7 +319,7 @@ namespace SunspaceDealerDesktop
                 windowDeductionsLBL.ID = "lblWindowDeductions" + title;
                 windowDeductionsLBL.Text = "No Deductions";
                 windowDeductionsLBL.ForeColor = System.Drawing.Color.Blue;
-                windowDeductionsLBL.Attributes.Add("onclick", "this.innerText = (this.innerText === 'No Deductions') ? 'Deduct 1/8\"' : (this.innerText === 'Deduct 1/8\"') ? 'Deduct 1/4\"' : (this.innerText === 'Deduct 1/4\"') ? 'Deduct 3/8\"' : (this.innerText === 'Deduct 3/8\"') ? 'Deduct 1/2\"' : 'No Deductions'; deductionsClicked(this.innerText);");
+                windowDeductionsLBL.Attributes.Add("onclick", "this.innerText = (this.innerText === 'No Deductions') ? 'Deduct 1/8\"' : (this.innerText === 'Deduct 1/8\"') ? 'Deduct 1/4\"' : (this.innerText === 'Deduct 1/4\"') ? 'Deduct 3/8\"' : (this.innerText === 'Deduct 3/8\"') ? 'Deduct 1/2\"' : 'No Deductions'; deductionsClicked(this.innerText); recalculate();");
                 windowDeductionsLBL.Attributes.Add("onmouseover", "this.style.cursor='pointer'");
                 windowDLOLBL.Attributes.Add("onmouseout", "this.style.cursor='auto'");
 
@@ -861,58 +861,6 @@ namespace SunspaceDealerDesktop
 
                 if (title == "Vinyl")
                 {
-                    #region edit
-                    /*
-                TableCell windowUnevenVentsEditRADCell = new TableCell();
-
-                Label windowUnevenVentsEditLBLRad = new Label();
-                windowUnevenVentsEditLBLRad.ID = "lblWindowUnevenVentsEdit" + title;
-
-                Label windowUnevenVentsEditLBL = new Label();
-                windowUnevenVentsEditLBL.ID = "lblWindowUnevenVentsEditRad" + title;
-                windowUnevenVentsEditLBL.Text = "Edit";
-
-                RadioButton windowUnevenVentsEditRAD = new RadioButton();
-                windowUnevenVentsEditRAD.ID = "radWindowUnevenVentsEdit" + title;
-                windowUnevenVentsEditRAD.Attributes.Add("value", "Edit");
-                windowUnevenVentsEditRAD.GroupName = "UnevenVents" + title;
-                windowUnevenVentsEditRAD.Checked = true;
-                windowUnevenVentsEditRAD.Attributes.Add("onclick", "windowStyle('" + title + "');");
-
-                windowUnevenVentsEditLBLRad.AssociatedControlID = "radWindowUnevenVentsEdit" + title;
-                windowUnevenVentsEditLBL.AssociatedControlID = "radWindowUnevenVentsEdit" + title;
-
-                windowUnevenVentsEditRADCell.Controls.Add(windowUnevenVentsEditRAD);
-                windowUnevenVentsEditRADCell.Controls.Add(windowUnevenVentsEditLBLRad);
-                windowUnevenVentsEditRADCell.Controls.Add(windowUnevenVentsEditLBL);
-                */
-                    #endregion
-
-                    #region done
-                    /*
-                TableCell windowUnevenVentsDoneRADCell = new TableCell();
-
-                Label windowUnevenVentsDoneLBLRad = new Label();
-                windowUnevenVentsDoneLBLRad.ID = "lblWindowUnevenVentsDone" + title;
-
-                Label windowUnevenVentsDoneLBL = new Label();
-                windowUnevenVentsDoneLBL.ID = "lblWindowUnevenVentsDoneRad" + title;
-                windowUnevenVentsDoneLBL.Text = "Done";
-
-                RadioButton windowUnevenVentsDoneRAD = new RadioButton();
-                windowUnevenVentsDoneRAD.ID = "radWindowUnevenVentsDone" + title;
-                windowUnevenVentsDoneRAD.Attributes.Add("value", "Done");
-                windowUnevenVentsDoneRAD.GroupName = "UnevenVents" + title;
-                windowUnevenVentsDoneRAD.Attributes.Add("onclick", "windowStyle('" + title + "');");
-
-                windowUnevenVentsDoneLBLRad.AssociatedControlID = "radWindowUnevenVentsDone" + title;
-                windowUnevenVentsDoneLBL.AssociatedControlID = "radWindowUnevenVentsDone" + title;
-
-                windowUnevenVentsDoneRADCell.Controls.Add(windowUnevenVentsDoneRAD);
-                windowUnevenVentsDoneRADCell.Controls.Add(windowUnevenVentsDoneLBLRad);
-                windowUnevenVentsDoneRADCell.Controls.Add(windowUnevenVentsDoneLBL);
-                */
-                    #endregion
 
                     #region Top
 
@@ -933,7 +881,7 @@ namespace SunspaceDealerDesktop
                     windowTopVentTXT.CssClass = "txtField txtWindowInput";
                     windowTopVentTXT.Attributes.Add("maxlength", "3");
                     windowTopVentTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
-                    windowTopVentTXT.Attributes.Add("onblur", "recalculate();");
+                    windowTopVentTXT.Attributes.Add("onblur", "adjustVentHeights(this.value, 'top');");
 
 
                     //DropDownList inchTopVentDDL = new DropDownList();
@@ -990,7 +938,7 @@ namespace SunspaceDealerDesktop
                     windowBottomVentTXT.CssClass = "txtField txtWindowInput";
                     windowBottomVentTXT.Attributes.Add("maxlength", "3");
                     windowBottomVentTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
-                    windowBottomVentTXT.Attributes.Add("onblur", "recalculate();");
+                    windowBottomVentTXT.Attributes.Add("onblur", "adjustVentHeights(this.value, 'bottom');");
 
                     //DropDownList inchBottomVentDDL = new DropDownList();
                     //inchBottomVentDDL.ID = "ddlWindowBottomVentHeight" + title;
