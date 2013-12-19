@@ -400,6 +400,8 @@
     <Compile Include="PriceCalculator.aspx.cs">
       <DependentUpon>PriceCalculator.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    <Compile Include="PriceCalculator.aspx.cs">
+      <DependentUpon>PriceCalculator.aspx</DependentUpon>
     </Compile>
     <Compile Include="PriceCalculator.aspx.designer.cs">
       <DependentUpon>PriceCalculator.aspx</DependentUpon>
