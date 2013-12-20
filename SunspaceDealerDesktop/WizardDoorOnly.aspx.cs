@@ -119,6 +119,171 @@ namespace SunspaceDealerDesktop
 
                 #endregion
 
+                #region Door Height
+
+                TableRow doorHeightRow = new TableRow();
+                doorHeightRow.ID = "rowDoorHeight" + title;
+                //doorHeightRow.Attributes.Add("style", "display:none;");
+                TableCell doorHeightLBLCell = new TableCell();
+                TableCell doorHeightTXTCell = new TableCell();
+                TableCell doorHeightDDLCell = new TableCell();
+
+                Label doorHeightLBL = new Label();
+                doorHeightLBL.ID = "lblDoorHeight" + title;
+                doorHeightLBL.Text = "Height:";
+
+                TextBox doorHeightTXT = new TextBox();
+                doorHeightTXT.ID = "txtDoorHeight" + title;
+                doorHeightTXT.CssClass = "txtField txtDoorInput";
+                doorHeightTXT.Attributes.Add("maxlength", "3");
+                doorHeightTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                doorHeightTXT.Attributes.Add("onblur", "recalculate();");
+
+                DropDownList inchHeight = new DropDownList();
+                inchHeight.ID = "ddlDoorHeight" + title;
+                inchHeight.Attributes.Add("onchange", "recalculate();");
+                inchHeight.Items.Add(lst0);
+                inchHeight.Items.Add(lst18);
+                inchHeight.Items.Add(lst14);
+                inchHeight.Items.Add(lst38);
+                inchHeight.Items.Add(lst12);
+                inchHeight.Items.Add(lst58);
+                inchHeight.Items.Add(lst34);
+                inchHeight.Items.Add(lst78);
+
+                doorHeightLBL.AssociatedControlID = "txtDoorHeight" + title;
+
+                #endregion
+
+                #region "As-if" Height
+                
+                TableRow doorAsIfHeightRow = new TableRow();
+                doorAsIfHeightRow.ID = "rowDoorAsIfHeight" + title;
+                doorAsIfHeightRow.Attributes.Add("style", "display:none;");
+                TableCell doorAsIfHeightLBLCell = new TableCell();
+                TableCell doorAsIfHeightTXTCell = new TableCell();
+                TableCell doorAsIfHeightDDLCell = new TableCell();
+
+                Label doorAsIfHeightLBL = new Label();
+                doorAsIfHeightLBL.ID = "lblDoorAsIfHeight" + title;
+                doorAsIfHeightLBL.Text = "Build As If:";
+
+                TextBox doorAsIfHeightTXT = new TextBox();
+                doorAsIfHeightTXT.ID = "txtDoorAsIfHeight" + title;
+                doorAsIfHeightTXT.CssClass = "txtField txtDoorInput";
+                doorAsIfHeightTXT.Attributes.Add("maxlength", "3");
+                doorAsIfHeightTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                doorAsIfHeightTXT.Attributes.Add("onblur", "recalculate();");
+
+                DropDownList inchAsIfHeight = new DropDownList();
+                inchAsIfHeight.ID = "ddlDoorAsIfHeight" + title;
+                inchAsIfHeight.Attributes.Add("onchange", "recalculate();");
+                inchAsIfHeight.Items.Add(lst0);
+                inchAsIfHeight.Items.Add(lst18);
+                inchAsIfHeight.Items.Add(lst14);
+                inchAsIfHeight.Items.Add(lst38);
+                inchAsIfHeight.Items.Add(lst12);
+                inchAsIfHeight.Items.Add(lst58);
+                inchAsIfHeight.Items.Add(lst34);
+                inchAsIfHeight.Items.Add(lst78);
+
+                doorAsIfHeightLBL.AssociatedControlID = "txtDoorAsIfHeight" + title;                
+                
+                #endregion
+
+                #region Door Width
+
+                TableRow doorWidthRow = new TableRow();
+                doorWidthRow.ID = "rowDoorWidth" + title;
+                //doorWidthRow.Attributes.Add("style", "display:none;");
+                TableCell doorWidthLBLCell = new TableCell();
+                TableCell doorWidthTXTCell = new TableCell();
+                TableCell doorWidthDDLCell = new TableCell();
+
+                Label doorWidthLBL = new Label();
+                doorWidthLBL.ID = "lblDoorWidth" + title;
+                doorWidthLBL.Text = "Width:";
+
+                TextBox doorWidthTXT = new TextBox();
+                doorWidthTXT.ID = "txtDoorWidth" + title;
+                doorWidthTXT.CssClass = "txtField txtDoorInput";
+                doorWidthTXT.Attributes.Add("maxlength", "3");
+                doorWidthTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                doorWidthTXT.Attributes.Add("onblur", "recalculate();");
+
+                DropDownList inchWidth = new DropDownList();
+                inchWidth.ID = "ddlDoorWidth" + title;
+                inchWidth.Attributes.Add("onchange", "recalculate();");
+                inchWidth.Items.Add(lst0);
+                inchWidth.Items.Add(lst18);
+                inchWidth.Items.Add(lst14);
+                inchWidth.Items.Add(lst38);
+                inchWidth.Items.Add(lst12);
+                inchWidth.Items.Add(lst58);
+                inchWidth.Items.Add(lst34);
+                inchWidth.Items.Add(lst78);
+
+                doorWidthLBL.AssociatedControlID = "txtDoorWidth" + title;                
+
+                #endregion
+
+                #region V4T Number Of Vents
+
+                    TableRow doorV4TNumberOfVentsRow = new TableRow();
+                    doorV4TNumberOfVentsRow.ID = "rowDoorV4TNumberOfVents" + title;
+                    //doorV4TNumberOfVentsRow.Attributes.Add("style", "display:none;");
+                    TableCell doorV4TNumberOfVentsLBLCell = new TableCell();
+                    TableCell doorV4TNumberOfVentsDDLCell = new TableCell();
+
+                    Label doorV4TNumberOfVentsLBL = new Label();
+                    doorV4TNumberOfVentsLBL.ID = "lblV4TNumberOfVents" + title;
+                    doorV4TNumberOfVentsLBL.Text = "Number Of Vents:";
+
+                    DropDownList doorV4TNumberOfVentsDDL = new DropDownList();
+                    doorV4TNumberOfVentsDDL.ID = "ddlDoorV4TNumberOfVents" + title;
+                    doorV4TNumberOfVentsDDL.Attributes.Add("onchange", "tintOptionsChanged();");
+                    for (int j = 0; j < Constants.DOOR_NUMBER_OF_VENTS.Count(); j++)
+                    {
+                        doorV4TNumberOfVentsDDL.Items.Add(new ListItem(Constants.DOOR_NUMBER_OF_VENTS[j], Constants.DOOR_NUMBER_OF_VENTS[j]));
+                    }
+
+                    doorV4TNumberOfVentsLBL.AssociatedControlID = "ddlDoorV4TNumberOfVents" + title;
+
+                    doorV4TNumberOfVentsLBLCell.Controls.Add(doorV4TNumberOfVentsLBL);
+                    doorV4TNumberOfVentsDDLCell.Controls.Add(doorV4TNumberOfVentsDDL);
+
+                    doorV4TNumberOfVentsRow.Cells.Add(doorV4TNumberOfVentsLBLCell);
+                    doorV4TNumberOfVentsRow.Cells.Add(doorV4TNumberOfVentsDDLCell);
+
+
+                    #region Uneven Vents Checkbox
+
+                    TableCell doorUnevenVentsCHKCell = new TableCell();
+                    //doorUnevenVentsCHKCell.Attributes.Add("style", "display:none;");
+                    doorUnevenVentsCHKCell.ID = "cellDoorUnevenVents" + title;
+
+                    Label doorUnevenVentsLBLChk = new Label();
+                    doorUnevenVentsLBLChk.ID = "lblDoorUnevenVents" + title;
+
+                    Label doorUnevenVentsLBL = new Label();
+                    doorUnevenVentsLBL.ID = "lblDoorUnevenVentsRad" + title;
+                    doorUnevenVentsLBL.Text = " Uneven Vents";
+
+                    CheckBox doorUnevenVentsCHK = new CheckBox();
+                    doorUnevenVentsCHK.ID = "chkDoorUnevenVents" + title;
+                    doorUnevenVentsCHK.Attributes.Add("value", "UnevenVents");
+                    doorUnevenVentsCHK.Attributes.Add("onclick", "unevenVentsChecked(this.checked,'" + title + "');");
+
+                    doorUnevenVentsLBLChk.AssociatedControlID = "chkDoorUnevenVents" + title;
+                    doorUnevenVentsLBL.AssociatedControlID = "chkDoorUnevenVents" + title;
+
+                    #endregion
+
+                
+                #endregion
+
+                #region Commented V4T
+                /*
                 #region Table:Sixteenth Row Door V4T Vinyl Tint (tblDoorDetails)
 
                 TableRow doorVinylTintRow = new TableRow();
@@ -164,6 +329,8 @@ namespace SunspaceDealerDesktop
 
                 doorNumberOfVentsLBL.AssociatedControlID = "ddlDoorNumberOfVents" + title;
 
+                #endregion
+                */
                 #endregion
 
                 #region Table:# Row Door Transom Vinyl (tblDoorDetails)
@@ -298,6 +465,8 @@ namespace SunspaceDealerDesktop
 
                 #endregion
 
+                #region Commented Height/Width
+                /*
                 #region Table:Fourth Row Door Height (tblDoorDetails)
 
                 TableRow doorHeightRow = new TableRow();
@@ -459,6 +628,8 @@ namespace SunspaceDealerDesktop
                 doorCustomWidthLBL.AssociatedControlID = "txtDoorWidthCustom" + title;
 
                 #endregion
+                */
+            #endregion
 
                 #region Table:Eight Row Door Primary Operator LHH (tblDoorDetails)
 
@@ -785,6 +956,8 @@ namespace SunspaceDealerDesktop
 
                 #endregion
 
+                #region Comment V4T Stuff
+                /*
                 #region Table:Twelfth Row Door V4T Number Of Vents Added To Table (tblDoorDetails)
 
                 doorNumberOfVentsLBLCell.Controls.Add(doorNumberOfVentsLBL);
@@ -809,6 +982,8 @@ namespace SunspaceDealerDesktop
                 
                 addMixedTintDropdowns(title, tblDoorDetails);
 
+                #endregion
+                */
                 #endregion
 
                 #region Table:# Row Door Transom Vinyl Types Added To Table (tblDoorDetails)
@@ -873,6 +1048,62 @@ namespace SunspaceDealerDesktop
 
                 #endregion
 
+                #region Table:Height
+
+                doorHeightLBLCell.Controls.Add(doorHeightLBL);
+                doorHeightTXTCell.Controls.Add(doorHeightTXT);
+                doorHeightDDLCell.Controls.Add(inchHeight);
+
+                tblDoorDetails.Rows.Add(doorHeightRow);
+
+                doorHeightRow.Cells.Add(doorHeightLBLCell);
+                doorHeightRow.Cells.Add(doorHeightTXTCell);
+                doorHeightRow.Cells.Add(doorHeightDDLCell);
+
+                #endregion
+
+                #region Table:Height AsIf
+
+                doorAsIfHeightLBLCell.Controls.Add(doorAsIfHeightLBL);
+                doorAsIfHeightTXTCell.Controls.Add(doorAsIfHeightTXT);
+                doorAsIfHeightDDLCell.Controls.Add(inchAsIfHeight);
+
+                tblDoorDetails.Rows.Add(doorAsIfHeightRow);
+
+                doorAsIfHeightRow.Cells.Add(doorAsIfHeightLBLCell);
+                doorAsIfHeightRow.Cells.Add(doorAsIfHeightTXTCell);
+                doorAsIfHeightRow.Cells.Add(doorAsIfHeightDDLCell);
+
+                #endregion
+
+                #region Table:Width
+
+                doorWidthLBLCell.Controls.Add(doorWidthLBL);
+                doorWidthTXTCell.Controls.Add(doorWidthTXT);
+                doorWidthDDLCell.Controls.Add(inchWidth);
+
+                tblDoorDetails.Rows.Add(doorWidthRow);
+
+                doorWidthRow.Cells.Add(doorWidthLBLCell);
+                doorWidthRow.Cells.Add(doorWidthTXTCell);
+                doorWidthRow.Cells.Add(doorWidthDDLCell);
+
+                #endregion
+
+                #region Table:V4T Number of Vents
+
+                doorUnevenVentsCHKCell.Controls.Add(doorUnevenVentsCHK);
+                doorUnevenVentsCHKCell.Controls.Add(doorUnevenVentsLBLChk);
+                doorUnevenVentsCHKCell.Controls.Add(doorUnevenVentsLBL);
+
+                doorV4TNumberOfVentsRow.Cells.Add(doorUnevenVentsCHKCell);
+
+                tblDoorDetails.Rows.Add(doorV4TNumberOfVentsRow);
+
+                #endregion
+
+                #region Commented Dimension Stuff
+                /*
                 #region Table:Fourth Row Height Of Door Added To Table (tblDoorDetails)
 
                 doorHeightLBLCell.Controls.Add(doorHeightLBL);
@@ -923,6 +1154,8 @@ namespace SunspaceDealerDesktop
                 doorCustomWidthRow.Cells.Add(doorCustomWidthTXTCell);
                 doorCustomWidthRow.Cells.Add(doorCustomWidthDDLCell);
 
+                #endregion
+                 */
                 #endregion
 
                 #region Table:Eight Row Door Primary Operator LHH Added To Table (tblDoorDetails)

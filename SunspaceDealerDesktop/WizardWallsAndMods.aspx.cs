@@ -3649,9 +3649,9 @@ namespace SunspaceDealerDesktop
 
             DropDownList openDropdown = new DropDownList();
             openDropdown.ID = "ddlOpen";
-            for (int i = 0; i < Constants.SUNSHADE_OPENNESS.Length; i++)
+            for (int i = 0; i < Constants.SUNSHADE_OPENNESS.Count(); i++)
             {
-                openDropdown.Items.Add(Constants.SUNSHADE_OPENNESS[i]);
+                openDropdown.Items.Add(new ListItem(Constants.SUNSHADE_OPENNESS[i] + "%", Constants.SUNSHADE_OPENNESS[i]));
             }
 
             openDropdown.Attributes.Add("onchange", "openChange()");
@@ -4631,7 +4631,7 @@ namespace SunspaceDealerDesktop
             aDoor.DoorType = "Patio";
             aDoor.DoorStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
             aDoor.ScreenType = hidScreenType.Value; //CHANGEME
-            aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
+            //aDoor.Kickplate = float.Parse(Request.Form["hidWall" + i + "Door" + j + "kickplate"]);
             
             //patio attributes
             aDoor.Height = float.Parse(Request.Form["hidWall" + i + "Door" + j + "height"]);

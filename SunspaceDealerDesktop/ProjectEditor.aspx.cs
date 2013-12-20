@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Newtonsoft.Json;
+
 
 namespace SunspaceDealerDesktop
 {
@@ -14,7 +16,7 @@ namespace SunspaceDealerDesktop
         {
             int project_id = 10;
             int wallCount;
-            List<Wall> listOfWalls = new List<Wall>();
+            List<Wall> aListOfWalls = new List<Wall>();
 
             using (SqlConnection aConnection = new SqlConnection(sdsDBConnection.ConnectionString))
             {
@@ -857,10 +859,11 @@ namespace SunspaceDealerDesktop
 
                         aWall.LinearItems = listOfLinearItems;
 
-                        listOfWalls.Add(aWall); //add the wall to the list
+                        aListOfWalls.Add(aWall); //add the wall to the list
                     }
-
                     aTransaction.Commit();
+
+                    hidJsonObjects.Value = JsonConvert.SerializeObject(aListOfWalls);
                 }
 
                 catch (Exception ex)
@@ -882,7 +885,6 @@ namespace SunspaceDealerDesktop
                         //lblError.Text += "  Message: " + ex2.Message;
                     }
                 }
-
             }
         }
     }
