@@ -34,21 +34,29 @@
                 return 1;
             }
 
+            // This function just calls all of the clear functions, all in one place
+            function clearAllItems() {
+
+                clearAdditionalCharges();
+                clearEditInvoiceItem();
+
+            }
+
             //Clicking the additional charges will display an overlay
             $(".additionalCharges").click(function () {
                 // If the overlay is already shown, hide it.
                 if ($(".additionalChargesOverlay").is(":visible"))
                 {
                     $(".additionalChargesOverlay").hide();
-                    clearAdditionalCharges();
                 }
                 else
                 {
                     $(".additionalChargesOverlay").show();
                     $(".editInvoiceItemOverlay").hide();
-
-                   $("#<%=txtShipping.ClientID%>").select();
+                    $("#<%=txtShipping.ClientID%>").select();
                 }
+
+                clearAllItems();
             });
 
             //Clicking the Add Item will display an overlay
@@ -57,15 +65,14 @@
                 if ($(".editInvoiceItemOverlay").is(":visible"))
                 {
                     $(".editInvoiceItemOverlay").hide();
-                    clearEditInvoiceItem();
                 }
                 else
                 {
                     $(".editInvoiceItemOverlay").show();
                     $(".additionalChargesOverlay").hide();
-
                     $("#<%=txtItemName.ClientID%>").select();
-                }                
+                }
+                clearAllItems();
             });
 
             //Clicking the transparent overlay closes the additional charges overlays
@@ -74,7 +81,7 @@
                 if (e.target == this)
                 {
                     $(".additionalChargesOverlay").hide();
-                    clearAdditionalCharges();
+                    clearAllItems();
                 }
             });
 
@@ -83,7 +90,7 @@
                 // If any child div's are clicked, do not hide anything
                 if (e.target == this) {
                     $(".editInvoiceItemOverlay").hide();
-                    clearEditInvoiceItem();
+                    clearAllItems();
                 }
             });
 
@@ -91,8 +98,7 @@
             $(".overlayClose").click(function () {
                 $(".additionalChargesOverlay").hide();
                 $(".editInvoiceItemOverlay").hide();
-                clearAdditionalCharges();
-                clearEditInvoiceItem();
+                clearAllItems();
             });
 
             //Changing the value of the quantity/unitprice will calculate the total value of the item
