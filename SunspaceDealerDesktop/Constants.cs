@@ -557,7 +557,7 @@ namespace SunspaceDealerDesktop
         #region Sunshades
         public static string[] SUNSHADE_VALANCE_COLOURS = { "White", "Driftwood", "Bronze" };
         public static string[] SUNSHADE_FABRIC_COLOURS = { "Chalk", "Alabaster", "Pebblestone", "Tobacco", "Ebony", "Greystone" };
-        public static string[] SUNSHADE_OPENNESS = { "3%", "5%", "15%" };
+        public static string[] SUNSHADE_OPENNESS = { "3", "5", "15" };
         #endregion
 
         #region Roofs

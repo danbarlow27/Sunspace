@@ -3649,9 +3649,9 @@ namespace SunspaceDealerDesktop
 
             DropDownList openDropdown = new DropDownList();
             openDropdown.ID = "ddlOpen";
-            for (int i = 0; i < Constants.SUNSHADE_OPENNESS.Length; i++)
+            for (int i = 0; i < Constants.SUNSHADE_OPENNESS.Count(); i++)
             {
-                openDropdown.Items.Add(Constants.SUNSHADE_OPENNESS[i]);
+                openDropdown.Items.Add(new ListItem(Constants.SUNSHADE_OPENNESS[i] + "%", Constants.SUNSHADE_OPENNESS[i]));
             }
 
             openDropdown.Attributes.Add("onchange", "openChange()");
