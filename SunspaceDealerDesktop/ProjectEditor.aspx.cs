@@ -859,8 +859,11 @@ namespace SunspaceDealerDesktop
 
                         listOfWalls.Add(aWall); //add the wall to the list
                     }
-
                     aTransaction.Commit();
+
+                    #region JSONize the objects
+
+                    #endregion
                 }
 
                 catch (Exception ex)
@@ -882,7 +885,6 @@ namespace SunspaceDealerDesktop
                         //lblError.Text += "  Message: " + ex2.Message;
                     }
                 }
-
             }
         }
     }

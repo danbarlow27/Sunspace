@@ -128,7 +128,7 @@
     </div>   
 
     <%--<asp:Label ID="lblError" runat="server"></asp:Label>--%>
-
+    <input id="hidJsonObjects" type="hidden" runat="server" />
 </asp:Content>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
