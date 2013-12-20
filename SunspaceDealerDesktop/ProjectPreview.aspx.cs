@@ -313,7 +313,7 @@ namespace SunspaceDealerDesktop
                                             + "'Sunroom', " //Will always be a sunroom to be at this point in wizard
                                             + "'House', "
                                             + "'" + Session["newProjectProjectName"] + "', "
-                                            + "1, "
+                                            + Session["customer_id"] + ", "
                                             + Session["user_id"] + ", "
                                             + "'" + DateTime.Now.ToString("yyyy/MM/dd") + "', "
                                             + "'" + "Active" + "', "
@@ -534,7 +534,7 @@ namespace SunspaceDealerDesktop
                                                 //Note, Vinyl and Glass are only accessible at this point as a transom
                                                 //So we assume they're window entries
                                                 case "Vinyl":
-                                                    aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                    aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar, mount) VALUES("
                                                                             + project_id + ", "
                                                                             + linearCounter + ", "
                                                                             + k + ", "
@@ -544,7 +544,8 @@ namespace SunspaceDealerDesktop
                                                                             + aWindow.RightHeight + ", "
                                                                             + aWindow.Width + ", '"
                                                                             + aWindow.Colour + "', "
-                                                                            + aWindow.SpreaderBar
+                                                                            + aWindow.SpreaderBar + ", '"
+                                                                            + "Out" + "'"
                                                                             + ");";
                                                     aCommand.ExecuteNonQuery();
                                                     break;
@@ -571,7 +572,7 @@ namespace SunspaceDealerDesktop
                                                     for (int vents = 0; vents < aWindow.NumVents; vents++)
                                                     {
                                                         string myColour = aWindow.Colour.Substring(vents, 1);
-                                                        aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                        aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar, mount) VALUES("
                                                                                 + project_id + ", "
                                                                                 + linearCounter + ", "
                                                                                 + k + ", "
@@ -581,7 +582,8 @@ namespace SunspaceDealerDesktop
                                                                                 + aWindow.RightHeight + ", "
                                                                                 + aWindow.Width + ", '"
                                                                                 + myColour + "', "
-                                                                                + aWindow.SpreaderBar
+                                                                                + aWindow.SpreaderBar + ", '"
+                                                                                + "Out" + "'"
                                                                                 + ");";
                                                         aCommand.ExecuteNonQuery();
                                                     }
@@ -592,7 +594,7 @@ namespace SunspaceDealerDesktop
                                                 case "Horizontal Roller":
                                                     for (int numVents = 0; numVents < aWindow.NumVents; numVents++)
                                                     {
-                                                        aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                        aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar, mount) VALUES("
                                                                                 + project_id + ", "
                                                                                 + linearCounter + ", "
                                                                                 + k + ", "
@@ -602,7 +604,8 @@ namespace SunspaceDealerDesktop
                                                                                 + aWindow.RightHeight + ", "
                                                                                 + aWindow.Width + ", '"
                                                                                 + aWindow.Colour + "', "
-                                                                                + aWindow.SpreaderBar
+                                                                                + aWindow.SpreaderBar + ", '"
+                                                                                + "Out" + "'"
                                                                                 + ");";
                                                         aCommand.ExecuteNonQuery();
                                                     }
@@ -615,7 +618,7 @@ namespace SunspaceDealerDesktop
                                                     for (int numVents = 0; numVents < aWindow.NumVents; numVents++)
                                                     {
                                                         aWindow.WindowStyle = "Horizontal Roller XX";
-                                                        aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                        aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar, mount) VALUES("
                                                                                 + project_id + ", "
                                                                                 + linearCounter + ", "
                                                                                 + k + ", "
@@ -625,7 +628,8 @@ namespace SunspaceDealerDesktop
                                                                                 + aWindow.RightHeight + ", "
                                                                                 + aWindow.Width + ", '"
                                                                                 + aWindow.Colour + "', "
-                                                                                + aWindow.SpreaderBar
+                                                                                + aWindow.SpreaderBar + ", '"
+                                                                                + "Out" + "'"
                                                                                 + ");";
                                                         aCommand.ExecuteNonQuery();
                                                     }
@@ -697,11 +701,7 @@ namespace SunspaceDealerDesktop
                                                     #region new by-window
                                                     case "Full Screen":
                                                     case "Aluminum Storm Screen":
-<<<<<<< HEAD
-                                                        aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length) VALUES("
-=======
                                                         aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length" /*, mount */ +") VALUES("
->>>>>>> a08435e591d83e16a61b63349e4d39061b88bfe3
                                                                                 + project_id + ", "             //Project ID
                                                                                 + linearCounter + ", "          //Linear Index
                                                                                 + k + ", "                      //Module Index
@@ -709,12 +709,8 @@ namespace SunspaceDealerDesktop
                                                                                 + aDoor.ScreenType + "', "      //Screen Type. This is a window, so it is 0
                                                                                 + doorWindow.LeftHeight + ", "  //Start Height
                                                                                 + doorWindow.RightHeight + ", " //End Height
-<<<<<<< HEAD
-                                                                                + doorWindow.Width              //Length
-=======
                                                                                 + doorWindow.Width //+ ", '"      //Length
                                                                                 //+ "In" + "' "                   //Mount
->>>>>>> a08435e591d83e16a61b63349e4d39061b88bfe3
                                                                                 + ");";
                                                         aCommand.ExecuteNonQuery();
                                                         break;
@@ -745,7 +741,7 @@ namespace SunspaceDealerDesktop
                                                     case "Vertical 4 Track":
                                                         for (int vents = 0; vents < doorWindow.NumVents; vents++)
                                                         {
-                                                            aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                            aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar, mount) VALUES("
                                                                                     + project_id + ", "
                                                                                     + linearCounter + ", "
                                                                                     + k + ", "
@@ -755,14 +751,15 @@ namespace SunspaceDealerDesktop
                                                                                     + doorWindow.RightHeight + ", "
                                                                                     + doorWindow.Width + ", '"
                                                                                     + doorWindow.Colour.Substring(vents, 1) + "', "
-                                                                                    + doorWindow.SpreaderBar
+                                                                                    + doorWindow.SpreaderBar + ", '"
+                                                                                    + "Out" + "'"
                                                                                     + ");";
                                                             aCommand.ExecuteNonQuery();
                                                         }
                                                         break;
 
                                                     case "Vinyl Guard":
-                                                        aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                        aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar, mount) VALUES("
                                                                                 + project_id + ", "
                                                                                 + linearCounter + ", "
                                                                                 + k + ", "
@@ -772,7 +769,8 @@ namespace SunspaceDealerDesktop
                                                                                 + doorWindow.RightHeight + ", "
                                                                                 + doorWindow.Width + ", '"
                                                                                 + doorWindow.Colour + "', "
-                                                                                + doorWindow.SpreaderBar
+                                                                                + doorWindow.SpreaderBar + ", '"
+                                                                                + "Out" + "'"
                                                                                 + ");";
                                                         aCommand.ExecuteNonQuery();                                            
                                                         break;
@@ -792,11 +790,7 @@ namespace SunspaceDealerDesktop
                                                         #region new by-window
                                                         case "Full Screen":
                                                         case "Aluminum Storm Screen":
-<<<<<<< HEAD
-                                                            aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length) VALUES("
-=======
                                                             aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length" /*, mount */ + ") VALUES("
->>>>>>> a08435e591d83e16a61b63349e4d39061b88bfe3
                                                                                     + project_id + ", "             //Project ID
                                                                                     + linearCounter + ", "          //Linear Index
                                                                                     + k + ", "                      //Module Index
@@ -804,12 +798,8 @@ namespace SunspaceDealerDesktop
                                                                                     + aDoor.ScreenType + "', "      //Screen Type. This is a window, so it is 0
                                                                                     + doorWindow.LeftHeight + ", "  //Start Height
                                                                                     + doorWindow.RightHeight + ", " //End Height
-<<<<<<< HEAD
-                                                                                    + doorWindow.Width              //Length
-=======
                                                                                     + doorWindow.Width //+ ", '"      //Length
                                                                                     //+ "In" + "' "                   //Mount
->>>>>>> a08435e591d83e16a61b63349e4d39061b88bfe3
                                                                                     + ");";
                                                             aCommand.ExecuteNonQuery();
                                                             break;
@@ -840,7 +830,7 @@ namespace SunspaceDealerDesktop
                                                         case "Vertical 4 Track":
                                                             for (int vents = 0; vents < doorWindow.NumVents; vents++)
                                                             {
-                                                                aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                                aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar, mount) VALUES("
                                                                                         + project_id + ", "
                                                                                         + linearCounter + ", "
                                                                                         + k + ", "
@@ -850,14 +840,15 @@ namespace SunspaceDealerDesktop
                                                                                         + doorWindow.RightHeight + ", "
                                                                                         + doorWindow.Width + ", '"
                                                                                         + doorWindow.Colour.Substring(vents, 1) + "', "
-                                                                                        + doorWindow.SpreaderBar
+                                                                                        + doorWindow.SpreaderBar + ", '"
+                                                                                        + "Out" + "'"
                                                                                         + ");";
                                                                 aCommand.ExecuteNonQuery();
                                                             }
                                                             break;
 
                                                         case "Vinyl Guard":
-                                                            aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
+                                                            aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar, mount) VALUES("
                                                                                     + project_id + ", "
                                                                                     + linearCounter + ", "
                                                                                     + k + ", "
@@ -867,7 +858,8 @@ namespace SunspaceDealerDesktop
                                                                                     + doorWindow.RightHeight + ", "
                                                                                     + doorWindow.Width + ", '"
                                                                                     + doorWindow.Colour + "', "
-                                                                                    + doorWindow.SpreaderBar
+                                                                                    + doorWindow.SpreaderBar + ", '"
+                                                                                    + "Out" + "'"
                                                                                     + ");";
                                                             aCommand.ExecuteNonQuery();
                                                             break;
