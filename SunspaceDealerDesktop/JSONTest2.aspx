@@ -9,8 +9,17 @@
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="MainContent" runat="server">
     <script>
-        var jsonString = <%=hidRealHidden.Value%>;
-        console.log(jsonString);
+        
+        var wallCount = '<%= wallCount %>';
+        
+        for (var i = 0; i < wallCount; i++) { 
+            var jsonString = $('#hidWall' + i + 'Info').val();
+            console.log(jsonString);
+        }
+
+        //var jsonString = <%--hidRealhidden.value--%>;
+        //console.log(jsonstring);
+
 
         function runme()
         {
@@ -21,4 +30,5 @@
 
     <asp:Button ID="btnFuck" runat="server" OnClick="btnFuck_Click" />
     <input id="hidRealHidden" type="hidden" runat="server" />
+    <div id="hidWallInfo" runat="server"></div>
 </asp:Content>
