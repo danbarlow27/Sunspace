@@ -496,7 +496,7 @@ namespace SunspaceDealerDesktop
                                                                             + linearCounter + ", "
                                                                             + k + ", "
                                                                             + -1 + ", " //This is not a vent, just solid glass
-                                                                            + 0 + ", " //This is a window
+                                                                            + 0 + ", '" //This is a window
                                                                             + "Single Glaze" + "', "
                                                                             + aKneewall.StartHeight + ", "
                                                                             + aKneewall.EndHeight + ", "
@@ -555,7 +555,7 @@ namespace SunspaceDealerDesktop
                                                                             + linearCounter + ", "
                                                                             + k + ", "
                                                                             + -1 + ", " //This is not a vent, just solid glass
-                                                                            + 0 + ", " //This is a window
+                                                                            + 0 + ", '" //This is a window
                                                                             + "Single Glaze" + "', "
                                                                             + aWindow.LeftHeight + ", "
                                                                             + aWindow.RightHeight + ", "
@@ -632,7 +632,7 @@ namespace SunspaceDealerDesktop
                                                     break;
 
                                                 case "Screen":
-                                                    aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length, mount) VALUES("
+                                                    aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length" /*, mount */ + ") VALUES("
                                                                             + project_id + ", "
                                                                             + linearCounter + ", "
                                                                             + k + ", "
@@ -640,8 +640,8 @@ namespace SunspaceDealerDesktop
                                                                             + aWindow.ScreenType + "', "
                                                                             + aWindow.LeftHeight + ", "
                                                                             + aWindow.RightHeight + ", "
-                                                                            + aWindow.Width + ", '"
-                                                                            + "In" + "'" //A screen window is inside mount, whereas a screen on a window of another type is outside mounted (handled below)
+                                                                            + aWindow.Width //+ ", '"
+                                                                            //+ "In" + "'" //A screen window is inside mount, whereas a screen on a window of another type is outside mounted (handled below)
                                                                             + ");";
                                                     aCommand.ExecuteNonQuery();
                                                     break;
@@ -650,7 +650,7 @@ namespace SunspaceDealerDesktop
                                             //Then if required, a screen table entry
                                             if (aWindow.ScreenType != "No Screen" && aWindow.ScreenType.Length > 1 && aWindow.WindowStyle != "Screen")
                                             {
-                                                aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length, mount) VALUES("
+                                                aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length" /*, mount */ + ") VALUES("
                                                                         + project_id + ", "
                                                                         + linearCounter + ", "
                                                                         + k + ", "
@@ -658,8 +658,8 @@ namespace SunspaceDealerDesktop
                                                                         + aWindow.ScreenType + "', "
                                                                         + aWindow.LeftHeight + ", "
                                                                         + aWindow.RightHeight + ", "
-                                                                        + aWindow.Width + ", '"
-                                                                        + "Out" + "'" //This screen is a screen in addition to a window, so it will be an outside mounted screen on an inside mounted window
+                                                                        + aWindow.Width //+ ", '"
+                                                                        //+ "Out" + "'" //This screen is a screen in addition to a window, so it will be an outside mounted screen on an inside mounted window
                                                                         + ");";
                                                 aCommand.ExecuteNonQuery();
                                             }
@@ -878,7 +878,7 @@ namespace SunspaceDealerDesktop
                                                                                 + linearCounter + ", "
                                                                                 + k + ", "
                                                                                 + -1 + ", " //This is not a vent, just solid glass
-                                                                                + 1 + ", " //This is a window
+                                                                                + 1 + ", '" //This is a window
                                                                                 + "Single Glaze" + "', "
                                                                                 + doorWindow.LeftHeight + ", "
                                                                                 + doorWindow.RightHeight + ", "
@@ -895,7 +895,7 @@ namespace SunspaceDealerDesktop
                                                                                 + linearCounter + ", "
                                                                                 + k + ", "
                                                                                 + -1 + ", " //This is not a vent, just solid glass
-                                                                                + 1 + ", " //This is a window
+                                                                                + 1 + ", '" //This is a window
                                                                                 + "Single Glaze" + "', "
                                                                                 + doorWindow.LeftHeight + ", "
                                                                                 + doorWindow.RightHeight + ", "
@@ -1178,6 +1178,7 @@ namespace SunspaceDealerDesktop
                 catch (Exception ex)
                 {
                     int hi;
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
                     //lblError.Text = "Commit Exception Type: " + ex.GetType();
                     //lblError.Text += "  Message: " + ex.Message;
 
