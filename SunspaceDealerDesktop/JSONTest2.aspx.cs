@@ -21,7 +21,20 @@ namespace SunspaceDealerDesktop
             aWall.GablePeak = 155;
             aWall.Length = 133;
 
-            json = JsonConvert.SerializeObject(aWall);
+            Wall aWallTwo = new Wall();
+            aWallTwo.Name = "Something";
+            aWallTwo.StartHeight = 69;
+            aWallTwo.EndHeight = 69;
+            aWallTwo.FireProtection = false;
+            aWallTwo.GablePeak = 169;
+            aWallTwo.Length = 69;
+
+            List<Wall> aListOfWalls = new List<Wall>();
+
+            aListOfWalls.Add(aWall);
+            aListOfWalls.Add(aWallTwo);
+
+            json = JsonConvert.SerializeObject(aListOfWalls);
             hidRealHidden.Value = json;
         }
 
