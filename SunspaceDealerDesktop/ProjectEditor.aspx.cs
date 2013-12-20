@@ -513,27 +513,27 @@ namespace SunspaceDealerDesktop
                                                         break;
                                                     case "Vinyl Guard": //vinyl
                                                         #region Vinyl Guard
-                                                        List<float> listOfVGVentHeights = new List<float>();
+                                                        //List<float> listOfVGVentHeights = new List<float>();
 
-                                                        //for each vinyl item in the in the vinyl window
-                                                        for (int l = 0; l < aDoorWindow.NumVents; l++)
-                                                        {
+                                                        ////for each vinyl item in the in the vinyl window
+                                                        //for (int l = 0; l < aDoorWindow.NumVents; l++)
+                                                        //{
 
-                                                            //Get vinyl item
-                                                            aCommand.CommandText = "SELECT start_height, vinyl_tint, spreader_bar FROM vinyl_items "
-                                                                                    + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "' AND vent_index = '" + l + "'";
+                                                        //    //Get vinyl item
+                                                        //    aCommand.CommandText = "SELECT start_height, vinyl_tint, spreader_bar FROM vinyl_items "
+                                                        //                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "' AND vent_index = '" + l + "'";
 
-                                                            aReader = aCommand.ExecuteReader();
-                                                            aReader.Read();
+                                                        //    aReader = aCommand.ExecuteReader();
+                                                        //    aReader.Read();
 
-                                                            listOfVGVentHeights.Add(Convert.ToSingle(aReader[0]));
-                                                            aDoorWindow.VinylTint += Convert.ToString(aReader[1]);
-                                                            aDoorWindow.SpreaderBar = Convert.ToSingle(aReader[2]);
+                                                        //    listOfVGVentHeights.Add(Convert.ToSingle(aReader[0]));
+                                                        //    aDoorWindow.VinylTint += Convert.ToString(aReader[1]);
+                                                        //    aDoorWindow.SpreaderBar = Convert.ToSingle(aReader[2]);
 
-                                                            aReader.Close();
-                                                        }
+                                                        //    aReader.Close();
+                                                        //}
 
-                                                        aDoorWindow.VentHeights = listOfVGVentHeights;
+                                                        //aDoorWindow.VentHeights = listOfVGVentHeights;
                                                         #endregion
                                                         break;
                                                 }
@@ -566,6 +566,8 @@ namespace SunspaceDealerDesktop
                                                         aCabanaDoor.Hinge = Convert.ToString(aReader[1]);
                                                         aCabanaDoor.Swing = Convert.ToString(aReader[2]);
                                                         aCabanaDoor.HardwareType = Convert.ToString(aReader[3]);
+
+                                                        aCabanaDoor.DoorWindow = aDoorWindow;
 
                                                         listOfModuleItems.Add(aCabanaDoor); //add the modular item to the list
 
@@ -600,6 +602,8 @@ namespace SunspaceDealerDesktop
                                                         aFrenchDoor.OperatingDoor = Convert.ToString(aReader[2]); ///this needs to be fixed, operator in db is bool and C# is string
                                                         aFrenchDoor.HardwareType = Convert.ToString(aReader[3]);
 
+                                                        aFrenchDoor.DoorWindow = aDoorWindow;
+
                                                         listOfModuleItems.Add(aFrenchDoor); //add the modular item to the list
 
                                                         aReader.Close();
@@ -630,6 +634,8 @@ namespace SunspaceDealerDesktop
                                                         aPatioDoor.Kickplate = doorKickPlate; // 
                                                         aPatioDoor.GlassTint = Convert.ToString(aReader[0]);
                                                         aPatioDoor.MovingDoor = Convert.ToString(aReader[1]); ///this needs to be fixed, operator in db is bool and C# is string
+
+                                                        aPatioDoor.DoorWindow = aDoorWindow;
 
                                                         listOfModuleItems.Add(aPatioDoor); //add the modular item to the list
 
