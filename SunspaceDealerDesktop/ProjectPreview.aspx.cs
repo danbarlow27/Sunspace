@@ -697,7 +697,7 @@ namespace SunspaceDealerDesktop
                                                     #region new by-window
                                                     case "Full Screen":
                                                     case "Aluminum Storm Screen":
-                                                        aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length, mount) VALUES("
+                                                        aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length" /*, mount */ +") VALUES("
                                                                                 + project_id + ", "             //Project ID
                                                                                 + linearCounter + ", "          //Linear Index
                                                                                 + k + ", "                      //Module Index
@@ -705,8 +705,8 @@ namespace SunspaceDealerDesktop
                                                                                 + aDoor.ScreenType + "', "      //Screen Type. This is a window, so it is 0
                                                                                 + doorWindow.LeftHeight + ", "  //Start Height
                                                                                 + doorWindow.RightHeight + ", " //End Height
-                                                                                + doorWindow.Width + ", '"      //Length
-                                                                                + "In" + "' "                   //Mount
+                                                                                + doorWindow.Width //+ ", '"      //Length
+                                                                                //+ "In" + "' "                   //Mount
                                                                                 + ");";
                                                         aCommand.ExecuteNonQuery();
                                                         break;
@@ -784,7 +784,7 @@ namespace SunspaceDealerDesktop
                                                         #region new by-window
                                                         case "Full Screen":
                                                         case "Aluminum Storm Screen":
-                                                            aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length, mount) VALUES("
+                                                            aCommand.CommandText = "INSERT INTO screen_items(project_id, linear_index, module_index, door_index, screen_type, start_height, end_height, length" /*, mount */ + ") VALUES("
                                                                                     + project_id + ", "             //Project ID
                                                                                     + linearCounter + ", "          //Linear Index
                                                                                     + k + ", "                      //Module Index
@@ -792,8 +792,8 @@ namespace SunspaceDealerDesktop
                                                                                     + aDoor.ScreenType + "', "      //Screen Type. This is a window, so it is 0
                                                                                     + doorWindow.LeftHeight + ", "  //Start Height
                                                                                     + doorWindow.RightHeight + ", " //End Height
-                                                                                    + doorWindow.Width + ", '"      //Length
-                                                                                    + "In" + "' "                   //Mount
+                                                                                    + doorWindow.Width //+ ", '"      //Length
+                                                                                    //+ "In" + "' "                   //Mount
                                                                                     + ");";
                                                             aCommand.ExecuteNonQuery();
                                                             break;
