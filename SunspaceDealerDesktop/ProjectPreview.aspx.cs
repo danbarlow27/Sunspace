@@ -1018,7 +1018,7 @@ namespace SunspaceDealerDesktop
 
                             aCommand.CommandText = "INSERT INTO roof_modules(project_id, roof_index, roof_view, interior_skin, exterior_skin, number_items, projection, width) VALUES("
                                                 + project_id + ", "
-                                                + 0 + ", '"
+                                                + (roofModules+1) + ", '"
                                                 + roof_view + "', '"
                                                 + aRoof.InteriorSkin + "', '" 
                                                 + aRoof.ExteriorSkin + "', " 
