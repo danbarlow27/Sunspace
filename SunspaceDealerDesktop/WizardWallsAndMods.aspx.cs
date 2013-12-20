@@ -3649,9 +3649,9 @@ namespace SunspaceDealerDesktop
 
             DropDownList openDropdown = new DropDownList();
             openDropdown.ID = "ddlOpen";
-            for (int i = 0; i < Constants.SUNSHADE_OPENNESS.Length; i++)
+            for (int i = 0; i < Constants.SUNSHADE_OPENNESS.Count(); i++)
             {
-                openDropdown.Items.Add(Constants.SUNSHADE_OPENNESS[i]);
+                openDropdown.Items.Add(new ListItem(Constants.SUNSHADE_OPENNESS[i] + "%", Constants.SUNSHADE_OPENNESS[i]));
             }
 
             openDropdown.Attributes.Add("onchange", "openChange()");
@@ -4021,10 +4021,11 @@ namespace SunspaceDealerDesktop
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
 
-                                if (doorWindow.WindowStyle == "Vertical 4 Track" || doorWindow.WindowStyle.Contains("Vinyl"))
+                                if (doorWindow.WindowStyle == "Vertical 4 Track" || doorWindow.WindowStyle == "Vertical Four Track" || doorWindow.WindowStyle.Contains("Vinyl"))
                                 {
                                     doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
-                                    if (doorWindow.WindowStyle == "Vertical 4 Track"){
+                                    if (doorWindow.WindowStyle == "Vertical 4 Track" || doorWindow.WindowStyle == "Vertical Four Track")
+                                    {
                                         doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
                                     }
                                 }
