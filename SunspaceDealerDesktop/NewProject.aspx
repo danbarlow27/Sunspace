@@ -1356,7 +1356,7 @@
                                                 <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height:" />
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtKneewallHeight" onkeydown="return (event.keyCode!=13);" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" Width="65" Text=" " runat="server" MaxLength="3" />
+                                                <asp:TextBox ID="txtKneewallHeight" onkeydown="return (event.keyCode!=13);" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" Width="65" Text="0" runat="server" MaxLength="3" />
                                             </asp:TableCell>                                         
                                         </asp:TableRow>
 
