@@ -11,7 +11,6 @@ namespace SunspaceDealerDesktop
     public partial class JSONTest2 : System.Web.UI.Page
     {
         string json;
-        protected int wallCount = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,31 +24,19 @@ namespace SunspaceDealerDesktop
             aWall.GablePeak = 155;
             aWall.Length = 133;
 
-            Wall anWall = new Wall();
-            anWall.Name = "Orange";
-            anWall.StartHeight = 133;
-            anWall.EndHeight = 133;
-            anWall.FireProtection = false;
-            anWall.GablePeak = 155;
-            anWall.Length = 133;
+            Wall aWallTwo = new Wall();
+            aWallTwo.Name = "Something";
+            aWallTwo.StartHeight = 69;
+            aWallTwo.EndHeight = 69;
+            aWallTwo.FireProtection = false;
+            aWallTwo.GablePeak = 169;
+            aWallTwo.Length = 69;
 
             aListOfWalls.Add(aWall);
-            aListOfWalls.Add(anWall);
+            aListOfWalls.Add(aWallTwo);
 
-            foreach (Wall wall in aListOfWalls)
-            {
-                json = JsonConvert.SerializeObject(wall);
-                hidRealHidden.Value += json;
-            }
-
-            for (int i = 0; i < aListOfWalls.Count(); i++)
-            {
-                json = JsonConvert.SerializeObject(aListOfWalls[i]);
-                hidRealHidden.Value = json;
-                //now create hidden fields for each and stoer the values
-                hidWallInfo.InnerHtml += "<input id=\"hidWall" + i + "Info\" type=\"hidden\" runat=\"server\" name=\"hidWall" + i + "Info\" value=\"" + json + "\" />";
-                wallCount++;
-            }
+            json = JsonConvert.SerializeObject(aListOfWalls);
+            hidRealHidden.Value = json;
 
         }
 
