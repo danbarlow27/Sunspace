@@ -10,7 +10,7 @@ namespace SunspaceDealerDesktop
 {
     public static class GlobalFunctions
     {
-        public static List<ListItem> FractionOptions()
+        public static List<ListItem> FractionOptions(string preselect = null)
         {
             List<ListItem> options = new List<ListItem>();
 
@@ -23,6 +23,81 @@ namespace SunspaceDealerDesktop
             ListItem lst34 = new ListItem("3/4", ".75");
             ListItem lst78 = new ListItem("7/8", ".875");
 
+            
+            switch (preselect)
+            {
+                case ".125":
+                    lst0 = new ListItem("---", "0");
+                    lst18 = new ListItem("1/8", ".125", true);
+                    lst14 = new ListItem("1/4", ".25");
+                    lst38 = new ListItem("3/8", ".375");
+                    lst12 = new ListItem("1/2", ".5");
+                    lst58 = new ListItem("5/8", ".625");
+                    lst34 = new ListItem("3/4", ".75");
+                    lst78 = new ListItem("7/8", ".875");
+                    break;
+                case ".25":
+                    lst0 = new ListItem("---", "0");
+                    lst18 = new ListItem("1/8", ".125");
+                    lst14 = new ListItem("1/4", ".25", true);
+                    lst38 = new ListItem("3/8", ".375");
+                    lst12 = new ListItem("1/2", ".5");
+                    lst58 = new ListItem("5/8", ".625");
+                    lst34 = new ListItem("3/4", ".75");
+                    lst78 = new ListItem("7/8", ".875");
+                    break;
+                case ".375":
+                    lst0 = new ListItem("---", "0");
+                    lst18 = new ListItem("1/8", ".125");
+                    lst14 = new ListItem("1/4", ".25");
+                    lst38 = new ListItem("3/8", ".375", true);
+                    lst12 = new ListItem("1/2", ".5");
+                    lst58 = new ListItem("5/8", ".625");
+                    lst34 = new ListItem("3/4", ".75");
+                    lst78 = new ListItem("7/8", ".875");
+                    break;
+                case ".5":
+                    lst0 = new ListItem("---", "0");
+                    lst18 = new ListItem("1/8", ".125");
+                    lst14 = new ListItem("1/4", ".25");
+                    lst38 = new ListItem("3/8", ".375");
+                    lst12 = new ListItem("1/2", ".5", true);
+                    lst58 = new ListItem("5/8", ".625");
+                    lst34 = new ListItem("3/4", ".75");
+                    lst78 = new ListItem("7/8", ".875");
+                    break;
+                case ".625":
+                    lst0 = new ListItem("---", "0");
+                    lst18 = new ListItem("1/8", ".125");
+                    lst14 = new ListItem("1/4", ".25");
+                    lst38 = new ListItem("3/8", ".375");
+                    lst12 = new ListItem("1/2", ".5");
+                    lst58 = new ListItem("5/8", ".625", true);
+                    lst34 = new ListItem("3/4", ".75");
+                    lst78 = new ListItem("7/8", ".875");
+                    break;
+                case ".75":
+                    lst0 = new ListItem("---", "0");
+                    lst18 = new ListItem("1/8", ".125");
+                    lst14 = new ListItem("1/4", ".25");
+                    lst38 = new ListItem("3/8", ".375");
+                    lst12 = new ListItem("1/2", ".5");
+                    lst58 = new ListItem("5/8", ".625");
+                    lst34 = new ListItem("3/4", ".75", true);
+                    lst78 = new ListItem("7/8", ".875");
+                    break;
+                case ".875":
+                    lst0 = new ListItem("---", "0");
+                    lst18 = new ListItem("1/8", ".125");
+                    lst14 = new ListItem("1/4", ".25");
+                    lst38 = new ListItem("3/8", ".375");
+                    lst12 = new ListItem("1/2", ".5");
+                    lst58 = new ListItem("5/8", ".625");
+                    lst34 = new ListItem("3/4", ".75");
+                    lst78 = new ListItem("7/8", ".875", true);
+                    break;
+            }
+            
             options.Add(lst0);
             options.Add(lst18);
             options.Add(lst14);
