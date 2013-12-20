@@ -326,7 +326,7 @@ namespace SunspaceDealerDesktop
 
         public static string[] DOOR_V4T_VINYL_OPTIONS = { "Clear", "Smoke Grey", "Dark Grey", "Bronze", "Mixed" };
 
-        public static string[] DOOR_NUMBER_OF_VENTS = { "2", "3", "4" };
+        public static string[] DOOR_NUMBER_OF_VENTS = { "3", "4" };
 
         public static string[] DOOR_COLOURS = { "White", "Driftwood", "Bronze", "Green", "Black", "Ivory", "Cherrywood", "Grey" };
 
