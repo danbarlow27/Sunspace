@@ -13,18 +13,16 @@ namespace SunspaceDealerDesktop
     public partial class ProjectEditor : System.Web.UI.Page
     {
 
+        protected List<Wall> listOfWalls = new List<Wall>();
+        protected Roof aRoof;
+        protected Floor aFloor;
         protected int wallCount = 0;
         protected int floorCount = 0;
         protected int roofCount = 0;
+        protected int project_id = 10; //get it from the session
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            int project_id = 10;
-            int wallCount;
-            List<Wall> aListOfWalls = new List<Wall>();
-
-
-
             using (SqlConnection aConnection = new SqlConnection(sdsDBConnection.ConnectionString))
             {
 
@@ -772,7 +770,7 @@ namespace SunspaceDealerDesktop
 
                                 aWall.LinearItems = listOfLinearItems;
 
-                                aListOfWalls.Add(aWall); //add the wall to the list
+                                listOfWalls.Add(aWall); //add the wall to the list
                             }
                             listItemReader.Close();
 
@@ -782,57 +780,175 @@ namespace SunspaceDealerDesktop
                     #endregion 
 
                     #region floors
+                    if (floorCount != 0)
+                    {
 
+                    }
                     #endregion
 
                     #region roofs
-                    //for each wall in the project
-                    
-                    aCommand.CommandText = "SELECT roof_type, interior_skin, exterior_skin, thickness, fire_protection, thermadeck, acrylic, gutter, gutter_pro, gutter_colour, number_supports, stripe_colour, projection, width "
-                            + "FROM roofs WHERE project_id = '" + project_id + "'";
+                    //if there is a roof in the project
 
-                    SqlDataReader roofReader = aCommand.ExecuteReader();
-
-                    if (roofReader.HasRows)
+                    if (roofCount != 0)
                     {
-                        while (roofReader.Read())
+                        aCommand.CommandText = "SELECT roof_type, interior_skin, exterior_skin, thickness, fire_protection, thermadeck, acrylic, gutter, gutter_pro, gutter_colour, number_supports, stripe_colour, projection, width, roof_index "
+                                + "FROM roofs WHERE project_id = '" + project_id + "'";
+
+                        SqlDataReader roofReader = aCommand.ExecuteReader();
+
+                        if (roofReader.HasRows)
                         {
-                            //create a new instance of a wall and set all its attributes from the db
-                            Roof aRoof = new Roof();
-                            aRoof.Type = Convert.ToString(aReader[0]);
-                            aRoof.InteriorSkin = Convert.ToString(aReader[1]);
-                            aRoof.ExteriorSkin = Convert.ToString(aReader[2]);
-                            aRoof.Thickness = Convert.ToDouble(aReader[3]);
-                            aRoof.FireProtection = Convert.ToBoolean(aReader[4]);
-                            aRoof.Thermadeck = Convert.ToBoolean(aReader[5]);
-                            aRoof.Acrylic = Convert.ToBoolean(aReader[6]);
-                            aRoof.Gutters = Convert.ToBoolean(aReader[7]);
-                            aRoof.GutterPro = Convert.ToBoolean(aReader[8]);
-                            aRoof.GutterColour = Convert.ToString(aReader[9]);
-                            aRoof.NumberSupports = Convert.ToInt32(aReader[10]);
-                            aRoof.StripeColour = Convert.ToString(aReader[11]);
-                            aRoof.Projection = Convert.ToDouble(aReader[12]); //how do we deal with obstructions
-                            aRoof.Width = Convert.ToDouble(aReader[13]);
-
-                            aReader.Close();
-
-                            List<LinearItem> listOfLinearItems = new List<LinearItem>();
-
-                            //for each linear item/mod in the wall
-                            for (int j = aWall.FirstItemIndex; j < aWall.LastItemIndex; j++)
+                            while (roofReader.Read())
                             {
 
-                            }
+                                //create a new instance of a wall and set all its attributes from the db
+                                aRoof = new Roof();
+                                aRoof.Type = Convert.ToString(aReader[0]);
+                                aRoof.InteriorSkin = Convert.ToString(aReader[1]);
+                                aRoof.ExteriorSkin = Convert.ToString(aReader[2]);
+                                aRoof.Thickness = Convert.ToDouble(aReader[3]);
+                                aRoof.FireProtection = Convert.ToBoolean(aReader[4]);
+                                aRoof.Thermadeck = Convert.ToBoolean(aReader[5]);
+                                aRoof.Acrylic = Convert.ToBoolean(aReader[6]);
+                                aRoof.Gutters = Convert.ToBoolean(aReader[7]);
+                                aRoof.GutterPro = Convert.ToBoolean(aReader[8]);
+                                aRoof.GutterColour = Convert.ToString(aReader[9]);
+                                aRoof.NumberSupports = Convert.ToInt32(aReader[10]);
+                                aRoof.StripeColour = Convert.ToString(aReader[11]);
+                                aRoof.Projection = Convert.ToDouble(aReader[12]); //how do we deal with obstructions
+                                aRoof.Width = Convert.ToDouble(aReader[13]);
+                                int roofIndex = Convert.ToInt32(aReader[14]);
 
+                                List<RoofModule> listOfRoofModules = new List<RoofModule>();
+
+                                aCommand.CommandText = "SELECT projection, width, interior_skin, exterior_skin, roof_view "
+                                + "FROM roof_modules WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "'";
+
+                                SqlDataReader moduleReader = aCommand.ExecuteReader();
+
+                                if (moduleReader.HasRows)
+                                {
+                                    while (moduleReader.Read())
+                                    {
+                                        RoofModule aModule = new RoofModule();
+                                        aModule.Projection = Convert.ToDouble(aReader[0]);
+                                        aModule.Width = Convert.ToDouble(aReader[1]);
+                                        aModule.InteriorSkin = Convert.ToString(aReader[2]);
+                                        aModule.ExteriorSkin = Convert.ToString(aReader[3]);
+                                        int roofView = Convert.ToInt32(aReader[4]);
+
+                                        List<RoofItem> listOfRoofItems = new List<RoofItem>();
+
+                                        aCommand.CommandText = "SELECT roof_item, projection, width, item_index "
+                                        + "FROM roof_modules WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "'";
+
+                                        SqlDataReader itemReader = aCommand.ExecuteReader();
+
+                                        if (itemReader.HasRows)
+                                        {
+                                            while(itemReader.Read())
+                                            {
+                                                // store in an object
+                                                RoofItem aRoofItem = new RoofItem();
+                                                aRoofItem.ItemType = Convert.ToString(aReader[0]);
+                                                aRoofItem.Projection = Convert.ToSingle(aReader[1]);
+                                                aRoofItem.Width = Convert.ToSingle(aReader[2]);
+                                                int itemIndex = Convert.ToInt32(aReader[3]);
+                                                
+                                                //check for skylight in this roof item
+
+                                                //are all skylights the same? length/width etc? .. 
+                                                //there is no skylight object.. roof item should have a attribute for a skylight object
+
+                                                aCommand.CommandText = "SELECT skylight_type, set_back, operator "
+                                                + "FROM skylights WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index '" + itemIndex + "'";
+
+                                                SqlDataReader skylightReader = aCommand.ExecuteReader();
+
+                                                if (skylightReader.HasRows)
+                                                {
+                                                    while (skylightReader.Read())
+                                                    {
+                                                        //Skylight aSkylight = new Skylight(); //create object and set attribute if required
+                                                        aRoofItem.SkyLight = Convert.ToSingle(skylightReader[1]);
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    aRoofItem.SkyLight = -1;
+                                                }
+                                                skylightReader.Close();
+
+
+                                                //check for fanbeams in this roof item
+                                                //no info in the db or in C#
+                                                aCommand.CommandText = "SELECT skylight_type, set_back, operator "
+                                                + "FROM fanbeams WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index = '" + itemIndex + "'";
+
+                                                SqlDataReader fanbeamReader = aCommand.ExecuteReader();
+
+                                                if (fanbeamReader.HasRows)
+                                                {
+                                                    while (fanbeamReader.Read())
+                                                    {
+                                                        //Skylight aSkylight = new Skylight(); //create object and set attribute if required
+                                                        aRoofItem.FanBeam = Convert.ToSingle(skylightReader[1]);
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    aRoofItem.FanBeam = -1;
+                                                }
+                                                fanbeamReader.Close();
+
+
+                                                ///different types of roof items
+                                                switch (aRoofItem.ItemType)
+                                                {
+                                                    case "Receiver": //no class.. what to do .. same as panel receiver? 
+                                                        break;
+                                                    case "Awning Track": //no class.. what to do
+                                                        break;
+                                                    case "I-Beam": //no class.. what to do
+                                                        break;
+                                                    case "Pressure Cap I-Beam": //no class.. what to do
+                                                        break;
+                                                    case "T-Bar": //no class.. what to do
+                                                        break;
+                                                    case "Acrylic Panel": //no class.. no class ... where is colour, width, setback, projection being stored?
+                                                        break;
+                                                    case "Foam Panel": //no class ... where is colour, width, setback, projection being stored?
+                                                        //accordding the to db, this is the only item in which you can have fanbeams and skylight
+                                                        break;
+                                                }
+
+
+
+                                                listOfRoofItems.Add(aRoofItem);
+                                            }
+                                        }
+
+                                        itemReader.Close();
+
+                                        listOfRoofModules.Add(aModule);
+                                    }
+                                }
+                                moduleReader.Close();
+
+                                aRoof.RoofModules = listOfRoofModules;
+                            }
                         }
+                        roofReader.Close();
                     }
-                    roofReader.Close();
+                    
                     #endregion
 
 
                     aTransaction.Commit();
 
-                    hidJsonObjects.Value = JsonConvert.SerializeObject(aListOfWalls);
+                    hidJsonObjects.Value = JsonConvert.SerializeObject(listOfWalls);
                 }
 
                 catch (Exception ex)

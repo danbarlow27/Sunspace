@@ -385,6 +385,7 @@
     <Compile Include="Customer.cs" />
     <Compile Include="Door.cs" />
     <Compile Include="ElectricalChase.cs" />
+    <Compile Include="Floor.cs" />
     <Compile Include="HBoxHeader.cs" />
     <Compile Include="HReceiver.cs" />
     <Compile Include="JSONTest.aspx.cs">
@@ -416,6 +417,7 @@
       <DependentUpon>ProjectEditor.aspx</DependentUpon>
     </Compile>
     <Compile Include="RoofSupport.cs" />
+    <Compile Include="Skylight.cs" />
     <Compile Include="WizardDoorOnly.aspx.cs">
       <DependentUpon>WizardDoorOnly.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
