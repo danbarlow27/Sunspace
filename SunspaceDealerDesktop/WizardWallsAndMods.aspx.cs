@@ -4021,10 +4021,11 @@ namespace SunspaceDealerDesktop
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
 
-                                if (doorWindow.WindowStyle == "Vertical 4 Track" || doorWindow.WindowStyle.Contains("Vinyl"))
+                                if (doorWindow.WindowStyle == "Vertical 4 Track" || doorWindow.WindowStyle == "Vertical Four Track" || doorWindow.WindowStyle.Contains("Vinyl"))
                                 {
                                     doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
-                                    if (doorWindow.WindowStyle == "Vertical 4 Track"){
+                                    if (doorWindow.WindowStyle == "Vertical 4 Track" || doorWindow.WindowStyle == "Vertical Four Track")
+                                    {
                                         doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
                                     }
                                 }
