@@ -27,6 +27,12 @@
             var toEdit = false;
             var editRow; // This is hold the TR element reference that was double clicked for editing
 
+            var errorMessage;            
+
+            /********************************************
+            BEGINNING OF ADDITIONAL CHARGES OVERLAY LOGIC
+            ********************************************/
+
             //This function clears the fields in the additional charges
             function clearAdditionalCharges() {
 
@@ -39,9 +45,75 @@
                 $("#<%=ddlLead.ClientID%>").val('0');
                 $("#<%=txtPercentDiscount.ClientID%>").val(null);
                 $("#<%=txtValueDiscount.ClientID%>").val(null);
-               
+
                 return 1;
             }
+
+            // This function takes a parameter for each of the fields in the additional charges overlay
+            // flt - Float
+            // str - String
+            // If all paramters are valid, this function returns (1/true)
+            function validateAdditionalCharges(fltShipping, fltInstallation, fltDeposit, strShippingMethod, strCompanyRep, strTerm, strLead, fltPercentDiscount, fltValueDiscount) {
+                var isValid = true;
+
+                // Check if each float value is not a number, if true, the values are invalid
+                if (isNaN(fltShipping) || isNaN(fltInstallation) || isNaN(fltDeposit) || isNaN(fltPercentDiscount) || isNaN(fltValueDiscount)) {
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            //Clicking the additional charges will display an overlay
+            $(".additionalCharges").click(function () {
+                // If the overlay is already shown, hide it.
+                if ($(".additionalChargesOverlay").is(":visible")) {
+                    $(".additionalChargesOverlay").hide();
+                }
+                else {
+                    $(".additionalChargesOverlay").show();
+                    $(".editInvoiceItemOverlay").hide();
+                    $("#<%=txtShipping.ClientID%>").select();
+                }
+                clearAllItems();
+            });
+
+            //Clicking the transparent overlay closes the additional charges overlays
+            $("#additionalChargesBackground").on("click", function (e) {
+                // If any child div's are clicked, do not hide anything
+                if (e.target == this) {
+                    $(".additionalChargesOverlay").hide();
+                    clearAllItems();
+                }
+            });
+
+            //Clicking the additional charges accept button will display the additional charges
+            //If the additional charges are already displayed, the values are to change
+            //The balance will also get recalculated
+            $(".additionalChargesOverlay .accept").click(function () {
+                var tempShipping = $("#<%=txtShipping.ClientID%>").val();
+                var tempInstallation = $("#<%=txtInstallation.ClientID%>").val();
+                var tempDeposit = $("#<%=txtDeposit.ClientID%>").val();
+                var tempShippingMethod = $("#<%=ddlShippingMethod.ClientID%>").val();
+                var tempCompanyRep = $("#<%=txtCompanyRep.ClientID%>").val();
+                var tempTerm = $("#<%=ddlTerm.ClientID%>").val();
+                var tempLead = $("#<%=ddlLead.ClientID%>").val();
+                var tempPercentDiscount = $("#<%=txtPercentDiscount.ClientID%>").val();
+                var tempValueDiscount = $("#<%=txtValueDiscount.ClientID%>").val();
+
+                var isValid = validateAdditionalCharges(tempShipping, tempInstallation, tempDeposit, tempShippingMethod, tempCompanyRep, tempTerm, tempLead, tempPercentDiscount, tempValueDiscount);
+
+                alert(isValid);
+            });
+
+
+            /**************************************
+            END OF ADDITIONAL CHARGES OVERLAY LOGIC
+            **************************************/
+
+            /***********************************************
+            BEGINNING OF ADD/EDIT INVOICE ITEM OVERLAY LOGIC
+            ***********************************************/
 
             //This function clears the fields in the add/edit invoice item overlay
             function clearEditInvoiceItem() {
@@ -57,6 +129,101 @@
 
                 return 1;
             }
+
+            //Clicking the Add Item will display an overlay
+            $("#SecondaryNavigation_lnkAddItem").click(function () {
+                // If the overlay is already shown, hide it.
+                if ($(".editInvoiceItemOverlay").is(":visible"))
+                {
+                    $(".editInvoiceItemOverlay").hide();
+                }
+                else
+                {
+                    $(".editInvoiceItemOverlay").show();
+                    $(".additionalChargesOverlay").hide();
+                    $("#<%=txtItemName.ClientID%>").select();
+                }
+                clearAllItems();
+            });
+
+            //Clicking the transparent overlay closes the edit invoice item overlays
+            $("#editInvoiceItemBackground").on("click", function (e) {
+                // If any child div's are clicked, do not hide anything &&
+                // Only allow the user the hide the overlay if they are adding an item, editing must be closed by Cancel or X Close
+                if (e.target == this && toEdit == false) {
+                    $(".editInvoiceItemOverlay").hide();
+                    clearAllItems();
+                }
+            });           
+
+            //Changing the value of the quantity/unitprice will calculate the total value of the item
+            $(".itemTotalField").keyup(function () {
+                var tempQuantity = parseFloat($("#SecondaryNavigation_txtQuantity").val());
+                var tempUnitPrice = parseFloat($("#SecondaryNavigation_txtUnitPrice").val());
+                var tempItemTotal = 0;
+
+                // Display 0 before any calculations
+                $("#<%=txtItemTotal.ClientID%>").val(tempItemTotal);
+
+                // Calculate and display the item total
+                if (tempQuantity >= 0 && tempUnitPrice >= 0) {
+                    tempItemTotal = tempQuantity * tempUnitPrice;
+                    $("#<%=txtItemTotal.ClientID%>").val(tempItemTotal);
+                }
+            });
+
+            //If the overlay is to be used to edit an item, the current values are to be stored in an array before changing the values on the spreadsheet
+            //First array element will contain the row number that is getting edited
+            //
+            //If the overlay is to be used to add an item, a row will be added with the content from the overlay.
+            //
+            //For both adding and editing, there needs to be validation.
+            $(".editInvoiceItemOverlay .accept").click(function () {
+                var lastRowNumber = parseInt($("#<%=tblPriceCalculator.ClientID%> tr:last td:first span").data("row"));
+                var tableRow;
+                var tableCell;
+
+                // If the user double clicked a row, they are going to edit. Else they clicked Add Item
+                if (toEdit == true) {
+                    // Using the reference of the table row clicked, add the edited class
+                    $(editRow).addClass("edited");
+                }
+                else {
+                    // Item name cell - Beginning of row
+                    tableCell = "<td><span data-row=\"" + (lastRowNumber + 1) + "\">" + $("#<%=txtItemName.ClientID%>").val() + "</span></td>";
+                    tableRow = "<tr>" + tableCell;
+
+                    // Item details cell
+                    tableCell = "<td><span>" + $("#<%=txtItemDetails.ClientID%>").val() + "</span></td>";
+                    tableRow += tableCell;
+
+                    // Item quantity cell
+                    tableCell = "<td><span>" + $("#<%=txtQuantity.ClientID%>").val() + "</span></td>";
+                    tableRow += tableCell;
+
+                    //Price per unit cell
+                    tableCell = "<td><span>" + $("#<%=txtUnitPrice.ClientID%>").val() + "/" + $("#<%=ddlUnitOfMeasurment.ClientID%>").val() + "</span></td>";
+                    tableRow += tableCell;
+
+                    //Price cell - End of row
+                    tableCell = "<td><span>" + $("#<%=txtItemTotal.ClientID%>").val() + "</span></td>";
+                    tableRow += tableCell + "</tr>";
+
+                    //Append the table row with all of the content after the last table row in the price calculator table
+                    $("#<%=tblPriceCalculator.ClientID%> tr:last").after(tableRow);
+                }
+
+                $(".editInvoiceItemOverlay").hide();
+                clearAllItems();
+            });
+
+            /*****************************************
+            END OF ADD/EDIT INVOICE ITEM OVERLAY LOGIC
+            *****************************************/
+
+            /***********************************
+            BEGINNING OF UNIVERSAL OVERLAY LOGIC
+            ***********************************/
 
             function resetVariables() {
                 //Additional Charges
@@ -92,81 +259,16 @@
                 return 1;
             }
 
-            //Clicking the additional charges will display an overlay
-            $(".additionalCharges").click(function () {
-                // If the overlay is already shown, hide it.
-                if ($(".additionalChargesOverlay").is(":visible"))
-                {
-                    $(".additionalChargesOverlay").hide();
-                }
-                else
-                {
-                    $(".additionalChargesOverlay").show();
-                    $(".editInvoiceItemOverlay").hide();
-                    $("#<%=txtShipping.ClientID%>").select();
-                }
-                clearAllItems();
-            });
-
-            //Clicking the Add Item will display an overlay
-            $("#SecondaryNavigation_lnkAddItem").click(function () {
-                // If the overlay is already shown, hide it.
-                if ($(".editInvoiceItemOverlay").is(":visible"))
-                {
-                    $(".editInvoiceItemOverlay").hide();
-                }
-                else
-                {
-                    $(".editInvoiceItemOverlay").show();
-                    $(".additionalChargesOverlay").hide();
-                    $("#<%=txtItemName.ClientID%>").select();
-                }
-                clearAllItems();
-            });
-
-            //Clicking the transparent overlay closes the additional charges overlays
-            $("#additionalChargesBackground").on("click", function (e) {
-                // If any child div's are clicked, do not hide anything
-                if (e.target == this)
-                {
-                    $(".additionalChargesOverlay").hide();
-                    clearAllItems();
-                }
-            });
-
-            //Clicking the transparent overlay closes the edit invoice item overlays
-            $("#editInvoiceItemBackground").on("click", function (e) {
-                // If any child div's are clicked, do not hide anything &&
-                // Only allow the user the hide the overlay if they are adding an item, editing must be closed by Cancel or X Close
-                if (e.target == this && toEdit == false) {
-                    $(".editInvoiceItemOverlay").hide();
-                    clearAllItems();                    
-                }
-            });
-
             //Clicking the X CLOSE, closes the overlays
             $(".priceCalculatorWrapper .close").click(function () {
                 $(".additionalChargesOverlay").hide();
                 $(".editInvoiceItemOverlay").hide();
                 clearAllItems();
-            });
+            });            
 
-            //Changing the value of the quantity/unitprice will calculate the total value of the item
-            $(".itemTotalField").keyup(function () {
-                var tempQuantity = parseFloat($("#SecondaryNavigation_txtQuantity").val());
-                var tempUnitPrice = parseFloat($("#SecondaryNavigation_txtUnitPrice").val());
-                var tempItemTotal = 0;
-
-                // Display 0 before any calculations
-                $("#<%=txtItemTotal.ClientID%>").val(tempItemTotal);
-
-                // Calculate and display the item total
-                if (tempQuantity >= 0 && tempUnitPrice >= 0)
-                {
-                    tempItemTotal = tempQuantity * tempUnitPrice;
-                    $("#<%=txtItemTotal.ClientID%>").val(tempItemTotal);
-                }
-            });
+            /*****************************
+            END OF UNIVERSAL OVERLAY LOGIC
+            *****************************/            
 
             //This function is clicking on a row cell, to populate the edit invoice item overlay
             $(".tblPriceCalculator").on("dblclick", "tr", function () {
@@ -215,57 +317,12 @@
                 $("#<%=txtItemTotal.ClientID%>").val(itemTotal);
                 // toEdit true allows for overlay accept button to update the current row
                 toEdit = true;
-                //editRowNumber = rowNumber;
-                editRowNumber = $(this);
-
+                // Store a reference of the table row that is going to get edited
+                editRow = $(this);
                 // Show the overlay for allowing the user to edit
                 $(".editInvoiceItemOverlay").show();
-            });
+            });            
             
-            //Clicking accept will pre populate the overlay for edit/add invoice items 
-            $(".editInvoiceItemOverlay .accept").click(function () {
-                var lastRowNumber = parseInt($("#<%=tblPriceCalculator.ClientID%> tr:last td:first span").data("row")) + 1;
-                var tableRow;
-                var tableCell;
-
-                // If the user double clicked a row, they are going to edit. Else they clicked Add Item
-                if (toEdit == true)
-                {
-                    //TODO PICK UP FROM HERE
-                    //tableRow = $(".tblPriceCalculator tr td span[data-row='" + editRowNumber + "']");
-                    $(editRowNumber).addClass("edited");
-                    console.log(editRowNumber);
-                    console.log(tableRow);
-                }
-                else
-                {
-                    // Item name cell - Beginning of row
-                    tableCell = "<td><span data-row=\"" + lastRowNumber + "\">" + $("#<%=txtItemName.ClientID%>").val() + "</span></td>";
-                    tableRow = "<tr>" + tableCell;
-
-                    // Item details cell
-                    tableCell = "<td><span>" + $("#<%=txtItemDetails.ClientID%>").val() + "</span></td>";
-                    tableRow += tableCell;
-
-                    // Item quantity cell
-                    tableCell = "<td><span>" + $("#<%=txtQuantity.ClientID%>").val() + "</span></td>";
-                    tableRow += tableCell;
-
-                    //Price per unit cell
-                    tableCell = "<td><span>" + $("#<%=txtUnitPrice.ClientID%>").val() + "/" + $("#<%=ddlUnitOfMeasurment.ClientID%>").val() + "</span></td>";
-                    tableRow += tableCell;
-
-                    //Price cell - End of row
-                    tableCell = "<td><span>" + $("#<%=txtItemTotal.ClientID%>").val() + "</span></td>";
-                    tableRow += tableCell + "</tr>";
-
-                    //Append the table row with all of the content after the last table row in the price calculator table
-                    $("#<%=tblPriceCalculator.ClientID%> tr:last").after(tableRow);                
-                }
-
-                $(".editInvoiceItemOverlay").hide();
-                clearAllItems();
-            });
         });
     </script>
      
@@ -274,7 +331,6 @@
         <nav class="navEditor">
             <ul class="ulNavEditor">
                 <li><asp:HyperLink ID="lnkAdditionalCharges" CssClass="additionalCharges" runat="server">Additional Charges</asp:HyperLink></li>
-                <li><asp:HyperLink ID="lnkDelivery" runat="server">Delivery</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkAddItem" runat="server">Add Item</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkEditItem" CssClass="editItem" runat="server">Edit Item</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkRemoveEdit" runat="server">Remove Edit</asp:HyperLink></li>
@@ -496,16 +552,16 @@
                 <asp:Label runat="server" Text="Random item - long name" data-row="1"></asp:Label>
             </asp:TableCell>
             <asp:TableCell CssClass="tdDetails">
-                <asp:Label runat="server" Text="Random item details - text can be long too"></asp:Label>
+                <asp:Label runat="server" Text="Random item details - text can be long too" data-row="1"></asp:Label>
             </asp:TableCell>   
             <asp:TableCell CssClass="tdQuantity">
-                <asp:Label runat="server" Text="12"></asp:Label>
+                <asp:Label runat="server" Text="12" data-row="1"></asp:Label>
             </asp:TableCell>   
             <asp:TableCell CssClass="tdPricePerUnit">
-                <asp:Label runat="server" Text="$89.00/EA"></asp:Label>
+                <asp:Label runat="server" Text="$89.00/EA" data-row="1"></asp:Label>
             </asp:TableCell> 
             <asp:TableCell CssClass="tdPrice">
-                <asp:Label runat="server" Text="$1068"></asp:Label>
+                <asp:Label runat="server" Text="$1068" data-row="1"></asp:Label>
             </asp:TableCell>
         </asp:TableRow>        
     </asp:Table>

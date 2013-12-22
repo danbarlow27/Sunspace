@@ -914,6 +914,7 @@ div.editInvoiceItemOverlay .content {
     margin-left: -200px;
     margin-top: -300px;
     z-index:1005; 
+    box-shadow: -10px 10px 5px #888888;
 }
 
 div.editInvoiceItemOverlay .content {
@@ -996,12 +997,12 @@ div.editInvoiceItemOverlay .button {
     cursor: cell;
 }
 
-.tblPriceCalculator tbody tr:hover {    
-    background-color:#dfbf98;
+.tblPriceCalculator .edited {    
+    background-color:#FF9933;
 }
 
-.tblPriceCalculator tbody tr.edited {    
-    background-color:#FF9933;
+.tblPriceCalculator tbody tr:hover {    
+    background-color:#dfbf98;
 }
 
 .tblPriceCalculator tbody tr td {
