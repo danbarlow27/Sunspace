@@ -855,55 +855,6 @@ namespace SunspaceDealerDesktop
                                                 aRoofItem.Width = Convert.ToSingle(aReader[2]);
                                                 int itemIndex = Convert.ToInt32(aReader[3]);
                                                 
-                                                //check for skylight in this roof item
-
-                                                //are all skylights the same? length/width etc? .. 
-                                                //there is no skylight object.. roof item should have a attribute for a skylight object
-
-                                                aCommand.CommandText = "SELECT skylight_type, set_back, operator "
-                                                + "FROM skylights WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index '" + itemIndex + "'";
-
-                                                SqlDataReader skylightReader = aCommand.ExecuteReader();
-
-                                                if (skylightReader.HasRows)
-                                                {
-                                                    while (skylightReader.Read())
-                                                    {
-                                                        //Skylight aSkylight = new Skylight(); //create object and set attribute if required
-                                                        aRoofItem.SkyLight = Convert.ToSingle(skylightReader[1]);
-                                                    }
-
-                                                }
-                                                else
-                                                {
-                                                    aRoofItem.SkyLight = -1;
-                                                }
-                                                skylightReader.Close();
-
-
-                                                //check for fanbeams in this roof item
-                                                //no info in the db or in C#
-                                                aCommand.CommandText = "SELECT skylight_type, set_back, operator "
-                                                + "FROM fanbeams WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index = '" + itemIndex + "'";
-
-                                                SqlDataReader fanbeamReader = aCommand.ExecuteReader();
-
-                                                if (fanbeamReader.HasRows)
-                                                {
-                                                    while (fanbeamReader.Read())
-                                                    {
-                                                        //Skylight aSkylight = new Skylight(); //create object and set attribute if required
-                                                        aRoofItem.FanBeam = Convert.ToSingle(skylightReader[1]);
-                                                    }
-
-                                                }
-                                                else
-                                                {
-                                                    aRoofItem.FanBeam = -1;
-                                                }
-                                                fanbeamReader.Close();
-
-
                                                 ///different types of roof items
                                                 switch (aRoofItem.ItemType)
                                                 {
@@ -921,16 +872,63 @@ namespace SunspaceDealerDesktop
                                                         break;
                                                     case "Foam Panel": //no class ... where is colour, width, setback, projection being stored?
                                                         //accordding the to db, this is the only item in which you can have fanbeams and skylight
+                                                        //check for skylight in this roof item
+
+                                                        //are all skylights the same? length/width etc? .. 
+                                                        //there is no skylight object.. roof item should have a attribute for a skylight object
+
+                                                        aCommand.CommandText = "SELECT skylight_type, set_back, operator "
+                                                        + "FROM skylights WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index '" + itemIndex + "'";
+
+                                                        SqlDataReader skylightReader = aCommand.ExecuteReader();
+
+                                                        if (skylightReader.HasRows)
+                                                        {
+                                                            while (skylightReader.Read())
+                                                            {
+                                                                //Skylight aSkylight = new Skylight(); //create object and set attribute if required
+                                                                aRoofItem.SkyLight = Convert.ToSingle(skylightReader[1]);
+                                                            }
+
+                                                        }
+                                                        else
+                                                        {
+                                                            aRoofItem.SkyLight = -1;
+                                                        }
+                                                        skylightReader.Close();
+
+
+                                                        //check for fanbeams in this roof item
+                                                        //no info in the db or in C#
+                                                        aCommand.CommandText = "SELECT skylight_type, set_back, operator "
+                                                        + "FROM fanbeams WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index = '" + itemIndex + "'";
+
+                                                        SqlDataReader fanbeamReader = aCommand.ExecuteReader();
+
+                                                        if (fanbeamReader.HasRows)
+                                                        {
+                                                            while (fanbeamReader.Read())
+                                                            {
+                                                                //Skylight aSkylight = new Skylight(); //create object and set attribute if required
+                                                                aRoofItem.FanBeam = Convert.ToSingle(skylightReader[1]);
+                                                            }
+
+                                                        }
+                                                        else
+                                                        {
+                                                            aRoofItem.FanBeam = -1;
+                                                        }
+                                                        fanbeamReader.Close();
                                                         break;
                                                 }
-
-
 
                                                 listOfRoofItems.Add(aRoofItem);
                                             }
                                         }
 
                                         itemReader.Close();
+
+                                        aModule.RoofItems = listOfRoofItems;
 
                                         listOfRoofModules.Add(aModule);
                                     }
