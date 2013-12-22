@@ -969,6 +969,7 @@ div.editInvoiceItemOverlay .button {
 .tblPriceCalculator {
     margin: 0 auto;
     width: 90%;
+    border-spacing: 0;
 }
 
 .tblPriceCalculator thead {
@@ -983,12 +984,28 @@ div.editInvoiceItemOverlay .button {
 
 .tblPriceCalculator span {
     width: 100%;
+}
+
+.tblPriceCalculator tbody tr {    
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    cursor: cell;
+}
+
+.tblPriceCalculator tbody tr:hover {    
+    background-color:#dfbf98;
+}
+
+.tblPriceCalculator tbody tr.edited {    
+    background-color:#FF9933;
+}
+
+.tblPriceCalculator tbody tr td {
+    margin-right: 2em;
 }
 
 /******************************************

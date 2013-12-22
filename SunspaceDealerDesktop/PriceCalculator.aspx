@@ -25,7 +25,7 @@
             var itemTotal = 0;
             //Additional edit/add variables
             var toEdit = false;
-            var editRowNumber = 0;
+            var editRow; // This is hold the TR element reference that was double clicked for editing
 
             //This function clears the fields in the additional charges
             function clearAdditionalCharges() {
@@ -136,13 +136,11 @@
 
             //Clicking the transparent overlay closes the edit invoice item overlays
             $("#editInvoiceItemBackground").on("click", function (e) {
-                // If any child div's are clicked, do not hide anything
-                if (e.target == this) {
-                    // Only allow the user the hide the overlay if they are adding an item, editing must be closed by Cancel or X Close
-                    if (toEdit == false) {
-                        $(".editInvoiceItemOverlay").hide();
-                        clearAllItems();
-                    }
+                // If any child div's are clicked, do not hide anything &&
+                // Only allow the user the hide the overlay if they are adding an item, editing must be closed by Cancel or X Close
+                if (e.target == this && toEdit == false) {
+                    $(".editInvoiceItemOverlay").hide();
+                    clearAllItems();                    
                 }
             });
 
@@ -175,7 +173,6 @@
                 var rowNumber = $(this).children("td:first").children("span").data("row"); // The data-row value of the first table cells' span element
                 var columns = $(this).children("td").children("span"); // Each table cells' span element in the row that was clicked
                 var tempPricePerUnitSub; // Splitting the unit price and unit of measurment (/ character)
-
 
                 // For each columns' span elements 
                 jQuery.each(columns, function (index) {
@@ -218,7 +215,9 @@
                 $("#<%=txtItemTotal.ClientID%>").val(itemTotal);
                 // toEdit true allows for overlay accept button to update the current row
                 toEdit = true;
-                editRowNumber = rowNumber;
+                //editRowNumber = rowNumber;
+                editRowNumber = $(this);
+
                 // Show the overlay for allowing the user to edit
                 $(".editInvoiceItemOverlay").show();
             });
@@ -232,7 +231,11 @@
                 // If the user double clicked a row, they are going to edit. Else they clicked Add Item
                 if (toEdit == true)
                 {
-
+                    //TODO PICK UP FROM HERE
+                    //tableRow = $(".tblPriceCalculator tr td span[data-row='" + editRowNumber + "']");
+                    $(editRowNumber).addClass("edited");
+                    console.log(editRowNumber);
+                    console.log(tableRow);
                 }
                 else
                 {
@@ -256,6 +259,7 @@
                     tableCell = "<td><span>" + $("#<%=txtItemTotal.ClientID%>").val() + "</span></td>";
                     tableRow += tableCell + "</tr>";
 
+                    //Append the table row with all of the content after the last table row in the price calculator table
                     $("#<%=tblPriceCalculator.ClientID%> tr:last").after(tableRow);                
                 }
 
@@ -492,16 +496,16 @@
                 <asp:Label runat="server" Text="Random item - long name" data-row="1"></asp:Label>
             </asp:TableCell>
             <asp:TableCell CssClass="tdDetails">
-                <asp:Label runat="server" Text="Details can be long too - thats what she said"></asp:Label>
+                <asp:Label runat="server" Text="Random item details - text can be long too"></asp:Label>
             </asp:TableCell>   
             <asp:TableCell CssClass="tdQuantity">
-                <asp:Label runat="server" Text="420"></asp:Label>
+                <asp:Label runat="server" Text="12"></asp:Label>
             </asp:TableCell>   
             <asp:TableCell CssClass="tdPricePerUnit">
-                <asp:Label runat="server" Text="$1337.00/EA"></asp:Label>
+                <asp:Label runat="server" Text="$89.00/EA"></asp:Label>
             </asp:TableCell> 
             <asp:TableCell CssClass="tdPrice">
-                <asp:Label runat="server" Text="$561540"></asp:Label>
+                <asp:Label runat="server" Text="$1068"></asp:Label>
             </asp:TableCell>
         </asp:TableRow>        
     </asp:Table>
