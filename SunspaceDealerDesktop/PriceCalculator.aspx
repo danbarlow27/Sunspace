@@ -141,13 +141,15 @@
                 validateAdditionalCharges();
             });
 
-            // Clicking percent discount clears the value discount
+            // Clicking percent discount clears the value discount and the invalid class
             $("#<%=txtPercentDiscount.ClientID%>").click(function () {
+                $("#<%=txtValueDiscount.ClientID%>").removeClass("invalid");
                 $("#<%=txtValueDiscount.ClientID%>").val("");
             });
 
-            // Clicking value discount clears the percent discount
+            // Clicking value discount clears the percent discount and the invalid class
             $("#<%=txtValueDiscount.ClientID%>").click(function () {
+                $("#<%=txtPercentDiscount.ClientID%>").removeClass("invalid");
                 $("#<%=txtPercentDiscount.ClientID%>").val("");
             });
 
@@ -256,10 +258,10 @@
             $(".itemTotalField").keyup(function () {
                 var tempQuantity = parseFloat($("#SecondaryNavigation_txtQuantity").val());
                 var tempUnitPrice = parseFloat($("#SecondaryNavigation_txtUnitPrice").val());
-                var tempItemTotal = 0;
+                var tempItemTotal;
 
-                // Display 0 before any calculations
-                $("#<%=txtItemTotal.ClientID%>").val(tempItemTotal);
+                // Display nothing before any calculations
+                $("#<%=txtItemTotal.ClientID%>").val("");
                 // Run validation
                 validateEditInvoiceItem();
 
@@ -267,7 +269,7 @@
                     // Calculate and display the item total
                     if (tempQuantity >= 0 && tempUnitPrice >= 0) {
                         tempItemTotal = tempQuantity * tempUnitPrice;
-                        $("#<%=txtItemTotal.ClientID%>").val(tempItemTotal);
+                        $("#<%=txtItemTotal.ClientID%>").val(parseFloat(tempItemTotal).toFixed(2));
                     }
                 }
             });
