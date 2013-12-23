@@ -141,6 +141,16 @@
                 validateAdditionalCharges();
             });
 
+            // Clicking percent discount clears the value discount
+            $("#<%=txtPercentDiscount.ClientID%>").click(function () {
+                $("#<%=txtValueDiscount.ClientID%>").val("");
+            });
+
+            // Clicking value discount clears the percent discount
+            $("#<%=txtValueDiscount.ClientID%>").click(function () {
+                $("#<%=txtPercentDiscount.ClientID%>").val("");
+            });
+
             //Clicking the additional charges accept button will display the additional charges
             //If the additional charges are already displayed, the values are to change
             //The balance will also get recalculated
@@ -189,7 +199,7 @@
             // This function uses the elements by ID for each of the fields in the edit invoice item overlay
             // If a field is invalid, the invalid class is added to the element, giving it a red border.
             // The accept button will not do anything with any invalid fields
-            function validateEditinvoiceItem() {
+            function validateEditInvoiceItem() {
 
                 var intQuantity = $("#<%=txtQuantity.ClientID%>").val();
                 var fltPricePerUnit = $("#<%=txtUnitPrice.ClientID%>").val();
@@ -251,7 +261,7 @@
                 // Display 0 before any calculations
                 $("#<%=txtItemTotal.ClientID%>").val(tempItemTotal);
                 // Run validation
-                validateEditinvoiceItem();                
+                validateEditInvoiceItem();
 
                 if (!($(".editInvoiceItemOverlay .accept").hasClass("invalid"))) {
                     // Calculate and display the item total
@@ -273,38 +283,47 @@
                 var tableRow;
                 var tableCell;
 
-                // If the user double clicked a row, they are going to edit. Else they clicked Add Item
-                if (toEdit == true) {
-                    // Using the reference of the table row clicked, add the edited class
-                    $(editRow).addClass("edited");
+                // Run validation
+                validateEditInvoiceItem();
+
+                if (!($(this).hasClass("invalid")))
+                {
+                    // If the user double clicked a row, they are going to edit. Else they clicked Add Item
+                    if (toEdit == true)
+                    {
+                        // Using the reference of the table row clicked, add the edited class
+                        $(editRow).addClass("edited");
+                    }
+                    else
+                    {
+                        // Item name cell - Beginning of row
+                        tableCell = "<td><span data-row=\"" + (lastRowNumber + 1) + "\">" + $("#<%=txtItemName.ClientID%>").val() + "</span></td>";
+                        tableRow = "<tr>" + tableCell;
+
+                        // Item details cell
+                        tableCell = "<td><span>" + $("#<%=txtItemDetails.ClientID%>").val() + "</span></td>";
+                        tableRow += tableCell;
+
+                        // Item quantity cell
+                        tableCell = "<td><span>" + $("#<%=txtQuantity.ClientID%>").val() + "</span></td>";
+                        tableRow += tableCell;
+
+                        //Price per unit cell
+                        tableCell = "<td><span>" + $("#<%=txtUnitPrice.ClientID%>").val() + "/" + $("#<%=ddlUnitOfMeasurment.ClientID%>").val() + "</span></td>";
+                        tableRow += tableCell;
+
+                        //Price cell - End of row
+                        tableCell = "<td><span>" + $("#<%=txtItemTotal.ClientID%>").val() + "</span></td>";
+                        tableRow += tableCell + "</tr>";
+
+                        //Append the table row with all of the content after the last table row in the price calculator table
+                        $("#<%=tblPriceCalculator.ClientID%> tr:last").after(tableRow);
+                    }
+
+                    $(".editInvoiceItemOverlay").hide();
+                    clearAllItems();
                 }
-                else {
-                    // Item name cell - Beginning of row
-                    tableCell = "<td><span data-row=\"" + (lastRowNumber + 1) + "\">" + $("#<%=txtItemName.ClientID%>").val() + "</span></td>";
-                    tableRow = "<tr>" + tableCell;
 
-                    // Item details cell
-                    tableCell = "<td><span>" + $("#<%=txtItemDetails.ClientID%>").val() + "</span></td>";
-                    tableRow += tableCell;
-
-                    // Item quantity cell
-                    tableCell = "<td><span>" + $("#<%=txtQuantity.ClientID%>").val() + "</span></td>";
-                    tableRow += tableCell;
-
-                    //Price per unit cell
-                    tableCell = "<td><span>" + $("#<%=txtUnitPrice.ClientID%>").val() + "/" + $("#<%=ddlUnitOfMeasurment.ClientID%>").val() + "</span></td>";
-                    tableRow += tableCell;
-
-                    //Price cell - End of row
-                    tableCell = "<td><span>" + $("#<%=txtItemTotal.ClientID%>").val() + "</span></td>";
-                    tableRow += tableCell + "</tr>";
-
-                    //Append the table row with all of the content after the last table row in the price calculator table
-                    $("#<%=tblPriceCalculator.ClientID%> tr:last").after(tableRow);
-                }
-
-                $(".editInvoiceItemOverlay").hide();
-                clearAllItems();
             });
 
             /*****************************************
