@@ -23,6 +23,7 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            #region hit the DB
             using (SqlConnection aConnection = new SqlConnection(sdsDBConnection.ConnectionString))
             {
 
@@ -969,6 +970,10 @@ namespace SunspaceDealerDesktop
                     }
                 }
             }
+            #endregion
+
+
+
         }
     }
 }
