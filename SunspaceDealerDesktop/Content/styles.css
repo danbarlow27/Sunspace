@@ -953,6 +953,22 @@ div.editInvoiceItemOverlay .content h3 {
     padding: 0 0 0 2em;
 }
 
+div.additionalChargesOverlay .content tr td:first-child,
+div.editInvoiceItemOverlay .content tr td:first-child {
+    text-align:right;
+}
+
+div.additionalChargesOverlay .invalid,
+div.editInvoiceItemOverlay .invalid {
+    border: red solid 1px;
+}
+
+div.additionalChargesOverlay .button.invalid,
+div.editInvoiceItemOverlay .button.invalid {
+    border: none;
+    opacity: 0.5;
+}
+
 div.additionalChargesOverlay .button,
 div.editInvoiceItemOverlay .button {
     background-color: #000;

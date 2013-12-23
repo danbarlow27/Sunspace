@@ -36,6 +36,7 @@
             //This function clears the fields in the additional charges
             function clearAdditionalCharges() {
 
+                // Set all values to default
                 $("#<%=txtShipping.ClientID%>").val(null);
                 $("#<%=txtInstallation.ClientID%>").val(null);
                 $("#<%=txtDeposit.ClientID%>").val(null);
@@ -46,22 +47,70 @@
                 $("#<%=txtPercentDiscount.ClientID%>").val(null);
                 $("#<%=txtValueDiscount.ClientID%>").val(null);
 
+                // Remove the invalid class from all numerical items
+                $("#<%=txtShipping.ClientID%>").removeClass("invalid");
+                $("#<%=txtInstallation.ClientID%>").removeClass("invalid");
+                $("#<%=txtDeposit.ClientID%>").removeClass("invalid");
+                $("#<%=txtPercentDiscount.ClientID%>").removeClass("invalid");
+                $("#<%=txtValueDiscount.ClientID%>").removeClass("invalid");
+                $(".additionalChargesOverlay .accept").removeClass("invalid");
+
                 return 1;
             }
 
-            // This function takes a parameter for each of the fields in the additional charges overlay
-            // flt - Float
-            // str - String
+            // This function uses the elements by ID for each of the fields in the additional charges overlay
             // If all paramters are valid, this function returns (1/true)
-            function validateAdditionalCharges(fltShipping, fltInstallation, fltDeposit, strShippingMethod, strCompanyRep, strTerm, strLead, fltPercentDiscount, fltValueDiscount) {
-                var isValid = true;
+            // If a field is invalid, the invalid class is added to the element, giving it a red border.
+            function validateAdditionalCharges() {
+                
+                var fltShipping = $("#<%=txtShipping.ClientID%>").val();
+                var fltInstallation = $("#<%=txtInstallation.ClientID%>").val();
+                var fltDeposit = $("#<%=txtDeposit.ClientID%>").val();
+                var fltPercentDiscount = $("#<%=txtPercentDiscount.ClientID%>").val();
+                var fltValueDiscount = $("#<%=txtValueDiscount.ClientID%>").val();
 
-                // Check if each float value is not a number, if true, the values are invalid
-                if (isNaN(fltShipping) || isNaN(fltInstallation) || isNaN(fltDeposit) || isNaN(fltPercentDiscount) || isNaN(fltValueDiscount)) {
-                    isValid = false;
+                // Remove the invalid class from each input field, if a is invalid, a red border is added
+                $("#<%=txtShipping.ClientID%>").removeClass("invalid");
+                $("#<%=txtInstallation.ClientID%>").removeClass("invalid");
+                $("#<%=txtDeposit.ClientID%>").removeClass("invalid");
+                $("#<%=txtPercentDiscount.ClientID%>").removeClass("invalid");
+                $("#<%=txtValueDiscount.ClientID%>").removeClass("invalid");
+                $(".additionalChargesOverlay .accept").removeClass("invalid");
+
+                // Shipping needs to be numeric and above/equal to 0
+                if (isNaN(fltShipping) || (!(isNaN(fltShipping)) && (fltShipping < 0))) {
+                    $("#<%=txtShipping.ClientID%>").addClass("invalid");
                 }
 
-                return isValid;
+                // Installation needs to be numeric and above/equal to 0
+                if (isNaN(fltInstallation) || (!(isNaN(fltInstallation)) && (fltInstallation < 0))) {
+                    $("#<%=txtInstallation.ClientID%>").addClass("invalid");
+                }
+
+                // Deposit needs to be numeric and above/equal to 0
+                if (isNaN(fltDeposit) || (!(isNaN(fltDeposit)) && (fltDeposit < 0))) {
+                    $("#<%=txtDeposit.ClientID%>").addClass("invalid");
+                }
+
+                // Percent discount needs to be numeric and above/equal to 0 or below/equal to 100
+                if (isNaN(fltPercentDiscount) || (!(isNaN(fltPercentDiscount)) && ((fltPercentDiscount < 0) || (fltPercentDiscount > 100)))) {
+                    $("#<%=txtPercentDiscount.ClientID%>").addClass("invalid");
+                }
+
+                // Value discount needs to be numeric and above/equal to 0
+                if (isNaN(fltValueDiscount) || (!(isNaN(fltValueDiscount)) && (fltValueDiscount < 0))) {
+                    $("#<%=txtValueDiscount.ClientID%>").addClass("invalid");
+                }
+
+                // If anything is invalid, the accept button will be given the invalid class. This sets opacity to 50%
+                if ($("#<%=txtShipping.ClientID%>").hasClass("invalid") ||
+                 $("#<%=txtInstallation.ClientID%>").hasClass("invalid") ||
+                 $("#<%=txtDeposit.ClientID%>").hasClass("invalid") ||
+                 $("#<%=txtPercentDiscount.ClientID%>").hasClass("invalid") ||
+                 $("#<%=txtValueDiscount.ClientID%>").hasClass("invalid"))
+                {
+                    $(".additionalChargesOverlay .accept").addClass("invalid");
+                }
             }
 
             //Clicking the additional charges will display an overlay
@@ -87,23 +136,22 @@
                 }
             });
 
+            // OnKeyUp for each numerical field in the additional charges overlay will trigger a validation function
+            $("#<%=txtShipping.ClientID%>,#<%=txtInstallation.ClientID%>,#<%=txtDeposit.ClientID%>,#<%=txtPercentDiscount.ClientID%>,#<%=txtValueDiscount.ClientID%>").keyup(function () {
+                validateAdditionalCharges();
+            });
+
             //Clicking the additional charges accept button will display the additional charges
             //If the additional charges are already displayed, the values are to change
             //The balance will also get recalculated
             $(".additionalChargesOverlay .accept").click(function () {
-                var tempShipping = $("#<%=txtShipping.ClientID%>").val();
-                var tempInstallation = $("#<%=txtInstallation.ClientID%>").val();
-                var tempDeposit = $("#<%=txtDeposit.ClientID%>").val();
-                var tempShippingMethod = $("#<%=ddlShippingMethod.ClientID%>").val();
-                var tempCompanyRep = $("#<%=txtCompanyRep.ClientID%>").val();
-                var tempTerm = $("#<%=ddlTerm.ClientID%>").val();
-                var tempLead = $("#<%=ddlLead.ClientID%>").val();
-                var tempPercentDiscount = $("#<%=txtPercentDiscount.ClientID%>").val();
-                var tempValueDiscount = $("#<%=txtValueDiscount.ClientID%>").val();
 
-                var isValid = validateAdditionalCharges(tempShipping, tempInstallation, tempDeposit, tempShippingMethod, tempCompanyRep, tempTerm, tempLead, tempPercentDiscount, tempValueDiscount);
+                // If the button doesn't have the class invalid, the content on the overlay is valid. Populate the price calculator.
+                if (!($(this).hasClass("invalid")))
+                {
+                    alert("VALID");
+                }
 
-                alert(isValid);
             });
 
 
@@ -354,12 +402,7 @@
                         <asp:TableCell>
                             <asp:TextBox ID="txtShipping" runat="server" CssClass="txtField" style="width:50%;" onkeydown="return (event.keyCode!=13);"></asp:TextBox>
                         </asp:TableCell>                          
-                    </asp:TableRow>
-                    <asp:TableRow>                            
-                        <asp:TableCell ColumnSpan="2" style="padding:0 0 0 2em; font-size:75%; line-height:50%;">
-                            <asp:Label ID="lblShippingNote" runat="server"  Text="Tax will be calculated on the Delivery Price of all Wholesale"></asp:Label>
-                        </asp:TableCell>                        
-                    </asp:TableRow>
+                    </asp:TableRow>                    
                     <asp:TableRow>                            
                         <asp:TableCell>
                             <asp:Label ID="lblInstallation" runat="server" style="padding:0 0 0 1em;" Text="Installation: "></asp:Label>
