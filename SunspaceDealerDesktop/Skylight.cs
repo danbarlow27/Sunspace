@@ -11,7 +11,11 @@ namespace SunspaceDealerDesktop
         private float setback;
         private bool isOperator;
 
-        public Skylight();
+        public Skylight(){
+            Type = "";
+            Setback = 0.0f;
+            Operator = true;
+        }
 
         public string Type
         {

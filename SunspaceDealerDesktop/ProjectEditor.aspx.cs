@@ -53,7 +53,7 @@ namespace SunspaceDealerDesktop
                         floorCount = Convert.ToInt32(projectReader[1]);
                         roofCount = Convert.ToInt32(projectReader[2]);
                     }
-                    aReader.Close();
+                    aReader.Close(); 
 
                     #region walls
                     //for each wall in the project
@@ -186,7 +186,7 @@ namespace SunspaceDealerDesktop
                                                             #region Window
                                                             //Get window
                                                             aCommand.CommandText = "SELECT window_type, screen_type, start_height, end_height, length, window_colour, number_vents FROM windows "
-                                                                                    + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "'";
+                                                                                    + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                             SqlDataReader windowReader = aCommand.ExecuteReader();
 
@@ -483,7 +483,7 @@ namespace SunspaceDealerDesktop
                                                                             #region French Door
 
                                                                             aCommand.CommandText = "SELECT glass_tint, swing, operator, hardware_type FROM french_doors "
-                                                                                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "'";
+                                                                                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                             SqlDataReader frenchReader = aCommand.ExecuteReader();
 
@@ -522,7 +522,7 @@ namespace SunspaceDealerDesktop
                                                                             #region Patio Door
 
                                                                             aCommand.CommandText = "SELECT glass_tint, moving_door FROM patio_doors "
-                                                                                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "'";
+                                                                                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'"; //change k to moduleIndex. Couldn't compile other pages.
 
                                                                             SqlDataReader patioReader = aCommand.ExecuteReader();
 
