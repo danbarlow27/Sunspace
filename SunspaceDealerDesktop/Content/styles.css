@@ -1018,6 +1018,7 @@ table.tblPriceCalculator {
     -ms-user-select: none;
     user-select: none;
     cursor: cell;
+    height: 2em;
 }
 
 .tblPriceCalculator .edited {    

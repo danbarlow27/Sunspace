@@ -282,6 +282,8 @@
                 var lastRowNumber = parseInt($("#<%=tblPriceCalculator.ClientID%> tr:last td:first span").data("row"));
                 var tableRow;
                 var tableCell;
+                var tempUnitPrice = $("#<%=txtUnitPrice.ClientID%>").val();
+                var tempItemTotal = $("#<%=txtItemTotal.ClientID%>").val();
 
                 // Run validation
                 validateEditInvoiceItem();
@@ -308,12 +310,20 @@
                         tableCell = "<td><span>" + $("#<%=txtQuantity.ClientID%>").val() + "</span></td>";
                         tableRow += tableCell;
 
-                        //Price per unit cell
-                        tableCell = "<td><span>" + $("#<%=txtUnitPrice.ClientID%>").val() + "/" + $("#<%=ddlUnitOfMeasurment.ClientID%>").val() + "</span></td>";
-                        tableRow += tableCell;
+                        //Price per unit cell portion
+                        // Display the unit price if it was set
+                        tableCell = "<td><span>" + ((tempUnitPrice != "") ? ("$" + parseFloat(tempUnitPrice).toFixed(2)) : "");
+                        // Unit of measurment cell portion
+                        // Display if unit of measurment is set
+                        if ($("#<%=ddlUnitOfMeasurment.ClientID%>").val() != "")
+                        {
+                            // Display / if there is a unit price
+                            tableCell += ((tempUnitPrice != "") ? "/" : "") + $("#<%=ddlUnitOfMeasurment.ClientID%>").val()
+                        }                        
+                        tableRow += tableCell + "</span></td>";
 
                         //Price cell - End of row
-                        tableCell = "<td><span>" + $("#<%=txtItemTotal.ClientID%>").val() + "</span></td>";
+                        tableCell = "<td><span>" + ((tempItemTotal != "") ? ("$" + parseFloat(tempItemTotal).toFixed(2) + "</span></td>") : "");
                         tableRow += tableCell + "</tr>";
 
                         //Append the table row with all of the content after the last table row in the price calculator table
