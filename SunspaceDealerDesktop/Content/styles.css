@@ -983,10 +983,17 @@ div.editInvoiceItemOverlay .button {
     margin: 0 2em;
 }
 
-.tblPriceCalculator {
+table.tblPriceCalculator {
     margin: 0 auto;
     width: 90%;
     border-spacing: 0;
+    padding-top:2em;
+}
+
+.tblPriceCalculator td:nth-child(3),
+.tblPriceCalculator td:nth-child(4),
+.tblPriceCalculator td:nth-child(5) {
+    text-align: center;
 }
 
 .tblPriceCalculator thead {

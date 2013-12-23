@@ -59,8 +59,8 @@
             }
 
             // This function uses the elements by ID for each of the fields in the additional charges overlay
-            // If all paramters are valid, this function returns (1/true)
             // If a field is invalid, the invalid class is added to the element, giving it a red border.
+            // The accept button will not do anything with any invalid fields
             function validateAdditionalCharges() {
                 
                 var fltShipping = $("#<%=txtShipping.ClientID%>").val();
@@ -145,6 +145,9 @@
             //If the additional charges are already displayed, the values are to change
             //The balance will also get recalculated
             $(".additionalChargesOverlay .accept").click(function () {
+                
+                // Run validation 1 more time, because keyup event handler has it's down side. (While holding an invalid character then clicking the accept button will be valid)
+                validateAdditionalCharges();
 
                 // If the button doesn't have the class invalid, the content on the overlay is valid. Populate the price calculator.
                 if (!($(this).hasClass("invalid")))
@@ -153,7 +156,6 @@
                 }
 
             });
-
 
             /**************************************
             END OF ADDITIONAL CHARGES OVERLAY LOGIC
@@ -166,6 +168,7 @@
             //This function clears the fields in the add/edit invoice item overlay
             function clearEditInvoiceItem() {
 
+                // Set all of the values to default
                 $("#<%=txtItemName.ClientID%>").val(null);
                 $("#<%=txtItemDetails.ClientID%>").val(null);
                 $("#<%=txtQuantity.ClientID%>").val(null);
@@ -175,7 +178,42 @@
                 toEdit = false;
                 editRowNumber = 0;
 
+                // Remove the invalid class from any numerical field
+                $("#<%=txtQuantity.ClientID%>").removeClass("invalid");
+                $("#<%=txtUnitPrice.ClientID%>").removeClass("invalid");
+                $(".editInvoiceItemOverlay .accept").removeClass("invalid");
+
                 return 1;
+            }
+
+            // This function uses the elements by ID for each of the fields in the edit invoice item overlay
+            // If a field is invalid, the invalid class is added to the element, giving it a red border.
+            // The accept button will not do anything with any invalid fields
+            function validateEditinvoiceItem() {
+
+                var intQuantity = $("#<%=txtQuantity.ClientID%>").val();
+                var fltPricePerUnit = $("#<%=txtUnitPrice.ClientID%>").val();
+
+                // Remove the invalid class from each input field, if a is invalid, a red border is added
+                $("#<%=txtQuantity.ClientID%>").removeClass("invalid");
+                $("#<%=txtUnitPrice.ClientID%>").removeClass("invalid");
+                $(".editInvoiceItemOverlay .accept").removeClass("invalid");
+
+                // Quantity needs to be integer and above/equal to 0
+                if (isNaN(intQuantity) || (intQuantity % 1 === 1) && (intQuantity < 0)) {
+                    $("#<%=txtQuantity.ClientID%>").addClass("invalid");
+                }
+
+                // Installation needs to be numeric and above/equal to 0
+                if (isNaN(fltPricePerUnit) || (!(isNaN(fltPricePerUnit)) && (fltPricePerUnit < 0))) {
+                    $("#<%=txtUnitPrice.ClientID%>").addClass("invalid");
+                }            
+
+                // If anything is invalid, the accept button will be given the invalid class. This sets opacity to 50%
+                if ($("#<%=txtQuantity.ClientID%>").hasClass("invalid") ||
+                 $("#<%=txtUnitPrice.ClientID%>").hasClass("invalid")) {
+                    $(".editInvoiceItemOverlay .accept").addClass("invalid");
+                }
             }
 
             //Clicking the Add Item will display an overlay
@@ -204,7 +242,7 @@
                 }
             });           
 
-            //Changing the value of the quantity/unitprice will calculate the total value of the item
+            //Changing the value of the quantity/unitprice will run validation and calculate the total value of the item
             $(".itemTotalField").keyup(function () {
                 var tempQuantity = parseFloat($("#SecondaryNavigation_txtQuantity").val());
                 var tempUnitPrice = parseFloat($("#SecondaryNavigation_txtUnitPrice").val());
@@ -212,11 +250,15 @@
 
                 // Display 0 before any calculations
                 $("#<%=txtItemTotal.ClientID%>").val(tempItemTotal);
+                // Run validation
+                validateEditinvoiceItem();                
 
-                // Calculate and display the item total
-                if (tempQuantity >= 0 && tempUnitPrice >= 0) {
-                    tempItemTotal = tempQuantity * tempUnitPrice;
-                    $("#<%=txtItemTotal.ClientID%>").val(tempItemTotal);
+                if (!($(".editInvoiceItemOverlay .accept").hasClass("invalid"))) {
+                    // Calculate and display the item total
+                    if (tempQuantity >= 0 && tempUnitPrice >= 0) {
+                        tempItemTotal = tempQuantity * tempUnitPrice;
+                        $("#<%=txtItemTotal.ClientID%>").val(tempItemTotal);
+                    }
                 }
             });
 
