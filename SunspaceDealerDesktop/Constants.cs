@@ -349,6 +349,8 @@ namespace SunspaceDealerDesktop
 
         public const float PATIO_FRAMING = 2F;
 
+        public const float DOOR_PADDING = 11.5f;
+        public const float KICKPLATE_PADDING = 4f;
         #endregion Doors
 
         #region Windows

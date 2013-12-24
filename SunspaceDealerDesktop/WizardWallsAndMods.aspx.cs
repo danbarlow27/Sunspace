@@ -3945,10 +3945,10 @@ namespace SunspaceDealerDesktop
 
                                 Window doorWindow = new Window();
                                 doorWindow.WindowStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
-                                doorWindow.FLength = aDoor.FLength - 11.5f; //11.5 is the amount of door between edge of door and start of window (both sides totalled to 11.5)
+                                doorWindow.FLength = aDoor.FLength - Constants.DOOR_PADDING; //11.5 is the amount of door between edge of door and start of window (both sides totalled to 11.5)
                                 doorWindow.Width = doorWindow.FLength - 2.125f;
-                                doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight - aDoor.Kickplate - 4; //4 corresponds to the amount of framing at a bottom of a door
-                                doorWindow.LeftHeight = doorWindow.RightHeight = aDoor.FStartHeight - aDoor.Kickplate - 4 - 2.125f;
+                                doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight - aDoor.Kickplate - Constants.KICKPLATE_PADDING; //4 corresponds to the amount of framing at a bottom of a door
+                                doorWindow.LeftHeight = doorWindow.RightHeight = aDoor.FStartHeight - aDoor.Kickplate - Constants.KICKPLATE_PADDING - 2.125f;
                                 doorWindow.ItemType = "Window";
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
@@ -4004,6 +4004,16 @@ namespace SunspaceDealerDesktop
                             {
                                 Door aDoor = getPatioDoorFromForm(i, j);
                                 aDoor.Punch = aDoor.FEndHeight;
+
+                                Window doorWindow = new Window();
+                                doorWindow.FLength = aDoor.FLength - Constants.DOOR_PADDING; //11.5 is the amount of door between edge of door and start of window (both sides totalled to 11.5)
+                                doorWindow.Width = doorWindow.FLength - 2.125f;
+                                doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight - aDoor.Kickplate - Constants.KICKPLATE_PADDING; //4 corresponds to the amount of framing at a bottom of a door
+                                doorWindow.LeftHeight = doorWindow.RightHeight = aDoor.FStartHeight - aDoor.Kickplate - Constants.KICKPLATE_PADDING - 2.125f;
+                                doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "glassTint"];
+                                doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
+                                doorWindow.SpreaderBar = -1;
+                                
                                 modularItems.Add(aDoor);
                             }
                             if (doorType == "French")
@@ -4013,10 +4023,10 @@ namespace SunspaceDealerDesktop
 
                                 Window doorWindow = new Window();
                                 doorWindow.WindowStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
-                                //doorWindow.FLength = aDoor.FLength - SOMEVALUE;
+                                doorWindow.FLength = aDoor.FLength - Constants.DOOR_PADDING;
                                 doorWindow.Width = doorWindow.FLength - 2.125f;
-                                //doorWindow.FStartHeight = doorWindow.FStartHeight = SOMEVALUE;
-                                //doorWindow.StartHeight = doorWindow.EndHeight = SOMEVALUE;
+                                doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight - aDoor.Kickplate - Constants.KICKPLATE_PADDING; //4 corresponds to the amount of framing at a bottom of a door;
+                                doorWindow.LeftHeight = doorWindow.RightHeight = aDoor.FStartHeight - aDoor.Kickplate - Constants.KICKPLATE_PADDING - 2.125f; //4 corresponds to the amount of framing at a bottom of a door;
                                 doorWindow.ItemType = "Window";
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
