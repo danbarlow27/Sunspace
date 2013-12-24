@@ -4,7 +4,7 @@
 <asp:Content runat="server" ID="SecondaryNavigation" ContentPlaceHolderID="SecondaryNavigation">   
     <nav class="navEditor">
         <ul class="ulNavEditor">
-            <li><asp:DropDownList ID="DropDownList1" Width="160" runat="server"></asp:DropDownList></li>
+            <li><asp:DropDownList ID="ddlSunroomObjects" Width="160" runat="server"></asp:DropDownList></li>
             <li><asp:HyperLink ID="lnkEditorNavMods" CssClass="editMods" runat="server">Edit Mods</asp:HyperLink></li>
             <li><asp:HyperLink ID="lnkEditorNavTools" runat="server">Tools</asp:HyperLink>
                 <ul>
@@ -128,7 +128,7 @@
     </div>   
 
     <%--<asp:Label ID="lblError" runat="server"></asp:Label>--%>
-
+    <input id="hidJsonObjects" type="hidden" runat="server" />
 </asp:Content>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">

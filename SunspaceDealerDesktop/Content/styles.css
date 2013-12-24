@@ -893,7 +893,8 @@ div.priceCalculatorWrapper .ulNavEditor li a {
     background: transparent;
 }
 
-div.priceCalculatorWrapper .additionalChargesOverlay {
+div.priceCalculatorWrapper .additionalChargesOverlay,
+div.priceCalculatorWrapper .editInvoiceItemOverlay {
     position: fixed;
     height: 100%;
     width: 100%;
@@ -902,26 +903,35 @@ div.priceCalculatorWrapper .additionalChargesOverlay {
     z-index: 1000;
 }
 
-div.additionalChargesOverlay .content {
+div.additionalChargesOverlay .content,
+div.editInvoiceItemOverlay .content {
     position: absolute;
     height: 500px;
     width: 400px;
     background-color: rgb(242, 235, 214);
     top: 50%;
     left: 50%;
-    margin-left: -200px !important;
-    margin-top: -300px !important;
+    margin-left: -200px;
+    margin-top: -300px;
     z-index:1005; 
+    box-shadow: -10px 10px 5px #888888;
 }
 
-div.additionalChargesOverlay .closeBar {
+div.editInvoiceItemOverlay .content {
+    height: 350px;
+    margin-top: -250px;
+}
+
+div.additionalChargesOverlay .closeBar,
+div.editInvoiceItemOverlay .closeBar {
     display: inline-block;
     height: 50px;
     width: 100%;
     background-color: black;
 }
 
-div.additionalChargesOverlay .overlayClose {
+div.additionalChargesOverlay .overlayClose,
+div.editInvoiceItemOverlay .overlayClose {
     cursor: pointer;
     font-size: 1.25em;
     text-transform: uppercase;
@@ -938,11 +948,29 @@ div.additionalChargesOverlay .overlayClose {
     overflow:hidden;
 }
 
-div.additionalChargesOverlay .content h3 {
+div.additionalChargesOverlay .content h3,
+div.editInvoiceItemOverlay .content h3 {
     padding: 0 0 0 2em;
 }
 
-div.additionalChargesOverlay .button {
+div.additionalChargesOverlay .content tr td:first-child,
+div.editInvoiceItemOverlay .content tr td:first-child {
+    text-align:right;
+}
+
+div.additionalChargesOverlay .invalid,
+div.editInvoiceItemOverlay .invalid {
+    border: red solid 1px;
+}
+
+div.additionalChargesOverlay .button.invalid,
+div.editInvoiceItemOverlay .button.invalid {
+    border: none;
+    opacity: 0.5;
+}
+
+div.additionalChargesOverlay .button,
+div.editInvoiceItemOverlay .button {
     background-color: #000;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
@@ -953,6 +981,56 @@ div.additionalChargesOverlay .button {
     cursor: pointer;
     padding: 12px 24px;
     margin: 0 2em;
+}
+
+table.tblPriceCalculator {
+    margin: 0 auto;
+    width: 90%;
+    border-spacing: 0;
+    padding-top:2em;
+}
+
+.tblPriceCalculator td:nth-child(3),
+.tblPriceCalculator td:nth-child(4),
+.tblPriceCalculator td:nth-child(5) {
+    text-align: center;
+}
+
+.tblPriceCalculator thead {
+    color: #fff;
+    background: #000;
+    height: 50px;
+    font-size: 1.25em;
+    text-transform: uppercase;
+    text-align:center;
+    line-height: 50px;
+}
+
+.tblPriceCalculator span {
+    width: 100%;
+}
+
+.tblPriceCalculator tbody tr {    
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: cell;
+    height: 2em;
+}
+
+.tblPriceCalculator .edited {    
+    background-color:#FF9933;
+}
+
+.tblPriceCalculator tbody tr:hover {    
+    background-color:#dfbf98;
+}
+
+.tblPriceCalculator tbody tr td {
+    margin-right: 2em;
 }
 
 /******************************************

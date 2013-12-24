@@ -37,6 +37,8 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            List<Wall> aListOfWalls = new List<Wall>();
+
 
             int project_id = 10;
             string project_type;
@@ -77,189 +79,7 @@ namespace SunspaceDealerDesktop
             float module_length;
 
             
-            #region attempt at hitting the database (not functional)
-            
-            //List<Wall> listOfWalls = (List<Wall>)Session["listOfWalls"];
-            List<Wall> listOfWalls = new List<Wall>();
 
-
-            using (SqlConnection aConnection = new SqlConnection(sdsDBConnection.ConnectionString))
-            {
-                aConnection.Open();
-                SqlCommand aCommand = aConnection.CreateCommand();
-                SqlTransaction aTransaction;
-                SqlDataReader aReader;
-
-                // Start a local transaction.
-                aTransaction = aConnection.BeginTransaction("SampleTransaction");
-
-                // Must assign both transaction object and connection 
-                // to Command object for a pending local transaction
-                aCommand.Connection = aConnection;
-                aCommand.Transaction = aTransaction;
-
-                try
-                {                    
-
-                    //get number of walls
-                    aCommand.CommandText = "SELECT * FROM walls WHERE project_id = '" + project_id + "'";
-                    aReader = aCommand.ExecuteReader();
-                    
-                    wallCount  = aReader.RecordsAffected; //get the number of walls in the project
-
-                    aReader.Close();
-
-                    for (int i = 0; i < wallCount; i++)
-                    {
-                        aCommand.CommandText = "SELECT wall_type, model_type, total_length, orientation, set_back, name, first_item_index, last_item_index, start_height, end_height, soffit_length, gable_peak, obstructions, fire_protection "
-                        + "FROM walls WHERE project_id = '" + project_id + "' AND wall_index = '" + i + "'";
-
-                        aReader = aCommand.ExecuteReader();
-                        aReader.Read();
-
-                        //create a new instance of a wall and set all its attributes from the db
-                        Wall aWall = new Wall(); 
-                        aWall.WallType = Convert.ToString(aReader[0]);
-                        aWall.ModelType = Convert.ToString(aReader[1]);
-                        aWall.Length = Convert.ToSingle(aReader[2]);
-                        aWall.Orientation = Convert.ToString(aReader[3]);
-                        aWall.SetBack = Convert.ToSingle(aReader[4]);
-                        aWall.Name = Convert.ToString(aReader[5]);
-                        aWall.FirstItemIndex = Convert.ToInt32(aReader[6]);
-                        aWall.LastItemIndex = Convert.ToInt32(aReader[7]);
-                        aWall.StartHeight = Convert.ToSingle(aReader[8]);
-                        aWall.EndHeight = Convert.ToSingle(aReader[9]);
-                        aWall.SoffitLength = Convert.ToSingle(aReader[10]);
-                        aWall.GablePeak = Convert.ToSingle(aReader[11]);
-                        //aWall.Obstructions = aReader[12]); how do we deal with obstructions
-                        aWall.FireProtection = Convert.ToBoolean(aReader[13]);
-
-                        aReader.Close();
-
-                        List<LinearItem> listOfLinearItems = new List<LinearItem>();
-                        
-
-                        for (int j = aWall.FirstItemIndex; j < aWall.LastItemIndex; j++)
-                        {
-                            //Get linear items
-                            aCommand.CommandText = "SELECT linear_index, linear_type, start_height, end_height, length, frame_colour, sex, fixed_location, attached_to "
-                                                    + "FROM linear_items WHERE project_id = '" + project_id + "' AND linear_index = '" + j + "'";
-                            aReader = aCommand.ExecuteReader();
-                            aReader.Read();
-
-                            LinearItem aLinearItem = new LinearItem();
-
-                            aLinearItem.LinearIndex = Convert.ToInt32(aReader[0]);
-                            aLinearItem.ItemType = Convert.ToString(aReader[1]);
-                            aLinearItem.StartHeight = Convert.ToSingle(aReader[2]);
-                            aLinearItem.EndHeight = Convert.ToSingle(aReader[3]);
-                            aLinearItem.Length = Convert.ToSingle(aReader[4]);
-                            aLinearItem.FrameColour = Convert.ToString(aReader[5]);
-                            aLinearItem.Sex = Convert.ToString(aReader[6]);
-                            aLinearItem.FixedLocation = Convert.ToSingle(aReader[7]);
-                            aLinearItem.AttachedTo = Convert.ToBoolean(aReader[8]);
-
-                            aReader.Close();
-
-                            List<ModuleItem> listOfModuleItems = new List<ModuleItem>();
-
-                            //get number of mods
-                            aCommand.CommandText = "SELECT * FROM moduleItems WHERE project_id = '" + project_id + "' "
-                                                                            + " AND linear_index = '" + aLinearItem.LinearIndex + "'";
-                            aReader = aCommand.ExecuteReader();
-
-                            int modCount = aReader.RecordsAffected; //get the number of walls in the project
-
-                            aReader.Close();
-
-                            for (int k = 0; k < modCount; k++)
-                            {
-                                //Get linear items
-                                aCommand.CommandText = "SELECT module_index, item_type, start_height, end_height, length FROM moduleItems " 
-                                                        + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aLinearItem.LinearIndex + "' AND module_index = '" + k + "'";
-
-                                aReader = aCommand.ExecuteReader();
-                                aReader.Read();
-
-
-                                ModuleItem aModuleItem = new ModuleItem();
-
-                                aModuleItem.ModuleIndex = Convert.ToInt32(aReader[0]);
-                                aModuleItem.ItemType = Convert.ToString(aReader[1]);
-                                aModuleItem.FStartHeight = Convert.ToSingle(aReader[2]);
-                                aModuleItem.FEndHeight = Convert.ToSingle(aReader[3]);
-                                aModuleItem.FLength = Convert.ToSingle(aReader[4]);
-                        
-                                aReader.Close();
-
-
-                                //different types of mods 
-
-
-                                //
-                                Window aWindow = new Window();
-                                switch (aWindow.WindowStyle)
-                                {
-                                    case "Vinyl":
-                                        break;
-                                    case "Screen":
-                                        break;
-                                    case "Glass":
-                                        break;
-                                    case "V4T":
-                                        break;
-                                    case "H2T":
-                                        break;
-                                }
-
-
-
-                                listOfModuleItems.Add(aModuleItem);
-
-
-                            }
-
-                            listOfLinearItems.Add(aLinearItem);
-        
-                        }
-
-                        aWall.LinearItems = listOfLinearItems; 
-
-                        listOfWalls.Add(aWall); //add the wall
-
-
-                    }
-
-
-
-
-                    //lblError.Text = "Successfully Updated!\n\n";
-                    aTransaction.Commit();
-
-                    Response.Redirect("SavedProjects.aspx", false);
-                }
-                catch (Exception ex)
-                {
-                    //lblError.Text = "Commit Exception Type: " + ex.GetType();
-                    //lblError.Text += "  Message: " + ex.Message;
-
-                    // Attempt to roll back the transaction. 
-                    try
-                    {
-                        aTransaction.Rollback();
-                    }
-                    catch (Exception ex2)
-                    {
-                        // This catch block will handle any errors that may have occurred 
-                        // on the server that would cause the rollback to fail, such as 
-                        // a closed connection.
-                        //lblError.Text = "Rollback Exception Type: " + ex2.GetType();
-                        //lblError.Text += "  Message: " + ex2.Message;
-                    }
-                }
-            }
-            
-            #endregion
 
 
 
@@ -268,7 +88,7 @@ namespace SunspaceDealerDesktop
             #region hardcode population
             //This info will all come from the database eventually            
 
-            //List<Wall> listOfWalls = new List<Wall>();
+            //List<Wall> aListOfWalls = new List<Wall>();
             float backwall = 150.0f;
             float frontwall = 140.0f;
             float slope = 0.6f;
@@ -319,9 +139,9 @@ namespace SunspaceDealerDesktop
             thirdWall.GablePeak = 0;
             thirdWall.SoffitLength = 0;
 
-            listOfWalls.Add(firstWall);
-            listOfWalls.Add(secondWall);
-            listOfWalls.Add(thirdWall);
+            aListOfWalls.Add(firstWall);
+            aListOfWalls.Add(secondWall);
+            aListOfWalls.Add(thirdWall);
             #endregion  //hardcode population
 
             #region dynamic accordion population
@@ -632,6 +452,9 @@ namespace SunspaceDealerDesktop
                 accordion.Controls.Add(new LiteralControl("<ul>"));
 
                     #region BackWall Height
+
+                string[] backHeight = firstWall.StartHeight.ToString().Split('.');
+
                     accordion.Controls.Add(new LiteralControl("<li>"));
                     Label backwallHeight = new Label();
                     backwallHeight.ID = "lblBackwall";
@@ -640,7 +463,7 @@ namespace SunspaceDealerDesktop
 
                     TextBox backwallTextBox = new TextBox();
                     backwallTextBox.ID = "txtBackwall";
-                    backwallTextBox.Text = backwall.ToString();
+                    backwallTextBox.Text = backHeight[0];
                     backwallTextBox.CssClass = "txtField txtInput";
                     backwallTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                     backwallTextBox.Attributes.Add("runat", "server");
@@ -648,6 +471,8 @@ namespace SunspaceDealerDesktop
 
                     DropDownList backwallFractions = new DropDownList();
                     backwallFractions.ID = "ddlBackwallFractions";
+
+                    fractionList = GlobalFunctions.FractionOptions("."+backHeight[1]);
 
                     for (int i = 0; i < fractionList.Count; i++)
                     {
@@ -660,6 +485,9 @@ namespace SunspaceDealerDesktop
                     #endregion //backwall height
 
                     #region FrontWall Height
+
+                    string[] frontHeight = firstWall.EndHeight.ToString().Split('.');
+
                     accordion.Controls.Add(new LiteralControl("<li>"));
                     Label frontwallHeight = new Label();
                     frontwallHeight.ID = "lblFrontwall";
@@ -668,7 +496,7 @@ namespace SunspaceDealerDesktop
 
                     TextBox frontwallTextBox = new TextBox();
                     frontwallTextBox.ID = "txtFrontwall";
-                    frontwallTextBox.Text = frontwall.ToString();
+                    frontwallTextBox.Text = frontHeight[0];
                     frontwallTextBox.CssClass = "txtField txtInput";
                     frontwallTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                     frontwallTextBox.Attributes.Add("runat", "server");
@@ -677,18 +505,27 @@ namespace SunspaceDealerDesktop
                     DropDownList frontwallFractions = new DropDownList();
                     frontwallFractions.ID = "ddlFrontwallFractions";
 
+                    fractionList = GlobalFunctions.FractionOptions("." + frontHeight[1]);
+
                     for (int i = 0; i < fractionList.Count; i++)
                     {
                         frontwallFractions.Items.Add(fractionList[i]);
                     }
 
-                    frontwallFractions.Attributes.Add("runat", "server");
+                    frontwallFractions.Attributes.Add("runat", "server");   
                     accordion.Controls.Add(frontwallFractions);
                     accordion.Controls.Add(new LiteralControl("</li>"));
                     #endregion //frontwall height
 
                     #region Slope
-                    accordion.Controls.Add(new LiteralControl("<li>"));
+            
+            //rise = parseFloat(backWallHeight) - parseFloat(frontWallHeight);
+
+            //return ((rise / (roomProjection - soffitLength)) * 12).toFixed(2);  //slope over 12, rounded to 2 decimal places
+        
+         
+            
+            accordion.Controls.Add(new LiteralControl("<li>"));
                     Label slopeLabel = new Label();
                     slopeLabel.ID = "lblSlope";
                     slopeLabel.Text = "Slope: ";
@@ -716,13 +553,13 @@ namespace SunspaceDealerDesktop
                 accordion.Controls.Add(new LiteralControl("<ul class=\"toggleOptions\">"));
                 accordion.Controls.Add(new LiteralControl("<h2>Wall Widths</h2>"));
 
-                for (int i = 0; i < listOfWalls.Count; i++)
+                for (int i = 0; i < aListOfWalls.Count; i++)
                 {
                     //accordion.Controls.Add(new LiteralControl("<li onclick=alert("+(i+1)+");>"));
                     accordion.Controls.Add(new LiteralControl("<li onclick=drawWall(document.getElementById('MainContent_txtWidth" + (i + 1) + "').value,document.getElementById('MainContent_lblStartHeightDisplay" + (i + 1) + "').innerHTML,document.getElementById('MainContent_lblEndHeightDisplay" + (i + 1) + "').innerHTML," + (i + 1) + ");>"));
                     Label accordionLabel = new Label();
                     accordionLabel.ID = "lblWall" + (i + 1) + "Label";
-                    accordionLabel.Text = listOfWalls[i].Name;
+                    accordionLabel.Text = aListOfWalls[i].Name;
                     accordion.Controls.Add(accordionLabel);
 
                     accordion.Controls.Add(new LiteralControl("<div class=\"toggleContent\"><ul>"));
@@ -736,7 +573,7 @@ namespace SunspaceDealerDesktop
 
                         TextBox widthTextBox = new TextBox();
                         widthTextBox.ID = "txtWidth" + (i + 1);
-                        widthTextBox.Text = listOfWalls[i].Length.ToString();
+                        widthTextBox.Text = aListOfWalls[i].Length.ToString();
                         widthTextBox.CssClass = "txtField txtInput";
                         widthTextBox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                         widthTextBox.Attributes.Add("runat", "server");
@@ -765,7 +602,7 @@ namespace SunspaceDealerDesktop
 
                         Label startHeightDisplay = new Label();
                         startHeightDisplay.ID = "lblStartHeightDisplay" + (i + 1);
-                        startHeightDisplay.Text = listOfWalls[i].StartHeight.ToString();
+                        startHeightDisplay.Text = aListOfWalls[i].StartHeight.ToString();
                         startHeightDisplay.Attributes.Add("runat", "server");
                         accordion.Controls.Add(startHeightDisplay);
 
@@ -781,7 +618,7 @@ namespace SunspaceDealerDesktop
 
                         Label endHeightDisplay = new Label();
                         endHeightDisplay.ID = "lblEndHeightDisplay" + (i + 1);
-                        endHeightDisplay.Text = listOfWalls[i].EndHeight.ToString();
+                        endHeightDisplay.Text = aListOfWalls[i].EndHeight.ToString();
                         endHeightDisplay.Attributes.Add("runat", "server");
                         accordion.Controls.Add(endHeightDisplay);
 

@@ -9,8 +9,10 @@
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="MainContent" runat="server">
     <script>
-        var jsonString = <%=hidRealHidden.Value%>;
-        console.log(jsonString);
+        
+        var jsonString = <%= hidRealhidden.value %>;
+        console.log(jsonstring);
+
 
         function runme()
         {
