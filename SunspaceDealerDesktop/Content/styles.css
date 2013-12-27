@@ -967,6 +967,7 @@ div.additionalChargesOverlay .button.invalid,
 div.editInvoiceItemOverlay .button.invalid {
     border: none;
     opacity: 0.5;
+    cursor: default;
 }
 
 div.additionalChargesOverlay .button,
@@ -1025,7 +1026,12 @@ table.tblPriceCalculator {
     background-color:#FF9933;
 }
 
-.tblPriceCalculator tbody tr:hover {    
+.tblPriceCalculator tbody tr.item:hover {   
+    background-color: rgb(242, 235, 214); 
+    
+}
+
+.tblPriceCalculator tbody tr.item.clicked {    
     background-color:#dfbf98;
 }
 
@@ -1061,8 +1067,12 @@ table.tblPriceCalculator {
 	margin-right: 0;
 }
 
-.center {
+.align-center {
     text-align:center;
+}
+
+.align-right {
+    text-align:right;
 }
 
 .maxWidth {

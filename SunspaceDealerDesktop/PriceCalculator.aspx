@@ -125,6 +125,7 @@
                     $("#<%=txtShipping.ClientID%>").select();
                 }
                 clearAllItems();
+                resetClickedRow();
             });
 
             //Clicking the transparent overlay closes the additional charges overlays
@@ -188,7 +189,6 @@
                 $("#<%=ddlUnitOfMeasurment.ClientID%>").val('0');
                 $("#<%=txtItemTotal.ClientID%>").val(null);
                 toEdit = false;
-                editRowNumber = 0;
 
                 // Remove the invalid class from any numerical field
                 $("#<%=txtQuantity.ClientID%>").removeClass("invalid");
@@ -237,11 +237,33 @@
                 }
                 else
                 {
+                    // Change the header for Add item
+                    $(".editInvoiceItemOverlay h3:first").text("Add Invoice Item");
                     $(".editInvoiceItemOverlay").show();
                     $(".additionalChargesOverlay").hide();
                     $("#<%=txtItemName.ClientID%>").select();
                 }
                 clearAllItems();
+                resetClickedRow();
+            });
+
+            //Clicking the Edit Item will display an overlay
+            $("#SecondaryNavigation_lnkEditItem").click(function () {
+                // If the overlay is already shown, hide it.
+                if ($(".editInvoiceItemOverlay").is(":visible"))
+                {
+                    $(".editInvoiceItemOverlay").hide();
+                }
+                else if (editRow != null) // Only show if a row was clicked to edit
+                {
+                    // Change the header for Edit item
+                    $(".editInvoiceItemOverlay h3:first").text("Edit Invoice Item");
+                    $(".editInvoiceItemOverlay").show();
+                    $(".additionalChargesOverlay").hide();
+                    $("#<%=txtItemName.ClientID%>").select();
+                }
+                clearAllItems();
+                toEdit = true;
             });
 
             //Clicking the transparent overlay closes the edit invoice item overlays
@@ -302,7 +324,7 @@
                     {
                         // Item name cell - Beginning of row
                         tableCell = "<td><span data-row=\"" + (lastRowNumber + 1) + "\">" + $("#<%=txtItemName.ClientID%>").val() + "</span></td>";
-                        tableRow = "<tr>" + tableCell;
+                        tableRow = "<tr class=\"item edited additionalItem\">" + tableCell;
 
                         // Item details cell
                         tableCell = "<td><span>" + $("#<%=txtItemDetails.ClientID%>").val() + "</span></td>";
@@ -326,14 +348,24 @@
 
                         //Price cell - End of row
                         tableCell = "<td><span>" + ((tempItemTotal != "") ? ("$" + parseFloat(tempItemTotal).toFixed(2) + "</span></td>") : "");
-                        tableRow += tableCell + "</tr>";
+                        tableRow += tableCell + "</tr>";                        
 
-                        //Append the table row with all of the content after the last table row in the price calculator table
-                        $("#<%=tblPriceCalculator.ClientID%> tr:last").after(tableRow);
+                        // If there is no additional item's already added, 
+                        if ($("#<%=tblPriceCalculator.ClientID%> tr.additionalItem").length == 0)
+                        {
+                            // Add a blank table row after the initial table rows before the new table row with content
+                            $("#<%=tblPriceCalculator.ClientID%> tr.item:last").after("<tr><td colspan=\"5\"></td></tr>" + tableRow);                            
+                        }
+                        else
+                        {
+                            $("#<%=tblPriceCalculator.ClientID%> tr.additionalItem:last").after(tableRow);
+                        }
+
                     }
 
                     $(".editInvoiceItemOverlay").hide();
                     clearAllItems();
+                    resetClickedRow();
                 }
 
             });
@@ -385,14 +417,55 @@
                 $(".additionalChargesOverlay").hide();
                 $(".editInvoiceItemOverlay").hide();
                 clearAllItems();
+                resetClickedRow();
             });            
 
             /*****************************
             END OF UNIVERSAL OVERLAY LOGIC
-            *****************************/            
+            *****************************/
 
-            //This function is clicking on a row cell, to populate the edit invoice item overlay
-            $(".tblPriceCalculator").on("dblclick", "tr", function () {
+            /****************************
+            BEGINNING OF REMOVE EDIT LOGIC
+            *****************************/
+
+            //Clicking the Edit Item will display an overlay
+            $("#SecondaryNavigation_lnkRemoveEdit").click(function () {
+                
+                // If a row was clicked and it has been edited
+                if ($(editRow).hasClass("clicked") && $(editRow).hasClass("edited")) {
+                    $(editRow).removeClass("edited");
+                    resetClickedRow();
+                }
+
+            });
+
+            //Clicking the Edit Item will display an overlay
+            $("#SecondaryNavigation_lnkRemoveAllEdits").click(function () {
+
+                // For each edited row
+                $(".tblPriceCalculator > tbody  > tr.edited").each(function (index) {
+                    // Remove the edited class
+                    $(this).removeClass("edited");
+                });
+
+            });
+
+            /****************************
+            END OF OF REMOVE EDIT LOGIC
+            *****************************/
+
+            /**********************************************
+            BEGINNING OF PRICE CALCULATOR SPREADSHEET LOGIC
+            **********************************************/
+
+            function resetClickedRow() 
+            {
+                $(editRow).removeClass("clicked");
+                editRow = null;
+            }
+
+            //This function is double clicking on a row cell, to populate the edit invoice item overlay
+            $(".tblPriceCalculator").on("dblclick", "tr.item", function () {
                 var rowNumber = $(this).children("td:first").children("span").data("row"); // The data-row value of the first table cells' span element
                 var columns = $(this).children("td").children("span"); // Each table cells' span element in the row that was clicked
                 var tempPricePerUnitSub; // Splitting the unit price and unit of measurment (/ character)
@@ -442,9 +515,23 @@
                 editRow = $(this);
                 // Show the overlay for allowing the user to edit
                 $(".editInvoiceItemOverlay").show();
-            });            
-            
+            });
+
+            // Clicking on a table row sets the clicked class to the row and saves a reference to the table row
+            $(".tblPriceCalculator").on("click", "tr.item", function () {
+                // Remove the clicked class from the previous row clicked
+                $(editRow).removeClass("clicked");
+                // Store a reference of this table row clicked
+                editRow = $(this);
+                // Add clicked class
+                $(editRow).addClass("clicked");                
+            });
+
+            /****************************************
+            END OF PRICE CALCULATOR SPREADSHEET LOGIC
+            ****************************************/            
         });
+
     </script>
      
     <div class="priceCalculatorWrapper">
@@ -453,7 +540,7 @@
             <ul class="ulNavEditor">
                 <li><asp:HyperLink ID="lnkAdditionalCharges" CssClass="additionalCharges" runat="server">Additional Charges</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkAddItem" runat="server">Add Item</asp:HyperLink></li>
-                <li><asp:HyperLink ID="lnkEditItem" CssClass="editItem" runat="server">Edit Item</asp:HyperLink></li>
+                <li><asp:HyperLink ID="lnkEditItem" CssClass="editItem disabled" runat="server">Edit Item</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkRemoveEdit" runat="server">Remove Edit</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkRemoveAllEdits" runat="server">Remove All Edits</asp:HyperLink></li>                
             </ul>
@@ -564,7 +651,7 @@
                         </asp:TableCell>  
                     </asp:TableRow>  
                     <asp:TableRow>                            
-                        <asp:TableCell ColumnSpan="2" CssClass="center">
+                        <asp:TableCell ColumnSpan="2" CssClass="align-center">
                             <div class="button accept">ACCEPT</div>
                             <div class="button close">CANCEL</div>
                         </asp:TableCell>  
@@ -630,7 +717,7 @@
                         </asp:TableCell>                          
                     </asp:TableRow> 
                      <asp:TableRow>                            
-                        <asp:TableCell ColumnSpan="2" CssClass="center">
+                        <asp:TableCell ColumnSpan="2" CssClass="align-center">
                             <div class="button accept">ACCEPT</div>
                             <div class="button close">CANCEL</div>
                         </asp:TableCell>  
@@ -663,22 +750,74 @@
                 <asp:Label ID="lblTablePrice" runat="server" Text="Price"></asp:Label>
             </asp:TableCell>                      
         </asp:TableHeaderRow>
-        <asp:TableRow>
+        <%--DUMMY DATA, REPLACE WITH PLACEHOLDER FOR INITIAL DATA --%>
+        <asp:TableRow CssClass="item">
             <asp:TableCell CssClass="tdItem">
-                <asp:Label runat="server" Text="Random item - long name" data-row="1"></asp:Label>
+                <asp:Label runat="server" Text="Room Size" data-row="0"></asp:Label>
             </asp:TableCell>
             <asp:TableCell CssClass="tdDetails">
-                <asp:Label runat="server" Text="Random item details - text can be long too" data-row="1"></asp:Label>
+                <asp:Label runat="server" Text="16' 6&#34; Projection x 16' 6&#34; Width" data-row="0"></asp:Label>
             </asp:TableCell>   
             <asp:TableCell CssClass="tdQuantity">
-                <asp:Label runat="server" Text="12" data-row="1"></asp:Label>
+                <asp:Label runat="server" Text="42" data-row="0"></asp:Label>
             </asp:TableCell>   
             <asp:TableCell CssClass="tdPricePerUnit">
-                <asp:Label runat="server" Text="$89.00/EA" data-row="1"></asp:Label>
+                <asp:Label runat="server" Text="$204.00/LF" data-row="0"></asp:Label>
             </asp:TableCell> 
             <asp:TableCell CssClass="tdPrice">
-                <asp:Label runat="server" Text="$1068" data-row="1"></asp:Label>
+                <asp:Label runat="server" Text="$8605.80" data-row="0"></asp:Label>
             </asp:TableCell>
-        </asp:TableRow>        
+        </asp:TableRow> 
+        <asp:TableRow CssClass="item">
+            <asp:TableCell CssClass="tdItem">
+                <asp:Label runat="server" Text="Room Type" data-row="1"></asp:Label>
+            </asp:TableCell>
+            <asp:TableCell CssClass="tdDetails">
+                <asp:Label runat="server" Text="Model 300 - Studio" data-row="1"></asp:Label>
+            </asp:TableCell>   
+            <asp:TableCell CssClass="tdQuantity">
+                <asp:Label runat="server" Text="" data-row="1"></asp:Label>
+            </asp:TableCell>   
+            <asp:TableCell CssClass="tdPricePerUnit">
+                <asp:Label runat="server" Text="" data-row="1"></asp:Label>
+            </asp:TableCell> 
+            <asp:TableCell CssClass="tdPrice">
+                <asp:Label runat="server" Text="" data-row="1"></asp:Label>
+            </asp:TableCell>
+        </asp:TableRow>
+        <asp:TableRow CssClass="item">
+            <asp:TableCell CssClass="tdItem">
+                <asp:Label runat="server" Text="Framing Color" data-row="2"></asp:Label>
+            </asp:TableCell>
+            <asp:TableCell CssClass="tdDetails">
+                <asp:Label runat="server" Text="White" data-row="2"></asp:Label>
+            </asp:TableCell>   
+            <asp:TableCell CssClass="tdQuantity">
+                <asp:Label runat="server" Text="" data-row="2"></asp:Label>
+            </asp:TableCell>   
+            <asp:TableCell CssClass="tdPricePerUnit">
+                <asp:Label runat="server" Text="" data-row="2"></asp:Label>
+            </asp:TableCell> 
+            <asp:TableCell CssClass="tdPrice">
+                <asp:Label runat="server" Text="" data-row="2"></asp:Label>
+            </asp:TableCell>
+        </asp:TableRow>
+        <%--END OF DUMMY DATA, REPLACE WITH PLACEHOLDER FOR INITIAL DATA --%>  
+        <asp:TableRow>
+            <asp:TableCell ColumnSpan="4" CssClass="align-right">
+                <asp:Label runat="server" Text="Sub Total"></asp:Label>
+            </asp:TableCell> 
+            <asp:TableCell CssClass="tdSubTotal">
+                <asp:Label ID="lblSubTotal" runat="server" Text=""></asp:Label>
+            </asp:TableCell>
+        </asp:TableRow>  
+        <asp:TableRow>
+            <asp:TableCell ColumnSpan="4" CssClass="align-right">
+                <asp:Label runat="server" Text="TOTAL"></asp:Label>
+            </asp:TableCell> 
+            <asp:TableCell CssClass="tdTotal">
+                <asp:Label ID="lblTotal" runat="server" Text=""></asp:Label>
+            </asp:TableCell>
+        </asp:TableRow>   
     </asp:Table>
 </asp:Content>
