@@ -308,17 +308,58 @@
                 var tableCell;
                 var tempUnitPrice = $("#<%=txtUnitPrice.ClientID%>").val();
                 var tempItemTotal = $("#<%=txtItemTotal.ClientID%>").val();
+                var tempPricePerUnit;
 
                 // Run validation
                 validateEditInvoiceItem();
 
                 if (!($(this).hasClass("invalid")))
                 {
+                    // Concatenate the price per unit column
+                    tempPricePerUnit = ((tempUnitPrice != "") ? ("$" + parseFloat(tempUnitPrice).toFixed(2)) : "");
+                    if ($("#<%=ddlUnitOfMeasurment.ClientID%>").val() != "")
+                    {
+                        // Display / if there is a unit price
+                        tempPricePerUnit += ((tempUnitPrice != "") ? "/" : "") + $("#<%=ddlUnitOfMeasurment.ClientID%>").val();
+                    }
+
                     // If the user double clicked a row, they are going to edit. Else they clicked Add Item
                     if (toEdit == true)
                     {
                         // Using the reference of the table row clicked, add the edited class
-                        $(editRow).addClass("edited");
+                        $(editRow).addClass("edited");                        
+                        // For each columns' span elements of the row to edit
+                        jQuery.each($(editRow).children("td").children("span"), function (index)
+                        {
+                            // If the data-original has not been set
+                            if (!($(this).attr("data-original"))) {
+                                // Store the original value in a data attribute
+                                $(this).attr("data-original", $(this).text());
+                            }
+
+                            // Each index is to set page level variables
+                            switch (index)
+                            {
+                                case 0:                                    
+                                    $(this).text($("#<%=txtItemName.ClientID%>").val());
+                                    break;
+                                case 1:
+                                    $(this).text($("#<%=txtItemDetails.ClientID%>").val());
+                                    break;
+                                case 2:
+                                    $(this).text($("#<%=txtQuantity.ClientID%>").val());
+                                    break;
+                                case 3:
+                                    $(this).text(tempPricePerUnit);
+                                    break;
+                                case 4:
+                                    $(this).text(((tempItemTotal != "") ? ("$" + parseFloat(tempItemTotal).toFixed(2)) : ""));
+                                    break;
+                                default:
+                                    console.log("Too many columns for the price calculator value set logic.");
+                                    break;
+                            }
+                        });
                     }
                     else
                     {
@@ -334,17 +375,9 @@
                         tableCell = "<td><span>" + $("#<%=txtQuantity.ClientID%>").val() + "</span></td>";
                         tableRow += tableCell;
 
-                        //Price per unit cell portion
-                        // Display the unit price if it was set
-                        tableCell = "<td><span>" + ((tempUnitPrice != "") ? ("$" + parseFloat(tempUnitPrice).toFixed(2)) : "");
-                        // Unit of measurment cell portion
-                        // Display if unit of measurment is set
-                        if ($("#<%=ddlUnitOfMeasurment.ClientID%>").val() != "")
-                        {
-                            // Display / if there is a unit price
-                            tableCell += ((tempUnitPrice != "") ? "/" : "") + $("#<%=ddlUnitOfMeasurment.ClientID%>").val()
-                        }                        
-                        tableRow += tableCell + "</span></td>";
+                        //Price per unit cell 
+                        tableCell = "<td><span>" + tempPricePerUnit + "</span></td>";          
+                        tableRow += tableCell;
 
                         //Price cell - End of row
                         tableCell = "<td><span>" + ((tempItemTotal != "") ? ("$" + parseFloat(tempItemTotal).toFixed(2) + "</span></td>") : "");
@@ -432,8 +465,19 @@
             $("#SecondaryNavigation_lnkRemoveEdit").click(function () {
                 
                 // If a row was clicked and it has been edited
-                if ($(editRow).hasClass("clicked") && $(editRow).hasClass("edited")) {
+                if ($(editRow).hasClass("clicked") && $(editRow).hasClass("edited"))
+                {
                     $(editRow).removeClass("edited");
+
+                    // For each columns' span elements of the row to edit
+                    jQuery.each($(editRow).children("td").children("span"), function (index)
+                    {
+                        // Place the original value in the span element
+                        $(this).text($(this).data("original"));
+                        // Remove the original data from the element
+                        $(this).removeData("original");
+                    });
+
                     resetClickedRow();
                 }
 
@@ -441,13 +485,19 @@
 
             //Clicking the Edit Item will display an overlay
             $("#SecondaryNavigation_lnkRemoveAllEdits").click(function () {
-
                 // For each edited row
                 $(".tblPriceCalculator > tbody  > tr.edited").each(function (index) {
                     // Remove the edited class
                     $(this).removeClass("edited");
+                    // For each columns' span elements of the row
+                    jQuery.each($(this).children("td").children("span"), function (index)
+                    {
+                        // Place the original value in the span element
+                        $(this).text($(this).data("original"));
+                        // Remove the original data from the element
+                        $(this).removeData("original");
+                    });
                 });
-
             });
 
             /****************************
