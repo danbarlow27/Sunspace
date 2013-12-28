@@ -365,7 +365,7 @@
                     {
                         // Item name cell - Beginning of row
                         tableCell = "<td><span data-row=\"" + (lastRowNumber + 1) + "\">" + $("#<%=txtItemName.ClientID%>").val() + "</span></td>";
-                        tableRow = "<tr class=\"item edited additionalItem\">" + tableCell;
+                        tableRow = "<tr class=\"item additionalItem\">" + tableCell;
 
                         // Item details cell
                         tableCell = "<td><span>" + $("#<%=txtItemDetails.ClientID%>").val() + "</span></td>";
@@ -461,7 +461,9 @@
             BEGINNING OF REMOVE EDIT LOGIC
             *****************************/
 
-            //Clicking the Edit Item will display an overlay
+            // Clicking the remove all edit will set the clicked table row with the edited class
+            // back to it's original value, the original value is stored in the data-original 
+            // attribute in each span element.
             $("#SecondaryNavigation_lnkRemoveEdit").click(function () {
                 
                 // If a row was clicked and it has been edited
@@ -483,7 +485,9 @@
 
             });
 
-            //Clicking the Edit Item will display an overlay
+            // Clicking the remove all edit will set all table rows with the edited class
+            // back to it's original value, the original value is stored in the data-original 
+            // attribute in each span elements.
             $("#SecondaryNavigation_lnkRemoveAllEdits").click(function () {
                 // For each edited row
                 $(".tblPriceCalculator > tbody  > tr.edited").each(function (index) {
@@ -500,9 +504,26 @@
                 });
             });
 
-            /****************************
+            /**************************
             END OF OF REMOVE EDIT LOGIC
-            *****************************/
+            **************************/
+
+            /****************************************
+            BEGINNING OF REMOVE ADDITIONAL ITEM LOGIC
+            ****************************************/
+
+            // If the row clicked contains the class additionalItem, the row will be removed from the DOM
+            $("#SecondaryNavigation_lnkRemoveAdditionalItem").click(function () {
+                // If the clicked row is an added row
+                if ($(editRow).hasClass("additionalItem")) {
+                    // Delete the editted row
+                    $(editRow).remove();
+                }
+            });
+
+            /**********************************
+            END OF REMOVE ADDITIONAL ITEM LOGIC
+            **********************************/
 
             /**********************************************
             BEGINNING OF PRICE CALCULATOR SPREADSHEET LOGIC
@@ -592,7 +613,8 @@
                 <li><asp:HyperLink ID="lnkAddItem" runat="server">Add Item</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkEditItem" CssClass="editItem disabled" runat="server">Edit Item</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkRemoveEdit" runat="server">Remove Edit</asp:HyperLink></li>
-                <li><asp:HyperLink ID="lnkRemoveAllEdits" runat="server">Remove All Edits</asp:HyperLink></li>                
+                <li><asp:HyperLink ID="lnkRemoveAllEdits" runat="server">Remove All Edits</asp:HyperLink></li>  
+                <li><asp:HyperLink ID="lnkRemoveAdditionalItem" runat="server">Remove Additional Item</asp:HyperLink></li>              
             </ul>
         </nav>
         
