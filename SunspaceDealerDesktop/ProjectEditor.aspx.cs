@@ -53,7 +53,7 @@ namespace SunspaceDealerDesktop
                         floorCount = Convert.ToInt32(projectReader[1]);
                         roofCount = Convert.ToInt32(projectReader[2]);
                     }
-                    //aReader.Close(); 
+                    projectReader.Close(); 
 
                     #region walls
                     //for each wall in the project
@@ -803,21 +803,21 @@ namespace SunspaceDealerDesktop
 
                                 //create a new instance of a wall and set all its attributes from the db
                                 aRoof = new Roof();
-                                //aRoof.Type = Convert.ToString(aReader[0]);
-                                //aRoof.InteriorSkin = Convert.ToString(aReader[1]);
-                                //aRoof.ExteriorSkin = Convert.ToString(aReader[2]);
-                                //aRoof.Thickness = Convert.ToDouble(aReader[3]);
-                                //aRoof.FireProtection = Convert.ToBoolean(aReader[4]);
-                                //aRoof.Thermadeck = Convert.ToBoolean(aReader[5]);
-                                //aRoof.Acrylic = Convert.ToBoolean(aReader[6]);
-                                //aRoof.Gutters = Convert.ToBoolean(aReader[7]);
-                                //aRoof.GutterPro = Convert.ToBoolean(aReader[8]);
-                                //aRoof.GutterColour = Convert.ToString(aReader[9]);
-                                //aRoof.NumberSupports = Convert.ToInt32(aReader[10]);
-                                //aRoof.StripeColour = Convert.ToString(aReader[11]);
-                                //aRoof.Projection = Convert.ToDouble(aReader[12]); //how do we deal with obstructions
-                                //aRoof.Width = Convert.ToDouble(aReader[13]);
-                                //int roofIndex = Convert.ToInt32(aReader[14]);
+                                aRoof.Type = Convert.ToString(roofReader[0]);
+                                aRoof.InteriorSkin = Convert.ToString(roofReader[1]);
+                                aRoof.ExteriorSkin = Convert.ToString(roofReader[2]);
+                                aRoof.Thickness = Convert.ToDouble(roofReader[3]);
+                                aRoof.FireProtection = Convert.ToBoolean(roofReader[4]);
+                                aRoof.Thermadeck = Convert.ToBoolean(roofReader[5]);
+                                aRoof.Acrylic = Convert.ToBoolean(roofReader[6]);
+                                aRoof.Gutters = Convert.ToBoolean(roofReader[7]);
+                                aRoof.GutterPro = Convert.ToBoolean(roofReader[8]);
+                                aRoof.GutterColour = Convert.ToString(roofReader[9]);
+                                aRoof.NumberSupports = Convert.ToInt32(roofReader[10]);
+                                aRoof.StripeColour = Convert.ToString(roofReader[11]);
+                                aRoof.Projection = Convert.ToDouble(roofReader[12]); //how do we deal with obstructions
+                                aRoof.Width = Convert.ToDouble(roofReader[13]);
+                                int roofIndex = Convert.ToInt32(roofReader[14]);
 
                                 List<RoofModule> listOfRoofModules = new List<RoofModule>();
 
@@ -831,11 +831,11 @@ namespace SunspaceDealerDesktop
                                     while (moduleReader.Read())
                                     {
                                         RoofModule aModule = new RoofModule();
-                                        //aModule.Projection = Convert.ToDouble(aReader[0]);
-                                        //aModule.Width = Convert.ToDouble(aReader[1]);
-                                        //aModule.InteriorSkin = Convert.ToString(aReader[2]);
-                                        //aModule.ExteriorSkin = Convert.ToString(aReader[3]);
-                                        //int roofView = Convert.ToInt32(aReader[4]);
+                                        aModule.Projection = Convert.ToDouble(moduleReader[0]);
+                                        aModule.Width = Convert.ToDouble(moduleReader[1]);
+                                        aModule.InteriorSkin = Convert.ToString(moduleReader[2]);
+                                        aModule.ExteriorSkin = Convert.ToString(moduleReader[3]);
+                                        int roofView = Convert.ToInt32(moduleReader[4]);
 
                                         List<RoofItem> listOfRoofItems = new List<RoofItem>();
 
@@ -850,10 +850,10 @@ namespace SunspaceDealerDesktop
                                             {
                                                 // store in an object
                                                 RoofItem aRoofItem = new RoofItem();
-                                                //aRoofItem.ItemType = Convert.ToString(aReader[0]);
-                                                //aRoofItem.Projection = Convert.ToSingle(aReader[1]);
-                                                //aRoofItem.Width = Convert.ToSingle(aReader[2]);
-                                                //int itemIndex = Convert.ToInt32(aReader[3]);
+                                                aRoofItem.ItemType = Convert.ToString(itemReader[0]);
+                                                aRoofItem.Projection = Convert.ToSingle(itemReader[1]);
+                                                aRoofItem.Width = Convert.ToSingle(itemReader[2]);
+                                                int itemIndex = Convert.ToInt32(itemReader[3]);
                                                 
                                                 ///different types of roof items
                                                 switch (aRoofItem.ItemType)

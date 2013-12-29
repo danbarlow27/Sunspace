@@ -59,8 +59,8 @@
             }
 
             // This function uses the elements by ID for each of the fields in the additional charges overlay
-            // If all paramters are valid, this function returns (1/true)
             // If a field is invalid, the invalid class is added to the element, giving it a red border.
+            // The accept button will not do anything with any invalid fields
             function validateAdditionalCharges() {
                 
                 var fltShipping = $("#<%=txtShipping.ClientID%>").val();
@@ -125,6 +125,7 @@
                     $("#<%=txtShipping.ClientID%>").select();
                 }
                 clearAllItems();
+                resetClickedRow();
             });
 
             //Clicking the transparent overlay closes the additional charges overlays
@@ -141,10 +142,25 @@
                 validateAdditionalCharges();
             });
 
+            // Clicking percent discount clears the value discount and the invalid class
+            $("#<%=txtPercentDiscount.ClientID%>").click(function () {
+                $("#<%=txtValueDiscount.ClientID%>").removeClass("invalid");
+                $("#<%=txtValueDiscount.ClientID%>").val("");
+            });
+
+            // Clicking value discount clears the percent discount and the invalid class
+            $("#<%=txtValueDiscount.ClientID%>").click(function () {
+                $("#<%=txtPercentDiscount.ClientID%>").removeClass("invalid");
+                $("#<%=txtPercentDiscount.ClientID%>").val("");
+            });
+
             //Clicking the additional charges accept button will display the additional charges
             //If the additional charges are already displayed, the values are to change
             //The balance will also get recalculated
             $(".additionalChargesOverlay .accept").click(function () {
+                
+                // Run validation 1 more time, because keyup event handler has it's down side. (While holding an invalid character then clicking the accept button will be valid)
+                validateAdditionalCharges();
 
                 // If the button doesn't have the class invalid, the content on the overlay is valid. Populate the price calculator.
                 if (!($(this).hasClass("invalid")))
@@ -153,7 +169,6 @@
                 }
 
             });
-
 
             /**************************************
             END OF ADDITIONAL CHARGES OVERLAY LOGIC
@@ -166,6 +181,7 @@
             //This function clears the fields in the add/edit invoice item overlay
             function clearEditInvoiceItem() {
 
+                // Set all of the values to default
                 $("#<%=txtItemName.ClientID%>").val(null);
                 $("#<%=txtItemDetails.ClientID%>").val(null);
                 $("#<%=txtQuantity.ClientID%>").val(null);
@@ -173,9 +189,43 @@
                 $("#<%=ddlUnitOfMeasurment.ClientID%>").val('0');
                 $("#<%=txtItemTotal.ClientID%>").val(null);
                 toEdit = false;
-                editRowNumber = 0;
+
+                // Remove the invalid class from any numerical field
+                $("#<%=txtQuantity.ClientID%>").removeClass("invalid");
+                $("#<%=txtUnitPrice.ClientID%>").removeClass("invalid");
+                $(".editInvoiceItemOverlay .accept").removeClass("invalid");
 
                 return 1;
+            }
+
+            // This function uses the elements by ID for each of the fields in the edit invoice item overlay
+            // If a field is invalid, the invalid class is added to the element, giving it a red border.
+            // The accept button will not do anything with any invalid fields
+            function validateEditInvoiceItem() {
+
+                var intQuantity = $("#<%=txtQuantity.ClientID%>").val();
+                var fltPricePerUnit = $("#<%=txtUnitPrice.ClientID%>").val();
+
+                // Remove the invalid class from each input field, if a is invalid, a red border is added
+                $("#<%=txtQuantity.ClientID%>").removeClass("invalid");
+                $("#<%=txtUnitPrice.ClientID%>").removeClass("invalid");
+                $(".editInvoiceItemOverlay .accept").removeClass("invalid");
+
+                // Quantity needs to be integer and above/equal to 0
+                if (isNaN(intQuantity) || (intQuantity % 1 === 1) && (intQuantity < 0)) {
+                    $("#<%=txtQuantity.ClientID%>").addClass("invalid");
+                }
+
+                // Installation needs to be numeric and above/equal to 0
+                if (isNaN(fltPricePerUnit) || (!(isNaN(fltPricePerUnit)) && (fltPricePerUnit < 0))) {
+                    $("#<%=txtUnitPrice.ClientID%>").addClass("invalid");
+                }            
+
+                // If anything is invalid, the accept button will be given the invalid class. This sets opacity to 50%
+                if ($("#<%=txtQuantity.ClientID%>").hasClass("invalid") ||
+                 $("#<%=txtUnitPrice.ClientID%>").hasClass("invalid")) {
+                    $(".editInvoiceItemOverlay .accept").addClass("invalid");
+                }
             }
 
             //Clicking the Add Item will display an overlay
@@ -187,11 +237,33 @@
                 }
                 else
                 {
+                    // Change the header for Add item
+                    $(".editInvoiceItemOverlay h3:first").text("Add Invoice Item");
                     $(".editInvoiceItemOverlay").show();
                     $(".additionalChargesOverlay").hide();
                     $("#<%=txtItemName.ClientID%>").select();
                 }
                 clearAllItems();
+                resetClickedRow();
+            });
+
+            //Clicking the Edit Item will display an overlay
+            $("#SecondaryNavigation_lnkEditItem").click(function () {
+                // If the overlay is already shown, hide it.
+                if ($(".editInvoiceItemOverlay").is(":visible"))
+                {
+                    $(".editInvoiceItemOverlay").hide();
+                }
+                else if (editRow != null) // Only show if a row was clicked to edit
+                {
+                    // Change the header for Edit item
+                    $(".editInvoiceItemOverlay h3:first").text("Edit Invoice Item");
+                    $(".editInvoiceItemOverlay").show();
+                    $(".additionalChargesOverlay").hide();
+                    $("#<%=txtItemName.ClientID%>").select();
+                }
+                clearAllItems();
+                toEdit = true;
             });
 
             //Clicking the transparent overlay closes the edit invoice item overlays
@@ -204,19 +276,23 @@
                 }
             });           
 
-            //Changing the value of the quantity/unitprice will calculate the total value of the item
+            //Changing the value of the quantity/unitprice will run validation and calculate the total value of the item
             $(".itemTotalField").keyup(function () {
                 var tempQuantity = parseFloat($("#SecondaryNavigation_txtQuantity").val());
                 var tempUnitPrice = parseFloat($("#SecondaryNavigation_txtUnitPrice").val());
-                var tempItemTotal = 0;
+                var tempItemTotal;
 
-                // Display 0 before any calculations
-                $("#<%=txtItemTotal.ClientID%>").val(tempItemTotal);
+                // Display nothing before any calculations
+                $("#<%=txtItemTotal.ClientID%>").val("");
+                // Run validation
+                validateEditInvoiceItem();
 
-                // Calculate and display the item total
-                if (tempQuantity >= 0 && tempUnitPrice >= 0) {
-                    tempItemTotal = tempQuantity * tempUnitPrice;
-                    $("#<%=txtItemTotal.ClientID%>").val(tempItemTotal);
+                if (!($(".editInvoiceItemOverlay .accept").hasClass("invalid"))) {
+                    // Calculate and display the item total
+                    if (tempQuantity >= 0 && tempUnitPrice >= 0) {
+                        tempItemTotal = tempQuantity * tempUnitPrice;
+                        $("#<%=txtItemTotal.ClientID%>").val(parseFloat(tempItemTotal).toFixed(2));
+                    }
                 }
             });
 
@@ -230,39 +306,101 @@
                 var lastRowNumber = parseInt($("#<%=tblPriceCalculator.ClientID%> tr:last td:first span").data("row"));
                 var tableRow;
                 var tableCell;
+                var tempUnitPrice = $("#<%=txtUnitPrice.ClientID%>").val();
+                var tempItemTotal = $("#<%=txtItemTotal.ClientID%>").val();
+                var tempPricePerUnit;
 
-                // If the user double clicked a row, they are going to edit. Else they clicked Add Item
-                if (toEdit == true) {
-                    // Using the reference of the table row clicked, add the edited class
-                    $(editRow).addClass("edited");
+                // Run validation
+                validateEditInvoiceItem();
+
+                if (!($(this).hasClass("invalid")))
+                {
+                    // Concatenate the price per unit column
+                    tempPricePerUnit = ((tempUnitPrice != "") ? ("$" + parseFloat(tempUnitPrice).toFixed(2)) : "");
+                    if ($("#<%=ddlUnitOfMeasurment.ClientID%>").val() != "")
+                    {
+                        // Display / if there is a unit price
+                        tempPricePerUnit += ((tempUnitPrice != "") ? "/" : "") + $("#<%=ddlUnitOfMeasurment.ClientID%>").val();
+                    }
+
+                    // If the user double clicked a row, they are going to edit. Else they clicked Add Item
+                    if (toEdit == true)
+                    {
+                        // Using the reference of the table row clicked, add the edited class
+                        $(editRow).addClass("edited");                        
+                        // For each columns' span elements of the row to edit
+                        jQuery.each($(editRow).children("td").children("span"), function (index)
+                        {
+                            // If the data-original has not been set
+                            if (!($(this).attr("data-original"))) {
+                                // Store the original value in a data attribute
+                                $(this).attr("data-original", $(this).text());
+                            }
+
+                            // Each index is to set page level variables
+                            switch (index)
+                            {
+                                case 0:                                    
+                                    $(this).text($("#<%=txtItemName.ClientID%>").val());
+                                    break;
+                                case 1:
+                                    $(this).text($("#<%=txtItemDetails.ClientID%>").val());
+                                    break;
+                                case 2:
+                                    $(this).text($("#<%=txtQuantity.ClientID%>").val());
+                                    break;
+                                case 3:
+                                    $(this).text(tempPricePerUnit);
+                                    break;
+                                case 4:
+                                    $(this).text(((tempItemTotal != "") ? ("$" + parseFloat(tempItemTotal).toFixed(2)) : ""));
+                                    break;
+                                default:
+                                    console.log("Too many columns for the price calculator value set logic.");
+                                    break;
+                            }
+                        });
+                    }
+                    else
+                    {
+                        // Item name cell - Beginning of row
+                        tableCell = "<td><span data-row=\"" + (lastRowNumber + 1) + "\">" + $("#<%=txtItemName.ClientID%>").val() + "</span></td>";
+                        tableRow = "<tr class=\"item additionalItem\">" + tableCell;
+
+                        // Item details cell
+                        tableCell = "<td><span>" + $("#<%=txtItemDetails.ClientID%>").val() + "</span></td>";
+                        tableRow += tableCell;
+
+                        // Item quantity cell
+                        tableCell = "<td><span>" + $("#<%=txtQuantity.ClientID%>").val() + "</span></td>";
+                        tableRow += tableCell;
+
+                        //Price per unit cell 
+                        tableCell = "<td><span>" + tempPricePerUnit + "</span></td>";          
+                        tableRow += tableCell;
+
+                        //Price cell - End of row
+                        tableCell = "<td><span>" + ((tempItemTotal != "") ? ("$" + parseFloat(tempItemTotal).toFixed(2) + "</span></td>") : "");
+                        tableRow += tableCell + "</tr>";                        
+
+                        // If there is no additional item's already added, 
+                        if ($("#<%=tblPriceCalculator.ClientID%> tr.additionalItem").length == 0)
+                        {
+                            // Add a blank table row after the initial table rows before the new table row with content
+                            $("#<%=tblPriceCalculator.ClientID%> tr.item:last").after("<tr><td colspan=\"5\"></td></tr>" + tableRow);                            
+                        }
+                        else
+                        {
+                            $("#<%=tblPriceCalculator.ClientID%> tr.additionalItem:last").after(tableRow);
+                        }
+
+                    }
+
+                    $(".editInvoiceItemOverlay").hide();
+                    clearAllItems();
+                    resetClickedRow();
                 }
-                else {
-                    // Item name cell - Beginning of row
-                    tableCell = "<td><span data-row=\"" + (lastRowNumber + 1) + "\">" + $("#<%=txtItemName.ClientID%>").val() + "</span></td>";
-                    tableRow = "<tr>" + tableCell;
 
-                    // Item details cell
-                    tableCell = "<td><span>" + $("#<%=txtItemDetails.ClientID%>").val() + "</span></td>";
-                    tableRow += tableCell;
-
-                    // Item quantity cell
-                    tableCell = "<td><span>" + $("#<%=txtQuantity.ClientID%>").val() + "</span></td>";
-                    tableRow += tableCell;
-
-                    //Price per unit cell
-                    tableCell = "<td><span>" + $("#<%=txtUnitPrice.ClientID%>").val() + "/" + $("#<%=ddlUnitOfMeasurment.ClientID%>").val() + "</span></td>";
-                    tableRow += tableCell;
-
-                    //Price cell - End of row
-                    tableCell = "<td><span>" + $("#<%=txtItemTotal.ClientID%>").val() + "</span></td>";
-                    tableRow += tableCell + "</tr>";
-
-                    //Append the table row with all of the content after the last table row in the price calculator table
-                    $("#<%=tblPriceCalculator.ClientID%> tr:last").after(tableRow);
-                }
-
-                $(".editInvoiceItemOverlay").hide();
-                clearAllItems();
             });
 
             /*****************************************
@@ -312,14 +450,93 @@
                 $(".additionalChargesOverlay").hide();
                 $(".editInvoiceItemOverlay").hide();
                 clearAllItems();
+                resetClickedRow();
             });            
 
             /*****************************
             END OF UNIVERSAL OVERLAY LOGIC
-            *****************************/            
+            *****************************/
 
-            //This function is clicking on a row cell, to populate the edit invoice item overlay
-            $(".tblPriceCalculator").on("dblclick", "tr", function () {
+            /****************************
+            BEGINNING OF REMOVE EDIT LOGIC
+            *****************************/
+
+            // Clicking the remove all edit will set the clicked table row with the edited class
+            // back to it's original value, the original value is stored in the data-original 
+            // attribute in each span element.
+            $("#SecondaryNavigation_lnkRemoveEdit").click(function () {
+                
+                // If a row was clicked and it has been edited
+                if ($(editRow).hasClass("clicked") && $(editRow).hasClass("edited"))
+                {
+                    $(editRow).removeClass("edited");
+
+                    // For each columns' span elements of the row to edit
+                    jQuery.each($(editRow).children("td").children("span"), function (index)
+                    {
+                        // Place the original value in the span element
+                        $(this).text($(this).data("original"));
+                        // Remove the original data from the element
+                        $(this).removeData("original");
+                    });
+
+                    resetClickedRow();
+                }
+
+            });
+
+            // Clicking the remove all edit will set all table rows with the edited class
+            // back to it's original value, the original value is stored in the data-original 
+            // attribute in each span elements.
+            $("#SecondaryNavigation_lnkRemoveAllEdits").click(function () {
+                // For each edited row
+                $(".tblPriceCalculator > tbody  > tr.edited").each(function (index) {
+                    // Remove the edited class
+                    $(this).removeClass("edited");
+                    // For each columns' span elements of the row
+                    jQuery.each($(this).children("td").children("span"), function (index)
+                    {
+                        // Place the original value in the span element
+                        $(this).text($(this).data("original"));
+                        // Remove the original data from the element
+                        $(this).removeData("original");
+                    });
+                });
+            });
+
+            /**************************
+            END OF OF REMOVE EDIT LOGIC
+            **************************/
+
+            /****************************************
+            BEGINNING OF REMOVE ADDITIONAL ITEM LOGIC
+            ****************************************/
+
+            // If the row clicked contains the class additionalItem, the row will be removed from the DOM
+            $("#SecondaryNavigation_lnkRemoveAdditionalItem").click(function () {
+                // If the clicked row is an added row
+                if ($(editRow).hasClass("additionalItem")) {
+                    // Delete the editted row
+                    $(editRow).remove();
+                }
+            });
+
+            /**********************************
+            END OF REMOVE ADDITIONAL ITEM LOGIC
+            **********************************/
+
+            /**********************************************
+            BEGINNING OF PRICE CALCULATOR SPREADSHEET LOGIC
+            **********************************************/
+
+            function resetClickedRow() 
+            {
+                $(editRow).removeClass("clicked");
+                editRow = null;
+            }
+
+            //This function is double clicking on a row cell, to populate the edit invoice item overlay
+            $(".tblPriceCalculator").on("dblclick", "tr.item", function () {
                 var rowNumber = $(this).children("td:first").children("span").data("row"); // The data-row value of the first table cells' span element
                 var columns = $(this).children("td").children("span"); // Each table cells' span element in the row that was clicked
                 var tempPricePerUnitSub; // Splitting the unit price and unit of measurment (/ character)
@@ -369,9 +586,23 @@
                 editRow = $(this);
                 // Show the overlay for allowing the user to edit
                 $(".editInvoiceItemOverlay").show();
-            });            
-            
+            });
+
+            // Clicking on a table row sets the clicked class to the row and saves a reference to the table row
+            $(".tblPriceCalculator").on("click", "tr.item", function () {
+                // Remove the clicked class from the previous row clicked
+                $(editRow).removeClass("clicked");
+                // Store a reference of this table row clicked
+                editRow = $(this);
+                // Add clicked class
+                $(editRow).addClass("clicked");                
+            });
+
+            /****************************************
+            END OF PRICE CALCULATOR SPREADSHEET LOGIC
+            ****************************************/            
         });
+
     </script>
      
     <div class="priceCalculatorWrapper">
@@ -380,9 +611,10 @@
             <ul class="ulNavEditor">
                 <li><asp:HyperLink ID="lnkAdditionalCharges" CssClass="additionalCharges" runat="server">Additional Charges</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkAddItem" runat="server">Add Item</asp:HyperLink></li>
-                <li><asp:HyperLink ID="lnkEditItem" CssClass="editItem" runat="server">Edit Item</asp:HyperLink></li>
+                <li><asp:HyperLink ID="lnkEditItem" CssClass="editItem disabled" runat="server">Edit Item</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkRemoveEdit" runat="server">Remove Edit</asp:HyperLink></li>
-                <li><asp:HyperLink ID="lnkRemoveAllEdits" runat="server">Remove All Edits</asp:HyperLink></li>                
+                <li><asp:HyperLink ID="lnkRemoveAllEdits" runat="server">Remove All Edits</asp:HyperLink></li>  
+                <li><asp:HyperLink ID="lnkRemoveAdditionalItem" runat="server">Remove Additional Item</asp:HyperLink></li>              
             </ul>
         </nav>
         
@@ -491,7 +723,7 @@
                         </asp:TableCell>  
                     </asp:TableRow>  
                     <asp:TableRow>                            
-                        <asp:TableCell ColumnSpan="2" CssClass="center">
+                        <asp:TableCell ColumnSpan="2" CssClass="align-center">
                             <div class="button accept">ACCEPT</div>
                             <div class="button close">CANCEL</div>
                         </asp:TableCell>  
@@ -557,7 +789,7 @@
                         </asp:TableCell>                          
                     </asp:TableRow> 
                      <asp:TableRow>                            
-                        <asp:TableCell ColumnSpan="2" CssClass="center">
+                        <asp:TableCell ColumnSpan="2" CssClass="align-center">
                             <div class="button accept">ACCEPT</div>
                             <div class="button close">CANCEL</div>
                         </asp:TableCell>  
@@ -590,22 +822,74 @@
                 <asp:Label ID="lblTablePrice" runat="server" Text="Price"></asp:Label>
             </asp:TableCell>                      
         </asp:TableHeaderRow>
-        <asp:TableRow>
+        <%--DUMMY DATA, REPLACE WITH PLACEHOLDER FOR INITIAL DATA --%>
+        <asp:TableRow CssClass="item">
             <asp:TableCell CssClass="tdItem">
-                <asp:Label runat="server" Text="Random item - long name" data-row="1"></asp:Label>
+                <asp:Label runat="server" Text="Room Size" data-row="0"></asp:Label>
             </asp:TableCell>
             <asp:TableCell CssClass="tdDetails">
-                <asp:Label runat="server" Text="Random item details - text can be long too" data-row="1"></asp:Label>
+                <asp:Label runat="server" Text="16' 6&#34; Projection x 16' 6&#34; Width" data-row="0"></asp:Label>
             </asp:TableCell>   
             <asp:TableCell CssClass="tdQuantity">
-                <asp:Label runat="server" Text="12" data-row="1"></asp:Label>
+                <asp:Label runat="server" Text="42" data-row="0"></asp:Label>
             </asp:TableCell>   
             <asp:TableCell CssClass="tdPricePerUnit">
-                <asp:Label runat="server" Text="$89.00/EA" data-row="1"></asp:Label>
+                <asp:Label runat="server" Text="$204.00/LF" data-row="0"></asp:Label>
             </asp:TableCell> 
             <asp:TableCell CssClass="tdPrice">
-                <asp:Label runat="server" Text="$1068" data-row="1"></asp:Label>
+                <asp:Label runat="server" Text="$8605.80" data-row="0"></asp:Label>
             </asp:TableCell>
-        </asp:TableRow>        
+        </asp:TableRow> 
+        <asp:TableRow CssClass="item">
+            <asp:TableCell CssClass="tdItem">
+                <asp:Label runat="server" Text="Room Type" data-row="1"></asp:Label>
+            </asp:TableCell>
+            <asp:TableCell CssClass="tdDetails">
+                <asp:Label runat="server" Text="Model 300 - Studio" data-row="1"></asp:Label>
+            </asp:TableCell>   
+            <asp:TableCell CssClass="tdQuantity">
+                <asp:Label runat="server" Text="" data-row="1"></asp:Label>
+            </asp:TableCell>   
+            <asp:TableCell CssClass="tdPricePerUnit">
+                <asp:Label runat="server" Text="" data-row="1"></asp:Label>
+            </asp:TableCell> 
+            <asp:TableCell CssClass="tdPrice">
+                <asp:Label runat="server" Text="" data-row="1"></asp:Label>
+            </asp:TableCell>
+        </asp:TableRow>
+        <asp:TableRow CssClass="item">
+            <asp:TableCell CssClass="tdItem">
+                <asp:Label runat="server" Text="Framing Color" data-row="2"></asp:Label>
+            </asp:TableCell>
+            <asp:TableCell CssClass="tdDetails">
+                <asp:Label runat="server" Text="White" data-row="2"></asp:Label>
+            </asp:TableCell>   
+            <asp:TableCell CssClass="tdQuantity">
+                <asp:Label runat="server" Text="" data-row="2"></asp:Label>
+            </asp:TableCell>   
+            <asp:TableCell CssClass="tdPricePerUnit">
+                <asp:Label runat="server" Text="" data-row="2"></asp:Label>
+            </asp:TableCell> 
+            <asp:TableCell CssClass="tdPrice">
+                <asp:Label runat="server" Text="" data-row="2"></asp:Label>
+            </asp:TableCell>
+        </asp:TableRow>
+        <%--END OF DUMMY DATA, REPLACE WITH PLACEHOLDER FOR INITIAL DATA --%>  
+        <asp:TableRow>
+            <asp:TableCell ColumnSpan="4" CssClass="align-right">
+                <asp:Label runat="server" Text="Sub Total"></asp:Label>
+            </asp:TableCell> 
+            <asp:TableCell CssClass="tdSubTotal">
+                <asp:Label ID="lblSubTotal" runat="server" Text=""></asp:Label>
+            </asp:TableCell>
+        </asp:TableRow>  
+        <asp:TableRow>
+            <asp:TableCell ColumnSpan="4" CssClass="align-right">
+                <asp:Label runat="server" Text="TOTAL"></asp:Label>
+            </asp:TableCell> 
+            <asp:TableCell CssClass="tdTotal">
+                <asp:Label ID="lblTotal" runat="server" Text=""></asp:Label>
+            </asp:TableCell>
+        </asp:TableRow>   
     </asp:Table>
 </asp:Content>

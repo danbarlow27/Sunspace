@@ -967,6 +967,7 @@ div.additionalChargesOverlay .button.invalid,
 div.editInvoiceItemOverlay .button.invalid {
     border: none;
     opacity: 0.5;
+    cursor: default;
 }
 
 div.additionalChargesOverlay .button,
@@ -983,10 +984,17 @@ div.editInvoiceItemOverlay .button {
     margin: 0 2em;
 }
 
-.tblPriceCalculator {
+table.tblPriceCalculator {
     margin: 0 auto;
     width: 90%;
     border-spacing: 0;
+    padding-top:2em;
+}
+
+.tblPriceCalculator td:nth-child(3),
+.tblPriceCalculator td:nth-child(4),
+.tblPriceCalculator td:nth-child(5) {
+    text-align: center;
 }
 
 .tblPriceCalculator thead {
@@ -1011,13 +1019,19 @@ div.editInvoiceItemOverlay .button {
     -ms-user-select: none;
     user-select: none;
     cursor: cell;
+    height: 2em;
 }
 
 .tblPriceCalculator .edited {    
     background-color:#FF9933;
 }
 
-.tblPriceCalculator tbody tr:hover {    
+.tblPriceCalculator tbody tr.item:hover {   
+    background-color: rgb(242, 235, 214); 
+    
+}
+
+.tblPriceCalculator tbody tr.item.clicked {    
     background-color:#dfbf98;
 }
 
@@ -1053,8 +1067,12 @@ div.editInvoiceItemOverlay .button {
 	margin-right: 0;
 }
 
-.center {
+.align-center {
     text-align:center;
+}
+
+.align-right {
+    text-align:right;
 }
 
 .maxWidth {

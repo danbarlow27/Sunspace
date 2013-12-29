@@ -8,8 +8,8 @@ namespace SunspaceDealerDesktop
     public class FrenchDoor : Door
     {
         #region Attributes
-        private float height = 0f;              //Door height: 80" (stored value: 80)
-        private float length = 0f;              //Door width: 30" (stored value: 30)
+        //private float height = 0f;              //Door height: 80" (stored value: 80)
+        //private float length = 0f;              //Door width: 30" (stored value: 30)
         private string vinylTint = null;        //Door vinyl tint: Smoke Grey, DarkGrey, Bronze, Clear, Mixed (stored value: Smoke Grey)
         private string screenType = null;       //Door screen type: Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screening, Tuff Screen, No Screen (stored value: Better Vue Insect Screen)
         private string glassTint = null;        //Door glass tint: Grey, Bronze, Clear (stored value: Grey)
@@ -23,30 +23,30 @@ namespace SunspaceDealerDesktop
         #endregion
 
         #region Accessors
-        public float Height
-        {
-            get
-            {
-                return height;
-            }
+        //public float Height
+        //{
+        //    get
+        //    {
+        //        return height;
+        //    }
 
-            set
-            {
-                height = value;
-            }
-        }
-        public float Length
-        {
-            get
-            {
-                return length;
-            }
+        //    set
+        //    {
+        //        height = value;
+        //    }
+        //}
+        //public float Length
+        //{
+        //    get
+        //    {
+        //        return length;
+        //    }
 
-            set
-            {
-                length = value;
-            }
-        }
+        //    set
+        //    {
+        //        length = value;
+        //    }
+        //}
         public string VinylTint
         {
             get
