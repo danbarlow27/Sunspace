@@ -53,7 +53,7 @@ namespace SunspaceDealerDesktop
                         floorCount = Convert.ToInt32(projectReader[1]);
                         roofCount = Convert.ToInt32(projectReader[2]);
                     }
-                    aReader.Close(); 
+                    //aReader.Close(); 
 
                     #region walls
                     //for each wall in the project
@@ -803,27 +803,27 @@ namespace SunspaceDealerDesktop
 
                                 //create a new instance of a wall and set all its attributes from the db
                                 aRoof = new Roof();
-                                aRoof.Type = Convert.ToString(aReader[0]);
-                                aRoof.InteriorSkin = Convert.ToString(aReader[1]);
-                                aRoof.ExteriorSkin = Convert.ToString(aReader[2]);
-                                aRoof.Thickness = Convert.ToDouble(aReader[3]);
-                                aRoof.FireProtection = Convert.ToBoolean(aReader[4]);
-                                aRoof.Thermadeck = Convert.ToBoolean(aReader[5]);
-                                aRoof.Acrylic = Convert.ToBoolean(aReader[6]);
-                                aRoof.Gutters = Convert.ToBoolean(aReader[7]);
-                                aRoof.GutterPro = Convert.ToBoolean(aReader[8]);
-                                aRoof.GutterColour = Convert.ToString(aReader[9]);
-                                aRoof.NumberSupports = Convert.ToInt32(aReader[10]);
-                                aRoof.StripeColour = Convert.ToString(aReader[11]);
-                                aRoof.Projection = Convert.ToDouble(aReader[12]); //how do we deal with obstructions
-                                aRoof.Width = Convert.ToDouble(aReader[13]);
-                                int roofIndex = Convert.ToInt32(aReader[14]);
+                                //aRoof.Type = Convert.ToString(aReader[0]);
+                                //aRoof.InteriorSkin = Convert.ToString(aReader[1]);
+                                //aRoof.ExteriorSkin = Convert.ToString(aReader[2]);
+                                //aRoof.Thickness = Convert.ToDouble(aReader[3]);
+                                //aRoof.FireProtection = Convert.ToBoolean(aReader[4]);
+                                //aRoof.Thermadeck = Convert.ToBoolean(aReader[5]);
+                                //aRoof.Acrylic = Convert.ToBoolean(aReader[6]);
+                                //aRoof.Gutters = Convert.ToBoolean(aReader[7]);
+                                //aRoof.GutterPro = Convert.ToBoolean(aReader[8]);
+                                //aRoof.GutterColour = Convert.ToString(aReader[9]);
+                                //aRoof.NumberSupports = Convert.ToInt32(aReader[10]);
+                                //aRoof.StripeColour = Convert.ToString(aReader[11]);
+                                //aRoof.Projection = Convert.ToDouble(aReader[12]); //how do we deal with obstructions
+                                //aRoof.Width = Convert.ToDouble(aReader[13]);
+                                //int roofIndex = Convert.ToInt32(aReader[14]);
 
                                 List<RoofModule> listOfRoofModules = new List<RoofModule>();
 
-                                aCommand.CommandText = "SELECT projection, width, interior_skin, exterior_skin, roof_view "
-                                + "FROM roof_modules WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "'";
-
+                                //aCommand.CommandText = "SELECT projection, width, interior_skin, exterior_skin, roof_view "
+                                //+ "FROM roof_modules WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "'";
+                                
                                 SqlDataReader moduleReader = aCommand.ExecuteReader();
 
                                 if (moduleReader.HasRows)
@@ -831,16 +831,16 @@ namespace SunspaceDealerDesktop
                                     while (moduleReader.Read())
                                     {
                                         RoofModule aModule = new RoofModule();
-                                        aModule.Projection = Convert.ToDouble(aReader[0]);
-                                        aModule.Width = Convert.ToDouble(aReader[1]);
-                                        aModule.InteriorSkin = Convert.ToString(aReader[2]);
-                                        aModule.ExteriorSkin = Convert.ToString(aReader[3]);
-                                        int roofView = Convert.ToInt32(aReader[4]);
+                                        //aModule.Projection = Convert.ToDouble(aReader[0]);
+                                        //aModule.Width = Convert.ToDouble(aReader[1]);
+                                        //aModule.InteriorSkin = Convert.ToString(aReader[2]);
+                                        //aModule.ExteriorSkin = Convert.ToString(aReader[3]);
+                                        //int roofView = Convert.ToInt32(aReader[4]);
 
                                         List<RoofItem> listOfRoofItems = new List<RoofItem>();
 
-                                        aCommand.CommandText = "SELECT roof_item, projection, width, item_index "
-                                        + "FROM roof_modules WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "'";
+                                        //aCommand.CommandText = "SELECT roof_item, projection, width, item_index "
+                                        //+ "FROM roof_modules WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "'";
 
                                         SqlDataReader itemReader = aCommand.ExecuteReader();
 
@@ -850,10 +850,10 @@ namespace SunspaceDealerDesktop
                                             {
                                                 // store in an object
                                                 RoofItem aRoofItem = new RoofItem();
-                                                aRoofItem.ItemType = Convert.ToString(aReader[0]);
-                                                aRoofItem.Projection = Convert.ToSingle(aReader[1]);
-                                                aRoofItem.Width = Convert.ToSingle(aReader[2]);
-                                                int itemIndex = Convert.ToInt32(aReader[3]);
+                                                //aRoofItem.ItemType = Convert.ToString(aReader[0]);
+                                                //aRoofItem.Projection = Convert.ToSingle(aReader[1]);
+                                                //aRoofItem.Width = Convert.ToSingle(aReader[2]);
+                                                //int itemIndex = Convert.ToInt32(aReader[3]);
                                                 
                                                 ///different types of roof items
                                                 switch (aRoofItem.ItemType)
@@ -877,8 +877,8 @@ namespace SunspaceDealerDesktop
                                                         //are all skylights the same? length/width etc? .. 
                                                         //there is no skylight object.. roof item should have a attribute for a skylight object
 
-                                                        aCommand.CommandText = "SELECT skylight_type, set_back, operator "
-                                                        + "FROM skylights WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index '" + itemIndex + "'";
+                                                        //aCommand.CommandText = "SELECT skylight_type, set_back, operator "
+                                                        //+ "FROM skylights WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index '" + itemIndex + "'";
 
                                                         SqlDataReader skylightReader = aCommand.ExecuteReader();
 
@@ -900,8 +900,8 @@ namespace SunspaceDealerDesktop
 
                                                         //check for fanbeams in this roof item
                                                         //no info in the db or in C#
-                                                        aCommand.CommandText = "SELECT skylight_type, set_back, operator "
-                                                        + "FROM fanbeams WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index = '" + itemIndex + "'";
+                                                        //aCommand.CommandText = "SELECT skylight_type, set_back, operator "
+                                                        //+ "FROM fanbeams WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index = '" + itemIndex + "'";
 
                                                         SqlDataReader fanbeamReader = aCommand.ExecuteReader();
 
