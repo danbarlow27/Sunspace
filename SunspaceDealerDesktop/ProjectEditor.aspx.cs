@@ -19,11 +19,12 @@ namespace SunspaceDealerDesktop
         protected int wallCount = 0;
         protected int floorCount = 0;
         protected int roofCount = 0;
-        protected int project_id = 10; //get it from the session
+        protected int projectId = 10; //get it from the session
 
         protected void Page_Load(object sender, EventArgs e)
         {
             #region hit the DB
+            /*
             using (SqlConnection aConnection = new SqlConnection(sdsDBConnection.ConnectionString))
             {
 
@@ -43,7 +44,7 @@ namespace SunspaceDealerDesktop
                 try
                 {
                     //get number of walls floors and roofs
-                    aCommand.CommandText = "SELECT number_walls, number_floors, number_roofs FROM sunrooms WHERE project_id = '" + project_id + "'";
+                    aCommand.CommandText = "SELECT number_walls, number_floors, number_roofs FROM sunrooms WHERE project_id = '" + projectId + "'";
                     SqlDataReader projectReader = aCommand.ExecuteReader();
 
                     if (projectReader.HasRows)
@@ -52,7 +53,7 @@ namespace SunspaceDealerDesktop
 
                         wallCount = Convert.ToInt32(projectReader[0]);
                         floorCount = Convert.ToInt32(projectReader[1]);
-                        roofCount = Convert.ToInt32(projectReader[2]);
+                        roofCount = Convert.ToInt32(projectReader[  2]);
                     }
                     projectReader.Close(); 
 
@@ -60,7 +61,7 @@ namespace SunspaceDealerDesktop
                     //for each wall in the project
                     //for (int i = 0; i < wallCount; i++)
                     aCommand.CommandText = "SELECT wall_type, model_type, total_length, orientation, set_back, name, first_item_index, last_item_index, start_height, end_height, soffit_length, gable_peak, obstructions, fire_protection, wall_index "
-                        + "FROM walls WHERE project_id = '" + project_id + "'";
+                        + "FROM walls WHERE project_id = '" + projectId + "'";
 
                     SqlDataReader wallReader = aCommand.ExecuteReader();
 
@@ -97,7 +98,7 @@ namespace SunspaceDealerDesktop
 
                             //Get linear items
                             aCommand.CommandText = "SELECT linear_index, linear_type, start_height, end_height, length, frame_colour, sex, fixed_location, attached_to "
-                                                    + "FROM linear_items WHERE project_id = '" + project_id + "' AND last_item_index < '" + aWall.LastItemIndex + "' AND first_item_index > '" + aWall.FirstItemIndex + "'";
+                                                    + "FROM linear_items WHERE project_id = '" + projectId + "' AND last_item_index < '" + aWall.LastItemIndex + "' AND first_item_index > '" + aWall.FirstItemIndex + "'";
                             SqlDataReader listItemReader = aCommand.ExecuteReader();
 
                             //for each linear item/mod in the wall
@@ -154,7 +155,7 @@ namespace SunspaceDealerDesktop
                                             //aReader.Close();
 
                                             aCommand.CommandText = "SELECT module_index, item_type, start_height, end_height, length FROM moduleItems "
-                                                                + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "'";
+                                                                + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "'";
 
                                             SqlDataReader moduleItemReader = aCommand.ExecuteReader();
 
@@ -187,7 +188,7 @@ namespace SunspaceDealerDesktop
                                                             #region Window
                                                             //Get window
                                                             aCommand.CommandText = "SELECT window_type, screen_type, start_height, end_height, length, window_colour, number_vents FROM windows "
-                                                                                    + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                    + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                             SqlDataReader windowReader = aCommand.ExecuteReader();
 
@@ -231,7 +232,7 @@ namespace SunspaceDealerDesktop
 
                                                                         //Get vinyl item
                                                                         aCommand.CommandText = "SELECT start_height, vinyl_tint, spreader_bar FROM vinyl_items "
-                                                                                                + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                                + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                         SqlDataReader vinylReader = aCommand.ExecuteReader();
 
@@ -304,7 +305,7 @@ namespace SunspaceDealerDesktop
 
                                                                         //Get glass item
                                                                         aCommand.CommandText = "SELECT glass_type, glass_tint, tempered, operation FROM glass_items "
-                                                                                                + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                                + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                         SqlDataReader glassReader = aCommand.ExecuteReader();
 
@@ -347,7 +348,7 @@ namespace SunspaceDealerDesktop
                                                             #region Door
                                                             //Get door
                                                             aCommand.CommandText = "SELECT door_type, door_style, screen_type, height, length, door_colour, kick_plate FROM doors "
-                                                                                    + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                    + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                             SqlDataReader doorReader = aCommand.ExecuteReader();
 
@@ -368,7 +369,7 @@ namespace SunspaceDealerDesktop
 
                                                                     //get the window in this door
                                                                     aCommand.CommandText = "SELECT door_index, window_type, screen_type, start_height, end_height, length, window_colour, number_vents FROM windows "
-                                                                                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                            + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                     SqlDataReader doorWindowReader = aCommand.ExecuteReader();
 
@@ -402,7 +403,7 @@ namespace SunspaceDealerDesktop
                                                                             //for (int l = 0; l < aDoorWindow.NumVents; l++)
                                                                             //Get vinyl item
                                                                             aCommand.CommandText = "SELECT start_height, vinyl_tint, spreader_bar FROM vinyl_items "
-                                                                                                    + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                                    + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                             SqlDataReader vinylReader = aCommand.ExecuteReader();
 
@@ -446,7 +447,7 @@ namespace SunspaceDealerDesktop
                                                                             #region Cabana Door
 
                                                                             aCommand.CommandText = "SELECT glass_tint, hinge, swing, hardware_type FROM cabana_doors "
-                                                                                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                            + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                             SqlDataReader cabanaReader = aCommand.ExecuteReader();
 
@@ -484,7 +485,7 @@ namespace SunspaceDealerDesktop
                                                                             #region French Door
 
                                                                             aCommand.CommandText = "SELECT glass_tint, swing, operator, hardware_type FROM french_doors "
-                                                                                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                            + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                             SqlDataReader frenchReader = aCommand.ExecuteReader();
 
@@ -523,7 +524,7 @@ namespace SunspaceDealerDesktop
                                                                             #region Patio Door
 
                                                                             aCommand.CommandText = "SELECT glass_tint, moving_door FROM patio_doors "
-                                                                                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'"; //change k to moduleIndex. Couldn't compile other pages.
+                                                                                            + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'"; //change k to moduleIndex. Couldn't compile other pages.
 
                                                                             SqlDataReader patioReader = aCommand.ExecuteReader();
 
@@ -793,7 +794,7 @@ namespace SunspaceDealerDesktop
                     if (roofCount != 0)
                     {
                         aCommand.CommandText = "SELECT roof_type, interior_skin, exterior_skin, thickness, fire_protection, thermadeck, acrylic, gutter, gutter_pro, gutter_colour, number_supports, stripe_colour, projection, width, roof_index "
-                                + "FROM roofs WHERE project_id = '" + project_id + "'";
+                                + "FROM roofs WHERE project_id = '" + projectId + "'";
 
                         SqlDataReader roofReader = aCommand.ExecuteReader();
 
@@ -823,7 +824,7 @@ namespace SunspaceDealerDesktop
                                 List<RoofModule> listOfRoofModules = new List<RoofModule>();
 
                                 aCommand.CommandText = "SELECT projection, width, interior_skin, exterior_skin, roof_view "
-                                + "FROM roof_modules WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "'";
+                                + "FROM roof_modules WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "'";
 
                                 SqlDataReader moduleReader = aCommand.ExecuteReader();
 
@@ -841,7 +842,7 @@ namespace SunspaceDealerDesktop
                                         List<RoofItem> listOfRoofItems = new List<RoofItem>();
 
                                         aCommand.CommandText = "SELECT roof_item, projection, width, item_index "
-                                        + "FROM roof_modules WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "'";
+                                        + "FROM roof_modules WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "'";
 
                                         SqlDataReader itemReader = aCommand.ExecuteReader();
 
@@ -879,7 +880,7 @@ namespace SunspaceDealerDesktop
                                                         //there is no skylight object.. roof item should have a attribute for a skylight object
 
                                                         aCommand.CommandText = "SELECT skylight_type, set_back, operator "
-                                                        + "FROM skylights WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index '" + itemIndex + "'";
+                                                        + "FROM skylights WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index '" + itemIndex + "'";
 
                                                         SqlDataReader skylightReader = aCommand.ExecuteReader();
 
@@ -902,7 +903,7 @@ namespace SunspaceDealerDesktop
                                                         //check for fanbeams in this roof item
                                                         //no info in the db or in C#
                                                         aCommand.CommandText = "SELECT skylight_type, set_back, operator "
-                                                        + "FROM fanbeams WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index = '" + itemIndex + "'";
+                                                        + "FROM fanbeams WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index = '" + itemIndex + "'";
 
                                                         SqlDataReader fanbeamReader = aCommand.ExecuteReader();
 
@@ -970,10 +971,57 @@ namespace SunspaceDealerDesktop
                     }
                 }
             }
+             */ 
             #endregion
 
+            //Wall wall1 = new Wall();
+            //Wall wall2 = new Wall();
+            //Wall wall3 = new Wall();
 
+            //listOfWalls.Add(wall1);
+            //listOfWalls.Add(wall2);
+            //listOfWalls.Add(wall3);
 
+            PopulateDropdown(floorCount, roofCount);
+        }
+
+        protected void PopulateDropdown(int floor = 0, int roof = 0)
+        {
+            if (roof != 0) //if there's a roof, add it 
+            {
+                ListItem liRoof = new ListItem("Roof", "Roof");
+                ddlSunroomObjects.Items.Add(liRoof);
+            }
+            // add all the walls
+            int i = 1;
+            foreach (Wall wall in listOfWalls)
+            {
+                ListItem liWall = new ListItem("Wall " + i.ToString(), i.ToString());
+                ddlSunroomObjects.Items.Add(liWall);
+                i++;
+            }
+            if (floor != 0) //if there's a floor, add it
+            {
+                ListItem liFloor = new ListItem("Floor", "Floor");
+                ddlSunroomObjects.Items.Add(liFloor);
+            }
+
+            //add the onclick attribute
+            ddlSunroomObjects.Attributes.Add("onclick", "sunroomObjectChanged(document.getElementById('SecondaryNavigation_ddlSunroomObjects').options[document.getElementById('SecondaryNavigation_ddlSunroomObjects').selectedIndex].value);");
+        }
+
+        protected void PopulateModOptions()
+        {
+            foreach (Wall wall in listOfWalls)
+            {
+                foreach (LinearItem li in wall.LinearItems)
+                {
+                    if (li.ItemType == "Mod")
+                    {
+
+                    }
+                }
+            }
         }
     }
 }
