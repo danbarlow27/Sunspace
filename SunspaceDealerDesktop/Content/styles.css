@@ -17,7 +17,8 @@
 
 body {
 	font: 1em/1.5em 'Shanti', Helvetica, Arial, sans-serif;
-	background: #fff;
+	background: #fff; 
+    overflow-y: scroll;  
 }
 
 .content-wrapper {
@@ -454,7 +455,7 @@ div.tblWallLengths table {
     top: 0;
     left: 0;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: auto;    
 }
 
 .no-sidebar {
@@ -462,7 +463,7 @@ div.tblWallLengths table {
 }
 
 .slide-wrapper {
-    width: 800%; /* 100% * total # slides */
+    width: 800%; /* 100% * total # slides */    
 }
 
 .slide {
