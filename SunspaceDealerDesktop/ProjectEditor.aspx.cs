@@ -821,9 +821,9 @@ namespace SunspaceDealerDesktop
 
                                 List<RoofModule> listOfRoofModules = new List<RoofModule>();
 
-                                aCommand.CommandText = "SELECT projection, width, interior_skin, exterior_skin, roof_view "
-                                + "FROM roof_modules WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "'";
-
+                                //aCommand.CommandText = "SELECT projection, width, interior_skin, exterior_skin, roof_view "
+                                //+ "FROM roof_modules WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "'";
+                                
                                 SqlDataReader moduleReader = aCommand.ExecuteReader();
 
                                 if (moduleReader.HasRows)
@@ -839,8 +839,8 @@ namespace SunspaceDealerDesktop
 
                                         List<RoofItem> listOfRoofItems = new List<RoofItem>();
 
-                                        aCommand.CommandText = "SELECT roof_item, projection, width, item_index "
-                                        + "FROM roof_modules WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "'";
+                                        //aCommand.CommandText = "SELECT roof_item, projection, width, item_index "
+                                        //+ "FROM roof_modules WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "'";
 
                                         SqlDataReader itemReader = aCommand.ExecuteReader();
 
@@ -877,8 +877,8 @@ namespace SunspaceDealerDesktop
                                                         //are all skylights the same? length/width etc? .. 
                                                         //there is no skylight object.. roof item should have a attribute for a skylight object
 
-                                                        aCommand.CommandText = "SELECT skylight_type, set_back, operator "
-                                                        + "FROM skylights WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index '" + itemIndex + "'";
+                                                        //aCommand.CommandText = "SELECT skylight_type, set_back, operator "
+                                                        //+ "FROM skylights WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index '" + itemIndex + "'";
 
                                                         SqlDataReader skylightReader = aCommand.ExecuteReader();
 
@@ -900,8 +900,8 @@ namespace SunspaceDealerDesktop
 
                                                         //check for fanbeams in this roof item
                                                         //no info in the db or in C#
-                                                        aCommand.CommandText = "SELECT skylight_type, set_back, operator "
-                                                        + "FROM fanbeams WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index = '" + itemIndex + "'";
+                                                        //aCommand.CommandText = "SELECT skylight_type, set_back, operator "
+                                                        //+ "FROM fanbeams WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index = '" + itemIndex + "'";
 
                                                         SqlDataReader fanbeamReader = aCommand.ExecuteReader();
 

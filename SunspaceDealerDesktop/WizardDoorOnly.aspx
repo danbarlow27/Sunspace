@@ -4,6 +4,27 @@
     <script src="Scripts/Validation.js"></script>
     <script>
 
+        var ventHeight; //height vents
+
+        var ventTopHeight;
+        var vent2Height;
+        var vent3Height;
+        var ventBottomHeight;
+
+        var ventWidth; //width vents
+
+        var MIN_WIDTH_BUILDABLE;
+        var MAX_WIDTH_BUILDABLE;
+        var MIN_HEIGHT_BUILDABLE;
+        var MAX_HEIGHT_BUILDABLE;
+        var MIN_WIDTH_WARRANTY;
+        var MAX_WIDTH_WARRANTY;
+        var MIN_HEIGHT_WARRANTY;
+        var MAX_HEIGHT_WARRANTY;
+
+        //var errorMessage = $("#MainContent_txtErrorMessage");
+        var errorMessage = $("#MainContent_lblErrorMessage");
+
         /**
         *customDimension
         *Checks the drop down selection on change, if the selection is custom, displays additional fields,
@@ -43,9 +64,9 @@
             //If drop down value is v4TCabana, perform block
             if (doorStyleDDL == 'Vertical 4 Track') {
                 //Change door vinyl tint row display style to inherit
-                //document.getElementById('MainContent_rowDoorVinylTint' + type).style.display = 'inherit';
+                document.getElementById('MainContent_rowDoorVinylTint' + type).style.display = 'inherit';
                 //Change door number of vents row display style to inherit
-                //document.getElementById('MainContent_rowDoorNumberOfVents' + type).style.display = 'inherit';
+                document.getElementById('MainContent_rowDoorV4TNumberOfVents' + type).style.display = 'inherit';
                 //Change door screen options row display style to none
                 document.getElementById('MainContent_rowDoorScreenTypes' + type).style.display = 'none';
                 //Change door glass tint row display style to none
@@ -57,22 +78,26 @@
                 //Change door screen options row display style to inherit
                 document.getElementById('MainContent_rowDoorScreenTypes' + type).style.display = 'inherit';
                 //Change door vinyl tint row display style to none
-                //document.getElementById('MainContent_rowDoorVinylTint' + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorVinylTint' + type).style.display = 'none';
                 //Change door number of vents row display style to inherit
-                //document.getElementById('MainContent_rowDoorNumberOfVents' + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorV4TNumberOfVents' + type).style.display = 'none';
                 //Change door glass tint row display style to none
                 document.getElementById('MainContent_rowDoorGlassTint' + type).style.display = 'none';
+
+                displayMixedTint(type);
             }
                 //else, perform block
             else {
                 //Change door vinyl tint row display style to none
-                //document.getElementById('MainContent_rowDoorVinylTint' + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorVinylTint' + type).style.display = 'none';
                 //Change door number of vents row display style to inherit
-                //document.getElementById('MainContent_rowDoorNumberOfVents' + type).style.display = 'none';
+                document.getElementById('MainContent_rowDoorV4TNumberOfVents' + type).style.display = 'none';
                 //Change door screen options row display style to none
                 document.getElementById('MainContent_rowDoorScreenTypes' + type).style.display = 'none';
                 //Change door glass tint row display style to inherit
                 document.getElementById('MainContent_rowDoorGlassTint' + type).style.display = 'inherit';
+
+                displayMixedTint(type);
             }
         }
 
@@ -80,17 +105,17 @@
         *displayMixedTint
         *This function is used to display invidual window tints on a vertical 4 track
         *only if the "Mixed" option is selected.
-        *@param type - holds the type of door selected (i.e. Cabana, French, Patio);
+        *@param type - holds the type of door selected (i.e. Cabana, French, Patio)
         */
         function displayMixedTint(type) {
             if ($('#MainContent_ddlDoorVinylTint' + type).val() == "Mixed") {
-                if ($('#MainContent_ddlDoorNumberOfVents' + type).val() == "3") {
+                if ($('#MainContent_ddlDoorV4TNumberOfVents' + type).val() == "3") {
                     document.getElementById('MainContent_row0DoorTint' + type).style.display = "inherit";
                     document.getElementById('MainContent_row1DoorTint' + type).style.display = "inherit";
                     document.getElementById('MainContent_row2DoorTint' + type).style.display = "inherit";
                     document.getElementById('MainContent_row3DoorTint' + type).style.display = "none";
                 }
-                else if ($('#MainContent_ddlDoorNumberOfVents' + type).val() == "4") {
+                else if ($('#MainContent_ddlDoorV4TNumberOfVents' + type).val() == "4") {
                     document.getElementById('MainContent_row0DoorTint' + type).style.display = "inherit";
                     document.getElementById('MainContent_row1DoorTint' + type).style.display = "inherit";
                     document.getElementById('MainContent_row2DoorTint' + type).style.display = "inherit";
@@ -98,6 +123,12 @@
                 }
             }
             else {
+                document.getElementById('MainContent_row0DoorTint' + type).style.display = "none";
+                document.getElementById('MainContent_row1DoorTint' + type).style.display = "none";
+                document.getElementById('MainContent_row2DoorTint' + type).style.display = "none";
+                document.getElementById('MainContent_row3DoorTint' + type).style.display = "none";
+            }
+            if ($('#MainContent_ddlDoorStyle' + type + ' option:selected').val() != 'Vertical 4 Track') {
                 document.getElementById('MainContent_row0DoorTint' + type).style.display = "none";
                 document.getElementById('MainContent_row1DoorTint' + type).style.display = "none";
                 document.getElementById('MainContent_row2DoorTint' + type).style.display = "none";
@@ -117,7 +148,7 @@
             var doorTitle = document.getElementById("MainContent_rowDoorTitle" + type);
             var doorStyleTable = document.getElementById("MainContent_rowDoorStyle" + type);
             var doorVinylTint = document.getElementById("MainContent_rowDoorVinylTint" + type);
-            var doorNumberOfVents = document.getElementById("MainContent_rowDoorNumberOfVents" + type);
+            var doorNumberOfVents = document.getElementById("MainContent_rowDoorV4TNumberOfVents" + type);
             var doorKickplate = document.getElementById("MainContent_rowDoorKickplate" + type);
             var doorKicplateCustom = document.getElementById("MainContent_rowDoorCustomKickplate" + type);
             var doorColour = document.getElementById("MainContent_rowDoorColour" + type);
@@ -229,11 +260,10 @@
         /*
         This function re validates and re calculates the values of height and width of the door and vent sizes
         */
-        function recalculate() {
-
-            var height = document.getElementById('MainContent_txtDoorHeightVinyl').value;
-            var asIfHeight = document.getElementById('MainContent_txtDoorAsIfHeightVinyl').value;
-            var width = document.getElementById('MainContent_txtDoorWidthVinyl').value;
+        function recalculate(title) {
+            var height = document.getElementById('MainContent_txtDoorHeight' + title).value;
+            var asIfHeight = document.getElementById('MainContent_txtDoorAsIfHeight' + title).value;
+            var width = document.getElementById('MainContent_txtDoorWidth' + title).value;
 
             if (!validateInteger(asIfHeight)) asIfHeight = height; //if asIfHeight = null, set the value of height to it
 
@@ -244,8 +274,8 @@
                 //error: please input a valid Height and Build-As-If Height
                 //alert("enter some numbers you fool!");
                 errorMessage.text("enter some numbers you foo!");
-                document.getElementById('MainContent_radDoorBottomRadVinyl').checked = true;
-                topOrBottomUnevenClicked();
+                document.getElementById('MainContent_radDoorBottomRad' + title).checked = true;
+                topOrBottomUnevenClicked(title);
             }
             else if (width < MIN_WIDTH_BUILDABLE || width > MAX_WIDTH_BUILDABLE ||
                  height < MIN_HEIGHT_BUILDABLE || height > MAX_HEIGHT_BUILDABLE ||
@@ -253,8 +283,8 @@
                 //error: please input a valid Height and Build-As-If Height
                 //alert("not buildable!");
                 errorMessage.text("not buildable");
-                document.getElementById('MainContent_radDoorBottomRadVinyl').checked = true;
-                topOrBottomUnevenClicked();
+                document.getElementById('MainContent_radDoorBottomRad' + title).checked = true;
+                topOrBottomUnevenClicked(title);
             }
             else if (width < MIN_WIDTH_WARRANTY || width > MAX_WIDTH_WARRANTY ||
                  height < MIN_HEIGHT_WARRANTY || height > MAX_HEIGHT_WARRANTY ||
@@ -262,11 +292,11 @@
                 //error: please input a valid Height and Build-As-If Height
                 //alert("buildable but not under warranty!");
                 errorMessage.text("buildable but not under warranty");
-                document.getElementById('MainContent_radDoorBottomRadVinyl').checked = true;
-                topOrBottomUnevenClicked();
+                document.getElementById('MainContent_radDoorBottomRad' + title).checked = true;
+                topOrBottomUnevenClicked(title);
             }
             else {
-                getHeightAndWidthOfEachVent(true);
+                getHeightAndWidthOfEachVent(true, title);
             }
             //everything including vent sizes, DLO/Deductions, etc.
         }
@@ -307,16 +337,16 @@
         This function also determines and sets the size of each vent for an uneven vent door
         @param asIf - build as if value given (true or false)
         */
-        function getHeightAndWidthOfEachVent(asIf) {
+        function getHeightAndWidthOfEachVent(asIf, title) {
 
             if (typeof (asIf) === 'undefined') asIf = false; //if asIf not specified set it by default to false
 
-            var ventCount = document.getElementById('MainContent_ddlDoorV4TNumberOfVentsVinyl').options[document.getElementById('MainContent_ddlDoorV4TNumberOfVentsVinyl').selectedIndex].value;
-            var doorWidth = document.getElementById('MainContent_txtDoorWidthVinyl').value + document.getElementById('MainContent_ddlDoorWidthVinyl').options[document.getElementById('MainContent_ddlDoorWidthVinyl').selectedIndex].value;
-            var doorHeight = (asIf) ? document.getElementById('MainContent_txtDoorAsIfHeightVinyl').value + document.getElementById('MainContent_ddlDoorAsIfHeightVinyl').options[document.getElementById('MainContent_ddlDoorAsIfHeightVinyl').selectedIndex].value :
-                                        document.getElementById('MainContent_txtDoorHeightVinyl').value + document.getElementById('MainContent_ddlDoorHeightVinyl').options[document.getElementById('MainContent_ddlDoorHeightVinyl').selectedIndex].value;
-            var asIfHeight = document.getElementById('MainContent_txtDoorAsIfHeightVinyl').value + document.getElementById('MainContent_ddlDoorAsIfHeightVinyl').options[document.getElementById('MainContent_ddlDoorAsIfHeightVinyl').selectedIndex].value;
-            var height = document.getElementById('MainContent_txtDoorHeightVinyl').value + document.getElementById('MainContent_ddlDoorHeightVinyl').options[document.getElementById('MainContent_ddlDoorHeightVinyl').selectedIndex].value;
+            var ventCount = $('#MainContent_ddlDoorV4TNumberOfVents' + title + ' option:selected').val();
+            var doorWidth = $('#MainContent_txtDoorWidthVinyl' + title + ' option:selected').val();
+            $('#MainContent_txtDoorAsIfHeightVinyl' + title + ' option:selected').val();
+            var doorHeight = (asIf) ? $('#MainContent_txtDoorAsIfHeightVinyl' + title + ' option:selected').val() : $('#MainContent_txtDoorHeightVinyl' + title + ' option:selected').val();
+            var asIfHeight = $('#MainContent_txtDoorAsIfHeightVinyl' + title + ' option:selected').val();
+            var height = $('#MainContent_txtDoorHeightVinyl' + title + ' option:selected').val();
 
             if (ventCount > 8) {
                 ventWidth = (parseFloat(doorWidth) - 1.5625 - 2.75) / 3;
@@ -350,13 +380,13 @@
 
                 var extraHeight = parseFloat(height) - parseFloat(asIfHeight);
 
-                if ($("#MainContent_radDoorTopRadVinyl").is(':checked')) {
+                if ($("#MainContent_radDoorTopRadVinyl" + title).is(':checked')) {
                     ventTopHeight = parseFloat(ventTopHeight) - parseFloat(extraHeight);
                 }
-                else if ($("#MainContent_radDoorBottomRadVinyl").is(':checked')) {
+                else if ($("#MainContent_radDoorBottomRadVinyl" + title).is(':checked')) {
                     ventBottomHeight = parseFloat(ventBottomHeight) - parseFloat(extraHeight);
                 }
-                else if ($("#MainContent_radDoorBothRadVinyl").is(':checked')) {
+                else if ($("#MainContent_radDoorBothRadVinyl" + title).is(':checked')) {
                     ventTopHeight = parseFloat(ventTopHeight) - (Math.round((parseFloat(extraHeight) / 2) * 100) / 100);
                     ventBottomHeight = parseFloat(ventBottomHeight) - (Math.round((parseFloat(extraHeight) / 2) * 100) / 100);
                 }
@@ -365,13 +395,13 @@
 
                 var remainingHeight = parseFloat(asIfHeight) - parseFloat(height);
 
-                if ($("#MainContent_radDoorTopRadVinyl").is(':checked')) {
+                if ($("#MainContent_radDoorTopRadVinyl" + title).is(':checked')) {
                     ventTopHeight = parseFloat(ventTopHeight) + parseFloat(remainingHeight);
                 }
-                else if ($("#MainContent_radDoorBottomRadVinyl").is(':checked')) {
+                else if ($("#MainContent_radDoorBottomRadVinyl" + title).is(':checked')) {
                     ventBottomHeight = parseFloat(ventBottomHeight) + parseFloat(remainingHeight);
                 }
-                else if ($("#MainContent_radDoorBothRadVinyl").is(':checked')) {
+                else if ($("#MainContent_radDoorBothRadVinyl" + title).is(':checked')) {
                     ventTopHeight = parseFloat(ventTopHeight) + (Math.round((parseFloat(remainingHeight) / 2) * 100) / 100);
                     ventBottomHeight = parseFloat(ventBottomHeight) + (Math.round((parseFloat(remainingHeight) / 2) * 100) / 100);
                 }
@@ -384,8 +414,8 @@
                 ventBottomHeight = ventHeight;
             }
 
-            $("#MainContent_txtDoorTopVentHeightVinyl").val(ventTopHeight);
-            $("#MainContent_txtDoorBottomVentHeightVinyl").val(ventBottomHeight);
+            $("#MainContent_txtDoorTopVentHeightVinyl" + title).val(ventTopHeight);
+            $("#MainContent_txtDoorBottomVentHeightVinyl" + title).val(ventBottomHeight);
 
         }
 
@@ -442,14 +472,18 @@
         This function gets called when the user selects both uneven vents radio button
         It displays the appropriate rows and recalculates all the values
         */
-        function bothUnevenClicked() {
-            getHeightAndWidthOfEachVent(true);
+        function bothUnevenClicked(title) {
 
-            document.getElementById('MainContent_txtDoorTopVentHeightVinyl').value = ventTopHeight;
-            document.getElementById('MainContent_txtDoorBottomVentHeightVinyl').value = ventBottomHeight;
+            console.log(title);
+            getHeightAndWidthOfEachVent(true, title);
 
-            document.getElementById('MainContent_rowDoorUnevenVentsTopVinyl').style.display = 'table-row';
-            document.getElementById('MainContent_rowDoorUnevenVentsBottomVinyl').style.display = 'table-row';
+            //document.getElementById('MainContent_txtDoorTopVentHeight' + title).value 
+            $('#MainContent_txtDoorTopVentHeight' + title).val(ventTopHeight);
+            //document.getElementById('MainContent_txtDoorBottomVentHeight' + title).value
+            $('#MainContent_txtDoorBottomVentHeight' + title).val(ventBottomHeight);
+
+            document.getElementById('MainContent_rowDoorUnevenVentsTop' + title).style.display = 'inherit';
+            document.getElementById('MainContent_rowDoorUnevenVentsBottom' + title).style.display = 'inherit';
 
         }
 
@@ -457,14 +491,17 @@
         This function gets called when the user selects top or bottom uneven vents radio button
         It hides the appropriate rows (undoes what bothUnevenClicked() did)
         */
-        function topOrBottomUnevenClicked() {
-            document.getElementById('MainContent_txtDoorTopVentHeightVinyl').value = '';
-            document.getElementById('MainContent_txtDoorBottomVentHeightVinyl').value = '';
+        function topOrBottomUnevenClicked(title) {
+            console.log(title);
+            $('#MainContent_txtDoorTopVentHeight' + title).val('');
+            //document.getElementById('MainContent_txtDoorTopVentHeight' + title).value = '';
+            $('#MainContent_txtDoorBottomVentHeight' + title).val('');
+            //document.getElementById('MainContent_txtDoorBottomVentHeight' + title).value = '';
 
-            document.getElementById('MainContent_rowDoorUnevenVentsTopVinyl').style.display = 'none';
-            document.getElementById('MainContent_rowDoorUnevenVentsBottomVinyl').style.display = 'none';
+            document.getElementById('MainContent_rowDoorUnevenVentsTop' + title).style.display = 'none';
+            document.getElementById('MainContent_rowDoorUnevenVentsBottom' + title).style.display = 'none';
 
-            getHeightAndWidthOfEachVent(true);
+            getHeightAndWidthOfEachVent(true, title);
         }
 
         /*
@@ -474,8 +511,8 @@
         */
         function unevenVentsChecked(checked, title) {
             if (checked) {
-                document.getElementById('MainContent_rowDoorAsIfHeight' + title).style.display = 'table-row';
-                document.getElementById('MainContent_rowDoorTopBottomBothRad' + title).style.display = 'table-row';
+                document.getElementById('MainContent_rowDoorAsIfHeight' + title).style.display = 'inherit';
+                document.getElementById('MainContent_rowDoorTopBottomBothRad' + title).style.display = 'inherit';
 
                 if (document.getElementById('MainContent_txtDoorAsIfHeight' + title).value === '')
                     document.getElementById('MainContent_txtDoorAsIfHeight' + title).value = document.getElementById('MainContent_txtDoorHeight' + title).value;
@@ -484,7 +521,7 @@
                     document.getElementById('MainContent_ddlDoorAsIfHeight' + title).selectedIndex = document.getElementById('MainContent_ddlDoorHeight' + title).selectedIndex;
 
                 if (document.getElementById('MainContent_radDoorBothRad' + title).checked) {
-                    bothUnevenClicked();
+                    bothUnevenClicked(title);
                 }
             }
             else {
@@ -501,38 +538,34 @@
         This function gets called when tint options are changed
         It displays appropriate number of mixed tint rows based on the user selections
         */
-        function tintOptionsChanged() {
+        function tintOptionsChanged(title) {
             var tempVents;
-            var tintValue = document.getElementById('MainContent_ddlDoorTintVinyl').options[document.getElementById('MainContent_ddlDoorTintVinyl').selectedIndex].value;
-            var numOfVents = document.getElementById('MainContent_ddlDoorV4TNumberOfVentsVinyl').options[document.getElementById('MainContent_ddlDoorV4TNumberOfVentsVinyl').selectedIndex].value;
+            var tintValue = $('#MainContent_ddlDoorVinylTint' + title + ' option:selected').val();
+            var numOfVents = parseInt($('#MainContent_ddlDoorV4TNumberOfVents' + title + ' option:selected').val());            
 
-            var vinylRows = (numOfVents == 12) ? 4 :
-                            (numOfVents == 9) ? 3 :
-                            (numOfVents == 8) ? 4 :
-                            (numOfVents == 6) ? 3 :
-                            (numOfVents == 4) ? 4 : 3;
+            var vinylRows = (numOfVents == 4) ? 4 : 3;
 
             if (tempVents != numOfVents) {
                 tempVents = numOfVents;
                 for (var i = 0; i < 4; i++) {
-                    document.getElementById('MainContent_row' + i + 'DoorTintVinyl').style.display = 'none';
+                    document.getElementById('MainContent_row' + i + 'DoorTint' + title).style.display = 'none';
                 }
                 for (var i = 0; i < vinylRows; i++) {
-                    document.getElementById('MainContent_row' + i + 'DoorTintVinyl').style.display = 'table-row';
+                    document.getElementById('MainContent_row' + i + 'DoorTint' + title).style.display = 'table-row';
                 }
             }
 
             if (tintValue == "Mixed") {
                 for (var i = 0; i < 4; i++) {
-                    document.getElementById('MainContent_row' + i + 'DoorTintVinyl').style.display = 'none';
+                    document.getElementById('MainContent_row' + i + 'DoorTint' + title).style.display = 'none';
                 }
                 for (var i = 0; i < vinylRows; i++) {
-                    document.getElementById('MainContent_row' + i + 'DoorTintVinyl').style.display = 'table-row';
+                    document.getElementById('MainContent_row' + i + 'DoorTint' + title).style.display = 'table-row';
                 }
             }
             else {
                 for (var i = 0; i < 4; i++) {
-                    document.getElementById('MainContent_row' + i + 'DoorTintVinyl').style.display = 'none';
+                    document.getElementById('MainContent_row' + i + 'DoorTint' + title).style.display = 'none';
                 }
             }
         }
