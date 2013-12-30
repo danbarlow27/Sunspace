@@ -17,7 +17,8 @@
 
 body {
 	font: 1em/1.5em 'Shanti', Helvetica, Arial, sans-serif;
-	background: #fff;
+	background: #fff; 
+    overflow-y: scroll;  
 }
 
 .content-wrapper {
@@ -454,7 +455,7 @@ div.tblWallLengths table {
     top: 0;
     left: 0;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: auto;    
 }
 
 .no-sidebar {
@@ -462,12 +463,14 @@ div.tblWallLengths table {
 }
 
 .slide-wrapper {
-    width: 800%; /* 100% * total # slides */
+    width: 800%; /* 100% * total # slides */    
 }
 
 .slide {
     width: 12.5%; /* 100% / total # slides */
-    float: left;    
+    float: left;
+    padding: 0 1px;
+    box-sizing: border-box;   
 }
 
 #sidebar {
@@ -476,14 +479,12 @@ div.tblWallLengths table {
     right: 0;
 }
 
-#paging-wrapper {
+#paging {
     background: #f6f6f6;
     padding: 10px 10px 0;    
     overflow-y: auto;
-}
-
-#paging {
-    height: 90%;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 #paging li {
@@ -967,6 +968,7 @@ div.additionalChargesOverlay .button.invalid,
 div.editInvoiceItemOverlay .button.invalid {
     border: none;
     opacity: 0.5;
+    cursor: default;
 }
 
 div.additionalChargesOverlay .button,
@@ -1025,7 +1027,12 @@ table.tblPriceCalculator {
     background-color:#FF9933;
 }
 
-.tblPriceCalculator tbody tr:hover {    
+.tblPriceCalculator tbody tr.item:hover {   
+    background-color: rgb(242, 235, 214); 
+    
+}
+
+.tblPriceCalculator tbody tr.item.clicked {    
     background-color:#dfbf98;
 }
 
@@ -1061,10 +1068,18 @@ table.tblPriceCalculator {
 	margin-right: 0;
 }
 
-.center {
+.align-center {
     text-align:center;
+}
+
+.align-right {
+    text-align:right;
 }
 
 .maxWidth {
     width:100%;
+}
+
+.displayNone {
+    display: none;
 }

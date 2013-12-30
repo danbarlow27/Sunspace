@@ -40,12 +40,13 @@
     $('.scrollbox').css('max-height', scrollHeight);
 
     // set max height of paging div
-    var pagingHeight = $('.slide-window').height() - 20;
-    $('#paging-wrapper').css('max-height', pagingHeight);
+    //var pagingHeight = $('.slide-window').height() - 20;
+    var pagingHeight = $(window).height() - 160;
+    $('#paging').css('max-height', pagingHeight);
 
     // set width of slide paging container
     var pagingWidth = $('.content-wrapper').width() - $('.slide-window').width() - 30;
-    $('#paging-wrapper').css('width', pagingWidth);
+    $('#paging').css('width', pagingWidth);
 
 
     function resizePanel() {
@@ -105,12 +106,13 @@
         $('.scrollbox').css('max-height', scrollHeight);
 
         // set max height of paging div
-        var pagingHeight = $('.slide-window').height() - 20;
-        $('#paging-wrapper').css('max-height', pagingHeight);
+        //var pagingHeight = $('.slide-window').height() - 20;
+        var pagingHeight = $(window).height() - 160;
+        $('#paging').css('max-height', pagingHeight);
 
-        // set width of slide paging container
+        // set width of slide paging container       
         var pagingWidth = $('.content-wrapper').width() - $('.slide-window').width() - 30;
-        $('#paging-wrapper').css('width', pagingWidth);
+        $('#paging').css('width', pagingWidth);
     });
 
 
