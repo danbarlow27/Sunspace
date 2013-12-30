@@ -1078,3 +1078,7 @@ table.tblPriceCalculator {
 .maxWidth {
     width:100%;
 }
+
+.displayNone {
+    display: none;
+}
