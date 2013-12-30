@@ -467,7 +467,9 @@ div.tblWallLengths table {
 
 .slide {
     width: 12.5%; /* 100% / total # slides */
-    float: left;    
+    float: left;
+    padding: 0 1px;
+    box-sizing: border-box;   
 }
 
 #sidebar {
@@ -476,14 +478,12 @@ div.tblWallLengths table {
     right: 0;
 }
 
-#paging-wrapper {
+#paging {
     background: #f6f6f6;
     padding: 10px 10px 0;    
     overflow-y: auto;
-}
-
-#paging {
-    height: 90%;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 #paging li {

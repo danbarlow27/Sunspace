@@ -1641,7 +1641,7 @@
                             </asp:TableRow>
                         </asp:Table>         
                     </li>
-
+                    <br />
                     <asp:CheckBox ID="chkMirrored" runat="server" onclick="toggleMirrored()" />
                     <asp:Label ID="lblMirroredCheck" AssociatedControlID="chkMirrored" runat="server"></asp:Label>
                     <asp:Label ID="lblMirrored" AssociatedControlID="chkMirrored" Text="Mirror images left to right" runat="server">
@@ -1660,7 +1660,7 @@
     <%-- SLIDE PAGING (QUESTION NAVIGATION)
     ======================================== --%>
     <div id="sidebar">
-        <div id="paging-wrapper">    
+  
             <div id="paging"> 
                 <h2>Project Specifications</h2>
 
@@ -1739,7 +1739,7 @@
                 </div>
             </ul>    
             </div> 
-        </div>
+
 
         <textarea id="txtErrorMessage" class="txtErrorMessage" disabled="disabled" rows="5" runat="server"></textarea>
     </div>
