@@ -208,6 +208,11 @@
                 }
             }
 
+            if(document.getElementById("<%=txtCustomerLastName.ClientID%>").value != "")
+            {
+                $('#<%=txtProjectName.ClientID%>').val(document.getElementById("<%=txtCustomerLastName.ClientID%>").value);
+            }
+
             return false;
         }
 
