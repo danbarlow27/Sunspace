@@ -1513,17 +1513,17 @@
                                 <li>
                                     <asp:RadioButton ID="radStudio" OnClick="newProjectCheckQuestion7()" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblStudioRadio" AssociatedControlID="radStudio" runat="server"></asp:Label>
-                                    <asp:Label ID="lblStudio" AssociatedControlID="radStudio" runat="server" Text="Studio"></asp:Label>
+                                    <asp:Label ID="lblStudio" AssociatedControlID="radStudio" runat="server" Text="Studio (Mono Slope)"></asp:Label>
                                 </li>
                                 <li>
                                     <asp:RadioButton ID="radDealerGable" OnClick="newProjectCheckQuestion7()" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblDealerGableRadio" AssociatedControlID="radDealerGable" runat="server"></asp:Label>
-                                    <asp:Label ID="lblDealerGable" AssociatedControlID="radDealerGable" runat="server" Text="Dealer gable"></asp:Label>
+                                    <asp:Label ID="lblDealerGable" AssociatedControlID="radDealerGable" runat="server" Text="Traditional Gable (Dealer to supply lumber)"></asp:Label>
                                 </li>
                                 <li>
                                     <asp:RadioButton ID="radSunspaceGable" OnClick="newProjectCheckQuestion7()" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblSunspaceGableRadio" AssociatedControlID="radSunspaceGable" runat="server"></asp:Label>
-                                    <asp:Label ID="lblSunspaceGable" AssociatedControlID="radSunspaceGable" runat="server" Text="Sunspace gable"></asp:Label>
+                                    <asp:Label ID="lblSunspaceGable" AssociatedControlID="radSunspaceGable" runat="server" Text="Manufactured Gable (Dual Slope front wall)"></asp:Label>
                                 </li>
                                 <li>
                                     <asp:Label ID="lblSoffitLength" runat="server" Text="Soffit Length:"></asp:Label>
