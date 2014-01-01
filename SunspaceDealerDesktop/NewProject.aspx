@@ -36,7 +36,7 @@
                 provStateLabel.innerHTML = "State";
 
                 zipText.setAttribute("MaxLength", "5");
-                zipLabel.innerHTML = "Zip Code";
+                zipLabel.innerHTML = "Zip Code:";
             }
             else
             {
@@ -58,7 +58,7 @@
                 provStateLabel.innerHTML = "Province";
 
                 zipText.setAttribute("MaxLength", "6");
-                zipLabel.innerHTML = "Postal Code";
+                zipLabel.innerHTML = "Postal Code:";
             }
         }
 
@@ -103,39 +103,23 @@
                     document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Last Name is required.\n";
                 }
 
-                if (document.getElementById("<%=txtCustomerAddress.ClientID%>").value == "")
-                {
-                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Address is required.\n";
-                }
-
-                if (document.getElementById("<%=txtCustomerCity.ClientID%>").value == "")
-                {
-                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer City is required.\n";
-                }
-
                 //check zipcode
                 if (ddlCustomerCountry == "USA")
                 {
                     var zipCode = document.getElementById("<%=hidZip.ClientID%>").value;
-
-                    //if zip code is not valid numeric, or it is not 5 digits, it is not valid
-                    if (document.getElementById("<%=txtCustomerZip.ClientID%>").value == "")
+                    
+                    if (zipCode.length > 0)
                     {
-                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Zip Code is required.\n";
-                    }
-                    else if (isNaN(zipCode) || zipCode.length < 5) {
-                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Zip Code you entered is not valid.\n";
+                        if (isNaN(zipCode) || zipCode.length < 5) {
+                            document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Zip Code you entered is not valid.\n";
+                        }
                     }
                 }
 
                 //check postal code
                 if (ddlCustomerCountry == "CAN")
                 {
-                    if (document.getElementById("<%=txtCustomerZip.ClientID%>").value == "")
-                    {
-                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Postal Code is required.\n";
-                    }
-                    else
+                    if (document.getElementById("<%=txtCustomerZip.ClientID%>").value != "")
                     {
                         if (postCheck == false)
                         {
@@ -145,31 +129,34 @@
                 }
 
                 //check to see if email is valid
-                if (document.getElementById("<%=txtCustomerEmail.ClientID%>").value == "")
+                if (document.getElementById("<%=txtCustomerEmail.ClientID%>").value != "")
                 {
-                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Email is required.\n";
-                }
-                else if (emailValidation() == false)
-                {
-                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Customer Email you entered is not valid.\n";
-                }
-
-                //having troubles checking .value.length, so setting .value into a variable
-                var lengthCheck = document.getElementById("<%=txtCustomerPhone.ClientID%>").value;
-
-                //only check if a full 10digit number is entered
-                if (lengthCheck.length == 10) {
-                    //validatePhone function returns an error message, blank if valid
-                    var validPhone = validatePhone(document.getElementById("<%=txtCustomerPhone.ClientID%>").value);
-
-                    if (validPhone != "")
+                    if (emailValidation() == false)
                     {
-                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += validPhone;
+                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Customer Email you entered is not valid.\n";
                     }
                 }
-                else if (document.getElementById("<%=txtCustomerPhone.ClientID%>").value == "" || lengthCheck.length < 10)
+
+                
+                if (document.getElementById("<%=txtCustomerPhone.ClientID%>").value != "")
                 {
-                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Phone is required.\n";
+                    //having troubles checking .value.length, so setting .value into a variable
+                    var lengthCheck = document.getElementById("<%=txtCustomerPhone.ClientID%>").value;
+
+                    //only check if a full 10digit number is entered
+                    if (lengthCheck.length == 10) {
+                        //validatePhone function returns an error message, blank if valid
+                        var validPhone = validatePhone(document.getElementById("<%=txtCustomerPhone.ClientID%>").value);
+
+                        if (validPhone != "")
+                        {
+                            document.getElementById('<%=txtErrorMessage.ClientID%>').value += validPhone;
+                        }
+                    }
+                    else if (lengthCheck.length < 10)
+                    {
+                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Phone is incomplete.\n";
+                    }
                 }
 
                 //having troubles checking .value.length, so setting .value into a variable
@@ -187,14 +174,9 @@
                 }
 
                 if (document.getElementById("<%=txtCustomerFirstName.ClientID%>").value == "" &&
-                    document.getElementById("<%=txtCustomerLastName.ClientID%>").value == "" &&
-                    document.getElementById("<%=txtCustomerAddress.ClientID%>").value == "" &&
-                    document.getElementById("<%=txtCustomerCity.ClientID%>").value == "" &&
-                    document.getElementById("<%=txtCustomerZip.ClientID%>").value == "" &&
-                    document.getElementById("<%=txtCustomerPhone.ClientID%>").value == "" &&
-                    document.getElementById("<%=txtCustomerEmail.ClientID%>").value == "") {
+                    document.getElementById("<%=txtCustomerLastName.ClientID%>").value == "") {
 
-                    document.getElementById('<%=txtErrorMessage.ClientID%>').value = "You must make the required entries in order to proceed.";
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value = "Customer First and Last names are required.";
                 }
 
                 //isValid remains true if nothing became false
@@ -1094,7 +1076,7 @@
 
                                         <asp:TableRow>
                                             <asp:TableCell>
-                                                <asp:Label ID="lblCustomerZip" AssociatedControlID="txtCustomerZip" runat="server" Text="ZIP Code:"></asp:Label>
+                                                <asp:Label ID="lblCustomerZip" AssociatedControlID="txtCustomerZip" runat="server" Text="Postal Code:"></asp:Label>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
