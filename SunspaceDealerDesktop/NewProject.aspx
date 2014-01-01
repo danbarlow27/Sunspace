@@ -1200,7 +1200,7 @@
                     <li>
                         <asp:RadioButton ID="radProjectSunroom" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectSunroomRadio" AssociatedControlID="radProjectSunroom" runat="server"></asp:Label>
-                        <asp:Label ID="lblProjectSunroom" AssociatedControlID="radProjectSunroom" runat="server" Text="Complete Sunroom"></asp:Label>
+                        <asp:Label ID="lblProjectSunroom" AssociatedControlID="radProjectSunroom" runat="server" Text="Sunroom"></asp:Label>
            
                         <div class="toggleContent">
                             <ul>
@@ -1232,7 +1232,7 @@
                     <li>
                         <asp:RadioButton ID="radProjectWalls" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectWallsRadio" AssociatedControlID="radProjectWalls" runat="server"></asp:Label>
-                        <asp:Label ID="lblProjectWalls" AssociatedControlID="radProjectWalls" runat="server" Text="Walls"></asp:Label>
+                        <asp:Label ID="lblProjectWalls" AssociatedControlID="radProjectWalls" runat="server" Text="Enclosure System (Walls Only)"></asp:Label>
 
                         <div class="toggleContent">
                             <ul class="checkboxes">
@@ -1264,14 +1264,14 @@
                     <li>
                         <asp:RadioButton ID="radProjectWindows" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectWindowsRadio" AssociatedControlID="radProjectWindows" runat="server"></asp:Label>
-                        <asp:Label ID="lblProjectWindows" AssociatedControlID="radProjectWindows" runat="server" Text="Windows"></asp:Label>
+                        <asp:Label ID="lblProjectWindows" AssociatedControlID="radProjectWindows" runat="server" Text="Windows Only"></asp:Label>
                     </li> 
                     
                     <%-- Door only --%>
                     <li>
                         <asp:RadioButton ID="radProjectDoors" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectDoorsRadio" AssociatedControlID="radProjectDoors" runat="server"></asp:Label>
-                        <asp:Label ID="lblProjectDoors" AssociatedControlID="radProjectDoors" runat="server" Text="Doors"></asp:Label>
+                        <asp:Label ID="lblProjectDoors" AssociatedControlID="radProjectDoors" runat="server" Text="Doors Only"></asp:Label>
                     </li>
                     
                     <%-- Floor only --%>
@@ -1285,14 +1285,14 @@
                     <li>
                         <asp:RadioButton ID="radProjectRoof" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectRoofRadio" AssociatedControlID="radProjectRoof" runat="server"></asp:Label>
-                        <asp:Label ID="lblProjectRoof" AssociatedControlID="radProjectRoof" runat="server" Text="Roof"></asp:Label>
+                        <asp:Label ID="lblProjectRoof" AssociatedControlID="radProjectRoof" runat="server" Text="Roof System Only"></asp:Label>
                     </li>  
                                         
                     <%-- Showroom --%>                 
                     <%--<li>
                         <asp:RadioButton ID="radSunroomModelShowroom" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblSunroomModelShowroomRadio" AssociatedControlID="radSunroomModelShowroom" runat="server"></asp:Label>
-                        <asp:Label ID="lblSunroomModelShowroom" AssociatedControlID="radSunroomModelShowroom" runat="server" Text="Showroom"></asp:Label>
+                        <asp:Label ID="lblSunroomModelShowroom" AssociatedControlID="radSunroomModelShowroom" runat="server" Text="Display Room"></asp:Label>
 
                         <div class="toggleContent">
                             <ul class="checkboxes">
