@@ -3543,7 +3543,7 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void openWall()
         {
-            tintOptions("OpenWall", "Open Wall", false, false, false, false, false, false);
+            tintOptions("OpenWall", "Open Wall (No Windows)", false, false, false, false, false, false);
         }
 
         /// <summary>
@@ -3551,7 +3551,7 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void solidWall()
         {
-            tintOptions("SolidWall", "Solid Wall", false, false, false, false, false, false);
+            tintOptions("SolidWall", "Solid Wall (No Windows)", false, false, false, false, false, false);
         }
 
         #endregion

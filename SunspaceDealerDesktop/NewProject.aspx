@@ -36,7 +36,7 @@
                 provStateLabel.innerHTML = "State";
 
                 zipText.setAttribute("MaxLength", "5");
-                zipLabel.innerHTML = "Zip Code";
+                zipLabel.innerHTML = "Zip Code:";
             }
             else
             {
@@ -58,7 +58,7 @@
                 provStateLabel.innerHTML = "Province";
 
                 zipText.setAttribute("MaxLength", "6");
-                zipLabel.innerHTML = "Postal Code";
+                zipLabel.innerHTML = "Postal Code:";
             }
         }
 
@@ -103,39 +103,23 @@
                     document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Last Name is required.\n";
                 }
 
-                if (document.getElementById("<%=txtCustomerAddress.ClientID%>").value == "")
-                {
-                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Address is required.\n";
-                }
-
-                if (document.getElementById("<%=txtCustomerCity.ClientID%>").value == "")
-                {
-                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer City is required.\n";
-                }
-
                 //check zipcode
                 if (ddlCustomerCountry == "USA")
                 {
                     var zipCode = document.getElementById("<%=hidZip.ClientID%>").value;
-
-                    //if zip code is not valid numeric, or it is not 5 digits, it is not valid
-                    if (document.getElementById("<%=txtCustomerZip.ClientID%>").value == "")
+                    
+                    if (zipCode.length > 0)
                     {
-                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Zip Code is required.\n";
-                    }
-                    else if (isNaN(zipCode) || zipCode.length < 5) {
-                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Zip Code you entered is not valid.\n";
+                        if (isNaN(zipCode) || zipCode.length < 5) {
+                            document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Zip Code you entered is not valid.\n";
+                        }
                     }
                 }
 
                 //check postal code
                 if (ddlCustomerCountry == "CAN")
                 {
-                    if (document.getElementById("<%=txtCustomerZip.ClientID%>").value == "")
-                    {
-                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Postal Code is required.\n";
-                    }
-                    else
+                    if (document.getElementById("<%=txtCustomerZip.ClientID%>").value != "")
                     {
                         if (postCheck == false)
                         {
@@ -145,31 +129,34 @@
                 }
 
                 //check to see if email is valid
-                if (document.getElementById("<%=txtCustomerEmail.ClientID%>").value == "")
+                if (document.getElementById("<%=txtCustomerEmail.ClientID%>").value != "")
                 {
-                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Email is required.\n";
-                }
-                else if (emailValidation() == false)
-                {
-                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Customer Email you entered is not valid.\n";
-                }
-
-                //having troubles checking .value.length, so setting .value into a variable
-                var lengthCheck = document.getElementById("<%=txtCustomerPhone.ClientID%>").value;
-
-                //only check if a full 10digit number is entered
-                if (lengthCheck.length == 10) {
-                    //validatePhone function returns an error message, blank if valid
-                    var validPhone = validatePhone(document.getElementById("<%=txtCustomerPhone.ClientID%>").value);
-
-                    if (validPhone != "")
+                    if (emailValidation() == false)
                     {
-                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += validPhone;
+                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += "The Customer Email you entered is not valid.\n";
                     }
                 }
-                else if (document.getElementById("<%=txtCustomerPhone.ClientID%>").value == "" || lengthCheck.length < 10)
+
+                
+                if (document.getElementById("<%=txtCustomerPhone.ClientID%>").value != "")
                 {
-                    document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Phone is required.\n";
+                    //having troubles checking .value.length, so setting .value into a variable
+                    var lengthCheck = document.getElementById("<%=txtCustomerPhone.ClientID%>").value;
+
+                    //only check if a full 10digit number is entered
+                    if (lengthCheck.length == 10) {
+                        //validatePhone function returns an error message, blank if valid
+                        var validPhone = validatePhone(document.getElementById("<%=txtCustomerPhone.ClientID%>").value);
+
+                        if (validPhone != "")
+                        {
+                            document.getElementById('<%=txtErrorMessage.ClientID%>').value += validPhone;
+                        }
+                    }
+                    else if (lengthCheck.length < 10)
+                    {
+                        document.getElementById('<%=txtErrorMessage.ClientID%>').value += "Customer Phone is incomplete.\n";
+                    }
                 }
 
                 //having troubles checking .value.length, so setting .value into a variable
@@ -187,14 +174,9 @@
                 }
 
                 if (document.getElementById("<%=txtCustomerFirstName.ClientID%>").value == "" &&
-                    document.getElementById("<%=txtCustomerLastName.ClientID%>").value == "" &&
-                    document.getElementById("<%=txtCustomerAddress.ClientID%>").value == "" &&
-                    document.getElementById("<%=txtCustomerCity.ClientID%>").value == "" &&
-                    document.getElementById("<%=txtCustomerZip.ClientID%>").value == "" &&
-                    document.getElementById("<%=txtCustomerPhone.ClientID%>").value == "" &&
-                    document.getElementById("<%=txtCustomerEmail.ClientID%>").value == "") {
+                    document.getElementById("<%=txtCustomerLastName.ClientID%>").value == "") {
 
-                    document.getElementById('<%=txtErrorMessage.ClientID%>').value = "You must make the required entries in order to proceed.";
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value = "Customer First and Last names are required.";
                 }
 
                 //isValid remains true if nothing became false
@@ -224,6 +206,11 @@
                     document.getElementById('pagerOne').style.display = "inline";
                     document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
                 }
+            }
+
+            if(document.getElementById("<%=txtCustomerLastName.ClientID%>").value != "")
+            {
+                $('#<%=txtProjectName.ClientID%>').val(document.getElementById("<%=txtCustomerLastName.ClientID%>").value);
             }
 
             return false;
@@ -1094,7 +1081,7 @@
 
                                         <asp:TableRow>
                                             <asp:TableCell>
-                                                <asp:Label ID="lblCustomerZip" AssociatedControlID="txtCustomerZip" runat="server" Text="ZIP Code:"></asp:Label>
+                                                <asp:Label ID="lblCustomerZip" AssociatedControlID="txtCustomerZip" runat="server" Text="Postal Code:"></asp:Label>
                                             </asp:TableCell>
 
                                             <asp:TableCell>
@@ -1200,7 +1187,7 @@
                     <li>
                         <asp:RadioButton ID="radProjectSunroom" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectSunroomRadio" AssociatedControlID="radProjectSunroom" runat="server"></asp:Label>
-                        <asp:Label ID="lblProjectSunroom" AssociatedControlID="radProjectSunroom" runat="server" Text="Complete Sunroom"></asp:Label>
+                        <asp:Label ID="lblProjectSunroom" AssociatedControlID="radProjectSunroom" runat="server" Text="Sunroom"></asp:Label>
            
                         <div class="toggleContent">
                             <ul>
@@ -1232,7 +1219,7 @@
                     <li>
                         <asp:RadioButton ID="radProjectWalls" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectWallsRadio" AssociatedControlID="radProjectWalls" runat="server"></asp:Label>
-                        <asp:Label ID="lblProjectWalls" AssociatedControlID="radProjectWalls" runat="server" Text="Walls"></asp:Label>
+                        <asp:Label ID="lblProjectWalls" AssociatedControlID="radProjectWalls" runat="server" Text="Enclosure System (Walls Only)"></asp:Label>
 
                         <div class="toggleContent">
                             <ul class="checkboxes">
@@ -1264,14 +1251,14 @@
                     <li>
                         <asp:RadioButton ID="radProjectWindows" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectWindowsRadio" AssociatedControlID="radProjectWindows" runat="server"></asp:Label>
-                        <asp:Label ID="lblProjectWindows" AssociatedControlID="radProjectWindows" runat="server" Text="Windows"></asp:Label>
+                        <asp:Label ID="lblProjectWindows" AssociatedControlID="radProjectWindows" runat="server" Text="Windows Only"></asp:Label>
                     </li> 
                     
                     <%-- Door only --%>
                     <li>
                         <asp:RadioButton ID="radProjectDoors" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectDoorsRadio" AssociatedControlID="radProjectDoors" runat="server"></asp:Label>
-                        <asp:Label ID="lblProjectDoors" AssociatedControlID="radProjectDoors" runat="server" Text="Doors"></asp:Label>
+                        <asp:Label ID="lblProjectDoors" AssociatedControlID="radProjectDoors" runat="server" Text="Doors Only"></asp:Label>
                     </li>
                     
                     <%-- Floor only --%>
@@ -1285,14 +1272,14 @@
                     <li>
                         <asp:RadioButton ID="radProjectRoof" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblProjectRoofRadio" AssociatedControlID="radProjectRoof" runat="server"></asp:Label>
-                        <asp:Label ID="lblProjectRoof" AssociatedControlID="radProjectRoof" runat="server" Text="Roof"></asp:Label>
+                        <asp:Label ID="lblProjectRoof" AssociatedControlID="radProjectRoof" runat="server" Text="Roof System Only"></asp:Label>
                     </li>  
                                         
                     <%-- Showroom --%>                 
                     <%--<li>
                         <asp:RadioButton ID="radSunroomModelShowroom" OnClick="newProjectCheckQuestion3()" GroupName="projectType" runat="server" />
                         <asp:Label ID="lblSunroomModelShowroomRadio" AssociatedControlID="radSunroomModelShowroom" runat="server"></asp:Label>
-                        <asp:Label ID="lblSunroomModelShowroom" AssociatedControlID="radSunroomModelShowroom" runat="server" Text="Showroom"></asp:Label>
+                        <asp:Label ID="lblSunroomModelShowroom" AssociatedControlID="radSunroomModelShowroom" runat="server" Text="Display Room"></asp:Label>
 
                         <div class="toggleContent">
                             <ul class="checkboxes">
@@ -1526,17 +1513,17 @@
                                 <li>
                                     <asp:RadioButton ID="radStudio" OnClick="newProjectCheckQuestion7()" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblStudioRadio" AssociatedControlID="radStudio" runat="server"></asp:Label>
-                                    <asp:Label ID="lblStudio" AssociatedControlID="radStudio" runat="server" Text="Studio"></asp:Label>
+                                    <asp:Label ID="lblStudio" AssociatedControlID="radStudio" runat="server" Text="Studio (Mono Slope)"></asp:Label>
                                 </li>
                                 <li>
                                     <asp:RadioButton ID="radDealerGable" OnClick="newProjectCheckQuestion7()" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblDealerGableRadio" AssociatedControlID="radDealerGable" runat="server"></asp:Label>
-                                    <asp:Label ID="lblDealerGable" AssociatedControlID="radDealerGable" runat="server" Text="Dealer gable"></asp:Label>
+                                    <asp:Label ID="lblDealerGable" AssociatedControlID="radDealerGable" runat="server" Text="Traditional Gable (Dealer to supply lumber)"></asp:Label>
                                 </li>
                                 <li>
                                     <asp:RadioButton ID="radSunspaceGable" OnClick="newProjectCheckQuestion7()" GroupName="roofSub" runat="server" />
                                     <asp:Label ID="lblSunspaceGableRadio" AssociatedControlID="radSunspaceGable" runat="server"></asp:Label>
-                                    <asp:Label ID="lblSunspaceGable" AssociatedControlID="radSunspaceGable" runat="server" Text="Sunspace gable"></asp:Label>
+                                    <asp:Label ID="lblSunspaceGable" AssociatedControlID="radSunspaceGable" runat="server" Text="Manufactured Gable (Dual Slope front wall)"></asp:Label>
                                 </li>
                                 <li>
                                     <asp:Label ID="lblSoffitLength" runat="server" Text="Soffit Length:"></asp:Label>

@@ -1129,7 +1129,7 @@
                 //Set answer on side pager and enable button
                 $('#MainContent_lblWallLengthsAnswer').text("Invalid Input");
                 document.getElementById('pagerOne').style.display = "inline";
-                document.getElementById('MainContent_btnQuestion1').disabled = false;
+                document.getElementById('MainContent_btnQuestion1').disabled = true;
             }
             
             checkRoofPanels();
@@ -1165,10 +1165,13 @@
                     
                     //we have front wall height and back wall height, calculate slope
                     if (!isNaN(document.getElementById("MainContent_txtLeftWallHeight").value) //if the other textbox values are valid
+                        && document.getElementById("MainContent_txtLeftWallHeight").value != ""
                         && document.getElementById("MainContent_txtLeftWallHeight").value > 0
                         && !isNaN(document.getElementById("MainContent_txtRightWallHeight").value)
+                        && document.getElementById("MainContent_txtRightWallHeight").value != ""
                         && document.getElementById("MainContent_txtRightWallHeight").value > 0
                         && !isNaN(document.getElementById("MainContent_txtGablePostHeight").value)
+                        && document.getElementById("MainContent_txtGablePostHeight").value != ""
                         && document.getElementById("MainContent_txtGablePostHeight").value > 0) {
 
                         isValid = true;
@@ -1196,8 +1199,10 @@
                 else if (document.getElementById("MainContent_radAutoLeftWallHeight").checked) {
                     //we have back wall height and slope, calculate front wall height
                     if (!isNaN(document.getElementById("MainContent_txtLeftRoofSlope").value)
+                        && document.getElementById("MainContent_txtLeftRoofSlope").value != ""
                         && document.getElementById("MainContent_txtLeftRoofSlope").value > 0
                         && !isNaN(document.getElementById("MainContent_txtGablePostHeight").value)
+                        && document.getElementById("MainContent_txtGablePostHeight").value != ""
                         && document.getElementById("MainContent_txtGablePostHeight").value > 0) {
 
                         var backHeight; //to store calculated frontwall height
@@ -1245,8 +1250,10 @@
                 else if (document.getElementById("MainContent_radAutoRightWallHeight").checked) {
                     //we have front wall height and slope, calculate back wall height
                     if (!isNaN(document.getElementById("MainContent_txtRightRoofSlope").value)
+                        && document.getElementById("MainContent_txtRightRoofSlope").value != ""
                         && document.getElementById("MainContent_txtRightRoofSlope").value > 0
                         && !isNaN(document.getElementById("MainContent_txtGablePostHeight").value)
+                        && document.getElementById("MainContent_txtGablePostHeight").value != ""
                         && document.getElementById("MainContent_txtGablePostHeight").value > 0) {
 
                         var backHeight; //to store calculated backwall height
@@ -1311,7 +1318,7 @@
                     //Set answer on side pager and enable button
                     $('#MainContent_lblWallHeightsAnswer').text("Invalid Input");
                     document.getElementById('pagerTwo').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion2').disabled = false;
+                    document.getElementById('MainContent_btnQuestion2').disabled = true;
                 }
             }
             else {
@@ -1319,8 +1326,10 @@
                 if (document.getElementById("MainContent_radAutoRoofSlope").checked) {
                     //we have front wall height and back wall height, calculate slope
                     if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value) //if the other textbox values are valid
+                        && document.getElementById("MainContent_txtBackWallHeight").value != ""
                         && document.getElementById("MainContent_txtBackWallHeight").value > 0
                         && !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                        && document.getElementById("MainContent_txtFrontWallHeight").value != ""
                         && document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
 
                         isValid = true; //valid is true
@@ -1336,8 +1345,10 @@
                 else if (document.getElementById("MainContent_radAutoFrontWallHeight").checked) {
                     //we have back wall height and slope, calculate front wall height
                     if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value) //if the other textbox values are valid
+                        && document.getElementById("MainContent_txtBackWallHeight").value != ""
                         && document.getElementById("MainContent_txtBackWallHeight").value > 0
                         && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                        && document.getElementById("MainContent_txtRoofSlope").value != ""
                         && document.getElementById("MainContent_txtRoofSlope").value > 0) {
 
                         var frontHeight; //to store calculated frontwall height
@@ -1371,9 +1382,11 @@
                     //the user wants to auto calculate back wall height
                 else if (document.getElementById("MainContent_radAutoBackWallHeight").checked) {
                     //we have front wall height and slope, calculate back wall height
-                    if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value) //check if other textbox values are valid
+                    if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value) 
+                        && document.getElementById("MainContent_txtFrontWallHeight").value != "" //check if other textbox values are valid
                         && document.getElementById("MainContent_txtFrontWallHeight").value > 0
-                        && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                        && !isNaN(document.getElementById("MainContent_txtRoofSlope").value) 
+                        && document.getElementById("MainContent_txtRoofSlope").value !=""
                         && document.getElementById("MainContent_txtRoofSlope").value > 0) {
 
                         var backHeight; //to store calculated backwall height
@@ -1407,7 +1420,7 @@
                 }
 
                 //if the calculated slope is invalid, i.e. negative or zero
-                if (document.getElementById("MainContent_txtRoofSlope").value >= 0)
+                if (document.getElementById("MainContent_txtRoofSlope").value != "" && document.getElementById("MainContent_txtRoofSlope").value >= 0)
                     isValid = true; //valid is false
 
                 if (isValid) { //if all is valid
@@ -1433,7 +1446,7 @@
                     //Set answer on side pager and enable button
                     $('#MainContent_lblWallHeightsAnswer').text("Invalid Input");
                     document.getElementById('pagerTwo').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion2').disabled = false;
+                    document.getElementById('MainContent_btnQuestion2').disabled = true;
                 }
             }
 
@@ -2429,7 +2442,7 @@
 
     
                 <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion1" Enabled="false" OnClientClick="checkQuestion1()" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide1 --%>
@@ -2457,7 +2470,7 @@
                         </div> <%-- end .toggleContent --%>
 
                 <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion2" OnClientClick="determineStartAndEndHeightOfEachWall(gable)" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion2" OnClientClick="determineStartAndEndHeightOfEachWall(gable); checkQuestion2(gable)" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide2 --%>
@@ -2475,7 +2488,7 @@
                     <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question"/>
+                <asp:Button ID="btnQuestion3" Enabled="true" OnClientClick="checkQuestion3()" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question"/>
 
             </div>
             <%-- end #slide3 --%>
@@ -2495,7 +2508,7 @@
                     <asp:PlaceHolder ID="plcSunshade" runat="server"></asp:PlaceHolder>           
                 </ul>  
                  
-                <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" OnClientClick="WindowPreparation();return false;"/>     
+                <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" OnClientClick="checkQuestion4(); WindowPreparation();return false;"/>     
             </div>
             <%-- end #slide4 --%>
 
