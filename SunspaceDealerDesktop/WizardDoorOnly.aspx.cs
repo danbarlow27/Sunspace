@@ -17,7 +17,48 @@ namespace SunspaceDealerDesktop
         protected ListItem lst58 = new ListItem("5/8", ".625");
         protected ListItem lst34 = new ListItem("3/4", ".75");
         protected ListItem lst78 = new ListItem("7/8", ".875");
-        List<Door> doorsOrdered = new List<Door>();            
+        List<Door> doorsOrdered = new List<Door>();
+
+        #region validation constants
+
+        //TO BE CONFIRMED. CURRENTLY WINDOW DIMENSIONS, NOT SURE OF DOOR DIMENSION LIMITS.
+        #region MIN_WIDTH_BUILDABLE
+        protected float V4T_3V_MIN_WIDTH_BUILDABLE = Constants.V4T_3V_MIN_WIDTH_BUILDABLE;
+        protected float V4T_4V_MIN_WIDTH_BUILDABLE = Constants.V4T_4V_MIN_WIDTH_BUILDABLE;
+
+        protected float SCREEN_MIN_WIDTH_BUILDABLE = Constants.SCREEN_MIN_WIDTH_BUILDABLE;
+        #endregion
+        #region MIN_WIDTH_WARRANTY
+        protected float V4T_3V_MIN_WIDTH_WARRANTY = Constants.V4T_3V_MIN_WIDTH_WARRANTY;
+        protected float V4T_4V_MIN_WIDTH_WARRANTY = Constants.V4T_4V_MIN_WIDTH_WARRANTY;
+        #endregion
+        #region MAX_WIDTH_BUILDABLE
+        protected float V4T_3V_MAX_WIDTH_BUILDABLE = Constants.V4T_3V_MAX_WIDTH_BUILDABLE;
+        protected float V4T_4V_MAX_WIDTH_BUILDABLE = Constants.V4T_4V_MAX_WIDTH_BUILDABLE;
+        #endregion
+        #region MAX_WIDTH_WARRANTY
+        protected float V4T_3V_MAX_WIDTH_WARRANTY = Constants.V4T_3V_MAX_WIDTH_WARRANTY;
+        protected float V4T_4V_MAX_WIDTH_WARRANTY = Constants.V4T_4V_MAX_WIDTH_WARRANTY;
+        #endregion
+
+        #region MIN_HEIGHT_BUILDABLE
+        protected float V4T_3V_MIN_HEIGHT_BUILDABLE = Constants.V4T_3V_MIN_HEIGHT_BUILDABLE;
+        protected float V4T_4V_MIN_HEIGHT_BUILDABLE = Constants.V4T_4V_MIN_HEIGHT_BUILDABLE;
+        #endregion
+        #region MIN_HEIGHT_WARRANTY
+        protected float V4T_3V_MIN_HEIGHT_WARRANTY = Constants.V4T_3V_MIN_HEIGHT_WARRANTY;
+        protected float V4T_4V_MIN_HEIGHT_WARRANTY = Constants.V4T_4V_MIN_HEIGHT_WARRANTY;
+        #endregion
+        #region MAX_HEIGHT_BUILDABLE
+        protected float V4T_3V_MAX_HEIGHT_BUILDABLE = Constants.V4T_3V_MAX_HEIGHT_BUILDABLE;
+        protected float V4T_4V_MAX_HEIGHT_BUILDABLE = Constants.V4T_4V_MAX_HEIGHT_BUILDABLE;
+        #endregion
+        #region MAX_HEIGHT_WARRANTY
+        protected float V4T_3V_MAX_HEIGHT_WARRANTY = Constants.V4T_3V_MAX_HEIGHT_WARRANTY;
+        protected float V4T_4V_MAX_HEIGHT_WARRANTY = Constants.V4T_4V_MAX_HEIGHT_WARRANTY;
+        #endregion
+
+        #endregion
 
         protected void Page_Load(object sender, EventArgs e)
         {
