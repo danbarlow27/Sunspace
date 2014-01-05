@@ -19,44 +19,12 @@ namespace SunspaceDealerDesktop
         protected ListItem lst78 = new ListItem("7/8", ".875");
         List<Door> doorsOrdered = new List<Door>();
 
-        #region validation constants
+        #region Validation constants
 
-        //TO BE CONFIRMED. CURRENTLY WINDOW DIMENSIONS, NOT SURE OF DOOR DIMENSION LIMITS.
-        #region MIN_WIDTH_BUILDABLE
-        protected float V4T_3V_MIN_WIDTH_BUILDABLE = Constants.V4T_3V_MIN_WIDTH_BUILDABLE;
-        protected float V4T_4V_MIN_WIDTH_BUILDABLE = Constants.V4T_4V_MIN_WIDTH_BUILDABLE;
-
-        protected float SCREEN_MIN_WIDTH_BUILDABLE = Constants.SCREEN_MIN_WIDTH_BUILDABLE;
-        #endregion
-        #region MIN_WIDTH_WARRANTY
-        protected float V4T_3V_MIN_WIDTH_WARRANTY = Constants.V4T_3V_MIN_WIDTH_WARRANTY;
-        protected float V4T_4V_MIN_WIDTH_WARRANTY = Constants.V4T_4V_MIN_WIDTH_WARRANTY;
-        #endregion
-        #region MAX_WIDTH_BUILDABLE
-        protected float V4T_3V_MAX_WIDTH_BUILDABLE = Constants.V4T_3V_MAX_WIDTH_BUILDABLE;
-        protected float V4T_4V_MAX_WIDTH_BUILDABLE = Constants.V4T_4V_MAX_WIDTH_BUILDABLE;
-        #endregion
-        #region MAX_WIDTH_WARRANTY
-        protected float V4T_3V_MAX_WIDTH_WARRANTY = Constants.V4T_3V_MAX_WIDTH_WARRANTY;
-        protected float V4T_4V_MAX_WIDTH_WARRANTY = Constants.V4T_4V_MAX_WIDTH_WARRANTY;
-        #endregion
-
-        #region MIN_HEIGHT_BUILDABLE
-        protected float V4T_3V_MIN_HEIGHT_BUILDABLE = Constants.V4T_3V_MIN_HEIGHT_BUILDABLE;
-        protected float V4T_4V_MIN_HEIGHT_BUILDABLE = Constants.V4T_4V_MIN_HEIGHT_BUILDABLE;
-        #endregion
-        #region MIN_HEIGHT_WARRANTY
-        protected float V4T_3V_MIN_HEIGHT_WARRANTY = Constants.V4T_3V_MIN_HEIGHT_WARRANTY;
-        protected float V4T_4V_MIN_HEIGHT_WARRANTY = Constants.V4T_4V_MIN_HEIGHT_WARRANTY;
-        #endregion
-        #region MAX_HEIGHT_BUILDABLE
-        protected float V4T_3V_MAX_HEIGHT_BUILDABLE = Constants.V4T_3V_MAX_HEIGHT_BUILDABLE;
-        protected float V4T_4V_MAX_HEIGHT_BUILDABLE = Constants.V4T_4V_MAX_HEIGHT_BUILDABLE;
-        #endregion
-        #region MAX_HEIGHT_WARRANTY
-        protected float V4T_3V_MAX_HEIGHT_WARRANTY = Constants.V4T_3V_MAX_HEIGHT_WARRANTY;
-        protected float V4T_4V_MAX_HEIGHT_WARRANTY = Constants.V4T_4V_MAX_HEIGHT_WARRANTY;
-        #endregion
+        protected int CUSTOM_DOOR_MIN_WIDTH = Constants.CUSTOM_DOOR_MIN_WIDTH;
+        protected int CUSTOM_DOOR_MAX_WIDTH = Constants.CUSTOM_DOOR_MAX_WIDTH;
+        protected int CUSTOM_DOOR_MIN_HEIGHT = Constants.CUSTOM_DOOR_MIN_HEIGHT;
+        protected int CUSTOM_DOOR_MAX_HEIGHT = Constants.CUSTOM_DOOR_MAX_HEIGHT;
 
         #endregion
 
