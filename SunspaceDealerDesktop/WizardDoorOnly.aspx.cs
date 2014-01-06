@@ -17,7 +17,16 @@ namespace SunspaceDealerDesktop
         protected ListItem lst58 = new ListItem("5/8", ".625");
         protected ListItem lst34 = new ListItem("3/4", ".75");
         protected ListItem lst78 = new ListItem("7/8", ".875");
-        List<Door> doorsOrdered = new List<Door>();            
+        List<Door> doorsOrdered = new List<Door>();
+
+        #region Validation constants
+
+        protected int CUSTOM_DOOR_MIN_WIDTH = Constants.CUSTOM_DOOR_MIN_WIDTH;
+        protected int CUSTOM_DOOR_MAX_WIDTH = Constants.CUSTOM_DOOR_MAX_WIDTH;
+        protected int CUSTOM_DOOR_MIN_HEIGHT = Constants.CUSTOM_DOOR_MIN_HEIGHT;
+        protected int CUSTOM_DOOR_MAX_HEIGHT = Constants.CUSTOM_DOOR_MAX_HEIGHT;
+
+        #endregion
 
         protected void Page_Load(object sender, EventArgs e)
         {

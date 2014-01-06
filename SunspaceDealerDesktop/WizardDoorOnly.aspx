@@ -4,6 +4,11 @@
     <script src="Scripts/Validation.js"></script>
     <script>
 
+        var DOOR_MIN_WIDTH = <%= CUSTOM_DOOR_MIN_WIDTH %>;
+        var DOOR_MAX_WIDTH = <%= CUSTOM_DOOR_MAX_WIDTH %>;
+        var DOOR_MIN_HEIGHT = <%= CUSTOM_DOOR_MIN_HEIGHT %>;
+        var DOOR_MAX_HEIGHT = <%= CUSTOM_DOOR_MAX_HEIGHT %>;
+
         var ventHeight; //height vents
 
         var ventTopHeight;
@@ -13,17 +18,11 @@
 
         var ventWidth; //width vents
 
-        var MIN_WIDTH_BUILDABLE;
-        var MAX_WIDTH_BUILDABLE;
-        var MIN_HEIGHT_BUILDABLE;
-        var MAX_HEIGHT_BUILDABLE;
-        var MIN_WIDTH_WARRANTY;
-        var MAX_WIDTH_WARRANTY;
-        var MIN_HEIGHT_WARRANTY;
-        var MAX_HEIGHT_WARRANTY;
+        var errorMessage;
 
-        //var errorMessage = $("#MainContent_txtErrorMessage");
-        var errorMessage = $("#MainContent_lblErrorMessage");
+        $(document).ready(function(){
+            errorMessage = document.getElementById("MainContent_txtErrorMessage");
+        });
 
         /**
         *customDimension
@@ -84,6 +83,10 @@
                 //Change door glass tint row display style to none
                 document.getElementById('MainContent_rowDoorGlassTint' + type).style.display = 'none';
 
+                document.getElementById("MainContent_rowDoorAsIfHeight" + type).style.display = 'none';
+
+                document.getElementById("MainContent_rowDoorTopBottomBothRad" + type).style.display = 'none';
+
                 displayMixedTint(type);
             }
                 //else, perform block
@@ -96,6 +99,10 @@
                 document.getElementById('MainContent_rowDoorScreenTypes' + type).style.display = 'none';
                 //Change door glass tint row display style to inherit
                 document.getElementById('MainContent_rowDoorGlassTint' + type).style.display = 'inherit';
+
+                document.getElementById("MainContent_rowDoorAsIfHeight" + type).style.display = 'none';
+
+                document.getElementById("MainContent_rowDoorTopBottomBothRad" + type).style.display = 'none';                
 
                 displayMixedTint(type);
             }
@@ -153,9 +160,8 @@
             var doorKicplateCustom = document.getElementById("MainContent_rowDoorCustomKickplate" + type);
             var doorColour = document.getElementById("MainContent_rowDoorColour" + type);
             var doorHeight = document.getElementById("MainContent_rowDoorHeight" + type);
-            var doorHeightCustom = document.getElementById("MainContent_rowDoorCustomHeight" + type);
             var doorWidth = document.getElementById("MainContent_rowDoorWidth" + type);
-            var doorWidthCustom = document.getElementById("MainContent_rowDoorCustomWidth" + type);
+            var topBotBothVents = document.getElementById("MainContent_rowDoorTopBottomBothRad" + type);
             var doorOperatorLHH = document.getElementById("MainContent_rowDoorOperatorLHH" + type);
             var doorOperatorRHH = document.getElementById("MainContent_rowDoorOperatorRHH" + type);
             var doorBoxHeader = document.getElementById("MainContent_rowDoorBoxHeader" + type);
@@ -253,50 +259,80 @@
                 doorStyle(type);
             }
         }
-
-
-        /********FUNCTIONS TAKEN FROM WINDOW ONLY ORDER FOR UNEVEN VENTS*******/
+        
+        /********FUNCTIONS TAKEN FROM WINDOW ONLY ORDER FOR UNEVEN VENTS (Credit goes to Taha Amjad, minimal modifications made)*******/
 
         /*
         This function re validates and re calculates the values of height and width of the door and vent sizes
         */
         function recalculate(title) {
             var height = document.getElementById('MainContent_txtDoorHeight' + title).value;
-            var asIfHeight = document.getElementById('MainContent_txtDoorAsIfHeight' + title).value;
             var width = document.getElementById('MainContent_txtDoorWidth' + title).value;
 
-            if (!validateInteger(asIfHeight)) asIfHeight = height; //if asIfHeight = null, set the value of height to it
+            if ($('#MainContent_radTypeFrench').is(':checked')){
+                DOOR_MIN_WIDTH = ((DOOR_MIN_WIDTH/2 + 2.125) - 1.625)*2 + 2;
+                DOOR_MAX_WIDTH = ((DOOR_MAX_WIDTH/2 + 2.125) - 1.625)*2 + 2;
+            }
+            else{
+                DOOR_MIN_WIDTH = <%= CUSTOM_DOOR_MIN_WIDTH %>;
+                DOOR_MAX_WIDTH = <%= CUSTOM_DOOR_MAX_WIDTH %>;
+            }
 
-            if (!validateInteger(height) || //height is not a valid integer
-                !validateInteger(asIfHeight) || //as-if height is not a valid integer
-                !validateInteger(width)) { //width is not a valid integer
+            if ($('#MainContent_ddlDoorStyle' + title + ' option:selected').val() == 'Vertical 4 Track'){
+                
+                var asIfHeight = document.getElementById('MainContent_txtDoorAsIfHeight' + title).value;
 
-                //error: please input a valid Height and Build-As-If Height
-                //alert("enter some numbers you fool!");
-                errorMessage.text("enter some numbers you foo!");
-                document.getElementById('MainContent_radDoorBottomRad' + title).checked = true;
-                topOrBottomUnevenClicked(title);
+                if (!validateInteger(asIfHeight)) asIfHeight = height; //if asIfHeight = null, set the value of height to it
+
+                if (!validateInteger(height) || //height is not a valid integer
+                    !validateInteger(asIfHeight) || //as-if height is not a valid integer
+                    !validateInteger(width)) { //width is not a valid integer
+                    //error: please input a valid Height and Build-As-If Height
+                    errorMessage.value = "Please enter a valid integer for both height and width.";
+                    $('MainContent_radDoorBottomRad' + title).prop('checked', true);
+                    topOrBottomUnevenClicked(title);
+                }
+                else if (width < DOOR_MIN_WIDTH || width > DOOR_MAX_WIDTH ||
+                     height < DOOR_MIN_HEIGHT || height > DOOR_MAX_HEIGHT ||
+                     asIfHeight < DOOR_MIN_HEIGHT || asIfHeight > DOOR_MAX_HEIGHT) {
+                    //error: please input a valid Height and Build-As-If Height
+                    errorMessage.value = "Not buildable, the buildable dimensions are: " 
+                        + DOOR_MAX_HEIGHT + "(Height) x " + DOOR_MAX_WIDTH + "(Width) to "
+                        + DOOR_MIN_HEIGHT + "(Height) x " + DOOR_MIN_WIDTH + "(Width).";
+                    $('MainContent_radDoorBottomRad' + title).prop('checked', true);
+                    topOrBottomUnevenClicked(title);
+                }
+                    //else if (width < MIN_WIDTH_WARRANTY || width > MAX_WIDTH_WARRANTY ||
+                    //     height < MIN_HEIGHT_WARRANTY || height > MAX_HEIGHT_WARRANTY ||
+                    //     asIfHeight < MIN_HEIGHT_WARRANTY || asIfHeight > MAX_HEIGHT_WARRANTY) {
+                    //    //error: please input a valid Height and Build-As-If Height
+                    //    //alert("buildable but not under warranty!");
+                    //    errorMessage.value = "Buildable but not under warranty. Warranty dimensions are: "
+                    //        + MAX_HEIGHT_WARRANTY + "(Height) x " + MAX_WIDTH_WARRANTY + "(Width) to "
+                    //        + MIN_HEIGHT_WARRANTY + "(Height) x " + MIN_WIDTH_WARRANTY + "(Width).";
+                    //    $('MainContent_radDoorBottomRad' + title).prop('checked', true);
+                    //    //document.getElementById('MainContent_radDoorBottomRad' + title).checked = true;
+                    //    topOrBottomUnevenClicked(title);
+                    //}
+                else {
+                    errorMessage.value = "";
+                    getHeightAndWidthOfEachVent(true, title);
+                }
             }
-            else if (width < MIN_WIDTH_BUILDABLE || width > MAX_WIDTH_BUILDABLE ||
-                 height < MIN_HEIGHT_BUILDABLE || height > MAX_HEIGHT_BUILDABLE ||
-                 asIfHeight < MIN_HEIGHT_BUILDABLE || asIfHeight > MAX_HEIGHT_BUILDABLE) {
-                //error: please input a valid Height and Build-As-If Height
-                //alert("not buildable!");
-                errorMessage.text("not buildable");
-                document.getElementById('MainContent_radDoorBottomRad' + title).checked = true;
-                topOrBottomUnevenClicked(title);
-            }
-            else if (width < MIN_WIDTH_WARRANTY || width > MAX_WIDTH_WARRANTY ||
-                 height < MIN_HEIGHT_WARRANTY || height > MAX_HEIGHT_WARRANTY ||
-                 asIfHeight < MIN_HEIGHT_WARRANTY || asIfHeight > MAX_HEIGHT_WARRANTY) {
-                //error: please input a valid Height and Build-As-If Height
-                //alert("buildable but not under warranty!");
-                errorMessage.text("buildable but not under warranty");
-                document.getElementById('MainContent_radDoorBottomRad' + title).checked = true;
-                topOrBottomUnevenClicked(title);
-            }
-            else {
-                getHeightAndWidthOfEachVent(true, title);
+            else{
+                if (!validateInteger(height) ||
+                    !validateInteger(width)) {
+                    errorMessage.value = "Please enter a valid integer for both height and width.";
+                }
+                else if (width < DOOR_MIN_WIDTH || width > DOOR_MAX_WIDTH ||
+                        height < DOOR_MIN_HEIGHT || height > DOOR_MAX_HEIGHT) {
+                    errorMessage.value = "Not buildable, the buildable dimensions are: " 
+                        + DOOR_MAX_HEIGHT + "(Height) x " + DOOR_MAX_WIDTH + "(Width) to "
+                        + DOOR_MIN_HEIGHT + "(Height) x " + DOOR_MIN_WIDTH + "(Width).";
+                }
+                else{
+                    errorMessage.value = "";                
+                }
             }
             //everything including vent sizes, DLO/Deductions, etc.
         }
@@ -342,11 +378,10 @@
             if (typeof (asIf) === 'undefined') asIf = false; //if asIf not specified set it by default to false
 
             var ventCount = $('#MainContent_ddlDoorV4TNumberOfVents' + title + ' option:selected').val();
-            var doorWidth = $('#MainContent_txtDoorWidthVinyl' + title + ' option:selected').val();
-            $('#MainContent_txtDoorAsIfHeightVinyl' + title + ' option:selected').val();
-            var doorHeight = (asIf) ? $('#MainContent_txtDoorAsIfHeightVinyl' + title + ' option:selected').val() : $('#MainContent_txtDoorHeightVinyl' + title + ' option:selected').val();
-            var asIfHeight = $('#MainContent_txtDoorAsIfHeightVinyl' + title + ' option:selected').val();
-            var height = $('#MainContent_txtDoorHeightVinyl' + title + ' option:selected').val();
+            var doorWidth = $('#MainContent_txtDoorWidth' + title).val();
+            var doorHeight = (asIf) ? $('#MainContent_txtDoorAsIfHeight' + title).val() : $('#MainContent_txtDoorHeight' + title).val();
+            var asIfHeight = $('#MainContent_txtDoorAsIfHeight' + title).val();
+            var height = $('#MainContent_txtDoorHeight' + title).val();
 
             if (ventCount > 8) {
                 ventWidth = (parseFloat(doorWidth) - 1.5625 - 2.75) / 3;
