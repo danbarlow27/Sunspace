@@ -472,7 +472,7 @@ namespace SunspaceDealerDesktop
                     DropDownList backwallFractions = new DropDownList();
                     backwallFractions.ID = "ddlBackwallFractions";
 
-                    fractionList = GlobalFunctions.FractionOptions("."+backHeight[1]);
+                    fractionList = GlobalFunctions.FractionOptions("." + backHeight[1]);
 
                     for (int i = 0; i < fractionList.Count; i++)
                     {
