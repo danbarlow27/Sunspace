@@ -16,20 +16,411 @@ namespace SunspaceDealerDesktop
         protected List<Wall> listOfWalls = new List<Wall>();
         protected Roof aRoof;
         protected Floor aFloor;
-        protected int wallCount = 0;
+        protected int wallCount = 3;
         protected int floorCount = 0;
         protected int roofCount = 0;
-        protected int project_id = 10; //get it from the session
+        protected int projectId = 10; //get it from the session
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            #region hard coded data
+            #region wall 1
+            Wall wall1 = new Wall();
+            wall1.WallType = "Proposed";
+            wall1.ModelType = "M200";
+            wall1.Length = 60f;
+            wall1.Orientation = "W";
+            wall1.SetBack = 60f;
+            wall1.Name = "Left Wall";
+            wall1.FirstItemIndex = 0;
+            wall1.LastItemIndex = 4;
+            wall1.StartHeight = 84f;
+            wall1.EndHeight = 78f;
+            wall1.SoffitLength = 0f;
+            wall1.GablePeak = 0f;
+            wall1.FireProtection = false;
+            //int wall1Index = 0;
+
+            List<LinearItem> list1OfLinearItems = new List<LinearItem>();
+
+            #region li1
+            Corner aCorner2 = new Corner();
+            aCorner2.LinearIndex = 0;
+            aCorner2.ItemType = "Starter Post";
+            aCorner2.StartHeight = 84f;
+            aCorner2.EndHeight = 83.9f;
+            aCorner2.Length = 2f;
+            aCorner2.FrameColour = "White";
+            aCorner2.Sex = "F";
+            aCorner2.FixedLocation = 0f;
+            aCorner2.AttachedTo = true;
+
+            list1OfLinearItems.Add(aCorner2); //add the linear item to the list
+            #endregion
+            #region li2
+            Filler aFiller2 = new Filler();
+            aFiller2.LinearIndex = 1;
+            aFiller2.ItemType = "Filler";
+            aFiller2.StartHeight = 83.9f;
+            aFiller2.EndHeight = 82.8f;
+            aFiller2.Length = 2f;
+            aFiller2.Sex = "MM";
+            aFiller2.FixedLocation = 2f;
+            aFiller2.AttachedTo = false;
+
+            list1OfLinearItems.Add(aFiller2);//add the linear item to the list
+            #endregion
+            #region li3
+            List<ModuleItem> list1OfModuleItems = new List<ModuleItem>();
+
+            Mod aMod5 = new Mod();
+
+            aMod5.LinearIndex = 2;
+            aMod5.ItemType = "Window";
+            aMod5.StartHeight = 82.8f;
+            aMod5.EndHeight = 78.2f;
+            aMod5.Length = 52f;
+            aMod5.FrameColour = "White";
+            aMod5.Sex = "MF";
+            aMod5.FixedLocation = 4f;
+            aMod5.AttachedTo = false;
+
+            #region mod1
+            Window kneewall = new Window();
+            kneewall.ModuleIndex = 0;
+            kneewall.ItemType = "Panel";
+            kneewall.FStartHeight = 0f;
+            kneewall.FEndHeight = 10f;
+            kneewall.FLength = 52f;
+            kneewall.WindowStyle = "Solid";
+            kneewall.ScreenType = "No Screen";
+            kneewall.LeftHeight = 8f;
+            kneewall.RightHeight = 8f;
+            kneewall.Width = 50f;
+            kneewall.FrameColour = "White"; //
+            kneewall.NumVents = 0;
+
+            list1OfModuleItems.Add(kneewall); //add the modular item to the list
+            #endregion 
+            #region mod2
+            VinylWindow aVinylWindow5 = new VinylWindow();
+            aVinylWindow5.ModuleIndex = 1;
+            aVinylWindow5.ItemType = "Window";
+            aVinylWindow5.FStartHeight = 10f;
+            aVinylWindow5.FEndHeight = 70.5f;
+            aVinylWindow5.FLength = 52f;
+            //aVinylWindow.Colour = windowColour; //replaced by FrameColour
+            aVinylWindow5.WindowStyle = "V4T";
+            aVinylWindow5.ScreenType = "Better Vue Insect Screen";
+            aVinylWindow5.LeftHeight = 58.5f;
+            aVinylWindow5.RightHeight = 58.5f;
+            aVinylWindow5.Width = 50f;
+            aVinylWindow5.FrameColour = "White"; //
+            aVinylWindow5.VinylTint = "CBGC"; // tint of each vent will be concatenated
+            aVinylWindow5.NumVents = 4;
+
+            List<float> list5OfVentHeights = new List<float>();
+            list5OfVentHeights.Add(15.125f);
+            list5OfVentHeights.Add(15.125f);
+            list5OfVentHeights.Add(15.125f);
+            list5OfVentHeights.Add(15.125f);
+            aVinylWindow5.VentHeights = list5OfVentHeights;
+
+            list1OfModuleItems.Add(aVinylWindow5);
+            #endregion
+            #region mod3
+            Window transom = new Window();
+            transom.ModuleIndex = 2;
+            transom.ItemType = "Panel";
+            transom.FStartHeight = 70.5f;
+            transom.FEndHeight = 82.8f;
+            transom.FLength = 52f;
+            transom.WindowStyle = "Solid";
+            transom.ScreenType = "No Screen";
+            transom.LeftHeight = 10.3f;
+            transom.RightHeight = 6.2f;
+            transom.Width = 50f;
+            transom.FrameColour = "White"; //
+            transom.NumVents = 0;
+
+            list1OfModuleItems.Add(transom); //add the modular item to the list
+            #endregion
+            aMod5.ModularItems = list1OfModuleItems;
+            list1OfLinearItems.Add(aMod5);
+            #endregion
+            #region li4
+            aFiller2 = new Filler();
+            aFiller2.LinearIndex = 3;
+            aFiller2.ItemType = "Filler";
+            aFiller2.StartHeight = 78.2f;
+            aFiller2.EndHeight = 78.1f;
+            aFiller2.Length = 2f;
+            aFiller2.Sex = "MM";
+            aFiller2.FixedLocation = -1f;
+            aFiller2.AttachedTo = false;
+
+            list1OfLinearItems.Add(aFiller2);//add the linear item to the list
+            #endregion
+            #region li5
+            aCorner2 = new Corner();
+            aCorner2.LinearIndex = 4;
+            aCorner2.ItemType = "Corner Post";
+            aCorner2.StartHeight = 78.1f;
+            aCorner2.EndHeight = 78f;
+            aCorner2.Length = 2f;
+            aCorner2.FrameColour = "White";
+            aCorner2.Sex = "F";
+            aCorner2.FixedLocation = 52f;
+            aCorner2.AttachedTo = true;
+
+            list1OfLinearItems.Add(aCorner2); //add the linear item to the list                 
+            #endregion
+            wall1.LinearItems = list1OfLinearItems;
+            listOfWalls.Add(wall1); //add the wall to the list
+            #endregion
+            
+            #region wall 2
+            Wall wall2 = new Wall();
+            wall2.WallType = "Proposed";
+            wall2.ModelType = "M200";
+            wall2.Length = 86f;
+            wall2.Orientation = "S";
+            wall2.SetBack = 0f;
+            wall2.Name = "Front Wall";
+            wall2.FirstItemIndex = 5;
+            wall2.LastItemIndex = 9;
+            wall2.StartHeight = 78f;
+            wall2.EndHeight = 78f;
+            wall2.SoffitLength = 0f;
+            wall2.GablePeak = 0f;
+            wall2.FireProtection = false;
+            //int wall2Index = 1;
+
+            List<LinearItem> list2OfLinearItems = new List<LinearItem>();
+
+            #region li1
+            aFiller2 = new Filler();
+            aFiller2.LinearIndex = 5;
+            aFiller2.ItemType = "Filler";
+            aFiller2.StartHeight = 78;
+            aFiller2.EndHeight = 78f;
+            aFiller2.Length = 2f;
+            aFiller2.Sex = "MM";
+            aFiller2.FixedLocation = 2f;
+            aFiller2.AttachedTo = false;
+
+            list1OfLinearItems.Add(aFiller2);//add the linear item to the list
+            #endregion
+            #region li2
+            List<ModuleItem> list2OfModuleItems = new List<ModuleItem>();
+
+            Mod aMod2 = new Mod();
+
+            aMod2.LinearIndex = 6;
+            aMod2.ItemType = "Window";
+            aMod2.StartHeight = 78f;
+            aMod2.EndHeight = 78f;
+            aMod2.Length = 52f;
+            aMod2.FrameColour = "White";
+            aMod2.Sex = "MF";
+            aMod2.FixedLocation = 4f;
+            aMod2.AttachedTo = false;
+
+            #region mod1
+            Window kneewall2 = new Window();
+            kneewall2.ModuleIndex = 0;
+            kneewall2.ItemType = "Panel";
+            kneewall2.FStartHeight = 0f;
+            kneewall2.FEndHeight = 10f;
+            kneewall2.FLength = 52f;
+            kneewall2.WindowStyle = "Solid";
+            kneewall2.ScreenType = "No Screen";
+            kneewall2.LeftHeight = 8f;
+            kneewall2.RightHeight = 8f;
+            kneewall2.Width = 50f;
+            kneewall2.FrameColour = "White"; //
+            kneewall2.NumVents = 0;
+
+            list1OfModuleItems.Add(kneewall); //add the modular item to the list
+            #endregion 
+            #region mod2
+            VinylWindow aVinylWindow2 = new VinylWindow();
+            aVinylWindow2.ModuleIndex = 1;
+            aVinylWindow2.ItemType = "Window";
+            aVinylWindow2.FStartHeight = 10f;
+            aVinylWindow2.FEndHeight = 70.5f;
+            aVinylWindow2.FLength = 52f;
+            //aVinylWindow.Colour = windowColour; //replaced by FrameColour
+            aVinylWindow2.WindowStyle = "V4T";
+            aVinylWindow2.ScreenType = "Better Vue Insect Screen";
+            aVinylWindow2.LeftHeight = 58.5f;
+            aVinylWindow2.RightHeight = 58.5f;
+            aVinylWindow2.Width = 50f;
+            aVinylWindow2.FrameColour = "White"; //
+            aVinylWindow2.VinylTint = "CBGC"; // tint of each vent will be concatenated
+            aVinylWindow2.NumVents = 4;
+
+            List<float> list2OfVentHeights = new List<float>();
+            list2OfVentHeights.Add(15.125f);
+            list2OfVentHeights.Add(15.125f);
+            list2OfVentHeights.Add(15.125f);
+            list2OfVentHeights.Add(15.125f);
+            aVinylWindow2.VentHeights = list2OfVentHeights;
+
+            list2OfModuleItems.Add(aVinylWindow2);
+            #endregion
+            #region mod3
+            Window transom2 = new Window();
+            transom2.ModuleIndex = 3;
+            transom2.ItemType = "Panel";
+            transom2.FStartHeight = 7.5f;
+            transom2.FEndHeight = 7.5f;
+            transom2.FLength = 52f;
+            transom2.WindowStyle = "Solid";
+            transom2.ScreenType = "No Screen";
+            transom2.LeftHeight = 7.5f;
+            transom2.RightHeight = 7.5f;
+            transom2.Width = 50f;
+            transom2.FrameColour = "White"; //
+            transom2.NumVents = 0;
+
+            list2OfModuleItems.Add(transom2); //add the modular item to the list
+            #endregion
+
+            aMod2.ModularItems = list2OfModuleItems;
+            list2OfLinearItems.Add(aMod2);
+            #endregion
+            #region li3
+            List<ModuleItem> list3OfModuleItems = new List<ModuleItem>();
+
+            aMod2 = new Mod();
+
+            aMod2.LinearIndex = 7;
+            aMod2.ItemType = "Door";
+            aMod2.StartHeight = 78f;
+            aMod2.EndHeight = 78f;
+            aMod2.Length = 28f;
+            aMod2.FrameColour = "White";
+            aMod2.Sex = "MF";
+            aMod2.FixedLocation = 4f;
+            aMod2.AttachedTo = false;
+            #region mod1
+            Window aDoorWindow1 = new Window();
+            aDoorWindow1.WindowStyle = "Glass";
+            aDoorWindow1.ScreenType = "No Screen";
+            aDoorWindow1.LeftHeight = 24f;
+            aDoorWindow1.RightHeight = 24f;
+            aDoorWindow1.Width = 22f;
+            aDoorWindow1.FrameColour = "White";
+            aDoorWindow1.NumVents = 0;
+
+
+
+            CabanaDoor aCabanaDoor1 = new CabanaDoor();
+            aCabanaDoor1.ModuleIndex = 0;
+            aCabanaDoor1.ItemType = "Door";
+            aCabanaDoor1.FStartHeight = 0f;
+            aCabanaDoor1.FEndHeight = 62f;
+            aCabanaDoor1.FLength = 26f;
+            aCabanaDoor1.DoorType = "Cabana Door";
+            aCabanaDoor1.DoorStyle = "Half Lite";
+            aCabanaDoor1.ScreenType = "No Screen";
+            aCabanaDoor1.Height = 60f;
+            aCabanaDoor1.Length = 24;
+            aCabanaDoor1.Colour = "White"; //
+            aCabanaDoor1.Kickplate = 10f; //
+            aCabanaDoor1.GlassTint = "Grey";
+            aCabanaDoor1.Hinge = "Left";
+            aCabanaDoor1.Swing = "Out";
+            aCabanaDoor1.HardwareType = "Satin Silver";
+
+            aCabanaDoor1.DoorWindow = aDoorWindow1;
+
+            list3OfModuleItems.Add(aCabanaDoor1); //add the modular item to the list
+            #endregion
+            #region mod1
+            transom2 = new Window();
+            transom2.ModuleIndex = 1;
+            transom2.ItemType = "Panel";
+            transom2.FStartHeight = 62f;
+            transom2.FEndHeight = 78f;
+            transom2.FLength = 26f;
+            transom2.WindowStyle = "Solid";
+            transom2.ScreenType = "No Screen";
+            transom2.LeftHeight = 16f;
+            transom2.RightHeight = 16f;
+            transom2.Width = 24f;
+            transom2.FrameColour = "White"; //
+            transom2.NumVents = 0;
+
+            list3OfModuleItems.Add(transom2); //add the modular item to the list
+            #endregion
+            aMod2.ModularItems = list3OfModuleItems;
+            list2OfLinearItems.Add(aMod2);
+            #endregion
+            #region li4
+            aFiller2 = new Filler();
+            aFiller2.LinearIndex = 8;
+            aFiller2.ItemType = "Filler";
+            aFiller2.StartHeight = 78f;
+            aFiller2.EndHeight = 78f;
+            aFiller2.Length = 2f;
+            aFiller2.Sex = "MM";
+            aFiller2.FixedLocation = 82f;
+            aFiller2.AttachedTo = true;
+
+            list2OfLinearItems.Add(aFiller2);//add the linear item to the list
+            #endregion
+            #region li5
+            aCorner2 = new Corner();
+            aCorner2.LinearIndex = 9;
+            aCorner2.ItemType = "Corner Post";
+            aCorner2.StartHeight = 78f;
+            aCorner2.EndHeight = 78f;
+            aCorner2.Length = 2f;
+            aCorner2.FrameColour = "White";
+            aCorner2.Sex = "F";
+            aCorner2.FixedLocation = 84f;
+            aCorner2.AttachedTo = false;
+
+            list2OfLinearItems.Add(aCorner2); //add the linear item to the list                 
+            #endregion
+            wall2.LinearItems = list2OfLinearItems;
+            listOfWalls.Add(wall2); //add the wall to the list
+            #endregion
+
+            #region wall 3
+            Wall wall3 = new Wall();
+            wall3.WallType = "Proposed";
+            wall3.ModelType = "M200";
+            wall3.Length = 60f;
+            wall3.Orientation = "E";
+            wall3.SetBack = 60f;
+            wall3.Name = "Right Wall";
+            wall3.FirstItemIndex = 10;
+            wall3.LastItemIndex = 13;
+            wall3.StartHeight = 78f;
+            wall3.EndHeight = 84f;
+            wall3.SoffitLength = 0f;
+            wall3.GablePeak = 0f;
+            wall3.FireProtection = false;
+            //int wall1Index = 0;
+
+            listOfWalls.Add(wall3); //add the wall to the list
+            #endregion
+
+            #endregion
+
+            #region hit the DB
+
             using (SqlConnection aConnection = new SqlConnection(sdsDBConnection.ConnectionString))
             {
 
                 aConnection.Open();
                 SqlCommand aCommand = aConnection.CreateCommand();
                 SqlTransaction aTransaction;
-                SqlDataReader aReader;
+                //SqlDataReader aReader;
 
                 // Start a local transaction.
                 aTransaction = aConnection.BeginTransaction("SampleTransaction");
@@ -42,7 +433,7 @@ namespace SunspaceDealerDesktop
                 try
                 {
                     //get number of walls floors and roofs
-                    aCommand.CommandText = "SELECT number_walls, number_floors, number_roofs FROM sunrooms WHERE project_id = '" + project_id + "'";
+                    aCommand.CommandText = "SELECT number_walls, number_floors, number_roofs FROM sunrooms WHERE project_id = '" + projectId + "'";
                     SqlDataReader projectReader = aCommand.ExecuteReader();
 
                     if (projectReader.HasRows)
@@ -59,7 +450,7 @@ namespace SunspaceDealerDesktop
                     //for each wall in the project
                     //for (int i = 0; i < wallCount; i++)
                     aCommand.CommandText = "SELECT wall_type, model_type, total_length, orientation, set_back, name, first_item_index, last_item_index, start_height, end_height, soffit_length, gable_peak, obstructions, fire_protection, wall_index "
-                        + "FROM walls WHERE project_id = '" + project_id + "'";
+                        + "FROM walls WHERE project_id = '" + projectId + "'";
 
                     SqlDataReader wallReader = aCommand.ExecuteReader();
 
@@ -88,7 +479,7 @@ namespace SunspaceDealerDesktop
                             aWall.SoffitLength = Convert.ToSingle(wallReader[10]);
                             aWall.GablePeak = Convert.ToSingle(wallReader[11]);
                             aWall.FireProtection = Convert.ToBoolean(wallReader[13]);
-                            int wallIndex = Convert.ToInt32(wallReader[0]);
+                            int wallIndex = Convert.ToInt32(wallReader[14]);
 
                             //aReader.Close();
 
@@ -96,14 +487,14 @@ namespace SunspaceDealerDesktop
 
                             //Get linear items
                             aCommand.CommandText = "SELECT linear_index, linear_type, start_height, end_height, length, frame_colour, sex, fixed_location, attached_to "
-                                                    + "FROM linear_items WHERE project_id = '" + project_id + "' AND last_item_index < '" + aWall.LastItemIndex + "' AND first_item_index > '" + aWall.FirstItemIndex + "'";
-                            SqlDataReader listItemReader = aCommand.ExecuteReader();
+                                                    + "FROM linear_items WHERE project_id = '" + projectId + "' AND last_item_index < '" + aWall.LastItemIndex + "' AND first_item_index > '" + aWall.FirstItemIndex + "'";
+                            SqlDataReader linearItemReader = aCommand.ExecuteReader();
 
                             //for each linear item/mod in the wall
                             //for (int j = aWall.FirstItemIndex; j < aWall.LastItemIndex; j++)
-                            if (listItemReader.HasRows)
+                            if (linearItemReader.HasRows)
                             {
-                                while (listItemReader.Read())
+                                while (linearItemReader.Read())
                                 {
                                     //Get linear items
                                     //aCommand.CommandText = "SELECT linear_index, linear_type, start_height, end_height, length, frame_colour, sex, fixed_location, attached_to "
@@ -112,15 +503,15 @@ namespace SunspaceDealerDesktop
                                     //aReader.Read();
 
 
-                                    int linearIndex = Convert.ToInt32(listItemReader[0]);
-                                    string linearItemType = Convert.ToString(listItemReader[1]);
-                                    float startHeight = Convert.ToSingle(listItemReader[2]);
-                                    float endHeight = Convert.ToSingle(listItemReader[3]);
-                                    float length = Convert.ToSingle(listItemReader[4]);
-                                    string frameColour = Convert.ToString(listItemReader[5]);
-                                    string sex = Convert.ToString(listItemReader[6]);
-                                    float fixedLocation = Convert.ToSingle(listItemReader[7]);
-                                    bool attachedTo = Convert.ToBoolean(listItemReader[8]);
+                                    int linearIndex = Convert.ToInt32(linearItemReader[0]);
+                                    string linearItemType = Convert.ToString(linearItemReader[1]);
+                                    float startHeight = Convert.ToSingle(linearItemReader[2]);
+                                    float endHeight = Convert.ToSingle(linearItemReader[3]);
+                                    float length = Convert.ToSingle(linearItemReader[4]);
+                                    string frameColour = Convert.ToString(linearItemReader[5]);
+                                    string sex = Convert.ToString(linearItemReader[6]);
+                                    float fixedLocation = Convert.ToSingle(linearItemReader[7]);
+                                    bool attachedTo = Convert.ToBoolean(linearItemReader[8]);
 
                                     //aReader.Close();
 
@@ -153,7 +544,7 @@ namespace SunspaceDealerDesktop
                                             //aReader.Close();
 
                                             aCommand.CommandText = "SELECT module_index, item_type, start_height, end_height, length FROM moduleItems "
-                                                                + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "'";
+                                                                + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "'";
 
                                             SqlDataReader moduleItemReader = aCommand.ExecuteReader();
 
@@ -186,7 +577,7 @@ namespace SunspaceDealerDesktop
                                                             #region Window
                                                             //Get window
                                                             aCommand.CommandText = "SELECT window_type, screen_type, start_height, end_height, length, window_colour, number_vents FROM windows "
-                                                                                    + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                    + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                             SqlDataReader windowReader = aCommand.ExecuteReader();
 
@@ -230,7 +621,7 @@ namespace SunspaceDealerDesktop
 
                                                                         //Get vinyl item
                                                                         aCommand.CommandText = "SELECT start_height, vinyl_tint, spreader_bar FROM vinyl_items "
-                                                                                                + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                                + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                         SqlDataReader vinylReader = aCommand.ExecuteReader();
 
@@ -303,7 +694,7 @@ namespace SunspaceDealerDesktop
 
                                                                         //Get glass item
                                                                         aCommand.CommandText = "SELECT glass_type, glass_tint, tempered, operation FROM glass_items "
-                                                                                                + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                                + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                         SqlDataReader glassReader = aCommand.ExecuteReader();
 
@@ -346,7 +737,7 @@ namespace SunspaceDealerDesktop
                                                             #region Door
                                                             //Get door
                                                             aCommand.CommandText = "SELECT door_type, door_style, screen_type, height, length, door_colour, kick_plate FROM doors "
-                                                                                    + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                    + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                             SqlDataReader doorReader = aCommand.ExecuteReader();
 
@@ -367,7 +758,7 @@ namespace SunspaceDealerDesktop
 
                                                                     //get the window in this door
                                                                     aCommand.CommandText = "SELECT door_index, window_type, screen_type, start_height, end_height, length, window_colour, number_vents FROM windows "
-                                                                                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                            + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                     SqlDataReader doorWindowReader = aCommand.ExecuteReader();
 
@@ -401,7 +792,7 @@ namespace SunspaceDealerDesktop
                                                                             //for (int l = 0; l < aDoorWindow.NumVents; l++)
                                                                             //Get vinyl item
                                                                             aCommand.CommandText = "SELECT start_height, vinyl_tint, spreader_bar FROM vinyl_items "
-                                                                                                    + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                                    + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                             SqlDataReader vinylReader = aCommand.ExecuteReader();
 
@@ -445,7 +836,7 @@ namespace SunspaceDealerDesktop
                                                                             #region Cabana Door
 
                                                                             aCommand.CommandText = "SELECT glass_tint, hinge, swing, hardware_type FROM cabana_doors "
-                                                                                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                            + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                             SqlDataReader cabanaReader = aCommand.ExecuteReader();
 
@@ -483,7 +874,7 @@ namespace SunspaceDealerDesktop
                                                                             #region French Door
 
                                                                             aCommand.CommandText = "SELECT glass_tint, swing, operator, hardware_type FROM french_doors "
-                                                                                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                                            + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                             SqlDataReader frenchReader = aCommand.ExecuteReader();
 
@@ -522,7 +913,7 @@ namespace SunspaceDealerDesktop
                                                                             #region Patio Door
 
                                                                             aCommand.CommandText = "SELECT glass_tint, moving_door FROM patio_doors "
-                                                                                            + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'"; //change k to moduleIndex. Couldn't compile other pages.
+                                                                                            + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'"; //change k to moduleIndex. Couldn't compile other pages.
 
                                                                             SqlDataReader patioReader = aCommand.ExecuteReader();
 
@@ -772,7 +1163,7 @@ namespace SunspaceDealerDesktop
 
                                 listOfWalls.Add(aWall); //add the wall to the list
                             }
-                            listItemReader.Close();
+                            linearItemReader.Close();
 
                         }
                     }
@@ -792,7 +1183,7 @@ namespace SunspaceDealerDesktop
                     if (roofCount != 0)
                     {
                         aCommand.CommandText = "SELECT roof_type, interior_skin, exterior_skin, thickness, fire_protection, thermadeck, acrylic, gutter, gutter_pro, gutter_colour, number_supports, stripe_colour, projection, width, roof_index "
-                                + "FROM roofs WHERE project_id = '" + project_id + "'";
+                                + "FROM roofs WHERE project_id = '" + projectId + "'";
 
                         SqlDataReader roofReader = aCommand.ExecuteReader();
 
@@ -821,9 +1212,10 @@ namespace SunspaceDealerDesktop
 
                                 List<RoofModule> listOfRoofModules = new List<RoofModule>();
 
-                                //aCommand.CommandText = "SELECT projection, width, interior_skin, exterior_skin, roof_view "
-                                //+ "FROM roof_modules WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "'";
-                                
+                                aCommand.CommandText = "SELECT projection, width, interior_skin, exterior_skin, roof_view "
+                                + "FROM roof_modules WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "'";
+
+
                                 SqlDataReader moduleReader = aCommand.ExecuteReader();
 
                                 if (moduleReader.HasRows)
@@ -839,8 +1231,9 @@ namespace SunspaceDealerDesktop
 
                                         List<RoofItem> listOfRoofItems = new List<RoofItem>();
 
-                                        //aCommand.CommandText = "SELECT roof_item, projection, width, item_index "
-                                        //+ "FROM roof_modules WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "'";
+                                        aCommand.CommandText = "SELECT roof_item, projection, width, item_index "
+                                        + "FROM roof_modules WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "'";
+
 
                                         SqlDataReader itemReader = aCommand.ExecuteReader();
 
@@ -877,8 +1270,9 @@ namespace SunspaceDealerDesktop
                                                         //are all skylights the same? length/width etc? .. 
                                                         //there is no skylight object.. roof item should have a attribute for a skylight object
 
-                                                        //aCommand.CommandText = "SELECT skylight_type, set_back, operator "
-                                                        //+ "FROM skylights WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index '" + itemIndex + "'";
+                                                        aCommand.CommandText = "SELECT skylight_type, set_back, operator "
+                                                        + "FROM skylights WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index '" + itemIndex + "'";
+
 
                                                         SqlDataReader skylightReader = aCommand.ExecuteReader();
 
@@ -900,8 +1294,9 @@ namespace SunspaceDealerDesktop
 
                                                         //check for fanbeams in this roof item
                                                         //no info in the db or in C#
-                                                        //aCommand.CommandText = "SELECT skylight_type, set_back, operator "
-                                                        //+ "FROM fanbeams WHERE project_id = '" + project_id + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index = '" + itemIndex + "'";
+                                                        aCommand.CommandText = "SELECT skylight_type, set_back, operator "
+                                                        + "FROM fanbeams WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index = '" + itemIndex + "'";
+
 
                                                         SqlDataReader fanbeamReader = aCommand.ExecuteReader();
 
@@ -967,6 +1362,113 @@ namespace SunspaceDealerDesktop
                         //lblError.Text = "Rollback Exception Type: " + ex2.GetType();
                         //lblError.Text += "  Message: " + ex2.Message;
                     }
+                }
+            }
+              
+            #endregion
+
+            hidJsonObjects.Value = JsonConvert.SerializeObject(listOfWalls);
+            PopulateDropdown(floorCount, roofCount);
+            PopulateModOptions();
+        }
+
+        protected void PopulateDropdown(int floor = 0, int roof = 0)
+        {
+            if (roof != 0) //if there's a roof, add it 
+            {
+                ListItem liRoof = new ListItem("Roof", "Roof");
+                ddlSunroomObjects.Items.Add(liRoof);
+            }
+            // add all the walls
+            int i = 0;
+            foreach (Wall wall in listOfWalls)
+            {
+                ListItem liWall = new ListItem(wall.Name, i.ToString());
+                ddlSunroomObjects.Items.Add(liWall);
+                i++;
+            }
+            if (floor != 0) //if there's a floor, add it
+            {
+                ListItem liFloor = new ListItem("Floor", "Floor");
+                ddlSunroomObjects.Items.Add(liFloor);
+            }
+
+            //add the onclick attribute
+            ddlSunroomObjects.Attributes.Add("onclick", "sunroomObjectChanged(document.getElementById('SecondaryNavigation_ddlSunroomObjects').options[document.getElementById('SecondaryNavigation_ddlSunroomObjects').selectedIndex].value);");
+        }
+
+        protected void PopulateModOptions()
+        {
+            foreach (Wall wall in listOfWalls)
+            {
+                foreach (LinearItem li in wall.LinearItems)
+                {
+                    //li tag to hold linear item type radio button and all its content
+                    ModOptions.Controls.Add(new LiteralControl("<li id=li"+li.LinearIndex+" style=\"display:none\">"));
+                    
+                    //Window type radio button
+                    RadioButton typeRadio = new RadioButton();
+                    typeRadio.ID = "radType" + li.LinearIndex; //Adding appropriate id to window type radio button
+                    typeRadio.GroupName = "linearItemTypeRadios";         //Adding group name for all window types
+                    //if (title == "Vinyl") typeRadio.Attributes.Add("onclick", "windowVinylStyleChanged(document.getElementById('MainContent_ddlWindowStyleVinyl').options[document.getElementById('MainContent_ddlWindowStyleVinyl').selectedIndex].value);");
+                    //if (title == "Glass") typeRadio.Attributes.Add("onclick", "windowGlassStyleChanged(document.getElementById('MainContent_ddlWindowStyleGlass').options[document.getElementById('MainContent_ddlWindowStyleGlass').selectedIndex].value);");
+                    //if (title == "Screen") typeRadio.Attributes.Add("onclick", "windowScreenStyleChanged(document.getElementById('MainContent_ddlWindowStyleScreen').options[document.getElementById('MainContent_ddlWindowStyleScreen').selectedIndex].value);");
+                    //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed('" + title + "')"); //On click event to display the proper fields/rows
+
+
+                    //Window type radio button label for clickable area
+                    Label typeLabelRadio = new Label();
+                    typeLabelRadio.AssociatedControlID = "radType"+ li.LinearIndex;   //Tying this label to the radio button
+
+                    //Window type radio button label text
+                    Label typeLabel = new Label();
+                    typeLabel.AssociatedControlID = "radType"+ li.LinearIndex;    //Tying this label to the radio button
+                    typeLabel.Text = li.ItemType;     //Displaying the proper texted based on current title variable
+
+
+                    ModOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder ModOptions
+                    ModOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder ModOptions
+                    ModOptions.Controls.Add(typeLabel);        //Adding label control to placeholder ModOptions
+
+                    
+                    //New instance of a table for every window type
+                    Table tblModDetails = new Table();
+
+                    tblModDetails.ID = "tblWindowDetails" + li.LinearIndex; //Adding appropriate id to the table
+                    //tblWindowDetails.CssClass = "tblTextFields";                  //Adding CssClass to the table for styling
+                    //tblWindowDetails.Attributes.Add("style", "display: block");
+                    tblModDetails.Style.Add("display", "table");
+
+
+
+
+                    /////////////////////////////////////////////
+                    // rows and cells go here
+                    /////////////////////////////////////////////
+
+
+
+
+                    //Adding literal control div tag to hold the table, add to ModOptions placeholder
+                    ModOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\" id=\"div_" + li.LinearIndex + "\">"));
+
+                    ModOptions.Controls.Add(new LiteralControl("<ul>"));
+
+                    //Adding literal control li to keep proper page look and format
+                    ModOptions.Controls.Add(new LiteralControl("<li>"));
+
+                    //Adding table to placeholder ModOptions
+                    ModOptions.Controls.Add(tblModDetails);
+
+                    //Closing necessary tags
+                    ModOptions.Controls.Add(new LiteralControl("</li>"));
+
+                    ModOptions.Controls.Add(new LiteralControl("</ul>"));
+
+                    ModOptions.Controls.Add(new LiteralControl("</div>"));
+
+                    ModOptions.Controls.Add(new LiteralControl("</li>"));
+
                 }
             }
         }

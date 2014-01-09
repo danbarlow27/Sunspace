@@ -505,9 +505,10 @@
         *Adding onclick events to next question buttons
         */
         $(document).ready(function () {
-            //$('#MainContent_btnQuestion2').click(determineStartAndEndHeightOfEachWall(gable));
-            $('#MainContent_btnQuestion2').click(loadWallData);
-            $('#MainContent_btnSubmit').click(submitData);
+            //$('#MainContent_btnQuestion2').on('click', checkQuestion2(gable));
+            //$('#MainContent_btnQuestion2').on('click', determineStartAndEndHeightOfEachWall(gable));
+            //$('#MainContent_btnQuestion2').on('click', loadWallData);
+            $('#MainContent_btnSubmit').on('click', submitData);
 
             //$('#MainContent_txtWall1Length').val('20');
             //$('#MainContent_txtWall3Length').val('120');
@@ -813,7 +814,6 @@
             wall to the first, setting end and start height of each wall (going backwards).
         */
         function determineStartAndEndHeightOfEachWall(gable) {
-            document.getElementById();
             if (gable == "True") {
 
                 var proposedCount = 0;
@@ -889,6 +889,12 @@
                     }
                 }
                 else if (backWall === "south") { //if backwall is a south facing wall.. i.e. is existing
+                    console.log(backWallIndex);
+
+                    wallStartHeightArray[backWallIndex] = parseFloat(document.getElementById("hidBackWallHeight").value);
+                    wallEndHeightArray[backWallIndex] = parseFloat(document.getElementById("hidBackWallHeight").value);
+
+                    console.log(wallStartHeightArray[backWallIndex].toString());
                     for (var i = 0; i < coordList.length; i++) {
                         if (coordList[i][4] === "E") { //existing wall
                             wallStartHeightArray[i] = parseFloat(document.getElementById("hidBackWallHeight").value);
@@ -902,21 +908,21 @@
                             switch (coordList[i][5]) {
                                 case "S": //if south
                                 case "N": //or north
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]);
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i-1]);
                                     break;
                                 case "W": //if west
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) - parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and length, and subtract it from start height
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i-1]) - parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and length, and subtract it from start height
                                     break;
                                 case "E": //if east
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) + parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and length, and add it to start height
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i-1]) + parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and length, and add it to start height
                                     break;
                                 case "SW": //if southwest
                                 case "SE": //or northwest
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) - parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and setback, then subtract it from start height 
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i-1]) - parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and setback, then subtract it from start height 
                                     break;
                                 case "NW": //if southeast
                                 case "NE": //or northeast
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) + parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and setback, then add it to start height 
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i-1]) + parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and setback, then add it to start height 
                                     break;
                             }
                         }
@@ -1464,6 +1470,8 @@
             }
             
             checkRoofPanels();
+
+            console.log(document.getElementById("hidBackWallHeight").value);
 
             return isValid;
         }
@@ -2474,7 +2482,7 @@
                         </div> <%-- end .toggleContent --%>
 
                 <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion2" OnClientClick="determineStartAndEndHeightOfEachWall(gable); checkQuestion2(gable)" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
+                <input type="button" id="btnQuestion2" onclick="checkQuestion2(gable); determineStartAndEndHeightOfEachWall(gable); loadWallData();" class="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" value="Next Question" disabled/>
 
             </div> 
             <%-- end #slide2 --%>
