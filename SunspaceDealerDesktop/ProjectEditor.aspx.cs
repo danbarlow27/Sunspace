@@ -40,7 +40,7 @@ namespace SunspaceDealerDesktop
             wall1.SoffitLength = 0f;
             wall1.GablePeak = 0f;
             wall1.FireProtection = false;
-            int wall1Index = 0;
+            //int wall1Index = 0;
 
             List<LinearItem> list1OfLinearItems = new List<LinearItem>();
 
@@ -131,7 +131,7 @@ namespace SunspaceDealerDesktop
             #endregion
             #region mod3
             Window transom = new Window();
-            transom.ModuleIndex = 3;
+            transom.ModuleIndex = 2;
             transom.ItemType = "Panel";
             transom.FStartHeight = 70.5f;
             transom.FEndHeight = 82.8f;
@@ -388,7 +388,28 @@ namespace SunspaceDealerDesktop
             #endregion
             wall2.LinearItems = list2OfLinearItems;
             listOfWalls.Add(wall2); //add the wall to the list
-            #endregion     
+            #endregion
+
+            #region wall 3
+            Wall wall3 = new Wall();
+            wall3.WallType = "Proposed";
+            wall3.ModelType = "M200";
+            wall3.Length = 60f;
+            wall3.Orientation = "E";
+            wall3.SetBack = 60f;
+            wall3.Name = "Right Wall";
+            wall3.FirstItemIndex = 10;
+            wall3.LastItemIndex = 13;
+            wall3.StartHeight = 78f;
+            wall3.EndHeight = 84f;
+            wall3.SoffitLength = 0f;
+            wall3.GablePeak = 0f;
+            wall3.FireProtection = false;
+            //int wall1Index = 0;
+
+            listOfWalls.Add(wall3); //add the wall to the list
+            #endregion
+
             #endregion
 
             #region hit the DB
