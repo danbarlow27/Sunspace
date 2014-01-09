@@ -103,86 +103,27 @@
         var wallSlope;
 
         ///* CREATE CANVAS */
-        var canvas = d3.select("#myCanvas")            //Select the div tag with id "mySunroom"
+        var canvas = d3.select("#myCanvas")            //Select the div tag with id "myCanvas"
                     .append("svg")                      //Add an svg tag to the selected div tag
                     .attr("width", MAX_CANVAS_WIDTH)    //Set the width of the canvas/grid to MAX_CANVAS_WIDTH
-                    .attr("height", MAX_CANVAS_HEIGHT); //Set the height of the canvas/grid to MAX_CANVAS_HEIGHT
-        var svgGrid = $("#myCanvas");     //create the svg grid on the canvas
+                    .attr("height", MAX_CANVAS_HEIGHT) //Set the height of the canvas/grid to MAX_CANVAS_HEIGHT
+                    .style("border", "1px solid black")
+                    .append("g")
+                    .attr("transform", "translate("+CENTRE_X+","+CENTRE_Y+")");
 
         var gridPoints;
 
 
         /**
-        *drawCanvas
-        *Draw canvas function; draws the canvas border
-        */
-        function drawCanvas() {
-
-            //Creates rectangle area to draw in based on max canvas dimensions
-            var rect = canvas.append("rect")                //Draws a rectangle for the canvas/grid to sit in
-                        .attr("width", MAX_CANVAS_WIDTH)    //Sets the width for the canvas/grid
-                        .attr("height", MAX_CANVAS_HEIGHT)  //Sets the height for the canvas/grid
-                        .attr("fill", "white");              //Sets the color of the rectangle to white
-
-            //Draws left border line of canvas
-            var line = canvas.append("line")                //Draws the left line of the border of the canvas/grid
-                        .attr("x1", 0)                      //Sets the first X value to 0
-                        .attr("y1", 0)                      //Sets the first Y value to 0
-                        .attr("x2", 0)                      //Sets the second X value to 0
-                        .attr("y2", MAX_CANVAS_HEIGHT)      //Sets the second Y value to MAX_CANVAS_HEIGHT(500)
-                        .attr("stroke", "black");           //Sets the line colour to black
-
-            //Draws top border line of canvas
-            var line = canvas.append("line")                //Draws the top line of the border of the canvas/grid
-                        .attr("x1", 0)                      //Sets the first X value to 0
-                        .attr("y1", 0)                      //Sets the first Y value to 0
-                        .attr("x2", MAX_CANVAS_WIDTH)       //Sets the second X value to MAX_CANVAS_WIDTH
-                        .attr("y2", 0)                      //Sets the second Y value to 0
-                        .attr("stroke", "black");           //Sets the line colour to black
-
-            //Draws bottom border line of canvas
-            var line = canvas.append("line")                //Draws the bottom line of the border of the canvas/grid
-                        .attr("x1", 0)                      //Sets the first X value to 0
-                        .attr("y1", MAX_CANVAS_HEIGHT)      //Sets the first Y value to MAX_CANVAS_HEIGHT
-                        .attr("x2", MAX_CANVAS_WIDTH)       //Sets the second X value to MAX_CANVAS_WIDTH
-                        .attr("y2", MAX_CANVAS_HEIGHT)      //Sets the second Y value to MAX_CANVAS_HEIGHT
-                        .attr("stroke", "black");           //Sets the line colour to black
-
-            //Draws right border line of canvas
-            var line = canvas.append("line")                //Draws the right line of the border of the canvas/grid
-                        .attr("x1", MAX_CANVAS_WIDTH)       //Sets the first X value to MAX_CANVAS_WIDTH
-                        .attr("y1", 0)                      //Sets the first Y value to 0
-                        .attr("x2", MAX_CANVAS_WIDTH)       //Sets the second X value to MAX_CANVAS_WIDTH
-                        .attr("y2", MAX_CANVAS_HEIGHT)      //Sets the second Y value to MAX_CANVAS_HEIGHt
-                        .attr("stroke", "black");           //Sets the line colour to black
-
-            //Draws vertical lines of the grid onto the canvas
-            //for (var i = 1; i < MAX_CANVAS_WIDTH; i += GRID_PADDING) {
-            //    var line = canvas.append("line")            //Draws vertical lines based on the current i value of the loop
-            //            .attr("x1", i + GRID_PADDING)       //Sets the first X value to i plus the GRID_PADDING (25)
-            //            .attr("y1", 1)                      //Sets the frist Y value to 0
-            //            .attr("x2", i + GRID_PADDING)       //Sets the second X value to i plus GRID_PADDING(25)
-            //            .attr("y2", MAX_CANVAS_HEIGHT - 1)      //Sets the second Y value to MAX_CANVAS_HEIGHT
-            //            .attr("stroke", "#F0F0F0");            //Sets the line colour to grey
-            //}
-
-            //Draws horizontal lines of the grid onto the canvas
-            //for (var i = 0; i < MAX_CANVAS_HEIGHT; i += GRID_PADDING) {
-            //    var line = canvas.append("line")            //Draws horizontal lines based on the current i value of the loop
-            //            .attr("x1", 1)                      //Sets the first X value to 0
-            //            .attr("y1", i + GRID_PADDING)       //Sets the first Y value to i plus GRID_PADDING(25)
-            //            .attr("x2", MAX_CANVAS_WIDTH - 1)       //Sets the second X value to MAX_CANVAS_WIDTH
-            //            .attr("y2", i + GRID_PADDING)       //Sets the second Y value to i plus GRID_PADDING(25)
-            //            .attr("stroke", "#F0F0F0");            //Sets the line colour to grey
-            //}
-        }
-
-        /**
         This function gets called when the wall accordion is clicked.
         This function sets all the appropriate attributes 
         to the wall height and width variables
+        @param width - width of the wall to be drawn
+        @param startHeight - start height of the wall to be drawn
+        @param endHeight - end height of the wall to be drawn
+        @param wallIndex - index of the wall for editing purposes; also used to draw linear items
         */
-        function drawWall(width, startHeight, endHeight, wallNumber) {
+        function drawWall(width, startHeight, endHeight, wallIndex) {
             //alert("width: " + width + ", start: " + startHeight + ", end: " + endHeight);
 
             d3.selectAll("#wall").remove();//remove any previously drawn walls
@@ -194,9 +135,24 @@
             var highHeight = (wallStartHeight < wallEndHeight) ? wallEndHeight : wallStartHeight;
 
             //wallSlope = wallEndHeight / wallWidth;
-
             //scaleWall(wallSlope, highHeight, wallWidth);
-            scaleWallOptimally(highHeight, wallWidth);
+            
+            
+            
+            
+
+
+            //////////////// THIS FUNCTION /////////////////
+            // scaleWallOptimally(highHeight, wallWidth); //
+            /////////////// REQUIRES FIXING ////////////////
+
+
+
+
+
+
+
+
 
             //var scaleX = d3.scale.linear()
             //       .domain([0, wallWidth])
@@ -205,10 +161,15 @@
             //       .domain([0, highHeight])
             //       .range([0, MAX_CANVAS_HEIGHT]);
 
-            var wallTopLeft = { "x": (CENTRE_X - (wallWidth / 2)), "y": (CENTRE_Y - (wallStartHeight / 2)) };
-            var wallTopRight = { "x": (CENTRE_X + (wallWidth / 2)), "y": (CENTRE_Y - (wallEndHeight / 2)) };
-            var wallBottomRight = { "x": (CENTRE_X + (wallWidth / 2)), "y": (CENTRE_Y + (wallEndHeight / 2)) };
-            var wallBottomLeft = { "x": (CENTRE_X - (wallWidth / 2)), "y": (CENTRE_Y + (wallEndHeight / 2)) };
+            //var wallTopLeft = { "x": (CENTRE_X - (wallWidth / 2)), "y": (CENTRE_Y - (wallStartHeight / 2)) };
+            //var wallTopRight = { "x": (CENTRE_X + (wallWidth / 2)), "y": (CENTRE_Y - (wallEndHeight / 2)) };
+            //var wallBottomRight = { "x": (CENTRE_X + (wallWidth / 2)), "y": (CENTRE_Y + (wallEndHeight / 2)) };
+            //var wallBottomLeft = { "x": (CENTRE_X - (wallWidth / 2)), "y": (CENTRE_Y + (wallEndHeight / 2)) };
+
+            var wallTopLeft = { "x": (-1 * parseFloat(wallWidth)), "y": (-1 * parseFloat(wallStartHeight)) };
+            var wallTopRight = { "x": parseFloat(wallWidth), "y": (-1 * parseFloat(wallEndHeight)) };
+            var wallBottomRight = { "x": parseFloat(wallWidth), "y": parseFloat(wallEndHeight) };
+            var wallBottomLeft = { "x": (-1 * parseFloat(wallWidth)), "y": parseFloat(wallEndHeight) };
 
             var points = gridPoints = [wallTopLeft, wallTopRight, wallBottomRight, wallBottomLeft];
 
@@ -226,11 +187,42 @@
                              .attr("stroke-width", "1")
                              .attr("onmouseover", "$(\"#wall\").attr(\"fill\", \"#F3F3F3\");")
                              .attr("onmouseout", "$(\"#wall\").attr(\"fill\", \"white\");")
-                             .attr("onclick", "$(\"#MainContent_txtWidth" + wallNumber + "\").focus();"); //put focus on the first editable field for the wall
+                             .attr("onclick", "$(\"#MainContent_txtWidth" + wallIndex + "\").focus();"); //put focus on the first editable field for the wall
+
+            //drawLinearItems(wallIndex, wall);
+
         }
 
         /**
-        This functions scales the currently selected wall to the optimal size to fit any size of canvas
+        This function draws all fo the linear items in the given wall
+        @param wallIndex - specifies the wall whose linear items to draw
+        @param wall - the html5 polygon which represents the wall on canvas
+        */
+        function drawLinearItems(wallIndex, wall) {
+            var startingPoint = 0;
+            for (var i = 0; i < listOfWalls[wallIndex].LinearItems.length; i++) {
+
+                var width = listOfWalls[wallIndex].LinearItems[i].Width;
+                var startHeight = listOfWalls[wallIndex].LinearItems[i].StartHeight;
+                var endHeight = listOfWalls[wallIndex].LinearItems[i].EndHeight;
+
+                var topLeft = { "x": startingPoint, "y": startingPoint };
+                var topRight = { "x": width, "y": (CENTRE_Y - (endHeight / 2)) };
+                var bottomRight = { "x": width, "y": (CENTRE_Y + (endHeight / 2)) };
+                var bottomLeft = { "x": startingPoint, "y": (CENTRE_Y + (startHeight / 2)) };
+
+                //var li = wall.append(canvas.selectAll("polygon"));
+
+////. CHECK TRANSLATE/SCALE/ETC. https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/HTML-canvas-guide/Translation,Rotation,andScaling/Translation,Rotation,andScaling.html
+
+                startingPoint = parseFloat(width) + parseFloat(listOfWalls[wallIndex].LinearItems[i].width);
+            }
+        }
+
+        /**
+        This function scales the currently selected wall to the optimal size to fit any size of canvas
+        @param height - height of the given wall
+        @param width - width of the given wall
         */
         function scaleWallOptimally(height, width) {
 
@@ -245,6 +237,7 @@
                     while (height < (MAX_CANVAS_HEIGHT - 50)) { //while the height is slightly less than the MAX HEIGHT
                         height = parseFloat(height) + 10; //increase height by 10
                         multiplier++; //keep count of how many times height was increased
+                        //console.log("height: " + height + ", multiplier: " + multiplier);
                     }
                 }
                 else { //if the remaining space on the sides is less than or equal to the remaining space from the top
@@ -303,7 +296,6 @@
         }
 
         $(document).ready(function () {
-            drawCanvas(); //Draws the initial grid
             sunroomObjectChanged("0");
         });
 
