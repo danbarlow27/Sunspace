@@ -1928,6 +1928,10 @@
             {
                 if (coordList[i - 1][4] == "P")
                 {
+                    console.log("Proposed wall succeeded");
+                    console.log(walls[i].startHeight);
+                    console.log(walls[i].endHeight);
+
                     document.getElementById("hidWall" + i + "StartHeight").value = walls[i].startHeight;
                     document.getElementById("hidWall" + i + "EndHeight").value = walls[i].endHeight;
                     document.getElementById("hidWall" + i + "Orientation").value = coordList[i-1][5];
@@ -2508,7 +2512,7 @@
                     <asp:PlaceHolder ID="plcSunshade" runat="server"></asp:PlaceHolder>           
                 </ul>  
                  
-                <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" OnClientClick="checkQuestion4(); WindowPreparation();return false;"/>     
+                <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" OnClientClick="WindowPreparation();return false;"/>     
             </div>
             <%-- end #slide4 --%>
 

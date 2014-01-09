@@ -335,6 +335,14 @@ namespace SunspaceDealerDesktop
                     int project_id = Convert.ToInt32(aReader[0]);
                     aReader.Close();
 
+                    aCommand.CommandText = "INSERT INTO sunrooms(project_id, sunroom_type, number_walls, number_floors, number_roofs) VALUES("
+                                                + project_id + ", "
+                                                + "'Standard',"
+                                                + listOfWalls.Count + ", "
+                                                + "1, 1" //Are these needed?
+                                                + ");";
+                    aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
+
                     #region Walls
                     for (int i = 0; i < listOfWalls.Count; i++)
                     {
@@ -1095,7 +1103,7 @@ namespace SunspaceDealerDesktop
 
                             aCommand.CommandText = "INSERT INTO roof_modules(project_id, roof_index, roof_view, interior_skin, exterior_skin, number_items, projection, width) VALUES("
                                                 + project_id + ", "
-                                                + (roofModules+1) + ", '"
+                                                + (roofModules) + ", '"
                                                 + roof_view + "', '"
                                                 + aRoof.InteriorSkin + "', '" 
                                                 + aRoof.ExteriorSkin + "', " 
