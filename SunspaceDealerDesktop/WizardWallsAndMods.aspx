@@ -814,6 +814,7 @@
             wall to the first, setting end and start height of each wall (going backwards).
         */
         function determineStartAndEndHeightOfEachWall(gable) {
+
             if (gable == "True") {
 
                 var proposedCount = 0;
@@ -1470,8 +1471,6 @@
             }
             
             checkRoofPanels();
-
-            console.log(document.getElementById("hidBackWallHeight").value);
 
             return isValid;
         }
