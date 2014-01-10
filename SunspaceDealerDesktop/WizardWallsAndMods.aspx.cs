@@ -64,8 +64,8 @@ namespace SunspaceDealerDesktop
             if (Session["loggedIn"] == null)
             {
                 //uncomment me when login functionality is working
-                //Response.Redirect("Login.aspx");
-                //Session.Add("loggedIn", "userA");
+                Response.Redirect("Login.aspx");
+                Session.Add("loggedIn", "userA");
             }
 
             string[] gableCheck = (string[])Session["newProjectArray"];
