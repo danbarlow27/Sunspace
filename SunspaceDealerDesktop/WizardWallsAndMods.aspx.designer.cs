@@ -73,7 +73,7 @@ namespace SunspaceDealerDesktop {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnQuestion2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnQuestion2;
         
         /// <summary>
         /// lblDoorDetails control.
