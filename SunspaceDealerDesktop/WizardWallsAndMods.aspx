@@ -505,9 +505,10 @@
         *Adding onclick events to next question buttons
         */
         $(document).ready(function () {
-            //$('#MainContent_btnQuestion2').click(determineStartAndEndHeightOfEachWall(gable));
-            $('#MainContent_btnQuestion2').click(loadWallData);
-            $('#MainContent_btnSubmit').click(submitData);
+            //$('#MainContent_btnQuestion2').on('click', checkQuestion2(gable));
+            //$('#MainContent_btnQuestion2').on('click', determineStartAndEndHeightOfEachWall(gable));
+            //$('#MainContent_btnQuestion2').on('click', loadWallData);
+            $('#MainContent_btnSubmit').on('click', submitData);
 
             //$('#MainContent_txtWall1Length').val('20');
             //$('#MainContent_txtWall3Length').val('120');
@@ -813,7 +814,7 @@
             wall to the first, setting end and start height of each wall (going backwards).
         */
         function determineStartAndEndHeightOfEachWall(gable) {
-            document.getElementById();
+
             if (gable == "True") {
 
                 var proposedCount = 0;
@@ -889,6 +890,12 @@
                     }
                 }
                 else if (backWall === "south") { //if backwall is a south facing wall.. i.e. is existing
+                    console.log(backWallIndex);
+
+                    wallStartHeightArray[backWallIndex] = parseFloat(document.getElementById("hidBackWallHeight").value);
+                    wallEndHeightArray[backWallIndex] = parseFloat(document.getElementById("hidBackWallHeight").value);
+
+                    console.log(wallStartHeightArray[backWallIndex].toString());
                     for (var i = 0; i < coordList.length; i++) {
                         if (coordList[i][4] === "E") { //existing wall
                             wallStartHeightArray[i] = parseFloat(document.getElementById("hidBackWallHeight").value);
@@ -902,21 +909,21 @@
                             switch (coordList[i][5]) {
                                 case "S": //if south
                                 case "N": //or north
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]);
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i-1]);
                                     break;
                                 case "W": //if west
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) - parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and length, and subtract it from start height
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i-1]) - parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and length, and subtract it from start height
                                     break;
                                 case "E": //if east
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) + parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and length, and add it to start height
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i-1]) + parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and length, and add it to start height
                                     break;
                                 case "SW": //if southwest
                                 case "SE": //or northwest
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) - parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and setback, then subtract it from start height 
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i-1]) - parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and setback, then subtract it from start height 
                                     break;
                                 case "NW": //if southeast
                                 case "NE": //or northeast
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i]) + parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and setback, then add it to start height 
+                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i-1]) + parseFloat((((wallSetBackArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and setback, then add it to start height 
                                     break;
                             }
                         }
@@ -1129,7 +1136,7 @@
                 //Set answer on side pager and enable button
                 $('#MainContent_lblWallLengthsAnswer').text("Invalid Input");
                 document.getElementById('pagerOne').style.display = "inline";
-                document.getElementById('MainContent_btnQuestion1').disabled = false;
+                document.getElementById('MainContent_btnQuestion1').disabled = true;
             }
             
             checkRoofPanels();
@@ -1165,10 +1172,13 @@
                     
                     //we have front wall height and back wall height, calculate slope
                     if (!isNaN(document.getElementById("MainContent_txtLeftWallHeight").value) //if the other textbox values are valid
+                        && document.getElementById("MainContent_txtLeftWallHeight").value != ""
                         && document.getElementById("MainContent_txtLeftWallHeight").value > 0
                         && !isNaN(document.getElementById("MainContent_txtRightWallHeight").value)
+                        && document.getElementById("MainContent_txtRightWallHeight").value != ""
                         && document.getElementById("MainContent_txtRightWallHeight").value > 0
                         && !isNaN(document.getElementById("MainContent_txtGablePostHeight").value)
+                        && document.getElementById("MainContent_txtGablePostHeight").value != ""
                         && document.getElementById("MainContent_txtGablePostHeight").value > 0) {
 
                         isValid = true;
@@ -1196,8 +1206,10 @@
                 else if (document.getElementById("MainContent_radAutoLeftWallHeight").checked) {
                     //we have back wall height and slope, calculate front wall height
                     if (!isNaN(document.getElementById("MainContent_txtLeftRoofSlope").value)
+                        && document.getElementById("MainContent_txtLeftRoofSlope").value != ""
                         && document.getElementById("MainContent_txtLeftRoofSlope").value > 0
                         && !isNaN(document.getElementById("MainContent_txtGablePostHeight").value)
+                        && document.getElementById("MainContent_txtGablePostHeight").value != ""
                         && document.getElementById("MainContent_txtGablePostHeight").value > 0) {
 
                         var backHeight; //to store calculated frontwall height
@@ -1245,8 +1257,10 @@
                 else if (document.getElementById("MainContent_radAutoRightWallHeight").checked) {
                     //we have front wall height and slope, calculate back wall height
                     if (!isNaN(document.getElementById("MainContent_txtRightRoofSlope").value)
+                        && document.getElementById("MainContent_txtRightRoofSlope").value != ""
                         && document.getElementById("MainContent_txtRightRoofSlope").value > 0
                         && !isNaN(document.getElementById("MainContent_txtGablePostHeight").value)
+                        && document.getElementById("MainContent_txtGablePostHeight").value != ""
                         && document.getElementById("MainContent_txtGablePostHeight").value > 0) {
 
                         var backHeight; //to store calculated backwall height
@@ -1311,7 +1325,7 @@
                     //Set answer on side pager and enable button
                     $('#MainContent_lblWallHeightsAnswer').text("Invalid Input");
                     document.getElementById('pagerTwo').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion2').disabled = false;
+                    document.getElementById('MainContent_btnQuestion2').disabled = true;
                 }
             }
             else {
@@ -1319,8 +1333,10 @@
                 if (document.getElementById("MainContent_radAutoRoofSlope").checked) {
                     //we have front wall height and back wall height, calculate slope
                     if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value) //if the other textbox values are valid
+                        && document.getElementById("MainContent_txtBackWallHeight").value != ""
                         && document.getElementById("MainContent_txtBackWallHeight").value > 0
                         && !isNaN(document.getElementById("MainContent_txtFrontWallHeight").value)
+                        && document.getElementById("MainContent_txtFrontWallHeight").value != ""
                         && document.getElementById("MainContent_txtFrontWallHeight").value > 0) {
 
                         isValid = true; //valid is true
@@ -1336,8 +1352,10 @@
                 else if (document.getElementById("MainContent_radAutoFrontWallHeight").checked) {
                     //we have back wall height and slope, calculate front wall height
                     if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value) //if the other textbox values are valid
+                        && document.getElementById("MainContent_txtBackWallHeight").value != ""
                         && document.getElementById("MainContent_txtBackWallHeight").value > 0
                         && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                        && document.getElementById("MainContent_txtRoofSlope").value != ""
                         && document.getElementById("MainContent_txtRoofSlope").value > 0) {
 
                         var frontHeight; //to store calculated frontwall height
@@ -1371,9 +1389,11 @@
                     //the user wants to auto calculate back wall height
                 else if (document.getElementById("MainContent_radAutoBackWallHeight").checked) {
                     //we have front wall height and slope, calculate back wall height
-                    if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value) //check if other textbox values are valid
+                    if (!isNaN(document.getElementById("MainContent_txtFrontWallHeight").value) 
+                        && document.getElementById("MainContent_txtFrontWallHeight").value != "" //check if other textbox values are valid
                         && document.getElementById("MainContent_txtFrontWallHeight").value > 0
-                        && !isNaN(document.getElementById("MainContent_txtRoofSlope").value)
+                        && !isNaN(document.getElementById("MainContent_txtRoofSlope").value) 
+                        && document.getElementById("MainContent_txtRoofSlope").value !=""
                         && document.getElementById("MainContent_txtRoofSlope").value > 0) {
 
                         var backHeight; //to store calculated backwall height
@@ -1407,7 +1427,7 @@
                 }
 
                 //if the calculated slope is invalid, i.e. negative or zero
-                if (document.getElementById("MainContent_txtRoofSlope").value >= 0)
+                if (document.getElementById("MainContent_txtRoofSlope").value != "" && document.getElementById("MainContent_txtRoofSlope").value >= 0)
                     isValid = true; //valid is false
 
                 if (isValid) { //if all is valid
@@ -1433,7 +1453,7 @@
                     //Set answer on side pager and enable button
                     $('#MainContent_lblWallHeightsAnswer').text("Invalid Input");
                     document.getElementById('pagerTwo').style.display = "inline";
-                    document.getElementById('MainContent_btnQuestion2').disabled = false;
+                    document.getElementById('MainContent_btnQuestion2').disabled = true;
                 }
             }
 
@@ -1915,6 +1935,10 @@
             {
                 if (coordList[i - 1][4] == "P")
                 {
+                    console.log("Proposed wall succeeded");
+                    console.log(walls[i].startHeight);
+                    console.log(walls[i].endHeight);
+
                     document.getElementById("hidWall" + i + "StartHeight").value = walls[i].startHeight;
                     document.getElementById("hidWall" + i + "EndHeight").value = walls[i].endHeight;
                     document.getElementById("hidWall" + i + "Orientation").value = coordList[i-1][5];
@@ -2429,7 +2453,7 @@
 
     
                 <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion1" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion1" Enabled="false" OnClientClick="checkQuestion1()" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide1 --%>
@@ -2457,7 +2481,7 @@
                         </div> <%-- end .toggleContent --%>
 
                 <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion2" OnClientClick="determineStartAndEndHeightOfEachWall(gable)" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" Text="Next Question" />
+                <input type="button" id="btnQuestion2" onclick="checkQuestion2(gable); determineStartAndEndHeightOfEachWall(gable); loadWallData();" class="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" value="Next Question" disabled/>
 
             </div> 
             <%-- end #slide2 --%>
@@ -2475,7 +2499,7 @@
                     <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question"/>
+                <asp:Button ID="btnQuestion3" Enabled="true" OnClientClick="checkQuestion3()" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question"/>
 
             </div>
             <%-- end #slide3 --%>

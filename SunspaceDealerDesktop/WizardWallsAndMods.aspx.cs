@@ -64,7 +64,7 @@ namespace SunspaceDealerDesktop
             if (Session["loggedIn"] == null)
             {
                 //uncomment me when login functionality is working
-                //Response.Redirect("Login.aspx");
+                Response.Redirect("Login.aspx");
                 //Session.Add("loggedIn", "userA");
             }
 
@@ -3543,7 +3543,7 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void openWall()
         {
-            tintOptions("OpenWall", "Open Wall", false, false, false, false, false, false);
+            tintOptions("OpenWall", "Open Wall (No Windows)", false, false, false, false, false, false);
         }
 
         /// <summary>
@@ -3551,7 +3551,7 @@ namespace SunspaceDealerDesktop
         /// </summary>
         protected void solidWall()
         {
-            tintOptions("SolidWall", "Solid Wall", false, false, false, false, false, false);
+            tintOptions("SolidWall", "Solid Wall (No Windows)", false, false, false, false, false, false);
         }
 
         #endregion
@@ -4493,6 +4493,8 @@ namespace SunspaceDealerDesktop
                             aBoxHeader.FixedLocation = listOfWalls[i].Length;
                             aBoxHeader.Length = 3.25f;
                             aBoxHeader.ItemType = "BoxHeader";
+                            aBoxHeader.StartHeight = GlobalFunctions.getHeightAtPosition(listOfWalls[i].StartHeight, listOfWalls[i].EndHeight, aBoxHeader.FixedLocation, listOfWalls[i].Length);
+                            aBoxHeader.EndHeight = GlobalFunctions.getHeightAtPosition(listOfWalls[i].StartHeight, listOfWalls[i].EndHeight, aBoxHeader.FixedLocation + aBoxHeader.Length, listOfWalls[i].Length);
                             listOfWalls[i].LinearItems.Add(aBoxHeader);
                             listOfWalls[i].Length += 3.25f;
                             listOfWalls[i].GablePeak = listOfWalls[i + 1].StartHeight;
@@ -4550,6 +4552,18 @@ namespace SunspaceDealerDesktop
                 listOfWalls[i].LastItemIndex = linearCounter;
                 listOfWalls[i].Name = "Wall " + (i + 1);
             }
+
+            Receiver endReceiver = new Receiver();
+            endReceiver.FixedLocation = listOfWalls[listOfWalls.Count - 1].Length - 1f;
+            endReceiver.IsTwoPiece = false;
+            listOfWalls[listOfWalls.Count - 1].LastItemIndex++;
+            endReceiver.ItemType = "Receiever";
+            endReceiver.Length = 1f;
+            endReceiver.LinearIndex = listOfWalls[listOfWalls.Count - 1].LastItemIndex + 1;
+            endReceiver.StartHeight = GlobalFunctions.getHeightAtPosition(listOfWalls[listOfWalls.Count - 1].StartHeight, listOfWalls[listOfWalls.Count - 1].EndHeight, listOfWalls[listOfWalls.Count - 1].Length - 1f, listOfWalls[listOfWalls.Count - 1].Length);
+            endReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(listOfWalls[listOfWalls.Count - 1].StartHeight, listOfWalls[listOfWalls.Count - 1].EndHeight, listOfWalls[listOfWalls.Count - 1].Length, listOfWalls[listOfWalls.Count - 1].Length);
+
+            listOfWalls[listOfWalls.Count - 1].LinearItems.Add(endReceiver);
 
             Session.Add("listOfWalls", listOfWalls);
             Session.Add("sunroomProjection", hidRoomProjection.Value);

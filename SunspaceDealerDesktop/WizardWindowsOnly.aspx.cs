@@ -225,6 +225,8 @@ namespace SunspaceDealerDesktop
                 mixedWindowTintLabel.Text = "Vinyl Vent " + (j + 1) + " Tint : ";
                 DropDownList ddlWindowTintOptions = new DropDownList();
                 ddlWindowTintOptions.ID = "ddlWindowTint" + j + title;
+                string nth = (j == 0) ? "first" : (j == 1) ? "second" : (j == 2) ? "third" : "fourth";
+                ddlWindowTintOptions.ToolTip = "Select tint colour for the " + nth + " vent";
 
                 for (int k = 0; k < Constants.DOOR_V4T_VINYL_OPTIONS.Count() - 1; k++)
                 {
@@ -314,6 +316,7 @@ namespace SunspaceDealerDesktop
                 windowDLOLBL.Attributes.Add("onclick", "this.innerText = (this.innerText === 'DLO') ? 'Tip to Tip' : 'DLO'; dloClicked(this.innerText); recalculate();");
                 windowDLOLBL.Attributes.Add("onmouseover", "this.style.cursor='pointer'");
                 windowDLOLBL.Attributes.Add("onmouseout", "this.style.cursor='auto'");
+                windowDLOLBL.ToolTip = "Click to switch between DLO and Tip to Tip";
 
                 Label windowDeductionsLBL = new Label();
                 windowDeductionsLBL.ID = "lblWindowDeductions" + title;
@@ -321,7 +324,8 @@ namespace SunspaceDealerDesktop
                 windowDeductionsLBL.ForeColor = System.Drawing.Color.Blue;
                 windowDeductionsLBL.Attributes.Add("onclick", "this.innerText = (this.innerText === 'No Deductions') ? 'Deduct 1/8\"' : (this.innerText === 'Deduct 1/8\"') ? 'Deduct 1/4\"' : (this.innerText === 'Deduct 1/4\"') ? 'Deduct 3/8\"' : (this.innerText === 'Deduct 3/8\"') ? 'Deduct 1/2\"' : 'No Deductions'; deductionsClicked(this.innerText); recalculate();");
                 windowDeductionsLBL.Attributes.Add("onmouseover", "this.style.cursor='pointer'");
-                windowDLOLBL.Attributes.Add("onmouseout", "this.style.cursor='auto'");
+                windowDeductionsLBL.Attributes.Add("onmouseout", "this.style.cursor='auto'");
+                windowDeductionsLBL.ToolTip = "Click to change deduction values";
 
                 windowTitleLBLCell.Controls.Add(windowTitleLBL);
                 windowDLOLBLCell.Controls.Add(windowDLOLBL);
@@ -348,6 +352,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList windowStyleDDL = new DropDownList();
                 windowStyleDDL.ID = "ddlWindowStyle" + title;
+                windowStyleDDL.ToolTip = "Choose a style of " + title + " windows";
                 //windowStyleDDL.Attributes.Add("onchange", "windowStyleChanged();");
 
                 if (title == "Vinyl")
@@ -389,6 +394,7 @@ namespace SunspaceDealerDesktop
                     TableCell windowSpreaderBarCHKCell = new TableCell();
                     windowSpreaderBarCHKCell.Attributes.Add("style", "display:none;");
                     windowSpreaderBarCHKCell.ID = "cellWindowSpreaderBar" + title;
+                    windowSpreaderBarCHKCell.ToolTip = "Check to add a spreader bar";
 
                     Label windowSpreaderBarLBLChk = new Label();
                     windowSpreaderBarLBLChk.ID = "lblWindowSpreaderBar" + title;
@@ -436,6 +442,7 @@ namespace SunspaceDealerDesktop
                 windowHeightTXT.Attributes.Add("maxlength", "3");
                 windowHeightTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                 windowHeightTXT.Attributes.Add("onblur", "recalculate();");
+                windowHeightTXT.ToolTip = "Enter the height of your window in whole numbers";
 
                 DropDownList inchHeight = new DropDownList();
                 inchHeight.ID = "ddlWindowHeight"   + title;
@@ -448,6 +455,7 @@ namespace SunspaceDealerDesktop
                 inchHeight.Items.Add(lst58);
                 inchHeight.Items.Add(lst34);
                 inchHeight.Items.Add(lst78);
+                inchHeight.ToolTip = "Select the decimal value for your window height";
 
                 windowHeightLBL.AssociatedControlID = "txtWindowHeight" + title;
 
@@ -484,6 +492,7 @@ namespace SunspaceDealerDesktop
                     windowAsIfHeightTXT.Attributes.Add("maxlength", "3");
                     windowAsIfHeightTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                     windowAsIfHeightTXT.Attributes.Add("onblur", "recalculate();");
+                    windowAsIfHeightTXT.ToolTip = "Enter the 'As If' height of your window in whole numbers. Note: As if height is only used to determine the heights of uneven vents.";
 
                     DropDownList inchAsIfHeight = new DropDownList();
                     inchAsIfHeight.ID = "ddlWindowAsIfHeight" + title;
@@ -496,7 +505,7 @@ namespace SunspaceDealerDesktop
                     inchAsIfHeight.Items.Add(lst58);
                     inchAsIfHeight.Items.Add(lst34);
                     inchAsIfHeight.Items.Add(lst78);
-
+                    inchAsIfHeight.ToolTip = "Select the decimal value for your window 'as if' height";
                     windowAsIfHeightLBL.AssociatedControlID = "txtWindowAsIfHeight" + title;
 
 
@@ -530,6 +539,7 @@ namespace SunspaceDealerDesktop
                 windowLeftHeightTXT.CssClass = "txtField txtWindowInput";
                 windowLeftHeightTXT.Attributes.Add("maxlength", "3");
                 windowLeftHeightTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                windowLeftHeightTXT.ToolTip = "Enter the left height of your trapezoid window in whole numbers";
 
                 DropDownList inchLeftHeight = new DropDownList();
                 inchLeftHeight.ID = "ddlWindowLeftHeight" + title;
@@ -541,6 +551,7 @@ namespace SunspaceDealerDesktop
                 inchLeftHeight.Items.Add(lst58);
                 inchLeftHeight.Items.Add(lst34);
                 inchLeftHeight.Items.Add(lst78);
+                inchLeftHeight.ToolTip = "Select the decimal value for your left height of the trapezoid window";
 
                 windowLeftHeightLBL.AssociatedControlID = "txtWindowLeftHeight" + title;
 
@@ -575,6 +586,7 @@ namespace SunspaceDealerDesktop
                 windowRightHeightTXT.CssClass = "txtField txtWindowInput";
                 windowRightHeightTXT.Attributes.Add("maxlength", "3");
                 windowRightHeightTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                windowRightHeightTXT.ToolTip = "Enter the right height of your trapezoid window in whole numbers";
 
                 DropDownList inchRightHeight = new DropDownList();
                 inchRightHeight.ID = "ddlWindowRightHeight" + title;
@@ -586,6 +598,7 @@ namespace SunspaceDealerDesktop
                 inchRightHeight.Items.Add(lst58);
                 inchRightHeight.Items.Add(lst34);
                 inchRightHeight.Items.Add(lst78);
+                inchRightHeight.ToolTip = "Select the decimal value for your right height of the trapezoid window";
 
                 windowRightHeightLBL.AssociatedControlID = "txtWindowRightHeight" + title;
 
@@ -621,6 +634,7 @@ namespace SunspaceDealerDesktop
                 windowWidthTXT.Attributes.Add("maxlength", "3");
                 windowWidthTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                 windowWidthTXT.Attributes.Add("onblur", "recalculate();");
+                windowWidthTXT.ToolTip = "Enter the width of your window in whole numbers";
 
                 DropDownList inchWidth = new DropDownList();
                 inchWidth.ID = "ddlWindowWidth" + title;
@@ -633,6 +647,7 @@ namespace SunspaceDealerDesktop
                 inchWidth.Items.Add(lst58);
                 inchWidth.Items.Add(lst34);
                 inchWidth.Items.Add(lst78);
+                inchWidth.ToolTip = "Select the decimal value for your window width";
 
                 windowWidthLBL.AssociatedControlID = "txtWindowWidth" + title;
 
@@ -666,6 +681,8 @@ namespace SunspaceDealerDesktop
                     DropDownList windowV4TNumberOfVentsDDL = new DropDownList();
                     windowV4TNumberOfVentsDDL.ID = "ddlWindowV4TNumberOfVents" + title;
                     windowV4TNumberOfVentsDDL.Attributes.Add("onchange", "tintOptionsChanged();");
+                    windowV4TNumberOfVentsDDL.ToolTip = "Select the number of vents in your V4T window";
+
                     ListItem V3 = new ListItem("3", "3");
                     ListItem V4 = new ListItem("4", "4");
                     ListItem V6S = new ListItem("6 Stereo", "6");
@@ -694,6 +711,7 @@ namespace SunspaceDealerDesktop
                     TableCell windowUnevenVentsCHKCell = new TableCell();
                     //windowUnevenVentsCHKCell.Attributes.Add("style", "display:none;");
                     windowUnevenVentsCHKCell.ID = "cellWindowUnevenVents" + title;
+                    windowUnevenVentsCHKCell.ToolTip = "Check to see uneven vents options for your V4T window";
 
                     Label windowUnevenVentsLBLChk = new Label();
                     windowUnevenVentsLBLChk.ID = "lblWindowUnevenVents" + title;
@@ -715,7 +733,6 @@ namespace SunspaceDealerDesktop
                     windowUnevenVentsCHKCell.Controls.Add(windowUnevenVentsLBL);
 
                     windowV4TNumberOfVentsRow.Cells.Add(windowUnevenVentsCHKCell);
-
 
                     tblWindowDetails.Rows.Add(windowV4TNumberOfVentsRow);
 
@@ -744,6 +761,7 @@ namespace SunspaceDealerDesktop
                     DropDownList windowH4TNumberOfVentsDDL = new DropDownList();
                     windowH4TNumberOfVentsDDL.ID = "ddlWindowH4TNumberOfVents" + title;
                     windowH4TNumberOfVentsDDL.Attributes.Add("onchange", "tintOptionsChanged();");
+                    windowH4TNumberOfVentsDDL.ToolTip = "Select the number of vents in your H4T window";
 
                     windowH4TNumberOfVentsDDL.Items.Add(V3);
                     windowH4TNumberOfVentsDDL.Items.Add(V4);
@@ -772,6 +790,7 @@ namespace SunspaceDealerDesktop
                     #region Top
 
                     TableCell windowTopRadCell = new TableCell();
+                    windowTopRadCell.ToolTip = "Select to make the top vent uneven based on your 'as if' height";
 
                     Label windowTopRadLBLRad = new Label();
                     windowTopRadLBLRad.ID = "lblWindowTopRad" + title;
@@ -798,6 +817,7 @@ namespace SunspaceDealerDesktop
                     #region Bottom
 
                     TableCell windowBottomRadCell = new TableCell();
+                    windowBottomRadCell.ToolTip = "Select to make the bottom vent uneven based on your 'as if' height";
 
                     Label windowBottomRadLBLRad = new Label();
                     windowBottomRadLBLRad.ID = "lblWindowBottomRad" + title;
@@ -825,6 +845,7 @@ namespace SunspaceDealerDesktop
                     #region Both
 
                     TableCell windowBothRadCell = new TableCell();
+                    windowBothRadCell.ToolTip = "Select to make both top and bottom vents uneven based on your 'as if' height. Note: the difference will be split evenly between top and bottom vents, however, it can be manually changed in the textboxes below.";
 
                     Label windowBothRadLBLRad = new Label();
                     windowBothRadLBLRad.ID = "lblWindowBothRad" + title;
@@ -882,7 +903,7 @@ namespace SunspaceDealerDesktop
                     windowTopVentTXT.Attributes.Add("maxlength", "3");
                     windowTopVentTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                     windowTopVentTXT.Attributes.Add("onblur", "adjustVentHeights(this.value, 'top');");
-
+                    windowTopVentTXT.ToolTip = "Adjust the top vent height. Note: the bottom vent height will automatically adjust to to fit the specified window height.";
 
                     //DropDownList inchTopVentDDL = new DropDownList();
                     //inchTopVentDDL.ID = "ddlWindowTopVentHeight" + title;
@@ -939,6 +960,7 @@ namespace SunspaceDealerDesktop
                     windowBottomVentTXT.Attributes.Add("maxlength", "3");
                     windowBottomVentTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                     windowBottomVentTXT.Attributes.Add("onblur", "adjustVentHeights(this.value, 'bottom');");
+                    windowBottomVentTXT.ToolTip = "Adjust the bottom vent height. Note: the top vent height will automatically adjust to to fit the specified window height.";
 
                     //DropDownList inchBottomVentDDL = new DropDownList();
                     //inchBottomVentDDL.ID = "ddlWindowBottomVentHeight" + title;
@@ -991,6 +1013,7 @@ namespace SunspaceDealerDesktop
 
                     DropDownList windowTintDDL = new DropDownList();
                     windowTintDDL.ID = "ddlWindowTint" + title;
+                    windowTintDDL.ToolTip = "Select the tint colour for your " + title + " window";
                     //windowTintDDL.Attributes.Add("onchange", "windowStyle('" + title + "');");
 
                     if (title == "Vinyl")
@@ -1042,6 +1065,7 @@ namespace SunspaceDealerDesktop
                     DropDownList windowTintNoMixedDDL = new DropDownList();
                     windowTintNoMixedDDL.ID = "ddlWindowTintNoMixed" + title;
                     windowTintNoMixedDDL.Attributes.Add("onchange", "windowStyle('" + title + "');");
+                    windowTintNoMixedDDL.ToolTip = "Select the tint colour for your " + title + " window";
 
                     for (int j = 0; j < Constants.DOOR_V4T_VINYL_OPTIONS.Count() - 1; j++)
                     {
@@ -1075,6 +1099,8 @@ namespace SunspaceDealerDesktop
 
                 DropDownList colourOfWindowDDL = new DropDownList();
                 colourOfWindowDDL.ID = "ddlWindowColour" + title;
+                colourOfWindowDDL.ToolTip = "Select the frame colour for your " + title + " window";
+                
                 for (int j = 0; j < Constants.DOOR_COLOURS.Count(); j++)
                 {
                     colourOfWindowDDL.Items.Add(new ListItem(Constants.DOOR_COLOURS[j], Constants.DOOR_COLOURS[j]));
@@ -1101,6 +1127,7 @@ namespace SunspaceDealerDesktop
                     //windowInsideMountRow.Attributes.Add("style", "display:none;");
                     TableCell windowInsideMountLBLCell = new TableCell();
                     TableCell windowInsideMountRADCell = new TableCell();
+                    windowInsideMountRADCell.ToolTip = "Click to select inside mount.";
 
                     Label windowMountLBLMain = new Label();
                     windowMountLBLMain.ID = "lblWindowMountMain" + title;
@@ -1144,6 +1171,7 @@ namespace SunspaceDealerDesktop
                     //windowOutsideMountRow.Attributes.Add("style", "display:none;");
                     TableCell windowOutsideMountLBLCell = new TableCell();
                     TableCell windowOutsideMountRADCell = new TableCell();
+                    windowOutsideMountRADCell.ToolTip = "Click to select outside mount.";
 
                     Label windowOutsideMountLBLRad = new Label();
                     windowOutsideMountLBLRad.ID = "lblWindowOutsideMountRad" + title;
@@ -1188,6 +1216,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList windowScreenOptionsDDL = new DropDownList();
                 windowScreenOptionsDDL.ID = "ddlWindowScreenOptions" + title;
+                windowScreenOptionsDDL.ToolTip = "Select screen type for your " + title + " window";
 
                 ListItem standard = new ListItem("18 x 16 Mesh (Standard)", "18 x 16 Mesh (Standard)");
                 ListItem noSeeUms = new ListItem("No-See-Ums 20 x 20 Mesh", "No-See-Ums 20 x 20 Mesh");
@@ -1233,6 +1262,7 @@ namespace SunspaceDealerDesktop
                 windowButton.ID = "btnAdd" + title;
                 windowButton.Text = "Add this " + title + " window";
                 windowButton.CssClass = "btnSubmit";
+                windowButton.ToolTip = "Click to add this " + title + " window to the order";
 
                 windowAddButtonCell.Controls.Add(windowButton);
 
