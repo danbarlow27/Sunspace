@@ -86,6 +86,8 @@
         var wallCount = '<%= wallCount %>';
         var projectId = '<%= projectId %>'; 
 
+        var wallIndex = 0;
+
         $("#myCanvas").height($(window).height() - 170);
         $("#myCanvas").width($(window).width());
 
@@ -96,207 +98,155 @@
         var CENTRE_X = MAX_CANVAS_WIDTH / 2;
         var CENTRE_Y = MAX_CANVAS_HEIGHT / 2;
 
-        var wallStartHeight;
-        var wallEndHeight;
-        var wallWidth;
+        //var wallStartHeight;
+        //var wallEndHeight;
+        //var wallWidth;
 
-        var wallSlope;
-
-        ///* CREATE CANVAS */
-        var canvas = d3.select("#myCanvas")            //Select the div tag with id "myCanvas"
+        /* CREATE CANVAS */
+        var svg = d3.select("#myCanvas")            //Select the div tag with id "myCanvas"
                     .append("svg")                      //Add an svg tag to the selected div tag
                     .attr("width", MAX_CANVAS_WIDTH)    //Set the width of the canvas/grid to MAX_CANVAS_WIDTH
                     .attr("height", MAX_CANVAS_HEIGHT) //Set the height of the canvas/grid to MAX_CANVAS_HEIGHT
-                    .style("border", "1px solid black")
-                    .append("g")
+                    .style("border", "1px solid black");
+        var canvas = svg.append("g")
                     .attr("transform", "translate("+CENTRE_X+","+CENTRE_Y+")");
-
-        var gridPoints;
-
+        var wall;
+        var scale = d3.scale.linear(); //used to fit the polygons optimally on the canvas
 
         /**
         This function gets called when the wall accordion is clicked.
         This function sets all the appropriate attributes 
         to the wall height and width variables
-        @param width - width of the wall to be drawn
-        @param startHeight - start height of the wall to be drawn
-        @param endHeight - end height of the wall to be drawn
-        @param wallIndex - index of the wall for editing purposes; also used to draw linear items
         */
-        function drawWall(width, startHeight, endHeight, wallIndex) {
-            //alert("width: " + width + ", start: " + startHeight + ", end: " + endHeight);
+        function drawWall() {
 
-            d3.selectAll("#wall").remove();//remove any previously drawn walls
+            var width = listOfWalls[wallIndex].Length; //wall width
+            var startHeight = listOfWalls[wallIndex].StartHeight; //wall start height
+            var endHeight = listOfWalls[wallIndex].EndHeight;  //wall end height
 
-            wallWidth = width;// * 2;
-            wallStartHeight = startHeight;// * 2;
-            wallEndHeight = endHeight;// * 2;
+            var id = ""; //id to be given to the wall
 
-            var highHeight = (wallStartHeight < wallEndHeight) ? wallEndHeight : wallStartHeight;
+            var g = wall.append("g").attr("transform", "translate(" + (-1 * scale(parseFloat(width/2))) + "," + (scale(parseFloat(startHeight/2))) + ")");
 
-            //wallSlope = wallEndHeight / wallWidth;
-            //scaleWall(wallSlope, highHeight, wallWidth);
+            console.log("wall w: " + width + ", " + "s: " + startHeight + ", " + "e: " + endHeight); 
+
+            //var topLeft = { "x": (-1 * scale(parseFloat(width/2))), "y": (-1 * scale(parseFloat(startHeight/2))) }; //top left coordinates
+            //var topRight = { "x": scale(parseFloat(width/2)), "y": (-1 * scale(parseFloat(endHeight/2))) }; //top right coordinates
+            //var bottomRight = { "x": scale(parseFloat(width/2)), "y": scale(parseFloat(endHeight/2)) }; //bottom right coordinates
+            //var bottomLeft = { "x": (-1 * scale(parseFloat(width/2))), "y": scale(parseFloat(endHeight/2)) }; //bottom left coordinates
+
+            var topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(startHeight))) }; //top left coordinates
+            var topRight = { "x": scale(parseFloat(width)), "y": (-1 * scale(parseFloat(endHeight))) }; //top right coordinates
+            var bottomRight = { "x": scale(parseFloat(width)), "y": scale(parseFloat(0)) }; //bottom right coordinates
+            var bottomLeft = { "x": scale(parseFloat(0)), "y": scale(parseFloat(0)) }; //bottom left coordinates
+
+            var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+            drawPolygon(points, id, g); //draw the polygon to represent the wall with the given coordinates and id
             
-            
-            
-            
-
-
-            //////////////// THIS FUNCTION /////////////////
-            // scaleWallOptimally(highHeight, wallWidth); //
-            /////////////// REQUIRES FIXING ////////////////
-
-
-
-
-
-
-
-
-
-            //var scaleX = d3.scale.linear()
-            //       .domain([0, wallWidth])
-            //       .range([0, MAX_CANVAS_WIDTH]);
-            //var scaleY = d3.scale.linear()
-            //       .domain([0, highHeight])
-            //       .range([0, MAX_CANVAS_HEIGHT]);
-
-            //var wallTopLeft = { "x": (CENTRE_X - (wallWidth / 2)), "y": (CENTRE_Y - (wallStartHeight / 2)) };
-            //var wallTopRight = { "x": (CENTRE_X + (wallWidth / 2)), "y": (CENTRE_Y - (wallEndHeight / 2)) };
-            //var wallBottomRight = { "x": (CENTRE_X + (wallWidth / 2)), "y": (CENTRE_Y + (wallEndHeight / 2)) };
-            //var wallBottomLeft = { "x": (CENTRE_X - (wallWidth / 2)), "y": (CENTRE_Y + (wallEndHeight / 2)) };
-
-            var wallTopLeft = { "x": (-1 * parseFloat(wallWidth)), "y": (-1 * parseFloat(wallStartHeight)) };
-            var wallTopRight = { "x": parseFloat(wallWidth), "y": (-1 * parseFloat(wallEndHeight)) };
-            var wallBottomRight = { "x": parseFloat(wallWidth), "y": parseFloat(wallEndHeight) };
-            var wallBottomLeft = { "x": (-1 * parseFloat(wallWidth)), "y": parseFloat(wallEndHeight) };
-
-            var points = gridPoints = [wallTopLeft, wallTopRight, wallBottomRight, wallBottomLeft];
-
-            var wall = canvas.selectAll("polygon")
-                             .data([points])
-                             .enter().append("polygon")
-                             .attr("id", "wall")
-                                 .attr("points", function (d) {
-                                     return d.map(function (d) {
-                                         return [d.x, d.y].join(",");
-                                     }).join(" ");
-                                 })
-                             .attr("fill", "white")
-                             .attr("stroke", "black")
-                             .attr("stroke-width", "1")
-                             .attr("onmouseover", "$(\"#wall\").attr(\"fill\", \"#F3F3F3\");")
-                             .attr("onmouseout", "$(\"#wall\").attr(\"fill\", \"white\");")
-                             .attr("onclick", "$(\"#MainContent_txtWidth" + wallIndex + "\").focus();"); //put focus on the first editable field for the wall
-
-            //drawLinearItems(wallIndex, wall);
+            drawLinearItems((-1 * scale(parseFloat(width/2))),(scale(parseFloat(startHeight/2))));
 
         }
 
         /**
         This function draws all fo the linear items in the given wall
-        @param wallIndex - specifies the wall whose linear items to draw
-        @param wall - the html5 polygon which represents the wall on canvas
         */
-        function drawLinearItems(wallIndex, wall) {
-            var startingPoint = 0;
+        function drawLinearItems(x, y) {
+            //var startingPoint = 0;
+
+            var g = wall.append("g").attr("transform", "translate(" + x + "," + y + ")");
+
+
+
             for (var i = 0; i < listOfWalls[wallIndex].LinearItems.length; i++) {
 
-                var width = listOfWalls[wallIndex].LinearItems[i].Width;
+                //alert(i+1);
+
+                var id = "" + listOfWalls[wallIndex].LinearItems[i].LinearIndex;
+                var width = listOfWalls[wallIndex].LinearItems[i].Length;
                 var startHeight = listOfWalls[wallIndex].LinearItems[i].StartHeight;
                 var endHeight = listOfWalls[wallIndex].LinearItems[i].EndHeight;
 
-                var topLeft = { "x": startingPoint, "y": startingPoint };
-                var topRight = { "x": width, "y": (CENTRE_Y - (endHeight / 2)) };
-                var bottomRight = { "x": width, "y": (CENTRE_Y + (endHeight / 2)) };
-                var bottomLeft = { "x": startingPoint, "y": (CENTRE_Y + (startHeight / 2)) };
+                console.log("i: " + i + ", " + "w: " + width + ", " + "s: " + startHeight + ", " + "e: " + endHeight); 
+                
+                var topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(startHeight))) }; //top left coordinates
+                var topRight = { "x": scale(parseFloat(width)), "y": (-1 * scale(parseFloat(endHeight))) }; //top right coordinates
+                var bottomRight = { "x": scale(parseFloat(width)), "y": scale(parseFloat(0)) }; //bottom right coordinates
+                var bottomLeft = { "x": scale(parseFloat(0)), "y": scale(parseFloat(0)) }; //bottom left coordinates
 
-                //var li = wall.append(canvas.selectAll("polygon"));
+                var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-////. CHECK TRANSLATE/SCALE/ETC. https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/HTML-canvas-guide/Translation,Rotation,andScaling/Translation,Rotation,andScaling.html
+                drawPolygon(points, id, g); //draw the polygon to represent the wall with the given coordinates and id
 
-                startingPoint = parseFloat(width) + parseFloat(listOfWalls[wallIndex].LinearItems[i].width);
+                x = parseFloat(x) + scale(parseFloat(width));
+
+                g = wall.append("g").attr("transform", "translate("+ x + "," + y + ")");
+
+                //startingPoint = parseFloat(width) + parseFloat(listOfWalls[wallIndex].LinearItems[i].width);
             }
         }
 
         /**
-        This function scales the currently selected wall to the optimal size to fit any size of canvas
-        @param height - height of the given wall
-        @param width - width of the given wall
+        This function draws a polygon on the canvas with the given data points as coordinates and sets it id to the given id
+        @param points - coordinates of a given polygon
+        @param id - to be given to the polygon object
         */
-        function scaleWallOptimally(height, width) {
-
-            var multiplier = 0; //to determine how much to increase/decrease the size
-
-            if (height < MAX_CANVAS_HEIGHT && width < MAX_CANVAS_WIDTH) { //if the wall is smaller than the canvas
-
-                var remainingWidth = MAX_CANVAS_WIDTH - width; //remaining space from the sides
-                var remainingHeight = MAX_CANVAS_HEIGHT - height; //remaining space from the top
-
-                if (remainingHeight < remainingWidth) { //if the remaining space at the top is less than remaining space on the sides
-                    while (height < (MAX_CANVAS_HEIGHT - 50)) { //while the height is slightly less than the MAX HEIGHT
-                        height = parseFloat(height) + 10; //increase height by 10
-                        multiplier++; //keep count of how many times height was increased
-                        //console.log("height: " + height + ", multiplier: " + multiplier);
-                    }
-                }
-                else { //if the remaining space on the sides is less than or equal to the remaining space from the top
-                    while (width < (MAX_CANVAS_WIDTH - 50)) { //while the width is slightly less than the MAX WIDTH
-                        width = parseFloat(width) + 10; // increase width by 10
-                        multiplier++; //keep count of how many times the width was increased
-                    }
-                }
-
-                //adjust the width and height proportionally to optimally fit the wall on canvas
-                wallWidth = parseFloat(wallWidth) + (10 * multiplier); //adjust the width
-                wallStartHeight = parseFloat(wallStartHeight) + (10 * multiplier); //adjust the start height
-                wallEndHeight = parseFloat(wallEndHeight) + (10 * multiplier); //adjust the end height
-            }
-            else { // if the wall is larger than the canvas
-
-                var extraWidth = width - MAX_CANVAS_WIDTH; //extra space outside the canvas from the sides
-                var extraHeight = height - MAX_CANVAS_HEIGHT; //extra space outside the canvas from the top
-
-                //console.log(height+","+extraHeight);
-                //console.log(width+","+extraWidth);
-
-                if (extraHeight > extraWidth) { //if the space outside the canvas at the top is more than space outside the canvas on the sides
-                    while (height > (MAX_CANVAS_HEIGHT - 50)) { //while the height is more than the MAX HEIGHT - 10
-                        height = parseFloat(height) - 10; //decrease height by 10
-                        multiplier++; //keep count of how many times height was increased
-                        //console.log(height + "," + multiplier);
-                    }
-                }
-                else { //if the space outside the canvas on the sides is more than or equal to the space from the top
-                    while (width > (MAX_CANVAS_WIDTH - 50)) { //while the width is more than the MAX WIDTH - 10
-                        width = parseFloat(width) - 10; // decrease width by 10
-                        multiplier++; //keep count of how many times the width was increased
-                        //console.log(width + "," + multiplier);
-                    }
-                }
-
-                //adjust the width and height proportionally to optimally fit the wall on canvas
-                wallWidth = parseFloat(wallWidth) - (10 * multiplier); //adjust the width
-                wallStartHeight = parseFloat(wallStartHeight) - (10 * multiplier); //adjust the start height
-                wallEndHeight = parseFloat(wallEndHeight) - (10 * multiplier); //adjust the end height
-
-                //console.log(wallWidth + "," + wallStartHeight + "," + wallEndHeight);
-            }
+        function drawPolygon(points, id, g) {
+            
+            var poly = g.selectAll("polygon")
+                     .data([points])
+                     .enter().append("polygon")
+                     .attr("id", id)
+                         .attr("points", function (d) {
+                             return d.map(function (d) {
+                                 return [d.x, d.y].join(",");
+                             }).join(" ");
+                         })
+                     .attr("fill", "white")
+                     .attr("stroke", "black")
+                     .attr("stroke-width", "1")
+                     .attr("onmouseover", "$(\"#wall\").attr(\"fill\", \"#F3F3F3\");")
+                     .attr("onmouseout", "$(\"#wall\").attr(\"fill\", \"white\");");
+                     //.attr("onclick", "$(\"#MainContent_txtWidth" + wallIndex + "\").focus();"); //put focus on the first editable field for the wall
         }
 
+        /**
+        This function hides and calls the appropriate information according the wall that is selected.
+        It also sets the scale of the polygons to be drawn on the canvas to make them fit the canvas optimally
+        @param value - index of the wall selected ("value" should be changed to "index", if it's only walls that we're dealing with)
+        */
         function sunroomObjectChanged(value) { 
+            if ($("#wall"))
+                d3.selectAll("#wall").remove(); //remove existing walls
+            
+            //hide all the li tags
             for (var i = 0; i < listOfWalls[listOfWalls.length - 1].LastItemIndex; i++) {
                 $("#li"+i).css("display", "none");
+                //if ($("#" + i))
+                //    d3.selectAll("#" + i).remove(); //remove existing walls
             }
+            //show only the appropriate li tags
             for (var i = listOfWalls[value].FirstItemIndex; i <= listOfWalls[value].LastItemIndex; i++) {
                 $("#li"+i).css("display", "block");
             }
 
-            drawWall(listOfWalls[value].Length,listOfWalls[value].StartHeight,listOfWalls[value].EndHeight, value); 
+            wallIndex = value; //set the wall index global variable
+            
+            var startHeight = listOfWalls[wallIndex].StartHeight;
+            var endHeight = listOfWalls[wallIndex].EndHeight;
+            var highHeight = (startHeight > endHeight) ? startHeight : endHeight;
+
+            //set the scale's domain and range according to wall size
+            scale.domain([0 , highHeight])
+                 .range([0 , (MAX_CANVAS_HEIGHT) - 100]);
+            
+            wall = canvas.append("g").attr("id", "wall");
+
+            drawWall(); //draw the wall
         }
 
         $(document).ready(function () {
-            sunroomObjectChanged("0");
+            sunroomObjectChanged("0"); //when page loads, call sunroomObjectChanged function to set all the default values for wall 0
         });
 
     </script>

@@ -318,7 +318,7 @@
                 var tempItemName;
                 var tempItemDetails;
                 var tempQuantity;
-                var tempPricePerUnitSub;
+                var tempQuantitySub;
                 var tempUnitPrice;
                 var tempUnitOfMeasurment
                 var tempPricePerUnit;
@@ -347,13 +347,13 @@
                                 tempItemDetails = $(this).text();
                                 break;
                             case 2:
-                                tempQuantity = $(this).text();
+                                //Quantity and unit of measurment are in the same cell, must split the string
+                                tempQuantitySub = $(this).text().split("/");
+                                tempQuantity = tempQuantitySub[0];
+                                tempUnitOfMeasurment = tempQuantitySub[1];
                                 break;
                             case 3:
-                                //Unit price and unit of measurment are in the same cell, must split the string
-                                tempPricePerUnitSub = $(this).text().split("/");
-                                tempUnitPrice = tempPricePerUnitSub[0];
-                                tempUnitOfMeasurment = tempPricePerUnitSub[1];
+                                tempUnitPrice = $(this).text();
                                 //Remove $ from the unitPrice
                                 tempUnitPrice = tempUnitPrice.replace("$", "");
                                 break;
@@ -424,19 +424,22 @@
                 var tableCell;
                 var tempUnitPrice = $("#<%=txtUnitPrice.ClientID%>").val();
                 var tempItemTotal = $("#<%=txtItemTotal.ClientID%>").val();
-                var tempPricePerUnit;
+                var tempQuantity = $("#<%=txtQuantity.ClientID%>").val();
+                var tempQuantityAndUnit;
 
                 // Run validation
                 validateEditInvoiceItem();
 
                 if (!($(this).hasClass("invalid")))
                 {
+                    tempUnitPrice = ((tempUnitPrice != "") ? ("$" + parseFloat(tempUnitPrice).toFixed(2)) : "");
                     // Concatenate the price per unit column
-                    tempPricePerUnit = ((tempUnitPrice != "") ? ("$" + parseFloat(tempUnitPrice).toFixed(2)) : "");
+                    tempQuantityAndUnit = tempQuantity;
+
                     if ($("#<%=ddlUnitOfMeasurment.ClientID%>").val() != "")
                     {
                         // Display / if there is a unit price
-                        tempPricePerUnit += ((tempUnitPrice != "") ? "/" : "") + $("#<%=ddlUnitOfMeasurment.ClientID%>").val();
+                        tempQuantityAndUnit += ((tempQuantity != "") ? "/" : "") + $("#<%=ddlUnitOfMeasurment.ClientID%>").val();
                     }
 
                     // If the user double clicked a row, they are going to edit. Else they clicked Add Item
@@ -463,10 +466,10 @@
                                     $(this).text($("#<%=txtItemDetails.ClientID%>").val());
                                     break;
                                 case 2:
-                                    $(this).text($("#<%=txtQuantity.ClientID%>").val());
+                                    $(this).text(tempQuantityAndUnit);
                                     break;
                                 case 3:
-                                    $(this).text(tempPricePerUnit);
+                                    $(this).text(tempUnitPrice);
                                     break;
                                 case 4:
                                     $(this).text(((tempItemTotal != "") ? ("$" + parseFloat(tempItemTotal).toFixed(2)) : ""));
@@ -481,18 +484,18 @@
                     {
                         // Item name cell - Beginning of row
                         tableCell = "<td><span data-row=\"" + (lastRowNumber + 1) + "\">" + $("#<%=txtItemName.ClientID%>").val() + "</span></td>";
-                        tableRow = "<tr class=\"item additionalItem\">" + tableCell;
+                        tableRow = "<tr class=\"item additionalItem edited\">" + tableCell;
 
                         // Item details cell
                         tableCell = "<td><span>" + $("#<%=txtItemDetails.ClientID%>").val() + "</span></td>";
                         tableRow += tableCell;
 
                         // Item quantity cell
-                        tableCell = "<td><span>" + $("#<%=txtQuantity.ClientID%>").val() + "</span></td>";
+                        tableCell = "<td><span>" + tempQuantityAndUnit + "</span></td>";
                         tableRow += tableCell;
 
                         //Price per unit cell 
-                        tableCell = "<td><span>" + tempPricePerUnit + "</span></td>";          
+                        tableCell = "<td><span>" + tempUnitPrice + "</span></td>";
                         tableRow += tableCell;
 
                         //Price cell - End of row
@@ -580,8 +583,13 @@
             // attribute in each span element.
             $("#SecondaryNavigation_lnkRemoveEdit").click(function () {
                 
+                // Ifa row was clicked and it has been edited
+                if ($(editRow).hasClass("clicked") && $(editRow).hasClass("additionalItem")) {
+                    // Remove the additional item
+                    $(editRow).remove();
+                }
                 // If a row was clicked and it has been edited
-                if ($(editRow).hasClass("clicked") && $(editRow).hasClass("edited"))
+                else if ($(editRow).hasClass("clicked") && $(editRow).hasClass("edited"))
                 {
                     $(editRow).removeClass("edited");
 
@@ -594,10 +602,10 @@
                         $(this).removeData("original");
                     });
 
-                    resetClickedRow();
-                    calculateAndDisplayTotals();
-                }
+                }               
 
+                resetClickedRow();
+                calculateAndDisplayTotals();
             });
 
             // Clicking the remove all edit will set all table rows with the edited class
@@ -617,30 +625,17 @@
                         $(this).removeData("original");
                     });
                 });
+                // For each added row
+                $(".tblPriceCalculator > tbody  > tr.additionalItem").each(function (index) {
+                    // Remove the edited class
+                    $(this).remove();   
+                });
                 calculateAndDisplayTotals();
             });
 
             /**************************
             END OF OF REMOVE EDIT LOGIC
             **************************/
-
-            /****************************************
-            BEGINNING OF REMOVE ADDITIONAL ITEM LOGIC
-            ****************************************/
-
-            // If the row clicked contains the class additionalItem, the row will be removed from the DOM
-            $("#SecondaryNavigation_lnkRemoveAdditionalItem").click(function () {
-                // If the clicked row is an added row
-                if ($(editRow).hasClass("additionalItem")) {
-                    // Delete the editted row
-                    $(editRow).remove();
-                }
-                calculateAndDisplayTotals();
-            });
-
-            /**********************************
-            END OF REMOVE ADDITIONAL ITEM LOGIC
-            **********************************/
 
             /**********************************************
             BEGINNING OF PRICE CALCULATOR SPREADSHEET LOGIC
@@ -763,7 +758,7 @@
             $(".tblPriceCalculator").on("dblclick", "tr.item", function () {
                 var rowNumber = $(this).children("td:first").children("span").data("row"); // The data-row value of the first table cells' span element
                 var columns = $(this).children("td").children("span"); // Each table cells' span element in the row that was clicked
-                var tempPricePerUnitSub; // Splitting the unit price and unit of measurment (/ character)
+                var tempQuantitySub; // Splitting the unit price and unit of measurment (/ character)
 
                 // For each columns' span elements 
                 jQuery.each(columns, function (index) {
@@ -776,13 +771,13 @@
                             itemDetails = $(this).text();
                             break;
                         case 2:
-                            quantity = $(this).text();
-                            break;
-                        case 3:
                             //Unit price and unit of measurment are in the same cell, must split the string
-                            tempPricePerUnitSub = $(this).text().split("/");
-                            unitPrice = tempPricePerUnitSub[0];
-                            unitOfMeasurment = tempPricePerUnitSub[1];
+                            tempQuantitySub = $(this).text().split("/");
+                            quantity = tempQuantitySub[0];
+                            unitOfMeasurment = tempQuantitySub[1];
+                            break;
+                        case 3:                            
+                            unitPrice = $(this).text();
                             //Remove $ from the unitPrice
                             unitPrice = unitPrice.replace("$", "");
                             break;
@@ -837,8 +832,7 @@
                 <li><asp:HyperLink ID="lnkAddItem" runat="server">Add Item</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkEditItem" CssClass="editItem disabled" runat="server">Edit Item</asp:HyperLink></li>
                 <li><asp:HyperLink ID="lnkRemoveEdit" runat="server">Remove Edit</asp:HyperLink></li>
-                <li><asp:HyperLink ID="lnkRemoveAllEdits" runat="server">Remove All Edits</asp:HyperLink></li>  
-                <li><asp:HyperLink ID="lnkRemoveAdditionalItem" runat="server">Remove Additional Item</asp:HyperLink></li>              
+                <li><asp:HyperLink ID="lnkRemoveAllEdits" runat="server">Remove All Edits</asp:HyperLink></li>                
             </ul>
         </nav>
         
@@ -1055,10 +1049,10 @@
                 <asp:Label runat="server" Text="16' 6&#34; Projection x 16' 6&#34; Width" data-row="0"></asp:Label>
             </asp:TableCell>   
             <asp:TableCell CssClass="tdQuantity">
-                <asp:Label runat="server" Text="42" data-row="0"></asp:Label>
+                <asp:Label runat="server" Text="42/LF" data-row="0"></asp:Label>
             </asp:TableCell>   
             <asp:TableCell CssClass="tdPricePerUnit">
-                <asp:Label runat="server" Text="$204.00/LF" data-row="0"></asp:Label>
+                <asp:Label runat="server" Text="$204.00" data-row="0"></asp:Label>
             </asp:TableCell> 
             <asp:TableCell CssClass="tdPrice">
                 <asp:Label runat="server" Text="$8605.80" data-row="0"></asp:Label>

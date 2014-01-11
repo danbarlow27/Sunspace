@@ -49,7 +49,7 @@ namespace SunspaceDealerDesktop
             aCorner2.LinearIndex = 0;
             aCorner2.ItemType = "Starter Post";
             aCorner2.StartHeight = 84f;
-            aCorner2.EndHeight = 83.9f;
+            aCorner2.EndHeight = 83.8f;
             aCorner2.Length = 2f;
             aCorner2.FrameColour = "White";
             aCorner2.Sex = "F";
@@ -62,8 +62,8 @@ namespace SunspaceDealerDesktop
             Filler aFiller2 = new Filler();
             aFiller2.LinearIndex = 1;
             aFiller2.ItemType = "Filler";
-            aFiller2.StartHeight = 83.9f;
-            aFiller2.EndHeight = 82.8f;
+            aFiller2.StartHeight = 83.8f;
+            aFiller2.EndHeight = 83.6f;
             aFiller2.Length = 2f;
             aFiller2.Sex = "MM";
             aFiller2.FixedLocation = 2f;
@@ -78,8 +78,8 @@ namespace SunspaceDealerDesktop
 
             aMod5.LinearIndex = 2;
             aMod5.ItemType = "Window";
-            aMod5.StartHeight = 82.8f;
-            aMod5.EndHeight = 78.2f;
+            aMod5.StartHeight = 83.6f;
+            aMod5.EndHeight = 78.4f;
             aMod5.Length = 52f;
             aMod5.FrameColour = "White";
             aMod5.Sex = "MF";
@@ -153,8 +153,8 @@ namespace SunspaceDealerDesktop
             aFiller2 = new Filler();
             aFiller2.LinearIndex = 3;
             aFiller2.ItemType = "Filler";
-            aFiller2.StartHeight = 78.2f;
-            aFiller2.EndHeight = 78.1f;
+            aFiller2.StartHeight = 78.4f;
+            aFiller2.EndHeight = 78.2f;
             aFiller2.Length = 2f;
             aFiller2.Sex = "MM";
             aFiller2.FixedLocation = -1f;
@@ -166,7 +166,7 @@ namespace SunspaceDealerDesktop
             aCorner2 = new Corner();
             aCorner2.LinearIndex = 4;
             aCorner2.ItemType = "Corner Post";
-            aCorner2.StartHeight = 78.1f;
+            aCorner2.StartHeight = 78.2f;
             aCorner2.EndHeight = 78f;
             aCorner2.Length = 2f;
             aCorner2.FrameColour = "White";
@@ -188,7 +188,7 @@ namespace SunspaceDealerDesktop
             wall2.Orientation = "S";
             wall2.SetBack = 0f;
             wall2.Name = "Front Wall";
-            wall2.FirstItemIndex = 5;
+            wall2.FirstItemIndex = 4;
             wall2.LastItemIndex = 9;
             wall2.StartHeight = 78f;
             wall2.EndHeight = 78f;
@@ -210,7 +210,7 @@ namespace SunspaceDealerDesktop
             aFiller2.FixedLocation = 2f;
             aFiller2.AttachedTo = false;
 
-            list1OfLinearItems.Add(aFiller2);//add the linear item to the list
+            list2OfLinearItems.Add(aFiller2);//add the linear item to the list
             #endregion
             #region li2
             List<ModuleItem> list2OfModuleItems = new List<ModuleItem>();
@@ -398,7 +398,7 @@ namespace SunspaceDealerDesktop
             wall3.Orientation = "E";
             wall3.SetBack = 60f;
             wall3.Name = "Right Wall";
-            wall3.FirstItemIndex = 10;
+            wall3.FirstItemIndex = 9;
             wall3.LastItemIndex = 13;
             wall3.StartHeight = 78f;
             wall3.EndHeight = 84f;
