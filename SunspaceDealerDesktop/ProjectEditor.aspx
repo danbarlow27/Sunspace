@@ -76,6 +76,7 @@
     <div style="max-width:100%; max-height:100%; min-width:100px; min-height:100px; margin: 0 auto;" id="myCanvas"></div>
 
     <style>
+        /*some styling for the axes*/
         .axis text {
             font: 10px sans-serif;
         }
@@ -124,36 +125,31 @@
                     .attr("transform", "translate("+CENTRE_X+","+CENTRE_Y+")");
         var wall;
         var scale = d3.scale.linear(); //used to fit the polygons optimally on the canvas
-        var leftScale = d3.scale.linear();
-        var bottomScale = d3.scale.linear();
-        var rightScale = d3.scale.linear();
-
-
-
+        
 
         /**
         This function gets called when the wall accordion is clicked.
         This function sets all the appropriate attributes 
-        to the wall height and width variables
+        to the wall height and length variables
         */
         function drawWall() {
 
-            var width = listOfWalls[wallIndex].Length; //wall width
+            var length = listOfWalls[wallIndex].Length; //wall length
             var startHeight = listOfWalls[wallIndex].StartHeight; //wall start height
             var endHeight = listOfWalls[wallIndex].EndHeight;  //wall end height
 
             var id = ""; //id to be given to the wall
 
-            var g = wall.append("g").attr("transform", "translate(" + (-1 * scale(parseFloat(width/2))) + "," + (scale(parseFloat(startHeight/2))) + ")");
+            var g = wall.append("g").attr("transform", "translate(" + (-1 * scale(parseFloat(length/2))) + "," + (scale(parseFloat(startHeight/2))) + ")");
 
-            //var topLeft = { "x": (-1 * scale(parsefloat(width/2))), "y": (-1 * scale(parsefloat(startheight/2))) }; //top left coordinates
-            //var topright = { "x": scale(parsefloat(width/2)), "y": (-1 * scale(parsefloat(endheight/2))) }; //top right coordinates
-            //var bottomright = { "x": scale(parsefloat(width/2)), "y": scale(parsefloat(endheight/2)) }; //bottom right coordinates
-            //var bottomleft = { "x": (-1 * scale(parseFloat(width/2))), "y": scale(parseFloat(endHeight/2)) }; //bottom left coordinates
+            //var topLeft = { "x": (-1 * scale(parsefloat(length/2))), "y": (-1 * scale(parsefloat(startheight/2))) }; //top left coordinates
+            //var topright = { "x": scale(parsefloat(length/2)), "y": (-1 * scale(parsefloat(endheight/2))) }; //top right coordinates
+            //var bottomright = { "x": scale(parsefloat(length/2)), "y": scale(parsefloat(endheight/2)) }; //bottom right coordinates
+            //var bottomleft = { "x": (-1 * scale(parseFloat(length/2))), "y": scale(parseFloat(endHeight/2)) }; //bottom left coordinates
 
             var topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(startHeight))) }; //top left coordinates
-            var topRight = { "x": scale(parseFloat(width)), "y": (-1 * scale(parseFloat(endHeight))) }; //top right coordinates
-            var bottomRight = { "x": scale(parseFloat(width)), "y": scale(parseFloat(0)) }; //bottom right coordinates
+            var topRight = { "x": scale(parseFloat(length)), "y": (-1 * scale(parseFloat(endHeight))) }; //top right coordinates
+            var bottomRight = { "x": scale(parseFloat(length)), "y": scale(parseFloat(0)) }; //bottom right coordinates
             var bottomLeft = { "x": scale(parseFloat(0)), "y": scale(parseFloat(0)) }; //bottom left coordinates
 
             var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
@@ -162,22 +158,22 @@
             
             drawAxes();
           
-            drawLinearItems((-1 * scale(parseFloat(width/2))),(scale(parseFloat(startHeight/2)))); //bottom left coordinates
+            drawLinearItems((-1 * scale(parseFloat(length/2))),(scale(parseFloat(startHeight/2)))); //bottom left coordinates
         }
 
         /**
-        This function draws x and y axes to represent the height and width of the walls and the items within the walls
+        This function draws x and y axes to represent the height and length of the walls and the items within the walls
         */
         function drawAxes() { 
 
-            var width = listOfWalls[wallIndex].Length; //wall width
+            var length = listOfWalls[wallIndex].Length; //wall length
             var startHeight = listOfWalls[wallIndex].StartHeight; //wall start height
             var endHeight = listOfWalls[wallIndex].EndHeight;  //wall end height
 
-            //bottom (x) axis representing the width
+            //bottom (x) axis representing the length
             var bottomScale = d3.scale.ordinal()
-                .domain([0 + "\"", width + "\""])
-                .rangePoints([0, scale(width)]);
+                .domain([0 + "\"", length + "\""])
+                .rangePoints([0, scale(length)]);
 
             var bottomAxis = d3.svg.axis()
                 .scale(bottomScale)
@@ -186,11 +182,11 @@
             wall.append("g")
                 .attr("transform", "translate(" + 0 + "," + scale(startHeight)/2 + ")")
                 .append("g")
-                .attr("transform", "translate(" + (scale(width)/2) + "," + 0 + ")")
+                .attr("transform", "translate(" + (scale(length)/2) + "," + 0 + ")")
                 .append("g")
                 .attr("transform", "translate(" + 0 + "," + 20 + ")")
                 .append("g")
-                .attr("transform", "translate(" + (-1 * scale(width)) + "," + 0 + ")")
+                .attr("transform", "translate(" + (-1 * scale(length)) + "," + 0 + ")")
                 .attr("class", "x axis")
                 .call(bottomAxis);
             //end of bottom (x) axis
@@ -205,7 +201,7 @@
                 .orient("left");
 
             wall.append("g")
-                .attr("transform", "translate(" + ((-1 * scale(parseFloat(width/2))) - 20) + "," + (-1 * scale(parseFloat(startHeight/2))) + ")")
+                .attr("transform", "translate(" + ((-1 * scale(parseFloat(length/2))) - 20) + "," + (-1 * scale(parseFloat(startHeight/2))) + ")")
                 .attr("class", "x axis")
                 .call(leftAxis);
             //end of left (y) axis
@@ -222,7 +218,7 @@
             wall.append("g")
                 .attr("transform", "translate(" + 0 + "," + scale(startHeight)/2 + ")")
                 .append("g")
-                .attr("transform", "translate(" + ((scale(width)/2) + 20) + "," + 0 + ")")
+                .attr("transform", "translate(" + ((scale(length)/2) + 20) + "," + 0 + ")")
                 .append("g")
                 .attr("transform", "translate(" + 0 + "," + -1 * scale(endHeight) + ")")
                 .attr("class", "x axis")
@@ -241,21 +237,26 @@
 
             for (var i = 0; i < listOfWalls[wallIndex].LinearItems.length; i++) {
 
-                var id = "" + listOfWalls[wallIndex].LinearItems[i].LinearIndex;
-                var width = listOfWalls[wallIndex].LinearItems[i].Length;
-                var startHeight = listOfWalls[wallIndex].LinearItems[i].StartHeight;
-                var endHeight = listOfWalls[wallIndex].LinearItems[i].EndHeight;
+                var id = "" + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
+                var length = listOfWalls[wallIndex].LinearItems[i].Length; //length of the linear item
+                var startHeight = listOfWalls[wallIndex].LinearItems[i].StartHeight; //start height of the linear item
+                var endHeight = listOfWalls[wallIndex].LinearItems[i].EndHeight; //end height of the linear item
+
+                var modularItems = listOfWalls[wallIndex].LinearItems[i].ModularItems; //modular items in the linear item
 
                 var topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(startHeight))) }; //top left coordinates
-                var topRight = { "x": scale(parseFloat(width)), "y": (-1 * scale(parseFloat(endHeight))) }; //top right coordinates
-                var bottomRight = { "x": scale(parseFloat(width)), "y": scale(parseFloat(0)) }; //bottom right coordinates
+                var topRight = { "x": scale(parseFloat(length)), "y": (-1 * scale(parseFloat(endHeight))) }; //top right coordinates
+                var bottomRight = { "x": scale(parseFloat(length)), "y": scale(parseFloat(0)) }; //bottom right coordinates
                 var bottomLeft = { "x": scale(parseFloat(0)), "y": scale(parseFloat(0)) }; //bottom left coordinates
 
                 var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
                 drawPolygon(points, id, li); //draw the polygon to represent the wall with the given coordinates and id
 
-                x = parseFloat(x) + scale(parseFloat(width));
+                if(typeof modularItems !== "undefined") 
+                    drawModularItems(modularItems);
+
+                x = parseFloat(x) + scale(parseFloat(length));
 
                 li = wall.append("g").attr("transform", "translate("+ x + "," + y + ")");
             }
@@ -263,9 +264,15 @@
 
         /**
         This function draws all the modular items within a given linear item
+        @param modularItems - the array containing modular items in a given linear item
         */
-        function drawModularItems() {
-        
+        function drawModularItems(modularItems) {
+            var x = 0;
+            var y = 0;
+
+            for (var i = 0; i < modularItems.length; i++) { 
+                
+            }
         }
 
         /**
@@ -317,7 +324,7 @@
             var startHeight = listOfWalls[wallIndex].StartHeight;
             var endHeight = listOfWalls[wallIndex].EndHeight;
             var highHeight = (startHeight > endHeight) ? startHeight : endHeight;
-            var width = listOfWalls[wallIndex].Length;
+            var length = listOfWalls[wallIndex].Length;
 
             //set the scale's domain and range according to wall size
             scale.domain([0 , highHeight])
