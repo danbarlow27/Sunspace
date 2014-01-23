@@ -194,7 +194,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="FinalizeEstimates.aspx" />
     <Content Include="Images\iconsNavEditor.png" />
+    <Content Include="index.aspx" />
     <Content Include="JSONTest.aspx" />
     <Content Include="JSONTest2.aspx" />
     <Content Include="PriceCalculator.aspx" />
@@ -374,6 +376,13 @@
     <Compile Include="BoxHeader.cs" />
     <Compile Include="CabanaDoor.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="FinalizeEstimates.aspx.cs">
+      <DependentUpon>FinalizeEstimates.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FinalizeEstimates.aspx.designer.cs">
+      <DependentUpon>FinalizeEstimates.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Corner.cs" />
     <Compile Include="CustomDrawingTool.aspx.cs">
       <DependentUpon>CustomDrawingTool.aspx</DependentUpon>
@@ -388,6 +397,13 @@
     <Compile Include="Floor.cs" />
     <Compile Include="HBoxHeader.cs" />
     <Compile Include="HReceiver.cs" />
+    <Compile Include="index.aspx.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="index.aspx.designer.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
     <Compile Include="JSONTest.aspx.cs">
       <DependentUpon>JSONTest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
