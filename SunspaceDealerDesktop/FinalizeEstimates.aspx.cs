@@ -69,10 +69,12 @@ namespace SunspaceWizard
             aTableCellA.Controls.Add(new LiteralControl("Cost"));
             aTableRow.Controls.Add(aTableCellA);
 
+            /*
             TableHeaderCell aTableCell3 = new TableHeaderCell();
             aTableCell3.CssClass = "sorttable_nosort";
             aTableCell3.Controls.Add(new LiteralControl("Add to Estimate"));
             aTableRow.Controls.Add(aTableCell3);
+            */
 
             tblSavedProjects.Controls.Add(aTableRow);
 
@@ -111,11 +113,13 @@ namespace SunspaceWizard
                 projectsEstimateCheck.ID = "chkAddToEstimate" + i;
                 projectsEstimateCell.Controls.Add(projectsEstimateCheck);
 
+                /*
                 Label projectEstimate = new Label();
                 projectEstimate.AssociatedControlID = "chkAddToEstimate" + i;
                 //projectEstimate.Text = dvProjectList[i][0].ToString();
                 projectsEstimateCell.Controls.Add(projectEstimate);
                 projectsTableRow.Controls.Add(projectsEstimateCell);
+                */
 
                 tblSavedProjects.Controls.Add(projectsTableRow);
                 //phProjectList.Controls.Add(new LiteralControl("<br/>"));
