@@ -164,7 +164,7 @@ namespace SunspaceWizard
             {
                 // Grab the current rows checkbox
                 chkAddToEstimate = (CheckBox)tblSavedProjects.Rows[i].FindControl("chkAddToEstimate" + i); // slightly less evil than how it was before
-               
+
 #if DEBUG
                 // Casting won't let me get text, so variables for debug writeline
                 Button projectName = (Button)tblSavedProjects.Rows[i].FindControl("lblProjectName" + i);
@@ -179,12 +179,20 @@ namespace SunspaceWizard
                     projectIdsToSave.Add(projectIdsArray[i]);   // Add to the list
 
             }
-            
-            
-            
-            // Pretend to add the project ids into a estimates table. 
-            Session.Add("projectIdsToSave", projectIdsToSave.ToArray());
 
+            // Check if they've selected anything
+            if (projectIdsToSave.Count() > 0)
+            {
+
+                // Pretend to add the project ids into a estimates table. 
+                Session.Add("projectIdsToSave", projectIdsToSave.ToArray());
+
+                Response.Redirect("FinalizeEstimates.aspx");
+            }
+            else // Hey! They didn't select anything, that's no good. Show them an error. 
+                lblError.Text = "You must select at least one project to create an estimate.";
+
+            
         }
     }
 }

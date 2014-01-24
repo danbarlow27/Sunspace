@@ -10,6 +10,7 @@ namespace SunspaceWizard
 {
     public partial class FinalizeEstimates : System.Web.UI.Page
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["loggedIn"] == null)
@@ -18,12 +19,36 @@ namespace SunspaceWizard
                 Response.Redirect("Login.aspx");                
             }
 
+            int[] projectIds = new int[0];
+            float msrpTotal = 0.0f;
+
+            // Remove after dbtable is created
+            if (Session["projectIdsToSave"] == null)
+            {
+                Response.Redirect("SavedProjects.aspx");
+            }
+            else
+            {
+                projectIds = (int[])Session["projectIdsToSave"];
+            }
+
             //Create table
             Table tblSavedProjects = new Table();
             tblSavedProjects.CssClass = "tblSavedProjects sortable";
 
             //Query DB to find row information
-            sdsProjectList.SelectCommand = "SELECT project_name, revised_date FROM projects WHERE user_id = '" + Session["user_id"] + "'";
+            // To be replaced with stored estimates table
+            sdsProjectList.SelectCommand = "SELECT project_name, revised_date, msrp FROM projects WHERE user_id = '" + Session["user_id"] + "'";
+
+            // Kinda really hacky
+            for (int i = 0; i < projectIds.Count(); i++)
+            {
+                if(i==0)
+                    sdsProjectList.SelectCommand += " AND project_id = '" + projectIds[i] + "'";
+                else
+                    sdsProjectList.SelectCommand += " OR project_id = '" + projectIds[i] + "'";
+            }
+
             DataView dvProjectList = (DataView)sdsProjectList.Select(System.Web.UI.DataSourceSelectArguments.Empty);
 
             TableHeaderRow aTableRow = new TableHeaderRow();
@@ -41,7 +66,7 @@ namespace SunspaceWizard
 
             TableHeaderCell aTableCellA = new TableHeaderCell();
             aTableCellA.CssClass = "thSortable";
-            aTableCellA.Controls.Add(new LiteralControl("&nbsp"));
+            aTableCellA.Controls.Add(new LiteralControl("Cost"));
             aTableRow.Controls.Add(aTableCellA);
 
             TableHeaderCell aTableCell3 = new TableHeaderCell();
@@ -68,13 +93,18 @@ namespace SunspaceWizard
                 projectsDateCell.Controls.Add(projectDate);
                 projectsTableRow.Controls.Add(projectsDateCell);
 
-                TableCell projectsDeleteCell = new TableCell();
+                TableCell projectsCostCell = new TableCell();
+                /*
                 HyperLink lnkDelete = new HyperLink();
                 lnkDelete.ID = "lnkDelete" + i;
                 lnkDelete.CssClass = "btnDelete";
                 lnkDelete.Text = "Delete";
-                projectsDeleteCell.Controls.Add(lnkDelete);
-                projectsTableRow.Controls.Add(projectsDeleteCell);
+                */
+                Label projectMsrp = new Label();
+                // Gotta parse it like a float to format it. We reorganize later..
+                projectMsrp.Text = float.Parse(dvProjectList[i][2].ToString()).ToString("c");
+                projectsCostCell.Controls.Add(projectMsrp);
+                projectsTableRow.Controls.Add(projectsCostCell);
 
                 TableCell projectsEstimateCell = new TableCell();
                 CheckBox projectsEstimateCheck = new CheckBox();
@@ -89,10 +119,61 @@ namespace SunspaceWizard
 
                 tblSavedProjects.Controls.Add(projectsTableRow);
                 //phProjectList.Controls.Add(new LiteralControl("<br/>"));
+
+                // It's weird
+                msrpTotal += float.Parse(dvProjectList[i][2].ToString());
             }
 
+            // Order Total
+
+            //Create table
+            Table tblTotalCost = new Table();
+            tblTotalCost.CssClass = "tblTotalCost";
+
+            TableRow numOfProjectsRow = new TableRow();
+
+            TableCell numOfProjectsTitleCell = new TableCell();
+            Label NumOfProjectsTitle = new Label();
+
+            NumOfProjectsTitle.Text = "Number of Projects: ";
+
+            numOfProjectsTitleCell.Controls.Add(NumOfProjectsTitle);
+            numOfProjectsRow.Controls.Add(numOfProjectsTitleCell);
+
+            TableCell numOfProjectsCell = new TableCell();
+            Label NumOfProjects = new Label();
+
+            NumOfProjects.Text = projectIds.Count().ToString();
+
+            numOfProjectsCell.Controls.Add(NumOfProjects);
+            numOfProjectsRow.Controls.Add(numOfProjectsCell);
+
+            TableRow costRow = new TableRow();
+
+            TableCell costTitleCell = new TableCell();
+            Label costTitle = new Label();
+
+            costTitle.Text = "";
+
+            costTitleCell.Controls.Add(costTitle);
+            costRow.Controls.Add(costTitleCell);
+
+            TableCell costCell = new TableCell();
+            Label cost = new Label();
+
+            // Format to currency
+            cost.Text = msrpTotal.ToString("c");
+
+            costTitleCell.Controls.Add(cost);
+            costRow.Controls.Add(costCell);
+
+            tblTotalCost.Controls.Add(numOfProjectsRow);
+            tblTotalCost.Controls.Add(costRow);
+
+
             //Finally add table to project placeholder
-            //phProjectList.Controls.Add(tblSavedProjects);
+            phFinalizeOrderList.Controls.Add(tblSavedProjects);
+            phFinalizeOrderTotal.Controls.Add(tblTotalCost);
 
         //    <asp:Table ID="tblSavedProjects" class="tblSavedProjects sortable" runat="server">
         //    <asp:TableHeaderRow TableSection="TableHeader">
@@ -135,6 +216,14 @@ namespace SunspaceWizard
         //    </asp:TableRow>
 
         //</asp:Table>
+        }
+
+        protected void btnAddToEstimate_Click(object sender, EventArgs e)
+        {
+            // SQL Magic here when the table is done.
+
+            // Redirect to the Order Landing
+            Response.Redirect("OrderLanding.aspx");
         }
     }
 }

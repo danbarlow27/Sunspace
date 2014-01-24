@@ -24,6 +24,13 @@
 
     <%-- PROJECTS TABLE - BODY
     ======================================== --%>
+    <asp:Table ID="Table1" runat="server">
+        <asp:TableRow>
+            <asp:TableCell ColumnSpan="2" CssClass="tdErrorLogin">
+                <asp:Label runat="server" ID="lblError" CssClass="lblErrorLogin" Text= "" ></asp:Label>
+            </asp:TableCell>
+        </asp:TableRow>
+    </asp:Table>
     <div class="scrollbox">
 
         <asp:PlaceHolder ID="phProjectList" runat="server"></asp:PlaceHolder>

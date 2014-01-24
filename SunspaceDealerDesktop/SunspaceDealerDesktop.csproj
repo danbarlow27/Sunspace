@@ -202,6 +202,7 @@
     <Content Include="PriceCalculator.aspx" />
     <Content Include="ProjectEditor.aspx" />
     <Content Include="Scripts\init.js" />
+    <Content Include="OrderLanding.aspx" />
     <Content Include="WizardDoorOnly.aspx" />
     <Content Include="GenerateMods.aspx" />
     <Content Include="Home.aspx" />
@@ -433,6 +434,13 @@
       <DependentUpon>ProjectEditor.aspx</DependentUpon>
     </Compile>
     <Compile Include="RoofSupport.cs" />
+    <Compile Include="OrderLanding.aspx.cs">
+      <DependentUpon>OrderLanding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrderLanding.aspx.designer.cs">
+      <DependentUpon>OrderLanding.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Skylight.cs" />
     <Compile Include="WizardDoorOnly.aspx.cs">
       <DependentUpon>WizardDoorOnly.aspx</DependentUpon>

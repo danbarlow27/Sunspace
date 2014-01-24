@@ -5,8 +5,6 @@
     <%-- SEARCH FIELD
     ======================================== --%>
     <div class="search">
-        <asp:TextBox ID="txtSearch" onkeydown="return (event.keyCode!=13);" class="txtField txtSearch float-left" placeholder="Search Projects" runat="server"></asp:TextBox>
-        <asp:Button ID="btnSearch" class="btnSubmit btnSearch" runat="server" Text="Search" />
     </div>
 
 
@@ -38,7 +36,7 @@
 
     
 
-    <asp:Button ID="btnAddToEstimate" CssClass="btnSubmit btnAddToEstimate" runat="server" Text="Add to Estimate" />
+    <asp:Button ID="btnAddToEstimate" CssClass="btnSubmit btnAddToEstimate" runat="server" Text="Finalize Order" OnClick="btnAddToEstimate_Click" />
 
     <asp:SqlDataSource ID="sdsProjectList" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>"></asp:SqlDataSource>
 
