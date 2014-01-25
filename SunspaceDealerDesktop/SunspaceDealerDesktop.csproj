@@ -194,12 +194,15 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="FinalizeEstimates.aspx" />
     <Content Include="Images\iconsNavEditor.png" />
+    <Content Include="index.aspx" />
     <Content Include="JSONTest.aspx" />
     <Content Include="JSONTest2.aspx" />
     <Content Include="PriceCalculator.aspx" />
     <Content Include="ProjectEditor.aspx" />
     <Content Include="Scripts\init.js" />
+    <Content Include="OrderLanding.aspx" />
     <Content Include="WizardDoorOnly.aspx" />
     <Content Include="GenerateMods.aspx" />
     <Content Include="Home.aspx" />
@@ -375,6 +378,13 @@
     <Compile Include="BoxHeader.cs" />
     <Compile Include="CabanaDoor.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="FinalizeEstimates.aspx.cs">
+      <DependentUpon>FinalizeEstimates.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FinalizeEstimates.aspx.designer.cs">
+      <DependentUpon>FinalizeEstimates.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Corner.cs" />
     <Compile Include="CustomDrawingTool.aspx.cs">
       <DependentUpon>CustomDrawingTool.aspx</DependentUpon>
@@ -389,6 +399,13 @@
     <Compile Include="Floor.cs" />
     <Compile Include="HBoxHeader.cs" />
     <Compile Include="HReceiver.cs" />
+    <Compile Include="index.aspx.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="index.aspx.designer.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
     <Compile Include="JSONTest.aspx.cs">
       <DependentUpon>JSONTest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -418,6 +435,13 @@
       <DependentUpon>ProjectEditor.aspx</DependentUpon>
     </Compile>
     <Compile Include="RoofSupport.cs" />
+    <Compile Include="OrderLanding.aspx.cs">
+      <DependentUpon>OrderLanding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrderLanding.aspx.designer.cs">
+      <DependentUpon>OrderLanding.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Skylight.cs" />
     <Compile Include="WizardDoorOnly.aspx.cs">
       <DependentUpon>WizardDoorOnly.aspx</DependentUpon>

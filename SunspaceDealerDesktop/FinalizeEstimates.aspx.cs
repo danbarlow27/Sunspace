@@ -5,16 +5,11 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
-using System.Diagnostics; // For debug.write
 
 namespace SunspaceWizard
 {
-    public partial class SavedProjects : System.Web.UI.Page
+    public partial class FinalizeEstimates : System.Web.UI.Page
     {
-        // Instantiates in the Page_Load
-        private Table tblSavedProjects;
-
-        private int[] projectIdsArray;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,13 +19,36 @@ namespace SunspaceWizard
                 Response.Redirect("Login.aspx");                
             }
 
+            int[] projectIds = new int[0];
+            float msrpTotal = 0.0f;
+
+            // Remove after dbtable is created
+            if (Session["projectIdsToSave"] == null)
+            {
+                Response.Redirect("SavedProjects.aspx");
+            }
+            else
+            {
+                projectIds = (int[])Session["projectIdsToSave"];
+            }
+
             //Create table
-            tblSavedProjects = new Table();
-            //tblSavedProjects.ID = "tblSavedProjects";
+            Table tblSavedProjects = new Table();
             tblSavedProjects.CssClass = "tblSavedProjects sortable";
 
             //Query DB to find row information
-            sdsProjectList.SelectCommand = "SELECT project_name, revised_date, project_id FROM projects WHERE user_id = '" + Session["user_id"] + "'";
+            // To be replaced with stored estimates table
+            sdsProjectList.SelectCommand = "SELECT project_name, revised_date, msrp FROM projects WHERE user_id = '" + Session["user_id"] + "'";
+
+            // Kinda really hacky
+            for (int i = 0; i < projectIds.Count(); i++)
+            {
+                if(i==0)
+                    sdsProjectList.SelectCommand += " AND project_id = '" + projectIds[i] + "'";
+                else
+                    sdsProjectList.SelectCommand += " OR project_id = '" + projectIds[i] + "'";
+            }
+
             DataView dvProjectList = (DataView)sdsProjectList.Select(System.Web.UI.DataSourceSelectArguments.Empty);
 
             TableHeaderRow aTableRow = new TableHeaderRow();
@@ -48,18 +66,17 @@ namespace SunspaceWizard
 
             TableHeaderCell aTableCellA = new TableHeaderCell();
             aTableCellA.CssClass = "thSortable";
-            aTableCellA.Controls.Add(new LiteralControl("&nbsp"));
+            aTableCellA.Controls.Add(new LiteralControl("Cost"));
             aTableRow.Controls.Add(aTableCellA);
 
+            /*
             TableHeaderCell aTableCell3 = new TableHeaderCell();
             aTableCell3.CssClass = "sorttable_nosort";
             aTableCell3.Controls.Add(new LiteralControl("Add to Estimate"));
             aTableRow.Controls.Add(aTableCell3);
+            */
 
             tblSavedProjects.Controls.Add(aTableRow);
-
-            // Initialize array
-            projectIdsArray = new int[dvProjectList.Count];
 
             for (int i = 0; i < dvProjectList.Count; i++)
             {
@@ -68,46 +85,99 @@ namespace SunspaceWizard
                 TableCell projectsNameCell = new TableCell();
                 Button projectName = new Button();
                 projectName.Text = dvProjectList[i][0].ToString();
-                projectName.ID = "lblProjectName" + i;
                 // projectName.
                  projectsNameCell.Controls.Add(projectName);
                 projectsTableRow.Controls.Add(projectsNameCell);
 
                 TableCell projectsDateCell = new TableCell();
                 Label projectDate = new Label();
-                projectDate.ID = "lblProjectDate" + i;
                 projectDate.Text = dvProjectList[i][1].ToString();
                 projectsDateCell.Controls.Add(projectDate);
                 projectsTableRow.Controls.Add(projectsDateCell);
 
-                TableCell projectsDeleteCell = new TableCell();
+                TableCell projectsCostCell = new TableCell();
+                /*
                 HyperLink lnkDelete = new HyperLink();
                 lnkDelete.ID = "lnkDelete" + i;
                 lnkDelete.CssClass = "btnDelete";
                 lnkDelete.Text = "Delete";
-                projectsDeleteCell.Controls.Add(lnkDelete);
-                projectsTableRow.Controls.Add(projectsDeleteCell);
+                */
+                Label projectMsrp = new Label();
+                // Gotta parse it like a float to format it. We reorganize later..
+                projectMsrp.Text = float.Parse(dvProjectList[i][2].ToString()).ToString("c");
+                projectsCostCell.Controls.Add(projectMsrp);
+                projectsTableRow.Controls.Add(projectsCostCell);
 
                 TableCell projectsEstimateCell = new TableCell();
                 CheckBox projectsEstimateCheck = new CheckBox();
                 projectsEstimateCheck.ID = "chkAddToEstimate" + i;
                 projectsEstimateCell.Controls.Add(projectsEstimateCheck);
 
+                /*
                 Label projectEstimate = new Label();
                 projectEstimate.AssociatedControlID = "chkAddToEstimate" + i;
                 //projectEstimate.Text = dvProjectList[i][0].ToString();
                 projectsEstimateCell.Controls.Add(projectEstimate);
                 projectsTableRow.Controls.Add(projectsEstimateCell);
+                */
 
                 tblSavedProjects.Controls.Add(projectsTableRow);
                 //phProjectList.Controls.Add(new LiteralControl("<br/>"));
 
-                // Store project id (we'll go through it later on add to estimate click)
-                projectIdsArray[i] = (int)dvProjectList[i][2];
+                // It's weird
+                msrpTotal += float.Parse(dvProjectList[i][2].ToString());
             }
 
+            // Order Total
+
+            //Create table
+            Table tblTotalCost = new Table();
+            tblTotalCost.CssClass = "tblTotalCost";
+
+            TableRow numOfProjectsRow = new TableRow();
+
+            TableCell numOfProjectsTitleCell = new TableCell();
+            Label NumOfProjectsTitle = new Label();
+
+            NumOfProjectsTitle.Text = "Number of Projects: ";
+
+            numOfProjectsTitleCell.Controls.Add(NumOfProjectsTitle);
+            numOfProjectsRow.Controls.Add(numOfProjectsTitleCell);
+
+            TableCell numOfProjectsCell = new TableCell();
+            Label NumOfProjects = new Label();
+
+            NumOfProjects.Text = projectIds.Count().ToString();
+
+            numOfProjectsCell.Controls.Add(NumOfProjects);
+            numOfProjectsRow.Controls.Add(numOfProjectsCell);
+
+            TableRow costRow = new TableRow();
+
+            TableCell costTitleCell = new TableCell();
+            Label costTitle = new Label();
+
+            costTitle.Text = "";
+
+            costTitleCell.Controls.Add(costTitle);
+            costRow.Controls.Add(costTitleCell);
+
+            TableCell costCell = new TableCell();
+            Label cost = new Label();
+
+            // Format to currency
+            cost.Text = msrpTotal.ToString("c");
+
+            costTitleCell.Controls.Add(cost);
+            costRow.Controls.Add(costCell);
+
+            tblTotalCost.Controls.Add(numOfProjectsRow);
+            tblTotalCost.Controls.Add(costRow);
+
+
             //Finally add table to project placeholder
-            phProjectList.Controls.Add(tblSavedProjects);
+            phFinalizeOrderList.Controls.Add(tblSavedProjects);
+            phFinalizeOrderTotal.Controls.Add(tblTotalCost);
 
         //    <asp:Table ID="tblSavedProjects" class="tblSavedProjects sortable" runat="server">
         //    <asp:TableHeaderRow TableSection="TableHeader">
@@ -154,45 +224,10 @@ namespace SunspaceWizard
 
         protected void btnAddToEstimate_Click(object sender, EventArgs e)
         {
-            // 
-            CheckBox chkAddToEstimate;
-            // We'll throw active projectids in here.
-            List<int> projectIdsToSave = new List<int>();
+            // SQL Magic here when the table is done.
 
-            // Grab active checkboxes
-            for (int i = 0; i < projectIdsArray.Count(); i++)
-            {
-                // Grab the current rows checkbox
-                chkAddToEstimate = (CheckBox)tblSavedProjects.Rows[i].FindControl("chkAddToEstimate" + i); // slightly less evil than how it was before
-
-#if DEBUG
-                // Casting won't let me get text, so variables for debug writeline
-                Button projectName = (Button)tblSavedProjects.Rows[i].FindControl("lblProjectName" + i);
-                Label projectDate = (Label)tblSavedProjects.Rows[i].FindControl("lblProjectDate" + i);
-
-                // debugdebugdebug project details
-                Debug.WriteLine("[" + projectDate.Text + "] Project: " + projectName.Text);
-#endif
-
-                // Check if it's..checked
-                if (chkAddToEstimate.Checked)
-                    projectIdsToSave.Add(projectIdsArray[i]);   // Add to the list
-
-            }
-
-            // Check if they've selected anything
-            if (projectIdsToSave.Count() > 0)
-            {
-
-                // Pretend to add the project ids into a estimates table. 
-                Session.Add("projectIdsToSave", projectIdsToSave.ToArray());
-
-                Response.Redirect("FinalizeEstimates.aspx");
-            }
-            else // Hey! They didn't select anything, that's no good. Show them an error. 
-                lblError.Text = "You must select at least one project to create an estimate.";
-
-            
+            // Redirect to the Order Landing
+            Response.Redirect("OrderLanding.aspx");
         }
     }
 }

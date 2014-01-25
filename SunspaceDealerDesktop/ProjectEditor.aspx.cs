@@ -242,7 +242,7 @@ namespace SunspaceDealerDesktop
             kneewall2.FrameColour = "White"; //
             kneewall2.NumVents = 0;
 
-            list1OfModuleItems.Add(kneewall); //add the modular item to the list
+            list2OfModuleItems.Add(kneewall); //add the modular item to the list
             #endregion 
             #region mod2
             VinylWindow aVinylWindow2 = new VinylWindow();

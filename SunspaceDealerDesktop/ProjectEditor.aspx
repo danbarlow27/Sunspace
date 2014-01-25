@@ -123,7 +123,7 @@
                     .style("border", "1px solid black");
         var canvas = svg.append("g")
                     .attr("transform", "translate("+CENTRE_X+","+CENTRE_Y+")");
-        var wall;
+        var gWall, gLi, gMod;
         var scale = d3.scale.linear(); //used to fit the polygons optimally on the canvas
         
 
@@ -140,7 +140,7 @@
 
             var id = ""; //id to be given to the wall
 
-            var g = wall.append("g").attr("transform", "translate(" + (-1 * scale(parseFloat(length/2))) + "," + (scale(parseFloat(startHeight/2))) + ")");
+            var g = gWall.append("g").attr("transform", "translate(" + (-1 * scale(parseFloat(length/2))) + "," + (scale(parseFloat(startHeight/2))) + ")");
 
             //var topLeft = { "x": (-1 * scale(parsefloat(length/2))), "y": (-1 * scale(parsefloat(startheight/2))) }; //top left coordinates
             //var topright = { "x": scale(parsefloat(length/2)), "y": (-1 * scale(parsefloat(endheight/2))) }; //top right coordinates
@@ -179,7 +179,7 @@
                 .scale(bottomScale)
                 .orient("bottom");
 
-            wall.append("g")
+            gWall.append("g")
                 .attr("transform", "translate(" + 0 + "," + scale(startHeight)/2 + ")")
                 .append("g")
                 .attr("transform", "translate(" + (scale(length)/2) + "," + 0 + ")")
@@ -200,7 +200,7 @@
                 .scale(leftScale)
                 .orient("left");
 
-            wall.append("g")
+            gWall.append("g")
                 .attr("transform", "translate(" + ((-1 * scale(parseFloat(length/2))) - 20) + "," + (-1 * scale(parseFloat(startHeight/2))) + ")")
                 .attr("class", "x axis")
                 .call(leftAxis);
@@ -215,7 +215,7 @@
                 .scale(rightScale)
                 .orient("right");
 
-            wall.append("g")
+            gWall.append("g")
                 .attr("transform", "translate(" + 0 + "," + scale(startHeight)/2 + ")")
                 .append("g")
                 .attr("transform", "translate(" + ((scale(length)/2) + 20) + "," + 0 + ")")
@@ -233,7 +233,7 @@
         */
         function drawLinearItems(x,y) {
 
-            var li = wall.append("g").attr("transform", "translate(" + x + "," + y + ")");
+            gLi = gWall.append("g").attr("transform", "translate(" + x + "," + y + ")");
 
             for (var i = 0; i < listOfWalls[wallIndex].LinearItems.length; i++) {
 
@@ -251,14 +251,16 @@
 
                 var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                drawPolygon(points, id, li); //draw the polygon to represent the wall with the given coordinates and id
+                drawPolygon(points, id, gLi); //draw the polygon to represent the wall with the given coordinates and id
+
+                //console.log(typeof moduleItems);
 
                 if(typeof modularItems !== "undefined") 
-                    drawModularItems(modularItems);
+                    drawModularItems(modularItems, x, y);
 
                 x = parseFloat(x) + scale(parseFloat(length));
 
-                li = wall.append("g").attr("transform", "translate("+ x + "," + y + ")");
+                gLi = gWall.append("g").attr("transform", "translate("+ x + "," + y + ")"); //bottom right coordinates of the linear item
             }
         }
 
@@ -266,11 +268,36 @@
         This function draws all the modular items within a given linear item
         @param modularItems - the array containing modular items in a given linear item
         */
-        function drawModularItems(modularItems) {
-            var x = 0;
-            var y = 0;
+        function drawModularItems(modularItems, x, y) {
+            //var x = 0;
+            //var y = 0;
+
+            gMod = gWall.append("g").attr("transform", "translate("+ x + "," + y + ")"); //bottom right coordinates of the linear item
 
             for (var i = 0; i < modularItems.length; i++) { 
+
+                var id = "";// + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
+                var length = modularItems[i].FLength; ; //length of the modular item
+                var startHeight = modularItems[i].FStartHeight; //start height of the modular item
+                var endHeight = modularItems[i].FEndHeight; //end height of the modular item
+                var leftHeight = modularItems[i].LeftHeight; //left height of the modular item
+                var rightHeight = modularItems[i].RightHeight; //right height of the modular item
+                
+                var topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(leftHeight))) }; //top left coordinates
+                var topRight = { "x": scale(parseFloat(length)), "y": (-1 * scale(parseFloat(rightHeight))) }; //top right coordinates
+                var bottomRight = { "x": scale(parseFloat(length)), "y": scale(parseFloat(0)) }; //bottom right coordinates
+                var bottomLeft = { "x": scale(parseFloat(0)), "y": scale(parseFloat(0)) }; //bottom left coordinates
+
+                var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                alert("l: " + length + ", sh: " + startHeight + ", eh: " + endHeight + ", lh: " + leftHeight + ", rh: " + rightHeight);
+
+                drawPolygon(points, id, gMod); //draw the polygon to represent the wall with the given coordinates and id
+
+                //y = parseFloat(y) + scale(parseFloat(leftHeight));
+                var y2 = parseFloat(y) - scale(parseFloat(endHeight));
+
+                gMod = gWall.append("g").attr("transform", "translate("+ x + "," + y2 + ")");
                 
             }
         }
@@ -330,7 +357,7 @@
             scale.domain([0 , highHeight])
                  .range([0 , (MAX_CANVAS_HEIGHT) - 100]);
             
-            wall = canvas.append("g").attr("id", "wall");
+            gWall = canvas.append("g").attr("id", "wall");
 
             drawWall(); //draw the wall
         }

@@ -695,7 +695,13 @@ li > .toggleOptions > li {
 }*/
 /* #endregion */
 
+/******************************************
+* FINALIZE ORDER PAGE
+*******************************************/
 
+.tblTotalCost {
+    background: rgb(242, 235, 214);
+}
 
 /******************************************
  * NEW PROJECT PAGE
