@@ -33,8 +33,7 @@
         </asp:TableRow>
 
         <asp:TableRow>
-            <asp:TableCell>&nbsp;</asp:TableCell>
-            <asp:TableCell>
+            <asp:TableCell ColumnSpan="2">
                 <asp:Button runat="server" ID="btnLogin" CssClass="btnSubmit btnLogin" Text="Login" OnClick="btnLogin_Click"/>
             </asp:TableCell>
         </asp:TableRow>

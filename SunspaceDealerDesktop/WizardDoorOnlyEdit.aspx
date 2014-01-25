@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Door Order" Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="WizardDoorOnly.aspx.cs" Inherits="SunspaceDealerDesktop.DoorOnlyOrder" %>
+﻿<%@ Page Title="Door Order Edit" Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="WizardDoorOnlyEdit.aspx.cs" Inherits="SunspaceDealerDesktop.WizardDoorOnlyEdit" %>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">    
     <script src="Scripts/GlobalFunctions.js"></script>
     <script src="Scripts/Validation.js"></script>

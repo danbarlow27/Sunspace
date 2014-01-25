@@ -257,6 +257,7 @@
     <Content Include="Content\fonts\Shanti-Regular.ttf" />
     <Content Include="ProjectPreview.aspx" />
     <Content Include="ProjEd.aspx" />
+    <Content Include="WizardDoorOnlyEdit.aspx" />
     <Content Include="WizardRoofOnly.aspx" />
     <Content Include="RoofTesting.aspx" />
     <Content Include="RoofWizard.aspx" />
@@ -501,6 +502,13 @@
     <Compile Include="Roof.cs" />
     <Compile Include="RoofItem.cs" />
     <Compile Include="RoofModule.cs" />
+    <Compile Include="WizardDoorOnlyEdit.aspx.cs">
+      <DependentUpon>WizardDoorOnlyEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WizardDoorOnlyEdit.aspx.designer.cs">
+      <DependentUpon>WizardDoorOnlyEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WizardRoofOnly.aspx.cs">
       <DependentUpon>WizardRoofOnly.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

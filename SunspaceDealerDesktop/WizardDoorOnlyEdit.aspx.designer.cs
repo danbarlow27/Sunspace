@@ -10,7 +10,7 @@
 namespace SunspaceDealerDesktop {
     
     
-    public partial class DoorOnlyOrder {
+    public partial class WizardDoorOnlyEdit {
         
         /// <summary>
         /// lblDoorDetails control.

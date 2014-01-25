@@ -5,11 +5,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using Newtonsoft.Json;
 namespace SunspaceDealerDesktop
 {
-    public partial class DoorOnlyOrder : System.Web.UI.Page
+    public partial class WizardDoorOnlyEdit : System.Web.UI.Page
     {
+        protected int projectId = 77; //get it from the session
         protected ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
         protected ListItem lst18 = new ListItem("1/8", ".125");
         protected ListItem lst14 = new ListItem("1/4", ".25");
@@ -31,7 +32,6 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
             #region Loop to display door types as radio buttons
 
             //For loop to get through all the possible door types: Cabana, French, Patio, Opening Only (No Door)
@@ -66,7 +66,7 @@ namespace SunspaceDealerDesktop
                 Label typeLabel = new Label();
                 typeLabel.AssociatedControlID = "radType" + title;    //Tying this label to the radio button
                 typeLabel.Text = title;     //Displaying the proper texted based on current title variable
-                
+
 
                 DoorOptions.Controls.Add(typeRadio);        //Adding radio button control to placeholder DoorOptions
                 DoorOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder DoorOptions
@@ -189,7 +189,7 @@ namespace SunspaceDealerDesktop
                 #endregion
 
                 #region "As-if" Height
-                
+
                 TableRow doorAsIfHeightRow = new TableRow();
                 doorAsIfHeightRow.ID = "rowDoorAsIfHeight" + title;
                 doorAsIfHeightRow.Attributes.Add("style", "display:none;");
@@ -220,8 +220,8 @@ namespace SunspaceDealerDesktop
                 inchAsIfHeight.Items.Add(lst34);
                 inchAsIfHeight.Items.Add(lst78);
 
-                doorAsIfHeightLBL.AssociatedControlID = "txtDoorAsIfHeight" + title;                
-                
+                doorAsIfHeightLBL.AssociatedControlID = "txtDoorAsIfHeight" + title;
+
                 #endregion
 
                 #region Door Width
@@ -256,225 +256,225 @@ namespace SunspaceDealerDesktop
                 inchWidth.Items.Add(lst34);
                 inchWidth.Items.Add(lst78);
 
-                doorWidthLBL.AssociatedControlID = "txtDoorWidth" + title;                
+                doorWidthLBL.AssociatedControlID = "txtDoorWidth" + title;
 
                 #endregion
 
                 #region V4T Number Of Vents
 
-                    TableRow doorV4TNumberOfVentsRow = new TableRow();
-                    doorV4TNumberOfVentsRow.ID = "rowDoorV4TNumberOfVents" + title;
-                    doorV4TNumberOfVentsRow.Attributes.Add("style", "display:inherit");
-                    //doorV4TNumberOfVentsRow.Attributes.Add("style", "display:none;");
-                    TableCell doorV4TNumberOfVentsLBLCell = new TableCell();
-                    TableCell doorV4TNumberOfVentsDDLCell = new TableCell();
+                TableRow doorV4TNumberOfVentsRow = new TableRow();
+                doorV4TNumberOfVentsRow.ID = "rowDoorV4TNumberOfVents" + title;
+                doorV4TNumberOfVentsRow.Attributes.Add("style", "display:inherit");
+                //doorV4TNumberOfVentsRow.Attributes.Add("style", "display:none;");
+                TableCell doorV4TNumberOfVentsLBLCell = new TableCell();
+                TableCell doorV4TNumberOfVentsDDLCell = new TableCell();
 
-                    Label doorV4TNumberOfVentsLBL = new Label();
-                    doorV4TNumberOfVentsLBL.ID = "lblV4TNumberOfVents" + title;
-                    doorV4TNumberOfVentsLBL.Text = "Number Of Vents:";
+                Label doorV4TNumberOfVentsLBL = new Label();
+                doorV4TNumberOfVentsLBL.ID = "lblV4TNumberOfVents" + title;
+                doorV4TNumberOfVentsLBL.Text = "Number Of Vents:";
 
-                    DropDownList doorV4TNumberOfVentsDDL = new DropDownList();
-                    doorV4TNumberOfVentsDDL.ID = "ddlDoorV4TNumberOfVents" + title;
-                    doorV4TNumberOfVentsDDL.Attributes.Add("onchange", "tintOptionsChanged('" + title + "'); displayMixedTint('" + title + "');");
-                    for (int j = 0; j < Constants.DOOR_NUMBER_OF_VENTS.Count(); j++)
-                    {
-                        doorV4TNumberOfVentsDDL.Items.Add(new ListItem(Constants.DOOR_NUMBER_OF_VENTS[j], Constants.DOOR_NUMBER_OF_VENTS[j]));
-                    }
+                DropDownList doorV4TNumberOfVentsDDL = new DropDownList();
+                doorV4TNumberOfVentsDDL.ID = "ddlDoorV4TNumberOfVents" + title;
+                doorV4TNumberOfVentsDDL.Attributes.Add("onchange", "tintOptionsChanged('" + title + "'); displayMixedTint('" + title + "');");
+                for (int j = 0; j < Constants.DOOR_NUMBER_OF_VENTS.Count(); j++)
+                {
+                    doorV4TNumberOfVentsDDL.Items.Add(new ListItem(Constants.DOOR_NUMBER_OF_VENTS[j], Constants.DOOR_NUMBER_OF_VENTS[j]));
+                }
 
-                    doorV4TNumberOfVentsLBL.AssociatedControlID = "ddlDoorV4TNumberOfVents" + title;                   
+                doorV4TNumberOfVentsLBL.AssociatedControlID = "ddlDoorV4TNumberOfVents" + title;
 
-                    #region Uneven Vents Checkbox
+                #region Uneven Vents Checkbox
 
-                    TableCell doorUnevenVentsCHKCell = new TableCell();
-                    //doorUnevenVentsCHKCell.Attributes.Add("style", "display:none;");
-                    doorUnevenVentsCHKCell.ID = "cellDoorUnevenVents" + title;
+                TableCell doorUnevenVentsCHKCell = new TableCell();
+                //doorUnevenVentsCHKCell.Attributes.Add("style", "display:none;");
+                doorUnevenVentsCHKCell.ID = "cellDoorUnevenVents" + title;
 
-                    Label doorUnevenVentsLBLChk = new Label();
-                    doorUnevenVentsLBLChk.ID = "lblDoorUnevenVents" + title;
+                Label doorUnevenVentsLBLChk = new Label();
+                doorUnevenVentsLBLChk.ID = "lblDoorUnevenVents" + title;
 
-                    Label doorUnevenVentsLBL = new Label();
-                    doorUnevenVentsLBL.ID = "lblDoorUnevenVentsRad" + title;
-                    doorUnevenVentsLBL.Text = " Uneven Vents";
+                Label doorUnevenVentsLBL = new Label();
+                doorUnevenVentsLBL.ID = "lblDoorUnevenVentsRad" + title;
+                doorUnevenVentsLBL.Text = " Uneven Vents";
 
-                    CheckBox doorUnevenVentsCHK = new CheckBox();
-                    doorUnevenVentsCHK.ID = "chkDoorUnevenVents" + title;
-                    doorUnevenVentsCHK.Attributes.Add("value", "UnevenVents");
-                    doorUnevenVentsCHK.Attributes.Add("onclick", "unevenVentsChecked(this.checked,'" + title + "');");
+                CheckBox doorUnevenVentsCHK = new CheckBox();
+                doorUnevenVentsCHK.ID = "chkDoorUnevenVents" + title;
+                doorUnevenVentsCHK.Attributes.Add("value", "UnevenVents");
+                doorUnevenVentsCHK.Attributes.Add("onclick", "unevenVentsChecked(this.checked,'" + title + "');");
 
-                    doorUnevenVentsLBLChk.AssociatedControlID = "chkDoorUnevenVents" + title;
-                    doorUnevenVentsLBL.AssociatedControlID = "chkDoorUnevenVents" + title;
+                doorUnevenVentsLBLChk.AssociatedControlID = "chkDoorUnevenVents" + title;
+                doorUnevenVentsLBL.AssociatedControlID = "chkDoorUnevenVents" + title;
 
-                    #endregion
-                
+                #endregion
+
                 #endregion
 
                 #region Uneven Vents Top Bottom Both Rads
 
-                    TableRow doorTopBottomBothRadRow = new TableRow();
-                    doorTopBottomBothRadRow.ID = "rowDoorTopBottomBothRad" + title;
-                    doorTopBottomBothRadRow.Attributes.Add("style", "display:none;");
+                TableRow doorTopBottomBothRadRow = new TableRow();
+                doorTopBottomBothRadRow.ID = "rowDoorTopBottomBothRad" + title;
+                doorTopBottomBothRadRow.Attributes.Add("style", "display:none;");
 
-                    #region Top
+                #region Top
 
-                    TableCell doorTopRadCell = new TableCell();
+                TableCell doorTopRadCell = new TableCell();
 
-                    Label doorTopRadLBLRad = new Label();
-                    doorTopRadLBLRad.ID = "lblDoorTopRad" + title;
+                Label doorTopRadLBLRad = new Label();
+                doorTopRadLBLRad.ID = "lblDoorTopRad" + title;
 
-                    Label doorTopRadLBL = new Label();
-                    doorTopRadLBL.ID = "lblDoorTopRadRad" + title;
-                    doorTopRadLBL.Text = "Top";
+                Label doorTopRadLBL = new Label();
+                doorTopRadLBL.ID = "lblDoorTopRadRad" + title;
+                doorTopRadLBL.Text = "Top";
 
-                    RadioButton doorTopRadRAD = new RadioButton();
-                    doorTopRadRAD.ID = "radDoorTopRad" + title;
-                    doorTopRadRAD.Attributes.Add("value", "top");
-                    doorTopRadRAD.GroupName = "Uneven" + title;
-                    doorTopRadRAD.Attributes.Add("onclick", "topOrBottomUnevenClicked('" + title + "');");
+                RadioButton doorTopRadRAD = new RadioButton();
+                doorTopRadRAD.ID = "radDoorTopRad" + title;
+                doorTopRadRAD.Attributes.Add("value", "top");
+                doorTopRadRAD.GroupName = "Uneven" + title;
+                doorTopRadRAD.Attributes.Add("onclick", "topOrBottomUnevenClicked('" + title + "');");
 
-                    doorTopRadLBLRad.AssociatedControlID = "radDoorTopRad" + title;
-                    doorTopRadLBL.AssociatedControlID = "radDoorTopRad" + title;
+                doorTopRadLBLRad.AssociatedControlID = "radDoorTopRad" + title;
+                doorTopRadLBL.AssociatedControlID = "radDoorTopRad" + title;
 
-                    doorTopRadCell.Controls.Add(doorTopRadRAD);
-                    doorTopRadCell.Controls.Add(doorTopRadLBLRad);
-                    doorTopRadCell.Controls.Add(doorTopRadLBL);
+                doorTopRadCell.Controls.Add(doorTopRadRAD);
+                doorTopRadCell.Controls.Add(doorTopRadLBLRad);
+                doorTopRadCell.Controls.Add(doorTopRadLBL);
 
-                    #endregion
+                #endregion
 
-                    #region Bottom
+                #region Bottom
 
-                    TableCell doorBottomRadCell = new TableCell();
+                TableCell doorBottomRadCell = new TableCell();
 
-                    Label doorBottomRadLBLRad = new Label();
-                    doorBottomRadLBLRad.ID = "lblDoorBottomRad" + title;
+                Label doorBottomRadLBLRad = new Label();
+                doorBottomRadLBLRad.ID = "lblDoorBottomRad" + title;
 
-                    Label doorBottomRadLBL = new Label();
-                    doorBottomRadLBL.ID = "lblDoorBottomRadRad" + title;
-                    doorBottomRadLBL.Text = "Bottom";
+                Label doorBottomRadLBL = new Label();
+                doorBottomRadLBL.ID = "lblDoorBottomRadRad" + title;
+                doorBottomRadLBL.Text = "Bottom";
 
-                    RadioButton doorBottomRadRAD = new RadioButton();
-                    doorBottomRadRAD.ID = "radDoorBottomRad" + title;
-                    doorBottomRadRAD.Attributes.Add("value", "bottom");
-                    doorBottomRadRAD.GroupName = "Uneven" + title;
-                    doorBottomRadRAD.Attributes.Add("onclick", "('" + title + "');");
-                    doorBottomRadRAD.Checked = true;
+                RadioButton doorBottomRadRAD = new RadioButton();
+                doorBottomRadRAD.ID = "radDoorBottomRad" + title;
+                doorBottomRadRAD.Attributes.Add("value", "bottom");
+                doorBottomRadRAD.GroupName = "Uneven" + title;
+                doorBottomRadRAD.Attributes.Add("onclick", "('" + title + "');");
+                doorBottomRadRAD.Checked = true;
 
-                    doorBottomRadLBLRad.AssociatedControlID = "radDoorBottomRad" + title;
-                    doorBottomRadLBL.AssociatedControlID = "radDoorBottomRad" + title;
+                doorBottomRadLBLRad.AssociatedControlID = "radDoorBottomRad" + title;
+                doorBottomRadLBL.AssociatedControlID = "radDoorBottomRad" + title;
 
-                    doorBottomRadCell.Controls.Add(doorBottomRadRAD);
-                    doorBottomRadCell.Controls.Add(doorBottomRadLBLRad);
-                    doorBottomRadCell.Controls.Add(doorBottomRadLBL);
+                doorBottomRadCell.Controls.Add(doorBottomRadRAD);
+                doorBottomRadCell.Controls.Add(doorBottomRadLBLRad);
+                doorBottomRadCell.Controls.Add(doorBottomRadLBL);
 
-                    #endregion
+                #endregion
 
-                    #region Both
+                #region Both
 
-                    TableCell doorBothRadCell = new TableCell();
+                TableCell doorBothRadCell = new TableCell();
 
-                    Label doorBothRadLBLRad = new Label();
-                    doorBothRadLBLRad.ID = "lblDoorBothRad" + title;
+                Label doorBothRadLBLRad = new Label();
+                doorBothRadLBLRad.ID = "lblDoorBothRad" + title;
 
-                    Label doorBothRadLBL = new Label();
-                    doorBothRadLBL.ID = "lblDoorBothRadRad" + title;
-                    doorBothRadLBL.Text = "Both";
+                Label doorBothRadLBL = new Label();
+                doorBothRadLBL.ID = "lblDoorBothRadRad" + title;
+                doorBothRadLBL.Text = "Both";
 
-                    RadioButton doorBothRadRAD = new RadioButton();
-                    doorBothRadRAD.ID = "radDoorBothRad" + title;
-                    doorBothRadRAD.Attributes.Add("value", "both");
-                    doorBothRadRAD.GroupName = "Uneven" + title;
-                    doorBothRadRAD.Attributes.Add("onclick", "bothUnevenClicked('" + title + "')");
+                RadioButton doorBothRadRAD = new RadioButton();
+                doorBothRadRAD.ID = "radDoorBothRad" + title;
+                doorBothRadRAD.Attributes.Add("value", "both");
+                doorBothRadRAD.GroupName = "Uneven" + title;
+                doorBothRadRAD.Attributes.Add("onclick", "bothUnevenClicked('" + title + "')");
 
-                    doorBothRadLBLRad.AssociatedControlID = "radDoorBothRad" + title;
-                    doorBothRadLBL.AssociatedControlID = "radDoorBothRad" + title;
+                doorBothRadLBLRad.AssociatedControlID = "radDoorBothRad" + title;
+                doorBothRadLBL.AssociatedControlID = "radDoorBothRad" + title;
 
-                    doorBothRadCell.Controls.Add(doorBothRadRAD);
-                    doorBothRadCell.Controls.Add(doorBothRadLBLRad);
-                    doorBothRadCell.Controls.Add(doorBothRadLBL);
+                doorBothRadCell.Controls.Add(doorBothRadRAD);
+                doorBothRadCell.Controls.Add(doorBothRadLBLRad);
+                doorBothRadCell.Controls.Add(doorBothRadLBL);
 
-                    #endregion                   
-                
+                #endregion
+
                 #endregion
 
                 #region Uneven Vents Textboxes
-                
-                    #region Top
 
-                    TableRow doorUnevenVentsRowTop = new TableRow();
-                    doorUnevenVentsRowTop.ID = "rowDoorUnevenVentsTop" + title;
-                    doorUnevenVentsRowTop.Attributes.Add("style", "display:none;");
+                #region Top
 
-                    TableCell doorTopVentLBLCell = new TableCell();
-                    TableCell doorTopVentTXTCell = new TableCell();
-                    //TableCell doorTopVentDDLCell = new TableCell();
+                TableRow doorUnevenVentsRowTop = new TableRow();
+                doorUnevenVentsRowTop.ID = "rowDoorUnevenVentsTop" + title;
+                doorUnevenVentsRowTop.Attributes.Add("style", "display:none;");
 
-                    Label doorTopVentLBL = new Label();
-                    doorTopVentLBL.ID = "lblDoorTopVentHeight" + title;
-                    doorTopVentLBL.Text = "Top Vent Height:";
+                TableCell doorTopVentLBLCell = new TableCell();
+                TableCell doorTopVentTXTCell = new TableCell();
+                //TableCell doorTopVentDDLCell = new TableCell();
 
-                    TextBox doorTopVentTXT = new TextBox();
-                    doorTopVentTXT.ID = "txtDoorTopVentHeight" + title;
-                    doorTopVentTXT.CssClass = "txtField txtDoorInput";
-                    doorTopVentTXT.Attributes.Add("maxlength", "3");
-                    doorTopVentTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
-                    doorTopVentTXT.Attributes.Add("onblur", "adjustVentHeights(this.value, 'top');");
+                Label doorTopVentLBL = new Label();
+                doorTopVentLBL.ID = "lblDoorTopVentHeight" + title;
+                doorTopVentLBL.Text = "Top Vent Height:";
 
-                    doorTopVentLBL.AssociatedControlID = "txtDoorTopVentHeight" + title;
+                TextBox doorTopVentTXT = new TextBox();
+                doorTopVentTXT.ID = "txtDoorTopVentHeight" + title;
+                doorTopVentTXT.CssClass = "txtField txtDoorInput";
+                doorTopVentTXT.Attributes.Add("maxlength", "3");
+                doorTopVentTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                doorTopVentTXT.Attributes.Add("onblur", "adjustVentHeights(this.value, 'top');");
 
-                    doorTopVentLBLCell.Controls.Add(doorTopVentLBL);
-                    doorTopVentTXTCell.Controls.Add(doorTopVentTXT);               
+                doorTopVentLBL.AssociatedControlID = "txtDoorTopVentHeight" + title;
 
-                    #endregion
+                doorTopVentLBLCell.Controls.Add(doorTopVentLBL);
+                doorTopVentTXTCell.Controls.Add(doorTopVentTXT);
 
-                    #region Bottom
+                #endregion
 
-                    TableRow doorUnevenVentsRowBottom = new TableRow();
-                    doorUnevenVentsRowBottom.ID = "rowDoorUnevenVentsBottom" + title;
-                    doorUnevenVentsRowBottom.Attributes.Add("style", "display:none;");
+                #region Bottom
 
-                    TableCell doorBottomVentLBLCell = new TableCell();
-                    TableCell doorBottomVentTXTCell = new TableCell();
-                    //TableCell doorBottomVentDDLCell = new TableCell();
+                TableRow doorUnevenVentsRowBottom = new TableRow();
+                doorUnevenVentsRowBottom.ID = "rowDoorUnevenVentsBottom" + title;
+                doorUnevenVentsRowBottom.Attributes.Add("style", "display:none;");
 
-                    Label doorBottomVentLBL = new Label();
-                    doorBottomVentLBL.ID = "lblDoorBottomVentHeight" + title;
-                    doorBottomVentLBL.Text = "Bottom Vent Height:";
+                TableCell doorBottomVentLBLCell = new TableCell();
+                TableCell doorBottomVentTXTCell = new TableCell();
+                //TableCell doorBottomVentDDLCell = new TableCell();
 
-                    TextBox doorBottomVentTXT = new TextBox();
-                    doorBottomVentTXT.ID = "txtDoorBottomVentHeight" + title;
-                    doorBottomVentTXT.CssClass = "txtField txtDoorInput";
-                    doorBottomVentTXT.Attributes.Add("maxlength", "3");
-                    doorBottomVentTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
-                    doorBottomVentTXT.Attributes.Add("onblur", "adjustVentHeights(this.value, 'bottom');");
+                Label doorBottomVentLBL = new Label();
+                doorBottomVentLBL.ID = "lblDoorBottomVentHeight" + title;
+                doorBottomVentLBL.Text = "Bottom Vent Height:";
 
-                    //DropDownList inchBottomVentDDL = new DropDownList();
-                    //inchBottomVentDDL.ID = "ddlDoorBottomVentHeight" + title;
-                    //inchBottomVentDDL.Items.Add(lst0);
-                    //inchBottomVentDDL.Items.Add(lst116);
-                    //inchBottomVentDDL.Items.Add(lst216);
-                    //inchBottomVentDDL.Items.Add(lst316);
-                    //inchBottomVentDDL.Items.Add(lst416);
-                    //inchBottomVentDDL.Items.Add(lst516);
-                    //inchBottomVentDDL.Items.Add(lst616);
-                    //inchBottomVentDDL.Items.Add(lst716);
-                    //inchBottomVentDDL.Items.Add(lst816);
-                    //inchBottomVentDDL.Items.Add(lst916);
-                    //inchBottomVentDDL.Items.Add(lst1016);
-                    //inchBottomVentDDL.Items.Add(lst1116);
-                    //inchBottomVentDDL.Items.Add(lst1216);
-                    //inchBottomVentDDL.Items.Add(lst1316);
-                    //inchBottomVentDDL.Items.Add(lst1416);
-                    //inchBottomVentDDL.Items.Add(lst1516);
+                TextBox doorBottomVentTXT = new TextBox();
+                doorBottomVentTXT.ID = "txtDoorBottomVentHeight" + title;
+                doorBottomVentTXT.CssClass = "txtField txtDoorInput";
+                doorBottomVentTXT.Attributes.Add("maxlength", "3");
+                doorBottomVentTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                doorBottomVentTXT.Attributes.Add("onblur", "adjustVentHeights(this.value, 'bottom');");
 
-                    doorBottomVentLBL.AssociatedControlID = "txtDoorBottomVentHeight" + title;
+                //DropDownList inchBottomVentDDL = new DropDownList();
+                //inchBottomVentDDL.ID = "ddlDoorBottomVentHeight" + title;
+                //inchBottomVentDDL.Items.Add(lst0);
+                //inchBottomVentDDL.Items.Add(lst116);
+                //inchBottomVentDDL.Items.Add(lst216);
+                //inchBottomVentDDL.Items.Add(lst316);
+                //inchBottomVentDDL.Items.Add(lst416);
+                //inchBottomVentDDL.Items.Add(lst516);
+                //inchBottomVentDDL.Items.Add(lst616);
+                //inchBottomVentDDL.Items.Add(lst716);
+                //inchBottomVentDDL.Items.Add(lst816);
+                //inchBottomVentDDL.Items.Add(lst916);
+                //inchBottomVentDDL.Items.Add(lst1016);
+                //inchBottomVentDDL.Items.Add(lst1116);
+                //inchBottomVentDDL.Items.Add(lst1216);
+                //inchBottomVentDDL.Items.Add(lst1316);
+                //inchBottomVentDDL.Items.Add(lst1416);
+                //inchBottomVentDDL.Items.Add(lst1516);
 
-                    doorBottomVentLBLCell.Controls.Add(doorBottomVentLBL);
-                    doorBottomVentTXTCell.Controls.Add(doorBottomVentTXT);
-                    //doorBottomVentDDLCell.Controls.Add(inchBottomVentDDL);
+                doorBottomVentLBL.AssociatedControlID = "txtDoorBottomVentHeight" + title;
 
-                    
+                doorBottomVentLBLCell.Controls.Add(doorBottomVentLBL);
+                doorBottomVentTXTCell.Controls.Add(doorBottomVentTXT);
+                //doorBottomVentDDLCell.Controls.Add(inchBottomVentDDL);
 
-                    #endregion
-                
+
+
+                #endregion
+
                 #endregion
 
                 #region Commented V4T
@@ -802,7 +802,7 @@ namespace SunspaceDealerDesktop
 
                 #endregion
                 */
-            #endregion
+                #endregion
 
                 #region Table:Eight Row Door Primary Operator LHH (tblDoorDetails)
 
@@ -1088,7 +1088,7 @@ namespace SunspaceDealerDesktop
                 doorPositionDDLLBL.AssociatedControlID = "ddlDoorPosition" + title;
 
                 #endregion
-            
+
                 #region Table:# Row Add This Door (tblDoorDetails)
 
                 TableRow doorButtonRow = new TableRow();
@@ -1524,107 +1524,63 @@ namespace SunspaceDealerDesktop
                 DoorOptions.Controls.Add(new LiteralControl("</li>"));
 
             }
-            #endregion
+            #endregion          
 
-            #region PostBack functionality to store doors
-            if (IsPostBack)
+            populateSideBar(findNumberOfDoorTypes());
+
+            using (SqlConnection aConnection = new SqlConnection(sdsDBConnection.ConnectionString))
             {
 
-                using (SqlConnection aConnection = new SqlConnection(sdsDBConnection.ConnectionString))
+                aConnection.Open();
+                SqlCommand aCommand = aConnection.CreateCommand();
+                SqlTransaction aTransaction;
+                //SqlDataReader aReader;
+
+                // Start a local transaction.
+                aTransaction = aConnection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection 
+                // to Command object for a pending local transaction
+                aCommand.Connection = aConnection;
+                aCommand.Transaction = aTransaction;
+
+                try
                 {
-                    aConnection.Open();
-                    SqlCommand aCommand = aConnection.CreateCommand();
-                    SqlTransaction aTransaction;
-                    SqlDataReader aReader;
+                    //get number of walls floors and roofs
+                    aCommand.CommandText = "SELECT door_type, door_style, screen_type, height, length, door_colour, kick_plate FROM doors WHERE project_id = '" + projectId + "', ";
+                    SqlDataReader projectReader = aCommand.ExecuteReader();
 
-                    // Start a local transaction.
-                    aTransaction = aConnection.BeginTransaction("SampleTransaction");
+                    if (projectReader.HasRows)
+                    {
+                        projectReader.Read();
+                        System.Diagnostics.Debug.WriteLine("Hello");
 
-                    // Must assign both transaction object and connection 
-                    // to Command object for a pending local transaction
-                    aCommand.Connection = aConnection;
-                    aCommand.Transaction = aTransaction;
+                        //wallCount = Convert.ToInt32(projectReader[0]);
+                        //floorCount = Convert.ToInt32(projectReader[1]);
+                        //roofCount = Convert.ToInt32(projectReader[2]);
+                    }
+                    projectReader.Close(); 
+                }
+                catch (Exception ex)
+                {
+                    //lblError.Text = "Commit Exception Type: " + ex.GetType();
+                    //lblError.Text += "  Message: " + ex.Message;
 
+                    // Attempt to roll back the transaction. 
                     try
                     {
-                        //Project
-                        #region Project
-                        
-                        aCommand.CommandText = "INSERT INTO projects(project_type, installation_type, project_name, customer_id, user_id, date_created, status, revised_date, revised_user_id, msrp, project_notes, "
-                                                + "hidden, cut_pitch) VALUES ("
-                                                + "'Door', " //Will always be a sunroom to be at this point in wizard
-                                                + "'None', "
-                                                //+ "'" + Session["newProjectProjectName"] + "', "
-                                                + "'testProjectName', "
-                                                //+ Session["customer_id"] + ", "
-                                                + "1, "
-                                                //+ Session["user_id"] + ", "
-                                                + "1, "
-                                                + "'" + DateTime.Now.ToString("yyyy/MM/dd") + "', "
-                                                + "'" + "Active" + "', "
-                                                + "'" + DateTime.Now.ToString("yyyy/MM/dd") + "', "
-                                                //+ Session["user_id"] + ", "
-                                                + "1, "
-                                                + 0 + ", "
-                                                + 0 + ", "
-                                                + 0 + ", "
-                                                + 1
-                                                + ");";
-                        aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
-                        #endregion
-
-                        aTransaction.Commit();
+                        aTransaction.Rollback();
                     }
-                    catch (Exception ex)
+                    catch (Exception ex2)
                     {
-                        int hi;
-                        System.Diagnostics.Debug.WriteLine(ex.Message);
-                        //lblError.Text = "Commit Exception Type: " + ex.GetType();
-                        //lblError.Text += "  Message: " + ex.Message;
-
-                        // Attempt to roll back the transaction. 
-                        try
-                        {
-                            aTransaction.Rollback();
-                        }
-                        catch (Exception ex2)
-                        {
-                            // This catch block will handle any errors that may have occurred 
-                            // on the server that would cause the rollback to fail, such as 
-                            // a closed connection.
-                            //lblError.Text = "Rollback Exception Type: " + ex2.GetType();
-                            //lblError.Text += "  Message: " + ex2.Message;
-                        }
+                        //This catch block will handle any errors that may have occurred 
+                        //on the server that would cause the rollback to fail, such as 
+                        //a closed connection.
+                        //lblError.Text = "Rollback Exception Type: " + ex2.GetType();
+                        //lblError.Text += "  Message: " + ex2.Message;
                     }
                 }
-                /*
-                if ((List<Door>)Session["doorsOrdered"] != null)
-                {
-                    doorsOrdered = (List<Door>)Session["doorsOrdered"];
-                }*/
-                
-                if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypeCabana")
-                {
-                    Door aDoor = getCabanaDoorFromForm();
-                    //doorsOrdered.Add(aDoor);
-
-
-                }
-                else if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypeFrench")
-                {
-                    Door aDoor = getFrenchDoorFromForm();
-                    //doorsOrdered.Add(aDoor);
-                }
-                else if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypePatio")
-                {
-                    Door aDoor = getPatioDoorFromForm();
-                    //doorsOrdered.Add(aDoor);
-                }
-                //Session.Add("doorsOrdered", doorsOrdered);
             }
-            #endregion
-            
-            populateSideBar(findNumberOfDoorTypes());
         }
 
         /// <summary>
@@ -1716,7 +1672,8 @@ namespace SunspaceDealerDesktop
                             + Request.Form["ctl00$MainContent$ddlDoorTint3Cabana"];
                     }
                 }
-                else {
+                else
+                {
                     aDoor.VinylTint = Request.Form["ctl00$MainContent$ddlDoorVinylTintCabana"];
                 }
             }
@@ -1730,7 +1687,6 @@ namespace SunspaceDealerDesktop
 
             return aDoor;
         }
-
         /// <summary>
         /// This function creates a FrenchDoor object and stores the
         /// information entered on the page.
@@ -1784,7 +1740,7 @@ namespace SunspaceDealerDesktop
             {
                 aDoor.ScreenType = Request.Form["ctl00$MainContent$ddlDoorScreenOptionsFrench"];
             }
-            aDoor.OperatingDoor = Request.Form["ctl00$MainContent$PrimaryOperatorFrench"]; 
+            aDoor.OperatingDoor = Request.Form["ctl00$MainContent$PrimaryOperatorFrench"];
             aDoor.Swing = Request.Form["ctl00$MainContent$SwingInOutFrench"];
             aDoor.HardwareType = Request.Form["ctl00$MainContent$ddlDoorHardwareFrench"];
 
@@ -1820,7 +1776,7 @@ namespace SunspaceDealerDesktop
 
             return aDoor;
         }
-        
+
         /// <summary>
         /// This function is used to find the amount of each type of 
         /// door that has been ordered.
@@ -1830,7 +1786,8 @@ namespace SunspaceDealerDesktop
         /// Item1:Cabana door count
         /// Item2:French door count
         /// Item3:Patio door count
-        private Tuple<int,int,int> findNumberOfDoorTypes() {
+        private Tuple<int, int, int> findNumberOfDoorTypes()
+        {
             int cabanaCount = 0, frenchCount = 0, patioCount = 0;
             doorsOrdered.ForEach(delegate(Door doorChecked)
             {
@@ -1842,9 +1799,9 @@ namespace SunspaceDealerDesktop
                     patioCount++;
             });
             //System.Diagnostics.Debug.Write("This is the cabana count: " + cabanaCount);
-            return new Tuple<int,int,int>(cabanaCount,frenchCount,patioCount);
+            return new Tuple<int, int, int>(cabanaCount, frenchCount, patioCount);
         }
-        
+
         /// <summary>
         /// This function is used to populate the side bar which displays
         /// information regarding how many doors of each type have been ordered,
@@ -1852,7 +1809,8 @@ namespace SunspaceDealerDesktop
         /// style to hide unneeded data.
         /// </summary>
         /// <param name="doorTypeCounts"></param>
-        private void populateSideBar(Tuple<int,int,int> doorTypeCounts) {
+        private void populateSideBar(Tuple<int, int, int> doorTypeCounts)
+        {
 
             int count;
 
@@ -1861,16 +1819,17 @@ namespace SunspaceDealerDesktop
             if (doorTypeCounts.Item1 > 0)
             {
                 lblDoorPager.Controls.Add(new LiteralControl("<li id='cabanaDoors'>"));
-                
+
                 Label cabanaLabel = new Label();
                 cabanaLabel.ID = "lblCabanaDoors";
                 cabanaLabel.Text = "Cabana Doors Ordered " + doorTypeCounts.Item1;
-                lblDoorPager.Controls.Add(cabanaLabel);                
+                lblDoorPager.Controls.Add(cabanaLabel);
 
                 count = 1;
 
                 #region Creating Cabana door pager items
-                foreach (Door aDoor in doorsOrdered){
+                foreach (Door aDoor in doorsOrdered)
+                {
                     if (aDoor.DoorType == "Cabana")
                     {
                         lblDoorPager.Controls.Add(new LiteralControl("<div class='toggleContent'>"));
@@ -1965,7 +1924,7 @@ namespace SunspaceDealerDesktop
                 frenchLabel.ID = "lblFrenchDoors";
                 frenchLabel.Text = "French Doors Ordered " + doorTypeCounts.Item2;
                 lblDoorPager.Controls.Add(frenchLabel);
-                
+
                 count = 1;
 
                 #region Creating French door pager items
@@ -2064,7 +2023,7 @@ namespace SunspaceDealerDesktop
                 patioLabel.ID = "lblPatioDoors";
                 patioLabel.Text = "Patio Doors Ordered " + doorTypeCounts.Item3;
                 lblDoorPager.Controls.Add(patioLabel);
-                
+
                 count = 1;
 
                 #region Creating Patio door pager items
@@ -2132,7 +2091,7 @@ namespace SunspaceDealerDesktop
             }
 
             lblDoorPager.Controls.Add(new LiteralControl("</ul>"));
-            
+
         }
     }
 }
