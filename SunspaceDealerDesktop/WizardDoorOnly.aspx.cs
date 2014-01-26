@@ -1555,7 +1555,7 @@ namespace SunspaceDealerDesktop
                                                 + "'Door', " //Will always be a sunroom to be at this point in wizard
                                                 + "'None', "
                                                 //+ "'" + Session["newProjectProjectName"] + "', "
-                                                + "'testProjectName', "
+                                                + "'" + Guid.NewGuid() + "', "
                                                 //+ Session["customer_id"] + ", "
                                                 + "1, "
                                                 //+ Session["user_id"] + ", "

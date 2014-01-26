@@ -3907,7 +3907,7 @@ namespace SunspaceDealerDesktop
                                     anHChannel.StartHeight = anHChannel.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
                                     anHChannel.Length = 2.5f;
                                     //CHANGEME if driftwood
-                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH + linearItems[0].Length;
+                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH + anHChannel.Length;
                                     linearItems.Add(anHChannel);
                                 }
                                 else
@@ -3916,7 +3916,7 @@ namespace SunspaceDealerDesktop
                                     aBoxHeader.ItemType = "BoxHeader";
                                     aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
                                     aBoxHeader.Length = 3.25f;
-                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH + linearItems[0].Length;
+                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH + aBoxHeader.Length;
                                     linearItems.Add(aBoxHeader);
                                 }
                             }
