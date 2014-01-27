@@ -1573,6 +1573,72 @@ namespace SunspaceDealerDesktop
                         aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
                         #endregion
 
+
+                        #region Door
+                        Door aDoor = new Door();
+
+                        /*
+                        if ((List<Door>)Session["doorsOrdered"] != null)
+                        {
+                            doorsOrdered = (List<Door>)Session["doorsOrdered"];
+                        }*/
+
+                        if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypeCabana")
+                        {
+                            aDoor = getCabanaDoorFromForm();
+                            //doorsOrdered.Add(aDoor);
+                            // height
+                            // length
+                            // vinyl_tint
+                            // screen_type
+                            // glass_tint
+                            // hinge
+                            // swing
+                            // hardware_type
+                            // number_vents
+                        }
+                        else if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypeFrench")
+                        {
+                            aDoor = getFrenchDoorFromForm();
+                            //doorsOrdered.Add(aDoor);
+                            // height
+                            // length
+                            // vinyl_tint
+                            // screen_type
+                            // glass_tint
+                            // swing
+                            // operator
+                            // hardware_type
+                            // number_vents
+                        }
+                        else if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypePatio")
+                        {
+                            aDoor = getPatioDoorFromForm();
+                            //doorsOrdered.Add(aDoor);
+                            // height
+                            // length
+                            // screen_type
+                            // glass_tint
+                            // moving_door
+                        }
+                        //Session.Add("doorsOrdered", doorsOrdered);
+
+                        aCommand.CommandText = "INSERT INTO doors(project_id, linear_index, module_index, door_type, door_style, screen_type, height, length, door_colour, kick_plate) VALUES ("
+                                                + "4, " //Will always be a sunroom to be at this point in wizard
+                                                + "0, "
+                                                + "0, "
+                                                + aDoor.DoorType.ToString() +", "
+                                                + aDoor.DoorStyle.ToString() + ", "
+                                                + aDoor.ScreenType.ToString() + ", "
+                                                + aDoor.Height + ", "
+                                                + aDoor.Length + ", "
+                                                + aDoor.Colour.ToString() + ", "
+                                                + aDoor.Kickplate + ");";
+                        aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
+
+                        
+                        #endregion
+
                         aTransaction.Commit();
                     }
                     catch (Exception ex)
@@ -1597,30 +1663,7 @@ namespace SunspaceDealerDesktop
                         }
                     }
                 }
-                /*
-                if ((List<Door>)Session["doorsOrdered"] != null)
-                {
-                    doorsOrdered = (List<Door>)Session["doorsOrdered"];
-                }*/
                 
-                if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypeCabana")
-                {
-                    Door aDoor = getCabanaDoorFromForm();
-                    //doorsOrdered.Add(aDoor);
-
-
-                }
-                else if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypeFrench")
-                {
-                    Door aDoor = getFrenchDoorFromForm();
-                    //doorsOrdered.Add(aDoor);
-                }
-                else if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypePatio")
-                {
-                    Door aDoor = getPatioDoorFromForm();
-                    //doorsOrdered.Add(aDoor);
-                }
-                //Session.Add("doorsOrdered", doorsOrdered);
             }
             #endregion
             
