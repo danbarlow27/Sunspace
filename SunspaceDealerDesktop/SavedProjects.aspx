@@ -50,6 +50,7 @@
             // hide 'close project' link in main nav
             $('#lnkMainNavCloseProject').hide();
         });
+
     </script>
             
 </asp:Content>
