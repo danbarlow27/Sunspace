@@ -841,9 +841,9 @@ namespace SunspaceDealerDesktop
         
         //Full View Glass ( c/w hardware, threshold & sweep )
         //Upgrade from patio door
-        public static float MODEL_200_F_FULL_VIEW_COLONIAL_GLASS_UPGRADE = 758.29f; //Each
+        public static float MODEL_200_F_FULL_VIEW_GLASS_UPGRADE = 758.29f; //Each
         //Additional entry door
-        public static float MODEL_200_F_FULL_VIEW_COLONIAL_GLASS_ADDITIONAL = 1019.20f; //Each
+        public static float MODEL_200_F_FULL_VIEW_GLASS_ADDITIONAL = 1019.20f; //Each
 
         //Full View Colonial Glass (15 Lite)( c/w hardware, threshold & sweep )
         //Upgrade from patio door
@@ -921,7 +921,7 @@ namespace SunspaceDealerDesktop
         //Transom/Gable Glass
         public static float MODEL_300_TRANSOM_GABLE = 46.20f; //Lin. Ft.
         //Transom/Gable Glass - Bronze or Grey Tinted Glass
-        public static float MODEL_300_TRANSOM_GABLE = 49.70f; //Lin. Ft.
+        public static float MODEL_300_TRANSOM_GABLE_TINTED = 49.70f; //Lin. Ft.
         //Transom/Gable Glass - Tempered
         public static float MODEL_300_TRANSOM_GABLE_TEMPERED = 49.70f; //Lin. Ft.
         //Transom/Gable Glass - Tempered Bronze or Grey Tinted Glass
