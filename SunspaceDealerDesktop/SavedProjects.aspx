@@ -39,6 +39,8 @@
 
     <asp:Button ID="btnAddToEstimate" CssClass="btnSubmit btnAddToEstimate" runat="server" Text="Add to Estimate" OnClick="btnAddToEstimate_Click" />
 
+    <div id="TestDiv"><p>Test Div. Click me!!!</p></div>
+
     <asp:SqlDataSource ID="sdsProjectList" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>"></asp:SqlDataSource>
 
     <script>
@@ -49,6 +51,35 @@
 
             // hide 'close project' link in main nav
             $('#lnkMainNavCloseProject').hide();
+        });
+        $(document).ready(function () {
+            // Add the page method call as an onclick handler for the div.
+            $("#TestDiv").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "SavedProjects.aspx/GenerateTravelPopup",
+                    data: JSON.stringify({ "projectType": "Sunroom"}),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        // Replace the div's content with the page method's return.
+                        //$("#TestDiv").html(msg.d);
+                        alert((msg.d));
+                        $("#TestDiv").append(msg.d);
+                        ApplyPopup();
+                    }
+                });
+            });
+
+            function ApplyPopup() {
+                $(function () {
+                    $("#dialog-transit").dialog({
+                        resizable: false,
+                        height: 140,
+                        modal: true,
+                    });
+                });
+            }
         });
     </script>
             

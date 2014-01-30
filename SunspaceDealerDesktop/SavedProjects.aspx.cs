@@ -6,6 +6,11 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Diagnostics; // For debug.write
+using SunspaceDealerDesktop;
+using System.Text.RegularExpressions;
+using System.Web.Services;
+using System.Text;
+//using System.Runtime.Serialization.Json;
 
 namespace SunspaceWizard
 {
@@ -14,7 +19,12 @@ namespace SunspaceWizard
         // Instantiates in the Page_Load
         private Table tblSavedProjects;
 
-        private int[] projectIdsArray;
+
+        //private int[] projectIdsArray;
+        //private string[] projectTypeArray;
+
+        // Moved to handle full project classes for future expansions (it's easier this way)
+        private Project[] projectArray;// = new Project();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,7 +40,8 @@ namespace SunspaceWizard
             tblSavedProjects.CssClass = "tblSavedProjects sortable";
 
             //Query DB to find row information
-            sdsProjectList.SelectCommand = "SELECT project_name, revised_date, project_id FROM projects WHERE user_id = '" + Session["user_id"] + "'";
+            //sdsProjectList.SelectCommand = "SELECT project_name, revised_date, project_id, project_type FROM projects WHERE user_id = '" + Session["user_id"] + "'";
+            sdsProjectList.SelectCommand = "SELECT project_id, project_name, project_type, revised_date FROM projects WHERE user_id = '" + Session["user_id"] + "'";
             DataView dvProjectList = (DataView)sdsProjectList.Select(System.Web.UI.DataSourceSelectArguments.Empty);
 
             TableHeaderRow aTableRow = new TableHeaderRow();
@@ -59,24 +70,43 @@ namespace SunspaceWizard
             tblSavedProjects.Controls.Add(aTableRow);
 
             // Initialize array
-            projectIdsArray = new int[dvProjectList.Count];
+            projectArray = new Project[dvProjectList.Count];
 
             for (int i = 0; i < dvProjectList.Count; i++)
             {
+                projectArray[i] = new Project();
+
+                // Fill in project class
+                projectArray[i].ProjectId   = (int)dvProjectList[i][0];
+                projectArray[i].ProjectName = (string)dvProjectList[i][1];
+                projectArray[i].ProjectType = (string)dvProjectList[i][2];
+                projectArray[i].RevisedDate = (DateTime)dvProjectList[i][3];
+
+
                 TableRow projectsTableRow = new TableRow();
 
                 TableCell projectsNameCell = new TableCell();
                 Button projectName = new Button();
-                projectName.Text = dvProjectList[i][0].ToString();
+                projectName.Text = projectArray[i].ProjectName;
                 projectName.ID = "lblProjectName" + i;
-                // projectName.
-                 projectsNameCell.Controls.Add(projectName);
+
+                //projectName.Click += btnProject_Click; // Add the event handler onto the button
+
+                // Hidden label for ID
+                Label projectID = new Label();
+                projectID.ID = "lblProjectID" + i;
+                projectID.Text = projectArray[i].ProjectId.ToString();
+                projectID.Visible = false;
+                //
+
+                projectsNameCell.Controls.Add(projectName);
+                projectsNameCell.Controls.Add(projectID);
                 projectsTableRow.Controls.Add(projectsNameCell);
 
                 TableCell projectsDateCell = new TableCell();
                 Label projectDate = new Label();
                 projectDate.ID = "lblProjectDate" + i;
-                projectDate.Text = dvProjectList[i][1].ToString();
+                projectDate.Text = projectArray[i].RevisedDate.ToString();
                 projectsDateCell.Controls.Add(projectDate);
                 projectsTableRow.Controls.Add(projectsDateCell);
 
@@ -103,7 +133,10 @@ namespace SunspaceWizard
                 //phProjectList.Controls.Add(new LiteralControl("<br/>"));
 
                 // Store project id (we'll go through it later on add to estimate click)
-                projectIdsArray[i] = (int)dvProjectList[i][2];
+                //projectIdsArray[i] = (int)dvProjectList[i][2];
+
+                // Store project type (We need this for the overlay on project name button click)
+                //projectTypeArray[i] = dvProjectList[i][3].ToString();
             }
 
             //Finally add table to project placeholder
@@ -160,7 +193,7 @@ namespace SunspaceWizard
             List<int> projectIdsToSave = new List<int>();
 
             // Grab active checkboxes
-            for (int i = 0; i < projectIdsArray.Count(); i++)
+            for (int i = 0; i < projectArray.Count(); i++)
             {
                 // Grab the current rows checkbox
                 chkAddToEstimate = (CheckBox)tblSavedProjects.Rows[i].FindControl("chkAddToEstimate" + i); // slightly less evil than how it was before
@@ -176,7 +209,7 @@ namespace SunspaceWizard
 
                 // Check if it's..checked
                 if (chkAddToEstimate.Checked)
-                    projectIdsToSave.Add(projectIdsArray[i]);   // Add to the list
+                    projectIdsToSave.Add(projectArray[i].ProjectId);   // Add to the list
 
             }
 
@@ -193,6 +226,112 @@ namespace SunspaceWizard
                 lblError.Text = "You must select at least one project to create an estimate.";
 
             
+        }
+
+        // Is called on every project button click. 
+        protected void btnProject_Click(object sender, EventArgs e)
+        {
+#if false
+            Button projectButton = (Button)sender;
+            //Label hiddenProjectIDLabel;
+            string labelID;
+            int projectPosition;
+            //string projectID;
+
+
+            #region Find Project Position #
+            // Super hacky! But can't find a better way to get the project_id from a button!
+            labelID = (string)projectButton.ID;
+
+            // Regular Expressions to return only digits
+            labelID = Regex.Match(labelID, @"\d+").Value;
+
+            projectPosition = int.Parse(labelID);
+            /*
+            hiddenProjectIDLabel = (Label)tblSavedProjects.FindControl("lblProjectID" + labelID);
+
+            projectID = hiddenProjectIDLabel.Text;
+            
+#if DEBUG
+            Debug.WriteLine("ProjectID is " + projectID);
+#endif
+            */
+            #endregion
+
+            switch (projectArray[projectPosition].ProjectType)
+            {
+                case ("Sunroom"):
+                    break;
+                default:
+                    break;
+            }
+#endif
+
+        }
+
+
+        /// <summary>
+        /// Example method! Yay.
+        /// </summary>
+        /// <param name="someParameter"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public static string GetDate(string someParameter)
+        {
+            return DateTime.Now.ToString();
+        }
+
+        [WebMethod]
+        public static string GenerateTravelPopup(string projectType)
+        {
+            /*
+            <div id="dialog-confirm" title="Empty the recycle bin?">
+                <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+            </div>
+             */
+
+            // StringBuilder we'll be writing HTML to!
+            StringBuilder aStringBuilder = new StringBuilder();
+            // We'll render the Panels/Buttons/etc to this, which directs it to the StringBuilder above.
+            HtmlTextWriter aHTMLTextWriter = new HtmlTextWriter(new System.IO.StringWriter(aStringBuilder));
+
+
+            // Modal popup div
+            Panel aDialogPopup = new Panel();
+
+            aDialogPopup.ID = "dialog-transit";
+            aDialogPopup.Attributes["title"] = "Select an option";
+
+            // 
+            Label aPopupDescription = new Label();
+
+            aPopupDescription.Text = "Please select the following options:";
+
+            aDialogPopup.Controls.Add(aPopupDescription);
+
+            switch (projectType)
+            {
+                case ("Sunroom"):
+                    Button aProjectEditorButton = new Button();
+                    aProjectEditorButton.Text = "Project Editor";
+                    aProjectEditorButton.ID = "btnProjectEditor";
+                    //aProjectEditorButton.Attributes["onClientClick"] = "return false"; // Removes auto post back!
+                    aDialogPopup.Controls.Add(aProjectEditorButton);
+                    break;
+                default:
+                    break;
+            }
+
+
+            // Render to HTMLTextWriter (so we can return StringBuilder..)
+            aDialogPopup.RenderControl(aHTMLTextWriter);
+
+#if DEBUG // Only compile this code if you're compiling for debug.
+            Debug.WriteLine(aStringBuilder.ToString());
+
+            Debug.WriteLine(projectType);
+#endif
+            return aStringBuilder.ToString();
         }
     }
 }
