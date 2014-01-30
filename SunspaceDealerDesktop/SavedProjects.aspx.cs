@@ -7,7 +7,11 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Diagnostics; // For debug.write
 using SunspaceDealerDesktop;
-using System.Text.RegularExpressions; 
+using System.Text.RegularExpressions;
+using System.Web.Services;
+using System.Text;
+//using System.Runtime.Serialization.Json;
+
 namespace SunspaceWizard
 {
     public partial class SavedProjects : System.Web.UI.Page
@@ -86,7 +90,7 @@ namespace SunspaceWizard
                 projectName.Text = projectArray[i].ProjectName;
                 projectName.ID = "lblProjectName" + i;
 
-                projectName.Click += btnProject_Click; // Add the event handler onto the button
+                //projectName.Click += btnProject_Click; // Add the event handler onto the button
 
                 // Hidden label for ID
                 Label projectID = new Label();
@@ -227,6 +231,7 @@ namespace SunspaceWizard
         // Is called on every project button click. 
         protected void btnProject_Click(object sender, EventArgs e)
         {
+#if false
             Button projectButton = (Button)sender;
             //Label hiddenProjectIDLabel;
             string labelID;
@@ -260,6 +265,73 @@ namespace SunspaceWizard
                 default:
                     break;
             }
+#endif
+
+        }
+
+
+        /// <summary>
+        /// Example method! Yay.
+        /// </summary>
+        /// <param name="someParameter"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public static string GetDate(string someParameter)
+        {
+            return DateTime.Now.ToString();
+        }
+
+        [WebMethod]
+        public static string GenerateTravelPopup(string projectType)
+        {
+            /*
+            <div id="dialog-confirm" title="Empty the recycle bin?">
+                <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+            </div>
+             */
+
+            // StringBuilder we'll be writing HTML to!
+            StringBuilder aStringBuilder = new StringBuilder();
+            // We'll render the Panels/Buttons/etc to this, which directs it to the StringBuilder above.
+            HtmlTextWriter aHTMLTextWriter = new HtmlTextWriter(new System.IO.StringWriter(aStringBuilder));
+
+
+            // Modal popup div
+            Panel aDialogPopup = new Panel();
+
+            aDialogPopup.ID = "dialog-transit";
+            aDialogPopup.Attributes["title"] = "Select an option";
+
+            // 
+            Label aPopupDescription = new Label();
+
+            aPopupDescription.Text = "Please select the following options:";
+
+            aDialogPopup.Controls.Add(aPopupDescription);
+
+            switch (projectType)
+            {
+                case ("Sunroom"):
+                    Button aProjectEditorButton = new Button();
+                    aProjectEditorButton.Text = "Project Editor";
+                    aProjectEditorButton.ID = "btnProjectEditor";
+                    //aProjectEditorButton.Attributes["onClientClick"] = "return false"; // Removes auto post back!
+                    aDialogPopup.Controls.Add(aProjectEditorButton);
+                    break;
+                default:
+                    break;
+            }
+
+
+            // Render to HTMLTextWriter (so we can return StringBuilder..)
+            aDialogPopup.RenderControl(aHTMLTextWriter);
+
+#if DEBUG // Only compile this code if you're compiling for debug.
+            Debug.WriteLine(aStringBuilder.ToString());
+
+            Debug.WriteLine(projectType);
+#endif
+            return aStringBuilder.ToString();
         }
     }
 }
