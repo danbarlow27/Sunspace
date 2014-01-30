@@ -39,7 +39,7 @@
 
     <asp:Button ID="btnAddToEstimate" CssClass="btnSubmit btnAddToEstimate" runat="server" Text="Add to Estimate" OnClick="btnAddToEstimate_Click" />
 
-    <div id="TestDiv"><p>YOLOSWAGGER#420BLAZIT</p></div>
+    <div id="TestDiv"><p>Test Div. Click me!!!</p></div>
 
     <asp:SqlDataSource ID="sdsProjectList" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>"></asp:SqlDataSource>
 
