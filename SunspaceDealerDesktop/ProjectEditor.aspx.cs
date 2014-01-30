@@ -77,7 +77,7 @@ namespace SunspaceDealerDesktop
             Mod aMod5 = new Mod();
 
             aMod5.LinearIndex = 2;
-            aMod5.ItemType = "Window";
+            aMod5.ItemType = "Mod";
             aMod5.StartHeight = 83.6f;
             aMod5.EndHeight = 78.4f;
             aMod5.Length = 52f;
@@ -92,12 +92,12 @@ namespace SunspaceDealerDesktop
             kneewall.ItemType = "Panel";
             kneewall.FStartHeight = 0f;
             kneewall.FEndHeight = 10f;
-            kneewall.FLength = 52f;
+            kneewall.FLength = 50f;
             kneewall.WindowStyle = "Solid";
             kneewall.ScreenType = "No Screen";
             kneewall.LeftHeight = 8f;
             kneewall.RightHeight = 8f;
-            kneewall.Width = 50f;
+            kneewall.Width = 48f;
             kneewall.FrameColour = "White"; //
             kneewall.NumVents = 0;
 
@@ -109,13 +109,13 @@ namespace SunspaceDealerDesktop
             aVinylWindow5.ItemType = "Window";
             aVinylWindow5.FStartHeight = 10f;
             aVinylWindow5.FEndHeight = 70.5f;
-            aVinylWindow5.FLength = 52f;
+            aVinylWindow5.FLength = 50f;
             //aVinylWindow.Colour = windowColour; //replaced by FrameColour
             aVinylWindow5.WindowStyle = "V4T";
             aVinylWindow5.ScreenType = "Better Vue Insect Screen";
             aVinylWindow5.LeftHeight = 58.5f;
             aVinylWindow5.RightHeight = 58.5f;
-            aVinylWindow5.Width = 50f;
+            aVinylWindow5.Width = 48f;
             aVinylWindow5.FrameColour = "White"; //
             aVinylWindow5.VinylTint = "CBGC"; // tint of each vent will be concatenated
             aVinylWindow5.NumVents = 4;
@@ -135,12 +135,12 @@ namespace SunspaceDealerDesktop
             transom.ItemType = "Panel";
             transom.FStartHeight = 70.5f;
             transom.FEndHeight = 82.8f;
-            transom.FLength = 52f;
+            transom.FLength = 50f;
             transom.WindowStyle = "Solid";
             transom.ScreenType = "No Screen";
             transom.LeftHeight = 10.3f;
             transom.RightHeight = 6.2f;
-            transom.Width = 50f;
+            transom.Width = 48f;
             transom.FrameColour = "White"; //
             transom.NumVents = 0;
 
