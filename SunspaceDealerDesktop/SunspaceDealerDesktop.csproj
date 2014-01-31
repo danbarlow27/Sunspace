@@ -194,15 +194,21 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Display.aspx" />
     <Content Include="FinalizeEstimates.aspx" />
+    <Content Include="GlobalUpdate.aspx" />
     <Content Include="Images\iconsNavEditor.png" />
     <Content Include="index.aspx" />
+    <Content Include="Insert.aspx" />
     <Content Include="JSONTest.aspx" />
     <Content Include="JSONTest2.aspx" />
+    <Content Include="MainMenu.aspx" />
     <Content Include="PriceCalculator.aspx" />
+    <Content Include="ProductSelect.aspx" />
     <Content Include="ProjectEditor.aspx" />
     <Content Include="Scripts\init.js" />
     <Content Include="OrderLanding.aspx" />
+    <Content Include="Update.aspx" />
     <Content Include="WizardDoorOnly.aspx" />
     <Content Include="GenerateMods.aspx" />
     <Content Include="Home.aspx" />
@@ -330,6 +336,7 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accessories.cs" />
     <Compile Include="AddUsers.aspx.cs">
       <DependentUpon>AddUsers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -378,6 +385,15 @@
     <Compile Include="BoxHeader.cs" />
     <Compile Include="CabanaDoor.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="DecorativeColumn.cs" />
+    <Compile Include="Display.aspx.cs">
+      <DependentUpon>Display.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Display.aspx.designer.cs">
+      <DependentUpon>Display.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DoorFrameExtrusion.cs" />
     <Compile Include="FinalizeEstimates.aspx.cs">
       <DependentUpon>FinalizeEstimates.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -397,6 +413,13 @@
     <Compile Include="Door.cs" />
     <Compile Include="ElectricalChase.cs" />
     <Compile Include="Floor.cs" />
+    <Compile Include="GlobalUpdate.aspx.cs">
+      <DependentUpon>GlobalUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GlobalUpdate.aspx.designer.cs">
+      <DependentUpon>GlobalUpdate.aspx</DependentUpon>
+    </Compile>
     <Compile Include="HBoxHeader.cs" />
     <Compile Include="HReceiver.cs" />
     <Compile Include="index.aspx.cs">
@@ -406,6 +429,14 @@
     <Compile Include="index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Insert.aspx.cs">
+      <DependentUpon>Insert.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Insert.aspx.designer.cs">
+      <DependentUpon>Insert.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InsulatedFloors.cs" />
     <Compile Include="JSONTest.aspx.cs">
       <DependentUpon>JSONTest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -420,12 +451,26 @@
     <Compile Include="JSONTest2.aspx.designer.cs">
       <DependentUpon>JSONTest2.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MainMenu.aspx.cs">
+      <DependentUpon>MainMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MainMenu.aspx.designer.cs">
+      <DependentUpon>MainMenu.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PriceCalculator.aspx.cs">
       <DependentUpon>PriceCalculator.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PriceCalculator.aspx.designer.cs">
       <DependentUpon>PriceCalculator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductSelect.aspx.cs">
+      <DependentUpon>ProductSelect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductSelect.aspx.designer.cs">
+      <DependentUpon>ProductSelect.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProjectEditor.aspx.cs">
       <DependentUpon>ProjectEditor.aspx</DependentUpon>
@@ -434,6 +479,8 @@
     <Compile Include="ProjectEditor.aspx.designer.cs">
       <DependentUpon>ProjectEditor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="RoofExtrusion.cs" />
+    <Compile Include="RoofPanels.cs" />
     <Compile Include="RoofSupport.cs" />
     <Compile Include="OrderLanding.aspx.cs">
       <DependentUpon>OrderLanding.aspx</DependentUpon>
@@ -442,7 +489,24 @@
     <Compile Include="OrderLanding.aspx.designer.cs">
       <DependentUpon>OrderLanding.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Schematics.cs" />
+    <Compile Include="ScreenRoll.cs" />
     <Compile Include="Skylight.cs" />
+    <Compile Include="SuncrylicRoof.cs" />
+    <Compile Include="Sunrail1000.cs" />
+    <Compile Include="Sunrail300.cs" />
+    <Compile Include="Sunrail300Accessories.cs" />
+    <Compile Include="Sunrail400.cs" />
+    <Compile Include="Update.aspx.cs">
+      <DependentUpon>Update.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Update.aspx.designer.cs">
+      <DependentUpon>Update.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VinylRoll.cs" />
+    <Compile Include="WallExtrusions.cs" />
+    <Compile Include="WallPanels.cs" />
     <Compile Include="WizardDoorOnly.aspx.cs">
       <DependentUpon>WizardDoorOnly.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
