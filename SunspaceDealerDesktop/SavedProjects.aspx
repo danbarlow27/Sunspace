@@ -53,24 +53,36 @@
             $('#lnkMainNavCloseProject').hide();
         });
         $(document).ready(function () {
-            // Add the page method call as an onclick handler for the div.
+
+            // EVENT HANDLERS
+            <%= ClickEvents %>
+
+            // END
+
             $("#TestDiv").click(function () {
+                ProjectName_Click("Sunroom");
+            });
+
+            function ProjectName_Click(type) {
+                //$("#MainContent_lblProjectName"+i).click(function () {
                 $.ajax({
                     type: "POST",
                     url: "SavedProjects.aspx/GenerateTravelPopup",
-                    data: JSON.stringify({ "projectType": "Sunroom"}),
+                    data: JSON.stringify({ "projectType": type }),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (msg) {
                         // Replace the div's content with the page method's return.
                         //$("#TestDiv").html(msg.d);
                         alert((msg.d));
-                        $("#TestDiv").append(msg.d);
+                        $("#body").append(msg.d);
                         ApplyPopup();
                     }
                 });
-            });
+                return false;
+            }
 
+        
             function ApplyPopup() {
                 $(function () {
                     $("#dialog-transit").dialog({
