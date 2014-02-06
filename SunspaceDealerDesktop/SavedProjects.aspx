@@ -39,6 +39,8 @@
 
     <asp:Button ID="btnAddToEstimate" CssClass="btnSubmit btnAddToEstimate" runat="server" Text="Add to Estimate" OnClick="btnAddToEstimate_Click" />
 
+    <div id="TestDiv"><p>Test Div. Click me!!!</p></div>
+
     <asp:SqlDataSource ID="sdsProjectList" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>"></asp:SqlDataSource>
 
     <script>
@@ -50,7 +52,47 @@
             // hide 'close project' link in main nav
             $('#lnkMainNavCloseProject').hide();
         });
+        $(document).ready(function () {
 
+            // EVENT HANDLERS
+            <%= ClickEvents %>
+
+            // END
+
+            $("#TestDiv").click(function () {
+                ProjectName_Click("Sunroom");
+            });
+
+            function ProjectName_Click(type) {
+                //$("#MainContent_lblProjectName"+i).click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "SavedProjects.aspx/GenerateTravelPopup",
+                    data: JSON.stringify({ "projectType": type }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        // Replace the div's content with the page method's return.
+                        //$("#TestDiv").html(msg.d);
+                        alert((msg.d));
+                        $("#body").append(msg.d);
+                        ApplyPopup();
+                    }
+                });
+                return false;
+            }
+
+        
+            function ApplyPopup() {
+                $(function () {
+                    $("#dialog-transit").dialog({
+                        resizable: false,
+                        height: 140,
+                        modal: true,
+                    });
+                });
+            }
+        });
     </script>
             
 </asp:Content>

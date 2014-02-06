@@ -1529,7 +1529,6 @@ namespace SunspaceDealerDesktop
             #region PostBack functionality to store doors
             if (IsPostBack)
             {
-
                 using (SqlConnection aConnection = new SqlConnection(sdsDBConnection.ConnectionString))
                 {
                     aConnection.Open();
@@ -1549,13 +1548,15 @@ namespace SunspaceDealerDesktop
                     {
                         //Project
                         #region Project
-                        
+
+                        var newGuid = Guid.NewGuid();
+
                         aCommand.CommandText = "INSERT INTO projects(project_type, installation_type, project_name, customer_id, user_id, date_created, status, revised_date, revised_user_id, msrp, project_notes, "
                                                 + "hidden, cut_pitch) VALUES ("
                                                 + "'Door', " //Will always be a sunroom to be at this point in wizard
                                                 + "'None', "
                                                 //+ "'" + Session["newProjectProjectName"] + "', "
-                                                + "'" + Guid.NewGuid() + "', "
+                                                + "'" + newGuid + "', "
                                                 //+ Session["customer_id"] + ", "
                                                 + "1, "
                                                 //+ Session["user_id"] + ", "
@@ -1573,8 +1574,16 @@ namespace SunspaceDealerDesktop
                         aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
                         #endregion
 
+                        //Get project_id for use in below statements
+                        aCommand.CommandText = "SELECT project_id FROM projects WHERE project_name = '" + newGuid + "'"; // Replace newGuid with Session["newProjectProjectName"]
+                        aReader = aCommand.ExecuteReader();
+                        aReader.Read();
+
+                        int project_id = Convert.ToInt32(aReader[0]);
+                        aReader.Close();
 
                         #region Door
+
                         Door aDoor = new Door();
 
                         /*
@@ -1585,21 +1594,36 @@ namespace SunspaceDealerDesktop
 
                         if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypeCabana")
                         {
-                            aDoor = getCabanaDoorFromForm();
+                            CabanaDoor tempDoor = getCabanaDoorFromForm();
+                            aDoor = tempDoor;
+                            // Using the CabanaDoor object, set Door height,length,screenType
+                            aDoor.Height = tempDoor.Height;
+                            aDoor.Length = tempDoor.Length;
+                            aDoor.ScreenType = tempDoor.ScreenType;
                             //doorsOrdered.Add(aDoor);
-                            // height
-                            // length
-                            // vinyl_tint
-                            // screen_type
-                            // glass_tint
-                            // hinge
-                            // swing
-                            // hardware_type
-                            // number_vents
+                            aCommand.CommandText = "INSERT INTO cabana_doors(project_id, linear_index, module_index, height, length, vinyl_tint, screen_type, glass_tint, hinge, swing, hardware_type) VALUES ("
+                                                + project_id + ", " //Will always be a sunroom to be at this point in wizard
+                                                + 0 + ", "
+                                                + 0 + ", "
+                                                + tempDoor.Height + ", "
+                                                + tempDoor.Length + ", "
+                                                + "'" + tempDoor.VinylTint.ToString() + "', "
+                                                + "'" + tempDoor.ScreenType.ToString() + "', "
+                                                + "'" + tempDoor.GlassTint.ToString() + "', "
+                                                + "'" + tempDoor.Hinge.ToString()[0] + "', "
+                                                + "'" + tempDoor.Swing.ToString() + "', "
+                                                + "'" + tempDoor.HardwareType.ToString() + "'"
+                                                + ");";
+                            aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
                         }
                         else if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypeFrench")
                         {
-                            aDoor = getFrenchDoorFromForm();
+                            FrenchDoor tempDoor = getFrenchDoorFromForm();
+                            aDoor = tempDoor;
+                            // Using the FrenchDoor object, set Door height,length,screenType
+                            aDoor.Height = tempDoor.Height;
+                            aDoor.Length = tempDoor.Length;
+                            aDoor.ScreenType = tempDoor.ScreenType;
                             //doorsOrdered.Add(aDoor);
                             // height
                             // length
@@ -1610,33 +1634,88 @@ namespace SunspaceDealerDesktop
                             // operator
                             // hardware_type
                             // number_vents
+                            aCommand.CommandText = "INSERT INTO french_doors(project_id, linear_index, module_index, door_index, height, length, vinyl_tint, screen_type, glass_tint, swing, operator, hardware_type) VALUES("
+                                                                    + project_id + ", "
+                                                                    + 0 + ", "
+                                                                    + 0 + ", "
+                                                                    + 0 + ", "
+                                                                    + tempDoor.Height + ", "
+                                                                    + tempDoor.Length + ", '"
+                                                                    + tempDoor.VinylTint + "', '"
+                                                                    + tempDoor.ScreenType + "', '"
+                                                                    + tempDoor.GlassTint + "', '"
+                                                                    + tempDoor.Swing + "', "
+                                                                    + 0 + ", '"
+                                                                    + tempDoor.HardwareType + "'"
+                                                                    + ");";
+                            aCommand.ExecuteNonQuery();
+
+                            aCommand.CommandText = "INSERT INTO french_doors(project_id, linear_index, module_index, door_index, height, length, vinyl_tint, screen_type, glass_tint, swing, operator, hardware_type) VALUES("
+                                                + project_id + ", "
+                                                + 0 + ", "
+                                                + 0 + ", "
+                                                + 1 + ", "
+                                                + tempDoor.Height + ", "
+                                                + tempDoor.Length + ", '"
+                                                + tempDoor.VinylTint + "', '"
+                                                + tempDoor.ScreenType + "', '"
+                                                + tempDoor.GlassTint + "', '"
+                                                + tempDoor.Swing + "', "
+                                                + 1 + ", '"
+                                                + tempDoor.HardwareType + "'"
+                                                + ");";
+                            aCommand.ExecuteNonQuery();
                         }
                         else if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypePatio")
                         {
-                            aDoor = getPatioDoorFromForm();
+                            PatioDoor tempDoor = getPatioDoorFromForm();
+                            aDoor = tempDoor;
+                            // Using the PatioDoor object, set Door height,length,screenType
+                            aDoor.Height = tempDoor.Height;
+                            aDoor.Length = tempDoor.Length;
+                            aDoor.ScreenType = tempDoor.ScreenType;
                             //doorsOrdered.Add(aDoor);
-                            // height
-                            // length
-                            // screen_type
-                            // glass_tint
-                            // moving_door
+                            aCommand.CommandText = "INSERT INTO patio_doors(project_id, linear_index, module_index, door_index, screen_type, glass_tint, height, length, moving_door) VALUES("
+                                                                    + project_id + ", "
+                                                                    + 0 + ", "
+                                                                    + 0 + ", "
+                                                                    + 0 + ", '"
+                                                                    + tempDoor.ScreenType + "', '"
+                                                                    + tempDoor.GlassTint + "', "
+                                                                    + tempDoor.Height + ", "
+                                                                    + tempDoor.Length + ", "
+                                                                    + 1
+                                                                    + ");";
+                            aCommand.ExecuteNonQuery();
+
+                            aCommand.CommandText = "INSERT INTO patio_doors(project_id, linear_index, module_index, door_index, screen_type, glass_tint, height, length, moving_door) VALUES("
+                                                + project_id + ", "
+                                                + 0 + ", "
+                                                + 0 + ", "
+                                                + 1 + ", '"
+                                                + tempDoor.ScreenType + "', '"
+                                                + tempDoor.GlassTint + "', "
+                                                + tempDoor.Height + ", "
+                                                + tempDoor.Length + ", "
+                                                + 0
+                                                + ");";
+                            aCommand.ExecuteNonQuery();
                         }
                         //Session.Add("doorsOrdered", doorsOrdered);
 
                         aCommand.CommandText = "INSERT INTO doors(project_id, linear_index, module_index, door_type, door_style, screen_type, height, length, door_colour, kick_plate) VALUES ("
-                                                + "4, " //Will always be a sunroom to be at this point in wizard
+                                                + project_id + ", " //Will always be a sunroom to be at this point in wizard
                                                 + "0, "
                                                 + "0, "
-                                                + aDoor.DoorType.ToString() +", "
-                                                + aDoor.DoorStyle.ToString() + ", "
-                                                + aDoor.ScreenType.ToString() + ", "
+                                                + "'" + aDoor.DoorType +"', "
+                                                + "'" + aDoor.DoorStyle + "', "
+                                                + "'" + aDoor.ScreenType + "', "
                                                 + aDoor.Height + ", "
                                                 + aDoor.Length + ", "
-                                                + aDoor.Colour.ToString() + ", "
+                                                + "'" + aDoor.Colour + "', "
                                                 + aDoor.Kickplate + ");";
-                        aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
+                        aCommand.ExecuteNonQuery(); //Execute a command that does not return anything                       
 
-                        
                         #endregion
 
                         aTransaction.Commit();
@@ -1745,6 +1824,7 @@ namespace SunspaceDealerDesktop
                 aDoor.DoorWindow.NumVents = int.Parse(Request.Form["ctl00$MainContent$ddlDoorV4TNumberOfVentsCabana"]);
                 if (aDoor.VinylTint == "Mixed")
                 {
+                    aDoor.ScreenType = "None";
                     if (aDoor.DoorWindow.NumVents == 3)
                     {
                         aDoor.VinylTint = Request.Form["ctl00$MainContent$ddlDoorTint0Cabana"]
@@ -1765,7 +1845,8 @@ namespace SunspaceDealerDesktop
             }
             else if (aDoor.DoorStyle.Contains("Screen"))
             {
-                aDoor.ScreenType = Request.Form["ctl00$MainContent$ddlDoorScreenOptionsCabana"];
+                aDoor.ScreenType = Request.Form["ctl00$MainContent$ddlDoorScreenTypesCabana"];
+                aDoor.VinylTint = "None";
             }
             aDoor.Hinge = Request.Form["ctl00$MainContent$DoorHingeCabana"];
             aDoor.Swing = Request.Form["ctl00$MainContent$SwingInOutCabana"];
@@ -1825,7 +1906,7 @@ namespace SunspaceDealerDesktop
             }
             else if (aDoor.DoorStyle.Contains("Screen"))
             {
-                aDoor.ScreenType = Request.Form["ctl00$MainContent$ddlDoorScreenOptionsFrench"];
+                aDoor.ScreenType = Request.Form["ctl00$MainContent$ddlDoorScreenTypesFrench"];
             }
             aDoor.OperatingDoor = Request.Form["ctl00$MainContent$PrimaryOperatorFrench"]; 
             aDoor.Swing = Request.Form["ctl00$MainContent$SwingInOutFrench"];

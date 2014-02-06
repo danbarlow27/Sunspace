@@ -7,13 +7,18 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Diagnostics; // For debug.write
 using SunspaceDealerDesktop;
-using System.Text.RegularExpressions; 
+using System.Text.RegularExpressions;
+using System.Web.Services;
+using System.Text;
+//using System.Runtime.Serialization.Json;
+
 namespace SunspaceWizard
 {
     public partial class SavedProjects : System.Web.UI.Page
     {
         // Instantiates in the Page_Load
         private Table tblSavedProjects;
+        public string ClickEvents = "";
 
 
         //private int[] projectIdsArray;
@@ -32,7 +37,7 @@ namespace SunspaceWizard
 
             //Create table
             tblSavedProjects = new Table();
-            //tblSavedProjects.ID = "tblSavedProjects";
+            tblSavedProjects.ID = "tblSavedProjects";
             tblSavedProjects.CssClass = "tblSavedProjects sortable";
 
             //Query DB to find row information
@@ -85,9 +90,13 @@ namespace SunspaceWizard
                 Button projectName = new Button();
                 projectName.Text = projectArray[i].ProjectName;
                 projectName.ID = "lblProjectName" + i;
+                projectName.OnClientClick = "return false;";
+                //projectName.Attributes["onclientclick"] = "return false;";
+                //projectName.Click += btnProject_Click; // Add the event handler onto the button
 
-                projectName.Click += btnProject_Click; // Add the event handler onto the button
-
+                // Adds a jquery event handler onto the asp page.
+                ClickEvents += "$(\"#MainContent_lblProjectName" + i + "\").click(function() { ProjectName_Click(\"" + projectArray[i].ProjectType.ToString() + "\"); });\n\t\t";
+                
                 // Hidden label for ID
                 Label projectID = new Label();
                 projectID.ID = "lblProjectID" + i;
@@ -95,8 +104,16 @@ namespace SunspaceWizard
                 projectID.Visible = false;
                 //
 
+                // Hidden type for ID
+                Label projectType = new Label();
+                projectType.ID = "lblProjectType" + i;
+                projectType.Text = projectArray[i].ProjectType.ToString();
+                projectType.Visible = false;
+                //
+
                 projectsNameCell.Controls.Add(projectName);
                 projectsNameCell.Controls.Add(projectID);
+                projectsNameCell.Controls.Add(projectType);
                 projectsTableRow.Controls.Add(projectsNameCell);
 
                 TableCell projectsDateCell = new TableCell();
@@ -225,8 +242,11 @@ namespace SunspaceWizard
         }
 
         // Is called on every project button click. 
-        protected void btnProject_Click(object sender, EventArgs e)
+        protected void btnProjectEditor_Click(object sender, EventArgs e)
         {
+           
+            HttpContext.Current.Response.Redirect("ProjectEditor.aspx");
+#if false
             Button projectButton = (Button)sender;
             //Label hiddenProjectIDLabel;
             string labelID;
@@ -260,6 +280,82 @@ namespace SunspaceWizard
                 default:
                     break;
             }
+#endif
+            
+        }
+
+
+        /// <summary>
+        /// Example method! Yay.
+        /// </summary>
+        /// <param name="someParameter"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public static string GetDate(string someParameter)
+        {
+            return DateTime.Now.ToString();
+        }
+
+        [WebMethod]
+        public static string GenerateTravelPopup(string projectType)
+        {
+            /*
+            <div id="dialog-confirm" title="Empty the recycle bin?">
+                <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+            </div>
+             */
+
+            // StringBuilder we'll be writing HTML to!
+            StringBuilder aStringBuilder = new StringBuilder();
+            // We'll render the Panels/Buttons/etc to this, which directs it to the StringBuilder above.
+            HtmlTextWriter aHTMLTextWriter = new HtmlTextWriter(new System.IO.StringWriter(aStringBuilder));
+
+            // Modal popup div
+            Panel aDialogPopup = new Panel();
+
+            aDialogPopup.ID = "dialog-transit";
+            aDialogPopup.Attributes["title"] = "Select an option";
+
+            // 
+            Label aPopupDescription = new Label();
+
+            //SavedProjects sp = new SavedProjects();
+
+            aPopupDescription.Text = "Please select the following options:";
+
+            aDialogPopup.Controls.Add(aPopupDescription);
+
+            switch (projectType)
+            {
+                case ("Sunroom"):
+                    Button aProjectEditorButton = new Button();
+                    aProjectEditorButton.Text = "Project Editor";
+                    aProjectEditorButton.ID = "btnProjectEditor";
+                    aProjectEditorButton.Attributes["onClick"] = "window.location.replace(\"ProjectEditor.aspx\");";
+                    //aProjectEditorButton.Click += new System.EventHandler(btnProjectEditor_Click); 
+                    aDialogPopup.Controls.Add(aProjectEditorButton);
+
+                    Button aPriceCalculatorButton = new Button();
+                    aPriceCalculatorButton.Text = "Price Calculator";
+                    aPriceCalculatorButton.ID = "btnPriceCalculator";
+                    aPriceCalculatorButton.Attributes["onClick"] = "window.location.replace(\"PriceCalculator.aspx\");";
+                    //aProjectEditorButton.Click += new System.EventHandler(btnProjectEditor_Click); 
+                    aDialogPopup.Controls.Add(aPriceCalculatorButton);
+                    break;
+                default:
+                    break;
+            }
+
+
+            // Render to HTMLTextWriter (so we can return StringBuilder..)
+            aDialogPopup.RenderControl(aHTMLTextWriter);
+
+#if DEBUG // Only compile this code if you're compiling for debug.
+            Debug.WriteLine(aStringBuilder.ToString());
+
+            Debug.WriteLine(projectType);
+#endif
+            return aStringBuilder.ToString();
         }
     }
 }
