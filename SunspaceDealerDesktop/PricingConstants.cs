@@ -480,7 +480,7 @@ namespace SunspaceDealerDesktop
         //Glass Transoms - trapezoids (walls up to 10' high)
         public static float MODEL_400_GLASS_TRANSOM_TRAPEZOID_UP_TO_10 = 135.20f; //Lin. Ft.
         //Glass Transoms - trapezoids (walls up to 12' high)
-        public static float MODEL_400_GLASS_TRANSOM_TRAPEZOID_UP_TO_10 = 175.90f; //Lin. Ft.
+        public static float MODEL_400_GLASS_TRANSOM_TRAPEZOID_UP_TO_12 = 175.90f; //Lin. Ft.
 
         /*NOTE: Fixed Glass transoms / traps must have a minimum height of 8". Therefore when a patio door is used the
         minimum wall height must be 92" and when a 400 Series Steel Entry Door is used the wall height must
@@ -754,18 +754,18 @@ namespace SunspaceDealerDesktop
         public static float THERMADECK_FLOOR_CUT_TO_SIZE_4_THICK_UP = 8.70f; //Sq. Ft.
 
         //6 1/2" thick x 4' x length (7/16" OSB skin w/ 5 1/2" - 1 Lb. EPS) 300-500
-        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_6_THICK = 11.80f; //Sq. Ft.
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_6_THICK_300 = 11.80f; //Sq. Ft.
         //6 1/2" thick x 4' x length (7/16" OSB skin w/ 5 1/2" - 1 Lb. EPS) 501-1000
-        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_6_THICK = 10.70f; //Sq. Ft.
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_6_THICK_500 = 10.70f; //Sq. Ft.
         //6 1/2" thick x 4' x length (7/16" OSB skin w/ 5 1/2" - 1 Lb. EPS) 1001 & UP
-        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_6_THICK = 9.60f; //Sq. Ft.
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_6_THICK_1000 = 9.60f; //Sq. Ft.
 
         //8 1/4" thick x 4' x length (7/16" OSB skin w/ 7 1/4" - 1 Lb. EPS) 300-500
-        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_8_THICK = 12.80f; //Sq. Ft.
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_8_THICK_300 = 12.80f; //Sq. Ft.
         //8 1/4" thick x 4' x length (7/16" OSB skin w/ 7 1/4" - 1 Lb. EPS) 501-1000
-        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_8_THICK = 11.50f; //Sq. Ft.
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_8_THICK_500 = 11.50f; //Sq. Ft.
         //8 1/4" thick x 4' x length (7/16" OSB skin w/ 7 1/4" - 1 Lb. EPS) 1001 & UP
-        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_8_THICK = 10.30f; //Sq. Ft.
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_8_THICK_1000 = 10.30f; //Sq. Ft.
 
         #endregion
 
