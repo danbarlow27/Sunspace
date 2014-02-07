@@ -10,7 +10,7 @@ namespace SunspaceDealerDesktop
 {
     public partial class WizardDoorOnlyEdit : System.Web.UI.Page
     {
-        protected int projectId = 109; //get it from the session
+        protected int projectId = 108; //get it from the session
         protected ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
         protected ListItem lst18 = new ListItem("1/8", ".125");
         protected ListItem lst14 = new ListItem("1/4", ".25");
@@ -1602,7 +1602,7 @@ namespace SunspaceDealerDesktop
                                 hardwareType = Convert.ToString(projectReader[4]);
 
                                 projectReader.Close(); 
-
+                                
                                 // Populate the door table fields
                                 DropDownList ddlDoorType = this.FindControl("ctl00$MainContent$ddlDoorStyleCabana") as DropDownList;
                                 ddlDoorType.SelectedValue = doorType;
@@ -1628,7 +1628,8 @@ namespace SunspaceDealerDesktop
 
                                 // Getting null from radio buttons / radio button list
                                 RadioButton radHinge = this.FindControl("ctl00$MainContent$DoorHingeCabana") as RadioButton;
-                                
+
+                               
                                 
                             }
                         }
