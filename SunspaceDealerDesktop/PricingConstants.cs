@@ -533,14 +533,281 @@ namespace SunspaceDealerDesktop
         //Full Lite - Upgrade to French Door
         public static float MODEL_400_FULL_LITE_UPGRADE_TO_FRENCH = 1593.07f; //Each
         //Half Lite with Mini Blinds - Upgrade From Patio Door
+        public static float MODEL_400_HALF_LITE_W_MINI_BLINDS_UPGRADE_FROM_PATIO = 1100.69f; //Each
         //Half Lite with Mini Blinds - Additional Entry Door
+        public static float MODEL_400_HALF_LITE_W_MINI_BLINDS_ADTTIONAL = 1201.55f; //Each
         //Half Lite with Mini Blinds - Upgrade to French Door
+        public static float MODEL_400_HALF_LITE_W_MINI_BLINDS_UPGRADE_TO_FRENCH = 2036.27f; //Each
         //Full View with Mini Blinds - Upgrade From Patio Door
+        public static float MODEL_400_FULL_LITE_W_MINI_BLINDS_UPGRADE_FROM_PATIO = 1219.92f; //Each
         //Full View with Mini Blinds - Additional Entry Door
+        public static float MODEL_400_FULL_LITE_W_MINI_BLINDS_ADTTIONAL = 1320.95f; //Each
         //Full View with Mini Blinds - Upgrade to French Door
+        public static float MODEL_400_FULL_LITE_W_MINI_BLINDS_UPGRADE_TO_FRENCH = 2256.84f; //Each
 
         #endregion
 
         #endregion
+
+        #region SUNSPACE INSULATED ROOF SYSTEMS
+
+            #region SUNSPACE "PRESSURE CAP" INSULATED ROOF SYSTEMS
+
+            //3" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_PRESSURE_CAP_3_INCH = 17.60f; //Sq. Ft.
+            //4" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_PRESSURE_CAP_4_INCH = 20.10f; //Sq. Ft.
+            //6" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_PRESSURE_CAP_6_INCH = 23.20f; //Sq. Ft.
+
+            #endregion
+
+            #region SUNSPACE "PRESSURE CAP FOAM PROTECTED" INSULATED ROOF SYSTEMS ( PRESSURE CAP F/P )
+
+            //3" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_PRESSURE_CAP_FOAM_PROTECTED_3_INCH = 21.90f; //Sq. Ft.
+            //4" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_PRESSURE_CAP_FOAM_PROTECTED_4_INCH = 24.00f; //Sq. Ft.
+            //6" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_PRESSURE_CAP_FOAM_PROTECTED_6_INCH = 27.10f; //Sq. Ft.
+
+            #endregion
+
+            #region SUNSPACE "I-BEAM" INSULATED ROOF SYSTEMS (White Only)
+
+            //3" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_I_BEAM_3_INCH = 17.60f; //Sq. Ft.
+            //4" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_I_BEAM_4_INCH = 20.10f; //Sq. Ft.
+            //6" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_I_BEAM_6_INCH = 23.20f; //Sq. Ft.
+
+            #endregion
+
+            #region SUNSPACE "I-BEAM FOAM PROTECTED" INSULATED ROOF SYSTEMS ( I-BEAM F/P ) (White Only)
+
+            //3" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_I_BEAM_FOAM_PROTECTED_3_INCH = 21.90f; //Sq. Ft.
+            //4" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_I_BEAM_FOAM_PROTECTED_4_INCH = 24.00f; //Sq. Ft.
+            //6" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_I_BEAM_FOAM_PROTECTED_6_INCH = 27.10f; //Sq. Ft.
+
+            #endregion
+
+            #region UPGRADE TO ABOVE ROOF SYSTEMS
+
+            //4" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_UPGRADE_TO_INSULATED_ROOF_4_INCH = 17.60f; //Sq. Ft.
+            //6" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_UPGRADE_TO_INSULATED_ROOF_6_INCH = 20.10f; //Sq. Ft.
+
+            //4" - 2lb. I-BEAM Roof @ 2' - o/c
+            public static float INSULATED_ROOF_UPGRADE_TO_INSULATED_ROOF_I_BEAM_4_INCH = 20.10f; //Sq. Ft.
+            //6" - 2lb. I-BEAM Roof @ 2' - o/c
+            public static float INSULATED_ROOF_UPGRADE_TO_INSULATED_ROOF_I_BEAM_6_INCH = 23.20f; //Sq. Ft.
+
+            #endregion
+
+            #region SUNSPACE "PRESSURE CAP OSB TOP" INSULATED ROOF SYSTEMS
+
+            //3" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_PRESSURE_CAP_OSB_3_INCH = 18.60f; //Sq. Ft.
+            //4" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_PRESSURE_CAP_OSB_4_INCH = 21.40f; //Sq. Ft.
+            //6" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_PRESSURE_CAP_OSB_6_INCH = 24.90f; //Sq. Ft.
+
+            #endregion
+
+            #region SUNSPACE "I-BEAM OSB TOP" INSULATED ROOF SYSTEMS
+
+            //3" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_I_BEAM_OSB_3_INCH = 18.60f; //Sq. Ft.
+            //4" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_I_BEAM_OSB_4_INCH = 21.40f; //Sq. Ft.
+            //6" - 1 lb. Density foam with .024" aluminum skin
+            public static float INSULATED_ROOF_I_BEAM_OSB_6_INCH = 24.90f; //Sq. Ft.
+
+            #endregion
+
+            #region SUNSPACE "T-BAR" INSULATED ROOF SYSTEMS
+
+            /*
+            Note: For invoicing purposes roof dimensions will be rounded up to the nearest foot. All T-BAR roof
+            systems will be shipped with tee-bars, receiver, gutter, fascia and 5/8" thick 2lb Aluminum Foam panels
+             
+            The T-Bar roof system has all the flexibility of the insulated roof system but also always you to add full length
+            ACRYLITE® skylight panel to the roof system where additional light is required. An upcharge will applied to
+            the square footage of acrylic rood panels used if the system. Please note that the Tee-bar roof system is not
+            recommended for installation over Model 400 walls.             
+            */
+
+            #region Studio Roof
+
+            //Up to 150 Sq. Ft.
+            public static float INSULATED_ROOF_STUDIO_ROOF_UP_TO_150_SQ_FT = 21.00f; //Sq. Ft.
+            //150 Sq. Ft. and up
+            public static float INSULATED_ROOF_STUDIO_ROOF_150_SQ_FT_AND_UP = 19.00f; //Sq. Ft.
+            //Panel Option Colors: White, Drift, Bronze
+
+            #endregion
+
+            #region Gable Roof
+
+            //Up to 150 Sq. Ft.
+            public static float INSULATED_ROOF_GABLE_ROOF_UP_TO_150_SQ_FT = 22.00f; //Sq. Ft.
+            //150 Sq. Ft. and up
+            public static float INSULATED_ROOF_GABLE_ROOF_150_SQ_FT_AND_UP = 20.00f; //Sq. Ft.
+            //Panel Option Colors: White, Drift, Bronze
+
+            #endregion
+
+            //Upgrade to ACRYLITE® Double Skin Acylic Panels
+            public static float INSULATED_ROOF_UPGRADE_TO_ACRYLITE_DOUBLE_SKIN_ACYLIC_PANELS = 10.00f; //Sq. Ft.
+
+            #endregion
+
+            #region COMPONENTS
+
+            //Concealed fan beam ( positioned a minimum 9" from end of panel)
+            public static float INSULATED_ROOF_CONCEALED_FAN_BEAM = 18.30f; //Ft.
+            //Extra downspout kit
+            public static float INSULATED_ROOF_EXTRA_DOWNSPOUT_KIT = 40.80f; //Each
+            //Caulking
+            public static float INSULATED_ROOF_CAULKING = 11.80f; //Each
+            //Eternabond Sealing Tape - 4" wid...50 ft. Roll
+            public static float INSULATED_ROOF_ETERNABOND_SEALING_TAPE_4_INCH = 101.50f; //Each
+            //Eternabond Sealing Tape - 6" wid...50 ft. Roll
+            public static float INSULATED_ROOF_ETERNABOND_SEALING_TAPE_6_INCH = 152.30f; //Each
+            //Flat Stock Coil...2' X 100'...White/Driftwood
+            public static float INSULATED_ROOF_FLAT_STOCK_COIL_WHITE_DRIFTWOOD = 340.40f; //Each
+            //Flat Stock Coil...2' X 100'...White/Bronze
+            public static float INSULATED_ROOF_FLAT_STOCK_COIL_WHITE_BRONZE = 340.40f; //Each
+
+            #region SUPPORT COMPONENTS
+
+            //3" x 3" Fluted Post 7' White, Bronze, Driftwood
+            public static float INSULATED_ROOF_FLUTED_POST_7_FOOT = 78.30f; //Each
+            //3" x 3" Fluted Post 8' White, Bronze, Driftwood
+            public static float INSULATED_ROOF_FLUTED_POST_8_FOOT = 91.40f; //Each
+            //3" x 3" Fluted Post 9' White, Bronze, Driftwood
+            public static float INSULATED_ROOF_FLUTED_POST_9_FOOT = 104.40f; //Each
+            //3" x 3" Fluted Post 10' White, Bronze, Driftwood
+            public static float INSULATED_ROOF_FLUTED_POST_10_FOOT = 117.50f; //Each
+            //3" x 3" Fluted Post 22' White, Bronze, Driftwood
+            public static float INSULATED_ROOF_FLUTED_POST_22_FOOT = 234.90f; //Each
+            //1 - 1/2" x 3" Structural U-Channel ...22' ...White, Bronze, Driftwood
+            public static float INSULATED_ROOF_STRUCTURAL_U_CHANNEL_22_FOOT = 7.60f; //Ft.
+
+            #endregion
+
+            #region SKYLIGHTS (Opening prepared - site installed)
+
+            //Flat Glass (Thermal Low E2) Fixed (includes snaps)
+            public static float INSUALTED_FLAT_GLASS_FIXED = 698.90f; //Each
+            //Flat Glass (Thermal Low E2) Operating (includes snaps)
+            public static float INSUALTED_FLAT_GLASS_OPERATING = 1009.60f; //Each
+            //Flat Glass (Thermal Low E2) Pole for Operating Skylight (includes snaps)
+            public static float INSUALTED_FLAT_GLASS_POLE_OPERATING_SKYLIGHT = 130.30f; //Each
+
+            //Skylight Snaps...3"
+            public static float INSULATED_ROOF_SKYLIGHT_SNAPS_3_INCH = 60.70f; //Each
+            //Skylight Snaps...4"
+            public static float INSULATED_ROOF_SKYLIGHT_SNAPS_4_INCH = 66.30f; //Each
+            //Skylight Snaps...6"
+            public static float INSULATED_ROOF_SKYLIGHT_SNAPS_6_INCH = 77.30f; //Each
+
+            //Solar Fusion Skylight
+            public static float INSUALTED_SOLAR_FUSION_SKYLIGHT = 524.40f; //Each
+
+            #endregion
+
+            #endregion
+
+        #endregion
+
+        #region THERMADECK INSULATED FLOOR SYSTEM
+
+        #region PRICING - Cut to Size
+
+        //Standard Set Backs
+        //4 1/2" thick x 4' x length (7/16" OSB skin w/ 3 1/2" - 1 Lb. EPS)
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_4_THICK = 12.00f; //Sq. Ft.
+        //6 1/2" thick x 4' x length (7/16" OSB skin w/ 5 1/2" - 1 Lb. EPS)
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_6_THICK = 13.10f; //Sq. Ft.
+        //8 1/4" thick x 4' x length (7/16" OSB skin w/ 7 1/4" - 1 Lb. EPS)
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_8_THICK = 14.20f; //Sq. Ft.
+        //7/16" OSB skins with Aluminum or FRP
+        public static float THERMADECK_FLOOR_OSB_SKINS_WITH_ALUMINUM_OR_FRP = 6.50f; //Sq. Ft.
+            
+        #endregion
+
+        #region FULL PANEL PRICING
+
+        //Standard Set Backs
+        //4 1/2" thick x 4' x length (7/16" OSB skin w/ 3 1/2" - 1 Lb. EPS) 300-500
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_4_THICK_500 = 10.70f; //Sq. Ft.
+        //4 1/2" thick x 4' x length (7/16" OSB skin w/ 3 1/2" - 1 Lb. EPS) 501-1000
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_4_THICK_1000 = 9.60f; //Sq. Ft.
+        //4 1/2" thick x 4' x length (7/16" OSB skin w/ 3 1/2" - 1 Lb. EPS) 1001 & UP
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_4_THICK_UP = 8.70f; //Sq. Ft.
+
+        //6 1/2" thick x 4' x length (7/16" OSB skin w/ 5 1/2" - 1 Lb. EPS) 300-500
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_6_THICK = 11.80f; //Sq. Ft.
+        //6 1/2" thick x 4' x length (7/16" OSB skin w/ 5 1/2" - 1 Lb. EPS) 501-1000
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_6_THICK = 10.70f; //Sq. Ft.
+        //6 1/2" thick x 4' x length (7/16" OSB skin w/ 5 1/2" - 1 Lb. EPS) 1001 & UP
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_6_THICK = 9.60f; //Sq. Ft.
+
+        //8 1/4" thick x 4' x length (7/16" OSB skin w/ 7 1/4" - 1 Lb. EPS) 300-500
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_8_THICK = 12.80f; //Sq. Ft.
+        //8 1/4" thick x 4' x length (7/16" OSB skin w/ 7 1/4" - 1 Lb. EPS) 501-1000
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_8_THICK = 11.50f; //Sq. Ft.
+        //8 1/4" thick x 4' x length (7/16" OSB skin w/ 7 1/4" - 1 Lb. EPS) 1001 & UP
+        public static float THERMADECK_FLOOR_CUT_TO_SIZE_BACKS_8_THICK = 10.30f; //Sq. Ft.
+
+        #endregion
+
+        //Add Metal Vapor Barrier
+        public static float THERMADECK_FLOOR_ADD_METAL_VAPOR_BARRIER = 3.20f; //Sq. Ft.
+        //Hot Knife (complete set)
+        public static float THERMADECK_FLOOR_HOT_KNIFE = 461.50f; //Net
+        //Hot Knife Replacement Blade Kit (includes 6" straight blade and 12" adjustable blades)
+        public static float THERMADECK_FLOOR_HOT_KNIFE_REPLACEMENT_BLADE_KIT = 30.40f; //Net
+        //Hot Knife Sled
+        public static float THERMADECK_FLOOR_HOT_KNIFE_SLED = 121.70f; //Net
+
+        #endregion
+
+        #region SUNSPACE ACRYLIC ROOF AND PATIO COVERS
+
+            #region COMPLETE ROOF PACKAGE INCLUDING
+
+            #region Studio Roof
+
+            //Up to 150 Sq. Ft....Clear, Bronze, Solar Cool White
+            public static float ACRYLIC_ROOF_STUDIO_ROOF_UP_TO_150_SQ_FT = 31.00f; //Sq. Ft.
+            //150 Sq. Ft. and up...Clear, Bronze, Solar Cool White
+            public static float ACRYLIC_ROOF_STUDIO_ROOF_150_SQ_FT_AND_UP = 29.00f; //Sq. Ft.
+
+            #endregion
+
+            #region Gable Roof
+
+            //Up to 150 Sq. Ft....Clear, Bronze, Solar Cool White
+            public static float ACRYLIC_ROOF_GABLE_ROOF_UP_TO_150_SQ_FT = 32.00f; //Sq. Ft.
+            //150 Sq. Ft. and up...Clear, Bronze, Solar Cool White
+            public static float ACRYLIC_ROOF_GABLE_ROOF_150_SQ_FT_AND_UP = 30.00f; //Sq. Ft.
+
+            #endregion
+
+            //For Heatstop Cool Blue add
+            public static float ACRYLIC_FOR_HEATSTOP_COOL_BLUE_ADD = 1.10f; //Sq. Ft.
+
+            #endregion
+
+        #endregion
+
     }
 }
