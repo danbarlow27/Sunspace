@@ -1627,7 +1627,7 @@ namespace SunspaceDealerDesktop
                                 ddlHardwareType.SelectedValue = hardwareType;
 
                                 // Getting null from radio buttons / radio button list
-                                //RadioButton radHinge = this.FindControl("ctl00$MainContent$DoorHingeCabana") as RadioButton;
+                                RadioButton radHinge = this.FindControl("ctl00$MainContent$DoorHingeCabana") as RadioButton;
                                 
                                 
                             }
