@@ -86,7 +86,7 @@ namespace SunspaceWizard
                 Button projectName = new Button();
                 projectName.Text = dvProjectList[i][0].ToString();
                 // projectName.
-                 projectsNameCell.Controls.Add(projectName);
+                projectsNameCell.Controls.Add(projectName);
                 projectsTableRow.Controls.Add(projectsNameCell);
 
                 TableCell projectsDateCell = new TableCell();
