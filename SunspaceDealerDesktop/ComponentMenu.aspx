@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Sunspace" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MainMenu.aspx.cs" Inherits="Sunspace.MainMenu" %>
+﻿<%@ Page Title="Sunspace" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ComponentMenu.aspx.cs" Inherits="Sunspace.MainMenu" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <br class="clear">

@@ -202,7 +202,7 @@
     <Content Include="Insert.aspx" />
     <Content Include="JSONTest.aspx" />
     <Content Include="JSONTest2.aspx" />
-    <Content Include="MainMenu.aspx" />
+    <Content Include="ComponentMenu.aspx" />
     <Content Include="PriceCalculator.aspx" />
     <Content Include="ProductSelect.aspx" />
     <Content Include="ProjectEditor.aspx" />
@@ -451,12 +451,12 @@
     <Compile Include="JSONTest2.aspx.designer.cs">
       <DependentUpon>JSONTest2.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MainMenu.aspx.cs">
-      <DependentUpon>MainMenu.aspx</DependentUpon>
+    <Compile Include="ComponentMenu.aspx.cs">
+      <DependentUpon>ComponentMenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MainMenu.aspx.designer.cs">
-      <DependentUpon>MainMenu.aspx</DependentUpon>
+    <Compile Include="ComponentMenu.aspx.designer.cs">
+      <DependentUpon>ComponentMenu.aspx</DependentUpon>
     </Compile>
     <Compile Include="PriceCalculator.aspx.cs">
       <DependentUpon>PriceCalculator.aspx</DependentUpon>

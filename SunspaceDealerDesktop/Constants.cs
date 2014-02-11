@@ -626,6 +626,10 @@ namespace SunspaceDealerDesktop
         public const string MOD_TYPE_WINDOW = "Window";
         #endregion
 
+        #region Integrated Railing
+        public static string[] RAILING_HEIGHTS = { "Height1", "Height2" };
+        #endregion
+
         #region Pricing based on 2014 MSRP
 
         #region MODEL 100 - SCREEN ROOM WALLS

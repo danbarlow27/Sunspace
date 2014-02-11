@@ -732,3 +732,187 @@ tr.pager td {
         }
 }
 /* END: Mobile Styles */
+
+/*Component Phase1 Styles*/
+/* REMOVE/HIDE/SHOW ELEMENTS */
+.removeElement {
+    display: none;
+}
+.hideElement {
+    visibility: hidden;
+}
+.showElementNoClass {
+    
+}
+
+/* LOGIN PAGE
+----------------------------------------------------------*/ 
+.containerLogin {
+    background-color: #dadada;
+    width: 300px;
+    height: 255px;
+    padding: 20px 30px 30px;
+    margin: 100px auto 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid rgb(162,162,162);
+}
+
+.containerLogin label {
+    font: normal 13px Arial, Helvetica, Verdana, sans-serif;
+    margin: 5px 0 0;
+}
+
+.txtLoginField {
+    font: 17px Arial, Helvetica, Verdana, sans-serif;
+    padding: 5px 10px;
+    border: 1px solid rgb(162,162,162);
+    width: 275px;
+    height: 30px;
+    margin: 5px 0 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: inset 1px 2px 4px rgba(0,0,0,.2);
+}
+
+#MainContent_btnLogin {
+    font-size: 17px;
+    width: 120px;
+    height: 35px;
+    margin: 20px 0 0;
+    float: right;
+}
+
+
+
+/* MAIN MENU PAGE
+----------------------------------------------------------*/ 
+.containerMainMenu {
+    text-align: center;
+    background-color: #dadada;
+    width: 300px;
+    padding: 20px 30px 30px;
+    margin: 100px auto 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid rgb(162,162,162);
+}
+
+/* Buttons */
+.btnMainMenu {
+    font-size: 17px;
+    width: 220px;
+    height: 45px;
+    margin: 7px 0;
+    /*margin-right: 25px;*/
+}
+.btnMainMenuLast {
+    font-size: 17px;
+    margin-right: 0;
+}
+
+
+
+/* PRODUCT SELECT PAGE
+----------------------------------------------------------*/
+.productSelectTable {
+    width: 900px;
+    margin: 70px auto 0;
+    border: 0;
+    border-collapse: collapse;
+}
+.productSelectTable td {
+    padding-bottom: 40px;
+    border: 0;
+}
+
+/* Radio Buttons */
+.containerUpdateSelect {
+    text-align: center;
+    margin: 70px auto 0;
+}
+.radUpdateSelect {
+    margin-right: 10px;
+}
+#MainContent_lblUpdateGeneral {
+    margin-right: 65px;
+}
+
+/* Dropdown */
+.tdLblProductSelect {
+    text-align: right;
+    padding-right: 10px;
+}
+
+/* Button */
+#MainContent_btnGo {
+    margin-left: 15px;
+}
+
+
+
+/* COMMON ELEMENTS
+----------------------------------------------------------*/
+/* NAVIGATION DROPDOWN/MENU
+---------------------------- */
+.containerNavigation {
+    margin: 20px 0 40px;
+}
+
+.containerNavigation .ddlField {
+    background-color: rgb(235,235,235);
+}
+
+
+/* NAVIGATION SCROLLING ARROWS
+---------------------------- */
+.prevArrow {
+    background-image: url(../Images/arrows.png); 
+    background-position: 0 36px;
+    width: 36px;
+    height: 36px;
+    margin-top: -18px;
+    border: 0;
+    position: fixed;
+    top: 50%;
+    left: 30px;
+    display: inline-block;
+}
+
+.nextArrow {
+    background-image: url(../Images/arrows.png); 
+    background-position: 0 0;
+    width: 36px;
+    height: 36px;
+    margin-top: -18px;
+    border: 0;
+    position: fixed;
+    top: 50%;
+    right: 30px;
+    display: inline-block;
+}
+
+.prevArrow:hover,
+.prevArrow:active,
+.prevArrow:focus, 
+.nextArrow:hover,
+.nextArrow:active,
+.nextArrow:focus {
+    border: 0;
+}
+
+.prevArrow:hover {
+    background-position: 36px 36px;
+}
+
+.nextArrow:hover {
+    background-position: 36px 0;
+}
+
+/*End Component Styles*/
