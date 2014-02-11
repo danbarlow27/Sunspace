@@ -472,6 +472,7 @@
     <Compile Include="ProductSelect.aspx.designer.cs">
       <DependentUpon>ProductSelect.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PricingConstants.cs" />
     <Compile Include="ProjectEditor.aspx.cs">
       <DependentUpon>ProjectEditor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

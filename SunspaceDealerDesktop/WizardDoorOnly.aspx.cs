@@ -1607,12 +1607,12 @@ namespace SunspaceDealerDesktop
                                                 + 0 + ", "
                                                 + tempDoor.Height + ", "
                                                 + tempDoor.Length + ", "
-                                                + "'" + tempDoor.VinylTint.ToString() + "', "
-                                                + "'" + tempDoor.ScreenType.ToString() + "', "
-                                                + "'" + tempDoor.GlassTint.ToString() + "', "
-                                                + "'" + tempDoor.Hinge.ToString() + "', "
-                                                + "'" + tempDoor.Swing.ToString() + "', "
-                                                + "'" + tempDoor.HardwareType.ToString() + "'"
+                                                + "'" + tempDoor.VinylTint + "', "
+                                                + "'" + tempDoor.ScreenType + "', "
+                                                + "'" + tempDoor.GlassTint + "', "
+                                                + "'" + tempDoor.Hinge[0] + "', "
+                                                + "'" + tempDoor.Swing + "', "
+                                                + "'" + tempDoor.HardwareType + "'"
                                                 + ");";
                             aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
                         }
@@ -1634,6 +1634,37 @@ namespace SunspaceDealerDesktop
                             // operator
                             // hardware_type
                             // number_vents
+                            aCommand.CommandText = "INSERT INTO french_doors(project_id, linear_index, module_index, door_index, height, length, vinyl_tint, screen_type, glass_tint, swing, operator, hardware_type) VALUES("
+                                                                    + project_id + ", "
+                                                                    + 0 + ", "
+                                                                    + 0 + ", "
+                                                                    + 0 + ", "
+                                                                    + tempDoor.Height + ", "
+                                                                    + tempDoor.Length + ", '"
+                                                                    + tempDoor.VinylTint + "', '"
+                                                                    + tempDoor.ScreenType + "', '"
+                                                                    + tempDoor.GlassTint + "', '"
+                                                                    + tempDoor.Swing + "', "
+                                                                    + 0 + ", '"
+                                                                    + tempDoor.HardwareType + "'"
+                                                                    + ");";
+                            aCommand.ExecuteNonQuery();
+
+                            aCommand.CommandText = "INSERT INTO french_doors(project_id, linear_index, module_index, door_index, height, length, vinyl_tint, screen_type, glass_tint, swing, operator, hardware_type) VALUES("
+                                                + project_id + ", "
+                                                + 0 + ", "
+                                                + 0 + ", "
+                                                + 1 + ", "
+                                                + tempDoor.Height + ", "
+                                                + tempDoor.Length + ", '"
+                                                + tempDoor.VinylTint + "', '"
+                                                + tempDoor.ScreenType + "', '"
+                                                + tempDoor.GlassTint + "', '"
+                                                + tempDoor.Swing + "', "
+                                                + 1 + ", '"
+                                                + tempDoor.HardwareType + "'"
+                                                + ");";
+                            aCommand.ExecuteNonQuery();
                         }
                         else if (Request.Form["ctl00$MainContent$doorTypeRadios"] == "radTypePatio")
                         {
@@ -1644,11 +1675,31 @@ namespace SunspaceDealerDesktop
                             aDoor.Length = tempDoor.Length;
                             aDoor.ScreenType = tempDoor.ScreenType;
                             //doorsOrdered.Add(aDoor);
-                            // height
-                            // length
-                            // screen_type
-                            // glass_tint
-                            // moving_door
+                            aCommand.CommandText = "INSERT INTO patio_doors(project_id, linear_index, module_index, door_index, screen_type, glass_tint, height, length, moving_door) VALUES("
+                                                                    + project_id + ", "
+                                                                    + 0 + ", "
+                                                                    + 0 + ", "
+                                                                    + 0 + ", '"
+                                                                    + tempDoor.ScreenType + "', '"
+                                                                    + tempDoor.GlassTint + "', "
+                                                                    + tempDoor.Height + ", "
+                                                                    + tempDoor.Length + ", "
+                                                                    + 1
+                                                                    + ");";
+                            aCommand.ExecuteNonQuery();
+
+                            aCommand.CommandText = "INSERT INTO patio_doors(project_id, linear_index, module_index, door_index, screen_type, glass_tint, height, length, moving_door) VALUES("
+                                                + project_id + ", "
+                                                + 0 + ", "
+                                                + 0 + ", "
+                                                + 1 + ", '"
+                                                + tempDoor.ScreenType + "', '"
+                                                + tempDoor.GlassTint + "', "
+                                                + tempDoor.Height + ", "
+                                                + tempDoor.Length + ", "
+                                                + 0
+                                                + ");";
+                            aCommand.ExecuteNonQuery();
                         }
                         //Session.Add("doorsOrdered", doorsOrdered);
 
@@ -1656,12 +1707,12 @@ namespace SunspaceDealerDesktop
                                                 + project_id + ", " //Will always be a sunroom to be at this point in wizard
                                                 + "0, "
                                                 + "0, "
-                                                + "'" + aDoor.DoorType.ToString() +"', "
-                                                + "'" + aDoor.DoorStyle.ToString() + "', "
-                                                + "'" + aDoor.ScreenType.ToString() + "', "
+                                                + "'" + aDoor.DoorType +"', "
+                                                + "'" + aDoor.DoorStyle + "', "
+                                                + "'" + aDoor.ScreenType + "', "
                                                 + aDoor.Height + ", "
                                                 + aDoor.Length + ", "
-                                                + "'" + aDoor.Colour.ToString() + "', "
+                                                + "'" + aDoor.Colour + "', "
                                                 + aDoor.Kickplate + ");";
                         aCommand.ExecuteNonQuery(); //Execute a command that does not return anything                       
 
