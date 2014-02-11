@@ -22,6 +22,24 @@
 
         $(document).ready(function(){
             errorMessage = document.getElementById("MainContent_txtErrorMessage");
+
+            // Retreive the JSON door
+            var hiddenDoor = <%= hidRealHidden.Value %>;
+            console.log(hiddenDoor);
+
+            if (hiddenDoor.DoorType == "Cabana")
+            {                
+                console.log(hiddenDoor.DoorType);
+            }
+            else if (hiddenDoor.DoorType == "French")
+            {
+                console.log(hiddenDoor.DoorType);
+            }
+            else 
+            {
+                console.log(hiddenDoor.DoorType);
+            }
+
         });
 
         /**
@@ -604,7 +622,6 @@
                 }
             }
         }
-
     </script>
 
     <div class="slide-window" id="slide-window" >
@@ -644,4 +661,5 @@
     </div>
     <div id="hiddenFieldsDiv" runat="server"></div>
     <asp:SqlDataSource ID="sdsDBConnection" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [users]"></asp:SqlDataSource>
+    <asp:HiddenField ID="hidRealHidden" runat="server" />
 </asp:Content>
