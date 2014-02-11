@@ -283,7 +283,7 @@
                 var asIfHeight = document.getElementById('MainContent_txtDoorAsIfHeight' + title).value;
 
                 if (!validateInteger(asIfHeight)) asIfHeight = height; //if asIfHeight = null, set the value of height to it
-
+                
                 if (!validateInteger(height) || //height is not a valid integer
                     !validateInteger(asIfHeight) || //as-if height is not a valid integer
                     !validateInteger(width)) { //width is not a valid integer
@@ -344,7 +344,7 @@
         @return valid - true or false
         */
         function validateInteger(value) {
-
+            
             var valid;
             if (isNaN(value)) {
                 valid = false;

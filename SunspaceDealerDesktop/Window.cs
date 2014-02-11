@@ -16,6 +16,7 @@ namespace SunspaceDealerDesktop
         private string frameColour;
         private float spreaderBar; //this is in vinyl window class, but here also to suppress errors
         private int numVents; //this is in vinyl window class, but here also to suppress errors
+        private double integratedRailing;
         #endregion
 
         #region Constructors
@@ -30,6 +31,7 @@ namespace SunspaceDealerDesktop
             FrameColour = "";
             //SpreaderBar = -1f;
             //NumVents = 0;
+            IntegratedRailing = -1;
         }
 
         #endregion
@@ -128,6 +130,18 @@ namespace SunspaceDealerDesktop
             set
             {
                 numVents = value;
+            }
+        }
+
+        public double IntegratedRailing
+        {
+            get
+            {
+                return integratedRailing;
+            }
+            set
+            {
+                integratedRailing = value;
             }
         }
 

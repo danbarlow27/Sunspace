@@ -652,6 +652,19 @@ namespace SunspaceDealerDesktop
                                                                             + "In" + "'" //A screen window is inside mount, whereas a screen on a window of another type is outside mounted (handled below)
                                                                             + ");";
                                                     aCommand.ExecuteNonQuery();
+
+                                                    if (aWindow.IntegratedRailing > -1)
+                                                    {
+                                                        aCommand.CommandText = "INSERT INTO integrated_railings(project_id, linear_index, module_index, railing_type, railing_colour, height) VALUES("
+                                                                                + project_id + ", "
+                                                                                + linearCounter + ", "
+                                                                                + k + ", "
+                                                                                + "'type'" + ", "
+                                                                                + "'colour'" + ", "
+                                                                                + aWindow.IntegratedRailing
+                                                                                + ");";
+                                                        aCommand.ExecuteNonQuery();
+                                                    }
                                                     break;
                                             }
 

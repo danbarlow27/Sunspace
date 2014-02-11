@@ -1607,12 +1607,12 @@ namespace SunspaceDealerDesktop
                                                 + 0 + ", "
                                                 + tempDoor.Height + ", "
                                                 + tempDoor.Length + ", "
-                                                + "'" + tempDoor.VinylTint.ToString() + "', "
-                                                + "'" + tempDoor.ScreenType.ToString() + "', "
-                                                + "'" + tempDoor.GlassTint.ToString() + "', "
-                                                + "'" + tempDoor.Hinge.ToString()[0] + "', "
-                                                + "'" + tempDoor.Swing.ToString() + "', "
-                                                + "'" + tempDoor.HardwareType.ToString() + "'"
+                                                + "'" + tempDoor.VinylTint + "', "
+                                                + "'" + tempDoor.ScreenType + "', "
+                                                + "'" + tempDoor.GlassTint + "', "
+                                                + "'" + tempDoor.Hinge[0] + "', "
+                                                + "'" + tempDoor.Swing + "', "
+                                                + "'" + tempDoor.HardwareType + "'"
                                                 + ");";
                             aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
                         }
