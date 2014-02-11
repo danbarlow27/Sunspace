@@ -370,19 +370,29 @@ namespace SunspaceWizard
             switch (projectType)
             {
                 case ("Sunroom"):
+                    Label aDirectionLabel = new Label();
+
+                    aDirectionLabel.Text = "Please select one of the options: <br/>";
+
+                    aDialogContent.Controls.Add(aDirectionLabel);
+
+
                     Button aProjectEditorButton = new Button();
                     aProjectEditorButton.Text = "Project Editor";
                     aProjectEditorButton.ID = "btnProjectEditor";
-                    aProjectEditorButton.Attributes["onClick"] = "window.location.replace(\"ProjectEditor.aspx\");";
+                    aProjectEditorButton.Attributes["onClick"] = "window.location.replace(\"ProjectEditor.aspx\"); return false;";
                     //aProjectEditorButton.Click += new System.EventHandler(btnProjectEditor_Click); 
                     aDialogContent.Controls.Add(aProjectEditorButton);
 
                     Button aPriceCalculatorButton = new Button();
                     aPriceCalculatorButton.Text = "Price Calculator";
                     aPriceCalculatorButton.ID = "btnPriceCalculator";
-                    aPriceCalculatorButton.Attributes["onClick"] = "window.location.replace(\"PriceCalculator.aspx\");";
+                    aPriceCalculatorButton.Attributes["onClick"] = "window.location.replace(\"PriceCalculator.aspx\"); return false;";
                     //aProjectEditorButton.Click += new System.EventHandler(btnProjectEditor_Click); 
                     aDialogContent.Controls.Add(aPriceCalculatorButton);
+                    break;
+                case("Walls"):
+
                     break;
                 default:
                     break;

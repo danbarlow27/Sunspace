@@ -64,6 +64,24 @@
             // hide 'close project' link in main nav
             $('#lnkMainNavCloseProject').hide();
         });
+
+
+        // Dynamic click events
+        $(document).on("click", ".savedProjectsWrapper .close", function () {
+            $(".projectTransitOverlay").hide();
+            $(".projectTransitOVerlay").remove();
+        });
+
+        $(document).on("click", "#projectTransitBackground", function (e) {
+            // If any child div's are clicked, do not hide anything
+            if (e.target == this) {
+                $(".projectTransitOverlay").hide();
+                $(".projectTransitOVerlay").remove();
+                //clearAllItems();
+            }
+        });
+
+
         $(document).ready(function () {
 
             // EVENT HANDLERS
@@ -75,23 +93,7 @@
                 ProjectName_Click("Sunroom");
             });
 
-            //Clicking the transparent overlay closes the additional charges overlays
-            $("#projectTransitBackground").click(function (e) {
-                // If any child div's are clicked, do not hide anything
-                if (e.target == this) {
-                    alert("Hidden");
-                    $(".projectTransitOverlay").hide();
-                    $(".projectTransitOVerlay").remove();
-                    //clearAllItems();
-                }
-            })
-
-            //Clicking the X CLOSE, closes the overlays
-            $(".savedProjectsWrapper .close").click(function () {
-                alert("test");
-                $(".projectTransitOverlay").hide();
-                $(".projectTransitOVerlay").remove();
-            })
+            
 
             function ProjectName_Click(type) {
                 //$("#MainContent_lblProjectName"+i).click(function () {
