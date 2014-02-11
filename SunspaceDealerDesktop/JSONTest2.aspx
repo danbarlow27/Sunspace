@@ -10,15 +10,8 @@
 <asp:Content ID="Content5" ContentPlaceHolderID="MainContent" runat="server">
     <script>
         
-        var jsonString = <%= hidRealhidden.value %>;
-        console.log(jsonstring);
-
-
-        function runme()
-        {
-            jsonString.Name = "Ass";
-            document.getElementById("<%=hidRealHidden.ClientID%>").value = JSON.stringify(jsonString);
-        }
+        var jsonString = <%= hidRealHidden.Value %>;
+        console.log(jsonString);
     </script>
 
     <asp:Button ID="btnFuck" runat="server" OnClick="btnFuck_Click" />
