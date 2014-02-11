@@ -2092,7 +2092,18 @@
                 }
             }
 
-            
+            if($('#MainContent_chkRailing').prop('checked') == true)
+            {
+                document.getElementById("MainContent_hidRailing").value  = "Yes";
+                document.getElementById("MainContent_hidRailingHeight").value  = $('#MainContent_ddlRailing :selected').text();
+                console.log("Railings are to be included");
+            }
+            else
+            {
+                document.getElementById("MainContent_hidRailing").value  = "No";
+                document.getElementById("MainContent_hidRailingHeight").value  = "";
+                console.log("Railings are NOT to be included");
+            }
             
             ////check the usable area array in console
             //for (var i=0;i<wallAreaArray.length-existingWallCount;i++)
@@ -2670,6 +2681,8 @@
     <input id="hidFabric" type="hidden" runat="server" value="" />
     <input id="hidOpenness" type="hidden" runat="server" value="" />
     <input id="hidChain" type="hidden" runat="server" value="" />
+    <input id="hidRailing" type="hidden" runat="server" value="No" />
+    <input id="hidRailingHeight" type="hidden" runat="server" />
 
     <%-- end hidden fields --%>    
 

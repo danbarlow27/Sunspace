@@ -296,7 +296,7 @@ namespace SunspaceDealerDesktop
         }
 
         public void FillSpaceWithWindows(string windowType, string windowColour, string framingColour, int numberOfVents, float kneewallHeight, string kneewallType, string transomType, 
-            bool sunshade, string valance, string fabric, string openness, string chain, string screenType)
+            bool sunshade, string valance, string fabric, string openness, string chain, string screenType, double railing)
         {
             float currentLocation = 0f;
 
@@ -486,6 +486,8 @@ namespace SunspaceDealerDesktop
                                     //If dimensions are equal?
                                 }
                             }
+                            
+                            aWindow.IntegratedRailing = railing;                            
 
                             aMod.ModularItems.Add(aWindow);
 

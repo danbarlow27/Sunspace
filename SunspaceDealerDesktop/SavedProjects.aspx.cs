@@ -311,19 +311,61 @@ namespace SunspaceWizard
             HtmlTextWriter aHTMLTextWriter = new HtmlTextWriter(new System.IO.StringWriter(aStringBuilder));
 
             // Modal popup div
-            Panel aDialogPopup = new Panel();
+            //Panel aWrapper = new Panel();
 
-            aDialogPopup.ID = "dialog-transit";
-            aDialogPopup.Attributes["title"] = "Select an option";
+            //aWrapper.CssClass = "priceCalculatorWrapper";
+
+            
+
+            Panel aDialogPopup = new Panel();
+            Panel aDialogContent = new Panel();
+
+            //Panel aWrapper = new Panel();
+
+            //aWrapper = (Panel)aWrapper.FindControl("savedProjectsWrapper");
+
+            // TEST TIME
+            aDialogPopup.ID = "projectTransitBackground";
+            aDialogPopup.CssClass = "projectTransitOverlay";
+            aDialogPopup.Attributes["style"] = "display: none;";
+
+            aDialogContent.CssClass = "content";
+            //aWrapper.Controls.Add(aDialogPopup);
+            aDialogPopup.Controls.Add(aDialogContent);
 
             // 
             Label aPopupDescription = new Label();
+
+            /*
+             * <div class="closeBar">
+                    <div class="overlayClose close">CLOSE</div>
+                </div>
+             */
 
             //SavedProjects sp = new SavedProjects();
 
             aPopupDescription.Text = "Please select the following options:";
 
-            aDialogPopup.Controls.Add(aPopupDescription);
+            //aDialogContent.Controls.Add(aPopupDescription);
+
+            // Close box
+            Panel aCloseBar = new Panel();
+
+            aCloseBar.CssClass = "closeBar";
+
+            aDialogContent.Controls.Add(aCloseBar);
+
+            Panel aCloseButton = new Panel();
+
+            aCloseButton.CssClass = "overlayClose close";
+
+            Label aCloseLabel = new Label();
+
+            aCloseLabel.Text = "CLOSE";
+
+            aCloseButton.Controls.Add(aCloseLabel);
+
+            aCloseBar.Controls.Add(aCloseButton);
 
             switch (projectType)
             {
@@ -333,19 +375,20 @@ namespace SunspaceWizard
                     aProjectEditorButton.ID = "btnProjectEditor";
                     aProjectEditorButton.Attributes["onClick"] = "window.location.replace(\"ProjectEditor.aspx\");";
                     //aProjectEditorButton.Click += new System.EventHandler(btnProjectEditor_Click); 
-                    aDialogPopup.Controls.Add(aProjectEditorButton);
+                    aDialogContent.Controls.Add(aProjectEditorButton);
 
                     Button aPriceCalculatorButton = new Button();
                     aPriceCalculatorButton.Text = "Price Calculator";
                     aPriceCalculatorButton.ID = "btnPriceCalculator";
                     aPriceCalculatorButton.Attributes["onClick"] = "window.location.replace(\"PriceCalculator.aspx\");";
                     //aProjectEditorButton.Click += new System.EventHandler(btnProjectEditor_Click); 
-                    aDialogPopup.Controls.Add(aPriceCalculatorButton);
+                    aDialogContent.Controls.Add(aPriceCalculatorButton);
                     break;
                 default:
                     break;
             }
 
+            
 
             // Render to HTMLTextWriter (so we can return StringBuilder..)
             aDialogPopup.RenderControl(aHTMLTextWriter);
