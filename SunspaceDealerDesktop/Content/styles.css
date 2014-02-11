@@ -720,8 +720,8 @@ div.savedProjectsWrapper .editInvoiceItemOverlay {
 div.projectTransitOverlay .content,
 div.editInvoiceItemOverlay .content {
     position: absolute;
-    height: 500px;
-    width: 400px;
+    height: 180px;
+    width: 470px;
     background-color: rgb(242, 235, 214);
     top: 50%;
     left: 50%;
@@ -796,7 +796,10 @@ div.editInvoiceItemOverlay .button {
     cursor: pointer;
     padding: 12px 24px;
     margin: 0 2em;
+    width:120px;
+    text-align:center;
 }
+
 
 
 /* #endregion */

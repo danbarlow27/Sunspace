@@ -381,12 +381,13 @@ namespace SunspaceWizard
             HttpContext.Current.Session["project_id"] = projectID;
 
             Label aDirectionLabel = new Label();
+            aDirectionLabel.Attributes["style"] = "margin-left: 25%";
 
-            aDirectionLabel.Text = "Please select one of the options: <br/>";
+            aDirectionLabel.Text = "\tPlease select one of the options: <br/><br/>";
 
             aDialogContent.Controls.Add(aDirectionLabel);
 
-
+            /*
             Button aProjectEditorButton = new Button();
             aProjectEditorButton.Text = "Project Editor";
             aProjectEditorButton.ID = "btnProjectEditor";
@@ -400,6 +401,28 @@ namespace SunspaceWizard
             aPriceCalculatorButton.Attributes["onClick"] = "window.location.replace(\"PriceCalculator.aspx\"); return false;";
             //aProjectEditorButton.Click += new System.EventHandler(btnProjectEditor_Click); 
             aDialogContent.Controls.Add(aPriceCalculatorButton);
+            */
+
+            Panel aProjectEditorButton = new Panel();
+            Label aProjectEditorLabel = new Label();
+            aProjectEditorLabel.Text = "Project Editor";
+            aProjectEditorButton.ID = "btnProjectEditor";
+            aProjectEditorButton.CssClass = "button";
+            aProjectEditorButton.Attributes["style"] = "float:left;";
+            aProjectEditorButton.Attributes["onClick"] = "window.location.replace(\"ProjectEditor.aspx\"); return false;";
+            aProjectEditorButton.Controls.Add(aProjectEditorLabel);
+            aDialogContent.Controls.Add(aProjectEditorButton);
+
+            Panel aPriceCalculatorButton = new Panel();
+            Label aPriceCalculatorLabel = new Label();
+            aPriceCalculatorLabel.Text = "Price Calculator";
+            aPriceCalculatorButton.ID = "btnPriceCalculator";
+            aPriceCalculatorButton.CssClass = "button";
+            aPriceCalculatorButton.Attributes["style"] = "float:right;";
+            aPriceCalculatorButton.Attributes["onClick"] = "window.location.replace(\"PriceCalculator.aspx\"); return false;";
+            aPriceCalculatorButton.Controls.Add(aPriceCalculatorLabel);
+            aDialogContent.Controls.Add(aPriceCalculatorButton);
+
             /*
                     break;
                 case("Walls"):
