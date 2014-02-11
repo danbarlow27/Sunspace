@@ -25,7 +25,7 @@ namespace SunspaceWizard
         //private string[] projectTypeArray;
 
         // Moved to handle full project classes for future expansions (it's easier this way)
-        private Project[] projectArray;// = new Project();
+        private static Project[] projectArray;// = new Project();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -95,7 +95,7 @@ namespace SunspaceWizard
                 //projectName.Click += btnProject_Click; // Add the event handler onto the button
 
                 // Adds a jquery event handler onto the asp page.
-                ClickEvents += "$(\"#MainContent_lblProjectName" + i + "\").click(function() { ProjectName_Click(\"" + projectArray[i].ProjectType.ToString() + "\"); });\n\t\t";
+                ClickEvents += "$(\"#MainContent_lblProjectName" + i + "\").click(function() { ProjectName_Click(\"" + projectArray[i].ProjectId.ToString() + "\",\"" + projectArray[i].ProjectType.ToString() + "\"); });\n\t\t";
                 
                 // Hidden label for ID
                 Label projectID = new Label();
@@ -296,15 +296,17 @@ namespace SunspaceWizard
             return DateTime.Now.ToString();
         }
 
+#if DEBUG
         [WebMethod]
-        public static string GenerateTravelPopup(string projectType)
+        public static string DebugGetSession()
         {
-            /*
-            <div id="dialog-confirm" title="Empty the recycle bin?">
-                <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
-            </div>
-             */
+            return HttpContext.Current.Session["project_id"].ToString();
+        }
+#endif
 
+        [WebMethod]
+        public static string GenerateTravelPopup(string projectID, string projectType)
+        {
             // StringBuilder we'll be writing HTML to!
             StringBuilder aStringBuilder = new StringBuilder();
             // We'll render the Panels/Buttons/etc to this, which directs it to the StringBuilder above.
@@ -367,29 +369,38 @@ namespace SunspaceWizard
 
             aCloseBar.Controls.Add(aCloseButton);
 
+            /*
             switch (projectType)
             {
                 case ("Sunroom"):
-                    Label aDirectionLabel = new Label();
+             */
 
-                    aDirectionLabel.Text = "Please select one of the options: <br/>";
+           
 
-                    aDialogContent.Controls.Add(aDirectionLabel);
+            // Create session for project editor
+            HttpContext.Current.Session["project_id"] = projectID;
+
+            Label aDirectionLabel = new Label();
+
+            aDirectionLabel.Text = "Please select one of the options: <br/>";
+
+            aDialogContent.Controls.Add(aDirectionLabel);
 
 
-                    Button aProjectEditorButton = new Button();
-                    aProjectEditorButton.Text = "Project Editor";
-                    aProjectEditorButton.ID = "btnProjectEditor";
-                    aProjectEditorButton.Attributes["onClick"] = "window.location.replace(\"ProjectEditor.aspx\"); return false;";
-                    //aProjectEditorButton.Click += new System.EventHandler(btnProjectEditor_Click); 
-                    aDialogContent.Controls.Add(aProjectEditorButton);
+            Button aProjectEditorButton = new Button();
+            aProjectEditorButton.Text = "Project Editor";
+            aProjectEditorButton.ID = "btnProjectEditor";
+            aProjectEditorButton.Attributes["onClick"] = "window.location.replace(\"ProjectEditor.aspx\"); return false;";
+            //aProjectEditorButton.Click += new System.EventHandler(btnProjectEditor_Click); 
+            aDialogContent.Controls.Add(aProjectEditorButton);
 
-                    Button aPriceCalculatorButton = new Button();
-                    aPriceCalculatorButton.Text = "Price Calculator";
-                    aPriceCalculatorButton.ID = "btnPriceCalculator";
-                    aPriceCalculatorButton.Attributes["onClick"] = "window.location.replace(\"PriceCalculator.aspx\"); return false;";
-                    //aProjectEditorButton.Click += new System.EventHandler(btnProjectEditor_Click); 
-                    aDialogContent.Controls.Add(aPriceCalculatorButton);
+            Button aPriceCalculatorButton = new Button();
+            aPriceCalculatorButton.Text = "Price Calculator";
+            aPriceCalculatorButton.ID = "btnPriceCalculator";
+            aPriceCalculatorButton.Attributes["onClick"] = "window.location.replace(\"PriceCalculator.aspx\"); return false;";
+            //aProjectEditorButton.Click += new System.EventHandler(btnProjectEditor_Click); 
+            aDialogContent.Controls.Add(aPriceCalculatorButton);
+            /*
                     break;
                 case("Walls"):
 
@@ -397,6 +408,7 @@ namespace SunspaceWizard
                 default:
                     break;
             }
+            */
 
             
 
