@@ -3482,6 +3482,53 @@ namespace SunspaceDealerDesktop
 
                 #endregion
             }
+
+            else
+            {
+                #region Integrated Railing
+
+                //li tag to hold Window type radio button and all its content
+                plcScreenOptions.Controls.Add(new LiteralControl("<li>"));
+
+                //Window type radio button
+                CheckBox typeCheck = new CheckBox();
+                typeCheck.ID = "chkRailing"; //Adding appropriate id to railing checkbox
+
+                //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed()"); //On click event to display the proper fields/rows
+
+                //Window type radio button label for clickable area
+                typeLabelRadio = new Label();
+                typeLabelRadio.AssociatedControlID = "chkRailing";  //Tying this label to the radio button
+
+                //Window type radio button label text
+                typeLabel = new Label();
+                typeLabel.AssociatedControlID = "chkRailing";    //Tying this label to the radio button
+                typeLabel.Text = " Integrated Railing";
+
+
+                plcScreenOptions.Controls.Add(typeCheck);        //Adding radio button control to placeholder wallWindowOptions
+                plcScreenOptions.Controls.Add(typeLabelRadio);   //Adding label control to placeholder wallWindowOptions
+                plcScreenOptions.Controls.Add(typeLabel);        //Adding label control to placeholder wallWindowOptions
+                plcScreenOptions.Controls.Add(new LiteralControl("</li>"));
+                
+                plcScreenOptions.Controls.Add(new LiteralControl("<li>"));
+
+                Label railingHeightLabel = new Label();
+                railingHeightLabel.Text = "Railing Height: ";
+
+                DropDownList railingHeight = new DropDownList();
+                railingHeight.ID = "ddlRailing";
+
+                for (int i = 0; i < Constants.RAILING_HEIGHTS.Count(); i++)
+                {
+                    railingHeight.Items.Add(Constants.RAILING_HEIGHTS[i]);
+                }
+
+                plcScreenOptions.Controls.Add(railingHeightLabel);
+                plcScreenOptions.Controls.Add(railingHeight);
+                plcScreenOptions.Controls.Add(new LiteralControl("</li>"));
+                #endregion
+            }
             ////////////////////////////////////////////////
 
             //wallWindowOptions.Controls.Add(new LiteralControl("</ul></li></ul></div></li>"));
@@ -4302,11 +4349,18 @@ namespace SunspaceDealerDesktop
                         //}
 
                         //Now that we have all the linear items, we add to each wall
+                        double iRailing = -1;
+
+                        if (hidRailing.Value == "Yes")
+                        {
+                            iRailing = Convert.ToDouble(hidRailingHeight.Value);
+                        }
+
                         listOfWalls[linearPosition].LinearItems = linearItems;
 
                         listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
                                                                          Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
-                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value);
+                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value, iRailing);
 
                         linearPosition++;
                     }
@@ -4443,11 +4497,18 @@ namespace SunspaceDealerDesktop
                             cheatCounter++;
                         }
 
+                        double iRailing = -1;
+
+                        if (hidRailing.Value == "Yes")
+                        {
+                            iRailing = Convert.ToDouble(hidRailingHeight.Value);
+                        }
+
                         listOfWalls[linearPosition].LinearItems = linearItems;
 
                         listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
                                                                          Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
-                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value);//
+                                                                         hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value, iRailing);//
                         linearPosition++;
                     }
                     #endregion
