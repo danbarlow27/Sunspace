@@ -64,6 +64,24 @@
             // hide 'close project' link in main nav
             $('#lnkMainNavCloseProject').hide();
         });
+
+
+        // Dynamic click events
+        $(document).on("click", ".savedProjectsWrapper .close", function () {
+            $(".projectTransitOverlay").hide();
+            $(".projectTransitOVerlay").remove();
+        });
+
+        $(document).on("click", "#projectTransitBackground", function (e) {
+            // If any child div's are clicked, do not hide anything
+            if (e.target == this) {
+                $(".projectTransitOverlay").hide();
+                $(".projectTransitOVerlay").remove();
+                //clearAllItems();
+            }
+        });
+
+
         $(document).ready(function () {
 
             // EVENT HANDLERS
@@ -72,33 +90,17 @@
             // END
 
             $("#TestDiv").click(function () {
-                ProjectName_Click("Sunroom");
+                ProjectName_Click("0","Sunroom");
             });
 
-            //Clicking the transparent overlay closes the additional charges overlays
-            $("#projectTransitBackground").click(function (e) {
-                // If any child div's are clicked, do not hide anything
-                if (e.target == this) {
-                    alert("Hidden");
-                    $(".projectTransitOverlay").hide();
-                    $(".projectTransitOVerlay").remove();
-                    //clearAllItems();
-                }
-            })
+            
 
-            //Clicking the X CLOSE, closes the overlays
-            $(".savedProjectsWrapper .close").click(function () {
-                alert("test");
-                $(".projectTransitOverlay").hide();
-                $(".projectTransitOVerlay").remove();
-            })
-
-            function ProjectName_Click(type) {
+            function ProjectName_Click(id,type) {
                 //$("#MainContent_lblProjectName"+i).click(function () {
                 $.ajax({
                     type: "POST",
                     url: "SavedProjects.aspx/GenerateTravelPopup",
-                    data: JSON.stringify({ "projectType": type }),
+                    data: JSON.stringify({ "projectID": id, "projectType": type }),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (msg) {
@@ -113,6 +115,22 @@
         
             function ApplyPopup() {
                 $(".projectTransitOverlay").show();
+
+                /* Test session id
+                $.ajax({
+                    type: "POST",
+                    url: "SavedProjects.aspx/DebugGetSession",
+                    //data: JSON.stringify({ "projectID": id, "projectType": type }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        // Replace the div's content with the page method's return.
+                        //$("#TestDiv").html(msg.d);
+                        //alert((msg.d));
+                        alert(msg.d);
+                    }
+                });
+                */
             }
         });
     </script>
