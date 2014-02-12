@@ -139,6 +139,7 @@
             var endHeight = listOfWalls[wallIndex].EndHeight - 0.5;  //wall end height
 
             var id = ""; //id to be given to the wall
+            var title = "Wall " + wallIndex;
 
             var g = gWall.append("g").attr("transform", "translate(" + (-1 * scale(parseFloat(length/2))) + "," + (scale(parseFloat(startHeight/2))) + ")");
 
@@ -153,7 +154,7 @@
 
             var points = [topRight, topLeft, bottomLeft, bottomRight, topReceiverRight, topReceiverLeft, bottomReceiverLeft, bottomReceiverRight, bottomRight]; //put all the coordinates together in an array
 
-            drawPolygon(points, id, g); //draw the polygon to represent the wall with the given coordinates and id
+            drawPolygon(points, id, title, g); //draw the polygon to represent the wall with the given coordinates and id
             
             drawAxes();
           
@@ -237,6 +238,7 @@
             for (var i = 0; i < listOfWalls[wallIndex].LinearItems.length; i++) {
 
                 var id = "" + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
+                var title = listOfWalls[wallIndex].LinearItems[i].ItemType;
                 var length = listOfWalls[wallIndex].LinearItems[i].Length; //length of the linear item
                 var startHeight = listOfWalls[wallIndex].LinearItems[i].StartHeight - 0.5; //start height of the linear item
                 var endHeight = listOfWalls[wallIndex].LinearItems[i].EndHeight - 0.5; //end height of the linear item
@@ -284,7 +286,7 @@
                         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                         var points = [bottomLeft,topLeft,insideTopLeft,insideBottomLeft,insideBottomRight,insideTopRight,topRight,bottomRight]; //put all the coordinates together in an array
-                        drawPolygon(points, id, gLi); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(points, id, title, gLi); //draw the polygon to represent the wall with the given coordinates and id
 
                         drawModularItems(modularItems, (parseFloat(x) + parseFloat(scale(1))), y);
 
@@ -313,7 +315,7 @@
 
                         var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(points, id, gLi); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(points, id, title, gLi); //draw the polygon to represent the wall with the given coordinates and id
 
                         x = parseFloat(x) + scale(parseFloat(length));
 
@@ -329,18 +331,28 @@
         */
         function drawModularItems(modularItems, x, y) {
 
+            var y2 = y;
             gMod = gWall.append("g").attr("transform", "translate("+ x + "," + y + ")"); //bottom right coordinates of the linear item
 
             for (var i = 0; i < modularItems.length; i++) { 
 
+                var id = "";// + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
+                var title = modularItems[i].ItemType;
+                var length = modularItems[i].FLength; ; //length of the modular item
+                var startHeight = modularItems[i].FStartHeight; //start height of the modular item
+                var endHeight = modularItems[i].FEndHeight; //end height of the modular item
+                var leftHeight = modularItems[i].LeftHeight; //left height of the modular item
+                var rightHeight = modularItems[i].RightHeight; //right height of the modular item
+
                 switch(modularItems[i].ItemType) {
                     case "Panel":
-                        var id = "";// + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
-                        var length = modularItems[i].FLength; ; //length of the modular item
-                        var startHeight = modularItems[i].FStartHeight; //start height of the modular item
-                        var endHeight = modularItems[i].FEndHeight; //end height of the modular item
-                        var leftHeight = modularItems[i].LeftHeight; //left height of the modular item
-                        var rightHeight = modularItems[i].RightHeight; //right height of the modular item
+                        //var id = "";// + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
+                        //var title = modularItems[i].ItemType;
+                        //var length = modularItems[i].FLength; ; //length of the modular item
+                        //var startHeight = modularItems[i].FStartHeight; //start height of the modular item
+                        //var endHeight = modularItems[i].FEndHeight; //end height of the modular item
+                        //var leftHeight = modularItems[i].LeftHeight; //left height of the modular item
+                        //var rightHeight = modularItems[i].RightHeight; //right height of the modular item
                 
                             var rise = (leftHeight > rightHeight) ? (leftHeight - rightHeight) : (rightHeight - leftHeight);
                             var height = (leftHeight > rightHeight) ? "start" : (leftHeight === rightHeight) ? "equal" : "end";
@@ -389,11 +401,9 @@
 
                         var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(points, id, gMod); //draw the polygon to represent the wall with the given coordinates and id
+                        //drawPolygon(points, id, title, gMod); //draw the polygon to represent the wall with the given coordinates and id
 
                         if (i < (parseFloat(modularItems.length) - 1)) {
-
-                            alert("alhamdoulillah");
 
                             var pt1 = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(endHeight))) }; //line left coordinates
                             var pt2 = { "x": scale(parseFloat(length)), "y": (-1 * scale(parseFloat(endHeight))) }; //line left coordinates
@@ -402,14 +412,15 @@
                         }
 
                         //y = parseFloat(y) + scale(parseFloat(leftHeight));
-                        var y2 = parseFloat(y) - scale(parseFloat(endHeight));
+                        //var y2 = parseFloat(y) - scale(parseFloat(endHeight));
 
-                        gMod = gWall.append("g").attr("transform", "translate("+ x + "," + y2 + ")");
+                        //gMod = gWall.append("g").attr("transform", "translate("+ x + "," + y2 + ")");
                         break;
                     case "Transom":
                     case "Kneewall":
                     case "Window":
                         var id = "";// + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
+                        var title = modularItems[i].ItemType;
                         var length = modularItems[i].FLength; ; //length of the modular item
                         var startHeight = modularItems[i].FStartHeight; //start height of the modular item
                         var endHeight = modularItems[i].FEndHeight; //end height of the modular item
@@ -425,8 +436,6 @@
 
                         //drawPolygon(points, id, gMod); //draw the polygon to represent the wall with the given coordinates and id
 
-                        //alert("bismillah");
-
                         var insideTopLeft = { "x": scale(parseFloat(0) + 1), "y": (-1 * scale(parseFloat(leftHeight) - 1)) }; //top left coordinates
                         var insideTopRight = { "x": scale(parseFloat(length) - 1), "y": (-1 * scale(parseFloat(rightHeight) - 1)) }; //top right coordinates
                         var insideBottomRight = { "x": scale(parseFloat(length) - 1), "y": scale(parseFloat(0) - 1) }; //bottom right coordinates
@@ -434,26 +443,30 @@
 
                         var insidePoints = [insideTopLeft, insideTopRight, insideBottomRight, insideBottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(insidePoints, id, gMod); //draw the polygon to represent the wall with the given coordinates and id
+                        //drawPolygon(insidePoints, id, title, gMod); //draw the polygon to represent the wall with the given coordinates and id
 
                         drawWindowDetails(modularItems[i]);
 
-                        if (i < (parseFloat(modularItems.length) - 1)) {
+                        //if (i < (parseFloat(modularItems.length) - 1)) {
+                        if (i == 0) {
 
-                            alert("alhamdoulillah");
+                            var pt1 = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(endHeight) - parseFloat(startHeight))) }; //line left coordinates
+                            var pt2 = { "x": scale(parseFloat(length)), "y": (-1 * scale(parseFloat(endHeight) - parseFloat(startHeight))) }; //line left coordinates
 
-                            var pt1 = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(endHeight) - startHeight)) }; //line left coordinates
-                            var pt2 = { "x": scale(parseFloat(length)), "y": (-1 * scale(parseFloat(endHeight) - startHeight)) }; //line left coordinates
+                            drawLine(pt1, pt2, gMod);
+                        }
+                        else if (i == parseFloat(modularItems.length) - 1) {
+
+                            var pt1 = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(endHeight) - parseFloat(startHeight))) }; //line left coordinates
+                            var pt2 = { "x": scale(parseFloat(length)), "y": (-1 * scale(parseFloat(endHeight) - parseFloat(startHeight))) }; //line left coordinates
 
                             drawLine(pt1, pt2, gMod);
                         }
 
-                        //alert("bismillah");
-
                         //y = parseFloat(y) + scale(parseFloat(leftHeight));
-                        var y2 = parseFloat(y) - scale(parseFloat(endHeight));
+                        //var y2 = parseFloat(y) - scale(parseFloat(endHeight));
 
-                        gMod = gWall.append("g").attr("transform", "translate("+ x + "," + y2 + ")");
+                        //gMod = gWall.append("g").attr("transform", "translate("+ x + "," + y2 + ")");
                         break;
                     case "Door":
                         break;
@@ -462,6 +475,14 @@
                     case "Receiver":
                         break;
                 }
+
+                drawPolygon(insidePoints, id, title, gMod); //draw the polygon to represent the wall with the given coordinates and id
+
+                y2 = parseFloat(y2) - scale(parseFloat(endHeight));
+
+                console.log("endheight: " + endHeight + ", y: " + y + ", y2: " + y2);
+
+                gMod = gWall.append("g").attr("transform", "translate("+ x + "," + y2 + ")");
             }
         }
 
@@ -501,14 +522,16 @@
         This function draws a polygon on the canvas with the given data points as coordinates and sets it id to the given id
         @param points - coordinates of a given polygon
         @param id - to be given to the polygon object
+        @param title -
         @param g -
         */
-        function drawPolygon(points, id, g) {
-
+        function drawPolygon(points, id, title, g) {
+            //alert(title);
             var poly = g.selectAll("polygon")
                      .data([points])
                      .enter().append("polygon")
                      .attr("id", id)
+                     .attr("title", title)
                          .attr("points", function (d) { 
                              return d.map(function (d) { 
                                  return [d.x, d.y].join(",");
@@ -519,7 +542,7 @@
                      .attr("stroke-width", "1");
                      //.attr("onmouseover", "$(\"#wall\").attr(\"fill\", \"#F3F3F3\");")
                      //.attr("onmouseout", "$(\"#wall\").attr(\"fill\", \"white\");");
-                     //.attr("onclick", "$(\"#MainContent_txtWidth" + wallIndex + "\").focus();"); //put focus on the first editable field for the wall
+                     //.attr("onclick", "alert"); //put focus on the first editable field for the wall
         }
 
         /**

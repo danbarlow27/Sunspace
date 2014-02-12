@@ -895,7 +895,7 @@
                     wallStartHeightArray[backWallIndex] = parseFloat(document.getElementById("hidBackWallHeight").value);
                     wallEndHeightArray[backWallIndex] = parseFloat(document.getElementById("hidBackWallHeight").value);
 
-                    console.log(wallStartHeightArray[backWallIndex].toString());
+                    //console.log("THIS ONE!!! " + wallStartHeightArray[backWallIndex].toString());
                     for (var i = 0; i < coordList.length; i++) {
                         if (coordList[i][4] === "E") { //existing wall
                             wallStartHeightArray[i] = parseFloat(document.getElementById("hidBackWallHeight").value);
@@ -909,7 +909,7 @@
                             switch (coordList[i][5]) {
                                 case "S": //if south
                                 case "N": //or north
-                                    wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i-1]);
+                                    wallEndHeightArray[i] = parseFloat(wallEndHeightArray[i-1]);
                                     break;
                                 case "W": //if west
                                     wallEndHeightArray[i] = parseFloat(wallStartHeightArray[i-1]) - parseFloat((((wallLengthArray[i] - wallSoffitArray[i]) * m) / RUN)); //determine rise based on slope and length, and subtract it from start height
@@ -927,6 +927,7 @@
                                     break;
                             }
                         }
+                        //console.log("WALL " + (i + 1) + " | TYPE " + coordList[i][4].toString() + " | ORIENT " + coordList[i][5].toString() + " | START " + wallStartHeightArray[i].toString() + " | END " + wallEndHeightArray[i].toString());
                     }
                 }
             }
