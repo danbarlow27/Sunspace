@@ -69,16 +69,36 @@
         // Dynamic click events
         $(document).on("click", ".savedProjectsWrapper .close", function () {
             $(".projectTransitOverlay").hide();
-            $(".projectTransitOVerlay").remove();
+            $(".projectTransitOverlay").remove();
         });
 
         $(document).on("click", "#projectTransitBackground", function (e) {
             // If any child div's are clicked, do not hide anything
             if (e.target == this) {
                 $(".projectTransitOverlay").hide();
-                $(".projectTransitOVerlay").remove();
+                $(".projectTransitOverlay").remove();
                 //clearAllItems();
             }
+        });
+
+        $(document).on("DuplicateProject_Click", function (e, id, type) {
+            $.ajax({
+                type: "POST",
+                url: "SavedProjects.aspx/GenerateDuplicatePopup",
+                data: JSON.stringify({ "projectID": id, "projectType": type }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    // Replace the div's content with the page method's return.
+                    //$("#TestDiv").html(msg.d);
+                    //alert((msg.d));
+                    $(".projectTransitOverlay").hide();
+                    $(".projectTransitOverlay").remove();
+
+                    $(".savedProjectsWrapper").prepend(msg.d);
+                    $(".projectTransitOverlay").show();
+                }
+            });
         });
 
 
@@ -92,6 +112,11 @@
             $("#TestDiv").click(function () {
                 ProjectName_Click("0","Sunroom");
             });
+
+            function DuplicateProject_Click(id, type) {
+                
+            }
+
 
             
 
@@ -108,7 +133,7 @@
                         //$("#TestDiv").html(msg.d);
                         //alert((msg.d));
                         $(".savedProjectsWrapper").prepend(msg.d);
-                        ApplyPopup();
+                        $(".projectTransitOverlay").show();
                     }
                 });
             }
