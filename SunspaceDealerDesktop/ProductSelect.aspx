@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Sunspace | Select Catalogue Product" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProductSelect.aspx.cs" Inherits="Sunspace.ProductSelect" %>
+﻿<%@ Page Title="Sunspace | Select Catalogue Product" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProductSelect.aspx.cs" Inherits="SunspaceDealerDesktop.ProductSelect" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <asp:SqlDataSource ID="datSelectDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [acrylic_panels]"></asp:SqlDataSource>

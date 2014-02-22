@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Sunspace
+namespace SunspaceDealerDesktop
 {
     public class ScreenRoll
     {

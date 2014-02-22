@@ -43,5 +43,10 @@ namespace SunspaceDealerDesktop
         {
             Response.Redirect("NewProject.aspx");
         }
+
+        protected void btnComponents_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ComponentMenu.aspx");
+        }
     }
 }

@@ -11,7 +11,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Sunspace
+namespace SunspaceDealerDesktop
 {
     public partial class ProductSelect : System.Web.UI.Page
     {
@@ -71,8 +71,10 @@ namespace Sunspace
                     System.Data.DataView tableList = new System.Data.DataView();
 
                     //select table names
-                    datSelectDataSource.SelectCommand = "SELECT name FROM sys.tables WHERE name != 'tblColor' AND name != 'tblSchematicParts' AND name != 'tblParts' AND name != 'tblLengthUnits'  AND name != 'tblAudits' AND name != 'tblSalesOrders' AND name != 'tblSalesOrderItems' ORDER BY name ASC";
-
+                    datSelectDataSource.SelectCommand = "SELECT name FROM sys.tables WHERE name != 'tblColor' AND name != 'tblSchematicParts' AND name != 'tblParts' "
+                                                                            + " AND name != 'tblLengthUnits'  AND name != 'tblAudits' AND name != 'tblSalesOrders' AND name != 'tblSalesOrderItems' "
+                                                                            + " AND SUBSTRING(name,1,3) = 'tbl' "
+                                                                            + "ORDER BY name ASC";  
                     //assign the table names to the dataview object
                     tableList = (System.Data.DataView)datSelectDataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
 

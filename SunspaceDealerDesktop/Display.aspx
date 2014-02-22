@@ -1,6 +1,7 @@
-<%@ Page Title="Sunspace | Catalogue" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Display.aspx.cs" Inherits="Sunspace.Display" %>
+<%@ Page Title="Sunspace | Catalogue" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Display.aspx.cs" Inherits="SunspaceDealerDesktop.Display" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <link href="/content/Components.css" rel="stylesheet" type="text/css" />
     <asp:SqlDataSource ID="datSelectDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [acrylic_panels]"></asp:SqlDataSource>
     <asp:SqlDataSource ID="datDisplayDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [acrylic_panels]"></asp:SqlDataSource>
     <br class="clear">
@@ -565,6 +566,7 @@
                 <asp:Panel ID="pnlButtonsDisplay" runat="server">
                     <asp:Button ID="btnUpdate" runat="server" Text="Edit Product" Height="30px" Width="140" TabIndex="2" OnClick="btnUpdate_Click" />
                     <asp:Button ID="btnInsert" runat="server" Text="Add Another Product" Height="30px" Width="140" TabIndex="3" OnClick="btnInsert_Click"  />
+                    <asp:Button ID="btnShop" runat="server" Text="Add To Cart" Height="30px" Width="140" TabIndex="4" OnClick="btnShop_Click" />
                 </asp:Panel> <!-- end pnlButtons -->
             </div> <!-- end .divButtonsDisplay -->
             <br class="clear">

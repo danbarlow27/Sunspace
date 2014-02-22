@@ -1,6 +1,7 @@
-﻿<%@ Page Title="Sunspace | Update Catalogue" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="GlobalUpdate.aspx.cs" Inherits="Sunspace.GlobalUpdate" %>
+﻿<%@ Page Title="Sunspace | Update Catalogue" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="GlobalUpdate.aspx.cs" Inherits="SunspaceDealerDesktop.GlobalUpdate" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <link href="/content/Components.css" rel="stylesheet" type="text/css" />
     <asp:SqlDataSource ID="datSelectDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [acrylic_panels]"></asp:SqlDataSource>
     <asp:SqlDataSource ID="datDisplayDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [acrylic_panels]"></asp:SqlDataSource>
 

@@ -12,7 +12,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Sunspace
+namespace SunspaceDealerDesktop
 {
     public partial class Insert : System.Web.UI.Page
     {
@@ -255,8 +255,10 @@ namespace Sunspace
 
                 System.Data.DataView tableList = new System.Data.DataView();
             //Load up the tables list
-            datInsertDataSource.SelectCommand = "SELECT name FROM sys.tables WHERE name != 'tblColor' AND name != 'tblSchematicParts' AND name != 'tblParts' AND name != 'tblLengthUnits' and name!='tblSchematics' and name != 'tblAudits' and name!='tblSalesOrders' and name!= 'tblSalesOrderItems' ORDER BY name ASC";
-
+                datInsertDataSource.SelectCommand = "SELECT name FROM sys.tables WHERE name != 'tblColor' AND name != 'tblSchematicParts' AND name != 'tblParts' "
+                                                                        + " AND name != 'tblLengthUnits'  AND name != 'tblAudits' AND name != 'tblSalesOrders' AND name != 'tblSalesOrderItems' "
+                                                                        + " AND SUBSTRING(name,1,3) = 'tbl' "
+                                                                        + "ORDER BY name ASC";  
             //assign the table names to the dataview object
             tableList = (System.Data.DataView)datInsertDataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
                             
@@ -1299,7 +1301,7 @@ namespace Sunspace
 
         protected void btnMainMenu_Click(object sender, EventArgs e)
         {
-            Response.Redirect("MainMenu.aspx");
+            Response.Redirect("ComponentMenu.aspx");
         }
 
         protected void ddlTables_SelectedIndexChanged(object sender, EventArgs e)

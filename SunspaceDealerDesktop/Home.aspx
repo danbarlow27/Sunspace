@@ -11,4 +11,6 @@
     <asp:Button ID="btnPreferences" runat="server" Text="Preferences" CssClass="btnSubmit" OnClick="btnPreferences_Click" />
     <br />
     <asp:Button ID="btnSpoof" runat="server" Text="Spoofed Login" CssClass="btnSubmit" OnClick="btnSpoof_Click" />
+    <br />
+    <asp:Button ID="btnComponents" runat="server" Text = "Component Menu" CssClass="btnSubmit" OnClick="btnComponents_Click" />
 </asp:Content>

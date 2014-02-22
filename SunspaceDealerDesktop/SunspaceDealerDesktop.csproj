@@ -139,6 +139,8 @@
     <Content Include="App_Data\sunspace_db_log.ldf">
       <DependentUpon>sunspace_db.mdf</DependentUpon>
     </Content>
+    <Content Include="ComponentCart.aspx" />
+    <Content Include="Content\Components.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -384,6 +386,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BoxHeader.cs" />
     <Compile Include="CabanaDoor.cs" />
+    <Compile Include="ComponentCart.aspx.cs">
+      <DependentUpon>ComponentCart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ComponentCart.aspx.designer.cs">
+      <DependentUpon>ComponentCart.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="DecorativeColumn.cs" />
     <Compile Include="Display.aspx.cs">
