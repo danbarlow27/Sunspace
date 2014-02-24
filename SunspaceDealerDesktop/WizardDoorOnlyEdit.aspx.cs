@@ -10,7 +10,7 @@ namespace SunspaceDealerDesktop
 {
     public partial class WizardDoorOnlyEdit : System.Web.UI.Page
     {
-        protected int projectId = 108; //get it from the session
+        protected int projectId = 116; //get it from the session
         protected string json;
         protected ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
         protected ListItem lst18 = new ListItem("1/8", ".125");
