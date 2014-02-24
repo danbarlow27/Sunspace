@@ -1,6 +1,7 @@
-﻿<%@ Page Title="Sunspace | Add Products to Catalogue" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Insert.aspx.cs" Inherits="Sunspace.Insert" %>
+﻿<%@ Page Title="Sunspace | Add Products to Catalogue" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Insert.aspx.cs" Inherits="SunspaceDealerDesktop.Insert" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <link href="/content/Components.css" rel="stylesheet" type="text/css" />
     <asp:SqlDataSource ID="datInsertDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [acrylic_panels]"></asp:SqlDataSource>
     <br class="clear">
 

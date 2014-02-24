@@ -694,9 +694,112 @@ li > .toggleOptions > li {
     padding-bottom: 0;
 }*/
 
-.transit-popup {
-    background: #ffffff !important;
+/*
+    Overlay    
+*/
+
+div.savedProjects .navEditor {
+    margin: -50px 0 0 0;
 }
+
+div.savedProjectsWrapper .ulNavEditor li a {
+    text-indent: 0;
+    background: transparent;
+}
+
+div.savedProjectsWrapper .projectTransitOverlay,
+div.savedProjectsWrapper .editInvoiceItemOverlay {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    display: none;
+    z-index: 1000;
+}
+
+div.projectTransitOverlay .content,
+div.editInvoiceItemOverlay .content {
+    position: absolute;
+    height: 180px;
+    width: 470px;
+    background-color: rgb(242, 235, 214);
+    top: 50%;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: -300px;
+    z-index:1005; 
+    box-shadow: -10px 10px 5px #888888;
+}
+
+div.editInvoiceItemOverlay .content {
+    height: 350px;
+    margin-top: -250px;
+}
+
+div.projectTransitOverlay .closeBar,
+div.editInvoiceItemOverlay .closeBar {
+    display: inline-block;
+    height: 50px;
+    width: 100%;
+    background-color: black;
+}
+
+div.projectTransitOverlay .overlayClose,
+div.editInvoiceItemOverlay .overlayClose {
+    cursor: pointer;
+    font-size: 1.25em;
+    text-transform: uppercase;
+    text-indent: 30px;
+    line-height: 50px;
+    color: #fff;
+    background: transparent url('../Images/iconsNav.png') no-repeat left top;
+    background-size: 36px 200px;
+    margin: 0 20px;
+    border: 0;
+    float: right;
+    display: block;
+    background-position: 0 -150px;
+    overflow:hidden;
+}
+
+div.projectTransitOverlay .content h3,
+div.editInvoiceItemOverlay .content h3 {
+    padding: 0 0 0 2em;
+}
+
+div.projectTransitOverlay .content tr td:first-child,
+div.editInvoiceItemOverlay .content tr td:first-child {
+    text-align:right;
+}
+
+div.projectTransitOverlay .invalid,
+div.editInvoiceItemOverlay .invalid {
+    border: red solid 1px;
+}
+
+div.projectTransitOverlay .button.invalid,
+div.editInvoiceItemOverlay .button.invalid {
+    border: none;
+    opacity: 0.5;
+    cursor: default;
+}
+
+div.projectTransitOverlay .button,
+div.editInvoiceItemOverlay .button {
+    background-color: #000;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    cursor: pointer;
+    padding: 12px 24px;
+    margin: 0 2em;
+    width:120px;
+    text-align:center;
+}
+
 
 
 /* #endregion */
@@ -1097,108 +1200,4 @@ table.tblPriceCalculator {
 
 .displayNone {
     display: none;
-}
-
-/* 
-Copied from price calc    
-   */
-
-div.savedProjects .navEditor {
-    margin: -50px 0 0 0;
-}
-
-div.savedProjectsWrapper .ulNavEditor li a {
-    text-indent: 0;
-    background: transparent;
-}
-
-div.savedProjectsWrapper .projectTransitOverlay,
-div.savedProjectsWrapper .editInvoiceItemOverlay {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background-color: transparent;
-    display: none;
-    z-index: 1000;
-}
-
-div.projectTransitOverlay .content,
-div.editInvoiceItemOverlay .content {
-    position: absolute;
-    height: 500px;
-    width: 400px;
-    background-color: rgb(242, 235, 214);
-    top: 50%;
-    left: 50%;
-    margin-left: -200px;
-    margin-top: -300px;
-    z-index:1005; 
-    box-shadow: -10px 10px 5px #888888;
-}
-
-div.editInvoiceItemOverlay .content {
-    height: 350px;
-    margin-top: -250px;
-}
-
-div.projectTransitOverlay .closeBar,
-div.editInvoiceItemOverlay .closeBar {
-    display: inline-block;
-    height: 50px;
-    width: 100%;
-    background-color: black;
-}
-
-div.projectTransitOverlay .overlayClose,
-div.editInvoiceItemOverlay .overlayClose {
-    cursor: pointer;
-    font-size: 1.25em;
-    text-transform: uppercase;
-    text-indent: 30px;
-    line-height: 50px;
-    color: #fff;
-    background: transparent url('../Images/iconsNav.png') no-repeat left top;
-    background-size: 36px 200px;
-    margin: 0 20px;
-    border: 0;
-    float: right;
-    display: block;
-    background-position: 0 -150px;
-    overflow:hidden;
-}
-
-div.projectTransitOverlay .content h3,
-div.editInvoiceItemOverlay .content h3 {
-    padding: 0 0 0 2em;
-}
-
-div.projectTransitOverlay .content tr td:first-child,
-div.editInvoiceItemOverlay .content tr td:first-child {
-    text-align:right;
-}
-
-div.projectTransitOverlay .invalid,
-div.editInvoiceItemOverlay .invalid {
-    border: red solid 1px;
-}
-
-div.projectTransitOverlay .button.invalid,
-div.editInvoiceItemOverlay .button.invalid {
-    border: none;
-    opacity: 0.5;
-    cursor: default;
-}
-
-div.projectTransitOverlay .button,
-div.editInvoiceItemOverlay .button {
-    background-color: #000;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -o-border-radius: 4px;
-    border-radius: 4px;
-    color: #fff;
-    display: inline-block;
-    cursor: pointer;
-    padding: 12px 24px;
-    margin: 0 2em;
 }

@@ -25,7 +25,7 @@ namespace SunspaceWizard
         //private string[] projectTypeArray;
 
         // Moved to handle full project classes for future expansions (it's easier this way)
-        private Project[] projectArray;// = new Project();
+        private static Project[] projectArray;// = new Project();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -95,7 +95,7 @@ namespace SunspaceWizard
                 //projectName.Click += btnProject_Click; // Add the event handler onto the button
 
                 // Adds a jquery event handler onto the asp page.
-                ClickEvents += "$(\"#MainContent_lblProjectName" + i + "\").click(function() { ProjectName_Click(\"" + projectArray[i].ProjectType.ToString() + "\"); });\n\t\t";
+                ClickEvents += "$(\"#MainContent_lblProjectName" + i + "\").click(function() { ProjectName_Click(\"" + projectArray[i].ProjectId.ToString() + "\",\"" + projectArray[i].ProjectType.ToString() + "\"); });\n\t\t";
                 
                 // Hidden label for ID
                 Label projectID = new Label();
@@ -296,15 +296,25 @@ namespace SunspaceWizard
             return DateTime.Now.ToString();
         }
 
+#if DEBUG
         [WebMethod]
-        public static string GenerateTravelPopup(string projectType)
+        public static string DebugGetSession()
         {
-            /*
-            <div id="dialog-confirm" title="Empty the recycle bin?">
-                <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
-            </div>
-             */
+            return HttpContext.Current.Session["project_id"].ToString();
+        }
+#endif
 
+
+        /// <summary>
+        /// Generates a Travel (Redirect) popup
+        /// Will give various options on where the user will go when they select on a project.
+        /// </summary>
+        /// <param name="projectID">Project's ID</param>
+        /// <param name="projectType">Project's Type</param>
+        /// <returns></returns>
+        [WebMethod]
+        public static string GenerateTravelPopup(string projectID, string projectType)
+        {
             // StringBuilder we'll be writing HTML to!
             StringBuilder aStringBuilder = new StringBuilder();
             // We'll render the Panels/Buttons/etc to this, which directs it to the StringBuilder above.
@@ -367,27 +377,51 @@ namespace SunspaceWizard
 
             aCloseBar.Controls.Add(aCloseButton);
 
-            switch (projectType)
-            {
-                case ("Sunroom"):
-                    Button aProjectEditorButton = new Button();
-                    aProjectEditorButton.Text = "Project Editor";
-                    aProjectEditorButton.ID = "btnProjectEditor";
-                    aProjectEditorButton.Attributes["onClick"] = "window.location.replace(\"ProjectEditor.aspx\");";
-                    //aProjectEditorButton.Click += new System.EventHandler(btnProjectEditor_Click); 
-                    aDialogContent.Controls.Add(aProjectEditorButton);
+            // Create session for project editor
+            HttpContext.Current.Session["project_id"] = projectID;
 
-                    Button aPriceCalculatorButton = new Button();
-                    aPriceCalculatorButton.Text = "Price Calculator";
-                    aPriceCalculatorButton.ID = "btnPriceCalculator";
-                    aPriceCalculatorButton.Attributes["onClick"] = "window.location.replace(\"PriceCalculator.aspx\");";
-                    //aProjectEditorButton.Click += new System.EventHandler(btnProjectEditor_Click); 
-                    aDialogContent.Controls.Add(aPriceCalculatorButton);
-                    break;
-                default:
-                    break;
-            }
+            Label aDirectionLabel = new Label();
+            aDirectionLabel.Attributes["style"] = "margin-left: 25%";
 
+            aDirectionLabel.Text = "\tPlease select one of the options: <br/><br/>";
+
+            aDialogContent.Controls.Add(aDirectionLabel);
+
+            Panel aProjectEditorButton = new Panel();
+            Label aProjectEditorLabel = new Label();
+            aProjectEditorLabel.Text = "Project Editor";
+            aProjectEditorButton.ID = "btnProjectEditor";
+            aProjectEditorButton.CssClass = "button";
+            aProjectEditorButton.Attributes["style"] = "float:left;";
+            aProjectEditorButton.Attributes["onClick"] = "window.location.replace(\"ProjectEditor.aspx\"); return false;";
+            aProjectEditorButton.Controls.Add(aProjectEditorLabel);
+            aDialogContent.Controls.Add(aProjectEditorButton);
+
+            Panel aPriceCalculatorButton = new Panel();
+            Label aPriceCalculatorLabel = new Label();
+            aPriceCalculatorLabel.Text = "Price Calculator";
+            aPriceCalculatorButton.ID = "btnPriceCalculator";
+            aPriceCalculatorButton.CssClass = "button";
+            aPriceCalculatorButton.Attributes["style"] = "float:right;";
+            aPriceCalculatorButton.Attributes["onClick"] = "window.location.replace(\"PriceCalculator.aspx\"); return false;";
+            aPriceCalculatorButton.Controls.Add(aPriceCalculatorLabel);
+            aDialogContent.Controls.Add(aPriceCalculatorButton);
+
+            Label LineBreaaaaak = new Label();
+            LineBreaaaaak.Text = "<br/><br/>";
+
+            aDialogContent.Controls.Add(LineBreaaaaak);
+
+            Panel aDuplicateButton = new Panel();
+            Label aDuplicateLabel = new Label();
+            aDuplicateLabel.Text = "Duplicate Project";
+            aDuplicateButton.ID = "btnDuplicateProjectInitial";
+            aDuplicateButton.CssClass = "button";
+            aDuplicateButton.Attributes["style"] = "float:right;";
+
+            aDuplicateButton.Attributes["onClick"] = "$(document).trigger( \"DuplicateProject_Click\", [ \"" + projectID + "\", \"" + projectType + "\" ] ); return false;";
+            aDuplicateButton.Controls.Add(aDuplicateLabel);
+            aDialogContent.Controls.Add(aDuplicateButton);
             
 
             // Render to HTMLTextWriter (so we can return StringBuilder..)
@@ -400,5 +434,120 @@ namespace SunspaceWizard
 #endif
             return aStringBuilder.ToString();
         }
+
+
+        /// <summary>
+        /// Generate's HTML for a Duplicate Project Popup
+        /// </summary>
+        /// <param name="projectID">Project's ID</param>
+        /// <param name="projectType">Project's Type</param>
+        /// <returns></returns>
+        [WebMethod]
+        public static string GenerateDuplicatePopup(string projectID, string projectType)
+        {
+            // StringBuilder we'll be writing HTML to!
+            StringBuilder aStringBuilder = new StringBuilder();
+            // We'll render the Panels/Buttons/etc to this, which directs it to the StringBuilder above.
+            HtmlTextWriter aHTMLTextWriter = new HtmlTextWriter(new System.IO.StringWriter(aStringBuilder));
+
+            Panel aDialogPopup = new Panel();
+            Panel aDialogContent = new Panel();
+
+
+            aDialogPopup.ID = "projectTransitBackground";
+            aDialogPopup.CssClass = "projectTransitOverlay";
+            aDialogPopup.Attributes["style"] = "display: none;";
+
+            aDialogContent.CssClass = "content";
+            aDialogPopup.Controls.Add(aDialogContent);
+
+            // 
+            Label aPopupDescription = new Label();
+
+
+
+            aPopupDescription.Text = "Please select dupe dis:";
+
+            //aDialogContent.Controls.Add(aPopupDescription);
+
+            // Close box
+            Panel aCloseBar = new Panel();
+
+            aCloseBar.CssClass = "closeBar";
+
+            aDialogContent.Controls.Add(aCloseBar);
+
+            Panel aCloseButton = new Panel();
+
+            aCloseButton.CssClass = "overlayClose close";
+
+            Label aCloseLabel = new Label();
+
+            aCloseLabel.Text = "CLOSE";
+
+            aCloseButton.Controls.Add(aCloseLabel);
+
+            aCloseBar.Controls.Add(aCloseButton);
+
+            /*
+            switch (projectType)
+            {
+                case ("Sunroom"):
+             */
+
+
+
+            // Create session for project editor
+            HttpContext.Current.Session["project_id"] = projectID;
+
+            Label aDirectionLabel = new Label();
+            aDirectionLabel.Attributes["style"] = "margin-left: 25%";
+
+            aDirectionLabel.Text = "\tPlease rename your new project: <br/><br/>";
+
+            aDialogContent.Controls.Add(aDirectionLabel);
+
+            TextBox aProjectNameBox = new TextBox();
+            aProjectNameBox.Attributes["placeholder"] = "Enter a project name";
+            aProjectNameBox.CssClass = "txtField";
+
+            aDialogContent.Controls.Add(aProjectNameBox);
+
+
+            Panel aDuplicateButton = new Panel();
+            Label aDuplicateLabel = new Label();
+            aDuplicateLabel.Text = "Duplicate Project";
+            aDuplicateButton.ID = "btnDuplicateProject";
+            aDuplicateButton.CssClass = "button";
+            aDuplicateButton.Attributes["style"] = "float:right;";
+            aDuplicateButton.Attributes["onClick"] = "alert(\"youhitthebuttoncongrats\"); window.location.replace(\"lollergags.aspx\"); return false;";
+            aDuplicateButton.Controls.Add(aDuplicateLabel);
+            aDialogContent.Controls.Add(aDuplicateButton);
+
+            /*
+                    break;
+                case("Walls"):
+
+                    break;
+                default:
+                    break;
+            }
+            */
+
+
+
+            // Render to HTMLTextWriter (so we can return StringBuilder..)
+            aDialogPopup.RenderControl(aHTMLTextWriter);
+
+#if DEBUG // Only compile this code if you're compiling for debug.
+            Debug.WriteLine(aStringBuilder.ToString());
+
+            Debug.WriteLine(projectType);
+#endif
+            return aStringBuilder.ToString();
+        }
+
+
+
     }
 }

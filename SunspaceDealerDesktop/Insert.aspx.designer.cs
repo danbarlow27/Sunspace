@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sunspace {
+namespace SunspaceDealerDesktop {
     
     
     public partial class Insert {

@@ -16,14 +16,15 @@ namespace SunspaceDealerDesktop
         protected List<Wall> listOfWalls = new List<Wall>();
         protected Roof aRoof;
         protected Floor aFloor;
-        protected int wallCount = 3;
+        protected int wallCount = 0;
         protected int floorCount = 0;
         protected int roofCount = 0;
-        protected int projectId = 77; //get it from the session
+        protected int projectId = 82; //get it from the session (project_id)
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            #region commented out hard coded data
+            /*
             #region hard coded data
             #region wall 1
             Wall wall1 = new Wall();
@@ -411,7 +412,8 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #endregion
-
+            */
+#endregion
             #region hit the DB
 
             using (SqlConnection aConnection = new SqlConnection(sdsDBConnection.ConnectionString))
@@ -420,7 +422,7 @@ namespace SunspaceDealerDesktop
                 aConnection.Open();
                 SqlCommand aCommand = aConnection.CreateCommand();
                 SqlTransaction aTransaction;
-                //SqlDataReader aReader;
+                SqlDataReader aReader;
 
                 // Start a local transaction.
                 aTransaction = aConnection.BeginTransaction("SampleTransaction");
@@ -434,86 +436,89 @@ namespace SunspaceDealerDesktop
                 {
                     //get number of walls floors and roofs
                     aCommand.CommandText = "SELECT number_walls, number_floors, number_roofs FROM sunrooms WHERE project_id = '" + projectId + "'";
-                    SqlDataReader projectReader = aCommand.ExecuteReader();
+                    aReader = aCommand.ExecuteReader();
 
-                    if (projectReader.HasRows)
+                    if (aReader.HasRows)
                     {
-                        projectReader.Read();
+                        aReader.Read();
 
-                        wallCount = Convert.ToInt32(projectReader[0]);
-                        floorCount = Convert.ToInt32(projectReader[1]);
-                        roofCount = Convert.ToInt32(projectReader[2]);
+                        wallCount = Convert.ToInt32(aReader[0]);
+                        floorCount = Convert.ToInt32(aReader[1]);
+                        roofCount = Convert.ToInt32(aReader[2]);
                     }
-                    projectReader.Close(); 
+                    aReader.Close(); 
 
                     #region walls
                     //for each wall in the project
-                    //for (int i = 0; i < wallCount; i++)
-                    aCommand.CommandText = "SELECT wall_type, model_type, total_length, orientation, set_back, name, first_item_index, last_item_index, start_height, end_height, soffit_length, gable_peak, obstructions, fire_protection, wall_index "
-                        + "FROM walls WHERE project_id = '" + projectId + "'";
+                    
+                    //aCommand.CommandText = "SELECT wall_type, model_type, total_length, orientation, set_back, name, first_item_index, last_item_index, start_height, end_height, soffit_length, gable_peak, obstructions, fire_protection, wall_index "
+                    //    + "FROM walls WHERE project_id = '" + projectId + "'";
 
-                    SqlDataReader wallReader = aCommand.ExecuteReader();
+                    //SqlDataReader wallReader = aCommand.ExecuteReader();
 
-                    if (wallReader.HasRows)
+                    //if (wallReader.HasRows)
+                    //{
+                    //    while (wallReader.Read())
+                    for (int i = 0; i < wallCount; i++)
                     {
-                        while (wallReader.Read())
-                        {
-                            //aCommand.CommandText = "SELECT wall_type, model_type, total_length, orientation, set_back, name, first_item_index, last_item_index, start_height, end_height, soffit_length, gable_peak, obstructions, fire_protection "
-                            //+ "FROM walls WHERE project_id = '" + project_id + "' AND wall_index = '" + i + "'";
+                            aCommand.CommandText = "SELECT wall_type, model_type, total_length, orientation, set_back, name, first_item_index, last_item_index, start_height, end_height, soffit_length, gable_peak, obstructions, fire_protection, wall_index "
+                            + "FROM walls WHERE project_id = '" + projectId + "' AND wall_index = '" + i + "'";
 
-                            //aReader = aCommand.ExecuteReader();
-                            //aReader.Read();
+                            aReader = aCommand.ExecuteReader();
+                            aReader.Read();
 
                             //create a new instance of a wall and set all its attributes from the db
                             Wall aWall = new Wall();
-                            aWall.WallType = Convert.ToString(wallReader[0]);
-                            aWall.ModelType = Convert.ToString(wallReader[1]);
-                            aWall.Length = Convert.ToSingle(wallReader[2]);
-                            aWall.Orientation = Convert.ToString(wallReader[3]);
-                            aWall.SetBack = Convert.ToSingle(wallReader[4]);
-                            aWall.Name = Convert.ToString(wallReader[5]);
-                            aWall.FirstItemIndex = Convert.ToInt32(wallReader[6]);
-                            aWall.LastItemIndex = Convert.ToInt32(wallReader[7]);
-                            aWall.StartHeight = Convert.ToSingle(wallReader[8]);
-                            aWall.EndHeight = Convert.ToSingle(wallReader[9]);
-                            aWall.SoffitLength = Convert.ToSingle(wallReader[10]);
-                            aWall.GablePeak = Convert.ToSingle(wallReader[11]);
-                            aWall.FireProtection = Convert.ToBoolean(wallReader[13]);
-                            int wallIndex = Convert.ToInt32(wallReader[14]);
+                            aWall.WallType = Convert.ToString(aReader[0]);
+                            aWall.ModelType = Convert.ToString(aReader[1]);
+                            aWall.Length = Convert.ToSingle(aReader[2]);
+                            aWall.Orientation = Convert.ToString(aReader[3]);
+                            aWall.SetBack = Convert.ToSingle(aReader[4]);
+                            aWall.Name = Convert.ToString(aReader[5]);
+                            aWall.FirstItemIndex = Convert.ToInt32(aReader[6]);
+                            aWall.LastItemIndex = Convert.ToInt32(aReader[7]);
+                            aWall.StartHeight = Convert.ToSingle(aReader[8]);
+                            aWall.EndHeight = Convert.ToSingle(aReader[9]);
+                            aWall.SoffitLength = Convert.ToSingle(aReader[10]);
+                            aWall.GablePeak = Convert.ToSingle(aReader[11]);
+                            aWall.FireProtection = Convert.ToBoolean(aReader[13]);
+                            int wallIndex = Convert.ToInt32(aReader[14]);
 
-                            //aReader.Close();
+                            aReader.Close();
 
                             List<LinearItem> listOfLinearItems = new List<LinearItem>();
 
                             //Get linear items
-                            aCommand.CommandText = "SELECT linear_index, linear_type, start_height, end_height, length, frame_colour, sex, fixed_location, attached_to "
-                                                    + "FROM linear_items WHERE project_id = '" + projectId + "' AND last_item_index < '" + aWall.LastItemIndex + "' AND first_item_index > '" + aWall.FirstItemIndex + "'";
-                            SqlDataReader linearItemReader = aCommand.ExecuteReader();
+                            //aCommand.CommandText = "SELECT linear_index, linear_type, start_height, end_height, length, frame_colour, sex, fixed_location, attached_to "
+                            //                        + "FROM linear_items WHERE project_id = '" + projectId + "' AND last_item_index < '" + aWall.LastItemIndex + "' AND first_item_index > '" + aWall.FirstItemIndex + "'";
+                            //aReader = aCommand.ExecuteReader();
 
                             //for each linear item/mod in the wall
-                            //for (int j = aWall.FirstItemIndex; j < aWall.LastItemIndex; j++)
-                            if (linearItemReader.HasRows)
-                            {
-                                while (linearItemReader.Read())
-                                {
+                            
+                            //if (linearItemReader.HasRows)
+                            //{
+                            //    while (linearItemReader.Read())
+                            //    {
+                        for (int j = aWall.FirstItemIndex; j < aWall.LastItemIndex; j++)
+                        {
                                     //Get linear items
-                                    //aCommand.CommandText = "SELECT linear_index, linear_type, start_height, end_height, length, frame_colour, sex, fixed_location, attached_to "
-                                    //                        + "FROM linear_items WHERE project_id = '" + project_id + "' AND linear_index = '" + j + "'";
-                                    //aReader = aCommand.ExecuteReader();
-                                    //aReader.Read();
+                                    aCommand.CommandText = "SELECT linear_index, linear_type, start_height, end_height, length, frame_colour, sex, fixed_location, attached_to "
+                                                            + "FROM linear_items WHERE project_id = '" + projectId + "' AND linear_index = '" + j + "'";
+                                    aReader = aCommand.ExecuteReader();
+                                    aReader.Read();
 
 
-                                    int linearIndex = Convert.ToInt32(linearItemReader[0]);
-                                    string linearItemType = Convert.ToString(linearItemReader[1]);
-                                    float startHeight = Convert.ToSingle(linearItemReader[2]);
-                                    float endHeight = Convert.ToSingle(linearItemReader[3]);
-                                    float length = Convert.ToSingle(linearItemReader[4]);
-                                    string frameColour = Convert.ToString(linearItemReader[5]);
-                                    string sex = Convert.ToString(linearItemReader[6]);
-                                    float fixedLocation = Convert.ToSingle(linearItemReader[7]);
-                                    bool attachedTo = Convert.ToBoolean(linearItemReader[8]);
+                                    int linearIndex = Convert.ToInt32(aReader[0]);
+                                    string linearItemType = Convert.ToString(aReader[1]);
+                                    float startHeight = Convert.ToSingle(aReader[2]);
+                                    float endHeight = Convert.ToSingle(aReader[3]);
+                                    float length = Convert.ToSingle(aReader[4]);
+                                    string frameColour = Convert.ToString(aReader[5]);
+                                    string sex = Convert.ToString(aReader[6]);
+                                    float fixedLocation = Convert.ToSingle(aReader[7]);
+                                    bool attachedTo = Convert.ToBoolean(aReader[8]);
 
-                                    //aReader.Close();
+                                    aReader.Close();
 
                                     switch (linearItemType)
                                     {
@@ -535,69 +540,72 @@ namespace SunspaceDealerDesktop
                                             aMod.AttachedTo = attachedTo;
 
                                             //get number of mods
-                                            //aCommand.CommandText = "SELECT * FROM moduleItems WHERE project_id = '" + project_id + "' "
-                                            //                                        + " AND linear_index = '" + aMod.LinearIndex + "'";
-                                            //aReader = aCommand.ExecuteReader();
+                                            aCommand.CommandText = "SELECT COUNT(*) FROM module_items WHERE project_id = '" + projectId + "' "
+                                                                                    + " AND linear_index = '" + aMod.LinearIndex + "'";
+                                            aReader = aCommand.ExecuteReader();
+                                            aReader.Read();
+                                            int modCount = Convert.ToInt32(aReader[0]); //get the number of walls in the project
 
-                                            //int modCount = aReader.RecordsAffected; //get the number of walls in the project
+                                            aReader.Close();
 
-                                            //aReader.Close();
+                                            //aCommand.CommandText = "SELECT module_index, item_type, start_height, end_height, length FROM moduleItems "
+                                            //                    + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "'";
 
-                                            aCommand.CommandText = "SELECT module_index, item_type, start_height, end_height, length FROM moduleItems "
-                                                                + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "'";
-
-                                            SqlDataReader moduleItemReader = aCommand.ExecuteReader();
+                                            //SqlDataReader moduleItemReader = aCommand.ExecuteReader();
 
                                             //for each modular item in the mod
-                                            //for (int k = 0; k < modCount; k++)
-                                            if (moduleItemReader.HasRows)
+                                            
+                                            //if (moduleItemReader.HasRows)
+                                            //{
+                                            //    while (moduleItemReader.Read())
+                                            for (int k = 0; k < modCount; k++)
                                             {
-                                                while (moduleItemReader.Read())
-                                                {
                                                     //Get module items
-                                                    // aCommand.CommandText = "SELECT module_index, item_type, start_height, end_height, length FROM moduleItems "
-                                                    //                + "WHERE project_id = '" + project_id + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "'";
+                                                     aCommand.CommandText = "SELECT module_index, item_type, start_height, end_height, length FROM module_items "
+                                                                    + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + k + "'";
 
-                                                    //aReader = aCommand.ExecuteReader();
-                                                    //aReader.Read();
+                                                    aReader = aCommand.ExecuteReader();
+                                                    aReader.Read();
 
-                                                    int moduleIndex = Convert.ToInt32(moduleItemReader[0]);
-                                                    string itemType = Convert.ToString(moduleItemReader[1]);
-                                                    float fStartHeight = Convert.ToSingle(moduleItemReader[2]);
-                                                    float fEndHeight = Convert.ToSingle(moduleItemReader[3]);
-                                                    float fLength = Convert.ToSingle(moduleItemReader[4]);
+                                                    int moduleIndex = Convert.ToInt32(aReader[0]);
+                                                    string itemType = Convert.ToString(aReader[1]);
+                                                    float fStartHeight = Convert.ToSingle(aReader[2]);
+                                                    float fEndHeight = Convert.ToSingle(aReader[3]);
+                                                    float fLength = Convert.ToSingle(aReader[4]);
 
-                                                    //aReader.Close();
+                                                    aReader.Close();
 
 
                                                     //different types of mods 
                                                     switch (itemType)
                                                     {
+                                                        case "Kneewall":
                                                         case "Window":
                                                             #region Window
                                                             //Get window
                                                             aCommand.CommandText = "SELECT window_type, screen_type, start_height, end_height, length, window_colour, number_vents FROM windows "
                                                                                     + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
-                                                            SqlDataReader windowReader = aCommand.ExecuteReader();
+                                                            aReader = aCommand.ExecuteReader();
 
-                                                            if (windowReader.HasRows)
-                                                            {
-                                                                windowReader.Read();
+                                                            //if (windowReader.HasRows)
+                                                            //{
+                                                                aReader.Read();
 
-                                                                string windowStyle = Convert.ToString(windowReader[0]);
-                                                                string screenType = Convert.ToString(windowReader[1]);
-                                                                float windowStartHeight = Convert.ToSingle(windowReader[2]);
-                                                                float windowEndHeight = Convert.ToSingle(windowReader[3]);
-                                                                float windowLength = Convert.ToSingle(windowReader[4]);
-                                                                string windowColour = Convert.ToString(windowReader[5]);
-                                                                int numVents = Convert.ToInt32(windowReader[6]); //i assume this is also used for glass windows???
+                                                                string windowStyle = Convert.ToString(aReader[0]);
+                                                                string screenType = Convert.ToString(aReader[1]);
+                                                                float windowStartHeight = Convert.ToSingle(aReader[2]);
+                                                                float windowEndHeight = Convert.ToSingle(aReader[3]);
+                                                                float windowLength = Convert.ToSingle(aReader[4]);
+                                                                string windowColour = Convert.ToString(aReader[5]);
+                                                                int numVents = Convert.ToInt32(aReader[6]); 
 
-                                                                //aReader.Close();
+                                                                aReader.Close();
 
                                                                 //types of windows
                                                                 switch (windowStyle)
                                                                 {
+                                                                    case "Horizontal Roller":
                                                                     case "Vinyl":
                                                                         #region Vinyl Window
 
@@ -615,32 +623,36 @@ namespace SunspaceDealerDesktop
                                                                         aVinylWindow.Width = windowLength;
                                                                         aVinylWindow.FrameColour = windowColour; //
                                                                         aVinylWindow.VinylTint = ""; // tint of each vent will be concatenated
+                                                                        //numVents = (numVents == 0) ? 1 : numVents;
                                                                         aVinylWindow.NumVents = numVents;
-
                                                                         List<float> listOfVentHeights = new List<float>();
 
                                                                         //Get vinyl item
-                                                                        aCommand.CommandText = "SELECT start_height, vinyl_tint, spreader_bar FROM vinyl_items "
-                                                                                                + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                        //aCommand.CommandText = "SELECT start_height, vinyl_tint, spreader_bar FROM vinyl_items "
+                                                                        //                        + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
-                                                                        SqlDataReader vinylReader = aCommand.ExecuteReader();
+                                                                        //aReader = aCommand.ExecuteReader();
 
-                                                                        if (vinylReader.HasRows)
-                                                                        {
-                                                                            while (vinylReader.Read())
+                                                                        //if (vinylReader.HasRows)
+                                                                        //{
+                                                                            //while (vinylReader.Read())
                                                                             //for each vinyl item in the in the vinyl window
-                                                                            //for (int l = 0; l < numVents; l++)
+                                                                            for (int l = 0; l < numVents; l++)
                                                                             {
+                                                                                aCommand.CommandText = "SELECT start_height, vinyl_tint, spreader_bar FROM vinyl_items "
+                                                                                                + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "' AND vent_index = '" + l + "'";
 
+                                                                        aReader = aCommand.ExecuteReader();
+                                                                        aReader.Read();
 
-                                                                                listOfVentHeights.Add(Convert.ToSingle(vinylReader[0]));
-                                                                                aVinylWindow.VinylTint += Convert.ToString(vinylReader[1]);
-                                                                                aVinylWindow.SpreaderBar = Convert.ToSingle(vinylReader[2]);
+                                                                                listOfVentHeights.Add(Convert.ToSingle(aReader[0]));
+                                                                                aVinylWindow.VinylTint += Convert.ToString(aReader[1]);
+                                                                                aVinylWindow.SpreaderBar = Convert.ToSingle(aReader[2]);
 
-
+                                                                        aReader.Close();
                                                                             }
-                                                                        }
-                                                                        vinylReader.Close();
+                                                                        
+                                                                        //vinylReader.Close();
 
                                                                         aVinylWindow.VentHeights = listOfVentHeights;
 
@@ -693,24 +705,32 @@ namespace SunspaceDealerDesktop
 
 
                                                                         //Get glass item
-                                                                        aCommand.CommandText = "SELECT glass_type, glass_tint, tempered, operation FROM glass_items "
-                                                                                                + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+                                                                        //aCommand.CommandText = "SELECT glass_type, glass_tint, tempered, operation FROM glass_items "
+                                                                        //                        + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
-                                                                        SqlDataReader glassReader = aCommand.ExecuteReader();
+                                                                        //SqlDataReader glassReader = aCommand.ExecuteReader();
 
-                                                                        //for (int l = 0; l < numVents; l++)
-
-                                                                        if (glassReader.HasRows)
+                                                                        for (int l = 0; l < numVents; l++)
                                                                         {
-                                                                            while (glassReader.Read())
-                                                                            {
-                                                                                aGlassWindow.GlassType = Convert.ToString(glassReader[0]);
-                                                                                aGlassWindow.GlassTint += Convert.ToString(glassReader[1]);
-                                                                                aGlassWindow.Tempered = Convert.ToBoolean(glassReader[2]);
-                                                                                aGlassWindow.Operation += Convert.ToString(glassReader[3]);
+                                                                        //if (glassReader.HasRows)
+                                                                        //{
+                                                                        //    while (glassReader.Read())
+                                                                        //    {
+
+                                                                             aCommand.CommandText = "SELECT glass_type, glass_tint, tempered, operation FROM glass_items "
+                                                                                                + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "' AND vent_index = '" + l + "'";
+
+                                                                            aReader = aCommand.ExecuteReader();
+                                                                            aReader.Read();
+                                                                                aGlassWindow.GlassType = Convert.ToString(aReader[0]);
+                                                                                aGlassWindow.GlassTint += Convert.ToString(aReader[1]);
+                                                                                aGlassWindow.Tempered = Convert.ToBoolean(aReader[2]);
+                                                                                aGlassWindow.Operation += Convert.ToString(aReader[3]);
+
+                                                                            aReader.Close();
                                                                             }
-                                                                        }
-                                                                        glassReader.Close();
+                                                                        
+                                                                        //glassReader.Close();
 
                                                                         listOfModuleItems.Add(aGlassWindow);
 
@@ -724,61 +744,92 @@ namespace SunspaceDealerDesktop
                                                                         openWindow.FStartHeight = fStartHeight;
                                                                         openWindow.FEndHeight = fEndHeight;
                                                                         openWindow.FLength = fLength;
+                                                                        openWindow.WindowStyle = windowStyle;
+                                                                        openWindow.ScreenType = screenType;
+                                                                        openWindow.LeftHeight = windowStartHeight;
+                                                                        openWindow.RightHeight = windowEndHeight;
+                                                                        openWindow.Width = windowLength;
+                                                                        openWindow.FrameColour = windowColour;
+                                                               
 
                                                                         listOfModuleItems.Add(openWindow); //add the modular item to the list
                                                                         #endregion
                                                                         break;
+                                                                    case "Panel":
+                                                                    case "Solid Wall":
+                                                                        #region Open Window
+                                                                        Window panel = new Window();
+                                                                        panel.ModuleIndex = moduleIndex;
+                                                                        panel.ItemType = itemType;
+                                                                        panel.FStartHeight = fStartHeight;
+                                                                        panel.FEndHeight = fEndHeight;
+                                                                        panel.FLength = fLength;
+                                                                        panel.WindowStyle = windowStyle;
+                                                                        panel.ScreenType = screenType;
+                                                                        panel.LeftHeight = windowStartHeight;
+                                                                        panel.RightHeight = windowEndHeight;
+                                                                        panel.Width = windowLength;
+                                                                        panel.FrameColour = windowColour;
+
+                                                                        listOfModuleItems.Add(panel); //add the modular item to the list
+                                                                        #endregion
+                                                                        break;
                                                                 }
-                                                            }
-                                                            windowReader.Close();
+                                                            
+                                                            //windowReader.Close();
                                                             #endregion
                                                             break;
                                                         case "Door":
                                                             #region Door
                                                             //Get door
-                                                            aCommand.CommandText = "SELECT door_type, door_style, screen_type, height, length, door_colour, kick_plate FROM doors "
+                                                            //aCommand.CommandText = "SELECT door_type, door_style, screen_type, height, length, door_colour, kick_plate FROM doors "
+                                                            //                        + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
+
+                                                            //SqlDataReader doorReader = aCommand.ExecuteReader();
+
+                                                            //if (doorReader.HasRows)
+                                                            //{
+                                                            //    while (doorReader.Read())
+                                                                
+                                                                    aCommand.CommandText = "SELECT door_type, door_style, screen_type, height, length, door_colour, kick_plate FROM doors "
                                                                                     + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
-                                                            SqlDataReader doorReader = aCommand.ExecuteReader();
+                                                                    aReader = aCommand.ExecuteReader();
+                                                                    aReader.Read();
 
-                                                            if (doorReader.HasRows)
-                                                            {
-                                                                while (doorReader.Read())
-                                                                {
-
-                                                                    string doorType = Convert.ToString(doorReader[0]);
-                                                                    string doorStyle = Convert.ToString(doorReader[1]);
-                                                                    string doorScreenType = Convert.ToString(doorReader[2]);
-                                                                    float doorFrameHeight = Convert.ToSingle(doorReader[3]);
-                                                                    float doorFrameLength = Convert.ToSingle(doorReader[4]);
-                                                                    string doorColour = Convert.ToString(doorReader[5]);
-                                                                    float doorKickPlate = Convert.ToSingle(doorReader[6]);
+                                                                    string doorType = Convert.ToString(aReader[0]);
+                                                                    string doorStyle = Convert.ToString(aReader[1]);
+                                                                    string doorScreenType = Convert.ToString(aReader[2]);
+                                                                    float doorFrameHeight = Convert.ToSingle(aReader[3]);
+                                                                    float doorFrameLength = Convert.ToSingle(aReader[4]);
+                                                                    string doorColour = Convert.ToString(aReader[5]);
+                                                                    float doorKickPlate = Convert.ToSingle(aReader[6]);
                                                                 
-                                                                    //doorReader.Close();
+                                                                    aReader.Close();
 
                                                                     //get the window in this door
                                                                     aCommand.CommandText = "SELECT door_index, window_type, screen_type, start_height, end_height, length, window_colour, number_vents FROM windows "
                                                                                             + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
-                                                                    SqlDataReader doorWindowReader = aCommand.ExecuteReader();
+                                                                    aReader = aCommand.ExecuteReader();
 
                                                                     VinylWindow aDoorWindow = new VinylWindow();
 
-                                                                    if (doorWindowReader.HasRows)
+                                                                    if (aReader.HasRows)
                                                                     {
-                                                                        while (doorWindowReader.Read())
+                                                                        while (aReader.Read())
                                                                         {
-                                                                            //int doorIndex = Convert.ToInt32(doorWindowReader[0]);
-                                                                            aDoorWindow.WindowStyle = Convert.ToString(doorWindowReader[1]);
-                                                                            aDoorWindow.ScreenType = Convert.ToString(doorWindowReader[2]);
-                                                                            aDoorWindow.LeftHeight = Convert.ToSingle(doorWindowReader[3]);
-                                                                            aDoorWindow.RightHeight = Convert.ToSingle(doorWindowReader[4]);
-                                                                            aDoorWindow.Width = Convert.ToSingle(doorWindowReader[5]);
-                                                                            aDoorWindow.FrameColour = Convert.ToString(doorWindowReader[6]);
-                                                                            aDoorWindow.NumVents = Convert.ToInt32(doorWindowReader[7]);
+                                                                            //int doorIndex = Convert.ToInt32(aReader[0]);
+                                                                            aDoorWindow.WindowStyle = Convert.ToString(aReader[1]);
+                                                                            aDoorWindow.ScreenType = Convert.ToString(aReader[2]);
+                                                                            aDoorWindow.LeftHeight = Convert.ToSingle(aReader[3]);
+                                                                            aDoorWindow.RightHeight = Convert.ToSingle(aReader[4]);
+                                                                            aDoorWindow.Width = Convert.ToSingle(aReader[5]);
+                                                                            aDoorWindow.FrameColour = Convert.ToString(aReader[6]);
+                                                                            aDoorWindow.NumVents = Convert.ToInt32(aReader[7]);
                                                                         }
                                                                     }
-                                                                    doorWindowReader.Close();
+                                                                    aReader.Close();
 
                                                                     switch (aDoorWindow.WindowStyle) //door/window style
                                                                     {
@@ -969,9 +1020,9 @@ namespace SunspaceDealerDesktop
                                                                             #endregion
                                                                             break;
                                                                     }
-                                                                }
-                                                            }
-                                                            doorReader.Close();
+                                                                
+                                                            
+                                                            //doorReader.Close();
                                                             #endregion
                                                             break;
                                                         case "Box Header": // 
@@ -1014,8 +1065,8 @@ namespace SunspaceDealerDesktop
                                                     aMod.ModularItems = listOfModuleItems;
                                                 }
                                                 listOfLinearItems.Add(aMod);//add the linear item to the list
-                                            }
-                                            moduleItemReader.Close();
+                                            
+                                            //moduleItemReader.Close();
                                             #endregion
                                             break;
                                         case "Receiver":
@@ -1163,11 +1214,11 @@ namespace SunspaceDealerDesktop
 
                                 listOfWalls.Add(aWall); //add the wall to the list
                             }
-                            linearItemReader.Close();
+                            //linearItemReader.Close();
 
-                        }
-                    }
-                    wallReader.Close();
+                        
+                    
+                    //wallReader.Close();
                     #endregion 
 
                     #region floors
@@ -1182,72 +1233,111 @@ namespace SunspaceDealerDesktop
 
                     if (roofCount != 0)
                     {
-                        aCommand.CommandText = "SELECT roof_type, interior_skin, exterior_skin, thickness, fire_protection, thermadeck, acrylic, gutter, gutter_pro, gutter_colour, number_supports, stripe_colour, projection, width, roof_index "
-                                + "FROM roofs WHERE project_id = '" + projectId + "'";
-
-                        SqlDataReader roofReader = aCommand.ExecuteReader();
-
-                        if (roofReader.HasRows)
+                        for(int i = 0; i < roofCount; i++)
                         {
-                            while (roofReader.Read())
-                            {
+                        aCommand.CommandText = "SELECT roof_type, interior_skin, exterior_skin, thickness, fire_protection, thermadeck, acrylic, gutter, gutter_pro, gutter_colour, number_supports, stripe_colour, projection, width, roof_index "
+                                + "FROM roofs WHERE project_id = '" + projectId + "' roof_index = '" + i + "'";
+
+                        aReader = aCommand.ExecuteReader();
+                        aReader.Read();
+
+                        //if (roofReader.HasRows)
+                        //{
+                        //    while (roofReader.Read())
+                        //    {
 
                                 //create a new instance of a wall and set all its attributes from the db
                                 aRoof = new Roof();
-                                aRoof.Type = Convert.ToString(roofReader[0]);
-                                aRoof.InteriorSkin = Convert.ToString(roofReader[1]);
-                                aRoof.ExteriorSkin = Convert.ToString(roofReader[2]);
-                                aRoof.Thickness = Convert.ToDouble(roofReader[3]);
-                                aRoof.FireProtection = Convert.ToBoolean(roofReader[4]);
-                                aRoof.Thermadeck = Convert.ToBoolean(roofReader[5]);
-                                aRoof.Acrylic = Convert.ToBoolean(roofReader[6]);
-                                aRoof.Gutters = Convert.ToBoolean(roofReader[7]);
-                                aRoof.GutterPro = Convert.ToBoolean(roofReader[8]);
-                                aRoof.GutterColour = Convert.ToString(roofReader[9]);
-                                aRoof.NumberSupports = Convert.ToInt32(roofReader[10]);
-                                aRoof.StripeColour = Convert.ToString(roofReader[11]);
-                                aRoof.Projection = Convert.ToDouble(roofReader[12]); //how do we deal with obstructions
-                                aRoof.Width = Convert.ToDouble(roofReader[13]);
-                                int roofIndex = Convert.ToInt32(roofReader[14]);
+                                aRoof.Type = Convert.ToString(aReader[0]);
+                                aRoof.InteriorSkin = Convert.ToString(aReader[1]);
+                                aRoof.ExteriorSkin = Convert.ToString(aReader[2]);
+                                aRoof.Thickness = Convert.ToDouble(aReader[3]);
+                                aRoof.FireProtection = Convert.ToBoolean(aReader[4]);
+                                aRoof.Thermadeck = Convert.ToBoolean(aReader[5]);
+                                aRoof.Acrylic = Convert.ToBoolean(aReader[6]);
+                                aRoof.Gutters = Convert.ToBoolean(aReader[7]);
+                                aRoof.GutterPro = Convert.ToBoolean(aReader[8]);
+                                aRoof.GutterColour = Convert.ToString(aReader[9]);
+                                aRoof.NumberSupports = Convert.ToInt32(aReader[10]);
+                                aRoof.StripeColour = Convert.ToString(aReader[11]);
+                                aRoof.Projection = Convert.ToDouble(aReader[12]); //how do we deal with obstructions
+                                aRoof.Width = Convert.ToDouble(aReader[13]);
+                                int roofIndex = Convert.ToInt32(aReader[14]);
 
+                            aReader.Close();
                                 List<RoofModule> listOfRoofModules = new List<RoofModule>();
 
-                                aCommand.CommandText = "SELECT projection, width, interior_skin, exterior_skin, roof_view "
-                                + "FROM roof_modules WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "'";
+                                aCommand.CommandText = "SELECT COUNT(*) FROM roof_modules WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "'";
+                                aReader = aCommand.ExecuteReader();
+                                aReader.Read();
+                                int roofModCount = Convert.ToInt32(aReader[0]);
 
 
-                                SqlDataReader moduleReader = aCommand.ExecuteReader();
+                                //aCommand.CommandText = "SELECT projection, width, interior_skin, exterior_skin, roof_view "
+                                //+ "FROM roof_modules WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "'";
 
-                                if (moduleReader.HasRows)
-                                {
-                                    while (moduleReader.Read())
+
+                                //SqlDataReader moduleReader = aCommand.ExecuteReader();
+
+                                //if (moduleReader.HasRows)
+                                //{
+                                //    while (moduleReader.Read())
+                                    for(int j = 0; j < roofModCount; j++)
                                     {
+
+                                        aCommand.CommandText = "SELECT projection, width, interior_skin, exterior_skin, roof_view "
+                                                    + "FROM roof_modules WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "'";
+
+
+                                         aReader = aCommand.ExecuteReader();
+                                         aReader.Read();
+
                                         RoofModule aModule = new RoofModule();
-                                        aModule.Projection = Convert.ToDouble(moduleReader[0]);
-                                        aModule.Width = Convert.ToDouble(moduleReader[1]);
-                                        aModule.InteriorSkin = Convert.ToString(moduleReader[2]);
-                                        aModule.ExteriorSkin = Convert.ToString(moduleReader[3]);
-                                        int roofView = Convert.ToInt32(moduleReader[4]);
+                                        aModule.Projection = Convert.ToDouble(aReader[0]);
+                                        aModule.Width = Convert.ToDouble(aReader[1]);
+                                        aModule.InteriorSkin = Convert.ToString(aReader[2]);
+                                        aModule.ExteriorSkin = Convert.ToString(aReader[3]);
+                                        int roofView = Convert.ToInt32(aReader[4]);
+
+                                        aReader.Close();
 
                                         List<RoofItem> listOfRoofItems = new List<RoofItem>();
 
-                                        aCommand.CommandText = "SELECT roof_item, projection, width, item_index "
-                                        + "FROM roof_modules WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "'";
+
+                                        aCommand.CommandText = "SELECT COUNT(*) FROM roof_modules WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "'";
+                                        aReader = aCommand.ExecuteReader();
+                                        aReader.Read();
+                                        int roofItemCount = Convert.ToInt32(aReader[0]);
+
+                                        //aCommand.CommandText = "SELECT roof_item, projection, width, item_index "
+                                        //+ "FROM roof_modules WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "'";
 
 
-                                        SqlDataReader itemReader = aCommand.ExecuteReader();
+                                        //SqlDataReader itemReader = aCommand.ExecuteReader();
 
-                                        if (itemReader.HasRows)
-                                        {
-                                            while(itemReader.Read())
+                                        //if (itemReader.HasRows)
+                                        //{
+                                        //    while(itemReader.Read())
+                                            for (int k = 0; k < roofItemCount; k++)
                                             {
+
+                                                aCommand.CommandText = "SELECT roof_item, projection, width, item_index "
+                                                    + "FROM roof_modules WHERE project_id = '" + projectId + "' AND roof_index = '" + roofIndex + "' AND roof_view = '" + roofView + "' AND item_index = '" + k + "'";
+
+
+                                                aReader = aCommand.ExecuteReader();
+                                                aReader.Read();
+
+
                                                 // store in an object
                                                 RoofItem aRoofItem = new RoofItem();
-                                                aRoofItem.ItemType = Convert.ToString(itemReader[0]);
-                                                aRoofItem.Projection = Convert.ToSingle(itemReader[1]);
-                                                aRoofItem.Width = Convert.ToSingle(itemReader[2]);
-                                                int itemIndex = Convert.ToInt32(itemReader[3]);
+                                                aRoofItem.ItemType = Convert.ToString(aReader[0]);
+                                                aRoofItem.Projection = Convert.ToSingle(aReader[1]);
+                                                aRoofItem.Width = Convert.ToSingle(aReader[2]);
+                                                int itemIndex = Convert.ToInt32(aReader[3]);
                                                 
+                                                aReader.Close();
+
                                                 ///different types of roof items
                                                 switch (aRoofItem.ItemType)
                                                 {
@@ -1319,21 +1409,21 @@ namespace SunspaceDealerDesktop
 
                                                 listOfRoofItems.Add(aRoofItem);
                                             }
-                                        }
+                                        
 
-                                        itemReader.Close();
+                                        //itemReader.Close();
 
                                         aModule.RoofItems = listOfRoofItems;
 
                                         listOfRoofModules.Add(aModule);
                                     }
-                                }
-                                moduleReader.Close();
+                                
+                                //moduleReader.Close();
 
                                 aRoof.RoofModules = listOfRoofModules;
                             }
-                        }
-                        roofReader.Close();
+                        
+                        //roofReader.Close();
                     }
                     
                     #endregion
@@ -1342,9 +1432,9 @@ namespace SunspaceDealerDesktop
                     aTransaction.Commit();
 
                     hidJsonObjects.Value = JsonConvert.SerializeObject(listOfWalls);
-                }
+            }
 
-                catch (Exception ex)
+                 catch (Exception ex)
                 {
                     //lblError.Text = "Commit Exception Type: " + ex.GetType();
                     //lblError.Text += "  Message: " + ex.Message;
@@ -1374,11 +1464,11 @@ namespace SunspaceDealerDesktop
 
         protected void PopulateDropdown(int floor = 0, int roof = 0)
         {
-            if (roof != 0) //if there's a roof, add it 
-            {
-                ListItem liRoof = new ListItem("Roof", "Roof");
-                ddlSunroomObjects.Items.Add(liRoof);
-            }
+            //if (roof != 0) //if there's a roof, add it 
+            //{
+            //    ListItem liRoof = new ListItem("Roof", "Roof");
+            //    ddlSunroomObjects.Items.Add(liRoof);
+            //}
             // add all the walls
             int i = 0;
             foreach (Wall wall in listOfWalls)
@@ -1387,11 +1477,11 @@ namespace SunspaceDealerDesktop
                 ddlSunroomObjects.Items.Add(liWall);
                 i++;
             }
-            if (floor != 0) //if there's a floor, add it
-            {
-                ListItem liFloor = new ListItem("Floor", "Floor");
-                ddlSunroomObjects.Items.Add(liFloor);
-            }
+            //if (floor != 0) //if there's a floor, add it
+            //{
+            //    ListItem liFloor = new ListItem("Floor", "Floor");
+            //    ddlSunroomObjects.Items.Add(liFloor);
+            //}
 
             //add the onclick attribute
             ddlSunroomObjects.Attributes.Add("onclick", "sunroomObjectChanged(document.getElementById('SecondaryNavigation_ddlSunroomObjects').options[document.getElementById('SecondaryNavigation_ddlSunroomObjects').selectedIndex].value);");
