@@ -10,7 +10,7 @@
 <asp:Content ID="Content5" ContentPlaceHolderID="MainContent" runat="server">
     <script>
         
-        var jsonString = <%= hidRealhidden.value %>;
+        var jsonString = <%= hidRealHidden.Value %>;
         console.log(jsonstring);
 
 

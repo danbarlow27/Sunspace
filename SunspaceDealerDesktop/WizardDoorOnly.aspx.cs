@@ -1936,8 +1936,8 @@ namespace SunspaceDealerDesktop
             aDoor.Kickplate = float.Parse(Request.Form["ctl00$MainContent$ddlDoorKickplatePatio"]);
 
             //patio attributes
-            aDoor.Height = float.Parse(Request.Form["ctl00$MainContent$ddlDoorHeightPatio"]);
-            aDoor.Length = float.Parse(Request.Form["ctl00$MainContent$ddlDoorWidthPatio"]);
+            aDoor.Height = float.Parse(Request.Form["ctl00$MainContent$txtDoorHeightPatio"]);
+            aDoor.Length = float.Parse(Request.Form["ctl00$MainContent$txtDoorWidthPatio"]);
             aDoor.GlassTint = Request.Form["ctl00$MainContent$ddlDoorGlassTintPatio"];
             //aDoor.ScreenType = ""; //CHANGEME
             aDoor.OperatingDoor = Request.Form["ctl00$MainContent$PrimaryOperatorPatio"];

@@ -10,7 +10,8 @@ namespace SunspaceDealerDesktop
 {
     public partial class WizardDoorOnlyEdit : System.Web.UI.Page
     {
-        protected int projectId = 109; //get it from the session
+        protected int projectId = 116; //get it from the session
+        protected string json;
         protected ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
         protected ListItem lst18 = new ListItem("1/8", ".125");
         protected ListItem lst14 = new ListItem("1/4", ".25");
@@ -1595,40 +1596,52 @@ namespace SunspaceDealerDesktop
                             {
                                 projectReader.Read();
 
-                                vinylTint = Convert.ToString(projectReader[0]);
-                                glassTint = Convert.ToString(projectReader[1]);
-                                hinge = Convert.ToString(projectReader[2]); // Still needs to get displayed
-                                swing = Convert.ToString(projectReader[3]);
-                                hardwareType = Convert.ToString(projectReader[4]);
+                                // Create a cabana door for JSON
+                                CabanaDoor tempDoor = new CabanaDoor();
+                                tempDoor.DoorType = doorType;
+                                tempDoor.DoorStyle = doorStyle;
+                                tempDoor.ScreenType = screenType;
+                                tempDoor.Height = height;
+                                tempDoor.Length = length;
+                                tempDoor.Colour = doorColour;
+                                tempDoor.Kickplate = kickPlate;
+                                tempDoor.VinylTint = Convert.ToString(projectReader[0]);
+                                tempDoor.GlassTint = Convert.ToString(projectReader[1]);
+                                tempDoor.Hinge = Convert.ToString(projectReader[2]);
+                                tempDoor.Swing = Convert.ToString(projectReader[3]);
+                                tempDoor.HardwareType = Convert.ToString(projectReader[4]);
+                                // Create a JSON serialize object
+                                json = JsonConvert.SerializeObject(tempDoor);
+                                // Store the door in a hidden filed
+                                hidRealHidden.Value = json;
 
                                 projectReader.Close(); 
-
-                                // Populate the door table fields
-                                DropDownList ddlDoorType = this.FindControl("ctl00$MainContent$ddlDoorStyleCabana") as DropDownList;
-                                ddlDoorType.SelectedValue = doorType;
-                                DropDownList ddlDoorStyle = this.FindControl("ctl00$MainContent$ddlDoorStyleCabana") as DropDownList;
-                                ddlDoorStyle.SelectedValue = doorStyle;
-                                DropDownList ddlScreenType = this.FindControl("ctl00$MainContent$ddlDoorScreenTypesCabana") as DropDownList;
-                                ddlScreenType.SelectedValue = screenType;
-                                TextBox txtHeight = this.FindControl("ctl00$MainContent$txtDoorHeightCabana") as TextBox;
-                                txtHeight.Text = Convert.ToString(height);
-                                TextBox txtLength = this.FindControl("ctl00$MainContent$txtDoorWidthCabana") as TextBox;
-                                txtLength.Text = Convert.ToString(length);
-                                DropDownList ddlDoorColour = this.FindControl("ctl00$MainContent$ddlDoorColourCabana") as DropDownList;
-                                ddlScreenType.SelectedValue = doorColour;
-                                DropDownList ddlKickPlate = this.FindControl("ctl00$MainContent$ddlDoorKickplateCabana") as DropDownList;
-                                ddlKickPlate.SelectedValue = Convert.ToString(kickPlate) + '"';
-                                // Populate the cabana door specified fields
-                                DropDownList ddlVinylTint = this.FindControl("ctl00$MainContent$ddlDoorVinylTintCabana") as DropDownList;
-                                ddlVinylTint.SelectedValue = vinylTint;
-                                DropDownList ddlGlassTint = this.FindControl("ctl00$MainContent$ddlDoorGlassTintCabana") as DropDownList;
-                                ddlGlassTint.SelectedValue = glassTint;
-                                DropDownList ddlHardwareType = this.FindControl("ctl00$MainContent$ddlDoorHardwareCabana") as DropDownList;
-                                ddlHardwareType.SelectedValue = hardwareType;
-
-                                // Getting null from radio buttons / radio button list
-                                //RadioButton radHinge = this.FindControl("ctl00$MainContent$DoorHingeCabana") as RadioButton;
                                 
+                                //// Populate the door table fields
+                                //DropDownList ddlDoorType = this.FindControl("ctl00$MainContent$ddlDoorStyleCabana") as DropDownList;
+                                //ddlDoorType.SelectedValue = doorType;
+                                //DropDownList ddlDoorStyle = this.FindControl("ctl00$MainContent$ddlDoorStyleCabana") as DropDownList;
+                                //ddlDoorStyle.SelectedValue = doorStyle;
+                                //DropDownList ddlScreenType = this.FindControl("ctl00$MainContent$ddlDoorScreenTypesCabana") as DropDownList;
+                                //ddlScreenType.SelectedValue = screenType;
+                                //TextBox txtHeight = this.FindControl("ctl00$MainContent$txtDoorHeightCabana") as TextBox;
+                                //txtHeight.Text = Convert.ToString(height);
+                                //TextBox txtLength = this.FindControl("ctl00$MainContent$txtDoorWidthCabana") as TextBox;
+                                //txtLength.Text = Convert.ToString(length);
+                                //DropDownList ddlDoorColour = this.FindControl("ctl00$MainContent$ddlDoorColourCabana") as DropDownList;
+                                //ddlScreenType.SelectedValue = doorColour;
+                                //DropDownList ddlKickPlate = this.FindControl("ctl00$MainContent$ddlDoorKickplateCabana") as DropDownList;
+                                //ddlKickPlate.SelectedValue = Convert.ToString(kickPlate) + '"';
+                                //// Populate the cabana door specified fields
+                                //DropDownList ddlVinylTint = this.FindControl("ctl00$MainContent$ddlDoorVinylTintCabana") as DropDownList;
+                                ////ddlVinylTint.SelectedValue = vinylTint;
+                                //DropDownList ddlGlassTint = this.FindControl("ctl00$MainContent$ddlDoorGlassTintCabana") as DropDownList;
+                                ////ddlGlassTint.SelectedValue = glassTint;
+                                //DropDownList ddlHardwareType = this.FindControl("ctl00$MainContent$ddlDoorHardwareCabana") as DropDownList;
+                                ////ddlHardwareType.SelectedValue = hardwareType;
+
+                                //// Getting null from radio buttons / radio button list
+                                //RadioButton radHinge = this.FindControl("ctl00$MainContent$DoorHingeCabana") as RadioButton;                              
                                 
                             }
                         }
@@ -1642,37 +1655,50 @@ namespace SunspaceDealerDesktop
                             {
                                 projectReader.Read();
 
-                                vinylTint = Convert.ToString(projectReader[0]);
-                                glassTint = Convert.ToString(projectReader[1]);
-                                swing = Convert.ToString(projectReader[2]); // Needs to be displayed
-                                operatorBool = Convert.ToBoolean(projectReader[3]); // Needs to be displayed
-                                hardwareType = Convert.ToString(projectReader[4]);
+                                // Create a cabana door for JSON
+                                FrenchDoor tempDoor = new FrenchDoor();
+                                tempDoor.DoorType = doorType;
+                                tempDoor.DoorStyle = doorStyle;
+                                tempDoor.ScreenType = screenType;
+                                tempDoor.Height = height;
+                                tempDoor.Length = length;
+                                tempDoor.Colour = doorColour;
+                                tempDoor.Kickplate = kickPlate;
+                                tempDoor.VinylTint = Convert.ToString(projectReader[0]);
+                                tempDoor.GlassTint = Convert.ToString(projectReader[1]);
+                                tempDoor.Swing = Convert.ToString(projectReader[2]);
+                                tempDoor.OperatingDoor = Convert.ToString(projectReader[3]);
+                                tempDoor.HardwareType = Convert.ToString(projectReader[4]);
+                                // Create a JSON serialize object
+                                json = JsonConvert.SerializeObject(tempDoor);
+                                // Store the door in a hidden filed
+                                hidRealHidden.Value = json;
 
                                 projectReader.Close();
 
-                                // Populate the door table fields
-                                DropDownList ddlDoorType = this.FindControl("ctl00$MainContent$ddlDoorStyleFrench") as DropDownList;
-                                ddlDoorType.SelectedValue = doorType;
-                                DropDownList ddlDoorStyle = this.FindControl("ctl00$MainContent$ddlDoorStyleFrench") as DropDownList;
-                                ddlDoorStyle.SelectedValue = doorStyle;
-                                DropDownList ddlScreenType = this.FindControl("ctl00$MainContent$ddlDoorScreenTypesFrench") as DropDownList;
-                                ddlScreenType.SelectedValue = screenType;
-                                TextBox txtHeight = this.FindControl("ctl00$MainContent$txtDoorHeightFrench") as TextBox;
-                                txtHeight.Text = Convert.ToString(height);
-                                TextBox txtLength = this.FindControl("ctl00$MainContent$txtDoorWidthFrench") as TextBox;
-                                txtLength.Text = Convert.ToString(length);
-                                DropDownList ddlDoorColour = this.FindControl("ctl00$MainContent$ddlDoorColourFrench") as DropDownList;
-                                ddlScreenType.SelectedValue = doorColour;
-                                DropDownList ddlKickPlate = this.FindControl("ctl00$MainContent$ddlDoorKickplateFrench") as DropDownList;
-                                ddlKickPlate.SelectedValue = Convert.ToString(kickPlate) + '"';
+                                //// Populate the door table fields
+                                //DropDownList ddlDoorType = this.FindControl("ctl00$MainContent$ddlDoorStyleFrench") as DropDownList;
+                                //ddlDoorType.SelectedValue = doorType;
+                                //DropDownList ddlDoorStyle = this.FindControl("ctl00$MainContent$ddlDoorStyleFrench") as DropDownList;
+                                //ddlDoorStyle.SelectedValue = doorStyle;
+                                //DropDownList ddlScreenType = this.FindControl("ctl00$MainContent$ddlDoorScreenTypesFrench") as DropDownList;
+                                //ddlScreenType.SelectedValue = screenType;
+                                //TextBox txtHeight = this.FindControl("ctl00$MainContent$txtDoorHeightFrench") as TextBox;
+                                //txtHeight.Text = Convert.ToString(height);
+                                //TextBox txtLength = this.FindControl("ctl00$MainContent$txtDoorWidthFrench") as TextBox;
+                                //txtLength.Text = Convert.ToString(length);
+                                //DropDownList ddlDoorColour = this.FindControl("ctl00$MainContent$ddlDoorColourFrench") as DropDownList;
+                                //ddlScreenType.SelectedValue = doorColour;
+                                //DropDownList ddlKickPlate = this.FindControl("ctl00$MainContent$ddlDoorKickplateFrench") as DropDownList;
+                                //ddlKickPlate.SelectedValue = Convert.ToString(kickPlate) + '"';
 
-                                // Populate the french door fields
-                                DropDownList ddlVinylTint = this.FindControl("ctl00$MainContent$ddlDoorVinylTintFrench") as DropDownList;
-                                ddlVinylTint.SelectedValue = vinylTint;
-                                DropDownList ddlGlassTint = this.FindControl("ctl00$MainContent$ddlDoorGlassTintFrench") as DropDownList;
-                                ddlGlassTint.SelectedValue = glassTint;
-                                DropDownList ddlHardwareType = this.FindControl("ctl00$MainContent$ddlDoorHardwareFrench") as DropDownList;
-                                ddlHardwareType.SelectedValue = hardwareType;
+                                //// Populate the french door fields
+                                //DropDownList ddlVinylTint = this.FindControl("ctl00$MainContent$ddlDoorVinylTintFrench") as DropDownList;
+                                //ddlVinylTint.SelectedValue = vinylTint;
+                                //DropDownList ddlGlassTint = this.FindControl("ctl00$MainContent$ddlDoorGlassTintFrench") as DropDownList;
+                                //ddlGlassTint.SelectedValue = glassTint;
+                                //DropDownList ddlHardwareType = this.FindControl("ctl00$MainContent$ddlDoorHardwareFrench") as DropDownList;
+                                //ddlHardwareType.SelectedValue = hardwareType;
                             }
                         }
                         // Populate patio doors
@@ -1685,30 +1711,43 @@ namespace SunspaceDealerDesktop
                             {
                                 projectReader.Read();
 
-                                glassTint = Convert.ToString(projectReader[0]);
-                                movingDoor = Convert.ToBoolean(projectReader[1]);
+                                // Create a cabana door for JSON
+                                PatioDoor tempDoor = new PatioDoor();
+                                tempDoor.DoorType = doorType;
+                                tempDoor.DoorStyle = doorStyle;
+                                tempDoor.ScreenType = screenType;
+                                tempDoor.Height = height;
+                                tempDoor.Length = length;
+                                tempDoor.Colour = doorColour;
+                                tempDoor.Kickplate = kickPlate;
+                                tempDoor.GlassTint = Convert.ToString(projectReader[0]);
+                                tempDoor.MovingDoor = Convert.ToString(projectReader[1]);
+                                // Create a JSON serialize object
+                                json = JsonConvert.SerializeObject(tempDoor);
+                                // Store the door in a hidden filed
+                                hidRealHidden.Value = json;
 
                                 projectReader.Close();
 
-                                // Populate the door table fields
-                                DropDownList ddlDoorType = this.FindControl("ctl00$MainContent$ddlDoorStylePatio") as DropDownList;
-                                ddlDoorType.SelectedValue = doorType;
-                                DropDownList ddlDoorStyle = this.FindControl("ctl00$MainContent$ddlDoorStylePatio") as DropDownList;
-                                ddlDoorStyle.SelectedValue = doorStyle;
-                                DropDownList ddlScreenType = this.FindControl("ctl00$MainContent$ddlDoorScreenTypesPatio") as DropDownList;
-                                ddlScreenType.SelectedValue = screenType;
-                                TextBox txtHeight = this.FindControl("ctl00$MainContent$txtDoorHeightPatio") as TextBox;
-                                txtHeight.Text = Convert.ToString(height);
-                                TextBox txtLength = this.FindControl("ctl00$MainContent$txtDoorWidthPatio") as TextBox;
-                                txtLength.Text = Convert.ToString(length);
-                                DropDownList ddlDoorColour = this.FindControl("ctl00$MainContent$ddlDoorColourPatio") as DropDownList;
-                                ddlScreenType.SelectedValue = doorColour;
-                                DropDownList ddlKickPlate = this.FindControl("ctl00$MainContent$ddlDoorKickplatePatio") as DropDownList;
-                                ddlKickPlate.SelectedValue = Convert.ToString(kickPlate) + '"';
+                                //// Populate the door table fields
+                                //DropDownList ddlDoorType = this.FindControl("ctl00$MainContent$ddlDoorStylePatio") as DropDownList;
+                                //ddlDoorType.SelectedValue = doorType;
+                                //DropDownList ddlDoorStyle = this.FindControl("ctl00$MainContent$ddlDoorStylePatio") as DropDownList;
+                                //ddlDoorStyle.SelectedValue = doorStyle;
+                                //DropDownList ddlScreenType = this.FindControl("ctl00$MainContent$ddlDoorScreenTypesPatio") as DropDownList;
+                                //ddlScreenType.SelectedValue = screenType;
+                                //TextBox txtHeight = this.FindControl("ctl00$MainContent$txtDoorHeightPatio") as TextBox;
+                                //txtHeight.Text = Convert.ToString(height);
+                                //TextBox txtLength = this.FindControl("ctl00$MainContent$txtDoorWidthPatio") as TextBox;
+                                //txtLength.Text = Convert.ToString(length);
+                                //DropDownList ddlDoorColour = this.FindControl("ctl00$MainContent$ddlDoorColourPatio") as DropDownList;
+                                //ddlScreenType.SelectedValue = doorColour;
+                                //DropDownList ddlKickPlate = this.FindControl("ctl00$MainContent$ddlDoorKickplatePatio") as DropDownList;
+                                //ddlKickPlate.SelectedValue = Convert.ToString(kickPlate) + '"';
 
-                                // Populate the french door fields
-                                DropDownList ddlGlassTint = this.FindControl("ctl00$MainContent$ddlDoorGlassTintPatio") as DropDownList;
-                                ddlGlassTint.SelectedValue = glassTint;
+                                //// Populate the french door fields
+                                //DropDownList ddlGlassTint = this.FindControl("ctl00$MainContent$ddlDoorGlassTintPatio") as DropDownList;
+                                //ddlGlassTint.SelectedValue = glassTint;
                             }
 
                         }
