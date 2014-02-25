@@ -123,7 +123,7 @@
                     .style("border", "1px solid black");
         var canvas = svg.append("g")
                     .attr("transform", "translate("+CENTRE_X+","+CENTRE_Y+")");
-        var gWall, gLi, gMod;
+        var gWall, gLi, gMod, gWindow, gScreen;
         var scale = d3.scale.linear(); //used to fit the polygons optimally on the canvas
         
 
@@ -328,6 +328,8 @@
         /**
         This function draws all the modular items within a given linear item
         @param modularItems - the array containing modular items in a given linear item
+        @param x - 
+        @param y - 
         */
         function drawModularItems(modularItems, x, y) {
 
@@ -346,14 +348,6 @@
 
                 switch(modularItems[i].ItemType) {
                     case "Panel":
-                        //var id = "";// + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
-                        //var title = modularItems[i].ItemType;
-                        //var length = modularItems[i].FLength; ; //length of the modular item
-                        //var startHeight = modularItems[i].FStartHeight; //start height of the modular item
-                        //var endHeight = modularItems[i].FEndHeight; //end height of the modular item
-                        //var leftHeight = modularItems[i].LeftHeight; //left height of the modular item
-                        //var rightHeight = modularItems[i].RightHeight; //right height of the modular item
-                
                             var rise = (leftHeight > rightHeight) ? (leftHeight - rightHeight) : (rightHeight - leftHeight);
                             var height = (leftHeight > rightHeight) ? "start" : (leftHeight === rightHeight) ? "equal" : "end";
                             var slope = rise / length;
@@ -367,41 +361,7 @@
                         var bottomRight = { "x": scale(parseFloat(length) - frame), "y": scale(parseFloat(0) - bottomFrame) }; //bottom right coordinates
                         var bottomLeft = { "x": scale(parseFloat(0) + frame), "y": scale(parseFloat(0) - bottomFrame) }; //bottom left coordinates
 
-                        
-
-                        ////MOD LEFT FRAME////////////////////////////////////////////////////////////////////////////////////////////
-
-                        //    if (height === "start")
-                        //        var insideLeftHeight = leftHeight - slope - topFrame; //inside end height of the linear item
-                        //    else if (height === "end")
-                        //        var insideLeftHeight = leftHeight + slope - topFrame;
-                        //    else
-                        //        var insideLeftHeight = leftHeight - topFrame;
-
-                        //    var insideTopLeft = { "x": scale(parseFloat(frame)), "y": (-1 * scale(parseFloat(insideLeftHeight))) }; //inside top left coordinates
-                        //    var insideBottomLeft = { "x": scale(parseFloat(frame)), "y": scale(parseFloat(bottomFrame)) }; //inside bottom left coordinates
-                        
-                        ////MOD RIGHT FRAME//////////////////////////////////////////////////////////////////////////////////////////
-
-                        //    if (height === "start")
-                        //        var insideRightHeight = rightHeight + slope - topFrame; //inside start height of the linear item
-                        //    else if (height === "end")
-                        //        var insideRightHeight = rightHeight - slope - topFrame;
-                        //    else
-                        //        var insideRightHeight = rightHeight - topFrame;
-
-                        //    var insideTopRight = { "x": scale(parseFloat(length) - frame), "y": (-1 * scale(parseFloat(insideRightHeight))) }; //inside top right coordinates
-                        //    var insideBottomRight = { "x": scale(parseFloat(length) - frame), "y": scale(parseFloat(bottomFrame)) }; //inside bottom right coordinates
-
-                        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                        //    var points = (i === 0) ?
-                        //            [bottomLeft,topLeft,topRight,bottomRight,insideBottomRight,insideTopRight,insideTopLeft,insideBottomLeft] :
-                        //            [topLeft,bottomLeft,bottomRight,topRight,insideTopRight,insideBottomRight,insideBottomLeft,insideTopLeft]; //put all the coordinates together in an array
-
                         var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
-
-                        //drawPolygon(points, id, title, gMod); //draw the polygon to represent the wall with the given coordinates and id
 
                         if (i < (parseFloat(modularItems.length) - 1)) {
 
@@ -411,10 +371,6 @@
                             drawLine(pt1, pt2, gMod);
                         }
 
-                        //y = parseFloat(y) + scale(parseFloat(leftHeight));
-                        //var y2 = parseFloat(y) - scale(parseFloat(endHeight));
-
-                        //gMod = gWall.append("g").attr("transform", "translate("+ x + "," + y2 + ")");
                         break;
                     case "Transom":
                     case "Kneewall":
@@ -427,15 +383,6 @@
                         var leftHeight = modularItems[i].LeftHeight; //left height of the modular item
                         var rightHeight = modularItems[i].RightHeight; //right height of the modular item
                 
-                        //var topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(leftHeight))) }; //top left coordinates
-                        //var topRight = { "x": scale(parseFloat(length)), "y": (-1 * scale(parseFloat(rightHeight))) }; //top right coordinates
-                        //var bottomRight = { "x": scale(parseFloat(length)), "y": scale(parseFloat(0)) }; //bottom right coordinates
-                        //var bottomLeft = { "x": scale(parseFloat(0)), "y": scale(parseFloat(0)) }; //bottom left coordinates
-
-                        //var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
-
-                        //drawPolygon(points, id, gMod); //draw the polygon to represent the wall with the given coordinates and id
-
                         var insideTopLeft = { "x": scale(parseFloat(0) + 1), "y": (-1 * scale(parseFloat(leftHeight) - 1)) }; //top left coordinates
                         var insideTopRight = { "x": scale(parseFloat(length) - 1), "y": (-1 * scale(parseFloat(rightHeight) - 1)) }; //top right coordinates
                         var insideBottomRight = { "x": scale(parseFloat(length) - 1), "y": scale(parseFloat(0) - 1) }; //bottom right coordinates
@@ -443,30 +390,22 @@
 
                         var insidePoints = [insideTopLeft, insideTopRight, insideBottomRight, insideBottomLeft]; //put all the coordinates together in an array
 
-                        //drawPolygon(insidePoints, id, title, gMod); //draw the polygon to represent the wall with the given coordinates and id
+                        drawWindowDetails(modularItems[i], insidePoints);
 
-                        drawWindowDetails(modularItems[i]);
-
-                        //if (i < (parseFloat(modularItems.length) - 1)) {
                         if (i == 0) {
 
-                            var pt1 = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(endHeight) - parseFloat(startHeight))) }; //line left coordinates
-                            var pt2 = { "x": scale(parseFloat(length)), "y": (-1 * scale(parseFloat(endHeight) - parseFloat(startHeight))) }; //line left coordinates
+                            var pt1 = { "x": scale(parseFloat(0)), "y": (insideTopLeft.y - scale(1)) }; //line left coordinates
+                            var pt2 = { "x": scale(parseFloat(length)), "y": (insideTopRight.y - scale(1)) }; //line left coordinates
 
                             drawLine(pt1, pt2, gMod);
                         }
                         else if (i == parseFloat(modularItems.length) - 1) {
 
-                            var pt1 = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(endHeight) - parseFloat(startHeight))) }; //line left coordinates
-                            var pt2 = { "x": scale(parseFloat(length)), "y": (-1 * scale(parseFloat(endHeight) - parseFloat(startHeight))) }; //line left coordinates
+                            var pt1 = { "x": scale(parseFloat(0)), "y": (insideBottomLeft.y + scale(1)) }; //line left coordinates
+                            var pt2 = { "x": scale(parseFloat(length)), "y": (insideBottomRight.y + scale(1)) }; //line left coordinates
 
                             drawLine(pt1, pt2, gMod);
                         }
-
-                        //y = parseFloat(y) + scale(parseFloat(leftHeight));
-                        //var y2 = parseFloat(y) - scale(parseFloat(endHeight));
-
-                        //gMod = gWall.append("g").attr("transform", "translate("+ x + "," + y2 + ")");
                         break;
                     case "Door":
                         break;
@@ -480,14 +419,59 @@
 
                 y2 = parseFloat(y2) - scale(parseFloat(endHeight));
 
-                console.log("endheight: " + endHeight + ", y: " + y + ", y2: " + y2);
+                console.log("startHeight: " + startHeight + ", endheight: " + endHeight + ", y: " + y + ", y2: " + y2);
 
                 gMod = gWall.append("g").attr("transform", "translate("+ x + "," + y2 + ")");
             }
         }
 
-        function drawWindowDetails(window) {
+
+        /**
+        This function draws the details of a given window
+        @param window - the window object
+        @param frame - the window frame coordinates
+        @param x -
+        @param y -
+        */
+        function drawWindowDetails(window, frame) {
+
+            drawPolygon(frame, "", "", gMod); //draw the polygon to represent the wall with the given coordinates and id
+            gWindow = gMod.append("g").attr("transform", "translate("+ frame[3].x + "," + frame[3].y + ")");
+
             switch(window.WindowStyle) {
+                case "Horizontal Roller": //H2T
+
+                    var pt1 = { "x": scale((window.Width / 2) - 1), "y": scale(0) }; //line left coordinates
+                    var pt2 = { "x": scale((window.Width / 2) - 1), "y": (-1 * scale(window.LeftHeight - 2)) }; //line left coordinates
+
+                    drawLine(pt1, pt2, gWindow, 2);
+
+                    var topLeft = { "x": (frame[0].x + scale(1)), "y": (frame[0].y + scale(3)) }; //top left coordinates
+                    var topRight = { "x": scale((window.Width / 2) - 3), "y": (frame[1].y + scale(3)) }; //top right coordinates
+                    var bottomRight = { "x": scale((window.Width / 2) - 3), "y": (frame[2].y - scale(1)) }; //bottom right coordinates
+                    var bottomLeft = { "x": (frame[3].x + scale(1)), "y": (frame[3].y - scale(1)) }; //bottom left coordinates
+
+                    var leftSlider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                    drawPolygon(leftSlider, "", "", gWindow); //draw the polygon to represent the wall with the given coordinates and id
+
+                    gWindow = gMod.append("g").attr("transform", "translate("+ frame[3].x + "," + frame[3].y + ")");
+
+                    topLeft = { "x": scale((window.Width / 2) + 1), "y": (frame[0].y + scale(3)) }; //top left coordinates
+                    topRight = { "x": scale(window.Width - 4), "y": (frame[1].y + scale(3)) }; //top right coordinates
+                    bottomRight = { "x": scale(window.Width - 4), "y": (frame[2].y - scale(1)) }; //bottom right coordinates
+                    bottomLeft = { "x": scale((window.Width / 2) + 1), "y": (frame[3].y - scale(1)) }; //bottom left coordinates
+
+                    var rightSlider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                    drawPolygon(rightSlider, "", "", gWindow); //draw the polygon to represent the wall with the given coordinates and id
+
+                    if (window.ScreenType != "No Screen") {
+                        drawScreen(leftSlider);
+                        drawScreen(rightSlider);
+                    }
+
+                    break;
                 case "Vinyl":
                     break;
                 case "Glass":
@@ -498,20 +482,55 @@
         }
 
         /**
+        This function draws the screen on a given window
+        @param frame - the window frame coordinates
+        */
+        function drawScreen(frame) {
+
+            gScreen = gWindow.append("g");
+
+            //Draws vertical lines of the grid onto the canvas
+            for (var i = frame[0].x; i < frame[1].x - scale(1); i += scale(1)) {
+                var line = gScreen.append("line")            //Draws vertical lines based on the current i value of the loop
+                        .attr("x1", i + scale(1))       //Sets the first X value to i plus the GRID_PADDING (25)
+                        .attr("y1", 0 - scale(2) - 1)                      //Sets the frist Y value to 0
+                        .attr("x2", i + scale(1))       //Sets the second X value to i plus GRID_PADDING(25)
+                        .attr("y2", frame[1].y + 1)      //Sets the second Y value to MAX_CANVAS_HEIGHT
+                        .attr("stroke", "#F0F0F2");            //Sets the line colour to grey
+            }
+
+            //var gScreen2 = gScreen.append("g");
+
+            //Draws horizontal lines of the grid onto the canvas
+            for (var i = frame[1].y + 1; i < frame[2].y - scale(1); i += scale(1)) {
+                var line = gScreen.append("line")            //Draws horizontal lines based on the current i value of the loop
+                        .attr("x1", frame[0].x + 1)                      //Sets the first X value to 0
+                        .attr("y1", i + scale(1))       //Sets the first Y value to i plus GRID_PADDING(25)
+                        .attr("x2", frame[1].x - 1)       //Sets the second X value to MAX_CANVAS_WIDTH
+                        .attr("y2", i + scale(1))       //Sets the second Y value to i plus GRID_PADDING(25)
+                        .attr("stroke", "#F0F0F2");            //Sets the line colour to grey
+            }
+        }
+        /**
         This function draws a polygon on the canvas with the given data points as coordinates and sets it id to the given id
         @param pt1 - x and y coordinates of starting point
         @param pt2 - x and y coordinates of ending point
         @param g - 
+        @param strokeWidth - width of the line drawn
+        @param stroke - colour of the line drawn
         */
-        function drawLine(pt1, pt2, g) {
+        function drawLine(pt1, pt2, g, strokeWidth, stroke) {
+
+            strokeWidth = typeof strokeWidth !== 'undefined' ? strokeWidth : 1;
+            stroke = typeof stroke !== 'undefined' ? stroke : "black";
 
             var poly = g.append("line")
                      .attr("x1", pt1.x)
                      .attr("y1", pt1.y)
                      .attr("x2", pt2.x)
                      .attr("y2", pt2.y)
-                     .attr("stroke", "black")
-                     .attr("stroke-width", "1");
+                     .attr("stroke", stroke)
+                     .attr("stroke-width", strokeWidth);
 
             //.attr("onmouseover", "$(\"#wall\").attr(\"fill\", \"#F3F3F3\");")
             //.attr("onmouseout", "$(\"#wall\").attr(\"fill\", \"white\");");
