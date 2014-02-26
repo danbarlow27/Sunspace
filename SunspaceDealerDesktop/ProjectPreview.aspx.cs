@@ -339,7 +339,7 @@ namespace SunspaceDealerDesktop
                                                 + project_id + ", "
                                                 + "'Standard',"
                                                 + listOfWalls.Count + ", "
-                                                + "1, 1" //Are these needed?
+                                                + "0, 0" //Are these needed?
                                                 + ");";
                     aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
 
@@ -576,6 +576,8 @@ namespace SunspaceDealerDesktop
                                                     break;
 
                                                 case "Vertical 4 Track":
+                                                case "V4T":
+                                                case "Vertical Four Track":
                                                     for (int vents = 0; vents < aWindow.NumVents; vents++)
                                                     {
                                                         string myColour = aWindow.Colour.Substring(vents, 1);
@@ -833,6 +835,7 @@ namespace SunspaceDealerDesktop
 
                                                     case "Vertical Four Track":
                                                     case "Vertical 4 Track":
+                                                    case "V4T":
                                                         for (int vents = 0; vents < doorWindow.NumVents; vents++)
                                                         {
                                                             aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
@@ -920,6 +923,7 @@ namespace SunspaceDealerDesktop
 
                                                         case "Vertical Four Track":
                                                         case "Vertical 4 Track":
+                                                        case "V4T":
                                                             for (int vents = 0; vents < doorWindow.NumVents; vents++)
                                                             {
                                                                 aCommand.CommandText = "INSERT INTO vinyl_items(project_id, linear_index, module_index, vent_index, door_index, start_height, end_height, length, vinyl_tint, spreader_bar) VALUES("
