@@ -782,30 +782,32 @@ namespace SunspaceDealerDesktop
 
         #region SUNSPACE ACRYLIC ROOF AND PATIO COVERS
 
+            #region SUNSPACE ACRYLIC ROOF SYSTEMS
+
             #region COMPLETE ROOF PACKAGE INCLUDING
 
             #region Studio Roof
 
             //Up to 150 Sq. Ft....Clear, Bronze, Solar Cool White
-            public static float ACRYLIC_ROOF_STUDIO_ROOF_UP_TO_150_SQ_FT = 31.00f; //Sq. Ft.
-            //150 Sq. Ft. and up...Clear, Bronze, Solar Cool White
-            public static float ACRYLIC_ROOF_STUDIO_ROOF_150_SQ_FT_AND_UP = 29.00f; //Sq. Ft.
+                    public static float ACRYLIC_ROOF_STUDIO_ROOF_UP_TO_150_SQ_FT = 31.00f; //Sq. Ft.
+                    //150 Sq. Ft. and up...Clear, Bronze, Solar Cool White
+                    public static float ACRYLIC_ROOF_STUDIO_ROOF_150_SQ_FT_AND_UP = 29.00f; //Sq. Ft.
 
-            #endregion
+                    #endregion
 
-            #region Gable Roof
+                    #region Gable Roof
 
-            //Up to 150 Sq. Ft....Clear, Bronze, Solar Cool White
-            public static float ACRYLIC_ROOF_GABLE_ROOF_UP_TO_150_SQ_FT = 32.00f; //Sq. Ft.
-            //150 Sq. Ft. and up...Clear, Bronze, Solar Cool White
-            public static float ACRYLIC_ROOF_GABLE_ROOF_150_SQ_FT_AND_UP = 30.00f; //Sq. Ft.
+                    //Up to 150 Sq. Ft....Clear, Bronze, Solar Cool White
+                    public static float ACRYLIC_ROOF_GABLE_ROOF_UP_TO_150_SQ_FT = 32.00f; //Sq. Ft.
+                    //150 Sq. Ft. and up...Clear, Bronze, Solar Cool White
+                    public static float ACRYLIC_ROOF_GABLE_ROOF_150_SQ_FT_AND_UP = 30.00f; //Sq. Ft.
 
-            #endregion
+                    #endregion
 
-            //For Heatstop Cool Blue add
-            public static float ACRYLIC_ROOF_FOR_HEATSTOP_COOL_BLUE_ADD = 1.10f; //Sq. Ft.
+                    //For Heatstop Cool Blue add
+                    public static float ACRYLIC_ROOF_FOR_HEATSTOP_COOL_BLUE_ADD = 1.10f; //Sq. Ft.
 
-            #endregion
+                    #endregion
 
             #region SUNSPACE "T-BAR" INSULATED ROOF SYSTEMS
 
@@ -829,6 +831,29 @@ namespace SunspaceDealerDesktop
             public static float ACRYLIC_ROOF_GABLE_UP_TO_150 = 22.00f; //Sq. Ft.
             //150 Sq. Ft. and up
             public static float ACRYLIC_ROOF_GABLE_150_AND_UP = 20.00f; //Sq. Ft.
+            #endregion
+
+            //Upgrade to ACRYLITE® Double Skin Acylic Panels
+            public static float UPGRADE_TO_ACRYLITE_DOUBLE_SKIN_ACYLIC_PANELS = 10.00f; //Add Sq. Ft.
+            //Available Color Options: Clear, Bronze, Solar Cool White, Heatstop Cool Blue
+
+            #region SUPPORT COMPONENTS
+
+            //3" x 3" Fluted Post 7' White, Bronze, Driftwood
+            public static float ACRYLIC_ROOF_FLUTED_POST_7_FOOT = 78.30f; //Each
+            //3" x 3" Fluted Post 8' White, Bronze, Driftwood
+            public static float ACRYLIC_ROOF_FLUTED_POST_8_FOOT = 91.40f; //Each
+            //3" x 3" Fluted Post 9' White, Bronze, Driftwood
+            public static float ACRYLIC_ROOF_FLUTED_POST_9_FOOT = 104.40f; //Each
+            //3" x 3" Fluted Post 10' White, Bronze, Driftwood
+            public static float ACRYLIC_ROOF_FLUTED_POST_10_FOOT = 117.50f; //Each
+            //3" x 3" Fluted Post 22' White, Bronze, Driftwood
+            public static float ACRYLIC_ROOF_FLUTED_POST_22_FOOT = 234.90f; //Each
+            //1 - 1/2" x 3" Structural U-Channel ...22' ...White, Bronze, Driftwood
+            public static float ACRYLIC_ROOF_STRUCTURAL_U_CHANNEL_22_FOOT = 7.60f; //Ft.
+
+            #endregion
+
             #endregion
 
             #endregion
