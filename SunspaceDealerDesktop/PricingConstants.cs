@@ -803,7 +803,33 @@ namespace SunspaceDealerDesktop
             #endregion
 
             //For Heatstop Cool Blue add
-            public static float ACRYLIC_FOR_HEATSTOP_COOL_BLUE_ADD = 1.10f; //Sq. Ft.
+            public static float ACRYLIC_ROOF_FOR_HEATSTOP_COOL_BLUE_ADD = 1.10f; //Sq. Ft.
+
+            #endregion
+
+            #region SUNSPACE "T-BAR" INSULATED ROOF SYSTEMS
+
+            /*Note: For invoicing purposes roof dimensions will be rounded up to the nearest foot. All T-BAR roof
+            systems will be shipped with tee-bars, receiver, gutter, fascia and 5/8" thick 2lb Aluminum Foam panels
+            The T-Bar roof system has all the flexibility of the insulated roof system but also always you to add full length
+            ACRYLITE® skylight panel to the roof system where additional light is required. An upcharge will applied to
+            the square footage of acrylic rood panels used if the system. Please note that the Tee-bar roof system is not
+            recommended for installation over Model 400 walls.
+            **/
+
+            #region Studio Roof
+            //Up to 150 Sq. Ft.
+            public static float ACRYLIC_ROOF_STUDIO_UP_TO_150 = 21.00f; //Sq. Ft.
+            //150 Sq. Ft. and up
+            public static float ACRYLIC_ROOF_STUDIO_150_AND_UP = 19.00f; //Sq. Ft.
+            #endregion
+
+            #region Gable Roof
+            //Up to 150 Sq. Ft.
+            public static float ACRYLIC_ROOF_GABLE_UP_TO_150 = 22.00f; //Sq. Ft.
+            //150 Sq. Ft. and up
+            public static float ACRYLIC_ROOF_GABLE_150_AND_UP = 20.00f; //Sq. Ft.
+            #endregion
 
             #endregion
 
