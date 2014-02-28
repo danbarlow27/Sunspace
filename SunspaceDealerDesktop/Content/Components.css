@@ -1,0 +1,1150 @@
+﻿@charset "UTF-8";
+
+/* GENERAL/SITE-WIDE
+----------------------------------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font: 16px Arial, Helvetica, Verdana, Sans-Serif;
+    color: #000;
+    background-color: rgb(235,235,235);
+    width: 100%;
+}
+
+.clear {
+    clear: both;
+}
+
+header, footer, hgroup,
+nav, section {
+    display: block;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.valign-top {
+    vertical-align: top;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.clear-fix:after {
+    content: ".";
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+img {
+    border: 0;
+}
+
+.contentWrapper {
+    padding: 0 40px;
+    margin: 0 auto;
+    width: 820px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+}
+
+
+/* REMOVE/HIDE/SHOW ELEMENTS */
+.removeElement {
+    display: none;
+}
+.hideElement {
+    visibility: hidden;
+}
+.showElementNoClass {
+
+}
+
+
+/* LINKS */
+a {
+    color: #333;
+    outline: none;
+    padding-left: 3px;
+    padding-right: 3px;
+    text-decoration: underline;
+}
+
+    a:link, a:visited,
+    a:active, a:hover {
+        color: #333;
+    }
+
+    a:hover {
+        background-color: #c7d1d6;
+    }
+
+
+/* TEXT */
+h1, h2, h3,
+h4, h5, h6 {
+    color: #000;
+}
+
+h1 {
+    font: 30px 'Trebuchet', Trebuchet MS, Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+    text-align: right;
+}
+
+h2 {
+    font: 22px 'Trebuchet', Trebuchet MS, Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+    color: rgb(153,51,0);
+}
+
+h3 {
+    font: bold 24px 'Trebuchet', Trebuchet MS, Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+    color: rgb(153,51,0);
+    margin-bottom: 20px;
+}
+
+/* FONTS */
+@font-face {
+	font-family: 'Trebuchet';
+	src: url('fonts/trebuchet/Trebuchet_MS.ttf') format('truetype');
+}
+
+
+/* HEADER (Site Master) */
+.logo {
+    margin: 20px 0 0;
+    border: 0;
+    float: left;
+}
+.pageTitle {
+    border-bottom: 5px solid #000;
+    padding: 0 0 5px;
+    margin: 65px 0 0;
+    display: inline-block;
+    float: right;
+}
+
+
+
+/* LOGIN PAGE
+----------------------------------------------------------*/
+.containerLogin {
+    background-color: #dadada;
+    width: 300px;
+    height: 255px;
+    padding: 20px 30px 30px;
+    margin: 100px auto 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid rgb(162,162,162);
+}
+
+.containerLogin label {
+    font: normal 13px Arial, Helvetica, Verdana, sans-serif;
+    margin: 5px 0 0;
+}
+
+.txtLoginField {
+    font: 17px Arial, Helvetica, Verdana, sans-serif;
+    padding: 5px 10px;
+    border: 1px solid rgb(162,162,162);
+    width: 275px;
+    height: 30px;
+    margin: 5px 0 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: inset 1px 2px 4px rgba(0,0,0,.2);
+}
+
+#MainContent_btnLogin {
+    font-size: 17px;
+    width: 120px;
+    height: 35px;
+    margin: 20px 0 0;
+    float: right;
+}
+
+
+
+/* MAIN MENU PAGE
+----------------------------------------------------------*/
+.containerMainMenu {
+    text-align: center;
+    background-color: #dadada;
+    width: 300px;
+    padding: 20px 30px 30px;
+    margin: 100px auto 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid rgb(162,162,162);
+}
+
+/* Buttons */
+.btnMainMenu {
+    font-size: 17px;
+    width: 220px;
+    height: 45px;
+    margin: 7px 0;
+    /*margin-right: 25px;*/
+}
+.btnMainMenuLast {
+    font-size: 17px;
+    margin-right: 0;
+}
+
+
+
+/* PRODUCT SELECT PAGE
+----------------------------------------------------------*/
+.productSelectTable {
+    width: 900px;
+    margin: 70px auto 0;
+    border: 0;
+    border-collapse: collapse;
+}
+.productSelectTable td {
+    padding-bottom: 40px;
+    border: 0;
+}
+
+/* Radio Buttons */
+.containerUpdateSelect {
+    text-align: center;
+    margin: 70px auto 0;
+}
+.radUpdateSelect {
+    margin-right: 10px;
+}
+#MainContent_lblUpdateGeneral {
+    margin-right: 65px;
+}
+
+/* Dropdown */
+.tdLblProductSelect {
+    text-align: right;
+    padding-right: 10px;
+}
+
+/* Button */
+#MainContent_btnGo {
+    margin-left: 15px;
+}
+
+
+
+/* COMMON ELEMENTS
+----------------------------------------------------------*/
+/* NAVIGATION DROPDOWN/MENU
+---------------------------- */
+.containerNavigation {
+    margin: 20px 0 40px;
+}
+
+.containerNavigation .ddlField {
+    background-color: rgb(235,235,235);
+}
+
+
+/* NAVIGATION SCROLLING ARROWS
+---------------------------- */
+.prevArrow {
+    background-image: url(../Images/arrows.png);
+    background-position: 0 36px;
+    width: 36px;
+    height: 36px;
+    margin-top: -18px;
+    border: 0;
+    position: fixed;
+    top: 50%;
+    left: 30px;
+    display: inline-block;
+}
+
+.nextArrow {
+    background-image: url(../Images/arrows.png);
+    background-position: 0 0;
+    width: 36px;
+    height: 36px;
+    margin-top: -18px;
+    border: 0;
+    position: fixed;
+    top: 50%;
+    right: 30px;
+    display: inline-block;
+}
+
+.prevArrow:hover,
+.prevArrow:active,
+.prevArrow:focus,
+.nextArrow:hover,
+.nextArrow:active,
+.nextArrow:focus {
+    border: 0;
+}
+
+.prevArrow:hover {
+    background-position: 36px 36px;
+}
+
+.nextArrow:hover {
+    background-position: 36px 0;
+}
+
+
+/* LABELS
+---------------------------- */
+.lblField,
+.lblFieldSelectCategory,
+.lblFieldColor {
+    font: 18px Arial, Helvetica, Verdana, sans-serif;
+}
+    .lblFieldSelectCategory {
+        margin-right: 10px;
+    }
+    .lblFieldColor {
+        margin-right: 5px;
+    }
+
+
+/* TEXT INPUT FIELDS
+---------------------------- */
+.txtInputField,
+.txtInputFieldDesc,
+.txtInputFieldText,
+.txtInputFieldDisabled {
+    font: 16px Arial, HelvetiOa, Verdana, sans-serif;
+    padding: 5px;
+    border: 1px solid rgb(192,192,192);
+}
+
+/* User-disabled Text Input Field (coded as label) */
+.lblInputFieldDisabled-- {
+    border: 0;
+}
+
+/* Description */
+.txtInputFieldDesc {
+    height: 70px;
+}
+
+.txtInputFieldDisabled {
+    background: transparent;
+    padding: 5px 0;
+    border: 0;
+    height: auto;
+}
+
+
+/* DROPDOWN LISTS
+---------------------------- */
+.ddlField {
+    padding: 0 0 0 5px;
+    margin-right: 10px;
+    border: 1px solid rgb(192,192,192);
+    border-radius: 4px;
+}
+
+
+
+/* UPDATE / INSERT PAGES
+----------------------------------------------------------*/
+/* Major Section Panels */
+.pnlDimensions,
+.pnlPricing,
+.pnlStatus,
+.pnlButtons {
+    padding: 25px 0 30px;
+    border-bottom: 1px dotted rgb(162,162,162);
+}
+.pnlButtons {
+    padding-bottom: 50px;
+    border-bottom: 0;
+}
+#MainContent_pnlSchematics {
+    width: 530px;
+    margin: 30px 0 0;
+    border-top: 1px dotted rgba(162,162,162,.5);
+}
+
+
+/* PRODUCT SECTION
+-------------------------------------- */
+.pnlProduct {
+    min-height: 375px;
+    padding: 0 0 30px;
+    margin: 70px 0 0;
+    clear: both;
+    border-bottom: 1px dotted rgb(162,162,162);
+}
+
+/* Image */
+.containerUpdateImage {
+    float: right;
+}
+
+.imageBoxUpdate {
+    text-align: center;
+    background-color: #fff;
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+    border: 1px solid rgb(134,134,134);
+}
+
+.imageBoxUpdate img {
+    width: 250px;
+    height: 250px;
+}
+
+.imageBoxUpdate img.landscape {
+    width: 250px;
+    height: auto;
+}
+
+.imageBoxUpdate img.portrait {
+    width: auto;
+    height: 250px;
+}
+
+#MainContent_fupNewImage,
+.btnUploadImg {
+    margin-top: 5px;
+    /*padding: 5px;
+    border: 1px solid rgb(192,192,192);
+    border-radius: 4px;*/
+}
+
+/* Part Number, Name */
+.containerPartId {
+}
+
+.lblProduct {
+    font: 24px 'Trebuchet', Trebuchet MS, Arial, Helvetica, sans-serif;
+    color: rgb(153,51,0);
+}
+
+/* Description, Color, Composition, Standard, Schematics */
+.containerDesc,
+.containerColor,
+.containerComposition,
+.containerStandard,
+.containerAccessories,
+.containerSchem {
+    margin: 30px 0 0;
+}
+
+
+/* DIMENSIONS, PRICING, STATUS SECTIONS
+-------------------------------------- */
+.dimensionsTable {
+    width: 100%;
+    /*width: 900px;*/
+    margin-top: 15px;
+    border: 0;
+    border-collapse: collapse;
+}
+.pricingTable,
+.statusTable {
+    margin-top: 15px;
+    border: 0;
+    border-collapse: collapse;
+}
+td {
+    padding: 10px 0;
+    /*border-top: 1px dotted rgba(162,162,162,.5);*/
+    vertical-align: middle;
+}
+
+
+/* Pricing Section Cells */
+.trPrice td {
+    padding: 10px 10px 0 0;
+    border-top: 0;
+}
+.trPrice .tdNextBtn {
+    padding-left: 100px;
+}
+
+/* Pricing Schematics Section Cells */
+.trPriceSchem td {
+    padding: 10px 10px 0 0;
+}
+
+ /* Labels */
+.tdLabel {
+    text-align: right;
+    width: 180px;
+    padding-right: 10px;
+}
+.tdLabelUnits {
+    text-align: right;
+    width: 100px;
+    padding-right: 10px;
+}
+
+.tdLabelPriceSchem,
+.tdLabelPriceSchem2 {
+    text-align: right;
+    width: 120px;
+    padding-right: 10px;
+}
+    .tdLabelPriceSchem2 {
+        width: 180px;
+    }
+
+/* Text Input Fields*/
+.tdInputTxt {
+    text-align: left;
+    width: 70px;
+    padding-right: 10px;
+}
+    .tdSchemLast,
+    #MainContent_pricingSchemTable td:nth-last-child(1) {
+        width: 150px;
+    }
+
+    /* Disabled Text Input Fields */
+    .tdInputTxtDisabled {
+        text-align: left;
+        padding-right: 10px;
+    }
+    /* Disabled Text Input Field - Feet (Sunrails) */
+    .tdInputTxtDisabledFeet {
+        text-align: left;
+        width: 50px;
+        padding-right: 10px;
+    }
+
+/* Radio Button */
+.tdInputRadio {
+    text-align: right;
+    padding-right: 10px;
+}
+.tdLabelRadio {
+    padding-right: 75px;
+}
+
+
+/* BUTTONS SECTION
+-------------------------------------- */
+.containerButtons {
+    margin: 25px 0 0;
+}
+
+#MainContent_btnReset {
+    float: left;
+}
+
+#MainContent_btnUpdate {
+    float: right;
+}
+
+#MainContent_btnInsert {
+    float: right;
+}
+
+
+/* VALIDATION ERROR MESSAGES
+-------------------------------------- */
+.errorMsg,
+.errorMsgProductPanel,
+.errorMsgPrice {
+    font-size: 14px;
+    color: red;
+    padding-left: 10px;
+    vertical-align: middle;
+}
+/* Description Field Error */
+.errorMsgProductPanel {
+    padding-left: 0;
+}
+/* Price Fields Error */
+.tdInputPriceError {
+    text-align: right;
+    padding-right: 10px;
+    border: 0;
+}
+.trPriceSchem .errorMsgPrice {
+    text-align: right;
+    padding: 10px 0px 10px 0;
+    border: 0;
+}
+
+
+
+/* GLOBAL UPDATE PAGE (PRICING GRID)
+----------------------------------------------------------*/
+.containerGlobalUpdate {
+    padding: 0 0 30px;
+    margin: 70px 0 0;
+    clear: both;
+}
+
+/* RADIO SELECTIONS
+-------------------------------------- */
+.containerRadioPricing {
+    margin-top: 50px;
+}
+
+.containerRadioPricing td {
+    padding: 0 0 5px;
+}
+
+.containerRadioPricing label {
+    margin-left: 10px;
+}
+
+.radIncreaseDecrease,
+.radPercentDollar {
+    margin-bottom: 20px;
+}
+
+
+/* PRICING TABLE
+-------------------------------------- */
+#MainContent_tblPriceGrid {
+    width: 100%;
+    margin-top: 50px;
+    border: 0;
+    border-collapse: collapse;
+    /*display: block;*/
+}
+
+/* Header Rows */
+#MainContent_tblPriceGrid th {
+    font: 18px 'Trebuchet', Trebuchet MS, Arial, Helvetica, sans-serif;
+    color: rgb(153,51,0);
+    background-color: #dadada;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.trHeader {
+    font: 18px 'Trebuchet', Trebuchet MS, Arial, Helvetica, sans-serif;
+    text-align: center;
+    background-color: #dadada;
+    border-bottom: 1px solid rgb(162,162,162);
+}
+
+/* All table cells */
+#MainContent_tblPriceGrid td {
+    padding: 5px;
+    border: 0px solid black;
+    /*vertical-align: top;*/
+}
+
+/* Every other row styling */
+#MainContent_tblPriceGrid tr:nth-child(odd) {
+    background-color: #e3e3e3;
+}
+
+/* Selected/Select All Rows*/
+#MainContent_tblPriceGrid tr.trSelected,
+#MainContent_tblPriceGrid tr.trSelectAll {
+    background-color: rgb(235, 235, 235);
+}
+
+#MainContent_tblPriceGrid tr.trSelected td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dotted rgb(162,162,162);
+}
+
+#MainContent_tblPriceGrid tr.trSelectAll td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Input Field Cells*/
+#MainContent_tblPriceGrid td.tdTxtInputUS {
+    text-align: center;
+    width: 90px;
+    padding-right: 0;
+}
+
+#MainContent_tblPriceGrid td.tdTxtInputCAN {
+    text-align: center;
+    width: 90px;
+    padding-left: 0;
+}
+
+
+/* BUTTONS
+-------------------------------------- */
+.containerButtonsPricing {
+    margin: 40px 0 30px;
+}
+
+
+
+/* DISPLAY PAGE
+----------------------------------------------------------*/
+.containerDisplay {
+    padding: 0 0 30px;
+    margin: 40px 0 0;
+    clear: both;
+}
+
+
+/* IMAGE
+---------------------------- */
+.containerImage {
+    float: right;
+    position: relative;
+}
+
+.imageBoxDisplay {
+    text-align: center;
+    background-color: #fff;
+    width: 400px;
+    height: 400px;
+    border: 1px solid rgb(134,134,134);
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.imageBoxDisplay a {
+    text-decoration: none;
+    background: transparent;
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+    outline: none;
+    border: 0;
+    position: relative;
+    top: 0;
+    right: 3px;
+}
+
+.imageBoxDisplay a:hover {
+    text-decoration: none;
+    background: transparent;
+    outline: none;
+    border: 0;
+}
+
+.imageBoxDisplay img {
+    width: 400px;
+    height: 400px;
+}
+
+.imageBoxDisplay img.landscape {
+    width: 400px;
+    height: auto;
+}
+
+.imageBoxDisplay img.portrait {
+    width: auto;
+    height: 400px;
+}
+
+/*#MainContent_HyperLink1 {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.containerImage #MainContent_imgPart {
+    position: absolute;
+    top: 0;
+    right: 0;
+}*/
+
+#MainContent_lblViewImgLarger {
+    font-size: 13px;
+    font-style: italic;
+    text-align: center;
+    color: rgb(162,162,162);
+}
+
+
+/* PRODUCT RECORD
+---------------------------- */
+.containerRecord {
+    width: 400px;
+}
+
+.pnlProductDisplay,
+.dimensionsTableDisplay,
+.schematicsTableDisplay,
+.priceTableDisplay {
+    width: 100%;
+    border: 0;
+    border-collapse: collapse;
+}
+
+.schematicsTableDisplay {
+    border-top: 1px dotted rgba(162,162,162,.5);
+}
+
+.pnlProductDisplay td,
+.schematicsTableDisplay td,
+.dimensionsTableDisplay td,
+.priceTableDisplay td {
+    padding: 0 0 20px;
+    border-top: 0;
+}
+
+.pnlProductDisplay .tdDisplayLabel,
+.schematicsTableDisplay .tdDisplayLabel,
+.dimensionsTableDisplay .tdDisplayLabel,
+.priceTableDisplay .tdDisplayLabel {
+    font: bold 16px Arial, Helvetica, Verdana, sans-serif;
+    text-align: right;
+    width: 120px;
+    padding-right: 10px;
+}
+
+.schematicsTableDisplay .tdDisplayLabelSchem {
+    font: bold 16px Arial, Helvetica, Verdana, sans-serif;
+    text-align: left;
+    padding: 20px 20px 30px 0;
+}
+
+.pnlProductDisplay .tdDisplayField,
+.schematicsTableDisplay .tdDisplayField,
+.dimensionsTableDisplay .tdDisplayField,
+.priceTableDisplay .tdDisplayField {
+    text-align: left;
+    height: auto;
+}
+
+.pnlProductDisplay .displayField,
+.schematicsTableDisplay .displayField,
+.dimensionsTableDisplay .displayField,
+.priceTableDisplay .displayField {
+    font: 16px Arial, Helvetica, Verdana, sans-serif;
+    color: #000;
+    background: transparent;
+    height: auto;
+    padding: 0 5px;
+    border: 0;
+}
+
+
+/* BUTTONS
+---------------------------- */
+#MainContent_pnlButtonsDisplay {
+    margin: 25px 0 0;
+}
+
+.divButtonsDisplay #MainContent_btnUpdate {
+    float: left;
+}
+
+
+
+
+
+
+
+
+
+
+/* SHOPPING CART
+---------------------------- */
+div.shoppingCartContainer {
+    margin: 30px auto 0 auto;
+    width: 820px;
+    font-family: Arial, sans-serif;
+}
+
+
+/* BREADCRUMBS */
+div.breadcrumbContainer {
+    position: relative;
+    margin: 0 auto 50px auto;
+    padding: 0 1px;
+    width: 818px;
+    height: 43px;
+}
+
+div.breadcrumbContainer div {
+    position: relative;
+    float: left;
+    padding: 12px 0 0 0;
+    width: 296px;
+    height: 43px;
+    text-align: center;
+}
+
+div.breadcrumb1 { z-index: 3; background: url('../Images/breadcrumbFirst.png') top left no-repeat; }
+div.breadcrumb2 { z-index: 2; }
+div.breadcrumb3 { z-index: 1; }
+
+div.breadcrumb2,
+div.breadcrumb3 {
+    background: url('../Images/breadcrumb.png') top left no-repeat;
+    margin: 0 0 0 -36px;
+}
+
+.breadcrumbContainer div a {
+    color:  rgb(232,127,130);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.breadcrumbContainer div a:hover {
+    background: none;
+}
+
+    .breadcrumbContainer div a.thisBreadcrumb {
+        color: #fff;
+    }
+/* BREADCRUMBS END */
+
+
+/* SHOPPING CART TABLE */
+.tblShoppingCart {
+    margin: 0 auto;
+    width: 820px;
+    border-collapse: collapse;
+}
+
+.shoppingCartHeaderRow {
+    color: rgb(153,51,0);
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 19px;
+}
+
+.tblShoppingCart td,
+.tblShoppingCart th {
+
+    text-align: center;
+}
+
+.tblShoppingCart th {
+    padding: 0 0 3px 0;
+    border-bottom: 1px solid #333;
+}
+
+.tblShoppingCart td {
+    padding: 15px 0;
+    border-bottom: 1px solid #888;
+    font-size: 16px;
+}
+
+.cartQuantity {
+    width: 50px;
+    text-align: center;
+}
+
+.itemLabel {
+    font-weight: bold;
+}
+
+.fontBold {
+    font-weight: bold;
+}
+
+.fontItalic {
+    font-style: italic;
+}
+/* SHOPPING CART TABLE END */
+
+
+/* SHOPPING CART TOTAL TABLE */
+.tblShoppingCartTotal {
+    float: right;
+    margin: 15px 0 10px 0;
+    width: 200px;
+    height: 75px;
+    font-size: 14px;
+    background: #fefefe;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.tblShoppingCartTotal td.numOfItems,
+.tblShoppingCartTotal td.cartTotal {
+    padding: 0 0 0 10px;
+    font-weight: bold;
+}
+
+.tblShoppingCartTotal td#numOfItems,
+.tblShoppingCartTotal td#cartTotal {
+    text-align: right;
+}
+
+.tblShoppingCartTotal td.numOfItems,
+.tblShoppingCartTotal td#numOfItems {
+    padding: 10px 10px 0 10px;
+}
+
+.tblShoppingCartTotal td.cartTotal,
+.tblShoppingCartTotal td#cartTotal {
+    padding: 0 10px 10px 10px;
+}
+/* SHOPPING CART TOTAL TABLE END */
+
+
+/* SHOPPING CART BUTTONS */
+.shoppingCartButtons { text-align: right; }
+.shoppingCartButtons input { margin: 0 0 0 15px; }
+/* SHOPPING CART BUTTONS END */
+
+/* CHECK OUT TABLE */
+.tblCheckOutHeader {
+    margin: 12px 0 0 0;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 19px;
+    text-decoration: underline;
+    font-weight: bold;
+    float: right;
+    width: 200px;
+    text-align: center;
+}
+.tblCheckOut {
+    margin: 10px 0 0 0;
+    float: left;
+    text-align: center;
+}
+.tblCheckOutTotal {
+    float: right;
+    margin: 10px 0 10px 0;
+    width: 200px;
+    height: 200px;
+    font-size: 14px;
+    background: #fefefe;
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: left;
+}
+.tblCheckOutTotal td.subtotalOfItems,
+.tblCheckOutTotal td.shippingCharges,
+.tblCheckOutTotal td.handlingCharges,
+.tblCheckOutTotal td.taxCharges,
+.tblCheckOutTotal td.totalPrice {
+    padding: 0 0 0 10px;
+    font-weight: bold;
+}
+.tblCheckOutTotal td#subtotalOfItems,
+.tblCheckOutTotal td#shippingCharges,
+.tblCheckOutTotal td#handlingCharges,
+.tblCheckOutTotal td#taxCharges,
+.tblCheckOutTotal td#totalPrice {
+    text-align: right;
+}
+.tblCheckOutTotal td.subtotalOfItems,
+.tblCheckOutTotal td#subtotalOfItems {
+    padding: 5px 10px 5px 10px;
+}
+.tblCheckOutTotal td.shippingCharges,
+.tblCheckOutTotal td#shippingCharges {
+    padding: 0 10px 5px 10px;
+}
+.tblCheckOutTotal td.handlingCharges,
+.tblCheckOutTotal td#handlingCharges {
+    padding: 0 10px 5px 10px;
+}
+.tblCheckOutTotal td.taxCharges,
+.tblCheckOutTotal td#taxCharges {
+    padding: 0 10px 5px 10px;
+    border-bottom: 1px solid black;
+}
+.tblCheckOutTotal td.totalPrice,
+.tblCheckOutTotal td#totalPrice {
+    padding: 10px 10px 10px 10px;
+}
+/* CHECK OUT TABLE END */
+
+/* CHECK OUT BUTTONS */
+.checkOutButtons { text-align: right; }
+.checkOutButtons input { margin: 0 0 0 15px; }
+/* CHECK OUT BUTTONS END */
+
+/* ORDER SUMMARY TABLE */
+.divThankYou {
+    margin: 0 20px 10px 20px;
+    padding: 0 0 10px 0;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-style: italic;
+    border-bottom: 1px solid black;
+}
+.tblOrderSummary {
+    float: left;
+    border-collapse: collapse;
+    text-align: center;
+    margin: 0 0 0 40px;
+}
+.tblOrderSummaryHeader {
+    color: rgb(153,51,0);
+    float: right;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 19px;
+    font-weight: bold;
+    width: 200px;
+    text-align: center;
+}
+.tblOrderSummaryTotal {
+    margin: 10px auto 10px auto;
+    width: 200px;
+    height: 200px;
+    font-size: 14px;
+    background: #fefefe;
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: left;
+    float: right;
+}
+.tblOrderSummaryTotal td.subtotalOfItems,
+.tblOrderSummaryTotal td.shippingCharges,
+.tblOrderSummaryTotal td.handlingCharges,
+.tblOrderSummaryTotal td.taxCharges,
+.tblOrderSummaryTotal td.totalPrice {
+    padding: 0 0 0 10px;
+    font-weight: bold;
+}
+.tblOrderSummaryTotal td#subtotalOfItems,
+.tblOrderSummaryTotal td#shippingCharges,
+.tblOrderSummaryTotal td#handlingCharges,
+.tblOrderSummaryTotal td#taxCharges,
+.tblOrderSummaryTotal td#totalPrice {
+    text-align: right;
+}
+.tblOrderSummaryTotal td.subtotalOfItems,
+.tblOrderSummaryTotal td#subtotalOfItems {
+    padding: 5px 10px 5px 10px;
+}
+.tblOrderSummaryTotal td.shippingCharges,
+.tblOrderSummaryTotal td#shippingCharges {
+    padding: 0 10px 5px 10px;
+}
+.tblOrderSummaryTotal td.handlingCharges,
+.tblOrderSummaryTotal td#handlingCharges {
+    padding: 0 10px 5px 10px;
+}
+.tblOrderSummaryTotal td.taxCharges,
+.tblOrderSummaryTotal td#taxCharges {
+    padding: 0 10px 5px 10px;
+    border-bottom: 1px solid black;
+}
+.tblOrderSummaryTotal td.totalPrice,
+.tblOrderSummaryTotal td#totalPrice {
+    padding: 10px 10px 10px 10px;
+}
+/* ORDER SUMMARY TABLE END */
+
+/* SHOPPING CART END
+---------------------------- */

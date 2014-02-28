@@ -11,7 +11,14 @@
     <script>
         
         var jsonString = <%= hidRealHidden.Value %>;
-        console.log(jsonString);
+        console.log(jsonstring);
+
+
+        function runme()
+        {
+            jsonString.Name = "Ass";
+            document.getElementById("<%=hidRealHidden.ClientID%>").value = JSON.stringify(jsonString);
+        }
     </script>
 
     <asp:Button ID="btnFuck" runat="server" OnClick="btnFuck_Click" />

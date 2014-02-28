@@ -15,13 +15,76 @@
         var vent2Height;
         var vent3Height;
         var ventBottomHeight;
-
         var ventWidth; //width vents
 
         var errorMessage;
 
         $(document).ready(function(){
             errorMessage = document.getElementById("MainContent_txtErrorMessage");
+
+            // Retreive the JSON door
+            var hiddenDoor = <%= hidRealHidden.Value %>;
+            console.log(hiddenDoor);
+
+            // Select the door type radio button
+            $("input[name='ctl00$MainContent$doorTypeRadios'][value='radType" + hiddenDoor.DoorType + "']").prop("checked", true);
+
+            if (hiddenDoor.DoorType == "Cabana")
+            {                
+                console.log(hiddenDoor.DoorType);
+                // Populate the Cabana fields
+                $("#MainContent_ddlDoorStyleCabana").val(hiddenDoor.DoorStyle);
+                $("#MainContent_ddlDoorScreenTypesCabana").val(hiddenDoor.ScreenType);
+                $("#MainContent_ddlDoorVinylTintCabana").val(hiddenDoor.VinylTint);
+                $("#MainContent_ddlDoorGlassTintCabana").val(hiddenDoor.GlassTint);
+                $("#MainContent_ddlDoorKickplateCabana").val(hiddenDoor.Kickplate);
+                $("#MainContent_ddlDoorColourCabana").val(hiddenDoor.Colour);
+                $("#MainContent_txtDoorHeightCabana").val(hiddenDoor.Height);
+                $("#MainContent_txtDoorWidthCabana").val(hiddenDoor.Length);
+                $("#MainContent_ddlDoorV4TNumberOfVentsCabana").val(hiddenDoor.NumberOfVents); // Not currently stored in the database
+                $("#MainContent_ddlDoorHardwareCabana").val(hiddenDoor.HardwareType);
+                $("input[name='ctl00$MainContent$SwingInOutCabana'][value='" + hiddenDoor.Swing + "']").prop("checked", true); // Not currently populating on the site
+                if (hiddenDoor.Hinge == "L") { // Not currently populating on the site
+                    $("input[name='ctl00$MainContent$DoorHingeCabana'][value='Left']").prop("checked", true);
+                }
+                else {                    
+                    $("input[='ctl00$MainContent$DoorHingeCabana'][value='Right']").prop("checked", true);
+                }
+            }
+            else if (hiddenDoor.DoorType == "French")
+            {
+                console.log(hiddenDoor.DoorType);
+                // Populate the French fields                                
+                $("#MainContent_ddlDoorStyleFrench").val(hiddenDoor.DoorStyle);
+                $("#MainContent_ddlDoorScreenTypesFrench").val(hiddenDoor.ScreenType);
+                $("#MainContent_ddlDoorColourFrench").val(hiddenDoor.Colour);
+                $("#MainContent_txtDoorHeightFrench").val(hiddenDoor.Height);
+                $("#MainContent_txtDoorWidthFrench").val(hiddenDoor.Length);
+                $("#MainContent_ddlDoorKickplateFrench").val(hiddenDoor.Kickplate);
+                $("#MainContent_ddlDoorVinylTintFrench").val(hiddenDoor.VinylTint);
+                $("#MainContent_ddlDoorGlassTintFrench").val(hiddenDoor.GlassTint);
+                $("input[name='ctl00$MainContent$SwingInOutFrench'][value='" + hiddenDoor.Swing + "']").prop("checked", true); // Not currently populating on the site                
+                $("input[name='ctl00$MainContent$PrimaryOperatorFrench'][value='" + hiddenDoor.OperatingDoor + "']").prop("checked", true); // Not currently populating on the site. Fields are Left/Right, database is True/False
+                $("#MainContent_ddlDoorHardwareFrench").val(hiddenDoor.HardwareType);
+            }
+            else 
+            {
+                console.log(hiddenDoor.DoorType);
+                // Populate the Patio fields
+                                
+                $("#MainContent_ddlDoorStylePatio").val(hiddenDoor.DoorStyle);
+                $("#MainContent_ddlDoorScreenTypesPatio").val(hiddenDoor.ScreenType);
+                $("#MainContent_ddlDoorColourPatio").val(hiddenDoor.Colour);
+                $("#MainContent_txtDoorHeightPatio").val(hiddenDoor.Height);
+                $("#MainContent_txtDoorWidthPatio").val(hiddenDoor.Length);
+                $("#MainContent_ddlDoorKickplatePatio").val(hiddenDoor.Kickplate);
+                $("#MainContent_ddlDoorGlassTintPatio").val(hiddenDoor.GlassTint);
+
+                /* Moving door field is missing? or is it the operator left and right? database field contains True/False 
+                   hiddenDoor.MovingDoor 
+                */
+            }
+
         });
 
         /**
@@ -605,6 +668,7 @@
             }
         }
 
+        
     </script>
 
     <div class="slide-window" id="slide-window" >
@@ -644,4 +708,5 @@
     </div>
     <div id="hiddenFieldsDiv" runat="server"></div>
     <asp:SqlDataSource ID="sdsDBConnection" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [users]"></asp:SqlDataSource>
+    <asp:HiddenField ID="hidRealHidden" runat="server" />
 </asp:Content>
