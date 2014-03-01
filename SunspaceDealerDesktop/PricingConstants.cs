@@ -782,28 +782,79 @@ namespace SunspaceDealerDesktop
 
         #region SUNSPACE ACRYLIC ROOF AND PATIO COVERS
 
+            #region SUNSPACE ACRYLIC ROOF SYSTEMS
+
             #region COMPLETE ROOF PACKAGE INCLUDING
 
             #region Studio Roof
 
             //Up to 150 Sq. Ft....Clear, Bronze, Solar Cool White
-            public static float ACRYLIC_ROOF_STUDIO_ROOF_UP_TO_150_SQ_FT = 31.00f; //Sq. Ft.
-            //150 Sq. Ft. and up...Clear, Bronze, Solar Cool White
-            public static float ACRYLIC_ROOF_STUDIO_ROOF_150_SQ_FT_AND_UP = 29.00f; //Sq. Ft.
+                    public static float ACRYLIC_ROOF_STUDIO_ROOF_UP_TO_150_SQ_FT = 31.00f; //Sq. Ft.
+                    //150 Sq. Ft. and up...Clear, Bronze, Solar Cool White
+                    public static float ACRYLIC_ROOF_STUDIO_ROOF_150_SQ_FT_AND_UP = 29.00f; //Sq. Ft.
 
+                    #endregion
+
+                    #region Gable Roof
+
+                    //Up to 150 Sq. Ft....Clear, Bronze, Solar Cool White
+                    public static float ACRYLIC_ROOF_GABLE_ROOF_UP_TO_150_SQ_FT = 32.00f; //Sq. Ft.
+                    //150 Sq. Ft. and up...Clear, Bronze, Solar Cool White
+                    public static float ACRYLIC_ROOF_GABLE_ROOF_150_SQ_FT_AND_UP = 30.00f; //Sq. Ft.
+
+                    #endregion
+
+                    //For Heatstop Cool Blue add
+                    public static float ACRYLIC_ROOF_FOR_HEATSTOP_COOL_BLUE_ADD = 1.10f; //Sq. Ft.
+
+                    #endregion
+
+            #region SUNSPACE "T-BAR" INSULATED ROOF SYSTEMS
+
+            /*Note: For invoicing purposes roof dimensions will be rounded up to the nearest foot. All T-BAR roof
+            systems will be shipped with tee-bars, receiver, gutter, fascia and 5/8" thick 2lb Aluminum Foam panels
+            The T-Bar roof system has all the flexibility of the insulated roof system but also always you to add full length
+            ACRYLITE® skylight panel to the roof system where additional light is required. An upcharge will applied to
+            the square footage of acrylic rood panels used if the system. Please note that the Tee-bar roof system is not
+            recommended for installation over Model 400 walls.
+            **/
+
+            #region Studio Roof
+            //Up to 150 Sq. Ft.
+            public static float ACRYLIC_ROOF_STUDIO_UP_TO_150 = 21.00f; //Sq. Ft.
+            //150 Sq. Ft. and up
+            public static float ACRYLIC_ROOF_STUDIO_150_AND_UP = 19.00f; //Sq. Ft.
             #endregion
 
             #region Gable Roof
+            //Up to 150 Sq. Ft.
+            public static float ACRYLIC_ROOF_GABLE_UP_TO_150 = 22.00f; //Sq. Ft.
+            //150 Sq. Ft. and up
+            public static float ACRYLIC_ROOF_GABLE_150_AND_UP = 20.00f; //Sq. Ft.
+            #endregion
 
-            //Up to 150 Sq. Ft....Clear, Bronze, Solar Cool White
-            public static float ACRYLIC_ROOF_GABLE_ROOF_UP_TO_150_SQ_FT = 32.00f; //Sq. Ft.
-            //150 Sq. Ft. and up...Clear, Bronze, Solar Cool White
-            public static float ACRYLIC_ROOF_GABLE_ROOF_150_SQ_FT_AND_UP = 30.00f; //Sq. Ft.
+            //Upgrade to ACRYLITE® Double Skin Acylic Panels
+            public static float UPGRADE_TO_ACRYLITE_DOUBLE_SKIN_ACYLIC_PANELS = 10.00f; //Add Sq. Ft.
+            //Available Color Options: Clear, Bronze, Solar Cool White, Heatstop Cool Blue
+
+            #region SUPPORT COMPONENTS
+
+            //3" x 3" Fluted Post 7' White, Bronze, Driftwood
+            public static float ACRYLIC_ROOF_FLUTED_POST_7_FOOT = 78.30f; //Each
+            //3" x 3" Fluted Post 8' White, Bronze, Driftwood
+            public static float ACRYLIC_ROOF_FLUTED_POST_8_FOOT = 91.40f; //Each
+            //3" x 3" Fluted Post 9' White, Bronze, Driftwood
+            public static float ACRYLIC_ROOF_FLUTED_POST_9_FOOT = 104.40f; //Each
+            //3" x 3" Fluted Post 10' White, Bronze, Driftwood
+            public static float ACRYLIC_ROOF_FLUTED_POST_10_FOOT = 117.50f; //Each
+            //3" x 3" Fluted Post 22' White, Bronze, Driftwood
+            public static float ACRYLIC_ROOF_FLUTED_POST_22_FOOT = 234.90f; //Each
+            //1 - 1/2" x 3" Structural U-Channel ...22' ...White, Bronze, Driftwood
+            public static float ACRYLIC_ROOF_STRUCTURAL_U_CHANNEL_22_FOOT = 7.60f; //Ft.
 
             #endregion
 
-            //For Heatstop Cool Blue add
-            public static float ACRYLIC_FOR_HEATSTOP_COOL_BLUE_ADD = 1.10f; //Sq. Ft.
+            #endregion
 
             #endregion
 
