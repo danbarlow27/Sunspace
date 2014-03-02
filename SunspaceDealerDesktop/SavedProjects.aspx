@@ -100,7 +100,52 @@
                 }
             });
         });
+        
+        /*
+        $(document).on("ActuallyDuplicateProject_Click", function (e, id) {
+            alert("it's a hit!");
+            var name =  $(".txtField").val();
+            $.ajax({
+                type: "POST",
+                url: "SavedProjects.aspx/DuplicateProject",
+                data: JSON.stringify({ "projectID": id, "projectNewName": name }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    // Replace the div's content with the page method's return.
+                    //$("#TestDiv").html(msg.d);
+                    //alert((msg.d));
+                    alert(msg.d);
+                }
+            });
+        });
+        */
+        function ActuallyDuplicateProject_Click(id) {
+            alert("it's a hit!");
+            var name = $(".txtField").val();
+            $.ajax({
+                type: "POST",
+                url: "SavedProjects.aspx/DuplicateProject",
+                data: JSON.stringify({ "projectID": id, "projectNewName": name }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    // Replace the div's content with the page method's return.
+                    //$("#TestDiv").html(msg.d);
+                    //alert((msg.d));
+                    alert(msg.d);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
 
+        function willirun() {
+            alert("yes");
+        }
 
         $(document).ready(function () {
 
@@ -113,7 +158,7 @@
                 ProjectName_Click("0","Sunroom");
             });
 
-            function DuplicateProject_Click(id, type) {
+            function DuplicateProject_Click(id, name) {
                 
             }
 

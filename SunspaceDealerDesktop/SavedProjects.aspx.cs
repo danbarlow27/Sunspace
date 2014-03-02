@@ -453,6 +453,8 @@ namespace SunspaceWizard
             Panel aDialogPopup = new Panel();
             Panel aDialogContent = new Panel();
 
+            
+
 
             aDialogPopup.ID = "projectTransitBackground";
             aDialogPopup.CssClass = "projectTransitOverlay";
@@ -520,7 +522,7 @@ namespace SunspaceWizard
             aDuplicateButton.ID = "btnDuplicateProject";
             aDuplicateButton.CssClass = "button";
             aDuplicateButton.Attributes["style"] = "float:right;";
-            aDuplicateButton.Attributes["onClick"] = "alert(\"youhitthebuttoncongrats\"); window.location.replace(\"lollergags.aspx\"); return false;";
+            aDuplicateButton.Attributes["onClick"] = "ActuallyDuplicateProject_Click(" + projectID + " ); return false;";
             aDuplicateButton.Controls.Add(aDuplicateLabel);
             aDialogContent.Controls.Add(aDuplicateButton);
 
@@ -548,6 +550,96 @@ namespace SunspaceWizard
         }
 
 
+        [WebMethod]
+        public static bool DuplicateProject(string projectID, string projectNewName)
+        {
 
+            /*
+            string sqlCount;
+            string sqlInsert;
+            System.Data.DataView selectTable = new System.Data.DataView();
+            int count;
+
+            sqlCount = "SELECT * FROM " + table;
+
+            dataSource.SelectCommand = sqlCount;
+            selectTable = (System.Data.DataView)dataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+            count = selectTable.Count;
+
+            sqlInsert = "INSERT INTO " + table
+            + "(accId,partName,description,partNumber,color,packQuantity,width,widthUnits,length,lengthUnits,size,sizeUnits,usdPrice,cadPrice,status)"
+            + "VALUES"
+            + "(" + (count + 1) + ",'" + AccessoryName + "','" + AccessoryDescription + "','" + AccessoryNumber + "','" + AccessoryColor + "'," + AccessoryPackQuantity + ","
+            + AccessoryWidth + ",'" + AccessoryWidthUnits + "'," + AccessoryLength + ",'" + AccessoryLengthUnits + "'," + AccessorySize + ",'" + accessorySizeUnits + "',"
+            + AccessoryUsdPrice + "," + AccessoryCadPrice + "," + 1 + ")";
+
+            dataSource.InsertCommand = sqlInsert;
+            dataSource.Insert();
+            */
+
+
+            SqlDataSource dataSource = new SqlDataSource();
+            // Super bad? Copy pasta from web.config
+            dataSource.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\sunspace_db.mdf;Integrated Security=True;Connect Timeout=30";
+            Project aProject = new Project();
+            System.Data.DataView selectProject = new System.Data.DataView();
+            string sqlSelect;
+            string sqlInsert;
+
+            // Select the project
+            sqlSelect = "SELECT 	project_type," + 
+		                            "installation_type," + 
+		                            "customer_id," +
+		                            "user_id," + 
+		                            "date_created," +
+		                            "status," +
+		                            "revised_date," +
+		                            "revised_user_id," +
+		                            "msrp," +
+		                            "project_notes," +
+		                            "hidden," +
+		                            "cut_pitch" +
+                        " FROM Projects" +
+                        " WHERE project_ID = " + projectID + ";";
+
+            dataSource.SelectCommand = sqlSelect;
+            selectProject = (System.Data.DataView)dataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+            Debug.WriteLine(selectProject[0].Row[0]);
+
+            sqlInsert = "INSERT INTO Projects(project_type, " +
+                     "installation_type, " +
+                     "customer_id, " +
+                     "user_id, " +
+                     "date_created, " +
+                     "status, " +
+                     "revised_date, " +
+                     "revised_user_id, " +
+                     "msrp, " +
+                     "project_notes, " +
+                     "hidden, " +
+                     "cut_pitch, " +
+                     "project_name " +
+            ") VALUES ( '" + selectProject[0].Row[0] + "'," +
+                     "'" + selectProject[0].Row[1] + "'," +
+                     "'" + selectProject[0].Row[2] + "'," +
+                     "'" + selectProject[0].Row[3] + "'," +
+                     "'" + selectProject[0].Row[4] + "'," +
+                     "'" + selectProject[0].Row[5] + "'," +
+                     "'" + selectProject[0].Row[6] + "'," +
+                     "'" + selectProject[0].Row[7] + "'," +
+                     "'" + selectProject[0].Row[8] + "'," +
+                     "'" + selectProject[0].Row[9] + "'," +
+                     "'" + selectProject[0].Row[10] + "'," +
+                     "'" + selectProject[0].Row[11] + "'," +
+                     "'" + projectNewName + "' ); "; //+
+            //" WHERE project_ID = '" + projectID + "';";
+
+            dataSource.InsertCommand = sqlInsert;
+            dataSource.Insert();
+
+            return true;
+        }
     }
 }
