@@ -41,5 +41,5 @@
 
         
     
-    <asp:SqlDataSource ID="sdsLogin" runat="server" ConnectionString="<%$ ConnectionStrings:SecondaryConnectionString %>" SelectCommand="SELECT * FROM [customers]"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsLogin" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [customers]"></asp:SqlDataSource>
 </asp:Content>
