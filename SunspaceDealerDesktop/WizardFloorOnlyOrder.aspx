@@ -139,7 +139,7 @@
                     </ul>
                 </div>
                 <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion2" Enabled="false" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Done" OnClick="btnQuestion1_Click" />
+                <asp:Button ID="btnQuestion2" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Done" OnClick="btnQuestion1_Click" />
             </div>
             <%-- end #slide3 --%>
             <asp:SqlDataSource ID="sdsFloors" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [floors]"></asp:SqlDataSource>

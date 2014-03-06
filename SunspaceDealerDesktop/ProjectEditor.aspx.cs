@@ -19,7 +19,7 @@ namespace SunspaceDealerDesktop
         protected int wallCount = 0;
         protected int floorCount = 0;
         protected int roofCount = 0;
-        protected int projectId = 82; //get it from the session (project_id)
+        protected int projectId = 88; //82 84 86 87 88 get it from the session (project_id)
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -606,7 +606,15 @@ namespace SunspaceDealerDesktop
                                                                 //types of windows
                                                                 switch (windowStyle)
                                                                 {
+                                                                    case "Double Slider": //glass model 300
+                                                                    case "Single Slider": //glass model 400
+                                                                    case "Horizontal Roller XX": //glass model 300
                                                                     case "Horizontal Roller":
+                                                                    case "Horizontal 2 Track":
+                                                                    case "H2T":
+                                                                    case "Vertical 4 Track":
+                                                                    case "Vertical Four Track":
+                                                                    case "V4T":
                                                                     case "Vinyl":
                                                                         #region Vinyl Window
 
@@ -685,6 +693,7 @@ namespace SunspaceDealerDesktop
                                                                         #endregion
                                                                         break;
                                                                     case "Glass":
+                                                                    case "Fixed Glass 2\"":
                                                                         #region Glass Window
 
                                                                         GlassWindow aGlassWindow = new GlassWindow();
