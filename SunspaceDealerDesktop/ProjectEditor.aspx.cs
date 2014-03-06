@@ -23,6 +23,7 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            projectId = Convert.ToInt32(Session["project_id"].ToString());
             #region commented out hard coded data
             /*
             #region hard coded data
