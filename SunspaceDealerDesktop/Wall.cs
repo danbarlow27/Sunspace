@@ -387,8 +387,8 @@ namespace SunspaceDealerDesktop
                             //We have a space, so create a window mod to fill it
                             Mod aMod = new Mod();
                             aMod.FixedLocation = currentLocation;
-                            aMod.StartHeight = this.GetHeightAtLocation(currentLocation);
-                            aMod.EndHeight = this.GetHeightAtLocation(LinearItems[i].FixedLocation);
+                            aMod.StartHeight = GetHeightAtLocation(currentLocation);
+                            aMod.EndHeight = GetHeightAtLocation(LinearItems[i].FixedLocation);
                             aMod.ItemType = "Mod";
                             aMod.Length = windowSpecifics[0];
                             if (windowCounter == 0)
@@ -442,7 +442,7 @@ namespace SunspaceDealerDesktop
                             //That way we arbitrarily set a location for the transom to start and maintain consistency.
                             if (highestPunch == 0)
                             {
-                                highestPunch = Math.Min(aMod.StartHeight, aMod.EndHeight) - 4.125F - Constants.KNEEWALL_PUNCH; //changeme based on type
+                                highestPunch = GlobalFunctions.RoundDownToNearestEighthInch(Math.Min(aMod.StartHeight, aMod.EndHeight) - 4.125F - Constants.KNEEWALL_PUNCH); //changeme based on type
                             }
                             //Now we know where the ending height is, so we subtract kneewall to get the height of the window
                             //Punch takes up space too, so subtract it as well
@@ -492,13 +492,13 @@ namespace SunspaceDealerDesktop
                             aMod.ModularItems.Add(aWindow);
 
                             //Now we handle transom
-                            float modStartWallHeight = GlobalFunctions.getHeightAtPosition(this.StartHeight, this.EndHeight, currentLocation, this.Length);
-                            float modEndWallHeight = GlobalFunctions.getHeightAtPosition(this.StartHeight, this.EndHeight, (currentLocation + aMod.Length), this.Length);
+                            float modStartWallHeight = GlobalFunctions.getHeightAtPosition(StartHeight, EndHeight, currentLocation, Length);
+                            float modEndWallHeight = GlobalFunctions.getHeightAtPosition(StartHeight, EndHeight, (currentLocation + aMod.Length), Length);
                             float spaceAbovePunch = Math.Max(modStartWallHeight, modEndWallHeight) - highestPunch - .25f; //Punch physical space
 
                             float[] transomInfo = GlobalFunctions.findOptimalHeightsOfWindows(spaceAbovePunch, transomType);
 
-                            if (this.StartHeight == this.EndHeight)
+                            if (StartHeight == EndHeight)
                             {
                                 //rectangular window
                                 for (int currentWindow = 0; currentWindow < transomInfo[0]; currentWindow++)
@@ -509,7 +509,8 @@ namespace SunspaceDealerDesktop
                                     aTransom.RightHeight = aTransom.LeftHeight = transomInfo[1] - 2.125f; //Window itself
                                     aTransom.Colour = windowColour;
                                     aTransom.ItemType = "Window";
-                                    aTransom.Width = aMod.Length - 2;
+                                    aTransom.FLength = aMod.Length - 2;
+                                    aTransom.Width = aTransom.FLength - 2.125f;
                                     aTransom.WindowStyle = transomType;
                                     if (currentWindow == 0)
                                     {

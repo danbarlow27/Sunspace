@@ -40,7 +40,7 @@ namespace SunspaceDealerDesktop
             try
             {
                 componentCart = (List<string>)Session["componentCart"];
-                componentCartQuantity = (List<int>)Session["componentCartQuantity"];
+                componentCartQuantity = (List<int>)Session["componentCartQty"];
 
                 if (componentCart.Count == 0)
                 {
@@ -61,9 +61,12 @@ namespace SunspaceDealerDesktop
                     aNormalRow.Controls.Add(aNormalCell);
                     aNormalCell = new TableCell();
 
+                    aNormalButton.Text = "Delete";
                     aNormalCell.Controls.Add(aNormalButton);
                     aNormalRow.Controls.Add(aNormalCell);
                     aNormalCell = new TableCell();
+
+                    mainTable.Controls.Add(aNormalRow);
                 }
 
                 lblDebug.Text = "Cart exists";

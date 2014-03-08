@@ -946,8 +946,8 @@ namespace SunspaceDealerDesktop
 
         protected void btnShop_Click(object sender, EventArgs e)
         {
-            List<string> componentCart = new List<string>();
-            List<int> componentCartQty = new List<int>();
+            List<string> componentCart;
+            List<int> componentCartQty;
 
             try
             {
@@ -975,7 +975,12 @@ namespace SunspaceDealerDesktop
             }
             catch //if session object doesn't exist, we create it
             {
+                componentCart = new List<string>(); 
+                componentCartQty = new List<int>();
+
                 componentCart.Add(Session["partNumber"].ToString());
+                componentCartQty.Add(1);
+
                 Session.Add("componentCart", componentCart);
                 Session.Add("componentCartQty", componentCartQty);
             }
