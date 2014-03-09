@@ -442,7 +442,7 @@ namespace SunspaceDealerDesktop
                             //That way we arbitrarily set a location for the transom to start and maintain consistency.
                             if (highestPunch == 0)
                             {
-                                highestPunch = GlobalFunctions.RoundDownToNearestEighthInch(Math.Min(aMod.StartHeight, aMod.EndHeight) - 4.125F - Constants.KNEEWALL_PUNCH); //changeme based on type
+                                highestPunch = GlobalFunctions.RoundDownToNearestEighthInch(Math.Min(StartHeight, EndHeight) - 4.125F - Constants.KNEEWALL_PUNCH); //changeme based on type
                             }
                             //Now we know where the ending height is, so we subtract kneewall to get the height of the window
                             //Punch takes up space too, so subtract it as well
@@ -539,17 +539,43 @@ namespace SunspaceDealerDesktop
                             else
                             {
                                 //trapezoid
+                                float nextTransomHeight;
+
+                                //If start wall is higher, lower end height
+                                if (modStartWallHeight == Math.Max(modStartWallHeight, modEndWallHeight))
+                                {
+                                    nextTransomHeight = transomInfo[1];
+                                }
+                                else
+                                {
+                                    nextTransomHeight = transomInfo[1] - (Math.Max(modStartWallHeight, modEndWallHeight) - Math.Min(modStartWallHeight, modEndWallHeight));
+                                }
+
                                 for (int currentWindow = 0; currentWindow < transomInfo[0]; currentWindow++)
                                 {
                                     //Set window properties
                                     Window aTransom = new Window();
-                                    aTransom.FEndHeight = aTransom.FStartHeight = transomInfo[1];
-                                    aTransom.RightHeight = aTransom.LeftHeight = transomInfo[1] - 2.125f;
                                     aTransom.Colour = windowColour;
                                     aTransom.ItemType = "Window";
                                     aTransom.FLength = aMod.Length - 2;
                                     aTransom.Width = aMod.Length - 2 - 2.125f;
                                     aTransom.WindowStyle = transomType;
+
+                                    aTransom.FStartHeight = nextTransomHeight;
+                                    aTransom.LeftHeight = aTransom.FStartHeight - 2.125f;
+                                    //If start wall is higher, lower end height
+                                    if (modStartWallHeight == Math.Max(modStartWallHeight, modEndWallHeight))
+                                    {
+                                        aTransom.FEndHeight = aTransom.FStartHeight - (modStartWallHeight - modEndWallHeight);
+                                    }
+                                    else
+                                    {
+                                        aTransom.FEndHeight = aTransom.FStartHeight + (modEndWallHeight - modStartWallHeight);
+                                    }
+
+                                    aTransom.RightHeight = aTransom.FEndHeight - 2.125f;
+                                    nextTransomHeight = aTransom.FEndHeight;
+
                                     //Add remaining area to first window
                                     if (currentWindow == 0)
                                     {
@@ -558,22 +584,28 @@ namespace SunspaceDealerDesktop
                                         aTransom.RightHeight += transomInfo[2];
                                         aTransom.LeftHeight += transomInfo[2];
                                     }
-                                    //If last window, we need to change a height to make it sloped
-                                    if (currentWindow == transomInfo[0] - 1)
-                                    {
-                                        //If start wall is higher, we lower end height
-                                        if (modStartWallHeight == Math.Max(modStartWallHeight, modEndWallHeight))
-                                        {
-                                            aTransom.FEndHeight -= (modStartWallHeight - modEndWallHeight);
-                                            aTransom.RightHeight -= (modStartWallHeight - modEndWallHeight);
-                                        }
-                                        //Otherwise we lower start height
-                                        else
-                                        {
-                                            aTransom.FStartHeight -= (modEndWallHeight - modStartWallHeight);
-                                            aTransom.LeftHeight -= (modEndWallHeight - modStartWallHeight);
-                                        }
-                                    }
+
+                                    aTransom.FStartHeight = GlobalFunctions.RoundDownToNearestEighthInch(aTransom.FStartHeight);
+                                    aTransom.FEndHeight = GlobalFunctions.RoundDownToNearestEighthInch(aTransom.FEndHeight);
+                                    aTransom.LeftHeight = GlobalFunctions.RoundDownToNearestEighthInch(aTransom.LeftHeight);
+                                    aTransom.RightHeight = GlobalFunctions.RoundDownToNearestEighthInch(aTransom.RightHeight);
+                                    
+                                    ////If last window, we need to change a height to make it sloped
+                                    //if (currentWindow == transomInfo[0] - 1)
+                                    //{
+                                    //    //If start wall is higher, we lower end height
+                                    //    if (modStartWallHeight == Math.Max(modStartWallHeight, modEndWallHeight))
+                                    //    {
+                                    //        aTransom.FEndHeight -= (modStartWallHeight - modEndWallHeight);
+                                    //        aTransom.RightHeight -= (modStartWallHeight - modEndWallHeight);
+                                    //    }
+                                    //    //Otherwise we lower start height
+                                    //    else
+                                    //    {
+                                    //        aTransom.FStartHeight -= (modEndWallHeight - modStartWallHeight);
+                                    //        aTransom.LeftHeight -= (modEndWallHeight - modStartWallHeight);
+                                    //    }
+                                    //}
                                     aMod.ModularItems.Add(aTransom);
                                 }
                             }
