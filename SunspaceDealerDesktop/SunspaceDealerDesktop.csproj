@@ -269,6 +269,7 @@
     <Content Include="ProjectPreview.aspx" />
     <Content Include="ProjEd.aspx" />
     <Content Include="WizardDoorOnlyEdit.aspx" />
+    <Content Include="WizardFloorOnlyEdit.aspx" />
     <Content Include="WizardRoofOnly.aspx" />
     <Content Include="RoofTesting.aspx" />
     <Content Include="RoofWizard.aspx" />
@@ -606,6 +607,13 @@
     </Compile>
     <Compile Include="WizardDoorOnlyEdit.aspx.designer.cs">
       <DependentUpon>WizardDoorOnlyEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WizardFloorOnlyEdit.aspx.cs">
+      <DependentUpon>WizardFloorOnlyEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WizardFloorOnlyEdit.aspx.designer.cs">
+      <DependentUpon>WizardFloorOnlyEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="WizardRoofOnly.aspx.cs">
       <DependentUpon>WizardRoofOnly.aspx</DependentUpon>

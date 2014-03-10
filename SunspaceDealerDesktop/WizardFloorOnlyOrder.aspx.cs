@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
 
 namespace SunspaceDealerDesktop
 {
@@ -72,7 +71,7 @@ namespace SunspaceDealerDesktop
             ddlFrontSetbackInches.Items.Add(lst58);
             ddlFrontSetbackInches.Items.Add(lst34);
             ddlFrontSetbackInches.Items.Add(lst78);
-            #endregion
+            #endregion            
         }
 
         protected void btnQuestion1_Click(object sender, EventArgs e)
@@ -126,7 +125,141 @@ namespace SunspaceDealerDesktop
             Session.Add("floorJointSetback", (Convert.ToSingle(txtJointSetback.Text) + Convert.ToSingle(ddlJointSetbackInches.SelectedValue)));
 
             //Now I know there's a column x row grid of panels
-            Response.Redirect("ProjectPreview.aspx");
+            //Response.Redirect("ProjectPreview.aspx");
+
+            // Hit the database
+            using (SqlConnection aConnection = new SqlConnection(sdsDBConnection.ConnectionString))
+            {
+                aConnection.Open();
+                SqlCommand aCommand = aConnection.CreateCommand();
+                SqlTransaction aTransaction;
+                SqlDataReader aReader;
+
+                // Start a local transaction.
+                aTransaction = aConnection.BeginTransaction("SampleTransaction");
+
+                // Must assign both transaction object and connection 
+                // to Command object for a pending local transaction
+                aCommand.Connection = aConnection;
+                aCommand.Transaction = aTransaction;
+
+                try
+                {
+                    //Project
+                    #region Project
+
+                    var newGuid = Guid.NewGuid();
+
+                    aCommand.CommandText = "INSERT INTO projects(project_type, installation_type, project_name, customer_id, user_id, date_created, status, revised_date, revised_user_id, msrp, project_notes, "
+                                            + "hidden, cut_pitch) VALUES ("
+                                            + "'Floor', " 
+                                            + "'None', "
+                                            //+ "'" + Session["newProjectProjectName"] + "', "
+                                            + "'" + newGuid + "', "
+                                            //+ Session["customer_id"] + ", "
+                                            + "1, "
+                                            //+ Session["user_id"] + ", "
+                                            + "1, "
+                                            + "'" + DateTime.Now.ToString("yyyy/MM/dd") + "', "
+                                            + "'" + "Active" + "', "
+                                            + "'" + DateTime.Now.ToString("yyyy/MM/dd") + "', "
+                                            //+ Session["user_id"] + ", "
+                                            + "1, "
+                                            + 0 + ", "
+                                            + 0 + ", "
+                                            + 0 + ", "
+                                            + 1
+                                            + ");";
+                    aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
+                    #endregion
+
+                    //Get project_id for use in below statements
+                    aCommand.CommandText = "SELECT project_id FROM projects WHERE project_name = '" + newGuid + "'"; // Replace newGuid with Session["newProjectProjectName"]
+                    aReader = aCommand.ExecuteReader();
+                    aReader.Read();
+
+                    int project_id = Convert.ToInt32(aReader[0]);
+                    aReader.Close();
+
+                    aTransaction.Commit();
+
+                    #region Floor
+                    if (Session["floorType"].ToString() == "Thermadeck")
+                    {
+                        int vapourBarrier = 0;
+                        if (Session["floorVapourBarrier"].ToString() == "true")
+                        {
+                            vapourBarrier = 1;
+                        }
+                        aCommand.CommandText = "INSERT INTO floors(project_id, floor_index, floor_type, projection, width, thickness, number_items, vapor_barrier) VALUES("
+                                                + project_id + ", "
+                                                + 0 + ", "
+                                                + "'Thermadeck'" + ", "
+                                                + Convert.ToSingle(Session["floorProjection"]) + ", "
+                                                + Convert.ToSingle(Session["floorWidth"]) + ", "
+                                                + Convert.ToSingle(Session["floorThickness"]) + ", "
+                                                + Convert.ToInt32(Session["floorPanelNumber"]) + ", "
+                                                + vapourBarrier
+                                                + ");";
+                        aCommand.ExecuteNonQuery();
+
+                        for (int i = 0; i < Convert.ToInt32(Session["floorPanelNumber"]); i++)
+                        {
+                            float panelWidth = Constants.THERMADECK_PANEL_WIDTH;
+                            float leftSetBack = Convert.ToSingle(Session["floorJointSetback"]);
+                            float rightSetBack = Convert.ToSingle(Session["floorJointSetback"]);
+
+                            if (i == Convert.ToInt32(Session["floorPanelNumber"])-1)
+                            {
+                                panelWidth = Convert.ToSingle(Session["floorLastPanelSize"]);
+                                rightSetBack = Convert.ToSingle(Session["floorSidesSetback"]);
+                            }
+
+                            if (i == 0)
+                            {
+                                leftSetBack = Convert.ToSingle(Session["floorSidesSetback"]);
+                            }
+
+                            aCommand.CommandText = "INSERT INTO thermadeck_panels(project_id, roof_index, roof_view, item_index, projection, width, set_back, back_setback, front_setback, right_setback, left_setback) VALUES("
+                                                + project_id + ", "
+                                                + 0 + ", "
+                                                + "'F'" + ", "
+                                                + i + ", "
+                                                + Convert.ToSingle(Session["floorProjection"]) + ", "
+                                                + panelWidth + ", "
+                                                + 0 + ", " //What is normal set_back? Soffit length?
+                                                + Convert.ToSingle(Session["floorLedgerSetback"]) + ", "
+                                                + Convert.ToSingle(Session["floorFrontSetback"]) + ", "
+                                                + rightSetBack + ", "
+                                                + leftSetBack
+                                                + ");";
+                            aCommand.ExecuteNonQuery();
+                        }
+                    }
+                    #endregion 
+                }
+                catch (Exception ex)
+                {
+                    int hi;
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    //lblError.Text = "Commit Exception Type: " + ex.GetType();
+                    //lblError.Text += "  Message: " + ex.Message;
+
+                    // Attempt to roll back the transaction. 
+                    try
+                    {
+                        aTransaction.Rollback();
+                    }
+                    catch (Exception ex2)
+                    {
+                        // This catch block will handle any errors that may have occurred 
+                        // on the server that would cause the rollback to fail, such as 
+                        // a closed connection.
+                        //lblError.Text = "Rollback Exception Type: " + ex2.GetType();
+                        //lblError.Text += "  Message: " + ex2.Message;
+                    }
+                }
+            }
         }
 
         //This function will add a new project, a new floor, and either Thermadeck or Alumadeck panels
