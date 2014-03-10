@@ -23,15 +23,17 @@ namespace SunspaceDealerDesktop
                 secondLabel.Text = Session["partNumber"].ToString();
             }
 
-            if (Session["viewSelected"] != null)
-            {
-                pnlButtonsDisplay.CssClass = "removeElement";
-            }
-            else if (Session["updateSelected"] != null)
+            if (Session["updateSelected"] != null)
             {
                 btnInsert.CssClass = "removeElement";
             }
-            
+
+            if (Session["user_type"].ToString() != "S")
+            {
+                btnUpdate.Visible = false;
+                btnInsert.Visible = false;
+            }
+
             //prevent backdoor
             if (Session["tableName"] == null)
             {

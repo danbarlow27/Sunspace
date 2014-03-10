@@ -5,5 +5,6 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <asp:PlaceHolder ID="phMainTable" runat="server"></asp:PlaceHolder>
+    <br /><br />
     <asp:Label ID="lblDebug" runat="server"></asp:Label>
 </asp:Content>

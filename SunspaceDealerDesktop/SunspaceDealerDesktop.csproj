@@ -334,7 +334,9 @@
     <Content Include="TestNumMods.aspx" />
     <Content Include="Scripts\Validation.js" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
@@ -475,6 +477,7 @@
     <Compile Include="PriceCalculator.aspx.designer.cs">
       <DependentUpon>PriceCalculator.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PricingFunctions.cs" />
     <Compile Include="ProductSelect.aspx.cs">
       <DependentUpon>ProductSelect.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
