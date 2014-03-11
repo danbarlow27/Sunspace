@@ -4625,6 +4625,69 @@ namespace SunspaceDealerDesktop
             endReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(listOfWalls[listOfWalls.Count - 1].StartHeight, listOfWalls[listOfWalls.Count - 1].EndHeight, listOfWalls[listOfWalls.Count - 1].Length, listOfWalls[listOfWalls.Count - 1].Length);
 
             listOfWalls[listOfWalls.Count - 1].LinearItems.Add(endReceiver);
+            
+            //linear item sexes
+            for (int i = 0; i < listOfWalls.Count; i++)
+            {
+                for (int j = 0; j < listOfWalls[i].LinearItems.Count; j++)
+                {
+                    if (listOfWalls[i].LinearItems[j].ItemType == "Receiver")
+                    {
+                        //Receiver at start of wall is MF, but at end of wall is FM
+                        if (j == 0)
+                        {
+                            listOfWalls[i].LinearItems[j].Sex = "MF";
+                        }
+                        else
+                        {
+                            listOfWalls[i].LinearItems[j].Sex = "FM";
+                        }
+                    }
+                    //Corners are always FF to allow the walls to 'go into' them
+                    else if (listOfWalls[i].LinearItems[j].ItemType == "Corner")
+                    {
+                        listOfWalls[i].LinearItems[j].Sex = "FF";
+                    }
+                    //Filler is always MM
+                    else if (listOfWalls[i].LinearItems[j].ItemType == "Filler")
+                    {
+                        listOfWalls[i].LinearItems[j].Sex = "MM";
+                    }
+                    else if (listOfWalls[i].LinearItems[j].ItemType == "Mod")
+                    {
+                        //If previous linear item ends with male receiever, this mod must be female
+                        if (listOfWalls[i].LinearItems[j - 1].Sex.Substring(1) == "M")
+                        {
+                            listOfWalls[i].LinearItems[j].Sex = "FF";
+                        }
+                        else
+                        {
+                            listOfWalls[i].LinearItems[j].Sex = "MM";
+                        }
+
+                        try
+                        {
+                            //If a filler is after this mod, we must make the mod end in female
+                            if (listOfWalls[i].LinearItems[j + 1].ItemType == "Filler")
+                            {
+                                listOfWalls[i].LinearItems[j].Sex = listOfWalls[i].LinearItems[j].Sex.Substring(0, 1) + "F";
+                            }
+                            //If a receiver is after this mod, we must make the mod end in male
+                            else if (listOfWalls[i].LinearItems[j + 1].ItemType == "Receiver")
+                            {
+                                listOfWalls[i].LinearItems[j].Sex = listOfWalls[i].LinearItems[j].Sex.Substring(0, 1) + "M";
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            //if we throw an exception, this is the very last linear item in the wall
+                            //If it is the last linear item in the wall, that means that a mod goes directly into a corner post
+                            //Adjust mod to end male to go into corner post
+                            listOfWalls[i].LinearItems[j].Sex = listOfWalls[i].LinearItems[j].Sex.Substring(0, 1) + "M";
+                        }
+                    }
+                }
+            }
 
             Session.Add("listOfWalls", listOfWalls);
             Session.Add("sunroomProjection", hidRoomProjection.Value);
