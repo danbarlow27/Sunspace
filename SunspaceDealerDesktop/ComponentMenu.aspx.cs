@@ -27,8 +27,9 @@ namespace SunspaceDealerDesktop
             }
             else if (Session["user_type"].ToString() != "S")
             {
-                btnSelectDisplay.Visible = false;
+                btnSelectInsert.Visible = false;
                 btnSelectUpdate.Visible = false;
+                btnSelectPricing.Visible = false;
             }
         }
 

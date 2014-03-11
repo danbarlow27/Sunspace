@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Floor Only Order" EnableEventValidation="false" MasterPageFile="~/Site.Master" Language="C#" AutoEventWireup="true" CodeBehind="WizardFloorOnlyOrder.aspx.cs" Inherits="SunspaceDealerDesktop.WizardFloorOnlyOrder" %>
+﻿<%@ Page Title="Floor Only Edit" EnableEventValidation="false" MasterPageFile="~/Site.Master" Language="C#" AutoEventWireup="true" CodeBehind="WizardFloorOnlyEdit.aspx.cs" Inherits="SunspaceDealerDesktop.WizardFloorOnlyEdit" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
@@ -139,7 +139,7 @@
                     </ul>
                 </div>
                 <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion2" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Done" OnClick="btnQuestion1_Click" />
+                <asp:Button ID="btnQuestion2" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Done" />
             </div>
             <%-- end #slide3 --%>
             <asp:SqlDataSource ID="sdsDBConnection" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [floors]"></asp:SqlDataSource>

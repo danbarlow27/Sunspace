@@ -40,7 +40,7 @@ namespace SunspaceDealerDesktop
             try
             {
                 componentCart = (List<string>)Session["componentCart"];
-                componentCartQuantity = (List<int>)Session["componentCartQuantity"];
+                componentCartQuantity = (List<int>)Session["componentCartQty"];
 
                 if (componentCart.Count == 0)
                 {
@@ -51,6 +51,22 @@ namespace SunspaceDealerDesktop
                 {
                     TableRow aNormalRow = new TableRow();
                     TableCell aNormalCell = new TableCell();
+                    Button aNormalButton = new Button();
+
+                    aNormalCell.Controls.Add(new LiteralControl(componentCart[i]));
+                    aNormalRow.Controls.Add(aNormalCell);
+                    aNormalCell = new TableCell();
+
+                    aNormalCell.Controls.Add(new LiteralControl(componentCartQuantity[i].ToString()));
+                    aNormalRow.Controls.Add(aNormalCell);
+                    aNormalCell = new TableCell();
+
+                    aNormalButton.Text = "Delete";
+                    aNormalCell.Controls.Add(aNormalButton);
+                    aNormalRow.Controls.Add(aNormalCell);
+                    aNormalCell = new TableCell();
+
+                    mainTable.Controls.Add(aNormalRow);
                 }
 
                 lblDebug.Text = "Cart exists";
@@ -58,9 +74,14 @@ namespace SunspaceDealerDesktop
             catch (Exception ex)
             {
                 //Nothing added to cart
-                aTableCell.Controls.Add(new LiteralControl("Nothing added to cart"));
-                aTableRow.Controls.Add(aTableCell);
-                mainTable.Controls.Add(aTableRow);
+                TableCell aTableCellB = new TableCell();
+                aTableCellB.Controls.Add(new LiteralControl("Nothing added to cart"));
+                aTableCellB.ColumnSpan = 3;
+
+                TableRow aTableRowB = new TableRow();
+                aTableRowB.Controls.Add(aTableCellB);
+
+                mainTable.Controls.Add(aTableRowB);
                 lblDebug.Text = "No cart exists";
             }
 
