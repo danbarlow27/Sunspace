@@ -1565,7 +1565,7 @@ namespace SunspaceDealerDesktop
 
                 try
                 {
-                    //get number of walls floors and roofs
+                    //get the door
                     aCommand.CommandText = "SELECT door_type, door_style, screen_type, height, length, door_colour, kick_plate FROM doors WHERE project_id = '" + projectId + "'";
                     SqlDataReader projectReader = aCommand.ExecuteReader();
 
