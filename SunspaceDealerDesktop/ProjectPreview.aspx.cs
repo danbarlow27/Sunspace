@@ -389,7 +389,7 @@ namespace SunspaceDealerDesktop
                                                     + listOfWalls[i].LinearItems[j].EndHeight + ", "
                                                     + listOfWalls[i].LinearItems[j].Length + ", '"
                                                     + Session["newProjectFramingColour"] + "', '"
-                                                    + "MF" + "', "
+                                                    + listOfWalls[i].LinearItems[j].Sex + "', "
                                                     + listOfWalls[i].LinearItems[j].FixedLocation + ", "
                                                     + 1 //Will start all as locked to avoid accidental changes in project editor before project submission
                                                     + ");";
