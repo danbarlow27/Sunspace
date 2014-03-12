@@ -4618,7 +4618,7 @@ namespace SunspaceDealerDesktop
             endReceiver.FixedLocation = listOfWalls[listOfWalls.Count - 1].Length - 1f;
             endReceiver.IsTwoPiece = false;
             listOfWalls[listOfWalls.Count - 1].LastItemIndex++;
-            endReceiver.ItemType = "Receiever";
+            endReceiver.ItemType = "Receiver";
             endReceiver.Length = 1f;
             endReceiver.LinearIndex = listOfWalls[listOfWalls.Count - 1].LastItemIndex + 1;
             endReceiver.StartHeight = GlobalFunctions.getHeightAtPosition(listOfWalls[listOfWalls.Count - 1].StartHeight, listOfWalls[listOfWalls.Count - 1].EndHeight, listOfWalls[listOfWalls.Count - 1].Length - 1f, listOfWalls[listOfWalls.Count - 1].Length);
