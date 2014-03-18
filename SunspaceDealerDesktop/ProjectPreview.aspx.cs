@@ -378,6 +378,30 @@ namespace SunspaceDealerDesktop
                     {
                         for (int j = 0; j < listOfWalls[i].LinearItems.Count; j++)
                         {
+                            //If we're the last filler in a wall, we need to remove the extra bit that temporarily holds wall length
+                            if (listOfWalls[i].LinearItems[j].ItemType == "Filler")
+                            {
+                                //If last linear item in wall is filler, its one of the first walls, whereas if its two from end, its the very last wall (filler+receiver)
+                                if (j == listOfWalls[i].LinearItems.Count - 1 || j == listOfWalls[i].LinearItems.Count - 2)
+                                {
+                                    //If last wall, its a receiver not a corner post
+                                    if (i == listOfWalls.Count-1)
+                                    {
+                                        listOfWalls[i].LinearItems[j].Length -= 1; //receiver
+                                    }
+                                    else
+                                    {
+                                        listOfWalls[i].LinearItems[j].Length -= 3.125f; //corner post
+                                    }
+
+                                    //If decreasing means the filler is 0
+                                    if (listOfWalls[i].LinearItems[j].Length == 0)
+                                    {
+                                        listOfWalls[i].LinearItems.RemoveAt(j);
+                                    }
+                                }
+                            }
+
                             //frame_colour
                             //sex
                             //attached_to logic, Lboxhead to door, door to Rboxhead
