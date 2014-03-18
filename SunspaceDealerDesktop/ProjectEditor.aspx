@@ -91,7 +91,10 @@
             /*visibility: hidden;*/
             height: auto;
             width: auto;
-            z-index: 999;
+            /*z-index: 1;*/
+        }
+        g {
+            position: static;
         }
     </style>
 
@@ -321,7 +324,7 @@
 
                         points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(points, id, title, gLi); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(points, "filler", title, gLi); //draw the polygon to represent the wall with the given coordinates and id
 
                         x = parseFloat(x) + scale(parseFloat(length));
 
@@ -717,7 +720,7 @@
             opacity = typeof opacity !== 'undefined' ? opacity : 1.0;
             stroke = typeof stroke !== 'undefined' ? stroke : "black";
 
-            var rect = g.append('rect')
+            var rect = g.style('z-index', 999).append('rect')
                 .attr("class", "label")
                 .attr('width', width)
                 .attr('height', height)
@@ -726,6 +729,7 @@
                 .style('fill', colour)
                 .style('fill-opacity', opacity)
                 .attr('stroke', stroke);
+                
             //.attr("onmouseover", "$(\"#wall\").attr(\"fill\", \"#F3F3F3\");")
             //.attr("onmouseout", "$(\"#wall\").attr(\"fill\", \"white\");");
             //.attr("onclick", "alert"); //put focus on the first editable field for the wall
@@ -952,6 +956,7 @@
 
         $(document).ready(function () {
             sunroomObjectChanged("0"); //when page loads, call sunroomObjectChanged function to set all the default values for wall 0
+            //$("#filler").style.zIndex = -1;
         });
 
     </script>

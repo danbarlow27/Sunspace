@@ -579,6 +579,63 @@ namespace SunspaceWizard
             */
 
 
+
+
+
+            /*
+                -- Declare variables
+                Declare @TABLE_NAME Varchar(128)
+
+                Declare @TABLE_COUNT int
+                Declare @INDEX int
+
+                -- Inner loop
+                Declare @SUB_INDEX int
+                Declare @SUB_COUNT int
+                Declare @SUB_COUNT2 varchar(32)
+                Declare @SUB_SQL varchar(1024)
+
+                -- TEMP
+                Declare @PROJECT_ID varchar(32)
+
+                SET @PROJECT_ID = 9
+
+                -- Set default for table name
+                SET @TABLE_NAME = ''
+                SET @SUB_COUNT = 0
+                -- Set index to zero
+                SET @INDEX = 0
+                -- Get the number of tables
+                Select @TABLE_COUNT = Count(*) From INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME LIKE 'project_id' AND TABLE_NAME <> 'projects'
+
+
+                While (@INDEX) < @TABLE_COUNT
+                Begin
+	                --print @PROJECT_ID
+	                -- To be used by inner loop
+	                SET @SUB_INDEX = 0
+	                SET @SUB_COUNT = 0
+
+	                -- Gets the current table name (offset by index, think of an array but cry a lot) 
+	                -- A monster, do not poke.
+	                SELECT @TABLE_NAME = TABLE_NAME From INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME LIKE 'project_id' AND TABLE_NAME <> 'projects' ORDER BY TABLE_NAME ASC OFFSET @INDEX ROWS FETCH NEXT 1 ROWS ONLY
+
+	                print @TABLE_NAME
+
+
+	                --SET @SUB_SQL = 'Select '+@SUB_COUNT2+' = Count(*) From ' + @TABLE_NAME + ' WHERE project_id = ''9'''
+	                --EXEC(@SUB_SQL)
+	                Select @SUB_COUNT = Count(*) From @TABLE_NAME WHERE 'project_id' = @PROJECT_ID
+	                print @SUB_SQL
+	                print @SUB_COUNT
+
+                    -- Increment Index (Super important fellas!)
+	                SET @INDEX = @INDEX + 1
+                    --Update ATable Set Processed = 1 Where Id = @Id 
+	                print '---end'
+                End
+             */
+
             SqlDataSource dataSource = new SqlDataSource();
             // Super bad? Copy pasta from web.config
             dataSource.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\sunspace_db.mdf;Integrated Security=True;Connect Timeout=30";
@@ -586,6 +643,10 @@ namespace SunspaceWizard
             System.Data.DataView selectProject = new System.Data.DataView();
             string sqlSelect;
             string sqlInsert;
+            List<string> tableNames = new List<string>();
+            int newProjectID;
+            int tableCount;
+            int subCount;
 
             // Select the project
             sqlSelect = "SELECT 	project_type," + 
@@ -638,6 +699,100 @@ namespace SunspaceWizard
 
             dataSource.InsertCommand = sqlInsert;
             dataSource.Insert();
+
+            // Grab project id from the last insert!
+            sqlSelect = "SELECT project_ID from Projects WHERE project_ID = IDENT_CURRENT('Projects');";
+
+
+            dataSource.SelectCommand = sqlSelect;
+            selectProject = (System.Data.DataView)dataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+            // Set new project id
+            newProjectID = (int)selectProject[0].Row[0];
+
+            Debug.WriteLine(selectProject[0].Row[0]);
+
+            // Get table count
+            sqlSelect = "Select Count(*) From INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME LIKE 'project_id' AND TABLE_NAME <> 'projects'";
+
+            dataSource.SelectCommand = sqlSelect;
+            selectProject = (System.Data.DataView)dataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+            // Set table count
+            tableCount = (int)selectProject[0].Row[0];
+
+            Debug.WriteLine(selectProject[0].Row[0]);
+
+            // 
+            for (int index = 0; index < tableCount; index++)
+            {
+                // Get table names
+                sqlSelect = "SELECT TABLE_NAME From INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME LIKE 'project_id' AND TABLE_NAME <> 'projects' ORDER BY TABLE_NAME ASC OFFSET "+ index +" ROWS FETCH NEXT 1 ROWS ONLY";
+                dataSource.SelectCommand = sqlSelect;
+                selectProject = (System.Data.DataView)dataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+                tableNames.Add((string)selectProject[0].Row[0]);
+                Debug.WriteLine("Table Name: " + selectProject[0].Row[0]);
+
+                // Select rows with the old project id
+                sqlSelect = "SELECT * FROM " + selectProject[0].Row[0] + " WHERE project_ID = " + projectID;
+                dataSource.SelectCommand = sqlSelect;
+                selectProject = (System.Data.DataView)dataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+                //
+                // IF THERES COLUMNS IN THE CURRENT TABLE
+                //
+                if (selectProject.Count > 0)
+                {
+                    // first [0] is rows
+                    // Rows are columns
+                    
+                    Debug.WriteLine(selectProject[0].Row[0]);
+                    
+                    
+                    
+                    //
+                    // TABLE ROW
+                    //
+                    // Gets deep now
+                    for (int index2 = 0; index2 < selectProject.Count; index2++)
+                    {
+                        
+                        //sqlSelect = "SELECT * FROM " + selectProject[0].Row[index2];
+                        Debug.WriteLine(selectProject[index2]);
+
+                        sqlInsert = "INSERT INTO " + tableNames[index2] + " VALUES (";
+
+                        //
+                        // TABLE COLUMN FROM A SPECIFIC ROW
+                        //
+                        // Oh god why
+                        for (int index3 = 0; index3 < selectProject[index2].Row.ItemArray.Count(); index3++)
+                        {
+                            if (index3 != (selectProject[index2].Row.ItemArray.Count() - 1))
+                                sqlInsert += selectProject[index2].Row[index3] + ", ";
+
+                            Debug.WriteLine(selectProject[index2].Row[index3]);
+
+                        }
+                        sqlInsert += ");";
+                        Debug.WriteLine(sqlInsert);
+                    }
+
+                }
+                // Loop to select and re-insert the info
+                /*
+                for (int index2 = 0; index2 < selectProject.Count; index2++)
+                {
+                    sqlSelect = "SELECT * FROM " + selectProject[0].Row[index2] + "
+
+                }
+                */
+            }
+
+            Debug.WriteLine(tableNames);
+
+            
 
             return true;
         }
