@@ -320,19 +320,9 @@ namespace SunspaceWizard
             // We'll render the Panels/Buttons/etc to this, which directs it to the StringBuilder above.
             HtmlTextWriter aHTMLTextWriter = new HtmlTextWriter(new System.IO.StringWriter(aStringBuilder));
 
-            // Modal popup div
-            //Panel aWrapper = new Panel();
-
-            //aWrapper.CssClass = "priceCalculatorWrapper";
-
-            
-
             Panel aDialogPopup = new Panel();
             Panel aDialogContent = new Panel();
 
-            //Panel aWrapper = new Panel();
-
-            //aWrapper = (Panel)aWrapper.FindControl("savedProjectsWrapper");
 
             // TEST TIME
             aDialogPopup.ID = "projectTransitBackground";
@@ -340,23 +330,14 @@ namespace SunspaceWizard
             aDialogPopup.Attributes["style"] = "display: none;";
 
             aDialogContent.CssClass = "content";
-            //aWrapper.Controls.Add(aDialogPopup);
             aDialogPopup.Controls.Add(aDialogContent);
 
             // 
             Label aPopupDescription = new Label();
 
-            /*
-             * <div class="closeBar">
-                    <div class="overlayClose close">CLOSE</div>
-                </div>
-             */
-
-            //SavedProjects sp = new SavedProjects();
 
             aPopupDescription.Text = "Please select the following options:";
 
-            //aDialogContent.Controls.Add(aPopupDescription);
 
             // Close box
             Panel aCloseBar = new Panel();
@@ -408,7 +389,7 @@ namespace SunspaceWizard
             aDialogContent.Controls.Add(aPriceCalculatorButton);
 
             Label LineBreaaaaak = new Label();
-            LineBreaaaaak.Text = "<br/><br/>";
+            LineBreaaaaak.Text = "<p>&nbsp;</p><br/><br/>";
 
             aDialogContent.Controls.Add(LineBreaaaaak);
 
@@ -470,8 +451,6 @@ namespace SunspaceWizard
 
             aPopupDescription.Text = "Please select dupe dis:";
 
-            //aDialogContent.Controls.Add(aPopupDescription);
-
             // Close box
             Panel aCloseBar = new Panel();
 
@@ -490,14 +469,6 @@ namespace SunspaceWizard
             aCloseButton.Controls.Add(aCloseLabel);
 
             aCloseBar.Controls.Add(aCloseButton);
-
-            /*
-            switch (projectType)
-            {
-                case ("Sunroom"):
-             */
-
-
 
             // Create session for project editor
             HttpContext.Current.Session["project_id"] = projectID;
@@ -526,18 +497,6 @@ namespace SunspaceWizard
             aDuplicateButton.Controls.Add(aDuplicateLabel);
             aDialogContent.Controls.Add(aDuplicateButton);
 
-            /*
-                    break;
-                case("Walls"):
-
-                    break;
-                default:
-                    break;
-            }
-            */
-
-
-
             // Render to HTMLTextWriter (so we can return StringBuilder..)
             aDialogPopup.RenderControl(aHTMLTextWriter);
 
@@ -554,88 +513,6 @@ namespace SunspaceWizard
         public static bool DuplicateProject(string projectID, string projectNewName)
         {
 
-            /*
-            string sqlCount;
-            string sqlInsert;
-            System.Data.DataView selectTable = new System.Data.DataView();
-            int count;
-
-            sqlCount = "SELECT * FROM " + table;
-
-            dataSource.SelectCommand = sqlCount;
-            selectTable = (System.Data.DataView)dataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
-
-            count = selectTable.Count;
-
-            sqlInsert = "INSERT INTO " + table
-            + "(accId,partName,description,partNumber,color,packQuantity,width,widthUnits,length,lengthUnits,size,sizeUnits,usdPrice,cadPrice,status)"
-            + "VALUES"
-            + "(" + (count + 1) + ",'" + AccessoryName + "','" + AccessoryDescription + "','" + AccessoryNumber + "','" + AccessoryColor + "'," + AccessoryPackQuantity + ","
-            + AccessoryWidth + ",'" + AccessoryWidthUnits + "'," + AccessoryLength + ",'" + AccessoryLengthUnits + "'," + AccessorySize + ",'" + accessorySizeUnits + "',"
-            + AccessoryUsdPrice + "," + AccessoryCadPrice + "," + 1 + ")";
-
-            dataSource.InsertCommand = sqlInsert;
-            dataSource.Insert();
-            */
-
-
-
-
-
-            /*
-                -- Declare variables
-                Declare @TABLE_NAME Varchar(128)
-
-                Declare @TABLE_COUNT int
-                Declare @INDEX int
-
-                -- Inner loop
-                Declare @SUB_INDEX int
-                Declare @SUB_COUNT int
-                Declare @SUB_COUNT2 varchar(32)
-                Declare @SUB_SQL varchar(1024)
-
-                -- TEMP
-                Declare @PROJECT_ID varchar(32)
-
-                SET @PROJECT_ID = 9
-
-                -- Set default for table name
-                SET @TABLE_NAME = ''
-                SET @SUB_COUNT = 0
-                -- Set index to zero
-                SET @INDEX = 0
-                -- Get the number of tables
-                Select @TABLE_COUNT = Count(*) From INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME LIKE 'project_id' AND TABLE_NAME <> 'projects'
-
-
-                While (@INDEX) < @TABLE_COUNT
-                Begin
-	                --print @PROJECT_ID
-	                -- To be used by inner loop
-	                SET @SUB_INDEX = 0
-	                SET @SUB_COUNT = 0
-
-	                -- Gets the current table name (offset by index, think of an array but cry a lot) 
-	                -- A monster, do not poke.
-	                SELECT @TABLE_NAME = TABLE_NAME From INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME LIKE 'project_id' AND TABLE_NAME <> 'projects' ORDER BY TABLE_NAME ASC OFFSET @INDEX ROWS FETCH NEXT 1 ROWS ONLY
-
-	                print @TABLE_NAME
-
-
-	                --SET @SUB_SQL = 'Select '+@SUB_COUNT2+' = Count(*) From ' + @TABLE_NAME + ' WHERE project_id = ''9'''
-	                --EXEC(@SUB_SQL)
-	                Select @SUB_COUNT = Count(*) From @TABLE_NAME WHERE 'project_id' = @PROJECT_ID
-	                print @SUB_SQL
-	                print @SUB_COUNT
-
-                    -- Increment Index (Super important fellas!)
-	                SET @INDEX = @INDEX + 1
-                    --Update ATable Set Processed = 1 Where Id = @Id 
-	                print '---end'
-                End
-             */
-
             SqlDataSource dataSource = new SqlDataSource();
             // Super bad? Copy pasta from web.config
             dataSource.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\sunspace_db.mdf;Integrated Security=True;Connect Timeout=30";
@@ -644,9 +521,8 @@ namespace SunspaceWizard
             string sqlSelect;
             string sqlInsert;
             List<string> tableNames = new List<string>();
-            int newProjectID;
-            int tableCount;
-            int subCount;
+            int newProjectID;   // New project ID for all the compenents of a project
+            int tableCount;     // Number of tables
 
             // Select the project
             sqlSelect = "SELECT 	project_type," + 
@@ -669,6 +545,7 @@ namespace SunspaceWizard
 
             Debug.WriteLine(selectProject[0].Row[0]);
 
+            // Insert the new project with the duplicated data!
             sqlInsert = "INSERT INTO Projects(project_type, " +
                      "installation_type, " +
                      "customer_id, " +
@@ -723,7 +600,7 @@ namespace SunspaceWizard
 
             Debug.WriteLine(selectProject[0].Row[0]);
 
-            // 
+            // Essentially this gets a compenent table info and re-inserts it with the new project ID
             for (int index = 0; index < tableCount; index++)
             {
                 // Get table names
@@ -733,6 +610,7 @@ namespace SunspaceWizard
 
                 tableNames.Add((string)selectProject[0].Row[0]);
                 Debug.WriteLine("Table Name: " + selectProject[0].Row[0]);
+                Debug.WriteLine("Table Count:" + tableNames.Count());
 
                 // Select rows with the old project id
                 sqlSelect = "SELECT * FROM " + selectProject[0].Row[0] + " WHERE project_ID = " + projectID;
@@ -740,59 +618,45 @@ namespace SunspaceWizard
                 selectProject = (System.Data.DataView)dataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
 
                 //
-                // IF THERES COLUMNS IN THE CURRENT TABLE
+                // If we actually need this table..
                 //
                 if (selectProject.Count > 0)
                 {
-                    // first [0] is rows
-                    // Rows are columns
                     
                     Debug.WriteLine(selectProject[0].Row[0]);
+
+                    // Start the insert statement
+                    sqlInsert = "INSERT INTO " + tableNames[index] + " VALUES (";
                     
                     
                     
                     //
                     // TABLE ROW
                     //
-                    // Gets deep now
-                    for (int index2 = 0; index2 < selectProject.Count; index2++)
+                    // Inserts the values
+                    for (int index2 = 0; index2 < selectProject[0].Row.ItemArray.Count(); index2++)
                     {
+                        Debug.WriteLine(selectProject[0].Row[index2]);
+                        if (index2 == 0)
+                            sqlInsert += "'" + newProjectID + "', ";
+                        else if (index2 != (selectProject[0].Row.ItemArray.Count() - 1))
+                            sqlInsert += "'" + selectProject[0].Row[index2] + "', ";
+                        else
+                            sqlInsert += "'" + selectProject[0].Row[index2] + "'";
                         
-                        //sqlSelect = "SELECT * FROM " + selectProject[0].Row[index2];
-                        Debug.WriteLine(selectProject[index2]);
-
-                        sqlInsert = "INSERT INTO " + tableNames[index2] + " VALUES (";
-
-                        //
-                        // TABLE COLUMN FROM A SPECIFIC ROW
-                        //
-                        // Oh god why
-                        for (int index3 = 0; index3 < selectProject[index2].Row.ItemArray.Count(); index3++)
-                        {
-                            if (index3 != (selectProject[index2].Row.ItemArray.Count() - 1))
-                                sqlInsert += selectProject[index2].Row[index3] + ", ";
-
-                            Debug.WriteLine(selectProject[index2].Row[index3]);
-
-                        }
-                        sqlInsert += ");";
-                        Debug.WriteLine(sqlInsert);
                     }
+                    // Close the insert
+                    sqlInsert += ");";
+                    Debug.WriteLine(sqlInsert);
+
+
+                    // Actually insert the data
+                    dataSource.InsertCommand = sqlInsert;
+                    dataSource.Insert();
 
                 }
-                // Loop to select and re-insert the info
-                /*
-                for (int index2 = 0; index2 < selectProject.Count; index2++)
-                {
-                    sqlSelect = "SELECT * FROM " + selectProject[0].Row[index2] + "
 
-                }
-                */
             }
-
-            Debug.WriteLine(tableNames);
-
-            
 
             return true;
         }
