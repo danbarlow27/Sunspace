@@ -101,27 +101,9 @@
             });
         });
         
-        /*
-        $(document).on("ActuallyDuplicateProject_Click", function (e, id) {
-            alert("it's a hit!");
-            var name =  $(".txtField").val();
-            $.ajax({
-                type: "POST",
-                url: "SavedProjects.aspx/DuplicateProject",
-                data: JSON.stringify({ "projectID": id, "projectNewName": name }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (msg) {
-                    // Replace the div's content with the page method's return.
-                    //$("#TestDiv").html(msg.d);
-                    //alert((msg.d));
-                    alert(msg.d);
-                }
-            });
-        });
-        */
+        // Duplicate Project POPUP - Duplicate button
         function ActuallyDuplicateProject_Click(id) {
-            alert("it's a hit!");
+           // alert("it's a hit!");
             var name = $(".txtField").val();
             $.ajax({
                 type: "POST",
@@ -133,7 +115,11 @@
                     // Replace the div's content with the page method's return.
                     //$("#TestDiv").html(msg.d);
                     //alert((msg.d));
-                    alert(msg.d);
+
+                    // Refresh the website!
+                    location.reload(true);
+
+                    //alert(msg.d);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -154,16 +140,6 @@
 
             // END
 
-            $("#TestDiv").click(function () {
-                ProjectName_Click("0","Sunroom");
-            });
-
-            function DuplicateProject_Click(id, name) {
-                
-            }
-
-
-            
 
             function ProjectName_Click(id,type) {
                 //$("#MainContent_lblProjectName"+i).click(function () {

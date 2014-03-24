@@ -628,11 +628,6 @@ namespace SunspaceWizard
                     // Start the insert statement
                     sqlInsert = "INSERT INTO " + tableNames[index] + " VALUES (";
                     
-                    
-                    
-                    //
-                    // TABLE ROW
-                    //
                     // Inserts the values
                     for (int index2 = 0; index2 < selectProject[0].Row.ItemArray.Count(); index2++)
                     {
