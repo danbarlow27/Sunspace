@@ -297,7 +297,7 @@
                                         <asp:Label ID="lblLedger" Text="Ledger: " runat="server"></asp:Label>
                                     </asp:TableCell>
                                     <asp:TableCell>
-                                        <asp:TextBox ID="txtLedgerSetback" onkeyup="wizardFloorsCheckQuestion2()" runat="server"></asp:TextBox>
+                                        <asp:TextBox ID="txtLedgerSetback" onkeyup="wizardFloorsCheckQuestion2()" runat="server" Text="3"></asp:TextBox>
                                     </asp:TableCell>
                                     <asp:TableCell>
                                         <asp:DropDownList ID="ddlLedgerSetbackInches" OnChange="wizardFloorsCheckQuestion2()" runat="server"></asp:DropDownList>
@@ -309,7 +309,7 @@
                                         <asp:Label ID="lblFront" Text="Front: " runat="server"></asp:Label>
                                     </asp:TableCell>
                                     <asp:TableCell>
-                                        <asp:TextBox ID="txtFrontSetback" onkeyup="wizardFloorsCheckQuestion2()" runat="server"></asp:TextBox>
+                                        <asp:TextBox ID="txtFrontSetback" onkeyup="wizardFloorsCheckQuestion2()" runat="server" Text="1"></asp:TextBox>
                                     </asp:TableCell>
                                     <asp:TableCell>
                                         <asp:DropDownList ID="ddlFrontSetbackInches" OnChange="wizardFloorsCheckQuestion2()" runat="server"></asp:DropDownList>
@@ -321,7 +321,7 @@
                                         <asp:Label ID="lblSides" Text="Sides: " runat="server"></asp:Label>
                                     </asp:TableCell>
                                     <asp:TableCell>
-                                        <asp:TextBox ID="txtSidesSetback" onkeyup="wizardFloorsCheckQuestion2()" runat="server"></asp:TextBox>
+                                        <asp:TextBox ID="txtSidesSetback" onkeyup="wizardFloorsCheckQuestion2()" runat="server" Text="1"></asp:TextBox>
                                     </asp:TableCell>
                                     <asp:TableCell>
                                         <asp:DropDownList ID="ddlSidesSetbackInches" OnChange="wizardFloorsCheckQuestion2()" runat="server"></asp:DropDownList>
@@ -333,7 +333,7 @@
                                         <asp:Label ID="lblJoint" Text="Joint: " runat="server"></asp:Label>
                                     </asp:TableCell>
                                     <asp:TableCell>
-                                        <asp:TextBox ID="txtJointSetback" onkeyup="wizardFloorsCheckQuestion2()" runat="server"></asp:TextBox>
+                                        <asp:TextBox ID="txtJointSetback" onkeyup="wizardFloorsCheckQuestion2()" runat="server" Text="0"></asp:TextBox>
                                     </asp:TableCell>
                                     <asp:TableCell>
                                         <asp:DropDownList ID="ddlJointSetbackInches" OnChange="wizardFloorsCheckQuestion2()" runat="server"></asp:DropDownList>

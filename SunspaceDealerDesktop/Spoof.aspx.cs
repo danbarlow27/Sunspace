@@ -26,7 +26,7 @@ namespace SunspaceDealerDesktop
             }
 
             //Get the customers assosciated with this dealer
-            sdsDealers.SelectCommand = "SELECT first_name, last_name, dealer_id FROM dealers";
+            sdsDealers.SelectCommand = "SELECT dealer_name, dealer_id FROM dealers";
 
             //assign the table names to the dataview object
             DataView dvDealers = (DataView)sdsDealers.Select(System.Web.UI.DataSourceSelectArguments.Empty);
@@ -35,7 +35,7 @@ namespace SunspaceDealerDesktop
 
             for (int i = 0; i < dvDealers.Count; i++)
             {
-                ddlDealers.Items.Add(new ListItem(dvDealers[i][0].ToString() + dvDealers[i][1].ToString(), dvDealers[i][2].ToString()));
+                ddlDealers.Items.Add(new ListItem(dvDealers[i][0].ToString(), dvDealers[i][1].ToString()));
             }
         }
 

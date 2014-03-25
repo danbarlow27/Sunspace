@@ -195,6 +195,13 @@ namespace SunspaceDealerDesktop
                 ddlJointSetbackInches.Items.Add(lst34);
                 ddlJointSetbackInches.Items.Add(lst78);                
                 #endregion
+
+
+                #region Inch Dropdown Selection
+                ddlJointSetbackInches.SelectedValue = ".5";
+                ddlLedgerSetbackInches.SelectedValue = ".5";
+                ddlSidesSetbackInches.SelectedValue = ".75";
+                #endregion
             }
 
             //Check roof type, position 26

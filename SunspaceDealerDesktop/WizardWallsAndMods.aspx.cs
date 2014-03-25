@@ -678,7 +678,7 @@ namespace SunspaceDealerDesktop
                 Label leftWallRadioTextLabel = new Label();
                 leftWallRadioTextLabel.ID = "lblRadioLeftWallText";
                 leftWallRadioTextLabel.AssociatedControlID = "radAutoLeftWallHeight";
-                leftWallRadioTextLabel.Text = "Auto Populate";
+                leftWallRadioTextLabel.Text = "Auto Calculate";
 
                 leftWallLabel.AssociatedControlID = "txtLeftWallHeight";
                 #endregion
@@ -727,7 +727,7 @@ namespace SunspaceDealerDesktop
                 Label rightWallRadioTextLabel = new Label();
                 rightWallRadioTextLabel.ID = "lblRadioRightWallText";
                 rightWallRadioTextLabel.AssociatedControlID = "radAutoRightWallHeight";
-                rightWallRadioTextLabel.Text = "Auto Populate";
+                rightWallRadioTextLabel.Text = "Auto Calculate";
 
                 rightWallLabel.AssociatedControlID = "txtRightWallHeight";
                 #endregion
@@ -776,7 +776,7 @@ namespace SunspaceDealerDesktop
                 Label gablePostRadioTextLabel = new Label();
                 gablePostRadioTextLabel.ID = "lblRadioGablePostText";
                 gablePostRadioTextLabel.AssociatedControlID = "radAutoGablePostHeight";
-                gablePostRadioTextLabel.Text = "Auto Populate";
+                gablePostRadioTextLabel.Text = "Auto Calculate";
 
                 gablePostLabel.AssociatedControlID = "txtGablePostHeight";
                 #endregion
@@ -818,7 +818,7 @@ namespace SunspaceDealerDesktop
                 Label leftRoofSlopeRadioTextLabel = new Label();
                 leftRoofSlopeRadioTextLabel.ID = "lblRadioRoofSlopeText";
                 leftRoofSlopeRadioTextLabel.AssociatedControlID = "radAutoRoofSlope";
-                leftRoofSlopeRadioTextLabel.Text = "Auto Populate";
+                leftRoofSlopeRadioTextLabel.Text = "Auto Calculate";
 
                 leftRoofSlopeLabel.AssociatedControlID = "txtLeftRoofSlope";
                 #endregion
@@ -979,7 +979,7 @@ namespace SunspaceDealerDesktop
                 Label backWallRadioTextLabel = new Label();
                 backWallRadioTextLabel.ID = "lblRadioBackWallText";
                 backWallRadioTextLabel.AssociatedControlID = "radAutoBackWallHeight";
-                backWallRadioTextLabel.Text = "Auto Populate";
+                backWallRadioTextLabel.Text = "Auto Calculate";
 
                 backWallLabel.AssociatedControlID = "txtBackWallHeight";
                 #endregion
@@ -1027,7 +1027,7 @@ namespace SunspaceDealerDesktop
                 Label frontWallRadioTextLabel = new Label();
                 frontWallRadioTextLabel.ID = "lblRadioFrontWallText";
                 frontWallRadioTextLabel.AssociatedControlID = "radAutoFrontWallHeight";
-                frontWallRadioTextLabel.Text = "Auto Populate";
+                frontWallRadioTextLabel.Text = "Auto Calculate";
 
                 frontWallLabel.AssociatedControlID = "txtFrontWallHeight";
                 #endregion
@@ -1068,7 +1068,7 @@ namespace SunspaceDealerDesktop
                 Label roofSlopeRadioTextLabel = new Label();
                 roofSlopeRadioTextLabel.ID = "lblRadioRoofSlopeText";
                 roofSlopeRadioTextLabel.AssociatedControlID = "radAutoRoofSlope";
-                roofSlopeRadioTextLabel.Text = "Auto Populate";
+                roofSlopeRadioTextLabel.Text = "Auto Calculate";
 
                 roofSlopeLabel.AssociatedControlID = "txtRoofSlope";
                 #endregion

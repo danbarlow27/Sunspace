@@ -83,6 +83,12 @@ namespace SunspaceDealerDesktop
             ddlFrontSetbackInches.Items.Add(lst34);
             ddlFrontSetbackInches.Items.Add(lst78);
             #endregion
+
+            #region Inch Dropdown Selection
+            ddlJointSetbackInches.SelectedValue = ".5";
+            //ddlLedgerSetbackInches.SelectedValue = ".5";
+            //ddlSidesSetbackInches.SelectedValue = ".75";
+            #endregion
         }
 
         protected void btnQuestion1_Click(object sender, EventArgs e)
