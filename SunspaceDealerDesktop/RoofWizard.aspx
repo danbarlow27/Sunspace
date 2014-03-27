@@ -130,6 +130,23 @@
             document.getElementById("<%=hidOverhang.ClientID%>").value = parseFloat($('#<%=txtOverhangLength.ClientID%>').val()) + parseFloat($('#<%=ddlOverhangInches.ClientID%>').val());
         }
 
+        function roofWizardPanelCheck() {
+            if (document.getElementById("<%=ddlPanelType.ClientID%>").value.indexOf("OSB") != -1)
+            {
+                if (document.getElementById("<%=ddlPanelType.ClientID%>").value.indexOf("OSB/OSB") != -1)
+                {
+                    document.getElementById("<%=ddlExteriorRoofSkin.ClientID%>").value = "OSB";
+                    document.getElementById("<%=ddlInteriorRoofSkin.ClientID%>").value = "OSB";
+                }
+                else
+                {
+                    document.getElementById("<%=ddlExteriorRoofSkin.ClientID%>").value = "OSB";
+                }
+            }
+            s.indexOf("oo") != -1
+            roofWizardCheckQuestion3();
+        }
+
         function roofWizardCheckQuestion3() {
             //move to hidden interior/exterior
             document.getElementById("<%=hidPanelType.ClientID%>").value = $('#<%=ddlPanelType.ClientID%>').val();
@@ -317,7 +334,7 @@
                 <ul class="toggleOptions">
                     <li>
                         <asp:Label ID="lblPanelType" runat="server" Text="Panel Type:"></asp:Label>
-                        <asp:DropDownList ID="ddlPanelType" runat="server" OnChange="roofWizardCheckQuestion3()"></asp:DropDownList>
+                        <asp:DropDownList ID="ddlPanelType" runat="server" OnChange="roofWizardPanelCheck()"></asp:DropDownList>
                     </li>
                     <li>
                         <asp:Label ID="lblInteriorRoofSkin" runat="server" Text="Interior Skin:"></asp:Label>
