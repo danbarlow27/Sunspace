@@ -165,6 +165,32 @@ namespace SunspaceDealerDesktop
             #endregion
             
             #endregion
+            #region Slide 3 pageload
+
+            //ddlInteriorSkin.Items.Add("Choose a skin...");
+            for (int i = 0; i < Constants.INTERIOR_WALL_SKIN_TYPES.Length; i++)
+            {
+                ddlInteriorSkin.Items.Add(Constants.INTERIOR_WALL_SKIN_TYPES[i]);
+            }
+
+            //ddlExteriorSkin.Items.Add("Choose a skin...");
+            for (int i = 0; i < Constants.EXTERIOR_WALL_SKIN_TYPES.Length; i++)
+            {
+                ddlExteriorSkin.Items.Add(Constants.EXTERIOR_WALL_SKIN_TYPES[i]);
+            }
+
+            //ddlKneewallType.Items.Add("Choose a type...");
+            for (int i = 0; i < Constants.KNEEWALL_TYPES.Length; i++)
+            {
+                ddlKneewallType.Items.Add(Constants.KNEEWALL_TYPES[i]);
+            }
+
+            for (int i = 0; i < Constants.KNEEWALL_GLASS_TINTS.Length; i++)
+            {
+                ddlKneewallTint.Items.Add(Constants.KNEEWALL_GLASS_TINTS[i]);
+            }
+            //Must populate transom dropdown based on model#
+            #endregion
 
             Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
 
@@ -4648,6 +4674,10 @@ namespace SunspaceDealerDesktop
                     {
                         listOfWalls[i].LinearItems[j].Sex = "FF";
                     }
+                    else if (listOfWalls[i].LinearItems[j].ItemType == "BoxHeader")
+                    {
+                        listOfWalls[i].LinearItems[j].Sex = "FF";
+                    }
                     //Filler is always MM
                     else if (listOfWalls[i].LinearItems[j].ItemType == "Filler")
                     {
@@ -4674,6 +4704,11 @@ namespace SunspaceDealerDesktop
                             }
                             //If a receiver is after this mod, we must make the mod end in male
                             else if (listOfWalls[i].LinearItems[j + 1].ItemType == "Receiver")
+                            {
+                                listOfWalls[i].LinearItems[j].Sex = listOfWalls[i].LinearItems[j].Sex.Substring(0, 1) + "M";
+                            }
+                            //If a boxheader is after this mod, we must make the mod end in male
+                            else if (listOfWalls[i].LinearItems[j + 1].ItemType == "BoxHeader")
                             {
                                 listOfWalls[i].LinearItems[j].Sex = listOfWalls[i].LinearItems[j].Sex.Substring(0, 1) + "M";
                             }
