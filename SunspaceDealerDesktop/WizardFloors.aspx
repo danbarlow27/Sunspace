@@ -344,6 +344,8 @@
                     </ul>
                 </div>
                 <%-- button to go to the next question --%>
+                <br />
+                <asp:Label ID="lblFinished" runat="server"></asp:Label>
                 <asp:Button ID="btnQuestion2" Enabled="false" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Confirm" OnClick="btnQuestion1_Click" />
             </div>
             <%-- end #slide3 --%>

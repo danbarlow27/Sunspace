@@ -2714,7 +2714,9 @@
                 <ul class="toggleOptions">
                     <asp:PlaceHolder ID="wallPreviewPlaceholder" runat="server"></asp:PlaceHolder>                   
                 </ul> 
-
+                
+                <br />
+                <asp:Label ID="lblFinished" runat="server"></asp:Label>
                 <asp:Button ID="btnSubmit" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
 
             </div>

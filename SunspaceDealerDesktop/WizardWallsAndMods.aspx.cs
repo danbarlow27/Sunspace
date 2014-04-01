@@ -59,6 +59,19 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["newProjectHasRoof"].ToString() == "Yes")
+            {
+                lblFinished.Text = "Wall details complete, next step: Roof";
+            }
+            else if (Session["newProjectPrefabFloor"].ToString() == "Yes")
+            {
+                lblFinished.Text = "Wall details complete, next step: Floor";
+            }
+            else
+            {
+                lblFinished.Text = "Wall details complete, next step: Completion";
+            }
+
             Page.Form.DefaultButton = "";
 
             if (Session["loggedIn"] == null)

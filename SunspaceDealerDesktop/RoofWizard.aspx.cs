@@ -18,7 +18,16 @@ namespace SunspaceDealerDesktop
             if (Session["loggedIn"] == null)
             {
                 Response.Redirect("Login.aspx");
-            }   
+            }
+
+            if (Session["newProjectPrefabFloor"].ToString() == "Yes")
+            {
+                lblFinished.Text = "Wall details complete, next step: Floor";
+            }
+            else
+            {
+                lblFinished.Text = "Wall details complete, next step: Completion";
+            }
 
             ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
             ListItem lst18 = new ListItem("1/8", ".125");

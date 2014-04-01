@@ -391,7 +391,9 @@
                         <asp:Label ID="lblGutterPresenceNo" AssociatedControlID="radGutterPresenceNo" runat="server" Text="No"></asp:Label>
                     </li>
                 </ul>
-
+                
+                <br />
+                <asp:Label ID="lblFinished" runat="server"></asp:Label>
                 <asp:Button ID="btnFinalButton" CssClass="btnSubmit float-right slidePanel" runat="server" OnClick="btnFinalButton_Click" Text="Submit" />
             </div>
         </div>
