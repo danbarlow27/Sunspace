@@ -47,54 +47,87 @@ namespace SunspaceDealerDesktop
         {
             float wallPrice = 0.0f;
             int numberOfDoors = 0;
-            float lengthOfDoors = 0.0f;
-            float lengthOfWindows = 0.0f;
+            float lengthOfMods = 0.0f;
             float lengthOfSolidWall = 0.0f;
+            float lengthOfOpen = 0.0f;
             List<LinearItem> listOfMods = (List<LinearItem>)aWall.LinearItems;
             foreach (LinearItem aLinearItem in listOfMods)
             {
-                //wallPrice += PriceMod(aMod);
                 if (aLinearItem.ItemType == "Mod")
-                {
+                {                    
                     Mod aMod = (Mod)aLinearItem;
-
                     if (aMod.ModType == "Door")
                     {
-                        numberOfDoors++;
-                        lengthOfDoors += aMod.Length;
+                        Door aDoor = (Door)aMod.ModularItems[0];
+                        if (aDoor.DoorType == "NoDoor")
+                        {
+                            lengthOfOpen += aLinearItem.Length;
+                        }
+                        else
+                        {
+                            numberOfDoors++;
+                            lengthOfMods += aLinearItem.Length;
+                        }                        
                     }
-                    else if (aMod.ModType == "Window") //Solid Wall
+                    else if (aMod.ModType == "Window")
                     {
-                        lengthOfWindows += aMod.Length;
+                        Kneewall aKneewall = (Kneewall)aMod.ModularItems[0]; //Kneewall
+                        if (aKneewall.FLength > 20)
+                        {
+                            //Add pricing for custom kneewall height
+                        }
+                        else
+                        {
+
+                        }
                     }
-                    else
+                    else if (aMod.ModType == "Open" && aLinearItem.Length >= 8)
                     {
-                        lengthOfSolidWall += aMod.Length;
+                        lengthOfOpen += aLinearItem.Length;
+                    }
+                    else 
+                    {
+                        lengthOfMods += aLinearItem.Length;
+                    }
+                    
+                }   
+                else //Check to see if everything else other than mods are included
+                {                    
+                    if (aLinearItem.Length >= 8)
+                    {
+                        lengthOfSolidWall += aLinearItem.Length;
+                        lengthOfMods -= aLinearItem.Length;
                     }
                 }
             }
 
-            switch (numberOfDoors) { 
+            switch (numberOfDoors)
+            {
                 case 1:
-                    wallPrice = PricingConstants.MODEL_100_SCREEN_OPENING_1_SCREEN_DOOR * lengthOfDoors;
+                    wallPrice += PricingConstants.MODEL_100_SCREEN_OPENING_1_SCREEN_DOOR * lengthOfMods;
                     break;
                 case 2:
-                    wallPrice = PricingConstants.MODEL_100_SCREEN_OPENING_2_SCREEN_DOORS * lengthOfDoors;
+                    wallPrice += PricingConstants.MODEL_100_SCREEN_OPENING_2_SCREEN_DOORS * lengthOfMods;
                     break;
                 case 3:
-                    wallPrice = PricingConstants.MODEL_100_SCREEN_OPENING_3_SCREEN_DOORS * lengthOfDoors;
+                    wallPrice += PricingConstants.MODEL_100_SCREEN_OPENING_3_SCREEN_DOORS * lengthOfMods;
                     break;
             }
 
             wallPrice += PricingConstants.MODEL_100_SOLID_WALL_PANEL * lengthOfSolidWall;
 
-            if (aWall.EndHeight > 96 && aWall.EndHeight < 120)
+            if ((aWall.EndHeight > 96 && aWall.EndHeight < 120) || (aWall.StartHeight > 96 && aWall.StartHeight < 120))
             {
                 wallPrice += PricingConstants.MODEL_100_NON_STANDARD_PANEL_HEIGHTS * aWall.Length;
             }
-            else if (aWall.EndHeight >= 120)
+            else if (aWall.EndHeight >= 120 || aWall.StartHeight >= 120)
             {
                 wallPrice += PricingConstants.MODEL_100_NON_STANDARD_PANEL_HEIGHTS_HIGHER * aWall.Length;
+            }
+
+            if (aWall.FireProtection == true) {
+                wallPrice += PricingConstants.MODEL_100_FP_SCREEN_OPENINGS_INCLUDES_1_SCREEN_DOOR * lengthOfMods;
+                wallPrice += PricingConstants.MODEL_100_FP_SOLID_WALL_PANEL * lengthOfSolidWall;
             }
 
             return wallPrice;
