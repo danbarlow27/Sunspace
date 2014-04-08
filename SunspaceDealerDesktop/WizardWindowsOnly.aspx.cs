@@ -615,170 +615,6 @@ namespace SunspaceDealerDesktop
 
                 #endregion
 
-                #region Window Width 
-
-                TableRow windowWidthRow = new TableRow();
-                windowWidthRow.ID = "rowWindowWidth" + title;
-                //windowWidthRow.Attributes.Add("style", "display:none;");
-                TableCell windowWidthLBLCell = new TableCell();
-                TableCell windowWidthTXTCell = new TableCell();
-                TableCell windowWidthDDLCell = new TableCell();
-
-                Label windowWidthLBL = new Label();
-                windowWidthLBL.ID = "lblWindowWidth" + title;
-                windowWidthLBL.Text = "Width:";
-
-                TextBox windowWidthTXT = new TextBox();
-                windowWidthTXT.ID = "txtWindowWidth" + title;
-                windowWidthTXT.CssClass = "txtField txtWindowInput";
-                windowWidthTXT.Attributes.Add("maxlength", "3");
-                windowWidthTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
-                windowWidthTXT.Attributes.Add("onblur", "recalculate();");
-                windowWidthTXT.ToolTip = "Enter the width of your window in whole numbers";
-
-                DropDownList inchWidth = new DropDownList();
-                inchWidth.ID = "ddlWindowWidth" + title;
-                inchWidth.Attributes.Add("onchange", "recalculate();");
-                inchWidth.Items.Add(lst0);
-                inchWidth.Items.Add(lst18);
-                inchWidth.Items.Add(lst14);
-                inchWidth.Items.Add(lst38);
-                inchWidth.Items.Add(lst12);
-                inchWidth.Items.Add(lst58);
-                inchWidth.Items.Add(lst34);
-                inchWidth.Items.Add(lst78);
-                inchWidth.ToolTip = "Select the decimal value for your window width";
-
-                windowWidthLBL.AssociatedControlID = "txtWindowWidth" + title;
-
-
-                windowWidthLBLCell.Controls.Add(windowWidthLBL);
-                windowWidthTXTCell.Controls.Add(windowWidthTXT);
-                windowWidthDDLCell.Controls.Add(inchWidth);
-
-                tblWindowDetails.Rows.Add(windowWidthRow);
-
-                windowWidthRow.Cells.Add(windowWidthLBLCell);
-                windowWidthRow.Cells.Add(windowWidthTXTCell);
-                windowWidthRow.Cells.Add(windowWidthDDLCell);
-
-                #endregion
-
-                #region V4T Number Of Vents
-
-                if (title == "Vinyl")
-                {
-                    TableRow windowV4TNumberOfVentsRow = new TableRow();
-                    windowV4TNumberOfVentsRow.ID = "rowWindowV4TNumberOfVents" + title;
-                    //windowV4TNumberOfVentsRow.Attributes.Add("style", "display:none;");
-                    TableCell windowV4TNumberOfVentsLBLCell = new TableCell();
-                    TableCell windowV4TNumberOfVentsDDLCell = new TableCell();
-
-                    Label windowV4TNumberOfVentsLBL = new Label();
-                    windowV4TNumberOfVentsLBL.ID = "lblV4TNumberOfVents" + title;
-                    windowV4TNumberOfVentsLBL.Text = "Number Of Vents:";
-
-                    DropDownList windowV4TNumberOfVentsDDL = new DropDownList();
-                    windowV4TNumberOfVentsDDL.ID = "ddlWindowV4TNumberOfVents" + title;
-                    windowV4TNumberOfVentsDDL.Attributes.Add("onchange", "tintOptionsChanged();");
-                    windowV4TNumberOfVentsDDL.ToolTip = "Select the number of vents in your V4T window";
-
-                    ListItem V3 = new ListItem("3", "3");
-                    ListItem V4 = new ListItem("4", "4");
-                    ListItem V6S = new ListItem("6 Stereo", "6");
-                    ListItem V8S = new ListItem("8 Stereo", "8");
-                    ListItem V9S = new ListItem("9 Stereo", "9");
-                    ListItem V12S = new ListItem("12 Stereo", "12");
-
-                    windowV4TNumberOfVentsDDL.Items.Add(V3);
-                    windowV4TNumberOfVentsDDL.Items.Add(V4);
-                    windowV4TNumberOfVentsDDL.Items.Add(V6S);
-                    windowV4TNumberOfVentsDDL.Items.Add(V8S);
-                    windowV4TNumberOfVentsDDL.Items.Add(V9S);
-                    windowV4TNumberOfVentsDDL.Items.Add(V12S);
-
-                    windowV4TNumberOfVentsLBL.AssociatedControlID = "ddlWindowV4TNumberOfVents" + title;
-
-                    windowV4TNumberOfVentsLBLCell.Controls.Add(windowV4TNumberOfVentsLBL);
-                    windowV4TNumberOfVentsDDLCell.Controls.Add(windowV4TNumberOfVentsDDL);
-
-                    windowV4TNumberOfVentsRow.Cells.Add(windowV4TNumberOfVentsLBLCell);
-                    windowV4TNumberOfVentsRow.Cells.Add(windowV4TNumberOfVentsDDLCell);
-
-
-                    #region Uneven Vents Checkbox
-
-                    TableCell windowUnevenVentsCHKCell = new TableCell();
-                    //windowUnevenVentsCHKCell.Attributes.Add("style", "display:none;");
-                    windowUnevenVentsCHKCell.ID = "cellWindowUnevenVents" + title;
-                    windowUnevenVentsCHKCell.ToolTip = "Check to see uneven vents options for your V4T window";
-
-                    Label windowUnevenVentsLBLChk = new Label();
-                    windowUnevenVentsLBLChk.ID = "lblWindowUnevenVents" + title;
-
-                    Label windowUnevenVentsLBL = new Label();
-                    windowUnevenVentsLBL.ID = "lblWindowUnevenVentsRad" + title;
-                    windowUnevenVentsLBL.Text = " Uneven Vents";
-
-                    CheckBox windowUnevenVentsCHK = new CheckBox();
-                    windowUnevenVentsCHK.ID = "chkWindowUnevenVents" + title;
-                    windowUnevenVentsCHK.Attributes.Add("value", "UnevenVents");
-                    windowUnevenVentsCHK.Attributes.Add("onclick", "unevenVentsChecked(this.checked);");
-
-                    windowUnevenVentsLBLChk.AssociatedControlID = "chkWindowUnevenVents" + title;
-                    windowUnevenVentsLBL.AssociatedControlID = "chkWindowUnevenVents" + title;
-
-                    windowUnevenVentsCHKCell.Controls.Add(windowUnevenVentsCHK);
-                    windowUnevenVentsCHKCell.Controls.Add(windowUnevenVentsLBLChk);
-                    windowUnevenVentsCHKCell.Controls.Add(windowUnevenVentsLBL);
-
-                    windowV4TNumberOfVentsRow.Cells.Add(windowUnevenVentsCHKCell);
-
-                    tblWindowDetails.Rows.Add(windowV4TNumberOfVentsRow);
-
-                    #endregion
-
-                }
-                #endregion
-                
-                #region H4T number of vents
-
-                if (title == "Vinyl")
-                {
-                    ListItem V3 = new ListItem("3", "3");
-                    ListItem V4 = new ListItem("4", "4");
-
-                    TableRow windowH4TNumberOfVentsRow = new TableRow();
-                    windowH4TNumberOfVentsRow.ID = "rowWindowH4TNumberOfVents" + title;
-                    windowH4TNumberOfVentsRow.Attributes.Add("style", "display:none;");
-                    TableCell windowH4TNumberOfVentsLBLCell = new TableCell();
-                    TableCell windowH4TNumberOfVentsDDLCell = new TableCell();
-
-                    Label windowH4TNumberOfVentsLBL = new Label();
-                    windowH4TNumberOfVentsLBL.ID = "lblH4TNumberOfVents" + title;
-                    windowH4TNumberOfVentsLBL.Text = "Number Of Vents:";
-
-                    DropDownList windowH4TNumberOfVentsDDL = new DropDownList();
-                    windowH4TNumberOfVentsDDL.ID = "ddlWindowH4TNumberOfVents" + title;
-                    windowH4TNumberOfVentsDDL.Attributes.Add("onchange", "tintOptionsChanged();");
-                    windowH4TNumberOfVentsDDL.ToolTip = "Select the number of vents in your H4T window";
-
-                    windowH4TNumberOfVentsDDL.Items.Add(V3);
-                    windowH4TNumberOfVentsDDL.Items.Add(V4);
-
-                    windowH4TNumberOfVentsLBL.AssociatedControlID = "ddlWindowH4TNumberOfVents" + title;
-
-                    windowH4TNumberOfVentsLBLCell.Controls.Add(windowH4TNumberOfVentsLBL);
-                    windowH4TNumberOfVentsDDLCell.Controls.Add(windowH4TNumberOfVentsDDL);
-
-                    windowH4TNumberOfVentsRow.Cells.Add(windowH4TNumberOfVentsLBLCell);
-                    windowH4TNumberOfVentsRow.Cells.Add(windowH4TNumberOfVentsDDLCell);
-
-                    tblWindowDetails.Rows.Add(windowH4TNumberOfVentsRow);
-                }
-
-                #endregion
-
                 #region Uneven Vents Top Bottom Both Rads
 
                 if (title == "Vinyl")
@@ -995,6 +831,170 @@ namespace SunspaceDealerDesktop
 
                     #endregion
                 }
+                #endregion
+
+                #region Window Width 
+
+                TableRow windowWidthRow = new TableRow();
+                windowWidthRow.ID = "rowWindowWidth" + title;
+                //windowWidthRow.Attributes.Add("style", "display:none;");
+                TableCell windowWidthLBLCell = new TableCell();
+                TableCell windowWidthTXTCell = new TableCell();
+                TableCell windowWidthDDLCell = new TableCell();
+
+                Label windowWidthLBL = new Label();
+                windowWidthLBL.ID = "lblWindowWidth" + title;
+                windowWidthLBL.Text = "Width:";
+
+                TextBox windowWidthTXT = new TextBox();
+                windowWidthTXT.ID = "txtWindowWidth" + title;
+                windowWidthTXT.CssClass = "txtField txtWindowInput";
+                windowWidthTXT.Attributes.Add("maxlength", "3");
+                windowWidthTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                windowWidthTXT.Attributes.Add("onblur", "recalculate();");
+                windowWidthTXT.ToolTip = "Enter the width of your window in whole numbers";
+
+                DropDownList inchWidth = new DropDownList();
+                inchWidth.ID = "ddlWindowWidth" + title;
+                inchWidth.Attributes.Add("onchange", "recalculate();");
+                inchWidth.Items.Add(lst0);
+                inchWidth.Items.Add(lst18);
+                inchWidth.Items.Add(lst14);
+                inchWidth.Items.Add(lst38);
+                inchWidth.Items.Add(lst12);
+                inchWidth.Items.Add(lst58);
+                inchWidth.Items.Add(lst34);
+                inchWidth.Items.Add(lst78);
+                inchWidth.ToolTip = "Select the decimal value for your window width";
+
+                windowWidthLBL.AssociatedControlID = "txtWindowWidth" + title;
+
+
+                windowWidthLBLCell.Controls.Add(windowWidthLBL);
+                windowWidthTXTCell.Controls.Add(windowWidthTXT);
+                windowWidthDDLCell.Controls.Add(inchWidth);
+
+                tblWindowDetails.Rows.Add(windowWidthRow);
+
+                windowWidthRow.Cells.Add(windowWidthLBLCell);
+                windowWidthRow.Cells.Add(windowWidthTXTCell);
+                windowWidthRow.Cells.Add(windowWidthDDLCell);
+
+                #endregion
+
+                #region V4T Number Of Vents
+
+                if (title == "Vinyl")
+                {
+                    TableRow windowV4TNumberOfVentsRow = new TableRow();
+                    windowV4TNumberOfVentsRow.ID = "rowWindowV4TNumberOfVents" + title;
+                    //windowV4TNumberOfVentsRow.Attributes.Add("style", "display:none;");
+                    TableCell windowV4TNumberOfVentsLBLCell = new TableCell();
+                    TableCell windowV4TNumberOfVentsDDLCell = new TableCell();
+
+                    Label windowV4TNumberOfVentsLBL = new Label();
+                    windowV4TNumberOfVentsLBL.ID = "lblV4TNumberOfVents" + title;
+                    windowV4TNumberOfVentsLBL.Text = "Number Of Vents:";
+
+                    DropDownList windowV4TNumberOfVentsDDL = new DropDownList();
+                    windowV4TNumberOfVentsDDL.ID = "ddlWindowV4TNumberOfVents" + title;
+                    windowV4TNumberOfVentsDDL.Attributes.Add("onchange", "tintOptionsChanged();");
+                    windowV4TNumberOfVentsDDL.ToolTip = "Select the number of vents in your V4T window";
+
+                    ListItem V3 = new ListItem("3", "3");
+                    ListItem V4 = new ListItem("4", "4");
+                    ListItem V6S = new ListItem("6 Stereo", "6");
+                    ListItem V8S = new ListItem("8 Stereo", "8");
+                    ListItem V9S = new ListItem("9 Stereo", "9");
+                    ListItem V12S = new ListItem("12 Stereo", "12");
+
+                    windowV4TNumberOfVentsDDL.Items.Add(V3);
+                    windowV4TNumberOfVentsDDL.Items.Add(V4);
+                    windowV4TNumberOfVentsDDL.Items.Add(V6S);
+                    windowV4TNumberOfVentsDDL.Items.Add(V8S);
+                    windowV4TNumberOfVentsDDL.Items.Add(V9S);
+                    windowV4TNumberOfVentsDDL.Items.Add(V12S);
+
+                    windowV4TNumberOfVentsLBL.AssociatedControlID = "ddlWindowV4TNumberOfVents" + title;
+
+                    windowV4TNumberOfVentsLBLCell.Controls.Add(windowV4TNumberOfVentsLBL);
+                    windowV4TNumberOfVentsDDLCell.Controls.Add(windowV4TNumberOfVentsDDL);
+
+                    windowV4TNumberOfVentsRow.Cells.Add(windowV4TNumberOfVentsLBLCell);
+                    windowV4TNumberOfVentsRow.Cells.Add(windowV4TNumberOfVentsDDLCell);
+
+
+                    #region Uneven Vents Checkbox
+
+                    TableCell windowUnevenVentsCHKCell = new TableCell();
+                    //windowUnevenVentsCHKCell.Attributes.Add("style", "display:none;");
+                    windowUnevenVentsCHKCell.ID = "cellWindowUnevenVents" + title;
+                    windowUnevenVentsCHKCell.ToolTip = "Check to see uneven vents options for your V4T window";
+
+                    Label windowUnevenVentsLBLChk = new Label();
+                    windowUnevenVentsLBLChk.ID = "lblWindowUnevenVents" + title;
+
+                    Label windowUnevenVentsLBL = new Label();
+                    windowUnevenVentsLBL.ID = "lblWindowUnevenVentsRad" + title;
+                    windowUnevenVentsLBL.Text = " Uneven Vents";
+
+                    CheckBox windowUnevenVentsCHK = new CheckBox();
+                    windowUnevenVentsCHK.ID = "chkWindowUnevenVents" + title;
+                    windowUnevenVentsCHK.Attributes.Add("value", "UnevenVents");
+                    windowUnevenVentsCHK.Attributes.Add("onclick", "unevenVentsChecked(this.checked);");
+
+                    windowUnevenVentsLBLChk.AssociatedControlID = "chkWindowUnevenVents" + title;
+                    windowUnevenVentsLBL.AssociatedControlID = "chkWindowUnevenVents" + title;
+
+                    windowUnevenVentsCHKCell.Controls.Add(windowUnevenVentsCHK);
+                    windowUnevenVentsCHKCell.Controls.Add(windowUnevenVentsLBLChk);
+                    windowUnevenVentsCHKCell.Controls.Add(windowUnevenVentsLBL);
+
+                    windowV4TNumberOfVentsRow.Cells.Add(windowUnevenVentsCHKCell);
+
+                    tblWindowDetails.Rows.Add(windowV4TNumberOfVentsRow);
+
+                    #endregion
+
+                }
+                #endregion
+                
+                #region H4T number of vents
+
+                if (title == "Vinyl")
+                {
+                    ListItem V3 = new ListItem("3", "3");
+                    ListItem V4 = new ListItem("4", "4");
+
+                    TableRow windowH4TNumberOfVentsRow = new TableRow();
+                    windowH4TNumberOfVentsRow.ID = "rowWindowH4TNumberOfVents" + title;
+                    windowH4TNumberOfVentsRow.Attributes.Add("style", "display:none;");
+                    TableCell windowH4TNumberOfVentsLBLCell = new TableCell();
+                    TableCell windowH4TNumberOfVentsDDLCell = new TableCell();
+
+                    Label windowH4TNumberOfVentsLBL = new Label();
+                    windowH4TNumberOfVentsLBL.ID = "lblH4TNumberOfVents" + title;
+                    windowH4TNumberOfVentsLBL.Text = "Number Of Vents:";
+
+                    DropDownList windowH4TNumberOfVentsDDL = new DropDownList();
+                    windowH4TNumberOfVentsDDL.ID = "ddlWindowH4TNumberOfVents" + title;
+                    windowH4TNumberOfVentsDDL.Attributes.Add("onchange", "tintOptionsChanged();");
+                    windowH4TNumberOfVentsDDL.ToolTip = "Select the number of vents in your H4T window";
+
+                    windowH4TNumberOfVentsDDL.Items.Add(V3);
+                    windowH4TNumberOfVentsDDL.Items.Add(V4);
+
+                    windowH4TNumberOfVentsLBL.AssociatedControlID = "ddlWindowH4TNumberOfVents" + title;
+
+                    windowH4TNumberOfVentsLBLCell.Controls.Add(windowH4TNumberOfVentsLBL);
+                    windowH4TNumberOfVentsDDLCell.Controls.Add(windowH4TNumberOfVentsDDL);
+
+                    windowH4TNumberOfVentsRow.Cells.Add(windowH4TNumberOfVentsLBLCell);
+                    windowH4TNumberOfVentsRow.Cells.Add(windowH4TNumberOfVentsDDLCell);
+
+                    tblWindowDetails.Rows.Add(windowH4TNumberOfVentsRow);
+                }
+
                 #endregion
 
                 #region Tint Options
@@ -1218,7 +1218,7 @@ namespace SunspaceDealerDesktop
                 windowScreenOptionsDDL.ID = "ddlWindowScreenOptions" + title;
                 windowScreenOptionsDDL.ToolTip = "Select screen type for your " + title + " window";
 
-                ListItem standard = new ListItem("18 x 16 Mesh (Standard)", "18 x 16 Mesh (Standard)");
+                ListItem standard = new ListItem("18 x 16 Mesh", "18 x 16 Mesh");
                 ListItem noSeeUms = new ListItem("No-See-Ums 20 x 20 Mesh", "No-See-Ums 20 x 20 Mesh");
                 ListItem betterVueInsect = new ListItem("Better Vue Insect Screen", "Better Vue Insect Screen");
                 ListItem solarInsect = new ListItem("Solar Insect Screening", "Solar Insect Screening");

@@ -82,12 +82,10 @@ namespace SunspaceDealerDesktop
                     //Finally, we check what kind of user they are. Send sunspace users to spoof page by default, otherwise to home
                     if (dvUsers[0][2].ToString() == "S")
                     {
-                        Response.Redirect("Spoof.aspx");
+                        Session["dealer_id"] = 1; //changeme to sunspace internal dealer default
                     }
-                    else
-                    {
-                        Response.Redirect("Home.aspx");
-                    }
+
+                    Response.Redirect("Home.aspx");
                 }                    
             }
         }

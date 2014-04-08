@@ -59,6 +59,19 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["newProjectHasRoof"].ToString() == "Yes")
+            {
+                lblFinished.Text = "Wall details complete, next step: Roof";
+            }
+            else if (Session["newProjectPrefabFloor"].ToString() == "Yes")
+            {
+                lblFinished.Text = "Wall details complete, next step: Floor";
+            }
+            else
+            {
+                lblFinished.Text = "Wall details complete, next step: Completion";
+            }
+
             Page.Form.DefaultButton = "";
 
             if (Session["loggedIn"] == null)
@@ -164,6 +177,32 @@ namespace SunspaceDealerDesktop
             Session["SCREEN_MAX_HEIGHT_WARRANTY"] = Constants.SCREEN_MAX_HEIGHT_WARRANTY;
             #endregion
             
+            #endregion
+            #region Slide 3 pageload
+
+            //ddlInteriorSkin.Items.Add("Choose a skin...");
+            for (int i = 0; i < Constants.INTERIOR_WALL_SKIN_TYPES.Length; i++)
+            {
+                ddlInteriorSkin.Items.Add(Constants.INTERIOR_WALL_SKIN_TYPES[i]);
+            }
+
+            //ddlExteriorSkin.Items.Add("Choose a skin...");
+            for (int i = 0; i < Constants.EXTERIOR_WALL_SKIN_TYPES.Length; i++)
+            {
+                ddlExteriorSkin.Items.Add(Constants.EXTERIOR_WALL_SKIN_TYPES[i]);
+            }
+
+            //ddlKneewallType.Items.Add("Choose a type...");
+            for (int i = 0; i < Constants.KNEEWALL_TYPES.Length; i++)
+            {
+                ddlKneewallType.Items.Add(Constants.KNEEWALL_TYPES[i]);
+            }
+
+            for (int i = 0; i < Constants.KNEEWALL_GLASS_TINTS.Length; i++)
+            {
+                ddlKneewallTint.Items.Add(Constants.KNEEWALL_GLASS_TINTS[i]);
+            }
+            //Must populate transom dropdown based on model#
             #endregion
 
             Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
@@ -678,7 +717,7 @@ namespace SunspaceDealerDesktop
                 Label leftWallRadioTextLabel = new Label();
                 leftWallRadioTextLabel.ID = "lblRadioLeftWallText";
                 leftWallRadioTextLabel.AssociatedControlID = "radAutoLeftWallHeight";
-                leftWallRadioTextLabel.Text = "Auto Populate";
+                leftWallRadioTextLabel.Text = "Auto Calculate";
 
                 leftWallLabel.AssociatedControlID = "txtLeftWallHeight";
                 #endregion
@@ -727,7 +766,7 @@ namespace SunspaceDealerDesktop
                 Label rightWallRadioTextLabel = new Label();
                 rightWallRadioTextLabel.ID = "lblRadioRightWallText";
                 rightWallRadioTextLabel.AssociatedControlID = "radAutoRightWallHeight";
-                rightWallRadioTextLabel.Text = "Auto Populate";
+                rightWallRadioTextLabel.Text = "Auto Calculate";
 
                 rightWallLabel.AssociatedControlID = "txtRightWallHeight";
                 #endregion
@@ -776,7 +815,7 @@ namespace SunspaceDealerDesktop
                 Label gablePostRadioTextLabel = new Label();
                 gablePostRadioTextLabel.ID = "lblRadioGablePostText";
                 gablePostRadioTextLabel.AssociatedControlID = "radAutoGablePostHeight";
-                gablePostRadioTextLabel.Text = "Auto Populate";
+                gablePostRadioTextLabel.Text = "Auto Calculate";
 
                 gablePostLabel.AssociatedControlID = "txtGablePostHeight";
                 #endregion
@@ -818,7 +857,7 @@ namespace SunspaceDealerDesktop
                 Label leftRoofSlopeRadioTextLabel = new Label();
                 leftRoofSlopeRadioTextLabel.ID = "lblRadioRoofSlopeText";
                 leftRoofSlopeRadioTextLabel.AssociatedControlID = "radAutoRoofSlope";
-                leftRoofSlopeRadioTextLabel.Text = "Auto Populate";
+                leftRoofSlopeRadioTextLabel.Text = "Auto Calculate";
 
                 leftRoofSlopeLabel.AssociatedControlID = "txtLeftRoofSlope";
                 #endregion
@@ -979,7 +1018,7 @@ namespace SunspaceDealerDesktop
                 Label backWallRadioTextLabel = new Label();
                 backWallRadioTextLabel.ID = "lblRadioBackWallText";
                 backWallRadioTextLabel.AssociatedControlID = "radAutoBackWallHeight";
-                backWallRadioTextLabel.Text = "Auto Populate";
+                backWallRadioTextLabel.Text = "Auto Calculate";
 
                 backWallLabel.AssociatedControlID = "txtBackWallHeight";
                 #endregion
@@ -1027,7 +1066,7 @@ namespace SunspaceDealerDesktop
                 Label frontWallRadioTextLabel = new Label();
                 frontWallRadioTextLabel.ID = "lblRadioFrontWallText";
                 frontWallRadioTextLabel.AssociatedControlID = "radAutoFrontWallHeight";
-                frontWallRadioTextLabel.Text = "Auto Populate";
+                frontWallRadioTextLabel.Text = "Auto Calculate";
 
                 frontWallLabel.AssociatedControlID = "txtFrontWallHeight";
                 #endregion
@@ -1068,7 +1107,7 @@ namespace SunspaceDealerDesktop
                 Label roofSlopeRadioTextLabel = new Label();
                 roofSlopeRadioTextLabel.ID = "lblRadioRoofSlopeText";
                 roofSlopeRadioTextLabel.AssociatedControlID = "radAutoRoofSlope";
-                roofSlopeRadioTextLabel.Text = "Auto Populate";
+                roofSlopeRadioTextLabel.Text = "Auto Calculate";
 
                 roofSlopeLabel.AssociatedControlID = "txtRoofSlope";
                 #endregion
@@ -4618,7 +4657,7 @@ namespace SunspaceDealerDesktop
             endReceiver.FixedLocation = listOfWalls[listOfWalls.Count - 1].Length - 1f;
             endReceiver.IsTwoPiece = false;
             listOfWalls[listOfWalls.Count - 1].LastItemIndex++;
-            endReceiver.ItemType = "Receiever";
+            endReceiver.ItemType = "Receiver";
             endReceiver.Length = 1f;
             endReceiver.LinearIndex = listOfWalls[listOfWalls.Count - 1].LastItemIndex + 1;
             endReceiver.StartHeight = GlobalFunctions.getHeightAtPosition(listOfWalls[listOfWalls.Count - 1].StartHeight, listOfWalls[listOfWalls.Count - 1].EndHeight, listOfWalls[listOfWalls.Count - 1].Length - 1f, listOfWalls[listOfWalls.Count - 1].Length);
@@ -4648,6 +4687,10 @@ namespace SunspaceDealerDesktop
                     {
                         listOfWalls[i].LinearItems[j].Sex = "FF";
                     }
+                    else if (listOfWalls[i].LinearItems[j].ItemType == "BoxHeader")
+                    {
+                        listOfWalls[i].LinearItems[j].Sex = "FF";
+                    }
                     //Filler is always MM
                     else if (listOfWalls[i].LinearItems[j].ItemType == "Filler")
                     {
@@ -4674,6 +4717,11 @@ namespace SunspaceDealerDesktop
                             }
                             //If a receiver is after this mod, we must make the mod end in male
                             else if (listOfWalls[i].LinearItems[j + 1].ItemType == "Receiver")
+                            {
+                                listOfWalls[i].LinearItems[j].Sex = listOfWalls[i].LinearItems[j].Sex.Substring(0, 1) + "M";
+                            }
+                            //If a boxheader is after this mod, we must make the mod end in male
+                            else if (listOfWalls[i].LinearItems[j + 1].ItemType == "BoxHeader")
                             {
                                 listOfWalls[i].LinearItems[j].Sex = listOfWalls[i].LinearItems[j].Sex.Substring(0, 1) + "M";
                             }

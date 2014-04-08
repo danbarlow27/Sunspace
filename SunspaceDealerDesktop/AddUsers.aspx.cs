@@ -114,16 +114,16 @@ namespace SunspaceDealerDesktop
                     DateTime aDate = DateTime.Now;
                     sdsUsers.InsertCommand = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
                                             + "VALUES('"
-                                            + txtLogin.Text + "', '"
+                                            + GlobalFunctions.escapeSqlString(txtLogin.Text) + "', '"
                                             + GlobalFunctions.CalculateSHAHash(txtPassword.Text) + "', '"
-                                            + txtEmail.Text + "', '"
+                                            + GlobalFunctions.escapeSqlString(txtEmail.Text) + "', '"
                                             + aDate.ToString("yyyy/MM/dd") + "', '"
                                             + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
                                             + "D" + "', '" //Must be D-S because a dealer can only add users of his dealership
                                             + "S" + "', "
                                             + Convert.ToInt32(Session["dealer_id"].ToString()) + ", '" //reference ID is the dealer id in the dealer table they belong to
-                                            + txtFirstName.Text + "', '"
-                                            + txtLastName.Text + "', "
+                                            + GlobalFunctions.escapeSqlString(txtFirstName.Text) + "', '"
+                                            + GlobalFunctions.escapeSqlString(txtLastName.Text) + "', "
                                             + 1 + ")";
                     sdsUsers.Insert();
                     lblError.Text = "Successfully Added";
@@ -163,9 +163,9 @@ namespace SunspaceDealerDesktop
                                 //Add to dealer table
                                 aCommand.CommandText = "INSERT INTO dealers (dealer_name, first_name, last_name, country, multiplier)"
                                                         + "VALUES('"
-                                                        + txtDealershipName.Text + "', '"
-                                                        + txtFirstName.Text + "', '"
-                                                        + txtLastName.Text + "', '"
+                                                        + GlobalFunctions.escapeSqlString(txtDealershipName.Text) + "', '"
+                                                        + GlobalFunctions.escapeSqlString(txtFirstName.Text) + "', '"
+                                                        + GlobalFunctions.escapeSqlString(txtLastName.Text) + "', '"
                                                         + ddlCountry.SelectedValue + "', "
                                                         + Convert.ToDecimal(txtMultiplier.Text) + ")"; //user enters %, so 80% will become 1.8 as a multiplier                               
                                 aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
@@ -179,14 +179,14 @@ namespace SunspaceDealerDesktop
                                                         + "VALUES('"
                                                         + txtLogin.Text + "', '"
                                                         + GlobalFunctions.CalculateSHAHash(txtPassword.Text) + "', '"
-                                                        + txtEmail.Text + "', '"
+                                                        + GlobalFunctions.escapeSqlString(txtEmail.Text) + "', '"
                                                         + aDate.ToString("yyyy/MM/dd") + "', '"
                                                         + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
                                                         + "D" + "', '" //Must be D-A within this block of logic
                                                         + "A" + "', "
                                                         + newDealerId + ", '" //reference ID is the dealer id in the dealer table they belong to
-                                                        + txtFirstName.Text + "', '"
-                                                        + txtLastName.Text + "', "
+                                                        + GlobalFunctions.escapeSqlString(txtFirstName.Text) + "', '"
+                                                        + GlobalFunctions.escapeSqlString(txtLastName.Text) + "', "
                                                         + 1 + ")";
                                 aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
 
@@ -466,28 +466,28 @@ namespace SunspaceDealerDesktop
                             aCommand.CommandText = "INSERT INTO sunspace (position, first_name, last_name)"
                                                     + "VALUES('"
                                                     + "CSR" + "', '" //can only be CSR at this point, can be changed to a variable later
-                                                    + txtFirstName.Text + "', '"
-                                                    + txtLastName.Text + "'"
+                                                    + GlobalFunctions.escapeSqlString(txtFirstName.Text) + "', '"
+                                                    + GlobalFunctions.escapeSqlString(txtLastName.Text) + "'"
                                                     + ")";
                             aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
 
-                            aCommand.CommandText = "SELECT sunspace_id FROM sunspace WHERE position='" + "CSR" + "' AND first_name='" + txtFirstName.Text + "' AND last_name='" + txtLastName.Text + "'";
+                            aCommand.CommandText = "SELECT sunspace_id FROM sunspace WHERE position='" + "CSR" + "' AND first_name='" + GlobalFunctions.escapeSqlString(txtFirstName.Text) + "' AND last_name='" + GlobalFunctions.escapeSqlString(txtLastName.Text) + "'";
                             int newSunspaceId = Convert.ToInt32(aCommand.ExecuteScalar()); //ExecuteScalar returns the value in the first field of the first row of a query. Good for getting one piece of data immediately
 
                             //Now add user
                             DateTime aDate = DateTime.Now;
                             aCommand.CommandText = "INSERT INTO users (login, password, email_address, enrol_date, last_access, user_type, user_group, reference_id, first_name, last_name, status)"
                                                     + "VALUES('"
-                                                    + txtLogin.Text + "', '"
+                                                    + GlobalFunctions.escapeSqlString(txtLogin.Text) + "', '"
                                                     + GlobalFunctions.CalculateSHAHash(txtPassword.Text) + "', '"
-                                                    + txtEmail.Text + "', '"
+                                                    + GlobalFunctions.escapeSqlString(txtEmail.Text) + "', '"
                                                     + aDate.ToString("yyyy/MM/dd") + "', '"
                                                     + aDate.ToString("yyyy/MM/dd") + "', '" //default to same-day
                                                     + "S" + "', '" //Must be S-C within this block of logic
                                                     + "C" + "', "
                                                     + newSunspaceId + ", '" //reference ID is the dealer id in the dealer table they belong to
-                                                    + txtFirstName.Text + "', '"
-                                                    + txtLastName.Text + "', "
+                                                    + GlobalFunctions.escapeSqlString(txtFirstName.Text) + "', '"
+                                                    + GlobalFunctions.escapeSqlString(txtLastName.Text) + "', "
                                                     + 1 + ")";
                             aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
 
