@@ -91,10 +91,10 @@
             /*visibility: hidden;*/
             height: auto;
             width: auto;
-            /*z-index: 1;*/
+            z-index: 999;
         }
         g {
-            position: static;
+            position: relative;
         }
     </style>
 

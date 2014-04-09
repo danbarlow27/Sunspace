@@ -19,11 +19,11 @@ namespace SunspaceDealerDesktop
         protected int wallCount = 0;
         protected int floorCount = 0;
         protected int roofCount = 0;
-        protected int projectId = 82; //82 84 86 87 88 get it from the session (project_id)
+        protected int projectId = 89; //82 84 86 87 88 89 get it from the session (project_id)
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            projectId = Convert.ToInt32(Session["project_id"].ToString());
+            //projectId = Convert.ToInt32(Session["project_id"].ToString());
             #region commented out hard coded data
             /*
             #region hard coded data
