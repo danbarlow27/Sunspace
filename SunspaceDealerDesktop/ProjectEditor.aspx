@@ -436,6 +436,39 @@
                         }
                         break;
                     case "Door":
+
+                        var id = "";// + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
+                        var title = modularItems[i].ItemType;
+                        var length = modularItems[i].FLength; ; //length of the modular item
+                        var startHeight = modularItems[i].FStartHeight; //start height of the modular item
+                        var endHeight = modularItems[i].FEndHeight; //end height of the modular item
+                        var leftHeight = modularItems[i].LeftHeight; //left height of the modular item
+                        var rightHeight = modularItems[i].RightHeight; //right height of the modular item
+                
+                        var insideTopLeft = { "x": scale(parseFloat(0) + 1), "y": (-1 * scale(parseFloat(leftHeight) - 1)) }; //top left coordinates
+                        var insideTopRight = { "x": scale(parseFloat(length) - 1), "y": (-1 * scale(parseFloat(rightHeight) - 1)) }; //top right coordinates
+                        var insideBottomRight = { "x": scale(parseFloat(length) - 1), "y": scale(parseFloat(0) - 1) }; //bottom right coordinates
+                        var insideBottomLeft = { "x": scale(parseFloat(0) + 1), "y": scale(parseFloat(0) - 1) }; //bottom left coordinates
+
+                        var insidePoints = [insideTopLeft, insideTopRight, insideBottomRight, insideBottomLeft]; //put all the coordinates together in an array
+
+                        drawDoorDetails(modularItems[i], insidePoints, modularItems.length, linearIndex, relativeLinearIndex);
+
+                        if (i == 0) {
+
+                            var pt1 = { "x": scale(parseFloat(0)), "y": (insideTopLeft.y - scale(1)) }; //line left coordinates
+                            var pt2 = { "x": scale(parseFloat(length)), "y": (insideTopRight.y - scale(1)) }; //line left coordinates
+
+                            //drawLine(pt1, pt2, gMod);
+                        }
+                        else if (i == parseFloat(modularItems.length) - 1) {
+
+                            var pt1 = { "x": scale(parseFloat(0)), "y": (insideBottomLeft.y + scale(1)) }; //line left coordinates
+                            var pt2 = { "x": scale(parseFloat(length)), "y": (insideBottomRight.y + scale(1)) }; //line left coordinates
+
+                            drawLine(pt1, pt2, gMod);
+                        }
+
                         break;
                     case "Box Header":
                         break;
@@ -601,6 +634,157 @@
                 //arrLabels[relativeLinearIndex] = { "g": gLi, "frame": frame, "text": text };
             }
         }
+
+
+        /**
+        This function draws the details of a given door
+        @param door - the door object
+        @param frame - the door frame coordinates
+        @param transomIndex - modular index of the transom
+        @param linearIndex - index of the linear item which contains this door
+        @param relativeLinearIndex - index of the linear item relative to the wall drawn
+        */
+        function drawDoorDetails(door, frame, transomIndex, linearIndex, relativeLinearIndex) {
+
+            var pt1, pt2, topLeft, topRight, bottomLeft, bottomRight, leftSlider, rightSlider;
+
+            drawPolygon(frame, "", "", gMod); //draw the polygon to represent the wall with the given coordinates and id
+            gDoor = gMod.append("g").attr("transform", "translate("+ frame[3].x + "," + frame[3].y + ")");
+
+            switch(door.DoorStyle) {
+                case "Double Slider": //glass model 300
+                case "Single Slider": //glass model 400
+                case "Horizontal Roller XX": //glass model 300
+                case "Horizontal Roller": //H2T model 200
+                case "Horizontal 2 Track": //H2T model 200
+                case "Horizontal Two Track": //H2T model 200
+                case "H2T": //H2T model 200
+
+                    //door.SpreaderBar = door.LeftHeight / 2; //for debuggin purposes
+
+                    pt1 = { "x": scale((door.Width / 2) - 1), "y": scale(0) }; //line left coordinates
+                    pt2 = { "x": scale((door.Width / 2) - 1), "y": (-1 * scale(door.LeftHeight - 2)) }; //line left coordinates
+
+                    drawLine(pt1, pt2, gDoor, 2);
+
+                    topLeft = { "x": (frame[0].x + scale(1)), "y": (frame[0].y + scale(3)) }; //top left coordinates
+                    topRight = { "x": scale((door.Width / 2) - 3), "y": (frame[1].y + scale(3)) }; //top right coordinates
+                    bottomRight = { "x": scale((door.Width / 2) - 3), "y": (frame[2].y - scale(1)) }; //bottom right coordinates
+                    bottomLeft = { "x": (frame[3].x + scale(1)), "y": (frame[3].y - scale(1)) }; //bottom left coordinates
+
+                    leftSlider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                    drawPolygon(leftSlider, "", "", gDoor); //draw the polygon to represent the wall with the given coordinates and id
+
+                    if (door.SpreaderBar !== 0) {
+                        gVent = gDoor.append("g");
+                        pt1 = { "x": topLeft.x, "y": -scale(door.SpreaderBar) }; //lne left coordinates
+                        pt2 = { "x": topRight.x, "y": -scale(door.SpreaderBar) }; //line left coordinates
+                        drawLine(pt1, pt2, gVent, 2);
+                    }
+
+                    gDoor = gMod.append("g").attr("transform", "translate("+ frame[3].x + "," + frame[3].y + ")");
+
+                    topLeft = { "x": scale((door.Width / 2) - 0.5), "y": (frame[0].y + scale(3)) }; //top left coordinates
+                    topRight = { "x": scale(door.Width - 4), "y": (frame[1].y + scale(3)) }; //top right coordinates
+                    bottomRight = { "x": scale(door.Width - 4), "y": (frame[2].y - scale(1)) }; //bottom right coordinates
+                    bottomLeft = { "x": scale((door.Width / 2) - 0.5), "y": (frame[3].y - scale(1)) }; //bottom left coordinates
+
+                    rightSlider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                    drawPolygon(rightSlider, "", "", gDoor); //draw the polygon to represent the wall with the given coordinates and id
+
+                    if (door.SpreaderBar !== 0) {
+                        gVent = gDoor.append("g");
+                        pt1 = { "x": topLeft.x, "y": -scale(door.SpreaderBar) }; //line left coordinates
+                        pt2 = { "x": topRight.x, "y": -scale(door.SpreaderBar) }; //line left coordinates
+                        drawLine(pt1, pt2, gVent, 2);
+                    }
+                        
+                    //drawGlassLines(leftSlider);
+                    //drawGlassLines(rightSlider);
+
+                    break;
+
+                case "Vertical 4 Track": //V4T
+                case "Vertical Four Track": //V4T
+                case "V4T": //V4T
+                    var ventHeight = 0;
+                    
+                    gVent = gDoor.append("g");
+
+                    for (var i = 0; i < door.NumVents; i++) {
+                        ventHeight = scale(door.VentHeights[i] / 4); ///4 because the vent heights are messed up
+                        
+                        var yBottom = (i === (door.NumVents - 1)) ? -(ventHeight - scale(1)) : -(ventHeight - scale(0.5));
+
+                        topLeft = { "x": scale(1), "y": scale(-1) }; //top left coordinates
+                        topRight = { "x": scale(door.Width - 3), "y": scale(-1) }; //top right coordinates
+                        bottomRight = { "x": scale(door.Width - 3), "y": yBottom }; //bottom right coordinates
+                        bottomLeft = { "x": (scale(1)), "y": yBottom }; //bottom left coordinates
+
+                        var slider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                        drawPolygon(slider, "", "", gVent); //draw the polygon to represent the wall with the given coordinates and id
+
+                        if (door.SpreaderBar !== 0) {
+
+                            var yTop = (i === (door.NumVents - 1)) ? -(ventHeight - scale(1)) : -(ventHeight - scale(0.5));
+
+                            pt1 = { "x": scale(door.SpreaderBar), "y": scale(-1) }; //line left coordinates
+                            pt2 = { "x": scale(door.SpreaderBar), "y": yTop }; //line left coordinates
+                            drawLine(pt1, pt2, gVent, 2);
+                        }
+
+                        //drawGlassLines(slider);
+
+                        gVent = gVent.append("g").attr("transform", "translate("+ 0 + "," + (parseFloat(-ventHeight)) + ")");
+
+                    }
+
+                    ventHeight = 0;
+                    for (var i = 0; i < door.NumVents - 1; i++) {
+                        ventHeight += scale(door.VentHeights[i] / 4); ///4 because the vent heights are messed up
+                        gVent = gDoor.append("g").attr("transform", "translate("+ 0 + "," + -ventHeight + ")");
+                        pt1 = { "x": scale(0), "y": scale(0) }; //line left coordinates
+                        pt2 = { "x": scale(parseFloat(door.Width) - 2), "y": scale(0) }; //line left coordinates
+                        drawLine(pt1, pt2, gVent, 1);
+
+                    }
+                    
+                    break;
+                case "Vinyl":
+                    break;
+                case "Glass":
+                    break;
+                case "Screen":
+                    break;
+                case "Solid Wall":
+                    break;
+            }        
+
+            if (door.ScreenType != "No Screen" && door.ScreenType != "NoScreen" && door.ScreenType != "" && typeof door.ScreenType !== 'undefined') 
+                drawScreen(frame); //draw screen lines
+
+            if (door.ModuleIndex != 0 && door.ModuleIndex != (transomIndex - 1)) {
+                var text, width, height;
+                //get the width of the door; if width contains a decimal value, convert it into a fraction string
+                width = ((door.FLength + "").indexOf(".") != -1) ? convertDecimalToFractions(door.FLength + "") : door.FLength;
+                //get the height of the door; if height contains a decinal value, convert it into a fraction string
+                height = ((door.FStartHeight + "").indexOf(".") != -1) ? convertDecimalToFractions(door.FStartHeight + "") : door.FStartHeight;
+                //set the label text
+                text = new Array();
+                text[0] = 'W' + (parseInt(linearIndex) + 1); 
+                text[1] = width + "\" x " + height + "\" " + door.DoorStyle;
+
+                //call the addLabels function to add the labels on the doors
+                addLabels(gDoor, frame, text);
+
+                //arrLabels[relativeLinearIndex] = { "g": gLi, "frame": frame, "text": text };
+            }
+        }
+
+
 
         /**
         This function draws the screen on a given window
