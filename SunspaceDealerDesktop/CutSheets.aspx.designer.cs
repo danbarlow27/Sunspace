@@ -10,51 +10,51 @@
 namespace SunspaceDealerDesktop {
     
     
-    public partial class Home1 {
+    public partial class CutSheets {
         
         /// <summary>
-        /// btnNewProject control.
+        /// lblTag control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnNewProject;
+        protected global::System.Web.UI.WebControls.Label lblTag;
         
         /// <summary>
-        /// btnPreferences control.
+        /// lblCustomer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPreferences;
+        protected global::System.Web.UI.WebControls.Label lblCustomer;
         
         /// <summary>
-        /// btnSpoof control.
+        /// lblColour control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSpoof;
+        protected global::System.Web.UI.WebControls.Label lblColour;
         
         /// <summary>
-        /// btnComponents control.
+        /// lblExtrusion control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnComponents;
+        protected global::System.Web.UI.WebControls.Label lblExtrusion;
         
         /// <summary>
-        /// btnAddUsers control.
+        /// tblPlaceholder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddUsers;
+        protected global::System.Web.UI.WebControls.PlaceHolder tblPlaceholder;
     }
 }

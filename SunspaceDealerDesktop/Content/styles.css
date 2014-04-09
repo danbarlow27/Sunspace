@@ -720,7 +720,7 @@ div.savedProjectsWrapper .editInvoiceItemOverlay {
 div.projectTransitOverlay .content,
 div.editInvoiceItemOverlay .content {
     position: absolute;
-    height: 180px;
+    height: 250px;
     width: 470px;
     background-color: rgb(242, 235, 214);
     top: 50%;

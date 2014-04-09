@@ -130,6 +130,23 @@
             document.getElementById("<%=hidOverhang.ClientID%>").value = parseFloat($('#<%=txtOverhangLength.ClientID%>').val()) + parseFloat($('#<%=ddlOverhangInches.ClientID%>').val());
         }
 
+        function roofWizardPanelCheck() {
+            if (document.getElementById("<%=ddlPanelType.ClientID%>").value.indexOf("OSB") != -1)
+            {
+                if (document.getElementById("<%=ddlPanelType.ClientID%>").value.indexOf("OSB/OSB") != -1)
+                {
+                    document.getElementById("<%=ddlExteriorRoofSkin.ClientID%>").value = "OSB";
+                    document.getElementById("<%=ddlInteriorRoofSkin.ClientID%>").value = "OSB";
+                }
+                else
+                {
+                    document.getElementById("<%=ddlExteriorRoofSkin.ClientID%>").value = "OSB";
+                }
+            }
+            s.indexOf("oo") != -1
+            roofWizardCheckQuestion3();
+        }
+
         function roofWizardCheckQuestion3() {
             //move to hidden interior/exterior
             document.getElementById("<%=hidPanelType.ClientID%>").value = $('#<%=ddlPanelType.ClientID%>').val();
@@ -236,7 +253,7 @@
                                                 <asp:Label ID="lblLedger" Text="Ledger: " runat="server"></asp:Label>
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtLedgerSetback" onkeyup="roofWizardCheckQuestion1()" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtLedgerSetback" onkeyup="roofWizardCheckQuestion1()" runat="server" Text="3"></asp:TextBox>
                                             </asp:TableCell>
                                             <asp:TableCell>
                                                 <asp:DropDownList ID="ddlLedgerSetbackInches" OnChange="roofWizardCheckQuestion1()" runat="server"></asp:DropDownList>
@@ -248,7 +265,7 @@
                                                 <asp:Label ID="lblFront" Text="Front: " runat="server"></asp:Label>
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtFrontSetback" onkeyup="roofWizardCheckQuestion1()" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtFrontSetback" onkeyup="roofWizardCheckQuestion1()" runat="server" Text="1"></asp:TextBox>
                                             </asp:TableCell>
                                             <asp:TableCell>
                                                 <asp:DropDownList ID="ddlFrontSetbackInches" OnChange="roofWizardCheckQuestion1()" runat="server"></asp:DropDownList>
@@ -260,7 +277,7 @@
                                                 <asp:Label ID="lblSides" Text="Sides: " runat="server"></asp:Label>
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtSidesSetback" onkeyup="roofWizardCheckQuestion1()" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtSidesSetback" onkeyup="roofWizardCheckQuestion1()" runat="server" Text="1"></asp:TextBox>
                                             </asp:TableCell>
                                             <asp:TableCell>
                                                 <asp:DropDownList ID="ddlSidesSetbackInches" OnChange="roofWizardCheckQuestion1()" runat="server"></asp:DropDownList>
@@ -272,7 +289,7 @@
                                                 <asp:Label ID="lblJoint" Text="Joint: " runat="server"></asp:Label>
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtJointSetback" onkeyup="roofWizardCheckQuestion1()" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtJointSetback" onkeyup="roofWizardCheckQuestion1()" runat="server" Text="0"></asp:TextBox>
                                             </asp:TableCell>
                                             <asp:TableCell>
                                                 <asp:DropDownList ID="ddlJointSetbackInches" OnChange="roofWizardCheckQuestion1()" runat="server"></asp:DropDownList>
@@ -297,7 +314,7 @@
                 <ul class="toggleOptions">
                     <li>                                
                         <asp:Label ID="lblOverhangLength" runat="server" Text="Overhang Length"></asp:Label>
-                        <asp:TextBox ID="txtOverhangLength" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="roofWizardCheckQuestion2()"></asp:TextBox>
+                        <asp:TextBox ID="txtOverhangLength" runat="server" onkeydown="return (event.keyCode!=13);" onkeyup="roofWizardCheckQuestion2()" Text="12"></asp:TextBox>
                         <asp:DropDownList ID="ddlOverhangInches" runat="server" OnChange="roofWizardCheckQuestion2()" ></asp:DropDownList>
                         <br />
                         <asp:Label ID="lblOverhangWarning" runat="server" Text="Enter 0 for no overhang"></asp:Label>
@@ -317,7 +334,7 @@
                 <ul class="toggleOptions">
                     <li>
                         <asp:Label ID="lblPanelType" runat="server" Text="Panel Type:"></asp:Label>
-                        <asp:DropDownList ID="ddlPanelType" runat="server" OnChange="roofWizardCheckQuestion3()"></asp:DropDownList>
+                        <asp:DropDownList ID="ddlPanelType" runat="server" OnChange="roofWizardPanelCheck()"></asp:DropDownList>
                     </li>
                     <li>
                         <asp:Label ID="lblInteriorRoofSkin" runat="server" Text="Interior Skin:"></asp:Label>
@@ -374,7 +391,9 @@
                         <asp:Label ID="lblGutterPresenceNo" AssociatedControlID="radGutterPresenceNo" runat="server" Text="No"></asp:Label>
                     </li>
                 </ul>
-
+                
+                <br />
+                <asp:Label ID="lblFinished" runat="server"></asp:Label>
                 <asp:Button ID="btnFinalButton" CssClass="btnSubmit float-right slidePanel" runat="server" OnClick="btnFinalButton_Click" Text="Submit" />
             </div>
         </div>
@@ -383,7 +402,7 @@
     <div id="sidebar">
         <div id="paging-wrapper">    
             <div id="paging"> 
-                <h2>Floor Specifications</h2>
+                <h2>Roof Specifications</h2>
 
                 <ul>
                     <%-- MINI CANVAS (HIGHLIGHTS CURRENT WALL)

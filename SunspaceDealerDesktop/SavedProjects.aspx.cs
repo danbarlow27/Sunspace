@@ -320,19 +320,9 @@ namespace SunspaceWizard
             // We'll render the Panels/Buttons/etc to this, which directs it to the StringBuilder above.
             HtmlTextWriter aHTMLTextWriter = new HtmlTextWriter(new System.IO.StringWriter(aStringBuilder));
 
-            // Modal popup div
-            //Panel aWrapper = new Panel();
-
-            //aWrapper.CssClass = "priceCalculatorWrapper";
-
-            
-
             Panel aDialogPopup = new Panel();
             Panel aDialogContent = new Panel();
 
-            //Panel aWrapper = new Panel();
-
-            //aWrapper = (Panel)aWrapper.FindControl("savedProjectsWrapper");
 
             // TEST TIME
             aDialogPopup.ID = "projectTransitBackground";
@@ -340,23 +330,14 @@ namespace SunspaceWizard
             aDialogPopup.Attributes["style"] = "display: none;";
 
             aDialogContent.CssClass = "content";
-            //aWrapper.Controls.Add(aDialogPopup);
             aDialogPopup.Controls.Add(aDialogContent);
 
             // 
             Label aPopupDescription = new Label();
 
-            /*
-             * <div class="closeBar">
-                    <div class="overlayClose close">CLOSE</div>
-                </div>
-             */
-
-            //SavedProjects sp = new SavedProjects();
 
             aPopupDescription.Text = "Please select the following options:";
 
-            //aDialogContent.Controls.Add(aPopupDescription);
 
             // Close box
             Panel aCloseBar = new Panel();
@@ -408,7 +389,7 @@ namespace SunspaceWizard
             aDialogContent.Controls.Add(aPriceCalculatorButton);
 
             Label LineBreaaaaak = new Label();
-            LineBreaaaaak.Text = "<br/><br/>";
+            LineBreaaaaak.Text = "<p>&nbsp;</p><br/><br/>";
 
             aDialogContent.Controls.Add(LineBreaaaaak);
 
@@ -470,8 +451,6 @@ namespace SunspaceWizard
 
             aPopupDescription.Text = "Please select dupe dis:";
 
-            //aDialogContent.Controls.Add(aPopupDescription);
-
             // Close box
             Panel aCloseBar = new Panel();
 
@@ -490,14 +469,6 @@ namespace SunspaceWizard
             aCloseButton.Controls.Add(aCloseLabel);
 
             aCloseBar.Controls.Add(aCloseButton);
-
-            /*
-            switch (projectType)
-            {
-                case ("Sunroom"):
-             */
-
-
 
             // Create session for project editor
             HttpContext.Current.Session["project_id"] = projectID;
@@ -526,18 +497,6 @@ namespace SunspaceWizard
             aDuplicateButton.Controls.Add(aDuplicateLabel);
             aDialogContent.Controls.Add(aDuplicateButton);
 
-            /*
-                    break;
-                case("Walls"):
-
-                    break;
-                default:
-                    break;
-            }
-            */
-
-
-
             // Render to HTMLTextWriter (so we can return StringBuilder..)
             aDialogPopup.RenderControl(aHTMLTextWriter);
 
@@ -554,31 +513,6 @@ namespace SunspaceWizard
         public static bool DuplicateProject(string projectID, string projectNewName)
         {
 
-            /*
-            string sqlCount;
-            string sqlInsert;
-            System.Data.DataView selectTable = new System.Data.DataView();
-            int count;
-
-            sqlCount = "SELECT * FROM " + table;
-
-            dataSource.SelectCommand = sqlCount;
-            selectTable = (System.Data.DataView)dataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
-
-            count = selectTable.Count;
-
-            sqlInsert = "INSERT INTO " + table
-            + "(accId,partName,description,partNumber,color,packQuantity,width,widthUnits,length,lengthUnits,size,sizeUnits,usdPrice,cadPrice,status)"
-            + "VALUES"
-            + "(" + (count + 1) + ",'" + AccessoryName + "','" + AccessoryDescription + "','" + AccessoryNumber + "','" + AccessoryColor + "'," + AccessoryPackQuantity + ","
-            + AccessoryWidth + ",'" + AccessoryWidthUnits + "'," + AccessoryLength + ",'" + AccessoryLengthUnits + "'," + AccessorySize + ",'" + accessorySizeUnits + "',"
-            + AccessoryUsdPrice + "," + AccessoryCadPrice + "," + 1 + ")";
-
-            dataSource.InsertCommand = sqlInsert;
-            dataSource.Insert();
-            */
-
-
             SqlDataSource dataSource = new SqlDataSource();
             // Super bad? Copy pasta from web.config
             dataSource.ConnectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\sunspace_db.mdf;Integrated Security=True;Connect Timeout=30";
@@ -586,6 +520,9 @@ namespace SunspaceWizard
             System.Data.DataView selectProject = new System.Data.DataView();
             string sqlSelect;
             string sqlInsert;
+            List<string> tableNames = new List<string>();
+            int newProjectID;   // New project ID for all the compenents of a project
+            int tableCount;     // Number of tables
 
             // Select the project
             sqlSelect = "SELECT 	project_type," + 
@@ -608,6 +545,7 @@ namespace SunspaceWizard
 
             Debug.WriteLine(selectProject[0].Row[0]);
 
+            // Insert the new project with the duplicated data!
             sqlInsert = "INSERT INTO Projects(project_type, " +
                      "installation_type, " +
                      "customer_id, " +
@@ -638,6 +576,82 @@ namespace SunspaceWizard
 
             dataSource.InsertCommand = sqlInsert;
             dataSource.Insert();
+
+            // Grab project id from the last insert!
+            sqlSelect = "SELECT project_ID from Projects WHERE project_ID = IDENT_CURRENT('Projects');";
+
+
+            dataSource.SelectCommand = sqlSelect;
+            selectProject = (System.Data.DataView)dataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+            // Set new project id
+            newProjectID = (int)selectProject[0].Row[0];
+
+            Debug.WriteLine(selectProject[0].Row[0]);
+
+            // Get table count
+            sqlSelect = "Select Count(*) From INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME LIKE 'project_id' AND TABLE_NAME <> 'projects'";
+
+            dataSource.SelectCommand = sqlSelect;
+            selectProject = (System.Data.DataView)dataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+            // Set table count
+            tableCount = (int)selectProject[0].Row[0];
+
+            Debug.WriteLine(selectProject[0].Row[0]);
+
+            // Essentially this gets a compenent table info and re-inserts it with the new project ID
+            for (int index = 0; index < tableCount; index++)
+            {
+                // Get table names
+                sqlSelect = "SELECT TABLE_NAME From INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME LIKE 'project_id' AND TABLE_NAME <> 'projects' ORDER BY TABLE_NAME ASC OFFSET "+ index +" ROWS FETCH NEXT 1 ROWS ONLY";
+                dataSource.SelectCommand = sqlSelect;
+                selectProject = (System.Data.DataView)dataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+                tableNames.Add((string)selectProject[0].Row[0]);
+                Debug.WriteLine("Table Name: " + selectProject[0].Row[0]);
+                Debug.WriteLine("Table Count:" + tableNames.Count());
+
+                // Select rows with the old project id
+                sqlSelect = "SELECT * FROM " + selectProject[0].Row[0] + " WHERE project_ID = " + projectID;
+                dataSource.SelectCommand = sqlSelect;
+                selectProject = (System.Data.DataView)dataSource.Select(System.Web.UI.DataSourceSelectArguments.Empty);
+
+                //
+                // If we actually need this table..
+                //
+                if (selectProject.Count > 0)
+                {
+                    
+                    Debug.WriteLine(selectProject[0].Row[0]);
+
+                    // Start the insert statement
+                    sqlInsert = "INSERT INTO " + tableNames[index] + " VALUES (";
+                    
+                    // Inserts the values
+                    for (int index2 = 0; index2 < selectProject[0].Row.ItemArray.Count(); index2++)
+                    {
+                        Debug.WriteLine(selectProject[0].Row[index2]);
+                        if (index2 == 0)
+                            sqlInsert += "'" + newProjectID + "', ";
+                        else if (index2 != (selectProject[0].Row.ItemArray.Count() - 1))
+                            sqlInsert += "'" + selectProject[0].Row[index2] + "', ";
+                        else
+                            sqlInsert += "'" + selectProject[0].Row[index2] + "'";
+                        
+                    }
+                    // Close the insert
+                    sqlInsert += ");";
+                    Debug.WriteLine(sqlInsert);
+
+
+                    // Actually insert the data
+                    dataSource.InsertCommand = sqlInsert;
+                    dataSource.Insert();
+
+                }
+
+            }
 
             return true;
         }

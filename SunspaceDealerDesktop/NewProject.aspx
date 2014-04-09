@@ -62,7 +62,8 @@
             }
         }
 
-        function newProjectCheckQuestion1() {
+        function newProjectCheckQuestion1() 
+        {
             document.getElementById('<%=btnQuestion3.ClientID%>').style.display="inline";
             document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').style.display="none";
             var ddlCustomerCountry = document.getElementById("<%=ddlCustomerCountry.ClientID%>").value;
@@ -74,7 +75,8 @@
             //disable 'next slide' button until after validation
             document.getElementById('<%=btnQuestion1.ClientID%>').disabled = true;
             //if they select new customer
-            if ($('#<%=radNewCustomer.ClientID%>').is(':checked')) {
+            if ($('#<%=radNewCustomer.ClientID%>').is(':checked')) 
+            {
                 //if checked, clear possible pager value from existing
                 $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("");
 
@@ -163,7 +165,8 @@
                 var lengthCheck = document.getElementById("<%=hidCell.ClientID%>").value;
 
                 //only check if a full 10digit number is entered
-                if (lengthCheck.length == 10) {
+                if (lengthCheck.length == 10) 
+                {
                     //validatePhone function returns an error message, blank if valid
                     var validCell = validatePhone(document.getElementById("<%=hidCell.ClientID%>").value);
 
@@ -174,13 +177,15 @@
                 }
 
                 if (document.getElementById("<%=txtCustomerFirstName.ClientID%>").value == "" &&
-                    document.getElementById("<%=txtCustomerLastName.ClientID%>").value == "") {
+                    document.getElementById("<%=txtCustomerLastName.ClientID%>").value == "") 
+                {
 
                     document.getElementById('<%=txtErrorMessage.ClientID%>').value = "Customer First and Last names are required.";
                 }
 
                 //isValid remains true if nothing became false
-                if (document.getElementById('<%=txtErrorMessage.ClientID%>').value == "") {
+                if (document.getElementById('<%=txtErrorMessage.ClientID%>').value == "") 
+                {
                     //Set answer to 'new' on side pager and enable button
                     $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("New");
                     document.getElementById('pagerOne').style.display = "inline";
@@ -188,7 +193,8 @@
                 }
             }
                 //if they select existing customer
-            else if ($('#<%=radExistingCustomer.ClientID%>').is(':checked')) {
+            else if ($('#<%=radExistingCustomer.ClientID%>').is(':checked')) 
+            {
                 //blank out new customer hiddens, just in case they did it first then came existing after
                 document.getElementById("<%=hidFirstName.ClientID%>").value = "";
                 document.getElementById("<%=hidLastName.ClientID%>").value = "";
@@ -206,6 +212,25 @@
                     document.getElementById('pagerOne').style.display = "inline";
                     document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;
                 }
+            }
+
+            else if ($('#<%=radNoCustomer.ClientID%>').is(':checked'))
+            {
+                console.log("radnocustomer checked");
+                //blank out new customer hiddens, just in case they did it first then came existing after
+                document.getElementById("<%=hidFirstName.ClientID%>").value = "";
+                document.getElementById("<%=hidLastName.ClientID%>").value = "";
+                document.getElementById("<%=hidAddress.ClientID%>").value = "";
+                document.getElementById("<%=hidCity.ClientID%>").value = "";
+                document.getElementById("<%=hidZip.ClientID%>").value = "";
+                document.getElementById("<%=hidPhone.ClientID%>").value = "";
+                $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("");
+
+                
+                $('#<%=lblSpecsProjectTypeAnswer.ClientID%>').text("No Customer");
+                document.getElementById("<%=hidExisting.ClientID%>").value = -1;
+                document.getElementById('pagerOne').style.display = "inline";
+                document.getElementById('<%=btnQuestion1.ClientID%>').disabled = false;                
             }
 
             if(document.getElementById("<%=txtCustomerLastName.ClientID%>").value != "")
@@ -335,6 +360,19 @@
                 //selected walls, so hide the sunroom button, and re-show the walls button
                 document.getElementById('<%=btnQuestion4.ClientID%>').style.display="none";
                 document.getElementById('<%=btnQuestion4Walls.ClientID%>').style.display="inline";
+
+                document.getElementById("<%=hidProjectType.ClientID%>").value = document.getElementById('<%=txtWallNumber.ClientID%>').value;
+
+                if (document.getElementById('<%=txtWallNumber.ClientID%>').value == "" || document.getElementById('<%=txtWallNumber.ClientID%>').value < 1)
+                {
+                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = true;
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value = "You must have at least one wall.";
+                }
+                else
+                {
+                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
+                    document.getElementById('<%=txtErrorMessage.ClientID%>').value = "";
+                }
             }
             else{              
                 document.getElementById('<%=btnQuestion3.ClientID%>').style.display="none";
@@ -1003,7 +1041,7 @@
             <%-- Slide 1 - Select a Customer --%>           
             <div id="slide1" class="slide">
                 <h1>
-                    <asp:Label ID="lblQuestion1" runat="server" Text="Is this a new or existing customer?"></asp:Label>
+                    <asp:Label ID="lblQuestion1" runat="server" Text="Customer Selection"></asp:Label>
                 </h1>        
                               
                 <ul class="toggleOptions">
@@ -1141,6 +1179,12 @@
                         </div> 
                     </li> 
 
+                    <%-- No Customer --%>
+                    <li>
+                        <asp:RadioButton ID="radNoCustomer" GroupName="question1" runat="server" OnClick="newProjectCheckQuestion1()" />
+                        <asp:Label ID="lblNoCustomerRadio" AssociatedControlID="radNoCustomer" runat="server"></asp:Label>
+                        <asp:Label ID="lblNoCustomer" AssociatedControlID="radNoCustomer" runat="server" Text="No customer"></asp:Label>                        
+                    </li> 
                 </ul> 
 
                 <asp:Button ID="btnQuestion1" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
@@ -1242,6 +1286,10 @@
                                     <asp:RadioButton ID="radWallsModel400" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />
                                     <asp:Label ID="lblWallsModel400Radio" AssociatedControlID="radWallsModel400" runat="server"></asp:Label>
                                     <asp:Label ID="lblWallsModel400" AssociatedControlID="radWallsModel400" runat="server" Text="Model 400"></asp:Label>
+                                </li>
+                                <li>
+                                    <asp:Label ID="lblWallNumber" runat="server" Text="Number of walls:"></asp:Label>
+                                    <asp:TextBox ID="txtWallNumber" runat="server" Text="1" onkeyup="newProjectCheckQuestion3()"></asp:TextBox>
                                 </li>
                             </ul>            
                         </div>
@@ -1527,7 +1575,7 @@
                                 </li>
                                 <li>
                                     <asp:Label ID="lblSoffitLength" runat="server" Text="Soffit Length:"></asp:Label>
-                                    <asp:TextBox ID="txtSoffitLength" onkeydown="return (event.keyCode!=13);" CssClass="txtField txtInput" Width="35" onkeyup="newProjectCheckQuestion7()" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtSoffitLength" onkeydown="return (event.keyCode!=13);" CssClass="txtField txtInput" Width="35" onkeyup="newProjectCheckQuestion7()" runat="server" Text="0"></asp:TextBox>
                                 </li>
                             </ul>
                         </div>
@@ -1634,6 +1682,8 @@
                     <asp:Label ID="lblMirrored" AssociatedControlID="chkMirrored" Text="Mirror images left to right" runat="server">
 
                     </asp:Label>
+                    <br />
+                    <asp:Label ID="lblFinished" Text="Sunroom details complete, next step: Walls." runat="server"></asp:Label>
                     <asp:Button ID="btnQuestion8" Enabled="false" CssClass="btnSubmit float-right slidePanel" Text="Confirm all selections" runat="server" OnClientClick="newProjectCheckQuestion8()" OnClick="btnLayout_Click"/>
 
                 </ul>
@@ -1749,6 +1799,7 @@
        
     <input id="hidProjectType" type="hidden" runat="server" />
     <input id="hidModelNumber" type="hidden" runat="server" />
+    <input id="hidWallNumber" type="hidden" runat="server" />
 
     <input id="hidKneewallType" type="hidden" runat="server" />
     <input id="hidKneewallHeight" type="hidden" runat="server" />
