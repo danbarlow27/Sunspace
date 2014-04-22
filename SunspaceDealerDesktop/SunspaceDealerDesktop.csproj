@@ -207,6 +207,7 @@
     <Content Include="JSONTest2.aspx" />
     <Content Include="ComponentMenu.aspx" />
     <Content Include="PriceCalculator.aspx" />
+    <Content Include="Content\print.css" />
     <Content Include="ProductSelect.aspx" />
     <Content Include="ProjectEditor.aspx" />
     <Content Include="Scripts\init.js" />

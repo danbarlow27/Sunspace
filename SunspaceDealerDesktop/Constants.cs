@@ -273,6 +273,8 @@ namespace SunspaceDealerDesktop
         #region Boxheaders
         public const float BOXHEADER_LENGTH = 3.25f;
         public const float BOXHEADER_RECEIVER_LENGTH = 4.25f;
+
+        public const float HCHANNEL_LENGTH = 2.5f;
         #endregion
 
         #region Walls

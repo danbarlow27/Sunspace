@@ -10,7 +10,21 @@ using System.Web.UI.WebControls;
 namespace SunspaceDealerDesktop
 {
     public partial class WizardWallsAndMods : System.Web.UI.Page
-    {        
+    {
+        //colour arrays generated as javascript usable objects
+        //Used for population of corresponding dropdown lists
+        public string model100FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_100_FRAMING_COLOURS);
+        public string model200FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_200_FRAMING_COLOURS);
+        public string model300FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_300_FRAMING_COLOURS);
+        public string model400FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_400_FRAMING_COLOURS);
+
+        public string model100TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_100_TRANSOM_TYPES);
+        public string model200TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_200_TRANSOM_TYPES);
+        public string model300TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_300_TRANSOM_TYPES);
+        public string model400TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_400_TRANSOM_TYPES);
+
+        public string transomGlassTints = new JavaScriptSerializer().Serialize(Constants.TRANSOM_GLASS_TINTS);
+        public string vinylTints = new JavaScriptSerializer().Serialize(Constants.VINYL_TINTS);
         public float VINYL_TRAP_MIN_WIDTH_WARRANTY = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
         public float VINYL_TRAP_MAX_WIDTH_WARRANTY = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
         public float V4T_4V_MIN_WIDTH_WARRANTY = Constants.V4T_4V_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
@@ -59,6 +73,13 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["loggedIn"] == null)
+            {
+                //uncomment me when login functionality is working
+                Response.Redirect("Login.aspx");
+                //Session.Add("loggedIn", "userA");
+            }
+
             if (Session["newProjectHasRoof"].ToString() == "Yes")
             {
                 lblFinished.Text = "Wall details complete, next step: Roof";
@@ -74,12 +95,6 @@ namespace SunspaceDealerDesktop
 
             Page.Form.DefaultButton = "";
 
-            if (Session["loggedIn"] == null)
-            {
-                //uncomment me when login functionality is working
-                Response.Redirect("Login.aspx");
-                //Session.Add("loggedIn", "userA");
-            }
 
             string[] gableCheck = (string[])Session["newProjectArray"];
             if (gableCheck[26] == "Dealer Gable" || gableCheck[26] == "Sunspace Gable")
@@ -202,7 +217,75 @@ namespace SunspaceDealerDesktop
             {
                 ddlKneewallTint.Items.Add(Constants.KNEEWALL_GLASS_TINTS[i]);
             }
-            //Must populate transom dropdown based on model#
+
+            if (Session["model"].ToString() == "M100")
+            {
+                for (int i=0;i<Constants.MODEL_100_TRANSOM_TYPES.Length;i++)
+                {
+                    ddlTransomType.Items.Add(Constants.MODEL_100_TRANSOM_TYPES[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_100_FRAMING_COLOURS.Length; i++)
+                {
+                    ddlFramingColour.Items.Add(Constants.MODEL_100_FRAMING_COLOURS[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_100_GLASS_TINTS.Length; i++)
+                {
+                    ddlTransomTint.Items.Add(Constants.MODEL_100_GLASS_TINTS[i]);
+                }
+            }
+            else if (Session["model"].ToString() == "M200")
+            {
+                for (int i = 0; i < Constants.MODEL_200_TRANSOM_TYPES.Length; i++)
+                {
+                    ddlTransomType.Items.Add(Constants.MODEL_200_TRANSOM_TYPES[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_200_FRAMING_COLOURS.Length; i++)
+                {
+                    ddlFramingColour.Items.Add(Constants.MODEL_200_FRAMING_COLOURS[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_200_GLASS_TINTS.Length; i++)
+                {
+                    ddlTransomTint.Items.Add(Constants.MODEL_200_GLASS_TINTS[i]);
+                }
+            }
+            else if (Session["model"].ToString() == "M300")
+            {
+                for (int i = 0; i < Constants.MODEL_300_TRANSOM_TYPES.Length; i++)
+                {
+                    ddlTransomType.Items.Add(Constants.MODEL_300_TRANSOM_TYPES[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_300_FRAMING_COLOURS.Length; i++)
+                {
+                    ddlFramingColour.Items.Add(Constants.MODEL_300_FRAMING_COLOURS[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_300_GLASS_TINTS.Length; i++)
+                {
+                    ddlTransomTint.Items.Add(Constants.MODEL_300_GLASS_TINTS[i]);
+                }
+            }
+            else if (Session["model"].ToString() == "M400")
+            {
+                for (int i = 0; i < Constants.MODEL_400_TRANSOM_TYPES.Length; i++)
+                {
+                    ddlTransomType.Items.Add(Constants.MODEL_400_TRANSOM_TYPES[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_400_FRAMING_COLOURS.Length; i++)
+                {
+                    ddlFramingColour.Items.Add(Constants.MODEL_400_FRAMING_COLOURS[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_400_GLASS_TINTS.Length; i++)
+                {
+                    ddlTransomTint.Items.Add(Constants.MODEL_400_GLASS_TINTS[i]);
+                }
+            }
             #endregion
 
             Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
@@ -3893,6 +3976,7 @@ namespace SunspaceDealerDesktop
             {
                 //A list of linear items to be added to each wall
                 List<LinearItem> linearItems = new List<LinearItem>();
+                bool addReceiver = true;
 
                 if (wallDetails[i - 1, 4] == "P" || wallDetails[i - 1, 4] == "G")
                 {
@@ -3991,9 +4075,9 @@ namespace SunspaceDealerDesktop
                                     HChannel anHChannel = new HChannel();
                                     anHChannel.ItemType = "HChannel";
                                     anHChannel.StartHeight = anHChannel.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                    anHChannel.Length = 2.5f;
+                                    anHChannel.Length = Constants.HCHANNEL_LENGTH;
                                     //CHANGEME if driftwood
-                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH + anHChannel.Length;
+                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - anHChannel.Length;
                                     linearItems.Add(anHChannel);
                                 }
                                 else
@@ -4001,8 +4085,8 @@ namespace SunspaceDealerDesktop
                                     BoxHeader aBoxHeader = new BoxHeader();
                                     aBoxHeader.ItemType = "BoxHeader";
                                     aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                    aBoxHeader.Length = 3.25f;
-                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH + aBoxHeader.Length;
+                                    aBoxHeader.Length = Constants.BOXHEADER_LENGTH;
+                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - aBoxHeader.Length;
                                     linearItems.Add(aBoxHeader);
                                 }
                             }
@@ -4011,7 +4095,7 @@ namespace SunspaceDealerDesktop
                             aMod.ItemType = "Mod";
                             aMod.ModType = Constants.MOD_TYPE_DOOR;
                             aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
-                            aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]) + linearItems[0].Length;
+                            aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);// +linearItems[0].Length;
                             aMod.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
                             aMod.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
                             aMod.Sunshade = Convert.ToBoolean(Request.Form["MainContent_hidSunshade"]);
@@ -4189,7 +4273,6 @@ namespace SunspaceDealerDesktop
                             //Extra door stuff here
 
                             //now we add transom windows
-
                             //The height of the wall at mod end and mod start
                             float modStartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));//
                             float modEndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
@@ -4280,15 +4363,15 @@ namespace SunspaceDealerDesktop
                                     anHChannel.Length = 2.5f;
                                     //CHANGEME if driftwood
                                     anHChannel.ItemType = "HChannel";//
-                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - anHChannel.Length;
                                     linearItems.Add(anHChannel);
                                 }
                                 else
                                 {
                                     BoxHeader aBoxHeader = new BoxHeader();
                                     aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                    aBoxHeader.Length = 3.25f;
-                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+                                    aBoxHeader.Length = Constants.BOXHEADER_LENGTH;
+                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - aBoxHeader.Length;
                                     aBoxHeader.ItemType = "BoxHeader";
                                     linearItems.Add(aBoxHeader);
                                 }
@@ -4397,8 +4480,8 @@ namespace SunspaceDealerDesktop
 
                         listOfWalls[linearPosition].LinearItems = linearItems;
 
-                        listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
-                                                                         Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
+                        listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(txtKneewallHeight.Text),
+                                                                         ddlKneewallType.SelectedValue.ToString(), ddlTransomType.SelectedValue.ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
                                                                          hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value, iRailing);
 
                         linearPosition++;
@@ -4545,8 +4628,8 @@ namespace SunspaceDealerDesktop
 
                         listOfWalls[linearPosition].LinearItems = linearItems;
 
-                        listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
-                                                                         Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
+                        listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(txtKneewallHeight.Text),
+                                                                         ddlKneewallType.SelectedValue.ToString(), ddlTransomType.SelectedValue.ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
                                                                          hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value, iRailing);//
                         linearPosition++;
                     }
@@ -4591,7 +4674,7 @@ namespace SunspaceDealerDesktop
                             BoxHeader aBoxHeader = new BoxHeader();
                             aBoxHeader.IsReceiver = true;
                             aBoxHeader.FixedLocation = listOfWalls[i].Length;
-                            aBoxHeader.Length = 3.25f;
+                            aBoxHeader.Length = Constants.BOXHEADER_LENGTH;
                             aBoxHeader.ItemType = "BoxHeader";
                             aBoxHeader.StartHeight = GlobalFunctions.getHeightAtPosition(listOfWalls[i].StartHeight, listOfWalls[i].EndHeight, aBoxHeader.FixedLocation, listOfWalls[i].Length);
                             aBoxHeader.EndHeight = GlobalFunctions.getHeightAtPosition(listOfWalls[i].StartHeight, listOfWalls[i].EndHeight, aBoxHeader.FixedLocation + aBoxHeader.Length, listOfWalls[i].Length);

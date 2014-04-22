@@ -10,6 +10,7 @@
     </asp:PlaceHolder>  
     <%--<webopt:BundleReference runat="server" Path="~/Content/css" /> --%>
     <link href="Content/styles.css" rel="stylesheet" />
+    <link href="Content/print.css" rel="stylesheet" type="text/css" media="print" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>

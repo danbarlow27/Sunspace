@@ -1158,6 +1158,35 @@ table.tblPriceCalculator {
     margin-right: 2em;
 }
 
+
+/******************************************
+ * CUT SHEETS
+ ******************************************/
+
+ table.CutSheet{
+    border-spacing: 10px;
+    border: 1px solid black;
+    border-collapse:collapse;
+ }
+
+ .CutSheetCells{
+     border: 1px solid black;
+     padding: 5px;
+ }
+
+ .CutSheetHeaders{
+     border: 1px solid black;
+     background-color: lightblue;
+     padding: 5px;
+ }
+
+ .CutSheetRowOdd {
+     background-color: lightgray;
+ }
+
+ .CutSheetRowEven {
+     background-color: white;
+ }
 /******************************************
  * GLOBAL FIXES
  ******************************************/
