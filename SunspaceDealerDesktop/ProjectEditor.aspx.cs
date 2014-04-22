@@ -19,11 +19,11 @@ namespace SunspaceDealerDesktop
         protected int wallCount = 0;
         protected int floorCount = 0;
         protected int roofCount = 0;
-        protected int projectId = 82; //82 84 86 87 88 get it from the session (project_id)
+        protected int projectId = 88; //82 84 86 87 88 89 97 get it from the session (project_id)
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            projectId = Convert.ToInt32(Session["project_id"].ToString());
+            //projectId = Convert.ToInt32(Session["project_id"].ToString());
             #region commented out hard coded data
             /*
             #region hard coded data
@@ -893,10 +893,11 @@ namespace SunspaceDealerDesktop
                                                                     //types of doors
                                                                     switch (doorType)
                                                                     {
+                                                                        case "Cabana":
                                                                         case "Cabana Door":
                                                                             #region Cabana Door
 
-                                                                            aCommand.CommandText = "SELECT glass_tint, hinge, swing, hardware_type FROM cabana_doors "
+                                                                            aCommand.CommandText = "SELECT glass_tint, hinge, swing, hardware_type, screen_type FROM cabana_doors "
                                                                                             + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                             SqlDataReader cabanaReader = aCommand.ExecuteReader();
@@ -922,6 +923,7 @@ namespace SunspaceDealerDesktop
                                                                                 aCabanaDoor.Hinge = Convert.ToString(cabanaReader[1]);
                                                                                 aCabanaDoor.Swing = Convert.ToString(cabanaReader[2]);
                                                                                 aCabanaDoor.HardwareType = Convert.ToString(cabanaReader[3]);
+                                                                                aCabanaDoor.ScreenType = Convert.ToString(cabanaReader[4]);
 
                                                                                 aCabanaDoor.DoorWindow = aDoorWindow;
 
@@ -931,10 +933,11 @@ namespace SunspaceDealerDesktop
 
                                                                             #endregion
                                                                             break;
+                                                                        case "French":
                                                                         case "French Door":
                                                                             #region French Door
 
-                                                                            aCommand.CommandText = "SELECT glass_tint, swing, operator, hardware_type FROM french_doors "
+                                                                            aCommand.CommandText = "SELECT glass_tint, swing, operator, hardware_type, screen_type FROM french_doors "
                                                                                             + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                             SqlDataReader frenchReader = aCommand.ExecuteReader();
@@ -961,6 +964,7 @@ namespace SunspaceDealerDesktop
                                                                                 aFrenchDoor.Swing = Convert.ToString(frenchReader[1]);
                                                                                 aFrenchDoor.OperatingDoor = Convert.ToString(frenchReader[2]); ///this needs to be fixed, operator in db is bool and C# is string
                                                                                 aFrenchDoor.HardwareType = Convert.ToString(frenchReader[3]);
+                                                                                aFrenchDoor.ScreenType = Convert.ToString(frenchReader[4]);
 
                                                                                 aFrenchDoor.DoorWindow = aDoorWindow;
 
@@ -970,6 +974,7 @@ namespace SunspaceDealerDesktop
 
                                                                             #endregion
                                                                             break;
+                                                                        case "Patio":
                                                                         case "Patio Door":
                                                                             #region Patio Door
 
@@ -1006,6 +1011,7 @@ namespace SunspaceDealerDesktop
 
                                                                             #endregion
                                                                             break;
+                                                                        case "NoDoor":
                                                                         case "No Door":
                                                                             #region No Door
 
@@ -1080,6 +1086,7 @@ namespace SunspaceDealerDesktop
                                             #endregion
                                             break;
                                         case "Receiver":
+                                        case "Receiever":
                                             #region Receiver
                                             BoxHeader aBoxHeader = new BoxHeader();
                                             aBoxHeader.LinearIndex = linearIndex;
@@ -1098,6 +1105,7 @@ namespace SunspaceDealerDesktop
                                             #endregion
                                             break;
                                         case "2 Piece Receiver":
+                                        case "2PieceReceiver":
                                             #region 2 Piece Receiver
                                             aBoxHeader = new BoxHeader();
                                             aBoxHeader.LinearIndex = linearIndex;
@@ -1115,6 +1123,7 @@ namespace SunspaceDealerDesktop
                                             listOfLinearItems.Add(aBoxHeader);//add the linear item to the list
                                             #endregion
                                             break;
+                                        case "BoxHeader": // 
                                         case "Box Header": // 
                                             #region Box Header
                                             aBoxHeader = new BoxHeader();
@@ -1133,6 +1142,7 @@ namespace SunspaceDealerDesktop
                                             listOfLinearItems.Add(aBoxHeader);//add the linear item to the list
                                             #endregion
                                             break;
+                                        case "BoxHeaderReceiver":
                                         case "Box Header Receiver": // 
                                             #region Box Header Receiver
                                             aBoxHeader = new BoxHeader();
@@ -1168,6 +1178,7 @@ namespace SunspaceDealerDesktop
                                             #endregion
                                             break;
                                         case "Corner Post":
+                                        case "Corner":
                                             #region Corner Post
                                             Corner aCorner = new Corner();
                                             aCorner.LinearIndex = linearIndex;
@@ -1185,6 +1196,7 @@ namespace SunspaceDealerDesktop
                                             listOfLinearItems.Add(aCorner); //add the linear item to the list
                                             #endregion
                                             break;
+                                        case "ElectricalChase":
                                         case "Electrical Chase":
                                             #region ElectricalChase
                                             ElectricalChase aElectricalChase = new ElectricalChase();
@@ -1201,6 +1213,7 @@ namespace SunspaceDealerDesktop
                                             listOfLinearItems.Add(aElectricalChase);//add the linear item to the list
                                             #endregion
                                             break;
+                                        case "HChannel":
                                         case "H Channel":
                                             #region H Channel
                                             HChannel aHChannel = new HChannel();
@@ -1474,10 +1487,12 @@ namespace SunspaceDealerDesktop
 
         protected void PopulateDropdown(int floor = 0, int roof = 0)
         {
+            ListItem liLayout = new ListItem("Room Layout", "-1");
+            ddlSunroomObjects.Items.Add(liLayout);
             //if (roof != 0) //if there's a roof, add it 
             //{
-            //    ListItem liRoof = new ListItem("Roof", "Roof");
-            //    ddlSunroomObjects.Items.Add(liRoof);
+                //ListItem liRoof = new ListItem("Roof", "Roof");
+                //ddlSunroomObjects.Items.Add(liRoof);
             //}
             // add all the walls
             int i = 0;

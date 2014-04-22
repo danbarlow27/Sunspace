@@ -23,7 +23,7 @@
 </asp:Content>
 
 <asp:Content runat="server" ID="ModOverlay" ContentPlaceHolderID="ModOverlay">
-    <%--<div class="overlayBg"></div>--%>
+    <%--<asp:Label ID="lblProjectSunroom" AssociatedControlID="radProjectSunroom" runat="server" Text="Mod 1"></asp:Label>--%>
     <div class="overlayContainer">
         <div class="overlayClose"><a href="#"><span>X</span> Close Mods Editor</a></div>
         
@@ -31,33 +31,10 @@
             
             <asp:PlaceHolder ID="ModOptions" runat="server"></asp:PlaceHolder>                    
 
-            <%-- Mod 1 --%>
-            <%--<li>--%>
-                <%--<asp:RadioButton ID="radProjectSunroom" GroupName="projectType" runat="server" />--%>
-                <%--<asp:Label ID="lblProjectSunroomRadio" AssociatedControlID="radProjectSunroom" runat="server"></asp:Label>--%>
-                <%--<asp:Label ID="lblProjectSunroom" AssociatedControlID="radProjectSunroom" runat="server" Text="Mod 1"></asp:Label>--%>
-           
-                <%--<div class="toggleContent">--%>
-                    <%--<ul>--%>
-                        <%--<li>--%>
-                            <%--<asp:RadioButton ID="radSunroomModel100" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />--%>
-                            <%--<asp:Label ID="lblSunroomModel100Radio" AssociatedControlID="radSunroomModel100" runat="server"></asp:Label>--%>
-                            <%--<asp:Label ID="lblSunroomModel100" AssociatedControlID="radSunroomModel100" runat="server" Text="Model 100"></asp:Label>--%>
-                        <%--</li>--%>
-                        <%--<li>--%>
-                            <%--<asp:RadioButton ID="radSunroomModel200" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />--%>
-                            <%--<asp:Label ID="lblSunroomModel200Radio" AssociatedControlID="radSunroomModel200" runat="server"></asp:Label>--%>
-                            <%--<asp:Label ID="lblSunroomModel200" AssociatedControlID="radSunroomModel200" runat="server" Text="Model 200"></asp:Label>--%>
-                        <%--</li>--%>
-                        <%--<li>
-                            <%--<asp:RadioButton ID="radSunroomModel300" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />--%>
-                            <%--<asp:Label ID="lblSunroomModel300Radio" AssociatedControlID="radSunroomModel300" runat="server"></asp:Label>--%>
-                            <%--<asp:Label ID="lblSunroomModel300" AssociatedControlID="radSunroomModel300" runat="server" Text="Model 300"></asp:Label>--%>
-                        <%--</li>--%>
-                        <%--<li>
-                            <%--<asp:RadioButton ID="radSunroomModel400" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />--%>
-                            <%--<asp:Label ID="lblSunroomModel400Radio" AssociatedControlID="radSunroomModel400" runat="server"></asp:Label>--%>
-                            <%--<asp:Label ID="lblSunroomModel400" AssociatedControlID="radSunroomModel400" runat="server" Text="Model 400"></asp:Label>--%>
+            <%--<div class="toggleContent">--%>            <%--<ul>--%>                <%--<li>--%>                <%--<asp:RadioButton ID="radSunroomModel100" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />--%>                <%--<asp:Label ID="lblSunroomModel100Radio" AssociatedControlID="radSunroomModel100" runat="server"></asp:Label>--%>           
+                <%--<asp:Label ID="lblSunroomModel100" AssociatedControlID="radSunroomModel100" runat="server" Text="Model 100"></asp:Label>--%>                    <%--</li>--%>                        <%--<li>--%>                            <%--<asp:RadioButton ID="radSunroomModel200" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />--%>                            <%--<asp:Label ID="lblSunroomModel200Radio" AssociatedControlID="radSunroomModel200" runat="server"></asp:Label>--%>                            <%--<asp:Label ID="lblSunroomModel200" AssociatedControlID="radSunroomModel200" runat="server" Text="Model 200"></asp:Label>--%>                        <%--</li>--%>                        <%--<li>
+                            <%--<asp:RadioButton ID="radSunroomModel300" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />--%>                            <%--<asp:Label ID="lblSunroomModel300Radio" AssociatedControlID="radSunroomModel300" runat="server"></asp:Label>--%>                            <%--<asp:Label ID="lblSunroomModel300" AssociatedControlID="radSunroomModel300" runat="server" Text="Model 300"></asp:Label>--%>                            <%--</li>--%>                        <%--<li>
+                            <%--<asp:RadioButton ID="radSunroomModel400" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />--%>                        <%--<asp:Label ID="lblSunroomModel400Radio" AssociatedControlID="radSunroomModel400" runat="server"></asp:Label>--%>                            <%--<asp:Label ID="lblSunroomModel400" AssociatedControlID="radSunroomModel400" runat="server" Text="Model 400"></asp:Label>--%>                            <%--</li>--%>                        <%--</ul>--%>                        <%--</div>--%>                            <%--</li>--%>                            <%--<asp:Label ID="lblError" runat="server"></asp:Label>--%>
                         <%--</li>--%>
                     <%--</ul>--%>            
                 <%--</div>--%>
@@ -72,6 +49,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
+    <asp:Label ID="lblTitle" runat="server" Text="Label" CssClass="float-right"></asp:Label> <br />
     <!--Div tag to hold the canvas/grid-->
     <div style="max-width:100%; max-height:100%; min-width:100px; min-height:100px; margin: 0 auto;" id="myCanvas"></div>
 
@@ -91,10 +69,10 @@
             /*visibility: hidden;*/
             height: auto;
             width: auto;
-            /*z-index: 1;*/
+            z-index: 999;
         }
         g {
-            position: static;
+            position: relative;
         }
     </style>
 
@@ -133,14 +111,460 @@
                     .style("border", "1px solid black");
         var canvas = svg.append("g")
                     .attr("transform", "translate("+CENTRE_X+","+CENTRE_Y+")");
-        var gWall, gLi, gMod, gWindow, gScreen, gGlass, gVent;
+        var gLayout, gWall, gLi, gMod, gWindow, gDoor, gScreen, gGlass, gVent;
         var scale = d3.scale.linear(); //used to fit the polygons optimally on the canvas
-
+        var projection, antiProjection;
         //var arrLabels = new Array();
-        
 
         /**
-        This function gets called when the wall accordion is clicked.
+        This function gets called when the room layout dropdown is clicked.
+        This function sets all the appropriate attributes 
+        to the wall height and length variables
+        */
+        function drawRoomLayout() {
+
+            drawRect(canvas, MAX_CANVAS_WIDTH, scale(10), -CENTRE_X, -CENTRE_Y, "existingWall", "#a8a8a8",1,"black","$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('Existing Wall'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', '#a8a8a8'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')");   
+            var text = "";
+
+            if (antiProjection > projection) {
+            
+                var x = scale(getWidth() / 2);
+                var y = -parseFloat(CENTRE_Y) + (scale(parseFloat(10)));
+
+                gLayout = canvas.append("g").attr("transform", "translate("+x+","+y+")").attr("id", "layout");
+
+                //alert(y);
+
+                for (var i = listOfWalls.length - 1; i >= 0; i--) {
+
+                    if (listOfWalls[i].Orientation === "E") {
+
+                        for (var j = listOfWalls[i].LinearItems.length - 1; j >= 0; j--) {
+
+                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var title = listOfWalls[i].LinearItems[j].ItemType;
+                            var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
+
+                            switch (listOfWalls[i].LinearItems[j].ItemType) {
+                                case "Mod":
+                                    
+                                    var modularItem = listOfWalls[i].LinearItems[j].ModularItems[listOfWalls[i].LinearItems[j].ModularItems.length - 2];
+                                    var modularItemStyle = modularItem.ItemType === "Door" ? modularItem.DoorType + " " + modularItem.DoorStyle : modularItem.WindowStyle;
+                                    //get the width of the window; if width contains a decimal value, convert it into a fraction string
+                                    var width = ((modularItem.FLength + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FLength + "") : modularItem.FLength;
+                                    //get the height of the window; if height contains a decinal value, convert it into a fraction string
+                                    var height = ((modularItem.FStartHeight + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FStartHeight + "") : modularItem.FStartHeight;
+                                    //set the label text
+                                    text = width + "\" x " + height + "\" " +  modularItemStyle + " " + modularItem.ItemType;
+                                    break;
+                                case "2 Piece Receiver":
+                                case "Box Header Receiver":
+                                case "Receiver": case "Receiever":
+                                case "Box Header":
+                                case "Filler":
+                                case "2PieceReceiver":
+                                case "BoxHeaderReceiver":
+                                case "BoxHeader":
+                                case "Filler":
+                                case "Corner Post": 
+                                case "Corner":
+                                case "CornerPost": 
+                                    //var topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(startHeight))) }; //top left coordinates
+                                    //var topRight;
+                                    //var middleLeft;
+                                    //var middleRight;
+                                    //var bottomRight;
+                                    //var bottomLeft;
+                                    //var points;
+                                case "Starter Post":
+                                case "Electrical Chase":
+                                case "H Channel":
+                                case "StarterPost":
+                                case "ElectricalChase":
+                                case "HChannel":
+                                    text = title;
+                                    break;
+                            }
+                            drawRect(gLayout, scale(2), scale(length), -scale(1), 0, id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')");
+                            gLayout = gLayout.append("g").attr("transform", "translate(0,"+scale(length)+")"); //bottom right coordinates of the linear item
+                        }
+                    }
+                    
+                    if (listOfWalls[i].Orientation === "W") {
+
+                        for (var j = listOfWalls[i].LinearItems.length - 1; j >= 0; j--) {
+
+                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var title = listOfWalls[i].LinearItems[j].ItemType;
+                            var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
+
+                            switch (listOfWalls[i].LinearItems[j].ItemType) {
+                                case "Mod":
+                                    var modularItem = listOfWalls[i].LinearItems[j].ModularItems[listOfWalls[i].LinearItems[j].ModularItems.length - 2];
+                                    var modularItemStyle = modularItem.ItemType === "Door" ? modularItem.DoorType + " " + modularItem.DoorStyle : modularItem.WindowStyle;
+                                    //get the width of the window; if width contains a decimal value, convert it into a fraction string
+                                    var width = ((modularItem.FLength + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FLength + "") : modularItem.FLength;
+                                    //get the height of the window; if height contains a decinal value, convert it into a fraction string
+                                    var height = ((modularItem.FStartHeight + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FStartHeight + "") : modularItem.FStartHeight;
+                                    //set the label text
+                                    text = width + "\" x " + height + "\" " +  modularItemStyle + " " + modularItem.ItemType;
+                                    break;
+                                case "2 Piece Receiver":
+                                case "Box Header Receiver":
+                                case "Receiver": case "Receiever":
+                                case "Box Header":
+                                case "Filler":
+                                case "2PieceReceiver":
+                                case "BoxHeaderReceiver":
+                                case "BoxHeader":
+                                case "Filler":
+                                case "Corner Post": 
+                                case "Corner":
+                                case "CornerPost": 
+                                    //var topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(startHeight))) }; //top left coordinates
+                                    //var topRight;
+                                    //var middleLeft;
+                                    //var middleRight;
+                                    //var bottomRight;
+                                    //var bottomLeft;
+                                    //var points;
+                                case "Starter Post":
+                                case "Electrical Chase":
+                                case "H Channel":
+                                case "StarterPost":
+                                case "ElectricalChase":
+                                case "HChannel":
+                                    text = title;
+                                    break;
+                            }
+                            drawRect(gLayout, scale(2), scale(length), -scale(1), -scale(length), id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')");
+                            gLayout = gLayout.append("g").attr("transform", "translate(0,"+(-(scale(length)))+")"); //bottom right coordinates of the linear item
+                        }
+                    }
+                    if (listOfWalls[i].Orientation === "S") {
+
+                        for (var j = listOfWalls[i].LinearItems.length - 1; j >= 0; j--) {
+
+                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var title = listOfWalls[i].LinearItems[j].ItemType;
+                            var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
+
+                            switch (listOfWalls[i].LinearItems[j].ItemType) {
+                                case "Mod":
+                                    var modularItem = listOfWalls[i].LinearItems[j].ModularItems[listOfWalls[i].LinearItems[j].ModularItems.length - 2];
+                                    var modularItemStyle = modularItem.ItemType === "Door" ? modularItem.DoorType + " " + modularItem.DoorStyle : modularItem.WindowStyle;
+                                    //get the width of the window; if width contains a decimal value, convert it into a fraction string
+                                    var width = ((modularItem.FLength + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FLength + "") : modularItem.FLength;
+                                    //get the height of the window; if height contains a decinal value, convert it into a fraction string
+                                    var height = ((modularItem.FStartHeight + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FStartHeight + "") : modularItem.FStartHeight;
+                                    //set the label text
+                                    text = width + "\" x " + height + "\" " +  modularItemStyle + " " + modularItem.ItemType;
+                                    break;
+                                case "2 Piece Receiver":
+                                case "Box Header Receiver":
+                                case "Receiver": case "Receiever":
+                                case "Box Header":
+                                case "Filler":
+                                case "2PieceReceiver":
+                                case "BoxHeaderReceiver":
+                                case "BoxHeader":
+                                case "Filler":
+                                case "Corner Post": 
+                                case "Corner":
+                                case "CornerPost": 
+                                    //var topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(startHeight))) }; //top left coordinates
+                                    //var topRight;
+                                    //var middleLeft;
+                                    //var middleRight;
+                                    //var bottomRight;
+                                    //var bottomLeft;
+                                    //var points;
+                                case "Starter Post":
+                                case "Electrical Chase":
+                                case "H Channel":
+                                case "StarterPost":
+                                case "ElectricalChase":
+                                case "HChannel":
+                                    text = title;
+                                    break;
+                            }
+                            drawRect(gLayout, scale(length), scale(2), (-(scale(length))), 0, id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')");
+                            gLayout = gLayout.append("g").attr("transform", "translate("+(-(scale(length)))+",0)"); //bottom right coordinates of the linear item
+                        }
+                    }
+                    else if (listOfWalls[i].Orientation === "N") {
+
+                        for (var j = listOfWalls[i].LinearItems.length - 1; j >= 0; j--) {
+
+                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var title = listOfWalls[i].LinearItems[j].ItemType;
+                            var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
+
+                            switch (listOfWalls[i].LinearItems[j].ItemType) {
+                                case "Mod":
+                                    var modularItem = listOfWalls[i].LinearItems[j].ModularItems[listOfWalls[i].LinearItems[j].ModularItems.length - 2];
+                                    var modularItemStyle = modularItem.ItemType === "Door" ? modularItem.DoorType + " " + modularItem.DoorStyle : modularItem.WindowStyle;
+                                    //get the width of the window; if width contains a decimal value, convert it into a fraction string
+                                    var width = ((modularItem.FLength + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FLength + "") : modularItem.FLength;
+                                    //get the height of the window; if height contains a decinal value, convert it into a fraction string
+                                    var height = ((modularItem.FStartHeight + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FStartHeight + "") : modularItem.FStartHeight;
+                                    //set the label text
+                                    text = width + "\" x " + height + "\" " +  modularItemStyle + " " + modularItem.ItemType;
+                                    break;
+                                case "2 Piece Receiver":
+                                case "Box Header Receiver":
+                                case "Receiver": case "Receiever":
+                                case "Box Header":
+                                case "Filler":
+                                case "2PieceReceiver":
+                                case "BoxHeaderReceiver":
+                                case "BoxHeader":
+                                case "Filler":
+                                case "Corner Post": 
+                                case "Corner":
+                                case "CornerPost": 
+                                    //var topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(startHeight))) }; //top left coordinates
+                                    //var topRight;
+                                    //var middleLeft;
+                                    //var middleRight;
+                                    //var bottomRight;
+                                    //var bottomLeft;
+                                    //var points;
+                                case "Starter Post":
+                                case "Electrical Chase":
+                                case "H Channel":
+                                case "StarterPost":
+                                case "ElectricalChase":
+                                case "HChannel":
+                                    text = title;
+                                    break;
+                            }
+                            drawRect(gLayout, scale(2), scale(length), 0, 0, id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')");
+                            gLayout = gLayout.append("g").attr("transform", "translate(0,"+scale(length)+")"); //bottom right coordinates of the linear item
+                        }
+                    }
+                }
+            }
+            else {
+
+                var x = -scale(getWidth() / 2);
+                var y = -parseFloat(CENTRE_Y) + (scale(parseFloat(10)));
+
+                gLayout = canvas.append("g").attr("transform", "translate("+x+","+y+")").attr("id", "layout");
+
+                for (var i = 0; i < listOfWalls.length; i++) {
+
+                    if (listOfWalls[i].Orientation === "W") {
+
+                        for (var j = 0; j < listOfWalls[i].LinearItems.length; j++) {
+
+                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var title = listOfWalls[i].LinearItems[j].ItemType;
+                            var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
+
+                            switch (listOfWalls[i].LinearItems[j].ItemType) {
+                                case "Mod":
+                                    var modularItem = listOfWalls[i].LinearItems[j].ModularItems[listOfWalls[i].LinearItems[j].ModularItems.length - 2];
+                                    var modularItemStyle = modularItem.ItemType === "Door" ? modularItem.DoorType + " " + modularItem.DoorStyle : modularItem.WindowStyle;
+                                    //get the width of the window; if width contains a decimal value, convert it into a fraction string
+                                    var width = ((modularItem.FLength + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FLength + "") : modularItem.FLength;
+                                    //get the height of the window; if height contains a decinal value, convert it into a fraction string
+                                    var height = ((modularItem.FStartHeight + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FStartHeight + "") : modularItem.FStartHeight;
+                                    //set the label text
+                                    text = width + "\" x " + height + "\" " +  modularItemStyle + " " + modularItem.ItemType;
+                                    break;
+                                case "2 Piece Receiver":
+                                case "Box Header Receiver":
+                                case "Receiver": case "Receiever":
+                                case "Box Header":
+                                case "Filler":
+                                case "2PieceReceiver":
+                                case "BoxHeaderReceiver":
+                                case "BoxHeader":
+                                case "Filler":
+                                case "Corner Post": 
+                                case "Corner":
+                                case "CornerPost": 
+                                    //var topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(startHeight))) }; //top left coordinates
+                                    //var topRight;
+                                    //var middleLeft;
+                                    //var middleRight;
+                                    //var bottomRight;
+                                    //var bottomLeft;
+                                    //var points;
+                                case "Starter Post":
+                                case "Electrical Chase":
+                                case "H Channel":
+                                case "StarterPost":
+                                case "ElectricalChase":
+                                case "HChannel":
+                                    text = title;
+                                    break;
+                            }
+                            drawRect(gLayout, scale(2), scale(length), -scale(1), 0, id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')");
+                            gLayout = gLayout.append("g").attr("transform", "translate(0,"+scale(length)+")"); //bottom right coordinates of the linear item
+                        }
+                    }
+                    
+                    if (listOfWalls[i].Orientation === "E") {
+
+                        for (var j = 0; j < listOfWalls[i].LinearItems.length; j++) {
+
+                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var title = listOfWalls[i].LinearItems[j].ItemType;
+                            var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
+
+                            switch (listOfWalls[i].LinearItems[j].ItemType) {
+                                case "Mod":
+                                    var modularItem = listOfWalls[i].LinearItems[j].ModularItems[listOfWalls[i].LinearItems[j].ModularItems.length - 2];
+                                    var modularItemStyle = modularItem.ItemType === "Door" ? modularItem.DoorType + " " + modularItem.DoorStyle : modularItem.WindowStyle;
+                                    //get the width of the window; if width contains a decimal value, convert it into a fraction string
+                                    var width = ((modularItem.FLength + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FLength + "") : modularItem.FLength;
+                                    //get the height of the window; if height contains a decinal value, convert it into a fraction string
+                                    var height = ((modularItem.FStartHeight + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FStartHeight + "") : modularItem.FStartHeight;
+                                    //set the label text
+                                    text = width + "\" x " + height + "\" " +  modularItemStyle + " " + modularItem.ItemType;
+                                    break;
+                                case "2 Piece Receiver":
+                                case "Box Header Receiver":
+                                case "Receiver": case "Receiever":
+                                case "Box Header":
+                                case "Filler":
+                                case "2PieceReceiver":
+                                case "BoxHeaderReceiver":
+                                case "BoxHeader":
+                                case "Filler":
+                                case "Corner Post": 
+                                case "Corner":
+                                case "CornerPost": 
+                                    //var topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(startHeight))) }; //top left coordinates
+                                    //var topRight;
+                                    //var middleLeft;
+                                    //var middleRight;
+                                    //var bottomRight;
+                                    //var bottomLeft;
+                                    //var points;
+                                case "Starter Post":
+                                case "Electrical Chase":
+                                case "H Channel":
+                                case "StarterPost":
+                                case "ElectricalChase":
+                                case "HChannel":
+                                    text = title;
+                                    break;
+                            }
+                            drawRect(gLayout, scale(2), scale(length), -scale(1), -scale(length), id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')");
+                            gLayout = gLayout.append("g").attr("transform", "translate(0,"+(-(scale(length)))+")"); //bottom right coordinates of the linear item
+                        }
+                    }
+                    if (listOfWalls[i].Orientation === "S") {
+
+                        for (var j = 0; j < listOfWalls[i].LinearItems.length; j++) {
+
+                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var title = listOfWalls[i].LinearItems[j].ItemType;
+                            var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
+
+                            switch (listOfWalls[i].LinearItems[j].ItemType) {
+                                case "Mod":
+                                    var modularItem = listOfWalls[i].LinearItems[j].ModularItems[listOfWalls[i].LinearItems[j].ModularItems.length - 2];
+                                    var modularItemStyle = modularItem.ItemType === "Door" ? modularItem.DoorType + " " + modularItem.DoorStyle : modularItem.WindowStyle;
+                                    //get the width of the window; if width contains a decimal value, convert it into a fraction string
+                                    var width = ((modularItem.FLength + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FLength + "") : modularItem.FLength;
+                                    //get the height of the window; if height contains a decinal value, convert it into a fraction string
+                                    var height = ((modularItem.FStartHeight + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FStartHeight + "") : modularItem.FStartHeight;
+                                    //set the label text
+                                    text = width + "\" x " + height + "\" " +  modularItemStyle + " " + modularItem.ItemType;
+                                    break;
+                                case "2 Piece Receiver":
+                                case "Box Header Receiver":
+                                case "Receiver": case "Receiever":
+                                case "Box Header":
+                                case "Filler":
+                                case "2PieceReceiver":
+                                case "BoxHeaderReceiver":
+                                case "BoxHeader":
+                                case "Filler":
+                                case "Corner Post": 
+                                case "Corner":
+                                case "CornerPost": 
+                                    //var topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(startHeight))) }; //top left coordinates
+                                    //var topRight;
+                                    //var middleLeft;
+                                    //var middleRight;
+                                    //var bottomRight;
+                                    //var bottomLeft;
+                                    //var points;
+                                case "Starter Post":
+                                case "Electrical Chase":
+                                case "H Channel":
+                                case "StarterPost":
+                                case "ElectricalChase":
+                                case "HChannel":
+                                    text = title;
+                                    break;
+                            }
+                            drawRect(gLayout, scale(length), scale(2), 0, 0, id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')");
+                            gLayout = gLayout.append("g").attr("transform", "translate("+((scale(length)))+",0)"); //bottom right coordinates of the linear item
+                        }
+                    }
+                    else if (listOfWalls[i].Orientation === "N") {
+
+                        for (var j = 0; j < listOfWalls[i].LinearItems.length; j++) {
+
+                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var title = listOfWalls[i].LinearItems[j].ItemType;
+                            var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
+
+                            switch (listOfWalls[i].LinearItems[j].ItemType) {
+                                case "Mod":
+                                    var modularItem = listOfWalls[i].LinearItems[j].ModularItems[listOfWalls[i].LinearItems[j].ModularItems.length - 2];
+                                    var modularItemStyle = modularItem.ItemType === "Door" ? modularItem.DoorType + " " + modularItem.DoorStyle : modularItem.WindowStyle;
+                                    //get the width of the window; if width contains a decimal value, convert it into a fraction string
+                                    var width = ((modularItem.FLength + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FLength + "") : modularItem.FLength;
+                                    //get the height of the window; if height contains a decinal value, convert it into a fraction string
+                                    var height = ((modularItem.FStartHeight + "").indexOf(".") != -1) ? convertDecimalToFractions(modularItem.FStartHeight + "") : modularItem.FStartHeight;
+                                    //set the label text
+                                    text = width + "\" x " + height + "\" " +  modularItemStyle + " " + modularItem.ItemType;
+                                    break;
+                                case "2 Piece Receiver":
+                                case "Box Header Receiver":
+                                case "Receiver": case "Receiever":
+                                case "Box Header":
+                                case "Filler":
+                                case "2PieceReceiver":
+                                case "BoxHeaderReceiver":
+                                case "BoxHeader":
+                                case "Filler":
+                                case "Corner Post": 
+                                case "Corner":
+                                case "CornerPost": 
+                                    //var topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(startHeight))) }; //top left coordinates
+                                    //var topRight;
+                                    //var middleLeft;
+                                    //var middleRight;
+                                    //var bottomRight;
+                                    //var bottomLeft;
+                                    //var points;
+                                case "Starter Post":
+                                case "Electrical Chase":
+                                case "H Channel":
+                                case "StarterPost":
+                                case "ElectricalChase":
+                                case "HChannel":
+                                    text = title;
+                                    break;
+                            }
+                            drawRect(gLayout, scale(length), scale(2), 0, 0, id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')");
+                            gLayout = gLayout.append("g").attr("transform", "translate(0,"+scale(length)+")"); //bottom right coordinates of the linear item
+                        }
+                    }
+                }            
+            }
+        }        
+
+        /**
+        This function gets called when the wall dropdown is clicked.
         This function sets all the appropriate attributes 
         to the wall height and length variables
         */
@@ -166,7 +590,7 @@
 
             var points = [topRight, topLeft, bottomLeft, bottomRight, topReceiverRight, topReceiverLeft, bottomReceiverLeft, bottomReceiverRight, bottomRight]; //put all the coordinates together in an array
 
-            drawPolygon(points, id, title, g); //draw the polygon to represent the wall with the given coordinates and id
+            drawPolygon(points, id, title, g, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('Top & Bottom Receivers'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')"); //draw the polygon to represent the wall with the given coordinates and id
             
             drawAxes();
           
@@ -282,40 +706,41 @@
                         bottomRight = { "x": scale(parseFloat(length)), "y": scale(parseFloat(0)) }; //bottom right coordinates
                         bottomLeft = { "x": scale(parseFloat(0)), "y": scale(parseFloat(0)) }; //bottom left coordinates
 
-                            //MOD LEFT FRAME////////////////////////////////////////////////////////////////////////////////////////////
+                        //MOD LEFT FRAME////////////////////////////////////////////////////////////////////////////////////////////
 
-                            var insideLeftHeight = (height === "start") ? (startHeight - slope) : (height === "end") ? (startHeight + slope) : startHeight;
+                        var insideLeftHeight = (height === "start") ? (startHeight - slope) : (height === "end") ? (startHeight + slope) : startHeight;
 
-                            var insideTopLeft = { "x": scale(parseFloat(1)), "y": (-1 * scale(parseFloat(insideLeftHeight)) + 1) }; //inside top left coordinates
-                            var insideBottomLeft = { "x": scale(parseFloat(1)), "y": scale(parseFloat(0)) }; //inside bottom left coordinates
+                        var insideTopLeft = { "x": scale(parseFloat(1)), "y": (-1 * scale(parseFloat(insideLeftHeight)) + 1) }; //inside top left coordinates
+                        var insideBottomLeft = { "x": scale(parseFloat(1)), "y": scale(parseFloat(0)) }; //inside bottom left coordinates
                         
-                            //MOD RIGHT FRAME//////////////////////////////////////////////////////////////////////////////////////////
+                        //MOD RIGHT FRAME//////////////////////////////////////////////////////////////////////////////////////////
 
-                            var insideRightHeight = (height === "start") ? (endHeight + slope) : (height === "end") ? (endHeight - slope) : endHeight;
+                        var insideRightHeight = (height === "start") ? (endHeight + slope) : (height === "end") ? (endHeight - slope) : endHeight;
 
-                            var insideTopRight = { "x": scale(parseFloat(length) - 1), "y": (-1 * scale(parseFloat(insideRightHeight)) + 1) }; //inside top right coordinates
-                            var insideBottomRight = { "x": scale(parseFloat(length) - 1), "y": scale(parseFloat(0)) }; //inside bottom right coordinates
+                        var insideTopRight = { "x": scale(parseFloat(length) - 1), "y": (-1 * scale(parseFloat(insideRightHeight)) + 1) }; //inside top right coordinates
+                        var insideBottomRight = { "x": scale(parseFloat(length) - 1), "y": scale(parseFloat(0)) }; //inside bottom right coordinates
 
                         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                         points = [bottomLeft,topLeft,insideTopLeft,insideBottomLeft,insideBottomRight,insideTopRight,topRight,bottomRight]; //put all the coordinates together in an array
-                        drawPolygon(points, id, title, gLi); //draw the polygon to represent the wall with the given coordinates and id
-
+                        
+                        drawPolygon(points, id, title, gLi, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+listOfWalls[wallIndex].LinearItems[i].ModularItems[listOfWalls[wallIndex].LinearItems[i].ModularItems.length - 2].ItemType+ " " + listOfWalls[wallIndex].LinearItems[i].ItemType + "'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')"); //draw the polygon to represent the wall with the given coordinates and id
+                        
                         drawModularItems(modularItems, (parseFloat(x) + parseFloat(scale(1))), y, listOfWalls[wallIndex].LinearItems[i].LinearIndex, i);
 
                         x = parseFloat(x) + scale(parseFloat(length));
 
                         gLi = gWall.append("g").attr("transform", "translate("+ x + "," + y + ")"); //bottom right coordinates of the linear item
                         break;
-                    case "2 Piece Receiver":
-                    case "Box Header Receiver":
-                    case "Receiver":
-                    case "Box Header":
+                    case "2 Piece Receiver": case "2PieceReceiver":
+                    case "Box Header Receiver": case "BoxHeaderReceiver":
+                    case "Receiver": case "Receiever":
+                    case "Box Header": case "BoxHeader":
                     case "Filler":
-                    case "Corner Post":
-                    case "Starter Post":
-                    case "Electrical Chase":
-                    case "H Channel":
+                    case "Corner Post": case "Corner":
+                    case "Starter Post": case "StarterPost":
+                    case "Electrical Chase": case "ElectricalChase":
+                    case "H Channel": case "HChannel":
                         
                         topLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(startHeight)) + 1) }; //top left coordinates
                         topRight = { "x": scale(parseFloat(length)), "y": (-1 * scale(parseFloat(endHeight)) + 1) }; //top right coordinates
@@ -324,7 +749,8 @@
 
                         points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(points, "filler", title, gLi); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(points, id, title, gLi, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+listOfWalls[wallIndex].LinearItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')"); //draw the polygon to represent the wall with the given coordinates and id
+                        //drawPolygon(points, "filler", title, gLi); //draw the polygon to represent the wall with the given coordinates and id
 
                         x = parseFloat(x) + scale(parseFloat(length));
 
@@ -376,13 +802,25 @@
 
                 switch(modularItems[i].ItemType) {
                     case "Panel":
-                            var rise = (leftHeight > rightHeight) ? (leftHeight - rightHeight) : (rightHeight - leftHeight);
-                            var height = (leftHeight > rightHeight) ? "start" : (leftHeight === rightHeight) ? "equal" : "end";
-                            var slope = rise / length;
+                    case "Kneewall":
+                        var rise = (leftHeight > rightHeight) ? (leftHeight - rightHeight) : (rightHeight - leftHeight);
+                        var height = (leftHeight > rightHeight) ? "start" : (leftHeight === rightHeight) ? "equal" : "end";
+                        var slope = rise / length;
 
-                            var topFrame = (i === parseFloat(modularItems.length) - 1) ? 0 : 0.5;
-                            var bottomFrame = (i === 0) ? 0 : 0.5;
-                            var frame = 0.5;
+                        var topFrame = (i === parseFloat(modularItems.length) - 1) ? 0 : 0.5;
+                        var bottomFrame = (i === 0) ? 0 : 0.5;
+                        var frame = 0.5;
+
+                        var topLeft = { "x": scale(0), "y": (-1 * scale(leftHeight)) }; //top left coordinates
+                        var topRight = { "x": scale(length), "y": (-1 * scale(rightHeight)) }; //top right coordinates
+                        var bottomRight = { "x": scale(length), "y": scale(0) }; //bottom right coordinates
+                        var bottomLeft = { "x": scale(0), "y": scale(0) }; //bottom left coordinates
+
+                        var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                        drawPolygon(points, id, title, gMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')"); //draw the polygon to represent the wall with the given coordinates and id
+
+                        var ggMod = gMod.append("g");
 
                         var topLeft = { "x": scale(parseFloat(0) + frame), "y": (-1 * scale(parseFloat(leftHeight) - topFrame)) }; //top left coordinates
                         var topRight = { "x": scale(parseFloat(length) - frame), "y": (-1 * scale(parseFloat(rightHeight) - topFrame)) }; //top right coordinates
@@ -390,6 +828,8 @@
                         var bottomLeft = { "x": scale(parseFloat(0) + frame), "y": scale(parseFloat(0) - bottomFrame) }; //bottom left coordinates
 
                         var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                        drawPolygon(points, id, title, ggMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')"); //draw the polygon to represent the wall with the given coordinates and id
 
                         if (i < (parseFloat(modularItems.length) - 1)) {
 
@@ -401,7 +841,7 @@
 
                         break;
                     case "Transom":
-                    case "Kneewall":
+                    //case "Kneewall":
                     case "Window":
                         var id = "";// + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
                         var title = modularItems[i].ItemType;
@@ -411,6 +851,18 @@
                         var leftHeight = modularItems[i].LeftHeight; //left height of the modular item
                         var rightHeight = modularItems[i].RightHeight; //right height of the modular item
                 
+                        var outsideTopLeft = { "x": scale(parseFloat(0)), "y": (-1 * scale(parseFloat(leftHeight))) }; //top left coordinates
+                        var outsideTopRight = { "x": scale(parseFloat(length)), "y": (-1 * scale(parseFloat(rightHeight))) }; //top right coordinates
+                        var outsideBottomRight = { "x": scale(parseFloat(length)), "y": scale(parseFloat(0)) }; //bottom right coordinates
+                        var outsideBottomLeft = { "x": scale(parseFloat(0)), "y": scale(parseFloat(0)) }; //bottom left coordinates
+
+                        var outsidePoints = [outsideTopLeft, outsideTopRight, outsideBottomRight, outsideBottomLeft]; //put all the coordinates together in an array
+
+                        drawPolygon(outsidePoints, id, title, gMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')"); //draw the polygon to represent the wall with the given coordinates and id
+                        //drawPolygon(outsidePoints, id, title, gMod);//, "white", 1, "black");
+                        
+                        gMod = gMod.append("g");
+
                         var insideTopLeft = { "x": scale(parseFloat(0) + 1), "y": (-1 * scale(parseFloat(leftHeight) - 1)) }; //top left coordinates
                         var insideTopRight = { "x": scale(parseFloat(length) - 1), "y": (-1 * scale(parseFloat(rightHeight) - 1)) }; //top right coordinates
                         var insideBottomRight = { "x": scale(parseFloat(length) - 1), "y": scale(parseFloat(0) - 1) }; //bottom right coordinates
@@ -436,10 +888,45 @@
                         }
                         break;
                     case "Door":
+
+                        var id = "";// + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
+                        var title = modularItems[i].ItemType;
+                        var length = modularItems[i].FLength; ; //length of the modular item
+                        var leftHeight = modularItems[i].FStartHeight; //start height of the modular item
+                        var rightHeight = modularItems[i].FEndHeight; //end height of the modular item
+                        //var leftHeight = modularItems[i].LeftHeight; //left height of the modular item
+                        //var rightHeight = modularItems[i].RightHeight; //right height of the modular item
+                
+                        //alert(listOfWalls[wallIndex].LinearItems[linearIndex - 1].ItemType);
+
+                        var insideTopLeft = { "x": scale(parseFloat(0) + 1), "y": (-1 * scale(parseFloat(leftHeight) - 1)) }; //top left coordinates
+                        var insideTopRight = { "x": scale(parseFloat(length) - 1), "y": (-1 * scale(parseFloat(rightHeight) - 1)) }; //top right coordinates
+                        var insideBottomRight = { "x": scale(parseFloat(length) - 1), "y": scale(parseFloat(0)) }; //bottom right coordinates
+                        var insideBottomLeft = { "x": scale(parseFloat(0) + 1), "y": scale(parseFloat(0)) }; //bottom left coordinates
+
+                        var insidePoints = [insideTopLeft, insideTopRight, insideBottomRight, insideBottomLeft]; //put all the coordinates together in an array
+
+                        drawDoorDetails(modularItems[i], insidePoints, modularItems.length, linearIndex, relativeLinearIndex);
+
+                        if (i == 0) {
+
+                            var pt1 = { "x": scale(parseFloat(0)), "y": (insideTopLeft.y - scale(1)) }; //line left coordinates
+                            var pt2 = { "x": scale(parseFloat(length)), "y": (insideTopRight.y - scale(1)) }; //line left coordinates
+
+                            //drawLine(pt1, pt2, gMod);
+                        }
+                        else if (i == parseFloat(modularItems.length) - 1) {
+
+                            var pt1 = { "x": scale(parseFloat(0)), "y": (insideBottomLeft.y + scale(1)) }; //line left coordinates
+                            var pt2 = { "x": scale(parseFloat(length)), "y": (insideBottomRight.y + scale(1)) }; //line left coordinates
+
+                            drawLine(pt1, pt2, gMod);
+                        }
+
                         break;
                     case "Box Header":
                         break;
-                    case "Receiver":
+                    case "Receiver": case "Receiever":
                         break;
                 }
 
@@ -453,7 +940,6 @@
             }
         }
 
-
         /**
         This function draws the details of a given window
         @param window - the window object
@@ -466,7 +952,8 @@
 
             var pt1, pt2, topLeft, topRight, bottomLeft, bottomRight, leftSlider, rightSlider;
 
-            drawPolygon(frame, "", "", gMod); //draw the polygon to represent the wall with the given coordinates and id
+            drawPolygon(frame, "", "", gMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')"); //draw the polygon to represent the wall with the given coordinates and id
+            //drawPolygon(frame, "", "", gMod); //draw the polygon to represent the wall with the given coordinates and id
             gWindow = gMod.append("g").attr("transform", "translate("+ frame[3].x + "," + frame[3].y + ")");
 
             switch(window.WindowStyle) {
@@ -492,7 +979,7 @@
 
                     leftSlider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                    drawPolygon(leftSlider, "", "", gWindow); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(leftSlider, "", "", gWindow, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Left Slider'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     if (window.SpreaderBar !== 0) {
                         gVent = gWindow.append("g");
@@ -510,7 +997,8 @@
 
                     rightSlider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                    drawPolygon(rightSlider, "", "", gWindow); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(rightSlider, "", "", gWindow, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Right Slider'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')"); //draw the polygon to represent the wall with the given coordinates and id
+                    //drawPolygon(rightSlider, "", "", gWindow); //draw the polygon to represent the wall with the given coordinates and id
 
                     if (window.SpreaderBar !== 0) {
                         gVent = gWindow.append("g");
@@ -543,7 +1031,8 @@
 
                         var slider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(slider, "", "", gVent); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(slider, "", "", gVent, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Vent "+ (parseFloat(i) + parseFloat(1)) +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')"); //draw the polygon to represent the wall with the given coordinates and id
+                        //drawPolygon(slider, "", "", gVent); //draw the polygon to represent the wall with the given coordinates and id
 
                         if (window.SpreaderBar !== 0) {
 
@@ -582,7 +1071,7 @@
             }        
 
             if (window.ScreenType != "No Screen" && window.ScreenType != "NoScreen" && window.ScreenType != "" && typeof window.ScreenType !== 'undefined') 
-                drawScreen(frame); //draw screen lines
+                drawScreen(gWindow, frame, window.ScreenType); //draw screen lines
 
             if (window.ModuleIndex != 0 && window.ModuleIndex != (transomIndex - 1)) {
                 var text, width, height;
@@ -603,26 +1092,103 @@
         }
 
         /**
-        This function draws the screen on a given window
-        @param frame - the window frame coordinates
+        This function draws the details of a given door
+        @param door - the door object
+        @param frame - the door frame coordinates
+        @param transomIndex - modular index of the transom
+        @param linearIndex - index of the linear item which contains this door
+        @param relativeLinearIndex - index of the linear item relative to the wall drawn
         */
-        function drawScreen(frame) {
+        function drawDoorDetails(door, frame, transomIndex, linearIndex, relativeLinearIndex) {
+
+            var pt1, pt2, topLeft, topRight, bottomLeft, bottomRight, leftSlider, rightSlider;
+
+            drawPolygon(frame, "", "", gMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')"); //draw the polygon to represent the wall with the given coordinates and id
+            //drawPolygon(frame, "", "", gMod); //draw the polygon to represent the wall with the given coordinates and id
+            gDoor = gMod.append("g").attr("transform", "translate("+ frame[3].x + "," + frame[3].y + ")");
+
+            switch(door.DoorType) {
+                
+                case "Cabana": case "Cabana Door": case "CabanaDoor":
+                    var topLeft = { "x": parseFloat(frame[0].x) + scale(parseFloat(3.5)), "y": parseFloat(frame[0].y) + scale(parseFloat(2.5)) }; //top left coordinates
+                    var topRight = { "x": parseFloat(frame[1].x) - scale(parseFloat(3.5)), "y": parseFloat(frame[1].y) + scale(parseFloat(2.5)) }; //top right coordinates
+                    var bottomRight = { "x": parseFloat(frame[2].x) - scale(parseFloat(3.5)), "y": parseFloat(frame[2].y) - scale(parseFloat(door.Kickplate) + parseFloat(0.5)) }; //bottom right coordinates
+                    var bottomLeft = { "x": parseFloat(frame[3].x) + scale(parseFloat(3.5)), "y": parseFloat(frame[3].y) - scale(parseFloat(door.Kickplate) + parseFloat(0.5)) }; //bottom left coordinates
+
+                    var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                    gMod = gMod.append("g");
+                    drawPolygon(doorWindowFrame, "", "", gMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')"); //draw the polygon to represent the wall with the given coordinates and id
+
+                    //door.Hinge = "R";
+
+                    var r = scale(1.25);
+                    var cx = (door.Hinge === "R") ? parseFloat(frame[0].x) + scale(parseFloat(1.75)) : parseFloat(frame[1].x) - scale(parseFloat(1.75));
+                    var cy = -scale(door.FEndHeight / 2);
+
+                    var ggMod = gMod.append("g");
+                    
+                    drawCircle(ggMod, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')"); //draw the polygon to represent the wall with the given coordinates and id
+
+                    
+                    if (door.ScreenType != "No Screen" && door.ScreenType != "NoScreen" && door.ScreenType != "" && typeof door.ScreenType !== 'undefined') {
+                     
+                        topLeft = { "x": topLeft.x + parseFloat(scale(1)) , "y": topLeft.y - parseFloat(scale(1)) }; //top left coordinates
+                        topRight = { "x": topRight.x + parseFloat(scale(1)) , "y": topRight.y - parseFloat(scale(1)) }; //top right coordinates
+                        bottomRight = { "x": bottomLeft.x + parseFloat(scale(1)) , "y": bottomLeft.y }; //bottom right coordinates
+                        bottomLeft = { "x": bottomRight.x + parseFloat(scale(1)) , "y": bottomRight.y }; //bottom left coordinates
+
+                        doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                        //console.log(doorWindowFrame);
+
+                        //var gggMod = gMod.append("g").attr("transform", "translate("+ topLeft.x + "," + topLeft.y + ")");
+                        //////////////////////////////////////////////////////////////////////////////////////////////////
+                        ////////////////////////////////////STUCK HERE////////////////////////////////////////////////////
+                        //////////////////////////////////////////////////////////////////////////////////////////////////
+                        //var ttopLeft = { "x": scale(-1) , "y": scale(parseFloat(door.FStartHeight) - parseFloat(door.Kickplate) - parseFloat(4)) }; //top left coordinates
+                        //var ttopRight = { "x": scale(parseFloat(door.FLength) - parseFloat(9)) , "y": scale(parseFloat(door.FStartHeight) - parseFloat(door.Kickplate) - parseFloat(4)) }; //top right coordinates
+                        //var bbottomRight = { "x": bottomLeft.x + parseFloat(scale(2)) , "y": scale(parseFloat(door.FStartHeight)) }; //bottom right coordinates
+                        //var bbottomLeft = { "x": bottomRight.x + parseFloat(scale(2)) , "y": scale(parseFloat(door.FStartHeight)) }; //bottom left coordinates
+                    
+                        //var ddoorWindowFrame = [ttopLeft, ttopRight, bbottomRight, bbottomLeft]; //put all the coordinates together in an array
+                    
+                        //console.log(doorWindowFrame);
+
+                        drawScreen(gMod, doorWindowFrame, door.ScreenType, true);
+                    }
+                    break;
+            }
+        }
+
+        /**
+        This function draws the screen on a given window
+        @param g - the <g> element on which to append the line
+        @param frame - the window frame coordinates
+        @param type - screen type
+        @param door - if its a door window (hot fix)
+        */
+        function drawScreen(g, frame, type, door) {
+
+            door = typeof door !== 'undefined' ? door : false;
 
             var pt1, pt2;
-            gScreen = gWindow.append("g");
+            gScreen = g.append("g");
+
+            var yBottom = (door) ? scale(20) : 0;
 
             //Draws vertical lines of the screen onto the window
             for (var i = frame[0].x; i < frame[1].x - scale(1); i += scale(0.5)) {
-                pt1 = { "x": i, "y": -1 }; //line left coordinates
+                pt1 = { "x": i, "y": -1 - yBottom }; //line left coordinates
                 pt2 = { "x": i, "y":  (frame[1].y + scale(1) + 1) }; //line left coordinates
-                drawLine(pt1, pt2, gScreen, 1, "black", 0.05);
+                drawLine(pt1, pt2, gScreen, 1, "black", 0.05, "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')");
             }
 
             //Draws horizontal lines of the screen onto the window
             for (var i = frame[1].y + scale(2); i < frame[2].y + scale(1); i += scale(0.5)) {
                 pt1 = { "x": (frame[0].x - scale(1) + 1), "y": i }; //line left coordinates
                 pt2 = { "x": (frame[1].x - scale(1) - 1), "y": i }; //line left coordinates
-                drawLine(pt1, pt2, gScreen, 1, "black", 0.05);
+                drawLine(pt1, pt2, gScreen, 1, "black", 0.05, "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('oh hai world')");
             }
         }
 
@@ -655,12 +1221,18 @@
         @param strokeWidth - width of the line drawn
         @param stroke - colour of the line drawn
         @param opacity - transparency of the line
+        @param mouseover -
+        @param mouseout - 
+        @param click - 
         */
-        function drawLine(pt1, pt2, g, strokeWidth, stroke, opacity) {
+        function drawLine(pt1, pt2, g, strokeWidth, stroke, opacity, mouseover, mouseout, click) {
 
             strokeWidth = typeof strokeWidth !== 'undefined' ? strokeWidth : 1;
             stroke = typeof stroke !== 'undefined' ? stroke : "black";
             opacity = typeof opacity !== 'undefined' ? opacity : 1.0;
+            mouseover = typeof mouseover !== 'undefined' ? mouseover : "";
+            mouseout = typeof mouseout !== 'undefined' ? mouseout : "";
+            click = typeof click !== 'undefined' ? click : "";
 
             var poly = g.append("line")
                      .attr("x1", pt1.x)
@@ -669,11 +1241,10 @@
                      .attr("y2", pt2.y)
                      .attr("stroke", stroke)
                      .attr("stroke-width", strokeWidth)
-                     .attr("stroke-opacity", opacity);
-
-            //.attr("onmouseover", "$(\"#wall\").attr(\"fill\", \"#F3F3F3\");")
-            //.attr("onmouseout", "$(\"#wall\").attr(\"fill\", \"white\");");
-            //.attr("onclick", "$(\"#MainContent_txtWidth" + wallIndex + "\").focus();"); //put focus on the first editable field for the wall
+                     .attr("stroke-opacity", opacity)
+                     .attr("onmouseover", mouseover)
+                     .attr("onmouseout", mouseout)
+                     .attr("onclick", click); 
         }
 
         /**
@@ -682,9 +1253,22 @@
         @param id - to be given to the polygon object
         @param title - to give a name to the shape drawn
         @param g - the <g> element on which to append the polygon
+        @param colour - fill colour (default: white)
+        @param opacity - fill opacity (default: 1.0)
+        @param stroke - outline stroke colour (default: black)
+        @param mouseover
+        @param mouseout
+        @param click
         */
-        function drawPolygon(points, id, title, g) {
-            //alert(title);
+        function drawPolygon(points, id, title, g, colour, opacity, stroke, mouseover, mouseout, click) {
+            id = typeof id !== 'undefined' ? id : "";
+            colour = typeof colour !== 'undefined' ? colour : "white";
+            opacity = typeof opacity !== 'undefined' ? opacity : 1.0;
+            stroke = typeof stroke !== 'undefined' ? stroke : "black";
+            mouseover = typeof mouseover !== 'undefined' ? mouseover : "";
+            mouseout = typeof mouseout !== 'undefined' ? mouseout : "";
+            click = typeof click !== 'undefined' ? click : "";
+
             var poly = g.selectAll("polygon")
                      .data([points])
                      .enter().append("polygon")
@@ -695,12 +1279,13 @@
                                  return [d.x, d.y].join(",");
                              }).join(" ");
                          })
-                     .attr("fill", "white")
-                     .attr("stroke", "black")
-                     .attr("stroke-width", "1");
-                     //.attr("onmouseover", "$(\"#wall\").attr(\"fill\", \"#F3F3F3\");")
-                     //.attr("onmouseout", "$(\"#wall\").attr(\"fill\", \"white\");");
-                     //.attr("onclick", "alert"); //put focus on the first editable field for the wall
+                     .attr("stroke-width", "1")
+                     .style('fill', colour)
+                     .style('fill-opacity', opacity)
+                     .attr('stroke', stroke)
+                     .attr("onmouseover", mouseover)
+                     .attr("onmouseout", mouseout)
+                     .attr("onclick", click); 
         }
 
         /**
@@ -710,29 +1295,75 @@
         @param height - rectangle height
         @param x - starting x coordinate
         @param y - starting y coordinate
+        @param id - 
         @param colour - fill colour (default: white)
         @param opacity - fill opacity (default: 1.0)
         @param stroke - outline stroke colour (default: black)
+        @param mouseover
+        @param mouseout
+        @param click
         */
-        function drawRect(g, width, height, x, y, colour, opacity, stroke) {
-            
+        function drawRect(g, width, height, x, y, id, colour, opacity, stroke, mouseover, mouseout, click) {
+            //alert(id);
+            id = typeof id !== 'undefined' ? id : "";
             colour = typeof colour !== 'undefined' ? colour : "white";
             opacity = typeof opacity !== 'undefined' ? opacity : 1.0;
             stroke = typeof stroke !== 'undefined' ? stroke : "black";
+            mouseover = typeof mouseover !== 'undefined' ? mouseover : "";
+            mouseout = typeof mouseout !== 'undefined' ? mouseout : "";
+            click = typeof click !== 'undefined' ? click : "";
 
-            var rect = g.style('z-index', 999).append('rect')
-                .attr("class", "label")
+            var rect = g.append('rect')
+                //.attr("class", "label")
+                .attr("id", id)
                 .attr('width', width)
                 .attr('height', height)
                 .attr('x', x)
                 .attr('y', y)
                 .style('fill', colour)
                 .style('fill-opacity', opacity)
-                .attr('stroke', stroke);
-                
-            //.attr("onmouseover", "$(\"#wall\").attr(\"fill\", \"#F3F3F3\");")
-            //.attr("onmouseout", "$(\"#wall\").attr(\"fill\", \"white\");");
-            //.attr("onclick", "alert"); //put focus on the first editable field for the wall
+                .attr('stroke', stroke)
+                .attr("onmouseover", mouseover)
+                .attr("onmouseout", mouseout)
+                .attr("onclick", click); 
+        }
+
+
+        /**
+        This function draws a circle on the canvas with the given data points as coordinates and sets it id to the given id
+        @param g - the <g> element on which to append the rect
+        @param r - radius of the circle
+        @param cx - origin x coordinate
+        @param cy - origin y coordinate
+        @param id - 
+        @param colour - fill colour (default: white)
+        @param opacity - fill opacity (default: 1.0)
+        @param stroke - outline stroke colour (default: black)
+        @param mouseover
+        @param mouseout
+        @param click
+        */
+        function drawCircle(g, r, cx, cy, id, colour, opacity, stroke, mouseover, mouseout, click) {
+            
+            id = typeof id !== 'undefined' ? id : "";
+            colour = typeof colour !== 'undefined' ? colour : "white";
+            opacity = typeof opacity !== 'undefined' ? opacity : 1.0;
+            stroke = typeof stroke !== 'undefined' ? stroke : "black";
+            mouseover = typeof mouseover !== 'undefined' ? mouseover : "";
+            mouseout = typeof mouseout !== 'undefined' ? mouseout : "";
+            click = typeof click !== 'undefined' ? click : "";
+            
+            var circle = g.append("circle")
+                .attr("id", id)
+                .attr("r", r)
+                .attr("cx", cx)
+                .attr("cy", cy)
+                .style("stroke", stroke)
+                .style("fill", colour)
+                .style('fill-opacity', opacity)
+                .attr("onmouseover", mouseover)
+                .attr("onmouseout", mouseout)
+                .attr("onclick", click); 
         }
 
         /**
@@ -772,7 +1403,7 @@
                     var x = (frame[1].x / 2) - ((labelElement.clientWidth / 2) + 5); //starting x coordinate, determined by frame size and temp label width
                     var y = (frame[0].y / 2) - labelElement.clientHeight; //starting y coordinate, determined by frame size and temp label height
             
-                    drawRect(g, width, height, x, y, "white", 0.9); //draw the rectangle
+                    drawRect(g, width, height, x, y, "", "white", 0.9); //draw the rectangle
          
                     $("#tempLabel").remove(); //remove the temp label element from the DOM so we can redraw it with the same ID for other windows
 
@@ -835,36 +1466,189 @@
             for (var i = 0; i < listOfWalls[listOfWalls.length - 1].LastItemIndex; i++) 
                 $("#li"+i).css("display", "none");
             
-            //show only the appropriate li tags
-            for (var i = listOfWalls[value].FirstItemIndex; i <= listOfWalls[value].LastItemIndex; i++) 
-                $("#li"+i).css("display", "block");
+            if (value != "-1") {
+
+                if ($("#existingWall"))
+                    d3.selectAll("#existingWall").remove(); //remove existing walls
+
+                if($("#layout"))
+                    d3.selectAll("#layout").remove(); //remove room layout drawing
+                
+
+                //show only the appropriate li tags
+                for (var i = listOfWalls[value].FirstItemIndex; i <= listOfWalls[value].LastItemIndex; i++) 
+                    $("#li"+i).css("display", "block");
             
 
-            wallIndex = value; //set the wall index global variable
+                wallIndex = value; //set the wall index global variable
             
-            var startHeight = listOfWalls[wallIndex].StartHeight;
-            var endHeight = listOfWalls[wallIndex].EndHeight;
-            var highHeight = (startHeight > endHeight) ? startHeight : endHeight;
-            var length = listOfWalls[wallIndex].Length;
+                var startHeight = listOfWalls[wallIndex].StartHeight;
+                var endHeight = listOfWalls[wallIndex].EndHeight;
+                var highHeight = (startHeight > endHeight) ? startHeight : endHeight;
+                var length = listOfWalls[wallIndex].Length;
 
-            //temporary scale to see if the enlarged wall will fit the canvas
-            scale.domain([0 , highHeight])
-                 .range([0 , MAX_CANVAS_HEIGHT - 100]);
+                //temporary scale to see if the enlarged wall will fit the canvas
+                scale.domain([0 , highHeight])
+                     .range([0 , MAX_CANVAS_HEIGHT - 100]);
 
-            //check if the enlarged wall width is greater than canvas width
-            //and set the upper domain and range
-            var upperDomain = (scale(length) < (MAX_CANVAS_WIDTH - 200)) ? highHeight : length;
-            var upperRange = (scale(length) < (MAX_CANVAS_WIDTH - 200)) ? (MAX_CANVAS_HEIGHT - 100) : (MAX_CANVAS_WIDTH - 150);
+                //check if the enlarged wall width is greater than canvas width
+                //and set the upper domain and range
+                var upperDomain = (scale(length) < (MAX_CANVAS_WIDTH - 200)) ? highHeight : length;
+                var upperRange = (scale(length) < (MAX_CANVAS_WIDTH - 200)) ? (MAX_CANVAS_HEIGHT - 100) : (MAX_CANVAS_WIDTH - 150);
             
-            //set the scale's domain and range according to wall size
-            scale.domain([0 , upperDomain])
-                 .range([0 , upperRange]);
+                //set the scale's domain and range according to wall size
+                scale.domain([0 , upperDomain])
+                     .range([0 , upperRange]);
             
-            gWall = canvas.append("g").attr("id", "wall");
+                gWall = canvas.append("g").attr("id", "wall");
 
-            drawWall(); //draw the wall
-            //addLabels();
-            //console.log(arrLabels);
+                drawWall(); //draw the wall
+                //addLabels();
+                //console.log(arrLabels);
+            }
+            else {
+                ///////////////////////////////////////////////////////////////////////////////
+                //hard coding set back because its not being stored/retrieved from the database
+                listOfWalls[0].SetBack = listOfWalls[0].Length; 
+                listOfWalls[2].SetBack = -listOfWalls[2].Length;
+                ///////////////////////////////////////////////////////////////////////////////
+
+                var projection = getProjection();
+                var width = getWidth();
+
+                //temporary scale to see if the enlarged wall will fit the canvas
+                scale.domain([0 , projection])
+                     .range([0 , MAX_CANVAS_HEIGHT - 100]);
+
+                //check if the enlarged wall width is greater than canvas width
+                //and set the upper domain and range
+                var upperDomain = (scale(width) < (MAX_CANVAS_WIDTH - 200)) ? parseFloat(projection) + parseFloat(scale(10)) : width;
+                var upperRange = (scale(width) < (MAX_CANVAS_WIDTH - 200)) ? (MAX_CANVAS_HEIGHT - 100) : (MAX_CANVAS_WIDTH - 150);
+            
+                //set the scale's domain and range according to wall size
+                scale.domain([0 , upperDomain ])
+                     .range([0 , upperRange]);
+            
+                gWall = canvas.append("g").attr("id", "wall");
+
+                drawRoomLayout(); //draw the wall
+            }
+        }
+
+        /**
+        This function uses the list of walls to calculate the room projection and antiProjection 
+            by simply adding the setback value of each wall.
+        @return projection - i.e. room projection from the left
+        @return antiProjection - i.e. room projection from the right
+        */
+        function getProjection() {
+//            var projection;
+//            var antiProjection;
+            var tempProjection = 0; //variable to store each setback
+            var tempAntiProjection = 0;
+            var highestProjection = 0; //variable to store the highest projection calculated from the left side of the room
+            var lowestProjection = 0; //variable to store the highest projection calculated from the right side of the room
+            //var overallProjection;
+            for (var i = 0; i < listOfWalls.length; i++) { //run through all the setbacks
+                tempProjection = +tempProjection + +listOfWalls[i].SetBack; //add the values to temp variable
+                if (tempProjection > highestProjection) { //determine if the current temp projection is greater than the highest projection calculated
+                    highestProjection = tempProjection; // reset the highest projection
+                    projection = highestProjection;
+                }
+                if (listOfWalls[i].SetBack < 0) {
+                    tempAntiProjection = tempAntiProjection + listOfWalls[i].SetBack * -1;
+                    antiProjection = tempAntiProjection;
+                }
+            }
+
+            return (antiProjection > projection) ? antiProjection : projection;
+        }
+
+        /**
+        This function is used to calculate the width of the sunroom using the setback formula.
+        Once the width is determined it gets stored in the global roomWidth variable.
+        @return highestWidth (i.e. room width)
+        */
+        function getWidth() {
+            var tempWidth = 0; //variable to store each setback
+            var highestWidth = 0; //variable to store the highest width calculated from the left side of the room
+            var width = 0;
+            var isGable = false;
+            for (var index = 0; index < listOfWalls.length; index++) { //run through all the setbacks
+                if (listOfWalls[index].WallType === "G")
+                {
+                    isGable = true;
+                }
+            
+                /*
+                WEST        :   ZERO
+                EAST        :   ZERO
+                SOUTH       :   LENGTH
+                NORTH       :   NEGATIVE LENGTH
+                SOUTHEAST   :   (2a^2 = L^2)
+                NORTHEAST   :   (2a^2 = L^2)            
+                SOUTHWEST   :   NEGATIVE (2a^2 = L^2)  
+                NORTHWEST   :   NEGATIVE (2a^2 = L^2) 
+                */
+
+                //length of the given wall
+                var L = +listOfWalls[index].Length;
+
+                //get the orientation of the given wall
+                if (isGable == false)
+                {
+                    switch (listOfWalls[index].Orientation) {
+                        case "S": //if south
+                            width = L;
+                            break;
+                        case "N": //or north
+                            width = -L;
+                            break;
+                        case "W": //if west
+                        case "E": //if east
+                            width = 0;
+                            break;
+                        case "SW": //if southwest
+                        case "NW": //or northwest
+                            width = -(Math.sqrt((Math.pow(L, 2)) / 2));
+                            break;
+                        case "SE": //if southeast
+                        case "NE": //or northeast
+                            width = Math.sqrt((Math.pow(L, 2)) / 2);
+                            break;
+                    }
+                }
+                else{
+                    switch (listOfWalls[index].Orientation)
+                    {
+                        case "S":
+                        case "N":
+                            width = 0;
+                            break;
+                        case "W":
+                            width = L;
+                            break;
+                        case "E":
+                            width = -L;
+                            break;
+                        case "SE":
+                        case "NE":
+                            width = -(Math.sqrt((Math.pow(L, 2)) / 2));
+                            break;
+                        case "SW":
+                        case "NW":
+                            width = Math.sqrt((Math.pow(L, 2)) / 2);
+                            break;
+                    }
+                }
+
+                tempWidth = +tempWidth + width //add the values to temp variable
+
+                if (tempWidth > highestWidth) { //determine if the current temp projection is greater than the highest projection calculated
+                    highestWidth = tempWidth; // reset the highest projection
+                }
+            }
+            return highestWidth;
         }
 
         /**
@@ -955,7 +1739,7 @@
 
 
         $(document).ready(function () {
-            sunroomObjectChanged("0"); //when page loads, call sunroomObjectChanged function to set all the default values for wall 0
+            sunroomObjectChanged("0"); //when page loads, call sunroomObjectChanged function to set all the default values for room layout (-1 index = room layout)
             //$("#filler").style.zIndex = -1;
         });
 

@@ -731,7 +731,6 @@
                 return antiProjection;
             else 
                 return projection;
-
         }
 
         /**
