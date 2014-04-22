@@ -1,0 +1,1223 @@
+﻿@font-face {
+	font-family: 'Shanti';
+	src: url('fonts/Shanti-Regular.ttf') format('truetype');
+}
+
+
+/******************************************
+ * GLOBAL
+ ******************************************/
+ 
+* {
+	padding: 0;
+	margin: 0;
+    list-style: none;
+    outline: none !important;
+}
+
+body {
+	font: 1em/1.5em 'Shanti', Helvetica, Arial, sans-serif;
+	background: #fff; 
+    overflow-y: scroll;  
+}
+
+.content-wrapper {
+    margin: 0 auto;
+    width: 90%;
+    position: relative;
+}
+
+.scrollbox {
+    overflow: auto;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover,
+input[type=submit]:hover {
+    -webkit-transition: all ease 300ms;
+       -moz-transition: all ease 300ms;
+        -ms-transition: all ease 300ms;
+         -o-transition: all ease 300ms;
+            transition: all ease 300ms;
+    cursor: pointer;
+}
+
+/******************************************
+ * TEXT
+ ******************************************/
+
+h1 { /* question */
+    font-size: 1.25em;
+    background: #f6f6f6;
+    padding: 15px;
+}
+
+h2 { /* paging sidebar heading */
+    font-size: 1.25em;
+    font-weight: normal;
+    padding: 5px 0 15px;
+}
+
+h3 { /* optional heading before text input field table */
+    font-size: 1em;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+
+
+/******************************************
+ * HEADER
+ ******************************************/
+/* #region */
+header {
+	margin-bottom: 50px;
+}
+
+#logo {
+	text-indent: -999999px;
+	background: url('../Images/logo.png') no-repeat left top;
+	background-size: auto 100%;
+	width: 70px;
+	height: 35px;
+	margin: 7.5px 20px 0 15px;
+	float: left;
+}
+
+.navMain
+{
+    display:none;
+}
+
+.ulNavMain li a,
+.ulNavMain li input[type=submit] {
+    font-size: 1.25em;
+    text-transform: uppercase;
+    text-indent: 30px;
+    line-height: 50px;
+    color: #fff;
+    background: transparent url('../Images/iconsNav.png') no-repeat left top;
+    background-size: 36px 200px;
+    margin: 0 20px;
+    border: 0;
+    float: left;
+    display: block;
+}
+
+.ulNavMain li input[type=submit] {
+    height: 50px;
+}
+
+.ulNavMain li a:hover,
+.ulNavMain li a:active,
+.ulNavMain li a:focus,
+.ulNavMain li input[type=submit]:hover,
+.ulNavMain li input[type=submit]:active,
+.ulNavMain li input[type=submit]:focus {
+    color: #dfbf98;
+}
+
+.ulNavMain li a.active {
+    color: #dfbf98;
+}
+
+.ulNavMain li:last-child {
+    float: right;
+}
+
+.ulNavMain li:nth-child(1) a {
+    background-position: 0 0;
+}
+
+.ulNavMain li:nth-child(2) a {
+    text-indent: 45px;
+    background-position: 0 -50px;
+}
+
+.ulNavMain li:nth-child(3) a { 
+    background-position: 0 -100px;
+}
+
+.ulNavMain li:nth-child(4) input[type=submit] {
+    background-position: 0 -150px;
+}
+/* #endregion */
+
+
+/******************************************
+ * FOOTER
+ ******************************************/
+
+footer {
+    font-size: .675em;
+    color: #898989;
+    padding: 0 5px;
+    margin-top: 50px;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
+
+
+
+/******************************************
+ * INPUT ELEMENTS
+ ******************************************/
+/* #region */
+/* TEXT FIELDS
+---------------------------------------- */
+
+/* Base styling */
+.txtField {
+    font-size: 1em; 
+    color: #555;
+    background-color: #fafafa;
+    padding: 5px;
+    border: 1px solid #cacece;
+    border-radius: 5px;
+}
+
+/* Custom text fields */
+.txtSearch {
+    font-size: .75em;
+    text-indent: 20px;
+    text-transform: uppercase;
+    background: url('../Images/iconSearch.png') no-repeat 5px top;
+    background-size: 14px 25px;
+    width: 200px;
+}
+
+.txtInput {    
+    width: 250px;
+}
+
+.txtAddress {
+    width: 250px;
+}
+
+.txtZipPhone {
+    width: 100px;
+}
+
+.txtLengthInput {
+    width: 50px;
+}
+
+.txtDoorInput {
+    width:inherit;
+}
+
+
+/* DROP DOWN LISTS
+---------------------------------------- */
+
+select {
+    font-size: 1em;
+    color: #555;
+    background: #fff;
+    min-width: 70px;
+    height: 31px;
+    padding: 5px;
+    border: 1px solid #cacece;
+    border-radius: 5px;     
+}
+
+
+/* RADIO BUTTONS / CHECKBOXES
+---------------------------------------- */
+
+.toggleOptions li {
+    padding: 4px 0;
+}
+
+input[type=radio] + label + label,
+input[type=radio] + label + img {
+    margin-left: 32px;
+    display: block;
+}
+
+input[type=radio] + label:hover,
+.toggleOptions li > label + label:hover,
+input[type=radio] + label + label:hover {
+    cursor: pointer;
+}
+
+.toggleOptions > li > span {
+    display: block !important;
+}
+
+.toggleOptions > li > span:hover {
+    cursor: pointer;
+}
+
+
+/* CHECKBOXES
+---------------------------------------- */
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"] + label {
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    width: 20px;
+	height: 20px;
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+    float: left;
+}
+ 
+input[type="checkbox"] + label:active, 
+input[type="checkbox"]:checked + label:active {
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+}
+ 
+input[type="checkbox"]:checked + label {
+    border: 1px solid #adb8c0;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+    color: #99a1a7;
+}
+ 
+input[type="checkbox"]:checked + label:after {
+    content: '\2714';
+    font-size: 14px;
+    position: absolute;
+    top: 0px;
+    left: 3px;
+    color: #99a1a7;
+}
+
+
+/* RADIO BUTTONS
+---------------------------------------- */
+
+input[type="radio"] {
+    display: none;
+}
+ 
+input[type="radio"] + label {
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    width: 20px;
+	height: 20px;
+    border-radius: 50px;
+    display: inline-block;
+    position: relative;
+    float: left;
+}
+ 
+input[type="radio"]:checked + label:after {
+    content: ' ';
+    width: 12px;
+    height: 12px;
+    border-radius: 50px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background: #99a1a7;    
+}
+ 
+input[type="radio"]:checked + label {
+    border: 1px solid #adb8c0;
+    box-shadow: inset 0px 0px 5px rgba(0,0,0,0.1);
+}
+ 
+input[type="radio"] + label:active, 
+input[type="radio"]:checked + label:active {
+	box-shadow: inset 0px 0px 5px rgba(0,0,0,0.1);
+}
+
+
+/* BUTTONS
+---------------------------------------- */
+
+.btnSubmit {
+    font: .75em 'Shanti', Helvetica, Arial, sans-serif !important;
+    text-transform: uppercase;
+    color: #555;
+    background: #dcdcdc;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f6f6f6), to(#dcdcdc)); /* Safari 4+, Chrome 1-9 */
+	background: -webkit-linear-gradient(top, #f6f6f6, #dcdcdc); /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background:    -moz-linear-gradient(top, #f6f6f6, #dcdcdc); /* Firefox 3.6+ */
+	background:     -ms-linear-gradient(top, #f6f6f6, #dcdcdc); /* IE 10+ */
+	background:      -o-linear-gradient(top, #f6f6f6, #dcdcdc); /* Opera 11.10+ */	 
+	background:         linear-gradient(top, #f6f6f6, #dcdcdc); /* Opera 11.10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', endColorstr='#dcdcdc',GradientType=0 ); /* IE6-9 */
+    padding: 5px;
+    margin: 15px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btnSubmit:hover {
+    color: #898989;
+}
+
+.btnSubmit:active {
+    background: #f6f6f6;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#dcdcdc), to(#f6f6f6)); /* Safari 4+, Chrome 1-9 */
+	background: -webkit-linear-gradient(top, #dcdcdc, #f6f6f6); /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background:    -moz-linear-gradient(top, #dcdcdc, #f6f6f6); /* Firefox 3.6+ */
+	background:     -ms-linear-gradient(top, #dcdcdc, #f6f6f6); /* IE 10+ */
+	background:      -o-linear-gradient(top, #dcdcdc, #f6f6f6); /* Opera 11.10+ */	 
+	background:         linear-gradient(top, #dcdcdc, #f6f6f6); /* Opera 11.10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dcdcdc', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
+    box-shadow: inset 0 0 6px #ccc, inset 1px 1px 4px #ccc;
+}
+
+/* SEARCH BUTTON */
+.btnSearch {
+    margin: 0 0 30px 10px;
+}
+
+/* DELETE 'BUTTON' (HYPERLINK) */
+.btnDelete {
+    font-size: .875em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    color: #898989;
+    display: block;
+}
+
+.btnDelete:hover {
+    color: #555;
+}
+
+/* ADD TO ESTIMATE BUTTON */
+.btnAddToEstimate {
+    margin-right: 5%;
+    float: right;
+}
+
+/* DISABLED BUTTON */
+.btnDisabled {
+    font: .75em 'Shanti', Helvetica, Arial, sans-serif !important;
+    text-transform: uppercase;
+    color: #bcbcbc;
+    background: #dcdcdc;
+    padding: 5px;
+    margin: 15px;
+    border: 1px solid #bcbcbc;
+    border-radius: 5px;
+}
+
+.btnDisabled:hover {
+    cursor: inherit;
+}
+
+
+/* TABLE LAYOUT FOR LABELS/INPUTS
+---------------------------------------- */
+
+.table {
+    border-collapse: collapse;
+}
+
+table td {
+    padding: 3px 8px 3px 0;
+}
+
+div.tblWallLengths {
+    background-color: rgb(242, 235, 214);
+    padding: 20px 0;
+}
+
+div.tblWallLengths table {
+    margin: 0 auto;
+}
+
+/* #endregion */
+
+/* LABEL FORMATTING */
+.labelFormatting {
+    display:inline-block;
+    width:140px;
+    vertical-align:top;
+}
+
+
+
+/******************************************
+ * SLIDES / PAGING
+ ******************************************/
+
+.slide-window {
+    width: 72%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;    
+}
+
+.no-sidebar {
+    width: 100%;
+}
+
+.slide-wrapper {
+    width: 800%; /* 100% * total # slides */    
+}
+
+.slide {
+    width: 12.5%; /* 100% / total # slides */
+    float: left;
+    padding: 0 1px;
+    box-sizing: border-box;   
+    -moz-box-sizing: border-box;
+}
+
+#sidebar {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#paging {
+    background: #f6f6f6;
+    padding: 10px 10px 0;    
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+#paging li {
+    padding: 3px 0;
+    border-bottom: 1px dotted #bbb;
+}
+
+#paging li:last-child {
+    padding-bottom: 10px;
+    border-bottom: 0;
+}
+
+#paging li span {
+    display: block;
+}
+
+#paging li span:first-child:after {
+    content: ':';
+}
+
+#paging li span + span {
+    padding-left: 10px; 
+}
+
+#paging a:hover {
+    color: #dfbf98;
+}
+
+
+
+/******************************************
+ * TOGGLE RADIO BUTTON OPTIONS (ACCORDION)
+ ******************************************/
+
+.toggleOptions > li:nth-child(odd) {
+    background: rgb(242, 235, 214);
+    padding: 10px;
+}
+
+.toggleOptions > li:nth-child(even) {
+    background: rgba(242, 235, 214,.5);
+    padding: 10px;
+}
+
+.toggleContent {
+    padding: 10px 0 10px 35px;
+    display: none;
+}
+
+li > .toggleOptions > li {
+    background: transparent !important;
+}
+
+
+
+/******************************************
+ * ERROR MESSAGE DISPLAY
+ ******************************************/
+
+.lblErrorMessage,
+.txtErrorMessage {
+    font-size: .9em;
+    font-style: italic;
+    line-height: 1em;
+    color: #fa0000;
+    background: transparent;
+    width: 100%;
+    margin-top: 10px;
+    border: 0;
+    display: inline-block;
+    resize: none;
+}
+
+.lblErrorMessage:before,
+.txtErrorMessage:before {
+    content: "* ";
+}
+
+
+
+/******************************************
+ * LOGIN PAGE
+ ******************************************/
+
+.tblLogin {
+    background: rgb(242, 235, 214);
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.tblLogin tr td:first-child {
+    text-align: right;
+    padding-left: 20px; 
+}
+
+.tblLogin tr td:last-child {
+    padding-right: 20px; 
+}
+
+.tblLogin tr:nth-child(2) td {
+    padding-top: 15px;
+}
+
+.tblLogin tr:last-child td {
+    padding: 10px 0 20px;
+}
+
+.tdErrorLogin {
+    text-align: left !important;
+    padding-bottom: 10px;
+}
+
+.lblErrorLogin {
+    font-size: .9em;
+    font-style: italic;
+    line-height: 1em;
+    color: #fa0000;
+}
+
+.btnLogin {
+    width: 90px;
+    margin: 0;
+}
+
+
+
+/******************************************
+ * SAVED PROJECTS PAGE
+ ******************************************/
+/* #region */
+.tblSavedProjects {
+    width: 100%;
+    /*margin-top: 30px;*/
+    border-collapse: collapse;
+}
+
+/*.tblSavedProjects thead {
+    width: 100%;
+}*/
+
+/*.tblSavedProjects tbody {
+    overflow: auto;
+    display: block;
+}*/
+
+.tblSavedProjects tr th {
+    font-size: 1.25em;
+    text-transform: uppercase;
+    text-align: center;
+    background: #f6f6f6;
+    padding: 15px 10px;
+    white-space: nowrap;
+}
+
+.tblSavedProjects tr th.thSortable:hover {
+    color: #dfbf98;
+    -webkit-transition: all ease 300ms;
+       -moz-transition: all ease 300ms;
+        -ms-transition: all ease 300ms;
+         -o-transition: all ease 300ms;
+            transition: all ease 300ms;
+    cursor: pointer;
+}
+
+.tblSavedProjects tr td {
+    font-size: 1.125em;
+    text-align: center;
+    padding: 10px;
+}
+
+.tblSavedProjects tr:nth-child(odd) td {
+    background: rgb(242, 235, 214);
+}
+
+.tblSavedProjects tr:nth-child(even) td {
+    background: rgba(242, 235, 214,.5);
+}
+
+.tblSavedProjects tr th:first-child,
+.tblSavedProjects tr td:first-child { /* Project name column */
+    text-align: left;
+}
+
+.tblSavedProjects tr th:nth-child(2),
+.tblSavedProjects tr td:nth-child(2),
+.tblSavedProjects tr th:last-child { /* Date column */
+    width: 20%;
+}
+
+.tblSavedProjects tr th:nth-child(3),
+.tblSavedProjects tr td:nth-child(3) { /* Delete column */
+    width: 10%;
+}
+
+.tblSavedProjects tr td:last-child { /* Add to estimate column */
+    padding-left: 9%;
+    width: 20%;
+}
+
+/*.tblSavedProjects tfoot td {
+    font-size: 1em;
+    text-align: center;
+    background: none !important;
+    padding-top: 0;
+    padding-bottom: 0;
+}*/
+
+/*
+    Overlay    
+*/
+
+div.savedProjects .navEditor {
+    margin: -50px 0 0 0;
+}
+
+div.savedProjectsWrapper .ulNavEditor li a {
+    text-indent: 0;
+    background: transparent;
+}
+
+div.savedProjectsWrapper .projectTransitOverlay,
+div.savedProjectsWrapper .editInvoiceItemOverlay {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    display: none;
+    z-index: 1000;
+}
+
+div.projectTransitOverlay .content,
+div.editInvoiceItemOverlay .content {
+    position: absolute;
+    height: 250px;
+    width: 470px;
+    background-color: rgb(242, 235, 214);
+    top: 50%;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: -300px;
+    z-index:1005; 
+    box-shadow: -10px 10px 5px #888888;
+}
+
+div.editInvoiceItemOverlay .content {
+    height: 350px;
+    margin-top: -250px;
+}
+
+div.projectTransitOverlay .closeBar,
+div.editInvoiceItemOverlay .closeBar {
+    display: inline-block;
+    height: 50px;
+    width: 100%;
+    background-color: black;
+}
+
+div.projectTransitOverlay .overlayClose,
+div.editInvoiceItemOverlay .overlayClose {
+    cursor: pointer;
+    font-size: 1.25em;
+    text-transform: uppercase;
+    text-indent: 30px;
+    line-height: 50px;
+    color: #fff;
+    background: transparent url('../Images/iconsNav.png') no-repeat left top;
+    background-size: 36px 200px;
+    margin: 0 20px;
+    border: 0;
+    float: right;
+    display: block;
+    background-position: 0 -150px;
+    overflow:hidden;
+}
+
+div.projectTransitOverlay .content h3,
+div.editInvoiceItemOverlay .content h3 {
+    padding: 0 0 0 2em;
+}
+
+div.projectTransitOverlay .content tr td:first-child,
+div.editInvoiceItemOverlay .content tr td:first-child {
+    text-align:right;
+}
+
+div.projectTransitOverlay .invalid,
+div.editInvoiceItemOverlay .invalid {
+    border: red solid 1px;
+}
+
+div.projectTransitOverlay .button.invalid,
+div.editInvoiceItemOverlay .button.invalid {
+    border: none;
+    opacity: 0.5;
+    cursor: default;
+}
+
+div.projectTransitOverlay .button,
+div.editInvoiceItemOverlay .button {
+    background-color: #000;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    cursor: pointer;
+    padding: 12px 24px;
+    margin: 0 2em;
+    width:120px;
+    text-align:center;
+}
+
+
+
+/* #endregion */
+
+/******************************************
+* FINALIZE ORDER PAGE
+*******************************************/
+
+.tblTotalCost {
+    background: rgb(242, 235, 214);
+}
+
+/******************************************
+ * NEW PROJECT PAGE
+ ******************************************/
+
+.tblSunroomLayout {
+    width: 100%;
+}
+
+.tblSunroomLayout td {
+    padding: 20px 0;
+    position: relative;
+}
+
+
+
+/******************************************
+ * PROJECT EDITOR PAGE
+ ******************************************/
+
+/* NAVIGATION
+---------------------------------------- */
+
+.navEditor {
+    color: #000;
+    background: rgb(242, 235, 214);
+    height: 40px;
+    margin: -50px 0 40px;
+}
+
+.ulNavEditor {
+    position: relative;
+    display: inline-block;
+    
+}
+
+.ulNavEditor li,
+.ulNavEditor li input[type=submit] {
+    font-size: 1em;
+    text-transform: uppercase;
+    line-height: 40px;
+    color: #000;
+    background: rgb(242, 235, 214);
+    padding: 0 10px;
+    border: 0;
+    border-right: 1px solid rgba(171,139,101,.5);
+    
+    float: left;
+}
+
+.ulNavEditor li input[type=submit] {
+    height: 40px;
+}
+
+.ulNavEditor li a {
+    text-indent: 15px;
+    background: transparent url('../Images/iconsNavEditor.png') no-repeat left top;
+    background-size: 20px 400px;
+    padding: 0 10px;
+    display: block;
+}
+
+.ulNavEditor li a:hover,
+.ulNavEditor li a:active,
+.ulNavEditor li a:focus,
+.ulNavEditor li input[type=submit]:hover,
+.ulNavEditor li input[type=submit]:active,
+.ulNavEditor li input[type=submit]:focus {
+    color: rgba(171,139,101,1);
+}
+
+/*.ulNavEditor li.activeSubNav {
+    background-color: rgb(242, 235, 214) !important;
+}
+
+.inactiveSubNav {
+    background-color: #f8f5ea !important;
+}*/
+
+.ulNavEditor li:nth-child(2) a {
+    background-position: 0 0;
+}
+
+.ulNavEditor li:nth-child(3) a {
+    background-position: 0 -40px;
+}
+
+.ulNavEditor li li:nth-child(1) a {
+    background-position: 0 -80px;
+}
+
+.ulNavEditor li li:nth-child(2) a {
+    background-position: 0 -120px;
+}
+
+.ulNavEditor li li:nth-child(3) a {
+    background-position: 0 -160px;
+}
+
+.ulNavEditor li li:nth-child(4) a {
+    background-position: 0 -200px;
+}
+
+.ulNavEditor li li:nth-child(5) a {
+    background-position: 0 -240px;
+}
+
+.ulNavEditor li li:nth-child(6) a {
+    background-position: 0 -280px;
+}
+
+.ulNavEditor li li:nth-child(7) a {
+    background-position: 0 -320px;
+}
+
+.ulNavEditor li li:nth-child(8) a {
+    background-position: 0 -360px;
+}
+
+.ulNavEditor li ul {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+}
+
+
+/* OVERLAY POPUP WINDOW
+---------------------------------------- */
+
+.overlayBg {
+    background: rgba(0,0,0,.5);
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 90px;
+    left: 0;
+    z-index: 10;
+    display: none;
+}
+
+.overlayContainer {
+    background: #fff;
+    width: 100%;
+    padding: 4%;
+    border-top: 1px solid rgba(171,139,101,.5);
+    border-bottom: 1px solid rgba(171,139,101,.5);
+    /*box-shadow: 0 0 20px rgba(0,0,0,.1);*/
+    position: absolute;
+    top: 90px;
+    left: 0;
+    display: none;  
+    z-index: 11; 
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.overlayClose a {
+    font-size: .875em;
+    line-height: 1.5em;
+    text-align: center;
+    color: #cacece;
+    background: #fff;
+    display: block;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+}
+
+.overlayClose a span {
+    width: 1.5em;
+    height: 1.5em;
+    border: 1px solid #cacece;
+    border-radius: 1em;
+    display: inline-block;
+}
+
+
+
+/******************************************
+ * CUSTOM DRAWING TOOL
+ ******************************************/
+
+textarea {
+    font: 1em/1.5em 'Shanti', Helvetica, Arial, sans-serif;
+}
+
+/******************************************
+ * PRICE CALCULATOR
+ ******************************************/
+
+div.priceCalculatorWrapper .navEditor {
+    margin: -50px 0 0 0;
+}
+
+div.priceCalculatorWrapper .ulNavEditor li a {
+    text-indent: 0;
+    background: transparent;
+}
+
+div.priceCalculatorWrapper .additionalChargesOverlay,
+div.priceCalculatorWrapper .editInvoiceItemOverlay {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    display: none;
+    z-index: 1000;
+}
+
+div.additionalChargesOverlay .content,
+div.editInvoiceItemOverlay .content {
+    position: absolute;
+    height: 500px;
+    width: 400px;
+    background-color: rgb(242, 235, 214);
+    top: 50%;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: -300px;
+    z-index:1005; 
+    box-shadow: -10px 10px 5px #888888;
+}
+
+div.editInvoiceItemOverlay .content {
+    height: 350px;
+    margin-top: -250px;
+}
+
+div.additionalChargesOverlay .closeBar,
+div.editInvoiceItemOverlay .closeBar {
+    display: inline-block;
+    height: 50px;
+    width: 100%;
+    background-color: black;
+}
+
+div.additionalChargesOverlay .overlayClose,
+div.editInvoiceItemOverlay .overlayClose {
+    cursor: pointer;
+    font-size: 1.25em;
+    text-transform: uppercase;
+    text-indent: 30px;
+    line-height: 50px;
+    color: #fff;
+    background: transparent url('../Images/iconsNav.png') no-repeat left top;
+    background-size: 36px 200px;
+    margin: 0 20px;
+    border: 0;
+    float: right;
+    display: block;
+    background-position: 0 -150px;
+    overflow:hidden;
+}
+
+div.additionalChargesOverlay .content h3,
+div.editInvoiceItemOverlay .content h3 {
+    padding: 0 0 0 2em;
+}
+
+div.additionalChargesOverlay .content tr td:first-child,
+div.editInvoiceItemOverlay .content tr td:first-child {
+    text-align:right;
+}
+
+div.additionalChargesOverlay .invalid,
+div.editInvoiceItemOverlay .invalid {
+    border: red solid 1px;
+}
+
+div.additionalChargesOverlay .button.invalid,
+div.editInvoiceItemOverlay .button.invalid {
+    border: none;
+    opacity: 0.5;
+    cursor: default;
+}
+
+div.additionalChargesOverlay .button,
+div.editInvoiceItemOverlay .button {
+    background-color: #000;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    cursor: pointer;
+    padding: 12px 24px;
+    margin: 0 2em;
+}
+
+table.tblPriceCalculator {
+    margin: 0 auto;
+    width: 90%;
+    border-spacing: 0;
+    padding-top:2em;
+}
+
+.tblPriceCalculator td:nth-child(3),
+.tblPriceCalculator td:nth-child(4),
+.tblPriceCalculator td:nth-child(5) {
+    text-align: center;
+}
+
+.tblPriceCalculator thead {
+    color: #fff;
+    background: #000;
+    height: 50px;
+    font-size: 1.25em;
+    text-transform: uppercase;
+    text-align:center;
+    line-height: 50px;
+}
+
+.tblPriceCalculator span {
+    width: 100%;
+}
+
+.tblPriceCalculator tbody tr {    
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: cell;
+    height: 2em;
+}
+
+.tblPriceCalculator .edited {    
+    background-color:#FF9933;
+}
+
+.tblPriceCalculator tbody tr.item:hover {   
+    background-color: rgb(242, 235, 214); 
+    
+}
+
+.tblPriceCalculator tbody tr.item.clicked {    
+    background-color:#dfbf98;
+}
+
+.tblPriceCalculator tbody tr td {
+    margin-right: 2em;
+}
+
+
+/******************************************
+ * CUT SHEETS
+ ******************************************/
+
+ table.CutSheet, td {
+    border: 1px solid black;
+ }
+
+ .CutSheetHeaders{
+     border: 1px solid black;
+     background-color: lightblue;
+ }
+
+ .CutSheetRowOdd {
+     background-color: lightgray;
+ }
+
+ .CutSheetRowEven {
+     background-color: white;
+ }
+/******************************************
+ * GLOBAL FIXES
+ ******************************************/
+ 
+.clear {
+	clear: both;
+}
+
+.clear-fix:after {
+    content: ".";
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
+.clear-right-margin {
+	margin-right: 0;
+}
+
+.align-center {
+    text-align:center;
+}
+
+.align-right {
+    text-align:right;
+}
+
+.maxWidth {
+    width:100%;
+}
+
+.displayNone {
+    display: none;
+}
