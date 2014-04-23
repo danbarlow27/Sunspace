@@ -3962,7 +3962,7 @@ namespace SunspaceDealerDesktop
             }
             
             //Loop for each wall
-            int linearPosition = 0;
+            int linearPosition = 0; //Current wall we're on
             int cheatCounter = 0;
             //If it's a gable, we need to start one element past the normal point to account for the gable post being part of the wall list
             int gableCompensation = 0;
@@ -4074,19 +4074,21 @@ namespace SunspaceDealerDesktop
                                 {
                                     HChannel anHChannel = new HChannel();
                                     anHChannel.ItemType = "HChannel";
-                                    anHChannel.StartHeight = anHChannel.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
                                     anHChannel.Length = Constants.HCHANNEL_LENGTH;
                                     //CHANGEME if driftwood
                                     anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - anHChannel.Length;
+                                    anHChannel.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, anHChannel.FixedLocation, listOfWalls[linearPosition].Length);
+                                    anHChannel.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, anHChannel.FixedLocation + anHChannel.Length, listOfWalls[linearPosition].Length);
                                     linearItems.Add(anHChannel);
                                 }
                                 else
                                 {
                                     BoxHeader aBoxHeader = new BoxHeader();
                                     aBoxHeader.ItemType = "BoxHeader";
-                                    aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
                                     aBoxHeader.Length = Constants.BOXHEADER_LENGTH;
                                     aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - aBoxHeader.Length;
+                                    aBoxHeader.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aBoxHeader.FixedLocation, listOfWalls[linearPosition].Length);
+                                    aBoxHeader.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aBoxHeader.FixedLocation + aBoxHeader.Length, listOfWalls[linearPosition].Length);
                                     linearItems.Add(aBoxHeader);
                                 }
                             }
@@ -4770,7 +4772,7 @@ namespace SunspaceDealerDesktop
                     {
                         listOfWalls[i].LinearItems[j].Sex = "FF";
                     }
-                    else if (listOfWalls[i].LinearItems[j].ItemType == "BoxHeader")
+                    else if (listOfWalls[i].LinearItems[j].ItemType == "BoxHeader" || listOfWalls[i].LinearItems[j].ItemType == "HChannel")
                     {
                         listOfWalls[i].LinearItems[j].Sex = "FF";
                     }
