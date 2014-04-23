@@ -152,35 +152,6 @@ namespace SunspaceDealerDesktop
             #endregion
             #endregion
 
-            //slide4
-            #region Slide 4 pageload
-
-            //ddlInteriorSkin.Items.Add("Choose a skin...");
-            for (int i = 0; i < Constants.INTERIOR_WALL_SKIN_TYPES.Length; i++)
-            {
-                ddlInteriorSkin.Items.Add(Constants.INTERIOR_WALL_SKIN_TYPES[i]);
-            }
-            
-            //ddlExteriorSkin.Items.Add("Choose a skin...");
-            for (int i = 0; i < Constants.EXTERIOR_WALL_SKIN_TYPES.Length; i++)
-            {
-                ddlExteriorSkin.Items.Add(Constants.EXTERIOR_WALL_SKIN_TYPES[i]);
-            }
-
-            //ddlKneewallType.Items.Add("Choose a type...");
-            for (int i = 0; i < Constants.KNEEWALL_TYPES.Length; i++)
-            {
-                ddlKneewallType.Items.Add(Constants.KNEEWALL_TYPES[i]);
-            }
-
-            for (int i = 0; i < Constants.KNEEWALL_GLASS_TINTS.Length; i++)
-            {
-                ddlKneewallTint.Items.Add(Constants.KNEEWALL_GLASS_TINTS[i]);
-            }
-            //Must populate transom dropdown based on model#
-            #endregion
-
-
             ////Set based on preferences
             //#region Preferences
 

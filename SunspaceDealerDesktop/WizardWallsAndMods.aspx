@@ -1,4 +1,4 @@
-﻿<%@ Page Title="New Project - Project Details" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="WizardWallsAndMods.aspx.cs" Inherits="SunspaceDealerDesktop.WizardWallsAndMods" %>
+﻿<%@ Page Title="New Project - Project Details" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="WizardWallsAndMods.aspx.cs" Inherits="SunspaceDealerDesktop.WizardWallsAndMods" EnableEventValidation="false" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script src="Scripts/GlobalFunctions.js"></script>
@@ -56,6 +56,7 @@
         function createDoorObject(wallNumber, type) {
             //Object variable to hold the current door being built
             var framedDoor;
+            var firstProposed = true;
 
             //Switch case to instantiate, object variable to the appropriate type
             switch (type) {
@@ -411,6 +412,13 @@
                 else {
                     framedDoor.position = walls[wallNumber].leftFiller;
                 }
+
+                if (firstProposed == true)
+                {
+                    firstProposed = false;
+                    framedDoor.position += 1;
+                    console.log("First Proposed Wall");
+                }
             }
             else if (framedDoor.position === "Right") {
                 if (framedDoor.boxHeader == "Right" || framedDoor.boxHeader == "Both") {
@@ -419,10 +427,18 @@
                 else {
                     framedDoor.position = walls[wallNumber].length - framedDoor.mwidth - walls[wallNumber].rightFiller;
                 }
+
+                console.log("Checking for last wall: does " + wallNumber + " equal " + '<%=strWalls.Count()%>' + "?")
+                if (wallNumber == '<%=strWalls.Count()%>')
+                {
+                    framedDoor.position -= 1;
+                    console.log("Last Wall");
+                }
             }
             else if (framedDoor.position === "Center") {
                 framedDoor.position = validateDecimal(walls[wallNumber].length / 2 - framedDoor.mwidth / 2);
             }
+
             //Return framedDoor object
             console.log(framedDoor.position);
             return framedDoor;
@@ -2449,6 +2465,187 @@
             document.getElementById("<%=hidChain.ClientID%>").value = $('#MainContent_ddlChain').val();
         }
 
+
+        //This function populates and changes the values of the dropdown lists containing framing colours and skins on slide 4
+        //It is called for initial population
+        function newProjectChangeColours() {
+            modelNumber = "<%=Session["model"]%>";
+            ddlFramingColour = document.getElementById("<%=ddlFramingColour.ClientID%>");
+            ddlFramingColour.options.length = 0;
+
+            //var blankOption = new Option("Choose a colour...", "Choose a colour...");
+            //ddlFramingColour.options.add(blankOption);
+
+            //Depending on model number we'll have different colours, so we use the corresponding serialized variable for that model's colours
+            //retrieving it, and adding its values to the dropdowns
+            switch (modelNumber.value) {
+                case 'M100':
+                    var anArray =  <%= model100FramingColoursJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
+                    }
+                    break;
+
+                case 'M200':
+                    var anArray =  <%= model200FramingColoursJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
+                    }                    
+                    break;
+
+                case 'M300':
+                    var anArray =  <%= model300FramingColoursJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
+                    }                    
+                    break;
+
+                case 'M400':
+                    var anArray =  <%= model400FramingColoursJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
+                    }   
+                    break;
+            }
+            
+
+            //As this is on the same slide as kneewall and transom, we still need a way to populate those.
+            //I didn't want to tack that on to this function, so I just made a new one and called it from here.
+            //One function, one purpose.
+            newProjectPopulateKneewallTransom();
+            newProjectTransomStyleChanged();
+            return true;
+        }
+
+        //this function is called whenever frame colour is changed, and will update the remaining dropdowns for interior/exterior colours and skins
+        //corresponding to the chosen frame colour.
+        function newProjectCascadeColours() {
+            ddlFramingColour = document.getElementById("<%= ddlFramingColour.ClientID %>");
+            
+            if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "White")
+            {
+                $("#<%=ddlInteriorSkin.ClientID%>").val('White Aluminum Stucco');
+                $("#<%=ddlExteriorSkin.ClientID%>").val('White Aluminum Stucco');
+            }
+            else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Driftwood")
+            {
+                $("#<%=ddlInteriorSkin.ClientID%>").val('Driftwood Aluminum Stucco');
+                $("#<%=ddlExteriorSkin.ClientID%>").val('Driftwood Aluminum Stucco');
+            }
+            else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Bronze")
+            {
+                $("#<%=ddlInteriorSkin.ClientID%>").val('Bronze Aluminum Stucco');
+                $("#<%=ddlExteriorSkin.ClientID%>").val('Bronze Aluminum Stucco');
+            }
+
+            //now that colours have cascaded we still need to validate the slide
+            newProjectCheckQuestion4();
+        }
+        //This function is used for initial population of the transom and kneewall type dropdowns
+        <%--function newProjectPopulateKneewallTransom() {            
+            modelNumber = "<%=Session["model"]%>";
+            ddlTransomTypes = document.getElementById("<%=ddlTransomType.ClientID%>");
+            ddlTransomTypes.options.length = 0;
+            
+            //var blankOption = new Option("Choose a type...", "Choose a type...");
+            //ddlTransomTypes.options.add(blankOption);
+
+            //Like above, types are based on model, and will get the proper variable based on model
+            switch (modelNumber.value) {
+                case 'M100':
+                    var anArray = <%= model100TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }
+                    break;
+
+                case 'M200':
+                    var anArray =  <%= model200TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }                    
+                    break;
+
+                case 'M300':
+                    var anArray =  <%= model300TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }                    
+                    break;
+
+                case 'M400':
+                    var anArray =  <%= model400TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }   
+                    break;
+            }
+            return true;
+        }--%>
+
+        function newProjectTransomStyleChanged()
+        {
+            console.log("this one");
+            ddlTransomTypes = document.getElementById("<%=ddlTransomType.ClientID%>");
+            ddlTransomTints = document.getElementById("<%=ddlTransomTint.ClientID%>");
+            ddlTransomTints.options.length = 0;
+            
+            //var blankOption = new Option("Choose a type...", "Choose a type...");
+            //ddlTransomTypes.options.add(blankOption);
+
+            //Like above, types are based on model, and will get the proper variable based on model
+            switch (ddlTransomTypes.value) {
+                case 'Glass':
+                    var anArray = <%= transomGlassTints %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTints.options.add(anOption);
+                    }
+                    break;
+
+                case 'Vinyl':
+                    var anArray =  <%= vinylTints %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTints.options.add(anOption);
+                    }                    
+                    break;
+
+                case 'Solid Wall':
+                    ddlTransomTints.options.add(new Option("N/A", "N/A"));
+                    break;
+            }
+
+            newProjectCheckQuestion4();
+        }
     </script>
     <%-- End hidden div populating scripts --%>
 
@@ -2547,7 +2744,7 @@
                         </div> <%-- end .toggleContent --%>
 
                 <%-- button to go to the next question --%>
-                <input type="button" id="btnQuestion2" onclick="checkQuestion2(gable); determineStartAndEndHeightOfEachWall(gable); loadWallData();" class="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" value="Next Question" disabled/>
+                <input type="button" id="btnQuestion2" onclick="checkQuestion2(gable); determineStartAndEndHeightOfEachWall(gable); loadWallData(); newProjectPopulateKneewallTransom();" class="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" value="Next Question" disabled/>
 
             </div> 
             <%-- end #slide2 --%>
