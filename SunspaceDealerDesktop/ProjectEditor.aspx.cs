@@ -19,7 +19,7 @@ namespace SunspaceDealerDesktop
         protected int wallCount = 0;
         protected int floorCount = 0;
         protected int roofCount = 0;
-        protected int projectId = 17; //82 84 86 87 88 89 97 get it from the session (project_id)
+        protected int projectId = 88; //82 84 86 87 88 89 97 98 100 101 102 get it from the session (project_id)
 
         protected void Page_Load(object sender, EventArgs e)
         {
