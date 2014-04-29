@@ -14,7 +14,7 @@ namespace SunspaceDealerDesktop
         protected void Page_Load(object sender, EventArgs e)
         {
             //listOfWalls = (List<Wall>)Session["listOfWalls"];
-
+            //.CssClass = "removeElement";
             Table aTable;
             TableRow aTableRow;
             TableHeaderCell aTableHeaderCell;
@@ -617,7 +617,7 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region Sash Cut Sheet
-            ddlCutSheets.Items.Add("Sash Cut sheet");
+            ddlCutSheets.Items.Add("Sash Cut Sheet");
             aTable = new Table();
             aTableRow = new TableRow();
             aTableHeaderCell = new TableHeaderCell();
@@ -842,7 +842,7 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region Frame Cut Sheet
-            ddlCutSheets.Items.Add("Frame Cut sheet");
+            ddlCutSheets.Items.Add("Frame Cut Sheet");
             aTable = new Table();
             aTableRow = new TableRow();
             aTableHeaderCell = new TableHeaderCell();

@@ -4282,7 +4282,7 @@ namespace SunspaceDealerDesktop
                             //The space left is the total height of the wall at the highest point of the mod minus the current built mod's space (aMod.StartHeight which equals aMod.endHeight at this point
                             //Minus the space the door punch takes up.
                             float sendableHeight = Math.Max(modStartHeight, modEndHeight);
-                            float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows((sendableHeight - modularItems[0].FStartHeight - .25f), (string)Session["newProjectTransomType"]);
+                            float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows((sendableHeight - modularItems[0].FStartHeight - .25f), ddlTransomType.SelectedValue);
                             if (modStartHeight == modEndHeight)
                             {
                                 //rectangular window
@@ -4296,7 +4296,8 @@ namespace SunspaceDealerDesktop
                                     aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                     aWindow.ItemType = "Window";
                                     aWindow.Width = aMod.Length - 2;
-                                    aWindow.WindowStyle = (string)Session["newProjectTransomType"];
+                                    
+                                    aWindow.WindowStyle = ddlTransomType.SelectedValue;
                                     aWindow.SpreaderBar = -1;
 
                                     //Add remaining area to first window

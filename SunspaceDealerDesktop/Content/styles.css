@@ -1230,3 +1230,6 @@ table.tblPriceCalculator {
 .displayNone {
     display: none;
 }
+.hideElement {
+    visibility: hidden;
+}
