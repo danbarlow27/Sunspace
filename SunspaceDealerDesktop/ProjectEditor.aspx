@@ -19,6 +19,11 @@
                 </ul>
             </li>
         </ul>
+        <ul class="ulNavEditor float-right">
+            <!-- Note: these 2 hyperlinks have javascript functions attached to their click events, see the last 2 lines of Page_Load in codebehind -->
+            <li class="float-right"><asp:HyperLink ID="lnkUpdateSunroom" runat="server" ToolTip="Click to update the sunroom temporarily/locally">Update</asp:HyperLink></li>
+            <li class="float-right"><asp:HyperLink ID="lnkSubmitSunroom" runat="server" ToolTip="Click to submit the sunroom to the database to save it permanently">Submit</asp:HyperLink></li>
+        </ul>
     </nav>
 </asp:Content>
 
@@ -31,8 +36,11 @@
             
             <asp:PlaceHolder ID="ModOptions" runat="server"></asp:PlaceHolder>                    
 
-            <%--<div class="toggleContent">--%>            <%--<ul>--%>                <%--<li>--%>                <%--<asp:RadioButton ID="radSunroomModel100" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />--%>                <%--<asp:Label ID="lblSunroomModel100Radio" AssociatedControlID="radSunroomModel100" runat="server"></asp:Label>--%>           
-                <%--<asp:Label ID="lblSunroomModel100" AssociatedControlID="radSunroomModel100" runat="server" Text="Model 100"></asp:Label>--%>                    <%--</li>--%>                        <%--<li>--%>                            <%--<asp:RadioButton ID="radSunroomModel200" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />--%>                            <%--<asp:Label ID="lblSunroomModel200Radio" AssociatedControlID="radSunroomModel200" runat="server"></asp:Label>--%>                            <%--<asp:Label ID="lblSunroomModel200" AssociatedControlID="radSunroomModel200" runat="server" Text="Model 200"></asp:Label>--%>                        <%--</li>--%>                        <%--<li>
+            <%--<div class="toggleContent">--%>            
+                <%--<ul>--%>                
+                    <%--<li>--%>                
+                        <%--<asp:RadioButton ID="radSunroomModel100" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />--%>                <%--<asp:Label ID="lblSunroomModel100Radio" AssociatedControlID="radSunroomModel100" runat="server"></asp:Label>--%>           
+                            <%--<asp:Label ID="lblSunroomModel100" AssociatedControlID="radSunroomModel100" runat="server" Text="Model 100"></asp:Label>--%>                    <%--</li>--%>                        <%--<li>--%>                            <%--<asp:RadioButton ID="radSunroomModel200" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />--%>                            <%--<asp:Label ID="lblSunroomModel200Radio" AssociatedControlID="radSunroomModel200" runat="server"></asp:Label>--%>                            <%--<asp:Label ID="lblSunroomModel200" AssociatedControlID="radSunroomModel200" runat="server" Text="Model 200"></asp:Label>--%>                        <%--</li>--%>                        <%--<li>
                             <%--<asp:RadioButton ID="radSunroomModel300" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />--%>                            <%--<asp:Label ID="lblSunroomModel300Radio" AssociatedControlID="radSunroomModel300" runat="server"></asp:Label>--%>                            <%--<asp:Label ID="lblSunroomModel300" AssociatedControlID="radSunroomModel300" runat="server" Text="Model 300"></asp:Label>--%>                            <%--</li>--%>                        <%--<li>
                             <%--<asp:RadioButton ID="radSunroomModel400" OnClick="newProjectCheckQuestion3()" GroupName="sunroomModel" runat="server" />--%>                        <%--<asp:Label ID="lblSunroomModel400Radio" AssociatedControlID="radSunroomModel400" runat="server"></asp:Label>--%>                            <%--<asp:Label ID="lblSunroomModel400" AssociatedControlID="radSunroomModel400" runat="server" Text="Model 400"></asp:Label>--%>                            <%--</li>--%>                        <%--</ul>--%>                        <%--</div>--%>                            <%--</li>--%>                            <%--<asp:Label ID="lblError" runat="server"></asp:Label>--%>
                         <%--</li>--%>
@@ -77,9 +85,6 @@
     </style>
 
     <script>
-        function toggle() {
-            $('.overlayContainer').slideToggle();
-        }
 
         var listOfWalls = <%= hidJsonObjects.Value %>;
 
@@ -126,7 +131,7 @@
         */
         function drawRoomLayout() {
 
-            drawRect(canvas, MAX_CANVAS_WIDTH, scale(10), -CENTRE_X, -CENTRE_Y, "existingWall", "#a8a8a8",1,"black","$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('Existing Wall'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', '#a8a8a8'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')");   
+            drawRect(canvas, MAX_CANVAS_WIDTH, scale(10), -CENTRE_X, -CENTRE_Y, "existingWall", "#a8a8a8",1,"black","$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('Existing Wall'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', '#a8a8a8'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");   
             var text = "";
 
             if (antiProjection > projection) {
@@ -144,7 +149,7 @@
 
                         for (var j = listOfWalls[i].LinearItems.length - 1; j >= 0; j--) {
 
-                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var id = "div_"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
                             var title = listOfWalls[i].LinearItems[j].ItemType;
                             var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
 
@@ -179,7 +184,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(2), scale(length), -scale(1), 0, id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')");
+                            drawRect(gLayout, scale(2), scale(length), -scale(1), 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate(0,"+scale(length)+")"); //bottom right coordinates of the linear item
                         }
                     }
@@ -188,7 +193,7 @@
 
                         for (var j = listOfWalls[i].LinearItems.length - 1; j >= 0; j--) {
 
-                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var id = "div_"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
                             var title = listOfWalls[i].LinearItems[j].ItemType;
                             var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
 
@@ -222,7 +227,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(2), scale(length), -scale(1), -scale(length), id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')");
+                            drawRect(gLayout, scale(2), scale(length), -scale(1), -scale(length), "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate(0,"+(-(scale(length)))+")"); //bottom right coordinates of the linear item
                         }
                     }
@@ -230,7 +235,7 @@
 
                         for (var j = listOfWalls[i].LinearItems.length - 1; j >= 0; j--) {
 
-                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var id = "div_"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
                             var title = listOfWalls[i].LinearItems[j].ItemType;
                             var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
 
@@ -264,7 +269,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(length), scale(2), (-(scale(length))), 0, id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')");
+                            drawRect(gLayout, scale(length), scale(2), (-(scale(length))), 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate("+(-(scale(length)))+",0)"); //bottom right coordinates of the linear item
                         }
                     }
@@ -272,7 +277,7 @@
 
                         for (var j = listOfWalls[i].LinearItems.length - 1; j >= 0; j--) {
 
-                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var id = "div_"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
                             var title = listOfWalls[i].LinearItems[j].ItemType;
                             var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
 
@@ -306,7 +311,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(2), scale(length), 0, 0, id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')");
+                            drawRect(gLayout, scale(2), scale(length), 0, 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate(0,"+scale(length)+")"); //bottom right coordinates of the linear item
                         }
                     }
@@ -325,7 +330,7 @@
 
                         for (var j = 0; j < listOfWalls[i].LinearItems.length; j++) {
 
-                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var id = "div_"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
                             var title = listOfWalls[i].LinearItems[j].ItemType;
                             var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
 
@@ -362,7 +367,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(2), scale(length), -scale(1), 0, id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')");
+                            drawRect(gLayout, scale(2), scale(length), -scale(1), 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate(0,"+scale(length)+")"); //bottom right coordinates of the linear item
                         }
                     }
@@ -371,7 +376,7 @@
 
                         for (var j = 0; j < listOfWalls[i].LinearItems.length; j++) {
 
-                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var id = "div_"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
                             var title = listOfWalls[i].LinearItems[j].ItemType;
                             var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
 
@@ -405,7 +410,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(2), scale(length), -scale(1), -scale(length), id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')");
+                            drawRect(gLayout, scale(2), scale(length), -scale(1), -scale(length), "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate(0,"+(-(scale(length)))+")"); //bottom right coordinates of the linear item
                         }
                     }
@@ -413,7 +418,7 @@
 
                         for (var j = 0; j < listOfWalls[i].LinearItems.length; j++) {
 
-                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var id = "div_"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
                             var title = listOfWalls[i].LinearItems[j].ItemType;
                             var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
 
@@ -447,7 +452,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(length), scale(2), 0, 0, id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')");
+                            drawRect(gLayout, scale(length), scale(2), 0, 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate("+((scale(length)))+",0)"); //bottom right coordinates of the linear item
                         }
                     }
@@ -455,7 +460,7 @@
 
                         for (var j = 0; j < listOfWalls[i].LinearItems.length; j++) {
 
-                            var id = "layout"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
+                            var id = "div_"+listOfWalls[i].LinearItems[j].LinearIndex; //id to be given to the polygon
                             var title = listOfWalls[i].LinearItems[j].ItemType;
                             var length = listOfWalls[i].LinearItems[j].Length; //length of the linear item
 
@@ -489,7 +494,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(length), scale(2), 0, 0, id, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')");
+                            drawRect(gLayout, scale(length), scale(2), 0, 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate(0,"+scale(length)+")"); //bottom right coordinates of the linear item
                         }
                     }
@@ -508,7 +513,7 @@
             var startHeight = listOfWalls[wallIndex].StartHeight - 0.5; //wall start height
             var endHeight = listOfWalls[wallIndex].EndHeight - 0.5;  //wall end height
 
-            var id = ""; //id to be given to the wall
+            var id = "wall_" + listOfWalls[wallIndex].FirstItemIndex; //id to be given to the wall
             var title = "Wall " + wallIndex;
 
             var g = gWall.append("g").attr("transform", "translate(" + (-1 * scale(parseFloat(length/2))) + "," + (scale(parseFloat(startHeight/2))) + ")");
@@ -524,7 +529,7 @@
 
             var points = [topRight, topLeft, bottomLeft, bottomRight, topReceiverRight, topReceiverLeft, bottomReceiverLeft, bottomReceiverRight, bottomRight]; //put all the coordinates together in an array
 
-            drawPolygon(points, id, title, g, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('Top & Bottom Receivers'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+            drawPolygon(points, "", title, g, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('Top & Bottom Receivers'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
             
             drawAxes();
           
@@ -618,7 +623,7 @@
 
             for (var i = 0; i < listOfWalls[wallIndex].LinearItems.length; i++) {
 
-                var id = "poly" + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
+                var id = "div_" + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
                 var title = listOfWalls[wallIndex].LinearItems[i].ItemType;
                 var length = listOfWalls[wallIndex].LinearItems[i].Length; //length of the linear item
                 var startHeight = listOfWalls[wallIndex].LinearItems[i].StartHeight - 0.5; //start height of the linear item
@@ -658,7 +663,7 @@
 
                         points = [bottomLeft,topLeft,insideTopLeft,insideBottomLeft,insideBottomRight,insideTopRight,topRight,bottomRight]; //put all the coordinates together in an array
                         
-                        drawPolygon(points, id, title, gLi, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+listOfWalls[wallIndex].LinearItems[i].ModularItems[listOfWalls[wallIndex].LinearItems[i].ModularItems.length - 2].ItemType+ " " + listOfWalls[wallIndex].LinearItems[i].ItemType + "'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(points, "", title, gLi, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+listOfWalls[wallIndex].LinearItems[i].ModularItems[listOfWalls[wallIndex].LinearItems[i].ModularItems.length - 2].ItemType+ " " + listOfWalls[wallIndex].LinearItems[i].ItemType + "'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                         
                         drawModularItems(modularItems, (parseFloat(x) + parseFloat(scale(1))), y, listOfWalls[wallIndex].LinearItems[i].LinearIndex, i);
 
@@ -683,7 +688,7 @@
 
                         points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(points, id, title, gLi, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+listOfWalls[wallIndex].LinearItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(points, "", title, gLi, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+listOfWalls[wallIndex].LinearItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                         //drawPolygon(points, "filler", title, gLi); //draw the polygon to represent the wall with the given coordinates and id
 
                         x = parseFloat(x) + scale(parseFloat(length));
@@ -726,7 +731,7 @@
 
             for (var i = 0; i < modularItems.length; i++) { 
 
-                var id = "";// + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
+                var id = "div_" + linearIndex + modularItems[i].ModuleIndex;// + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
                 var title = modularItems[i].ItemType;
                 var length = modularItems[i].FLength; ; //length of the modular item
                 var startHeight = modularItems[i].FStartHeight; //start height of the modular item
@@ -752,7 +757,7 @@
 
                         var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(points, id, title, gMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(points, "", title, gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                         var ggMod = gMod.append("g");
 
@@ -763,7 +768,7 @@
 
                         var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(points, id, title, ggMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(points, "", title, ggMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                         if (i < (parseFloat(modularItems.length) - 1)) {
 
@@ -776,7 +781,7 @@
                         break;
                     case "transom":
                     case "window":
-                        var id = "";// + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
+                        
                         var title = modularItems[i].ItemType;
                         var length = modularItems[i].FLength; ; //length of the modular item
                         var startHeight = modularItems[i].FStartHeight; //start height of the modular item
@@ -791,8 +796,8 @@
 
                         var outsidePoints = [outsideTopLeft, outsideTopRight, outsideBottomRight, outsideBottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(outsidePoints, id, title, gMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
-                        //drawPolygon(outsidePoints, id, title, gMod);//, "white", 1, "black");
+                        drawPolygon(outsidePoints, "", title, gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                        //drawPolygon(outsidePoints, "", title, gMod);//, "white", 1, "black");
                         
                         gMod = gMod.append("g");
 
@@ -803,7 +808,7 @@
 
                         var insidePoints = [insideTopLeft, insideTopRight, insideBottomRight, insideBottomLeft]; //put all the coordinates together in an array
 
-                        drawWindowDetails(modularItems[i], insidePoints, modularItems.length, linearIndex, relativeLinearIndex);
+                        drawWindowDetails(modularItems[i], insidePoints, modularItems.length, linearIndex, relativeLinearIndex, id);
 
                         if (i == 0) {
 
@@ -822,7 +827,7 @@
                         break;
                     case "door":
 
-                        var id = "";// + listOfWalls[wallIndex].LinearItems[i].LinearIndex; //id to be given to the polygon
+                       
                         var title = modularItems[i].ItemType;
                         var length = modularItems[i].FLength; ; //length of the modular item
                         var leftHeight = modularItems[i].FStartHeight; //start height of the modular item
@@ -839,7 +844,7 @@
 
                         var insidePoints = [insideTopLeft, insideTopRight, insideBottomRight, insideBottomLeft]; //put all the coordinates together in an array
 
-                        drawDoorDetails(modularItems[i], insidePoints, modularItems.length, linearIndex, relativeLinearIndex);
+                        drawDoorDetails(modularItems[i], insidePoints, modularItems.length, linearIndex, relativeLinearIndex, id);
 
                         if (i == 0) {
 
@@ -863,7 +868,7 @@
                         break;
                 }
 
-                drawPolygon(insidePoints, id, title, gMod); //draw the polygon to represent the wall with the given coordinates and id
+                drawPolygon(insidePoints, "", title, gMod); //draw the polygon to represent the wall with the given coordinates and id
 
                 y2 = parseFloat(y2) - scale(parseFloat(endHeight));
 
@@ -880,12 +885,13 @@
         @param transomIndex - modular index of the transom
         @param linearIndex - index of the linear item which contains this window
         @param relativeLinearIndex - index of the linear item relative to the wall drawn
+        @param id - id to be used for the onclick event to display the appropriate update form 
         */
-        function drawWindowDetails(window, frame, transomIndex, linearIndex, relativeLinearIndex) {
+        function drawWindowDetails(window, frame, transomIndex, linearIndex, relativeLinearIndex, id) {
 
             var pt1, pt2, topLeft, topRight, bottomLeft, bottomRight, leftSlider, rightSlider;
 
-            drawPolygon(frame, "", "", gMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+            drawPolygon(frame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
             //drawPolygon(frame, "", "", gMod); //draw the polygon to represent the wall with the given coordinates and id
             gWindow = gMod.append("g").attr("transform", "translate("+ frame[3].x + "," + frame[3].y + ")");
 
@@ -907,7 +913,7 @@
 
                     leftSlider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                    drawPolygon(leftSlider, "", "", gWindow, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Left Slider'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(leftSlider, "", "", gWindow, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Left Slider'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     if (window.SpreaderBar !== 0) {
                         gVent = gWindow.append("g");
@@ -925,7 +931,7 @@
 
                     rightSlider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                    drawPolygon(rightSlider, "", "", gWindow, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Right Slider'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(rightSlider, "", "", gWindow, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Right Slider'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     if (window.SpreaderBar !== 0) {
                         gVent = gWindow.append("g");
@@ -955,7 +961,7 @@
 
                         var slider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(slider, "", "", gVent, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Vent "+ (parseFloat(i) + parseFloat(1)) +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(slider, "", "", gVent, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Vent "+ (parseFloat(i) + parseFloat(1)) +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                         //drawPolygon(slider, "", "", gVent); //draw the polygon to represent the wall with the given coordinates and id
 
                         if (window.SpreaderBar !== 0) {
@@ -989,7 +995,7 @@
             }        
 
             if (window.ScreenType.toLowerCase() != "no screen" && window.ScreenType != "noscreen" && window.ScreenType != "" && typeof window.ScreenType !== 'undefined') 
-                drawScreen(gWindow, frame, window.ScreenType); //draw screen lines
+                drawScreen(gWindow, frame, window.ScreenType, id); //draw screen lines
 
             if (window.ModuleIndex != 0 && window.ModuleIndex != (transomIndex - 1)) {
                 var text, width, height;
@@ -1016,8 +1022,9 @@
         @param transomIndex - modular index of the transom
         @param linearIndex - index of the linear item which contains this door
         @param relativeLinearIndex - index of the linear item relative to the wall drawn
+        @param id - id to be used for the onclick event to display the appropriate update form 
         */
-        function drawDoorDetails(door, frame, transomIndex, linearIndex, relativeLinearIndex) {
+        function drawDoorDetails(door, frame, transomIndex, linearIndex, relativeLinearIndex, id) {
 
             var pt1, pt2, topLeft, topRight, bottomLeft, bottomRight, leftSlider, rightSlider;
 
@@ -1028,8 +1035,8 @@
             
             var doorDoorFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-            drawPolygon(doorDoorFrame, "", "", gMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
-            drawPolygon(frame, "", "", gMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+            drawPolygon(doorDoorFrame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+            drawPolygon(frame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
             
             gDoor = gMod.append("g").attr("transform", "translate("+ frame[3].x + "," + frame[3].y + ")");
 
@@ -1044,7 +1051,7 @@
                     var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
                     gMod = gMod.append("g");
-                    drawPolygon(doorWindowFrame, "", "", gMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(doorWindowFrame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     var r = scale(1.25);
                     var cx = (door.Hinge === "R") ? parseFloat(frame[0].x) + scale(parseFloat(1.75)) : parseFloat(frame[1].x) - scale(parseFloat(1.75));
@@ -1052,7 +1059,7 @@
 
                     var ggMod = gMod.append("g");
                     
-                    drawCircle(ggMod, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawCircle(ggMod, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     //////////////// DOOR WINDOW DETAILS
 
@@ -1069,7 +1076,7 @@
 
                         doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawScreen(gMod, doorWindowFrame, door.ScreenType, true);
+                        drawScreen(gMod, doorWindowFrame, door.ScreenType, id, true);
                     }
                     break;
                 case "french": case "frenchdoor": case "french door":
@@ -1082,7 +1089,7 @@
                     var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
                     var gDoorFrame = gMod.append("g");
-                    drawPolygon(doorWindowFrame, "", "", gDoorFrame, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(doorWindowFrame, "", "", gDoorFrame, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                     
                     ///////////////END LEFT DOOR
 
@@ -1096,7 +1103,7 @@
                     var doorWindowFrame1 = [topLeft1, topRight1, bottomRight1, bottomLeft1]; //put all the coordinates together in an array
 
                     var gDoorWindow = gMod.append("g");
-                    drawPolygon(doorWindowFrame1, "", "", gDoorWindow, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(doorWindowFrame1, "", "", gDoorWindow, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     ///////////END LEFT DOOR WINDOW
 
@@ -1108,7 +1115,7 @@
 
                     var gDoorknob = gMod.append("g");
                     
-                    drawCircle(gDoorknob, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawCircle(gDoorknob, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     /////////////END LEFT DOORKNOB
 
@@ -1129,7 +1136,7 @@
 
                         doorWindowFrame1 = [topLeft1, topRight1, bottomRight1, bottomLeft1]; //put all the coordinates together in an array
 
-                        drawScreen(gMod, doorWindowFrame1, door.ScreenType, true);
+                        drawScreen(gMod, doorWindowFrame1, door.ScreenType, id, true);
                     }
 
                     //////////////////END LEFT DOOR SCREEN
@@ -1143,7 +1150,7 @@
                     var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
                     gggMod = gDoorFrame.append("g");
-                    drawPolygon(doorWindowFrame, "", "", gggMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(doorWindowFrame, "", "", gggMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                     
                     ///////////////END RIGHT DOOR
                     
@@ -1157,7 +1164,7 @@
                     var doorWindowFrame1 = [topLeft1, topRight1, bottomRight1, bottomLeft1]; //put all the coordinates together in an array
 
                     ggMod = gDoorWindow.append("g");
-                    drawPolygon(doorWindowFrame1, "", "", ggMod, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID%>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(doorWindowFrame1, "", "", ggMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID%>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     ///////////END RIGHT DOOR WINDOW
 
@@ -1167,7 +1174,7 @@
                     var cx = parseFloat(frame[0].x) + scale(parseFloat(1.75)) + scale(parseFloat(door.FLength/2)) - scale(parseFloat(0.25));
                     var cy = -scale(door.FEndHeight / 2);
 
-                    drawCircle(gDoorknob, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawCircle(gDoorknob, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                 
                     ////////////END RIGHT DOORKNOB
 
@@ -1188,7 +1195,7 @@
 
                         doorWindowFrame1 = [topLeft1, topRight1, bottomRight1, bottomLeft1]; //put all the coordinates together in an array
 
-                        drawScreen(gMod, doorWindowFrame1, door.ScreenType, true);
+                        drawScreen(gMod, doorWindowFrame1, door.ScreenType, id, true);
                     }
 
                     /////////////END RIGHT DOOR SCREEN
@@ -1224,14 +1231,14 @@
                     for (var i = frame[0].x + scale(parseFloat(3.5)); i < frame[1].x - scale(1) - scale(parseFloat(3.5)); i += xIncrement) {
                         pt1 = { "x": i, "y": 0 }; //line left coordinates
                         pt2 = { "x": i, "y":  -(frame[1].y + 1) - scale(20) }; //line left coordinates
-                        drawLine(pt1, pt2, gDoorWindowDetails, 1, "black", 1);//, "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')");
+                        drawLine(pt1, pt2, gDoorWindowDetails, 1, "black", 1);//, "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
                     }
 
                     //horizontal lines
                     for (var i = parseFloat(frame[1].y) + scale(parseFloat(50)) - scale(parseFloat(door.Kickplate)); i < frame[2].y + scale(1) + parseFloat(0.5) + scale(parseFloat(20)); i += (parseFloat(yIncrement) + parseFloat(2))) {
                         pt1 = { "x": (frame[0].x - scale(4) - 1), "y": -i }; //line left coordinates
                         pt2 = { "x": (frame[1].x - scale(4) - 1), "y": -i }; //line left coordinates
-                        drawLine(pt1, pt2, gDoorWindowDetails, 1, "black", 1);//, "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')");
+                        drawLine(pt1, pt2, gDoorWindowDetails, 1, "black", 1);//, "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
                     }
 
                     break;
@@ -1259,7 +1266,7 @@
 
                         var slider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(slider, "", "", gVent, "white", 1, "black", "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Vent "+ (parseFloat(i) + parseFloat(1)) +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')"); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(slider, "", "", gVent, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Vent "+ (parseFloat(i) + parseFloat(1)) +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                         
                         if (window.SpreaderBar !== 0) {
 
@@ -1305,7 +1312,7 @@
         @param type - screen type
         @param door - if its a door window (hot fix)
         */
-        function drawScreen(g, frame, type, door) {
+        function drawScreen(g, frame, type, id, door) {
 
             door = typeof door !== 'undefined' ? door : false;
 
@@ -1318,14 +1325,14 @@
             for (var i = frame[0].x; i < frame[1].x - scale(1); i += scale(0.5)) {
                 pt1 = { "x": i, "y": -1 - yBottom }; //line left coordinates
                 pt2 = { "x": i, "y":  (frame[1].y + scale(1) + 1) }; //line left coordinates
-                drawLine(pt1, pt2, gScreen, 1, "black", 0.05, "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')");
+                drawLine(pt1, pt2, gScreen, 1, "black", 0.05, "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
             }
 
             //Draws horizontal lines of the screen onto the window
             for (var i = frame[1].y + scale(2); i < frame[2].y + scale(1); i += scale(0.5)) {
                 pt1 = { "x": (frame[0].x - scale(1) + 1), "y": i }; //line left coordinates
                 pt2 = { "x": (frame[1].x - scale(1) - 1), "y": i }; //line left coordinates
-                drawLine(pt1, pt2, gScreen, 1, "black", 0.05, "$(this).css('fill', 'cyan'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "alert('hello world')");
+                drawLine(pt1, pt2, gScreen, 1, "black", 0.05, "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
             }
         }
 
@@ -1598,10 +1605,19 @@
 
             if ($("#wall"))
                 d3.selectAll("#wall").remove(); //remove existing walls
-            
-            //hide all the li tags
-            for (var i = 0; i < listOfWalls[listOfWalls.length - 1].LastItemIndex; i++) 
-                $("#li"+i).css("display", "none");
+
+            //hide all the li tags for each wall and each linear item and each modular item
+            for (var i = 0; i < listOfWalls.length; i++) { 
+                $("#wall"+listOfWalls[i].FirstItemIndex).css("display", "none");
+                for (var j = 0; j < listOfWalls[i].LinearItems.length; j++) {
+                    $("#li"+listOfWalls[i].LinearItems[j].LinearIndex).css("display", "none");
+                    if (typeof listOfWalls[i].LinearItems[j].ModularItems !== 'undefined') {
+                        for (var k = 0; k < listOfWalls[i].LinearItems[j].ModularItems.length; k++) {
+                            $("#mod"+listOfWalls[i].LinearItems[j].LinearIndex+k).css("display", "none");
+                        }
+                    }
+                }
+            }
             
             if (value != "-1") {
 
@@ -1612,10 +1628,28 @@
                     d3.selectAll("#layout").remove(); //remove room layout drawing
                 
 
-                //show only the appropriate li tags
-                for (var i = listOfWalls[value].FirstItemIndex; i <= listOfWalls[value].LastItemIndex; i++) 
-                    $("#li"+i).css("display", "block");
-            
+                //show the appropriate wall li wall tag
+                $("#wall"+listOfWalls[value].FirstItemIndex).css("display", "block");
+                ////show the appropriate wall li tag for the linear items and modular items of a selected wall
+                //for (var i = 0; i < listOfWalls[value].LinearItems.length; i++) {
+                //    $("#li"+listOfWalls[value].LinearItems[i].LinearIndex).css("display", "none");
+                //    if (typeof listOfWalls[value].LinearItems[i].ModularItems !== 'undefined') {
+                //        $("#li"+listOfWalls[value].LinearItems[i].LinearIndex).css("background-color", "#EBC79E");
+                //        for (var j = 0; j < listOfWalls[value].LinearItems[i].ModularItems.length; j++) {
+                //            $("#mod"+listOfWalls[value].LinearItems[i].LinearIndex+j).css("display", "none");
+                //        }
+                //    }
+                //}
+
+                for (var i = 0; i < listOfWalls[value].LinearItems.length; i++) {
+                    $("#li"+listOfWalls[value].LinearItems[i].LinearIndex).css("display", "block");
+                    if (typeof listOfWalls[value].LinearItems[i].ModularItems !== 'undefined') {
+                        $("#li"+listOfWalls[value].LinearItems[i].LinearIndex).css("background-color", "#EBC79E");
+                        for (var j = 0; j < listOfWalls[value].LinearItems[i].ModularItems.length; j++) {
+                            $("#mod"+listOfWalls[value].LinearItems[i].LinearIndex+j).css("display", "block");
+                        }
+                    }
+                }
 
                 wallIndex = value; //set the wall index global variable
             
@@ -1644,6 +1678,35 @@
                 //console.log(arrLabels);
             }
             else {
+
+                ////show all the li tags for each wall and each linear item and each modular item
+                //for (var i = 0; i < listOfWalls.length; i++) { 
+                //    $("#wall"+listOfWalls[i].FirstItemIndex).css("display", "block");
+                //    for (var j = 0; j < listOfWalls[i].LinearItems.length; j++) {
+                //        $("#li"+listOfWalls[i].LinearItems[j].LinearIndex).css("display", "none");
+                //        if (typeof listOfWalls[i].LinearItems[j].ModularItems !== 'undefined') {
+                //            $("#li"+listOfWalls[i].LinearItems[j].LinearIndex).css("background-color", "#EBC79E");
+                //            for (var k = 0; k < listOfWalls[i].LinearItems[j].ModularItems.length; k++) {
+                //                $("#mod"+listOfWalls[i].LinearItems[j].LinearIndex+k).css("display", "none");
+                //            }
+                //        }
+                //    }
+                //}
+
+                //show all the li tags for each wall and each linear item and each modular item
+                for (var i = 0; i < listOfWalls.length; i++) { 
+                    $("#wall"+listOfWalls[i].FirstItemIndex).css("display", "block");
+                    for (var j = 0; j < listOfWalls[i].LinearItems.length; j++) {
+                        $("#li"+listOfWalls[i].LinearItems[j].LinearIndex).css("display", "block");
+                        if (typeof listOfWalls[i].LinearItems[j].ModularItems !== 'undefined') {
+                            $("#li"+listOfWalls[i].LinearItems[j].LinearIndex).css("background-color", "#EBC79E");
+                            for (var k = 0; k < listOfWalls[i].LinearItems[j].ModularItems.length; k++) {
+                                $("#mod"+listOfWalls[i].LinearItems[j].LinearIndex+k).css("display", "block");
+                            }
+                        }
+                    }
+                }
+
                 ///////////////////////////////////////////////////////////////////////////////
                 //hard coding set back because its not being stored/retrieved from the database
                 listOfWalls[0].SetBack = listOfWalls[0].Length; 
@@ -1669,6 +1732,108 @@
                 gWall = canvas.append("g").attr("id", "wall");
 
                 drawRoomLayout(); //draw the wall
+            }
+        }
+
+        /**
+        This function slide toggles the appropriate divs based on item on the canvas that was clicked
+        @param id - the id of the div to slide down
+        */
+        function toggle(id) {
+
+            //slide up everything
+            for (var i = 0; i < listOfWalls.length; i++) { 
+                $("#wall_"+listOfWalls[i].FirstItemIndex).slideUp();
+                for (var j = 0; j < listOfWalls[i].LinearItems.length; j++) {
+                    $("#div_"+listOfWalls[i].LinearItems[j].LinearIndex).slideUp();
+                    if (typeof listOfWalls[i].LinearItems[j].ModularItems !== 'undefined') {
+                        for (var k = 0; k < listOfWalls[i].LinearItems[j].ModularItems.length; k++) {
+                            $("#div_"+listOfWalls[i].LinearItems[j].LinearIndex+k).slideUp();
+                        }
+                    }
+                }
+            }
+
+            var container = $("#"+id); //the div to slide down
+            var inputs = (container.find("input")); //get all the inputs from the div
+            $('.overlayContainer').slideDown(); //slide down the overlay container
+            container.slideDown(); //slide down the div that was selected
+            inputs[0].focus(); //put focus on the first input element in the selected div
+            
+            //for (var i = 0; i < inputs.length; i++) {
+            //    if(inputs[i].is('input:text')) {
+            //        inputs[i].focus();
+            //        break;
+            //    }
+            //}
+        }
+
+        ///**
+        //This function shows/hides the appropriate li rows depending on which wall is clicked
+        //@param firstLiIndex - the first Li item to display for the selected wall
+        //@param lastLiIndex - the last Li item to display for the selected wall
+        //@param selected - is the wall radio button checked (true or false)
+        //*/
+        //function radWallClicked(firstLiIndex, lastLiIndex, selected) {
+
+        //    for (var i = 0; i <= listOfWalls[listOfWalls.length - 1].LastItemIndex; i++) 
+        //        $("#li"+i).css("display", "none");
+
+        //    if (selected) {
+        //        for (var i = firstLiIndex; i < lastLiIndex; i++) 
+        //            $("#li"+i).css("display", "block");
+        //    }
+        //}
+
+        ///**
+        //This function shows/hides the appropriate mod rows depending on which li is clicked
+        //@param liIndex - index of li
+        //@param modCount - total mod count in this li
+        //@param selected - is the wall radio button checked (true or false)
+        //*/
+        //function radModClicked(liIndex, modCount, selected) {
+
+        //    for (var i = 0; i < modCount; i++) 
+        //        $("#mod"+liIndex+i).css("display", "none");
+
+        //    if (selected) {
+        //        for (var i = 0; i < modCount; i++) 
+        //            $("#mod"+liIndex+i).css("display", "block");
+        //    }
+        //}
+
+        /**
+        This function updates the sunroom locally/temporarily
+        */
+        function updateSunroom() {
+            alert("update sunroom");
+        }
+
+        /**
+        This function updates the sunroom in the db/permanently
+        */
+        function submitSunroom() {
+            alert("submit sunroom");
+        }
+
+        /**
+        This function hides/shows appropriate rows depending on whether sunshade is selected or not
+        @param sunshade - sunshade selected true or false
+        @param id - linear item id
+        */
+        function sunshadeOptionChanged(sunshade, id) {
+
+            if(sunshade) {
+                $("#ModOverlay_rowLiSunshadeChain"+id).css("display","table-row");
+                $("#ModOverlay_rowLiSunshadeFabric"+id).css("display","table-row");
+                $("#ModOverlay_rowLiSunshadeOpenness"+id).css("display","table-row");
+                $("#ModOverlay_rowLiSunshadeValance"+id).css("display","table-row");
+            }
+            else {
+                $("#ModOverlay_rowLiSunshadeChain"+id).css("display","none");
+                $("#ModOverlay_rowLiSunshadeFabric"+id).css("display","none");
+                $("#ModOverlay_rowLiSunshadeOpenness"+id).css("display","none");
+                $("#ModOverlay_rowLiSunshadeValance"+id).css("display","none");
             }
         }
 
