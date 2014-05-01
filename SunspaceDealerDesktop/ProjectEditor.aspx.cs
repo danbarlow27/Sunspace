@@ -19,11 +19,11 @@ namespace SunspaceDealerDesktop
         protected int wallCount = 0;
         protected int floorCount = 0;
         protected int roofCount = 0;
-        protected int projectId; //gets it from the session (project_id)
+        protected int projectId = 98; //82 84 86 87 88 89 97 98 100 101 102, 103, 104 get it from the session (project_id)
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            projectId = Convert.ToInt32(HttpContext.Current.Session["project_id"].ToString());
+            //projectId = Convert.ToInt32(HttpContext.Current.Session["project_id"].ToString());
 
             #region commented out hard coded data
             /*
@@ -1012,6 +1012,11 @@ namespace SunspaceDealerDesktop
 
                                                                             #endregion
                                                                             break;
+                                                                        case "Half Lite":
+                                                                        case "Half Lite Venting":
+                                                                        case "Half Lite With Mini Blinds":
+                                                                        case "Full View With Mini Blinds":
+                                                                            break;
                                                                         case "NoDoor":
                                                                         case "No Door":
                                                                             #region No Door
@@ -1486,6 +1491,8 @@ namespace SunspaceDealerDesktop
             PopulateModOptions();
             lnkUpdateSunroom.Attributes.Add("onclick", "updateSunroom()");
             lnkSubmitSunroom.Attributes.Add("onclick", "submitSunroom()");
+            //lnkEditorNavMods.Attributes.Add("onclick", "$('.overlayContainer').slideToggle()");
+            lnkEditorNavTools.Attributes.Add("onclick", "$('#saveButtons').fadeToggle(); $('.btnTools').slideToggle();");
         }
 
         protected void PopulateDropdown(int floor = 0, int roof = 0)
