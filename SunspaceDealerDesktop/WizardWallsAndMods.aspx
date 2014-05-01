@@ -2,6 +2,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script src="Scripts/GlobalFunctions.js"></script>
+
     <script src="Scripts/Validation.js"></script>
     <script>
         //Embedded variables needed before call or addition of DoorSlideFunction.js
@@ -18,6 +19,12 @@
         var MODEL_400_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_400_TRANSOM_MINIMUM_SIZE"] %>';
         var BOXHEADER_LENGTH = <%= BOXHEADER_LENGTH %>;
         var BOXHEADER_RECEIVER_LENGTH = <%= BOXHEADER_RECEIVER_LENGTH %>;
+
+        if ("<%=currentModel%>" == "M400")
+        {
+            BOXHEADER_LENGTH = <%= HCHANNEL_LENGTH %>;
+            BOXHEADER_RECEIVER_LENGTH = <%= HCHANNEL_RECEIVER_LENGTH %>;
+        }
         //var MIN_WINDOW_WIDTH = 
         //var MAX_WINDOW_WIDTH = 
         //var MIN_MOD_WIDTH = MIN_WINDOW_WIDTH + 2;

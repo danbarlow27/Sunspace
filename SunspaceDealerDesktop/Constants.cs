@@ -275,6 +275,7 @@ namespace SunspaceDealerDesktop
         public const float BOXHEADER_RECEIVER_LENGTH = 4.25f;
 
         public const float HCHANNEL_LENGTH = 2.5f;
+        public const float HCHANNEL_RECEIVER_LENGTH = 3.5f;
         #endregion
 
         #region Walls
@@ -627,6 +628,8 @@ namespace SunspaceDealerDesktop
         #region Mods
         public const string MOD_TYPE_DOOR = "Door";
         public const string MOD_TYPE_WINDOW = "Window";
+
+        public const float MOD_FRAMING_OFFSET = 2f;
         #endregion
 
         #region Integrated Railing

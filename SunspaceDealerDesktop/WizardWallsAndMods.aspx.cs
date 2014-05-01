@@ -43,6 +43,8 @@ namespace SunspaceDealerDesktop
         public const float THERMADECK_PANEL_PROJECTION = 288f;
         public const float BOXHEADER_LENGTH = Constants.BOXHEADER_LENGTH;
         public const float BOXHEADER_RECEIVER_LENGTH = Constants.BOXHEADER_RECEIVER_LENGTH;
+        public const float HCHANNEL_LENGTH = Constants.HCHANNEL_LENGTH;
+        public const float HCHANNEL_RECEIVER_LENGTH = Constants.HCHANNEL_RECEIVER_LENGTH;
 
         public string gableType = "";
 
@@ -4295,7 +4297,8 @@ namespace SunspaceDealerDesktop
                                     aWindow.Colour = Request.Form["MainContent_hidWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
                                     aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                     aWindow.ItemType = "Window";
-                                    aWindow.Width = aMod.Length - 2;
+                                    aWindow.FLength = aMod.Length - Constants.MOD_FRAMING_OFFSET;
+                                    aWindow.Width = aWindow.FLength - Constants.WINDOW_FRAMING_OFFSET;
                                     
                                     aWindow.WindowStyle = ddlTransomType.SelectedValue;
                                     aWindow.SpreaderBar = -1;
@@ -4323,8 +4326,10 @@ namespace SunspaceDealerDesktop
                                     aWindow.Colour = Request.Form["MainContent_hidWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
                                     aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                     aWindow.ItemType = "Window";
-                                    aWindow.Width = aMod.Length - 2;
-                                    aWindow.WindowStyle = (string)Session["newProjectTransomType"];
+                                    aWindow.FLength = aMod.Length - Constants.MOD_FRAMING_OFFSET;
+                                    aWindow.Width = aWindow.FLength - Constants.WINDOW_FRAMING_OFFSET;
+
+                                    aWindow.WindowStyle = ddlTransomType.SelectedValue;
                                     aWindow.SpreaderBar = -1;
 
                                     //Add remaining area to first window
