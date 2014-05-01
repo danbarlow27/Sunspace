@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -886,6 +887,257 @@ namespace SunspaceDealerDesktop
                 }
 
                 Session["completedRoof"] = aRoof;
+                // Hit the database
+                using (SqlConnection aConnection = new SqlConnection(sdsDBConnection.ConnectionString))
+                {
+                    aConnection.Open();
+                    SqlCommand aCommand = aConnection.CreateCommand();
+                    SqlTransaction aTransaction;
+                    SqlDataReader aReader;
+
+                    // Start a local transaction.
+                    aTransaction = aConnection.BeginTransaction("SampleTransaction");
+
+                    // Must assign both transaction object and connection 
+                    // to Command object for a pending local transaction
+                    aCommand.Connection = aConnection;
+                    aCommand.Transaction = aTransaction;
+
+                    try
+                    {
+                        //Project
+                        #region Project
+
+                        var newGuid = Guid.NewGuid();
+
+                        aCommand.CommandText = "INSERT INTO projects(project_type, installation_type, project_name, customer_id, user_id, date_created, status, revised_date, revised_user_id, msrp, project_notes, "
+                                                + "hidden, cut_pitch) VALUES ("
+                                                + "'Roof', "
+                                                + "'None', "
+                            //+ "'" + Session["newProjectProjectName"] + "', "
+                                                + "'" + newGuid + "', "
+                            //+ Session["customer_id"] + ", "
+                                                + "1, "
+                            //+ Session["user_id"] + ", "
+                                                + "1, "
+                                                + "'" + DateTime.Now.ToString("yyyy/MM/dd") + "', "
+                                                + "'" + "Active" + "', "
+                                                + "'" + DateTime.Now.ToString("yyyy/MM/dd") + "', "
+                            //+ Session["user_id"] + ", "
+                                                + "1, "
+                                                + 0 + ", "
+                                                + 0 + ", "
+                                                + 0 + ", "
+                                                + 1
+                                                + ");";
+                        aCommand.ExecuteNonQuery(); //Execute a command that does not return anything
+                        #endregion
+
+                        //Get project_id for use in below statements
+                        aCommand.CommandText = "SELECT project_id FROM projects WHERE project_name = '" + newGuid + "'"; // Replace newGuid with Session["newProjectProjectName"]
+                        aReader = aCommand.ExecuteReader();
+                        aReader.Read();
+
+                        int project_id = Convert.ToInt32(aReader[0]);
+                        aReader.Close();
+
+                        aTransaction.Commit();
+
+                        #region Roof
+                        if (Session["newProjectHasRoof"].ToString() == "Yes")
+                        {
+                            int fireProtection = 0;
+                            if (aRoof.FireProtection == true)
+                            {
+                                fireProtection = 1;
+                            }
+
+                            int thermadeck = 0;
+                            if (aRoof.Thermadeck == true)
+                            {
+                                thermadeck = 1;
+                            }
+
+                            int acrylicBool = 0;
+                            if (aRoof.Type.Contains("Acrylic"))
+                            {
+                                acrylicBool = 1;
+                            }
+
+                            int gutterBool = 0;
+                            if (aRoof.Gutters == true)
+                            {
+                                gutterBool = 1;
+                            }
+
+                            int gutterProBool = 0;
+                            if (aRoof.GutterPro == true)
+                            {
+                                gutterProBool = 1;
+                            }
+
+                            string roofType = Session["newProjectRoofType"].ToString();
+                            if (roofType.Contains("Gable"))
+                            {
+                                roofType = "Gable";
+                            }
+                            aCommand.CommandText = "INSERT INTO roofs(project_id, roof_index, roof_type, interior_skin, exterior_skin, thickness, fire_protection, thermadeck, acrylic, gutter, gutter_pro, gutter_colour, number_supports, stripe_colour, projection, width) VALUES("
+                                                    + project_id + ", "
+                                                    + 0 + ", '"
+                                                    + roofType + "', '"
+                                                    + aRoof.InteriorSkin + "', '"
+                                                    + aRoof.ExteriorSkin + "', "
+                                                    + aRoof.Thickness + ", "
+                                                    + fireProtection + ", "
+                                                    + thermadeck + ", "
+                                                    + acrylicBool + ", "
+                                                    + gutterBool + ", "
+                                                    + gutterProBool + ", '"
+                                                    + aRoof.GutterColour + "', "
+                                                    + aRoof.NumberSupports + ", '"
+                                                    + aRoof.StripeColour + "', "
+                                                    + aRoof.Projection + ", "
+                                                    + aRoof.Width
+                                                    + ");";
+                            aCommand.ExecuteNonQuery();
+
+                            //Now insert the needed roof modules
+
+                            for (int roofModules = 0; roofModules < aRoof.RoofModules.Count; roofModules++)
+                            {
+                                string roof_view;
+                                if (Session["newProjectRoofType"].ToString() == "Studio")
+                                {
+                                    //If it's a studio roof, we have a single studio roof module
+                                    roof_view = "S";
+                                }
+                                else if (roofModules == 0)
+                                {
+                                    //If it's not studio, and it's the first module, it's gable left
+                                    roof_view = "GL";
+                                }
+                                else
+                                {
+                                    //Otherwise it's gable right
+                                    roof_view = "GR";
+                                }
+
+                                aCommand.CommandText = "INSERT INTO roof_modules(project_id, roof_index, roof_view, interior_skin, exterior_skin, number_items, projection, width) VALUES("
+                                                    + project_id + ", "
+                                                    + (roofModules) + ", '"
+                                                    + roof_view + "', '"
+                                                    + aRoof.InteriorSkin + "', '"
+                                                    + aRoof.ExteriorSkin + "', "
+                                                    + aRoof.RoofModules[roofModules].RoofItems.Count + ", "
+                                                    + aRoof.RoofModules[roofModules].Projection + ", "
+                                                    + aRoof.RoofModules[roofModules].Width
+                                                    + ");";
+                                aCommand.ExecuteNonQuery();
+
+                                //We also enter the roof items
+                                for (int roofItems = 0; roofItems < aRoof.RoofModules[roofModules].RoofItems.Count; roofItems++)
+                                {
+                                    aCommand.CommandText = "INSERT INTO roof_items(project_id, roof_index, roof_view, item_index, roof_item, projection, width) VALUES("
+                                                    + project_id + ", "
+                                                    + 0 + ", '"
+                                                    + roof_view + "', "
+                                                    + roofItems + ", '"
+                                                    + aRoof.RoofModules[roofModules].RoofItems[roofItems].ItemType + "', "
+                                                    + aRoof.RoofModules[roofModules].RoofItems[roofItems].Projection + ", "
+                                                    + aRoof.RoofModules[roofModules].RoofItems[roofItems].Width
+                                                    + ");";
+                                    aCommand.ExecuteNonQuery();
+
+                                    if (aRoof.RoofModules[roofModules].RoofItems[roofItems].ItemType == "Foam Panel")
+                                    {
+                                        aCommand.CommandText = "INSERT INTO foam_panels(project_id, roof_index, roof_view, item_index, interior_skin, exterior_skin, projection, width, set_back, skylight, fanbeam) VALUES("
+                                                    + project_id + ", "
+                                                    + 0 + ", '"
+                                                    + roof_view + "', "
+                                                    + roofItems + ", '"
+                                                    + aRoof.InteriorSkin + "', '"
+                                                    + aRoof.ExteriorSkin + "', "
+                                                    + aRoof.RoofModules[roofModules].RoofItems[roofItems].Projection + ", "
+                                                    + aRoof.RoofModules[roofModules].RoofItems[roofItems].Width + ", "
+                                                    + 0 + ", " //what is normal set_back?
+                                                    + aRoof.RoofModules[roofModules].RoofItems[roofItems].SkyLight + ", "
+                                                    + aRoof.RoofModules[roofModules].RoofItems[roofItems].FanBeam
+                                                    + ");";
+                                        aCommand.ExecuteNonQuery();
+                                    }
+
+                                    if (aRoof.RoofModules[roofModules].RoofItems[roofItems].ItemType == "Acrylic Panel")
+                                    {
+                                        aCommand.CommandText = "INSERT INTO acrylic_panels(project_id, roof_index, roof_view, item_index, panel_colour, projection, width, set_back) VALUES("
+                                                    + project_id + ", "
+                                                    + 0 + ", '"
+                                                    + roof_view + "', "
+                                                    + roofItems + ", '"
+                                                    + Session["roofAcrylicPanelColour"] + "', "
+                                                    + aRoof.RoofModules[roofModules].RoofItems[roofItems].Projection + ", "
+                                                    + aRoof.RoofModules[roofModules].RoofItems[roofItems].Width + ", "
+                                                    + 0 //what is normal set_back?
+                                                    + ");";
+                                        aCommand.ExecuteNonQuery();
+                                    }
+
+                                    if (aRoof.RoofModules[roofModules].RoofItems[roofItems].ItemType == "Thermadeck Panel")
+                                    {
+                                        float leftSetBack = Convert.ToSingle(Session["roofJointSetback"]);
+                                        float rightSetBack = Convert.ToSingle(Session["roofJointSetback"]);
+
+                                        if (roofItems == aRoof.RoofModules[roofModules].RoofItems.Count - 1)
+                                        {
+                                            rightSetBack = Convert.ToSingle(Session["roofSidesSetback"]);
+                                        }
+
+                                        if (roofItems == 0)
+                                        {
+                                            leftSetBack = Convert.ToSingle(Session["roofSidesSetback"]);
+                                        }
+
+                                        aCommand.CommandText = "INSERT INTO thermadeck_panels(project_id, roof_index, roof_view, item_index, projection, width, set_back, back_setback, front_setback, right_setback, left_setback) VALUES("
+                                                            + project_id + ", "
+                                                            + 0 + ", '"
+                                                            + roof_view + "', "
+                                                            + roofItems + ", "
+                                                            + aRoof.RoofModules[roofModules].RoofItems[roofItems].Projection + ", "
+                                                            + aRoof.RoofModules[roofModules].RoofItems[roofItems].Width + ", "
+                                                            + 0 + ", " //What is normal set_back? Soffit length?
+                                                            + Convert.ToSingle(Session["roofLedgerSetback"]) + ", "
+                                                            + Convert.ToSingle(Session["roofFrontSetback"]) + ", "
+                                                            + rightSetBack + ", "
+                                                            + leftSetBack
+                                                            + ");";
+                                        aCommand.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+                        }
+                        #endregion
+                    }
+                    catch (Exception ex)
+                    {
+                        int hi;
+                        System.Diagnostics.Debug.WriteLine(ex.Message);
+                        //lblError.Text = "Commit Exception Type: " + ex.GetType();
+                        //lblError.Text += "  Message: " + ex.Message;
+
+                        // Attempt to roll back the transaction. 
+                        try
+                        {
+                            aTransaction.Rollback();
+                        }
+                        catch (Exception ex2)
+                        {
+                            // This catch block will handle any errors that may have occurred 
+                            // on the server that would cause the rollback to fail, such as 
+                            // a closed connection.
+                            //lblError.Text = "Rollback Exception Type: " + ex2.GetType();
+                            //lblError.Text += "  Message: " + ex2.Message;
+                        }
+                    }
+                }
             }
             #endregion
         }
