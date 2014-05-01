@@ -21,6 +21,7 @@ namespace SunspaceDealerDesktop
         protected int roofCount = 0;
         protected int projectId = 98; //82 84 86 87 88 89 97 98 100 101 102, 103, 104 get it from the session (project_id)
 
+
         protected void Page_Load(object sender, EventArgs e)
         {
             //projectId = Convert.ToInt32(Session["project_id"].ToString());
