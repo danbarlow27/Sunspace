@@ -88,10 +88,9 @@ header {
 	float: left;
 }
 
-.navMain {
-	color: #fff;
-	background: #000;
-	height: 50px;
+.navMain
+{
+    display:none;
 }
 
 .ulNavMain li a,
@@ -1163,21 +1162,13 @@ table.tblPriceCalculator {
  * CUT SHEETS
  ******************************************/
 
- table.CutSheet{
-    border-spacing: 10px;
+ table.CutSheet, td {
     border: 1px solid black;
-    border-collapse:collapse;
- }
-
- .CutSheetCells{
-     border: 1px solid black;
-     padding: 5px;
  }
 
  .CutSheetHeaders{
      border: 1px solid black;
      background-color: lightblue;
-     padding: 5px;
  }
 
  .CutSheetRowOdd {
@@ -1229,7 +1220,4 @@ table.tblPriceCalculator {
 
 .displayNone {
     display: none;
-}
-.hideElement {
-    visibility: hidden;
 }

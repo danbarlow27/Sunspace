@@ -21,6 +21,7 @@ namespace SunspaceDealerDesktop
             if (Session["user_type"].ToString() == "D")
             {
                 btnSpoof.Visible = false;
+                btnAddUsers.Text = "Add Sales Rep";
             }
         }
 

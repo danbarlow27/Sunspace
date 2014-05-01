@@ -10,7 +10,21 @@ using System.Web.UI.WebControls;
 namespace SunspaceDealerDesktop
 {
     public partial class WizardWallsAndMods : System.Web.UI.Page
-    {        
+    {
+        //colour arrays generated as javascript usable objects
+        //Used for population of corresponding dropdown lists
+        public string model100FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_100_FRAMING_COLOURS);
+        public string model200FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_200_FRAMING_COLOURS);
+        public string model300FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_300_FRAMING_COLOURS);
+        public string model400FramingColoursJ = new JavaScriptSerializer().Serialize(Constants.MODEL_400_FRAMING_COLOURS);
+
+        public string model100TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_100_TRANSOM_TYPES);
+        public string model200TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_200_TRANSOM_TYPES);
+        public string model300TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_300_TRANSOM_TYPES);
+        public string model400TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_400_TRANSOM_TYPES);
+
+        public string transomGlassTints = new JavaScriptSerializer().Serialize(Constants.TRANSOM_GLASS_TINTS);
+        public string vinylTints = new JavaScriptSerializer().Serialize(Constants.VINYL_TINTS);
         public float VINYL_TRAP_MIN_WIDTH_WARRANTY = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
         public float VINYL_TRAP_MAX_WIDTH_WARRANTY = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
         public float V4T_4V_MIN_WIDTH_WARRANTY = Constants.V4T_4V_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
@@ -59,14 +73,28 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.Form.DefaultButton = "";
-
             if (Session["loggedIn"] == null)
             {
                 //uncomment me when login functionality is working
                 Response.Redirect("Login.aspx");
                 //Session.Add("loggedIn", "userA");
             }
+
+            if (Session["newProjectHasRoof"].ToString() == "Yes")
+            {
+                lblFinished.Text = "Wall details complete, next step: Roof";
+            }
+            else if (Session["newProjectPrefabFloor"].ToString() == "Yes")
+            {
+                lblFinished.Text = "Wall details complete, next step: Floor";
+            }
+            else
+            {
+                lblFinished.Text = "Wall details complete, next step: Completion";
+            }
+
+            Page.Form.DefaultButton = "";
+
 
             string[] gableCheck = (string[])Session["newProjectArray"];
             if (gableCheck[26] == "Dealer Gable" || gableCheck[26] == "Sunspace Gable")
@@ -164,6 +192,100 @@ namespace SunspaceDealerDesktop
             Session["SCREEN_MAX_HEIGHT_WARRANTY"] = Constants.SCREEN_MAX_HEIGHT_WARRANTY;
             #endregion
             
+            #endregion
+            #region Slide 3 pageload
+
+            //ddlInteriorSkin.Items.Add("Choose a skin...");
+            for (int i = 0; i < Constants.INTERIOR_WALL_SKIN_TYPES.Length; i++)
+            {
+                ddlInteriorSkin.Items.Add(Constants.INTERIOR_WALL_SKIN_TYPES[i]);
+            }
+
+            //ddlExteriorSkin.Items.Add("Choose a skin...");
+            for (int i = 0; i < Constants.EXTERIOR_WALL_SKIN_TYPES.Length; i++)
+            {
+                ddlExteriorSkin.Items.Add(Constants.EXTERIOR_WALL_SKIN_TYPES[i]);
+            }
+
+            //ddlKneewallType.Items.Add("Choose a type...");
+            for (int i = 0; i < Constants.KNEEWALL_TYPES.Length; i++)
+            {
+                ddlKneewallType.Items.Add(Constants.KNEEWALL_TYPES[i]);
+            }
+
+            for (int i = 0; i < Constants.KNEEWALL_GLASS_TINTS.Length; i++)
+            {
+                ddlKneewallTint.Items.Add(Constants.KNEEWALL_GLASS_TINTS[i]);
+            }
+
+            if (Session["model"].ToString() == "M100")
+            {
+                for (int i=0;i<Constants.MODEL_100_TRANSOM_TYPES.Length;i++)
+                {
+                    ddlTransomType.Items.Add(Constants.MODEL_100_TRANSOM_TYPES[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_100_FRAMING_COLOURS.Length; i++)
+                {
+                    ddlFramingColour.Items.Add(Constants.MODEL_100_FRAMING_COLOURS[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_100_GLASS_TINTS.Length; i++)
+                {
+                    ddlTransomTint.Items.Add(Constants.MODEL_100_GLASS_TINTS[i]);
+                }
+            }
+            else if (Session["model"].ToString() == "M200")
+            {
+                for (int i = 0; i < Constants.MODEL_200_TRANSOM_TYPES.Length; i++)
+                {
+                    ddlTransomType.Items.Add(Constants.MODEL_200_TRANSOM_TYPES[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_200_FRAMING_COLOURS.Length; i++)
+                {
+                    ddlFramingColour.Items.Add(Constants.MODEL_200_FRAMING_COLOURS[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_200_GLASS_TINTS.Length; i++)
+                {
+                    ddlTransomTint.Items.Add(Constants.MODEL_200_GLASS_TINTS[i]);
+                }
+            }
+            else if (Session["model"].ToString() == "M300")
+            {
+                for (int i = 0; i < Constants.MODEL_300_TRANSOM_TYPES.Length; i++)
+                {
+                    ddlTransomType.Items.Add(Constants.MODEL_300_TRANSOM_TYPES[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_300_FRAMING_COLOURS.Length; i++)
+                {
+                    ddlFramingColour.Items.Add(Constants.MODEL_300_FRAMING_COLOURS[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_300_GLASS_TINTS.Length; i++)
+                {
+                    ddlTransomTint.Items.Add(Constants.MODEL_300_GLASS_TINTS[i]);
+                }
+            }
+            else if (Session["model"].ToString() == "M400")
+            {
+                for (int i = 0; i < Constants.MODEL_400_TRANSOM_TYPES.Length; i++)
+                {
+                    ddlTransomType.Items.Add(Constants.MODEL_400_TRANSOM_TYPES[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_400_FRAMING_COLOURS.Length; i++)
+                {
+                    ddlFramingColour.Items.Add(Constants.MODEL_400_FRAMING_COLOURS[i]);
+                }
+
+                for (int i = 0; i < Constants.MODEL_400_GLASS_TINTS.Length; i++)
+                {
+                    ddlTransomTint.Items.Add(Constants.MODEL_400_GLASS_TINTS[i]);
+                }
+            }
             #endregion
 
             Session["DEFAULT_FILLER"] = Constants.PREFERRED_DEFAULT_FILLER;
@@ -678,7 +800,7 @@ namespace SunspaceDealerDesktop
                 Label leftWallRadioTextLabel = new Label();
                 leftWallRadioTextLabel.ID = "lblRadioLeftWallText";
                 leftWallRadioTextLabel.AssociatedControlID = "radAutoLeftWallHeight";
-                leftWallRadioTextLabel.Text = "Auto Populate";
+                leftWallRadioTextLabel.Text = "Auto Calculate";
 
                 leftWallLabel.AssociatedControlID = "txtLeftWallHeight";
                 #endregion
@@ -727,7 +849,7 @@ namespace SunspaceDealerDesktop
                 Label rightWallRadioTextLabel = new Label();
                 rightWallRadioTextLabel.ID = "lblRadioRightWallText";
                 rightWallRadioTextLabel.AssociatedControlID = "radAutoRightWallHeight";
-                rightWallRadioTextLabel.Text = "Auto Populate";
+                rightWallRadioTextLabel.Text = "Auto Calculate";
 
                 rightWallLabel.AssociatedControlID = "txtRightWallHeight";
                 #endregion
@@ -776,7 +898,7 @@ namespace SunspaceDealerDesktop
                 Label gablePostRadioTextLabel = new Label();
                 gablePostRadioTextLabel.ID = "lblRadioGablePostText";
                 gablePostRadioTextLabel.AssociatedControlID = "radAutoGablePostHeight";
-                gablePostRadioTextLabel.Text = "Auto Populate";
+                gablePostRadioTextLabel.Text = "Auto Calculate";
 
                 gablePostLabel.AssociatedControlID = "txtGablePostHeight";
                 #endregion
@@ -818,7 +940,7 @@ namespace SunspaceDealerDesktop
                 Label leftRoofSlopeRadioTextLabel = new Label();
                 leftRoofSlopeRadioTextLabel.ID = "lblRadioRoofSlopeText";
                 leftRoofSlopeRadioTextLabel.AssociatedControlID = "radAutoRoofSlope";
-                leftRoofSlopeRadioTextLabel.Text = "Auto Populate";
+                leftRoofSlopeRadioTextLabel.Text = "Auto Calculate";
 
                 leftRoofSlopeLabel.AssociatedControlID = "txtLeftRoofSlope";
                 #endregion
@@ -979,7 +1101,7 @@ namespace SunspaceDealerDesktop
                 Label backWallRadioTextLabel = new Label();
                 backWallRadioTextLabel.ID = "lblRadioBackWallText";
                 backWallRadioTextLabel.AssociatedControlID = "radAutoBackWallHeight";
-                backWallRadioTextLabel.Text = "Auto Populate";
+                backWallRadioTextLabel.Text = "Auto Calculate";
 
                 backWallLabel.AssociatedControlID = "txtBackWallHeight";
                 #endregion
@@ -1027,7 +1149,7 @@ namespace SunspaceDealerDesktop
                 Label frontWallRadioTextLabel = new Label();
                 frontWallRadioTextLabel.ID = "lblRadioFrontWallText";
                 frontWallRadioTextLabel.AssociatedControlID = "radAutoFrontWallHeight";
-                frontWallRadioTextLabel.Text = "Auto Populate";
+                frontWallRadioTextLabel.Text = "Auto Calculate";
 
                 frontWallLabel.AssociatedControlID = "txtFrontWallHeight";
                 #endregion
@@ -1068,7 +1190,7 @@ namespace SunspaceDealerDesktop
                 Label roofSlopeRadioTextLabel = new Label();
                 roofSlopeRadioTextLabel.ID = "lblRadioRoofSlopeText";
                 roofSlopeRadioTextLabel.AssociatedControlID = "radAutoRoofSlope";
-                roofSlopeRadioTextLabel.Text = "Auto Populate";
+                roofSlopeRadioTextLabel.Text = "Auto Calculate";
 
                 roofSlopeLabel.AssociatedControlID = "txtRoofSlope";
                 #endregion
@@ -3840,7 +3962,7 @@ namespace SunspaceDealerDesktop
             }
             
             //Loop for each wall
-            int linearPosition = 0;
+            int linearPosition = 0; //Current wall we're on
             int cheatCounter = 0;
             //If it's a gable, we need to start one element past the normal point to account for the gable post being part of the wall list
             int gableCompensation = 0;
@@ -3854,6 +3976,7 @@ namespace SunspaceDealerDesktop
             {
                 //A list of linear items to be added to each wall
                 List<LinearItem> linearItems = new List<LinearItem>();
+                bool addReceiver = true;
 
                 if (wallDetails[i - 1, 4] == "P" || wallDetails[i - 1, 4] == "G")
                 {
@@ -3951,19 +4074,21 @@ namespace SunspaceDealerDesktop
                                 {
                                     HChannel anHChannel = new HChannel();
                                     anHChannel.ItemType = "HChannel";
-                                    anHChannel.StartHeight = anHChannel.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                    anHChannel.Length = 2.5f;
+                                    anHChannel.Length = Constants.HCHANNEL_LENGTH;
                                     //CHANGEME if driftwood
-                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH + anHChannel.Length;
+                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - anHChannel.Length;
+                                    anHChannel.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, anHChannel.FixedLocation, listOfWalls[linearPosition].Length);
+                                    anHChannel.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, anHChannel.FixedLocation + anHChannel.Length, listOfWalls[linearPosition].Length);
                                     linearItems.Add(anHChannel);
                                 }
                                 else
                                 {
                                     BoxHeader aBoxHeader = new BoxHeader();
                                     aBoxHeader.ItemType = "BoxHeader";
-                                    aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                    aBoxHeader.Length = 3.25f;
-                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH + aBoxHeader.Length;
+                                    aBoxHeader.Length = Constants.BOXHEADER_LENGTH;
+                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - aBoxHeader.Length;
+                                    aBoxHeader.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aBoxHeader.FixedLocation, listOfWalls[linearPosition].Length);
+                                    aBoxHeader.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aBoxHeader.FixedLocation + aBoxHeader.Length, listOfWalls[linearPosition].Length);
                                     linearItems.Add(aBoxHeader);
                                 }
                             }
@@ -3972,7 +4097,7 @@ namespace SunspaceDealerDesktop
                             aMod.ItemType = "Mod";
                             aMod.ModType = Constants.MOD_TYPE_DOOR;
                             aMod.Length = float.Parse(Request.Form["hidWall" + i + "Door" + j + "mwidth"]);
-                            aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]) + linearItems[0].Length;
+                            aMod.FixedLocation = float.Parse(Request.Form["hidWall" + i + "Door" + j + "position"]);// +linearItems[0].Length;
                             aMod.StartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));
                             aMod.EndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
                             aMod.Sunshade = Convert.ToBoolean(Request.Form["MainContent_hidSunshade"]);
@@ -4150,7 +4275,6 @@ namespace SunspaceDealerDesktop
                             //Extra door stuff here
 
                             //now we add transom windows
-
                             //The height of the wall at mod end and mod start
                             float modStartHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, aMod.FixedLocation, float.Parse(Request.Form["hidWall" + i + "Length"]));//
                             float modEndHeight = GlobalFunctions.getHeightAtPosition(wallStartHeight, wallEndHeight, (aMod.FixedLocation + aMod.Length), float.Parse(Request.Form["hidWall" + i + "Length"]));
@@ -4158,7 +4282,7 @@ namespace SunspaceDealerDesktop
                             //The space left is the total height of the wall at the highest point of the mod minus the current built mod's space (aMod.StartHeight which equals aMod.endHeight at this point
                             //Minus the space the door punch takes up.
                             float sendableHeight = Math.Max(modStartHeight, modEndHeight);
-                            float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows((sendableHeight - modularItems[0].FStartHeight - .25f), (string)Session["newProjectTransomType"]);
+                            float[] windowInfo = GlobalFunctions.findOptimalHeightsOfWindows((sendableHeight - modularItems[0].FStartHeight - .25f), ddlTransomType.SelectedValue);
                             if (modStartHeight == modEndHeight)
                             {
                                 //rectangular window
@@ -4172,7 +4296,8 @@ namespace SunspaceDealerDesktop
                                     aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                     aWindow.ItemType = "Window";
                                     aWindow.Width = aMod.Length - 2;
-                                    aWindow.WindowStyle = (string)Session["newProjectTransomType"];
+                                    
+                                    aWindow.WindowStyle = ddlTransomType.SelectedValue;
                                     aWindow.SpreaderBar = -1;
 
                                     //Add remaining area to first window
@@ -4241,15 +4366,15 @@ namespace SunspaceDealerDesktop
                                     anHChannel.Length = 2.5f;
                                     //CHANGEME if driftwood
                                     anHChannel.ItemType = "HChannel";//
-                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+                                    anHChannel.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - anHChannel.Length;
                                     linearItems.Add(anHChannel);
                                 }
                                 else
                                 {
                                     BoxHeader aBoxHeader = new BoxHeader();
                                     aBoxHeader.StartHeight = aBoxHeader.EndHeight = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "mheight"]);
-                                    aBoxHeader.Length = 3.25f;
-                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - Constants.BOXHEADER_LENGTH;
+                                    aBoxHeader.Length = Constants.BOXHEADER_LENGTH;
+                                    aBoxHeader.FixedLocation = Convert.ToSingle(Request.Form["hidWall" + i + "Door" + j + "position"]) - aBoxHeader.Length;
                                     aBoxHeader.ItemType = "BoxHeader";
                                     linearItems.Add(aBoxHeader);
                                 }
@@ -4358,8 +4483,8 @@ namespace SunspaceDealerDesktop
 
                         listOfWalls[linearPosition].LinearItems = linearItems;
 
-                        listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
-                                                                         Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
+                        listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(txtKneewallHeight.Text),
+                                                                         ddlKneewallType.SelectedValue.ToString(), ddlTransomType.SelectedValue.ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
                                                                          hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value, iRailing);
 
                         linearPosition++;
@@ -4506,8 +4631,8 @@ namespace SunspaceDealerDesktop
 
                         listOfWalls[linearPosition].LinearItems = linearItems;
 
-                        listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(Session["newProjectKneewallHeight"]),
-                                                                         Session["newProjectKneewallType"].ToString(), Session["newProjectTransomType"].ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
+                        listOfWalls[linearPosition].FillSpaceWithWindows(hidWindowType.Value, hidWindowColour.Value, hidWindowFramingColour.Value, numberOfVents, Convert.ToSingle(txtKneewallHeight.Text),
+                                                                         ddlKneewallType.SelectedValue.ToString(), ddlTransomType.SelectedValue.ToString(), bool.Parse(hidSunshade.Value), hidValance.Value,
                                                                          hidFabric.Value, hidOpenness.Value, hidChain.Value, hidScreenType.Value, iRailing);//
                         linearPosition++;
                     }
@@ -4552,7 +4677,7 @@ namespace SunspaceDealerDesktop
                             BoxHeader aBoxHeader = new BoxHeader();
                             aBoxHeader.IsReceiver = true;
                             aBoxHeader.FixedLocation = listOfWalls[i].Length;
-                            aBoxHeader.Length = 3.25f;
+                            aBoxHeader.Length = Constants.BOXHEADER_LENGTH;
                             aBoxHeader.ItemType = "BoxHeader";
                             aBoxHeader.StartHeight = GlobalFunctions.getHeightAtPosition(listOfWalls[i].StartHeight, listOfWalls[i].EndHeight, aBoxHeader.FixedLocation, listOfWalls[i].Length);
                             aBoxHeader.EndHeight = GlobalFunctions.getHeightAtPosition(listOfWalls[i].StartHeight, listOfWalls[i].EndHeight, aBoxHeader.FixedLocation + aBoxHeader.Length, listOfWalls[i].Length);
@@ -4618,13 +4743,85 @@ namespace SunspaceDealerDesktop
             endReceiver.FixedLocation = listOfWalls[listOfWalls.Count - 1].Length - 1f;
             endReceiver.IsTwoPiece = false;
             listOfWalls[listOfWalls.Count - 1].LastItemIndex++;
-            endReceiver.ItemType = "Receiever";
+            endReceiver.ItemType = "Receiver";
             endReceiver.Length = 1f;
             endReceiver.LinearIndex = listOfWalls[listOfWalls.Count - 1].LastItemIndex + 1;
             endReceiver.StartHeight = GlobalFunctions.getHeightAtPosition(listOfWalls[listOfWalls.Count - 1].StartHeight, listOfWalls[listOfWalls.Count - 1].EndHeight, listOfWalls[listOfWalls.Count - 1].Length - 1f, listOfWalls[listOfWalls.Count - 1].Length);
             endReceiver.EndHeight = GlobalFunctions.getHeightAtPosition(listOfWalls[listOfWalls.Count - 1].StartHeight, listOfWalls[listOfWalls.Count - 1].EndHeight, listOfWalls[listOfWalls.Count - 1].Length, listOfWalls[listOfWalls.Count - 1].Length);
 
             listOfWalls[listOfWalls.Count - 1].LinearItems.Add(endReceiver);
+            
+            //linear item sexes
+            for (int i = 0; i < listOfWalls.Count; i++)
+            {
+                for (int j = 0; j < listOfWalls[i].LinearItems.Count; j++)
+                {
+                    if (listOfWalls[i].LinearItems[j].ItemType == "Receiver")
+                    {
+                        //Receiver at start of wall is MF, but at end of wall is FM
+                        if (j == 0)
+                        {
+                            listOfWalls[i].LinearItems[j].Sex = "MF";
+                        }
+                        else
+                        {
+                            listOfWalls[i].LinearItems[j].Sex = "FM";
+                        }
+                    }
+                    //Corners are always FF to allow the walls to 'go into' them
+                    else if (listOfWalls[i].LinearItems[j].ItemType == "Corner")
+                    {
+                        listOfWalls[i].LinearItems[j].Sex = "FF";
+                    }
+                    else if (listOfWalls[i].LinearItems[j].ItemType == "BoxHeader" || listOfWalls[i].LinearItems[j].ItemType == "HChannel")
+                    {
+                        listOfWalls[i].LinearItems[j].Sex = "FF";
+                    }
+                    //Filler is always MM
+                    else if (listOfWalls[i].LinearItems[j].ItemType == "Filler")
+                    {
+                        listOfWalls[i].LinearItems[j].Sex = "MM";
+                    }
+                    else if (listOfWalls[i].LinearItems[j].ItemType == "Mod")
+                    {
+                        //If previous linear item ends with male receiever, this mod must be female
+                        if (listOfWalls[i].LinearItems[j - 1].Sex.Substring(1) == "M")
+                        {
+                            listOfWalls[i].LinearItems[j].Sex = "FF";
+                        }
+                        else
+                        {
+                            listOfWalls[i].LinearItems[j].Sex = "MM";
+                        }
+
+                        try
+                        {
+                            //If a filler is after this mod, we must make the mod end in female
+                            if (listOfWalls[i].LinearItems[j + 1].ItemType == "Filler")
+                            {
+                                listOfWalls[i].LinearItems[j].Sex = listOfWalls[i].LinearItems[j].Sex.Substring(0, 1) + "F";
+                            }
+                            //If a receiver is after this mod, we must make the mod end in male
+                            else if (listOfWalls[i].LinearItems[j + 1].ItemType == "Receiver")
+                            {
+                                listOfWalls[i].LinearItems[j].Sex = listOfWalls[i].LinearItems[j].Sex.Substring(0, 1) + "M";
+                            }
+                            //If a boxheader is after this mod, we must make the mod end in male
+                            else if (listOfWalls[i].LinearItems[j + 1].ItemType == "BoxHeader")
+                            {
+                                listOfWalls[i].LinearItems[j].Sex = listOfWalls[i].LinearItems[j].Sex.Substring(0, 1) + "M";
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            //if we throw an exception, this is the very last linear item in the wall
+                            //If it is the last linear item in the wall, that means that a mod goes directly into a corner post
+                            //Adjust mod to end male to go into corner post
+                            listOfWalls[i].LinearItems[j].Sex = listOfWalls[i].LinearItems[j].Sex.Substring(0, 1) + "M";
+                        }
+                    }
+                }
+            }
 
             Session.Add("listOfWalls", listOfWalls);
             Session.Add("sunroomProjection", hidRoomProjection.Value);

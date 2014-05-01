@@ -19,11 +19,11 @@ namespace SunspaceDealerDesktop
         protected int wallCount = 0;
         protected int floorCount = 0;
         protected int roofCount = 0;
-        protected int projectId = 88; //82 84 86 87 88 get it from the session (project_id)
+        protected int projectId = 18; //82 84 86 87 88 89 97 98 100 101 102 get it from the session (project_id)
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            projectId = Convert.ToInt32(Session["project_id"].ToString());
+            //projectId = Convert.ToInt32(Session["project_id"].ToString());
             #region commented out hard coded data
             /*
             #region hard coded data
@@ -893,10 +893,11 @@ namespace SunspaceDealerDesktop
                                                                     //types of doors
                                                                     switch (doorType)
                                                                     {
+                                                                        case "Cabana":
                                                                         case "Cabana Door":
                                                                             #region Cabana Door
 
-                                                                            aCommand.CommandText = "SELECT glass_tint, hinge, swing, hardware_type FROM cabana_doors "
+                                                                            aCommand.CommandText = "SELECT glass_tint, hinge, swing, hardware_type, screen_type FROM cabana_doors "
                                                                                             + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                             SqlDataReader cabanaReader = aCommand.ExecuteReader();
@@ -922,6 +923,7 @@ namespace SunspaceDealerDesktop
                                                                                 aCabanaDoor.Hinge = Convert.ToString(cabanaReader[1]);
                                                                                 aCabanaDoor.Swing = Convert.ToString(cabanaReader[2]);
                                                                                 aCabanaDoor.HardwareType = Convert.ToString(cabanaReader[3]);
+                                                                                aCabanaDoor.ScreenType = Convert.ToString(cabanaReader[4]);
 
                                                                                 aCabanaDoor.DoorWindow = aDoorWindow;
 
@@ -931,10 +933,11 @@ namespace SunspaceDealerDesktop
 
                                                                             #endregion
                                                                             break;
+                                                                        case "French":
                                                                         case "French Door":
                                                                             #region French Door
 
-                                                                            aCommand.CommandText = "SELECT glass_tint, swing, operator, hardware_type FROM french_doors "
+                                                                            aCommand.CommandText = "SELECT glass_tint, swing, operator, hardware_type, screen_type FROM french_doors "
                                                                                             + "WHERE project_id = '" + projectId + "' AND linear_index = '" + aMod.LinearIndex + "' AND module_index = '" + moduleIndex + "'";
 
                                                                             SqlDataReader frenchReader = aCommand.ExecuteReader();
@@ -961,6 +964,7 @@ namespace SunspaceDealerDesktop
                                                                                 aFrenchDoor.Swing = Convert.ToString(frenchReader[1]);
                                                                                 aFrenchDoor.OperatingDoor = Convert.ToString(frenchReader[2]); ///this needs to be fixed, operator in db is bool and C# is string
                                                                                 aFrenchDoor.HardwareType = Convert.ToString(frenchReader[3]);
+                                                                                aFrenchDoor.ScreenType = Convert.ToString(frenchReader[4]);
 
                                                                                 aFrenchDoor.DoorWindow = aDoorWindow;
 
@@ -970,6 +974,7 @@ namespace SunspaceDealerDesktop
 
                                                                             #endregion
                                                                             break;
+                                                                        case "Patio":
                                                                         case "Patio Door":
                                                                             #region Patio Door
 
@@ -1006,6 +1011,7 @@ namespace SunspaceDealerDesktop
 
                                                                             #endregion
                                                                             break;
+                                                                        case "NoDoor":
                                                                         case "No Door":
                                                                             #region No Door
 
@@ -1080,6 +1086,7 @@ namespace SunspaceDealerDesktop
                                             #endregion
                                             break;
                                         case "Receiver":
+                                        case "Receiever":
                                             #region Receiver
                                             BoxHeader aBoxHeader = new BoxHeader();
                                             aBoxHeader.LinearIndex = linearIndex;
@@ -1098,6 +1105,7 @@ namespace SunspaceDealerDesktop
                                             #endregion
                                             break;
                                         case "2 Piece Receiver":
+                                        case "2PieceReceiver":
                                             #region 2 Piece Receiver
                                             aBoxHeader = new BoxHeader();
                                             aBoxHeader.LinearIndex = linearIndex;
@@ -1115,6 +1123,7 @@ namespace SunspaceDealerDesktop
                                             listOfLinearItems.Add(aBoxHeader);//add the linear item to the list
                                             #endregion
                                             break;
+                                        case "BoxHeader": // 
                                         case "Box Header": // 
                                             #region Box Header
                                             aBoxHeader = new BoxHeader();
@@ -1133,6 +1142,7 @@ namespace SunspaceDealerDesktop
                                             listOfLinearItems.Add(aBoxHeader);//add the linear item to the list
                                             #endregion
                                             break;
+                                        case "BoxHeaderReceiver":
                                         case "Box Header Receiver": // 
                                             #region Box Header Receiver
                                             aBoxHeader = new BoxHeader();
@@ -1168,6 +1178,7 @@ namespace SunspaceDealerDesktop
                                             #endregion
                                             break;
                                         case "Corner Post":
+                                        case "Corner":
                                             #region Corner Post
                                             Corner aCorner = new Corner();
                                             aCorner.LinearIndex = linearIndex;
@@ -1185,6 +1196,7 @@ namespace SunspaceDealerDesktop
                                             listOfLinearItems.Add(aCorner); //add the linear item to the list
                                             #endregion
                                             break;
+                                        case "ElectricalChase":
                                         case "Electrical Chase":
                                             #region ElectricalChase
                                             ElectricalChase aElectricalChase = new ElectricalChase();
@@ -1201,6 +1213,7 @@ namespace SunspaceDealerDesktop
                                             listOfLinearItems.Add(aElectricalChase);//add the linear item to the list
                                             #endregion
                                             break;
+                                        case "HChannel":
                                         case "H Channel":
                                             #region H Channel
                                             HChannel aHChannel = new HChannel();
@@ -1470,14 +1483,18 @@ namespace SunspaceDealerDesktop
             hidJsonObjects.Value = JsonConvert.SerializeObject(listOfWalls);
             PopulateDropdown(floorCount, roofCount);
             PopulateModOptions();
+            lnkUpdateSunroom.Attributes.Add("onclick", "updateSunroom()");
+            lnkSubmitSunroom.Attributes.Add("onclick", "submitSunroom()");
         }
 
         protected void PopulateDropdown(int floor = 0, int roof = 0)
         {
+            ListItem liLayout = new ListItem("Room Layout", "-1");
+            ddlSunroomObjects.Items.Add(liLayout);
             //if (roof != 0) //if there's a roof, add it 
             //{
-            //    ListItem liRoof = new ListItem("Roof", "Roof");
-            //    ddlSunroomObjects.Items.Add(liRoof);
+                //ListItem liRoof = new ListItem("Roof", "Roof");
+                //ddlSunroomObjects.Items.Add(liRoof);
             //}
             // add all the walls
             int i = 0;
@@ -1501,11 +1518,334 @@ namespace SunspaceDealerDesktop
         {
             foreach (Wall wall in listOfWalls)
             {
+
+                #region wall specifics
+
+                #region top wall specifics
+                //li tag to hold linear item type radio button and all its content
+                ModOptions.Controls.Add(new LiteralControl("<li id=wall" + wall.FirstItemIndex + " style=\"display:none; background-color:tan;\">"));
+
+                //Window type radio button
+                RadioButton radWall = new RadioButton();
+                radWall.ID = "radWall" + wall.FirstItemIndex; //Adding appropriate id to window type radio button
+                radWall.GroupName = "linearItemTypeRadios";         //Adding group name for all window types
+                //if (title == "Vinyl") radWall.Attributes.Add("onclick", "windowVinylStyleChanged(document.getElementById('MainContent_ddlWindowStyleVinyl').options[document.getElementById('MainContent_ddlWindowStyleVinyl').selectedIndex].value);");
+                //if (title == "Glass") radWall.Attributes.Add("onclick", "windowGlassStyleChanged(document.getElementById('MainContent_ddlWindowStyleGlass').options[document.getElementById('MainContent_ddlWindowStyleGlass').selectedIndex].value);");
+                //if (title == "Screen") radWall.Attributes.Add("onclick", "windowScreenStyleChanged(document.getElementById('MainContent_ddlWindowStyleScreen').options[document.getElementById('MainContent_ddlWindowStyleScreen').selectedIndex].value);");
+                radWall.Attributes.Add("onclick", "radWallClicked(" + wall.FirstItemIndex + ", " + wall.LastItemIndex + ", this.checked)"); //On click event to display the proper fields/rows
+
+
+                //Window type radio button label for clickable area
+                Label lblWallRadioLabel = new Label();
+                lblWallRadioLabel.AssociatedControlID = "radWall" + wall.FirstItemIndex;   //Tying this label to the radio button
+
+                //Window type radio button label text
+                Label lblWall = new Label();
+                lblWall.AssociatedControlID = "radWall" + wall.FirstItemIndex;    //Tying this label to the radio button
+                lblWall.Text = wall.Name;     //Displaying the proper texted based on current title variable
+
+
+                ModOptions.Controls.Add(radWall);        //Adding radio button control to placeholder ModOptions
+                ModOptions.Controls.Add(lblWallRadioLabel);   //Adding label control to placeholder ModOptions
+                ModOptions.Controls.Add(lblWall);        //Adding label control to placeholder ModOptions
+
+                #endregion
+
+                Table tblWallDetails = new Table();
+                tblWallDetails.ID = "tblWallDetails" + wall.FirstItemIndex; //Adding appropriate id to the table
+                tblWallDetails.Style.Add("display", "table");
+
+                
+
+                #region wall Name Model Orientation
+                TableRow wallNameModelOrientationRow = new TableRow();
+                wallNameModelOrientationRow.ID = "rowWallNameModelOrientation" + wall.FirstItemIndex;
+                //wallNameModelOrientationRow.Attributes.Add("style", "display:none;");
+                TableCell wallNameCell = new TableCell();
+                TableCell wallModelCell = new TableCell();
+                TableCell wallOrientationCell = new TableCell();
+
+                TextBox txtWallName = new TextBox();
+                txtWallName.ID = "txtWallName" + wall.FirstItemIndex;
+                txtWallName.CssClass = "txtField txtWindowInput";
+                txtWallName.Attributes.Add("maxlength", "3");
+                txtWallName.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                //txtWallName.Attributes.Add("onblur", "recalculate();");
+                txtWallName.ToolTip = "Enter the name of this wall and click 'Save' to save";
+                txtWallName.Text = wall.Name;
+
+                Label lblWallModel = new Label();
+                lblWallModel.ID = "lblWallModel" + wall.FirstItemIndex;
+                lblWallModel.Text = "Model " + wall.ModelType.Substring(wall.ModelType.Length - 3);
+
+                Label lblWallOrientation = new Label();
+                lblWallOrientation.ID = "lblWallOrientation" + wall.FirstItemIndex;
+                lblWallOrientation.Text = "Orientation: " + wall.Orientation;
+
+                wallNameCell.Controls.Add(txtWallName);
+                wallModelCell.Controls.Add(lblWallModel);
+                wallOrientationCell.Controls.Add(lblWallOrientation);
+
+                tblWallDetails.Rows.Add(wallNameModelOrientationRow);
+
+                wallNameModelOrientationRow.Cells.Add(wallNameCell);
+                wallNameModelOrientationRow.Cells.Add(wallModelCell);
+                wallNameModelOrientationRow.Cells.Add(wallOrientationCell);
+                #endregion
+
+                #region wall length
+
+                String[] splitLength = wall.Length.ToString().Split('.');
+                
+                TableRow wallLengthRow = new TableRow();
+                wallLengthRow.ID = "rowWallLength" + wall.FirstItemIndex;
+                //wallLengthRow.Attributes.Add("style", "display:none;");
+                TableCell wallLengthLBLCell = new TableCell();
+                TableCell wallLengthTXTCell = new TableCell();
+                TableCell wallLengthDDLCell = new TableCell();
+
+                Label wallLengthLBL = new Label();
+                wallLengthLBL.ID = "lblWallLength" + wall.FirstItemIndex;
+                wallLengthLBL.Text = "Wall Length:";
+
+                TextBox wallLengthTXT = new TextBox();
+                wallLengthTXT.ID = "txtWallLength" + wall.FirstItemIndex;
+                wallLengthTXT.CssClass = "txtField txtWindowInput";
+                wallLengthTXT.Attributes.Add("maxlength", "3");
+                wallLengthTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                //wallLengthTXT.Attributes.Add("onblur", "recalculate();");
+                wallLengthTXT.ToolTip = "Enter the length of your wall in whole numbers";
+                wallLengthTXT.Text = splitLength[0];
+
+                DropDownList inchHeight = new DropDownList();
+                List<ListItem> inches = new List<ListItem>(GlobalFunctions.FractionOptions(splitLength.Length == 1 ? null : "." + splitLength[1]));
+                for (int i = 0; i < inches.Count; i++)
+                {
+                    inchHeight.Items.Add(inches[i]);
+                }
+                inchHeight.ID = "ddlWallLength" + wall.FirstItemIndex;
+                //inchHeight.Attributes.Add("onchange", "recalculate();");
+                inchHeight.ToolTip = "Select the decimal value for your wall length";
+
+                wallLengthLBL.AssociatedControlID = "txtWallLength" + wall.FirstItemIndex;
+
+                wallLengthLBLCell.Controls.Add(wallLengthLBL);
+                wallLengthTXTCell.Controls.Add(wallLengthTXT);
+                wallLengthDDLCell.Controls.Add(inchHeight);
+
+                tblWallDetails.Rows.Add(wallLengthRow);
+
+                wallLengthRow.Cells.Add(wallLengthLBLCell);
+                wallLengthRow.Cells.Add(wallLengthTXTCell);
+                wallLengthRow.Cells.Add(wallLengthDDLCell);
+                #endregion
+
+                #region wall left height
+
+                String[] splitLeftHeight = wall.StartHeight.ToString().Split('.');
+
+                TableRow wallLeftHeightRow = new TableRow();
+                wallLeftHeightRow.ID = "rowWallLeftHeight" + wall.FirstItemIndex;
+                //wallLeftHeightRow.Attributes.Add("style", "display:none;");
+                TableCell wallLeftHeightLBLCell = new TableCell();
+                TableCell wallLeftHeightTXTCell = new TableCell();
+                TableCell wallLeftHeightDDLCell = new TableCell();
+
+                Label wallLeftHeightLBL = new Label();
+                wallLeftHeightLBL.ID = "lblWallLeftHeight" + wall.FirstItemIndex;
+                wallLeftHeightLBL.Text = "Wall LeftHeight:";
+
+                TextBox wallLeftHeightTXT = new TextBox();
+                wallLeftHeightTXT.ID = "txtWallLeftHeight" + wall.FirstItemIndex;
+                wallLeftHeightTXT.CssClass = "txtField txtWindowInput";
+                wallLeftHeightTXT.Attributes.Add("maxlength", "3");
+                wallLeftHeightTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                //wallLeftHeightTXT.Attributes.Add("onblur", "recalculate();");
+                wallLeftHeightTXT.ToolTip = "Enter the left height of your wall in whole numbers";
+                wallLeftHeightTXT.Text = splitLeftHeight[0];
+
+                inchHeight = new DropDownList();
+                inches = new List<ListItem>(GlobalFunctions.FractionOptions(splitLeftHeight.Length == 1 ? null : "."+splitLeftHeight[1]));
+                for (int i = 0; i < inches.Count; i++)
+                {
+                    inchHeight.Items.Add(inches[i]);
+                }
+                inchHeight.ID = "ddlWallLeftHeight" + wall.FirstItemIndex;
+                //inchHeight.Attributes.Add("onchange", "recalculate();");
+                inchHeight.ToolTip = "Select the decimal value for your wall left height";
+
+                wallLeftHeightLBL.AssociatedControlID = "txtWallLeftHeight" + wall.FirstItemIndex;
+
+                wallLeftHeightLBLCell.Controls.Add(wallLeftHeightLBL);
+                wallLeftHeightTXTCell.Controls.Add(wallLeftHeightTXT);
+                wallLeftHeightDDLCell.Controls.Add(inchHeight);
+
+                tblWallDetails.Rows.Add(wallLeftHeightRow);
+
+                wallLeftHeightRow.Cells.Add(wallLeftHeightLBLCell);
+                wallLeftHeightRow.Cells.Add(wallLeftHeightTXTCell);
+                wallLeftHeightRow.Cells.Add(wallLeftHeightDDLCell);
+                #endregion
+
+                #region wall right height
+
+                String[] splitRightHeight = wall.EndHeight.ToString().Split('.');
+
+                TableRow wallRightHeightRow = new TableRow();
+                wallRightHeightRow.ID = "rowWallRightHeight" + wall.FirstItemIndex;
+                //wallRightHeightRow.Attributes.Add("style", "display:none;");
+                TableCell wallRightHeightLBLCell = new TableCell();
+                TableCell wallRightHeightTXTCell = new TableCell();
+                TableCell wallRightHeightDDLCell = new TableCell();
+
+                Label wallRightHeightLBL = new Label();
+                wallRightHeightLBL.ID = "lblWallRightHeight" + wall.FirstItemIndex;
+                wallRightHeightLBL.Text = "Right Height:";
+
+                TextBox wallRightHeightTXT = new TextBox();
+                wallRightHeightTXT.ID = "txtWallRightHeight" + wall.FirstItemIndex;
+                wallRightHeightTXT.CssClass = "txtField txtWindowInput";
+                wallRightHeightTXT.Attributes.Add("maxlength", "3");
+                wallRightHeightTXT.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                wallRightHeightTXT.Text = splitRightHeight[0];
+                //wallRightHeightTXT.Attributes.Add("onblur", "recalculate();");
+                wallRightHeightTXT.ToolTip = "Enter the right height of your wall in whole numbers";
+
+                inchHeight = new DropDownList();
+                inches = new List<ListItem>(GlobalFunctions.FractionOptions(splitRightHeight.Length == 1 ? null : "."+splitRightHeight[1]));
+                for (int i = 0; i < inches.Count; i++)
+                {
+                    inchHeight.Items.Add(inches[i]);
+                }
+                inchHeight.ID = "ddlWallRightHeight" + wall.FirstItemIndex;
+                //inchHeight.Attributes.Add("onchange", "recalculate();");
+                inchHeight.ToolTip = "Select the decimal value for your wall right height";
+
+                wallRightHeightLBL.AssociatedControlID = "txtWallRightHeight" + wall.FirstItemIndex;
+
+                wallRightHeightLBLCell.Controls.Add(wallRightHeightLBL);
+                wallRightHeightTXTCell.Controls.Add(wallRightHeightTXT);
+                wallRightHeightDDLCell.Controls.Add(inchHeight);
+
+                tblWallDetails.Rows.Add(wallRightHeightRow);
+
+                wallRightHeightRow.Cells.Add(wallRightHeightLBLCell);
+                wallRightHeightRow.Cells.Add(wallRightHeightTXTCell);
+                wallRightHeightRow.Cells.Add(wallRightHeightDDLCell);
+
+                #endregion
+
+                #region fire protection
+                TableRow wallFireProtectionRow = new TableRow();
+                wallFireProtectionRow.ID = "rowWallFireProtection" + wall.FirstItemIndex;
+                //wallFireProtectionRow.Attributes.Add("style", "display:none;");
+                TableCell wallFireProtectionLBLCell = new TableCell();
+                TableCell wallFireProtectionYesCell = new TableCell();
+                TableCell wallFireProtectionNoCell = new TableCell();
+                wallFireProtectionYesCell.ToolTip = "Click to add fire protection on this wall";
+                wallFireProtectionNoCell.ToolTip = "Click to remove fire protection from this wall";
+
+                Label lblFireProtection = new Label();
+                lblFireProtection.ID = "lblFireProtection" + wall.FirstItemIndex;
+                lblFireProtection.Text = "Fire Protection:";
+
+                wallFireProtectionLBLCell.Controls.Add(lblFireProtection);
+
+                #region fire protection yes
+
+                Label lblWallFireProtectionRadioYes = new Label();
+                lblWallFireProtectionRadioYes.ID = "lblWallFireProtectionRadioYes" + wall.FirstItemIndex;
+
+                Label lblWallFireProtectionLabelYes = new Label();
+                lblWallFireProtectionLabelYes.ID = "lblWallFireProtectionLabelYes" + wall.FirstItemIndex;
+                lblWallFireProtectionLabelYes.Text = "Yes";
+
+                RadioButton radWallFireProtectionYes = new RadioButton();
+                radWallFireProtectionYes.ID = "radWallFireProtectionYes" + wall.FirstItemIndex;
+                radWallFireProtectionYes.Attributes.Add("value", "true");
+                radWallFireProtectionYes.GroupName = "FireProtection" + wall.FirstItemIndex;
+                radWallFireProtectionYes.Checked = wall.FireProtection ? true : false;
+                //radWallFireProtectionYes.Attributes.Add("onclick", "document.getElementById('MainContent_rowWindowScreenOptionsVinyl').style.display = 'table-row';;");
+
+                lblWallFireProtectionRadioYes.AssociatedControlID = "radWallFireProtectionYes" + wall.FirstItemIndex;
+                lblWallFireProtectionLabelYes.AssociatedControlID = "radWallFireProtectionYes" + wall.FirstItemIndex;
+
+                wallFireProtectionYesCell.Controls.Add(radWallFireProtectionYes);
+                wallFireProtectionYesCell.Controls.Add(lblWallFireProtectionRadioYes);
+                wallFireProtectionYesCell.Controls.Add(lblWallFireProtectionLabelYes);
+
+                #endregion
+
+                #region fire protection no
+
+                Label lblWallFireProtectionRadioNo = new Label();
+                lblWallFireProtectionRadioNo.ID = "lblWallFireProtectionRadioNo" + wall.FirstItemIndex;
+
+                Label lblWallFireProtectionLabelNo = new Label();
+                lblWallFireProtectionLabelNo.ID = "lblWallFireProtectionLabelNo" + wall.FirstItemIndex;
+                lblWallFireProtectionLabelNo.Text = "No";
+
+                RadioButton radWallFireProtectionNo = new RadioButton();
+                radWallFireProtectionNo.ID = "radWallFireProtectionNo" + wall.FirstItemIndex;
+                radWallFireProtectionNo.Attributes.Add("value", "false");
+                radWallFireProtectionNo.GroupName = "FireProtection" + wall.FirstItemIndex;
+                radWallFireProtectionNo.Checked = wall.FireProtection ? false : true;
+                //radWallFireProtectionNo.Attributes.Add("onclick", "document.getElementById('MainContent_rowWindowScreenOptionsVinyl').style.display = 'table-row';;");
+
+                lblWallFireProtectionRadioNo.AssociatedControlID = "radWallFireProtectionNo" + wall.FirstItemIndex;
+                lblWallFireProtectionLabelNo.AssociatedControlID = "radWallFireProtectionNo" + wall.FirstItemIndex;
+
+                wallFireProtectionNoCell.Controls.Add(radWallFireProtectionNo);
+                wallFireProtectionNoCell.Controls.Add(lblWallFireProtectionRadioNo);
+                wallFireProtectionNoCell.Controls.Add(lblWallFireProtectionLabelNo);
+
+                #endregion
+
+                tblWallDetails.Rows.Add(wallFireProtectionRow);
+
+                wallFireProtectionRow.Cells.Add(wallFireProtectionLBLCell);
+                wallFireProtectionRow.Cells.Add(wallFireProtectionYesCell);
+                wallFireProtectionRow.Cells.Add(wallFireProtectionNoCell);
+
+                #endregion
+
+
+                #region bottom wall specifics
+
+                //Adding literal control div tag to hold the table, add to ModOptions placeholder
+                ModOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\" id=\"wall_" + wall.FirstItemIndex + "\">"));
+
+                ModOptions.Controls.Add(new LiteralControl("<ul>"));
+
+                //Adding literal control li to keep proper page look and format
+                ModOptions.Controls.Add(new LiteralControl("<li>"));
+
+                //Adding table to placeholder ModOptions
+                ModOptions.Controls.Add(tblWallDetails);
+
+                //Closing necessary tags
+                ModOptions.Controls.Add(new LiteralControl("</li>"));
+
+                ModOptions.Controls.Add(new LiteralControl("</ul>"));
+
+                ModOptions.Controls.Add(new LiteralControl("</div>"));
+
+                ModOptions.Controls.Add(new LiteralControl("</li>"));
+
+
+                #endregion
+
+
+                #endregion
+
+                ///////////////////////////////////////////////////////////////////////////////////////////////
                 foreach (LinearItem li in wall.LinearItems)
                 {
-                    //li tag to hold linear item type radio button and all its content
-                    ModOptions.Controls.Add(new LiteralControl("<li id=li"+li.LinearIndex+" style=\"display:none\">"));
+                        //li tag to hold linear item type radio button and all its content
+                        ModOptions.Controls.Add(new LiteralControl("<li id=li" + li.LinearIndex + " style=\"display:none;\">"));
                     
+                    #region li type
+
                     //Window type radio button
                     RadioButton typeRadio = new RadioButton();
                     typeRadio.ID = "radType" + li.LinearIndex; //Adding appropriate id to window type radio button
@@ -1514,7 +1854,7 @@ namespace SunspaceDealerDesktop
                     //if (title == "Glass") typeRadio.Attributes.Add("onclick", "windowGlassStyleChanged(document.getElementById('MainContent_ddlWindowStyleGlass').options[document.getElementById('MainContent_ddlWindowStyleGlass').selectedIndex].value);");
                     //if (title == "Screen") typeRadio.Attributes.Add("onclick", "windowScreenStyleChanged(document.getElementById('MainContent_ddlWindowStyleScreen').options[document.getElementById('MainContent_ddlWindowStyleScreen').selectedIndex].value);");
                     //typeRadio.Attributes.Add("onclick", "typeRowsDisplayed('" + title + "')"); //On click event to display the proper fields/rows
-
+                    //typeRadio.Attributes.Add("onclick", "radModClicked(" + li.LinearIndex + ", 3, false)"); //On click event to display the proper fields/rows
 
                     //Window type radio button label for clickable area
                     Label typeLabelRadio = new Label();
@@ -1532,22 +1872,71 @@ namespace SunspaceDealerDesktop
 
                     
                     //New instance of a table for every window type
-                    Table tblModDetails = new Table();
+                    Table tblLiDetails = new Table();
 
-                    tblModDetails.ID = "tblWindowDetails" + li.LinearIndex; //Adding appropriate id to the table
+                    tblLiDetails.ID = "tblLiDetails" + li.LinearIndex; //Adding appropriate id to the table
                     //tblWindowDetails.CssClass = "tblTextFields";                  //Adding CssClass to the table for styling
                     //tblWindowDetails.Attributes.Add("style", "display: block");
-                    tblModDetails.Style.Add("display", "table");
+                    tblLiDetails.Style.Add("display", "table");
 
+                    #endregion
 
+                    #region li length
+                    TableRow liLengthRow = new TableRow();
+                    liLengthRow.ID = "rowLiLength" + li.LinearIndex;
+                    //liLengthRow.Attributes.Add("style", "display:none;");
+                    TableCell liLengthLBLCell = new TableCell();
+                    
+                    Label lblLiLength = new Label();
+                    lblLiLength.ID = "lblLiLength" + li.LinearIndex;
+                    lblLiLength.Text = "Length: " + li.Length;
 
+                    liLengthLBLCell.Controls.Add(lblLiLength);
+                    
+                    tblLiDetails.Rows.Add(liLengthRow);
 
-                    /////////////////////////////////////////////
-                    // rows and cells go here
-                    /////////////////////////////////////////////
+                    liLengthRow.Cells.Add(liLengthLBLCell);
+                    #endregion
 
+                    #region li LeftHeight
+                    TableRow liLeftHeightRow = new TableRow();
+                    liLeftHeightRow.ID = "rowLiLeftHeight" + li.LinearIndex;
+                    //liLeftHeightRow.Attributes.Add("style", "display:none;");
+                    TableCell liLeftHeightLBLCell = new TableCell();
 
+                    Label lblLiLeftHeight = new Label();
+                    lblLiLeftHeight.ID = "lblLiLeftHeight" + li.LinearIndex;
+                    lblLiLeftHeight.Text = "LeftHeight: " + li.StartHeight;
 
+                    liLeftHeightLBLCell.Controls.Add(lblLiLeftHeight);
+
+                    tblLiDetails.Rows.Add(liLeftHeightRow);
+
+                    liLeftHeightRow.Cells.Add(liLeftHeightLBLCell);
+                    #endregion
+
+                    #region li RightHeight
+                    TableRow liRightHeightRow = new TableRow();
+                    liRightHeightRow.ID = "rowLiRightHeight" + li.LinearIndex;
+                    //liRightHeightRow.Attributes.Add("style", "display:none;");
+                    TableCell liRightHeightLBLCell = new TableCell();
+
+                    Label lblLiRightHeight = new Label();
+                    lblLiRightHeight.ID = "lblLiRightHeight" + li.LinearIndex;
+                    lblLiRightHeight.Text = "RightHeight: " + li.EndHeight;
+
+                    liRightHeightLBLCell.Controls.Add(lblLiRightHeight);
+
+                    tblLiDetails.Rows.Add(liRightHeightRow);
+
+                    liRightHeightRow.Cells.Add(liRightHeightLBLCell);
+                    #endregion
+
+                    //////////////////////////////////////////
+                    // more li related attribute rows here  //
+                    //////////////////////////////////////////
+
+                    #region bottom li specifics
 
                     //Adding literal control div tag to hold the table, add to ModOptions placeholder
                     ModOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\" id=\"div_" + li.LinearIndex + "\">"));
@@ -1558,7 +1947,7 @@ namespace SunspaceDealerDesktop
                     ModOptions.Controls.Add(new LiteralControl("<li>"));
 
                     //Adding table to placeholder ModOptions
-                    ModOptions.Controls.Add(tblModDetails);
+                    ModOptions.Controls.Add(tblLiDetails);
 
                     //Closing necessary tags
                     ModOptions.Controls.Add(new LiteralControl("</li>"));
@@ -1568,6 +1957,285 @@ namespace SunspaceDealerDesktop
                     ModOptions.Controls.Add(new LiteralControl("</div>"));
 
                     ModOptions.Controls.Add(new LiteralControl("</li>"));
+
+                    #endregion
+
+
+                    if (li.ItemType.ToLower() == "mod")
+                    {
+                        Mod mod = (Mod)li; //convert linear item into a mod
+
+                        typeRadio.Attributes.Add("onclick", "radModClicked(" + mod.LinearIndex + ", " + mod.ModularItems.Count() + ", this.checked)"); //On click event to display the proper fields/rows
+                        
+                        #region sunshade
+                        TableRow liSunshadeRow = new TableRow();
+                        liSunshadeRow.ID = "rowLiSunshade" + mod.LinearIndex;
+                        //liSunshadeRow.Attributes.Add("style", "display:none;");
+                        TableCell liSunshadeLBLCell = new TableCell();
+                        TableCell liSunshadeSelectedCell = new TableCell();
+                        TableCell liSunshadeNoCell = new TableCell();
+                        liSunshadeSelectedCell.ToolTip = "Click to add/remove fire protection on this li";
+                        liSunshadeNoCell.ToolTip = "Click to remove fire protection from this li";
+
+                        Label lblSunshade = new Label();
+                        lblSunshade.ID = "lblSunshade" + mod.LinearIndex;
+                        lblSunshade.Text = "Sunshade:";
+
+                        liSunshadeLBLCell.Controls.Add(lblSunshade);
+
+
+                        #region sunshade selected
+
+                        Label lblLiSunshadeCheckboxSelected = new Label();
+                        lblLiSunshadeCheckboxSelected.ID = "lblLiSunshadeCheckboxSelected" + mod.LinearIndex;
+
+                        Label lblLiSunshadeLabelSelected = new Label();
+                        lblLiSunshadeLabelSelected.ID = "lblLiSunshadeLabelSelected" + mod.LinearIndex;
+                        lblLiSunshadeLabelSelected.Text = "Click to add/remove Sunshade";
+
+                        CheckBox chkLiSunshadeSelected = new CheckBox();
+                        chkLiSunshadeSelected.ID = "chkLiSunshadeSelected" + mod.LinearIndex;
+                        //chkLiSunshadeSelected.Attributes.Add("value", "true");
+                        chkLiSunshadeSelected.Attributes.Add("onclick", "sunshadeOptionChanged(this.checked, " + mod.LinearIndex + ");");
+                        chkLiSunshadeSelected.Checked = mod.Sunshade ? true : false;
+                        
+                        lblLiSunshadeCheckboxSelected.AssociatedControlID = "chkLiSunshadeSelected" + mod.LinearIndex;
+                        lblLiSunshadeLabelSelected.AssociatedControlID = "chkLiSunshadeSelected" + mod.LinearIndex;
+
+                        liSunshadeSelectedCell.Controls.Add(chkLiSunshadeSelected);
+                        liSunshadeSelectedCell.Controls.Add(lblLiSunshadeCheckboxSelected);
+                        liSunshadeSelectedCell.Controls.Add(lblLiSunshadeLabelSelected);
+
+
+                        #endregion
+
+
+                        tblLiDetails.Rows.Add(liSunshadeRow);
+
+                        liSunshadeRow.Cells.Add(liSunshadeLBLCell);
+                        liSunshadeRow.Cells.Add(liSunshadeSelectedCell);
+                        
+
+                        #endregion
+
+                        #region sunshade chain
+                        TableRow liSunshadeChainRow = new TableRow();
+                        liSunshadeChainRow.ID = "rowLiSunshadeChain" + mod.LinearIndex;
+                        if (!mod.Sunshade)
+                            liSunshadeChainRow.Attributes.Add("style", "display:none;");
+                        TableCell liSunshadeChainLBLCell = new TableCell();
+                        TableCell liSunshadeChainTXTCell = new TableCell();
+                        
+
+                        Label lblLiSunshadeChain = new Label();
+                        lblLiSunshadeChain.ID = "lblLiSunshadeChain" + mod.LinearIndex;
+                        lblLiSunshadeChain.Text = "Sunshade Chain:";
+
+                        TextBox txtLiSunshadeChain = new TextBox();
+                        txtLiSunshadeChain.ID = "txtLiSunshadeChain" + mod.LinearIndex;
+                        txtLiSunshadeChain.CssClass = "txtField txtWindowInput";
+                        txtLiSunshadeChain.Attributes.Add("maxlength", "3");
+                        txtLiSunshadeChain.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                        //txtLiSunshadeChain.Attributes.Add("onblur", "recalculate();");
+                        txtLiSunshadeChain.ToolTip = "Enter sunshade chain type";
+                        txtLiSunshadeChain.Text = mod.SunshadeChain;
+
+                        liSunshadeChainLBLCell.Controls.Add(lblLiSunshadeChain);
+                        liSunshadeChainTXTCell.Controls.Add(txtLiSunshadeChain);
+
+                        tblLiDetails.Rows.Add(liSunshadeChainRow);
+
+                        liSunshadeChainRow.Cells.Add(liSunshadeChainLBLCell);
+                        liSunshadeChainRow.Cells.Add(liSunshadeChainTXTCell);
+                        #endregion
+
+                        #region sunshade fabric
+                        TableRow liSunshadeFabricRow = new TableRow();
+                        liSunshadeFabricRow.ID = "rowLiSunshadeFabric" + mod.LinearIndex;
+                        if (!mod.Sunshade)
+                            liSunshadeFabricRow.Attributes.Add("style", "display:none;");
+                        TableCell liSunshadeFabricLBLCell = new TableCell();
+                        TableCell liSunshadeFabricTXTCell = new TableCell();
+
+
+                        Label lblLiSunshadeFabric = new Label();
+                        lblLiSunshadeFabric.ID = "lblLiSunshadeFabric" + mod.LinearIndex;
+                        lblLiSunshadeFabric.Text = "Sunshade Fabric:";
+
+                        TextBox txtLiSunshadeFabric = new TextBox();
+                        txtLiSunshadeFabric.ID = "txtLiSunshadeFabric" + mod.LinearIndex;
+                        txtLiSunshadeFabric.CssClass = "txtField txtWindowInput";
+                        txtLiSunshadeFabric.Attributes.Add("maxlength", "3");
+                        txtLiSunshadeFabric.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                        //txtLiSunshadeFabric.Attributes.Add("onblur", "recalculate();");
+                        txtLiSunshadeFabric.ToolTip = "Enter sunshade fabric type";
+                        txtLiSunshadeFabric.Text = mod.SunshadeFabric;
+
+                        liSunshadeFabricLBLCell.Controls.Add(lblLiSunshadeFabric);
+                        liSunshadeFabricTXTCell.Controls.Add(txtLiSunshadeFabric);
+
+                        tblLiDetails.Rows.Add(liSunshadeFabricRow);
+
+                        liSunshadeFabricRow.Cells.Add(liSunshadeFabricLBLCell);
+                        liSunshadeFabricRow.Cells.Add(liSunshadeFabricTXTCell);
+                        #endregion
+
+                        #region sunshade openness
+                        TableRow liSunshadeOpennessRow = new TableRow();
+                        liSunshadeOpennessRow.ID = "rowLiSunshadeOpenness" + mod.LinearIndex;
+                        if (!mod.Sunshade)
+                            liSunshadeOpennessRow.Attributes.Add("style", "display:none;");
+                        TableCell liSunshadeOpennessLBLCell = new TableCell();
+                        TableCell liSunshadeOpennessTXTCell = new TableCell();
+
+
+                        Label lblLiSunshadeOpenness = new Label();
+                        lblLiSunshadeOpenness.ID = "lblLiSunshadeOpenness" + mod.LinearIndex;
+                        lblLiSunshadeOpenness.Text = "Sunshade Openness:";
+
+                        TextBox txtLiSunshadeOpenness = new TextBox();
+                        txtLiSunshadeOpenness.ID = "txtLiSunshadeOpenness" + mod.LinearIndex;
+                        txtLiSunshadeOpenness.CssClass = "txtField txtWindowInput";
+                        txtLiSunshadeOpenness.Attributes.Add("maxlength", "3");
+                        txtLiSunshadeOpenness.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                        //txtLiSunshadeOpenness.Attributes.Add("onblur", "recalculate();");
+                        txtLiSunshadeOpenness.ToolTip = "Enter sunshade openness type";
+                        txtLiSunshadeOpenness.Text = mod.SunshadeOpenness;
+
+                        liSunshadeOpennessLBLCell.Controls.Add(lblLiSunshadeOpenness);
+                        liSunshadeOpennessTXTCell.Controls.Add(txtLiSunshadeOpenness);
+
+                        tblLiDetails.Rows.Add(liSunshadeOpennessRow);
+
+                        liSunshadeOpennessRow.Cells.Add(liSunshadeOpennessLBLCell);
+                        liSunshadeOpennessRow.Cells.Add(liSunshadeOpennessTXTCell);
+                        #endregion
+
+                        #region sunshade valance
+                        TableRow liSunshadeValanceRow = new TableRow();
+                        liSunshadeValanceRow.ID = "rowLiSunshadeValance" + mod.LinearIndex;
+                        if (!mod.Sunshade)
+                            liSunshadeValanceRow.Attributes.Add("style", "display:none;");
+                        TableCell liSunshadeValanceLBLCell = new TableCell();
+                        TableCell liSunshadeValanceTXTCell = new TableCell();
+
+
+                        Label lblLiSunshadeValance = new Label();
+                        lblLiSunshadeValance.ID = "lblLiSunshadeValance" + mod.LinearIndex;
+                        lblLiSunshadeValance.Text = "Sunshade Valance:";
+
+                        TextBox txtLiSunshadeValance = new TextBox();
+                        txtLiSunshadeValance.ID = "txtLiSunshadeValance" + mod.LinearIndex;
+                        txtLiSunshadeValance.CssClass = "txtField txtWindowInput";
+                        txtLiSunshadeValance.Attributes.Add("maxlength", "3");
+                        txtLiSunshadeValance.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                        //txtLiSunshadeValance.Attributes.Add("onblur", "recalculate();");
+                        txtLiSunshadeValance.ToolTip = "Enter sunshade valance type";
+                        txtLiSunshadeValance.Text = mod.SunshadeValance;
+
+                        liSunshadeValanceLBLCell.Controls.Add(lblLiSunshadeValance);
+                        liSunshadeValanceTXTCell.Controls.Add(txtLiSunshadeValance);
+
+                        tblLiDetails.Rows.Add(liSunshadeValanceRow);
+
+                        liSunshadeValanceRow.Cells.Add(liSunshadeValanceLBLCell);
+                        liSunshadeValanceRow.Cells.Add(liSunshadeValanceTXTCell);
+                        #endregion
+
+
+                        foreach (ModuleItem modularItem in mod.ModularItems)
+                        {
+
+                            //li tag to hold linear item type radio button and all its content
+                            ModOptions.Controls.Add(new LiteralControl("<li id=mod" + mod.LinearIndex + modularItem.ModuleIndex + " >"));
+
+                            #region mod type
+
+                            //Window type radio button
+                            RadioButton modTypeRadio = new RadioButton();
+                            modTypeRadio.ID = "modTypeRadio" + mod.LinearIndex + modularItem.ModuleIndex; //Adding appropriate id to window type radio button
+                            modTypeRadio.GroupName = "linearItemTypeRadios";         //Adding group name for all window types
+                            //if (title == "Vinyl") modTypeRadio.Attributes.Add("onclick", "windowVinylStyleChanged(document.getElementById('MainContent_ddlWindowStyleVinyl').options[document.getElementById('MainContent_ddlWindowStyleVinyl').selectedIndex].value);");
+                            //if (title == "Glass") modTypeRadio.Attributes.Add("onclick", "windowGlassStyleChanged(document.getElementById('MainContent_ddlWindowStyleGlass').options[document.getElementById('MainContent_ddlWindowStyleGlass').selectedIndex].value);");
+                            //if (title == "Screen") modTypeRadio.Attributes.Add("onclick", "windowScreenStyleChanged(document.getElementById('MainContent_ddlWindowStyleScreen').options[document.getElementById('MainContent_ddlWindowStyleScreen').selectedIndex].value);");
+                            //modTypeRadio.Attributes.Add("onclick", "typeRowsDisplayed('" + title + "')"); //On click event to display the proper fields/rows
+
+
+                            //Window type radio button label for clickable area
+                            Label modTypeLabelRadio = new Label();
+                            modTypeLabelRadio.AssociatedControlID = "modTypeRadio" + mod.LinearIndex + modularItem.ModuleIndex;   //Tying this label to the radio button
+
+                            //Window type radio button label text
+                            Label modTypeLabel = new Label();
+                            modTypeLabel.AssociatedControlID = "modTypeRadio" + mod.LinearIndex + modularItem.ModuleIndex;    //Tying this label to the radio button
+                            modTypeLabel.Text = modularItem.ItemType;     //Displaying the proper texted based on current title variable
+
+
+                            ModOptions.Controls.Add(modTypeRadio);        //Adding radio button control to placeholder ModOptions
+                            ModOptions.Controls.Add(modTypeLabelRadio);   //Adding label control to placeholder ModOptions
+                            ModOptions.Controls.Add(modTypeLabel);        //Adding label control to placeholder ModOptions
+
+
+                            //New instance of a table for every window type
+                            Table tblModDetails = new Table();
+
+                            tblModDetails.ID = "tblModDetails" + mod.LinearIndex + modularItem.ModuleIndex; //Adding appropriate id to the table
+                            //tblWindowDetails.CssClass = "tblTextFields";                  //Adding CssClass to the table for styling
+                            //tblWindowDetails.Attributes.Add("style", "display: block");
+                            tblModDetails.Style.Add("display", "table");
+
+                            #endregion
+
+                            switch (mod.ItemType.ToLower())
+                            {
+                                case "panel":
+                                case "kneewall":
+                                    break;
+                                case "transom":
+                                case "window":
+                                    break;
+                                case "door":
+                                    break;
+                                case "box header":
+                                case "boxheader":
+                                    break;
+                                case "receiver":
+                                case "receiever":
+                                    break;
+                            }
+
+                            //Adding literal control div tag to hold the table, add to ModOptions placeholder
+                            ModOptions.Controls.Add(new LiteralControl("<div class=\"toggleContent\" id=\"div_" + mod.LinearIndex + modularItem.ModuleIndex + "\">"));
+
+                            ModOptions.Controls.Add(new LiteralControl("<ul>"));
+
+                            //Adding literal control li to keep proper page look and format
+                            ModOptions.Controls.Add(new LiteralControl("<li>"));
+
+                            //Adding table to placeholder ModOptions
+                            ModOptions.Controls.Add(tblModDetails);
+
+                            //Closing necessary tags
+                            ModOptions.Controls.Add(new LiteralControl("</li>"));
+
+                            ModOptions.Controls.Add(new LiteralControl("</ul>"));
+
+                            ModOptions.Controls.Add(new LiteralControl("</div>"));
+
+                            ModOptions.Controls.Add(new LiteralControl("</li>"));
+                        }
+                    }
+
+                     
+
+                    /////////////////////////////////////////////
+                    // rows and cells go here
+                    /////////////////////////////////////////////
+
+
+
+
+
 
                 }
             }

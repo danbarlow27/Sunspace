@@ -18,7 +18,16 @@ namespace SunspaceDealerDesktop
             if (Session["loggedIn"] == null)
             {
                 Response.Redirect("Login.aspx");
-            }   
+            }
+
+            if (Session["newProjectPrefabFloor"].ToString() == "Yes")
+            {
+                lblFinished.Text = "Wall details complete, next step: Floor";
+            }
+            else
+            {
+                lblFinished.Text = "Wall details complete, next step: Completion";
+            }
 
             ListItem lst0 = new ListItem("---", "0", true); //0, i.e. no decimal value, selected by default
             ListItem lst18 = new ListItem("1/8", ".125");
@@ -194,6 +203,13 @@ namespace SunspaceDealerDesktop
                 ddlJointSetbackInches.Items.Add(lst58);
                 ddlJointSetbackInches.Items.Add(lst34);
                 ddlJointSetbackInches.Items.Add(lst78);                
+                #endregion
+
+
+                #region Inch Dropdown Selection
+                ddlJointSetbackInches.SelectedValue = ".5";
+                ddlLedgerSetbackInches.SelectedValue = ".5";
+                ddlSidesSetbackInches.SelectedValue = ".75";
                 #endregion
             }
 

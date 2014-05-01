@@ -1,4 +1,4 @@
-﻿<%@ Page Title="New Project - Project Details" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="WizardWallsAndMods.aspx.cs" Inherits="SunspaceDealerDesktop.WizardWallsAndMods" %>
+﻿<%@ Page Title="New Project - Project Details" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="WizardWallsAndMods.aspx.cs" Inherits="SunspaceDealerDesktop.WizardWallsAndMods" EnableEventValidation="false" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script src="Scripts/GlobalFunctions.js"></script>
@@ -56,6 +56,7 @@
         function createDoorObject(wallNumber, type) {
             //Object variable to hold the current door being built
             var framedDoor;
+            var firstProposed = true;
 
             //Switch case to instantiate, object variable to the appropriate type
             switch (type) {
@@ -402,7 +403,7 @@
             framedDoor.mheight = dimensions.height + 2;
             framedDoor.mwidth = dimensions.width + 2;
 
-            framedDoor.kickplate = <%= Session["newProjectKneewallHeight"] %>;
+            framedDoor.kickplate = document.getElementById("<%=hidKneewallHeight.ClientID%>").value;
             /*Insert the door with the appropriate variables based on drop down selected index*/
             if (framedDoor.position === "Left") {
                 if (framedDoor.boxHeader == "Left" || framedDoor.boxHeader == "Both") {
@@ -410,6 +411,13 @@
                 }
                 else {
                     framedDoor.position = walls[wallNumber].leftFiller;
+                }
+
+                if (firstProposed == true)
+                {
+                    firstProposed = false;
+                    framedDoor.position += 1;
+                    console.log("First Proposed Wall");
                 }
             }
             else if (framedDoor.position === "Right") {
@@ -419,10 +427,18 @@
                 else {
                     framedDoor.position = walls[wallNumber].length - framedDoor.mwidth - walls[wallNumber].rightFiller;
                 }
+
+                console.log("Checking for last wall: does " + wallNumber + " equal " + '<%=strWalls.Count()%>' + "?")
+                if (wallNumber == '<%=strWalls.Count()%>')
+                {
+                    framedDoor.position -= 1;
+                    console.log("Last Wall");
+                }
             }
             else if (framedDoor.position === "Center") {
                 framedDoor.position = validateDecimal(walls[wallNumber].length / 2 - framedDoor.mwidth / 2);
             }
+
             //Return framedDoor object
             console.log(framedDoor.position);
             return framedDoor;
@@ -715,7 +731,6 @@
                 return antiProjection;
             else 
                 return projection;
-
         }
 
         /**
@@ -1574,10 +1589,15 @@
                 }
             }
 
-            //Validate custom kickplate
+            <%--//Validate custom kickplate
             for (var i = 0; i < coordList.length; i++)
             {
-                if (isNaN(document.getElementById('MainContent_rowDoorCustomKickplate' + i + "Cabana").value))
+                console.log(document.getElementById('MainContent_rowDoorCustomKickplate' + i + "Cabana").value);
+                if (document.getElementById('MainContent_rowDoorCustomKickplate' + i + "Cabana").value == null)
+                {
+                    document.getElementById(<%=txtErrorMessage.ClientID%>).value = "Kickplate must be a valid number.";
+                }
+                else if (isNaN(document.getElementById('MainContent_rowDoorCustomKickplate' + i + "Cabana").value))
                 {
                     document.getElementById("<%=txtErrorMessage.ClientID%>").value = "Kickplates must be a valid number.";                   
                 }
@@ -1585,9 +1605,59 @@
                 {
                     document.getElementById("<%=txtErrorMessage.ClientID%>").value = "Kickplates must equal 4\" or be greater than or equal to 10\"";     
                 }
-            }
+            }--%>
         }
         
+        function newProjectCheckQuestion4() {
+            document.getElementById("<%=txtErrorMessage.ClientID%>").value = "";
+            document.getElementById('<%=btnQuestion4.ClientID%>').disabled = true;
+
+            //Only run validation if a number is entered and values selected
+            if (document.getElementById("<%=txtKneewallHeight.ClientID%>").value != "") {
+
+                //only requirement on height at this moment is that it is a valid number
+                if (isNaN(document.getElementById("<%=txtKneewallHeight.ClientID%>").value)) {
+                    //kneewall height error handling
+                    document.getElementById("<%=txtErrorMessage.ClientID%>").value = "The kneewall height you entered is not a valid number.";
+                }
+                else
+                {
+                    if (document.getElementById("<%=ddlKneewallType.ClientID%>").value == "Glass")
+                    {
+                        if(document.getElementById("<%=txtKneewallHeight.ClientID%>").value <20)
+                        {
+                            document.getElementById("<%=txtErrorMessage.ClientID%>").value = "Glass kneewalls must be 20 inches or greater in height.";
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            else {
+                document.getElementById("<%=txtErrorMessage.ClientID%>").value = "You must enter a kneewall height to proceed.";
+            }     
+            
+            //if everything was valid it will say =true, so enable button and update pager
+            if (document.getElementById("<%=txtErrorMessage.ClientID%>").value == "") {
+                document.getElementById("<%=hidTransomType.ClientID%>").value = document.getElementById("<%=ddlTransomType.ClientID%>").value;
+                document.getElementById("<%=hidFramingColour.ClientID%>").value = document.getElementById("<%=ddlFramingColour.ClientID%>").value;
+                document.getElementById("<%=hidInteriorSkin.ClientID%>").value = document.getElementById("<%=ddlInteriorSkin.ClientID%>").value;
+                document.getElementById("<%=hidExteriorSkin.ClientID%>").value = document.getElementById("<%=ddlExteriorSkin.ClientID%>").value;
+                document.getElementById("<%=hidKneewallHeight.ClientID%>").value = document.getElementById("<%=txtKneewallHeight.ClientID%>").value;
+                document.getElementById("<%=hidKneewallType.ClientID%>").value = document.getElementById("<%=ddlKneewallType.ClientID%>").value;
+                document.getElementById("<%=hidKneewallTint.ClientID%>").value = document.getElementById("<%=ddlKneewallTint.ClientID%>").value;
+                document.getElementById("<%=hidTransomTint.ClientID%>").value = document.getElementById("<%=ddlTransomTint.ClientID%>").value;
+
+                document.getElementById('<%=btnQuestion4.ClientID%>').disabled = false;
+                $('#<%=lblQuestion4PagerAnswer.ClientID%>').text("Entry Complete");
+                document.getElementById('pagerFour').style.display = "inline";
+            }
+
+            return false;
+        }
+
         function checkRoofPanels() {
             if (gable != "True"){
                 document.getElementById("<%=txtErrorMessage.ClientID%>").value = ""
@@ -2395,6 +2465,187 @@
             document.getElementById("<%=hidChain.ClientID%>").value = $('#MainContent_ddlChain').val();
         }
 
+
+        //This function populates and changes the values of the dropdown lists containing framing colours and skins on slide 4
+        //It is called for initial population
+        function newProjectChangeColours() {
+            modelNumber = "<%=Session["model"]%>";
+            ddlFramingColour = document.getElementById("<%=ddlFramingColour.ClientID%>");
+            ddlFramingColour.options.length = 0;
+
+            //var blankOption = new Option("Choose a colour...", "Choose a colour...");
+            //ddlFramingColour.options.add(blankOption);
+
+            //Depending on model number we'll have different colours, so we use the corresponding serialized variable for that model's colours
+            //retrieving it, and adding its values to the dropdowns
+            switch (modelNumber.value) {
+                case 'M100':
+                    var anArray =  <%= model100FramingColoursJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
+                    }
+                    break;
+
+                case 'M200':
+                    var anArray =  <%= model200FramingColoursJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
+                    }                    
+                    break;
+
+                case 'M300':
+                    var anArray =  <%= model300FramingColoursJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
+                    }                    
+                    break;
+
+                case 'M400':
+                    var anArray =  <%= model400FramingColoursJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlFramingColour.options.add(anOption);
+                    }   
+                    break;
+            }
+            
+
+            //As this is on the same slide as kneewall and transom, we still need a way to populate those.
+            //I didn't want to tack that on to this function, so I just made a new one and called it from here.
+            //One function, one purpose.
+            newProjectPopulateKneewallTransom();
+            newProjectTransomStyleChanged();
+            return true;
+        }
+
+        //this function is called whenever frame colour is changed, and will update the remaining dropdowns for interior/exterior colours and skins
+        //corresponding to the chosen frame colour.
+        function newProjectCascadeColours() {
+            ddlFramingColour = document.getElementById("<%= ddlFramingColour.ClientID %>");
+            
+            if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "White")
+            {
+                $("#<%=ddlInteriorSkin.ClientID%>").val('White Aluminum Stucco');
+                $("#<%=ddlExteriorSkin.ClientID%>").val('White Aluminum Stucco');
+            }
+            else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Driftwood")
+            {
+                $("#<%=ddlInteriorSkin.ClientID%>").val('Driftwood Aluminum Stucco');
+                $("#<%=ddlExteriorSkin.ClientID%>").val('Driftwood Aluminum Stucco');
+            }
+            else if (ddlFramingColour.options[ddlFramingColour.selectedIndex].value == "Bronze")
+            {
+                $("#<%=ddlInteriorSkin.ClientID%>").val('Bronze Aluminum Stucco');
+                $("#<%=ddlExteriorSkin.ClientID%>").val('Bronze Aluminum Stucco');
+            }
+
+            //now that colours have cascaded we still need to validate the slide
+            newProjectCheckQuestion4();
+        }
+        //This function is used for initial population of the transom and kneewall type dropdowns
+        <%--function newProjectPopulateKneewallTransom() {            
+            modelNumber = "<%=Session["model"]%>";
+            ddlTransomTypes = document.getElementById("<%=ddlTransomType.ClientID%>");
+            ddlTransomTypes.options.length = 0;
+            
+            //var blankOption = new Option("Choose a type...", "Choose a type...");
+            //ddlTransomTypes.options.add(blankOption);
+
+            //Like above, types are based on model, and will get the proper variable based on model
+            switch (modelNumber.value) {
+                case 'M100':
+                    var anArray = <%= model100TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }
+                    break;
+
+                case 'M200':
+                    var anArray =  <%= model200TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }                    
+                    break;
+
+                case 'M300':
+                    var anArray =  <%= model300TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }                    
+                    break;
+
+                case 'M400':
+                    var anArray =  <%= model400TransomTypesJ %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTypes.options.add(anOption);
+                    }   
+                    break;
+            }
+            return true;
+        }--%>
+
+        function newProjectTransomStyleChanged()
+        {
+            console.log("this one");
+            ddlTransomTypes = document.getElementById("<%=ddlTransomType.ClientID%>");
+            ddlTransomTints = document.getElementById("<%=ddlTransomTint.ClientID%>");
+            ddlTransomTints.options.length = 0;
+            
+            //var blankOption = new Option("Choose a type...", "Choose a type...");
+            //ddlTransomTypes.options.add(blankOption);
+
+            //Like above, types are based on model, and will get the proper variable based on model
+            switch (ddlTransomTypes.value) {
+                case 'Glass':
+                    var anArray = <%= transomGlassTints %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTints.options.add(anOption);
+                    }
+                    break;
+
+                case 'Vinyl':
+                    var anArray =  <%= vinylTints %>;
+
+                    for (var i=0;i<anArray.length;i++)
+                    {
+                        var anOption = new Option(anArray[i], anArray[i]);
+                        ddlTransomTints.options.add(anOption);
+                    }                    
+                    break;
+
+                case 'Solid Wall':
+                    ddlTransomTints.options.add(new Option("N/A", "N/A"));
+                    break;
+            }
+
+            newProjectCheckQuestion4();
+        }
     </script>
     <%-- End hidden div populating scripts --%>
 
@@ -2493,16 +2744,149 @@
                         </div> <%-- end .toggleContent --%>
 
                 <%-- button to go to the next question --%>
-                <input type="button" id="btnQuestion2" onclick="checkQuestion2(gable); determineStartAndEndHeightOfEachWall(gable); loadWallData();" class="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" value="Next Question" disabled/>
+                <input type="button" id="btnQuestion2" onclick="checkQuestion2(gable); determineStartAndEndHeightOfEachWall(gable); loadWallData(); newProjectPopulateKneewallTransom();" class="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" value="Next Question" disabled/>
 
             </div> 
             <%-- end #slide2 --%>
 
+            <%-- QUESTION 4 - WINDOW OPTIONS/DETAILS
+            ======================================== --%>
+            <div id="slide3" class="slide">
+                <h1>
+                    <asp:Label ID="lblWindowDetails" runat="server" Text="Mod Details"></asp:Label>
+                </h1>        
+                              
+                <ul class="toggleOptions">
+                    <asp:PlaceHolder ID="wallWindowOptions" runat="server"></asp:PlaceHolder>
+                    <asp:PlaceHolder ID="plcFrameOptions" runat="server"></asp:PlaceHolder>
+                    <asp:PlaceHolder ID="plcScreenOptions" runat="server"></asp:PlaceHolder>
+                    <asp:PlaceHolder ID="plcSunshade" runat="server"></asp:PlaceHolder>    
+
+                    <%-- Kneewall --%>
+                    <li>
+                                    
+                        <%--<asp:RadioButton ID="radKneewallOptions" GroupName="styling" runat="server" />
+                        <asp:Label ID="lblKneewallOptionsRadio" AssociatedControlID="radKneewallOptions" runat="server"></asp:Label>
+                        <asp:Label ID="lblKneewallOptions" AssociatedControlID="radKneewallOptions" runat="server" Text="Kneewall"></asp:Label>--%>
+                        <asp:Label ID="lblKneewallOptions" runat="server" Text="Kneewall"></asp:Label>
+
+                        <div class="toggleContent">
+                            <ul>                                
+                                <li>
+                                    <asp:Table runat="server">
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height:" />
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:TextBox ID="txtKneewallHeight" onkeydown="return (event.keyCode!=13);" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" Width="65" Text="0" runat="server" MaxLength="3" />
+                                            </asp:TableCell>                                         
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblKneewallType" AssociatedControlID="txtKneewallHeight" runat="server" Text="Type:" />
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlKneewallType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblKneewallTint" AssociatedControlID="txtKneewallHeight" runat="server" Text="Tint:"></asp:Label>
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlKneewallTint" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server"></asp:DropDownList>
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+                                    </asp:Table>
+                                </li>
+                            </ul>   
+                        </div> 
+
+                    </li> 
+
+                    <%-- Transom --%>
+                    <li>
+                
+                        <%--<asp:RadioButton ID="radTransomOptions" GroupName="styling" runat="server" />
+                        <asp:Label ID="lblTransomOptionsRadio" AssociatedControlID="radTransomOptions" runat="server"></asp:Label>
+                        <asp:Label ID="lblTransomOptions" AssociatedControlID="radTransomOptions" runat="server" Text="Transom"></asp:Label>--%>
+                        <asp:Label ID="lblTransomOptions" runat="server" Text="Transom"></asp:Label>
+
+                        <div class="toggleContent">
+                            <ul>                                
+                                <li>
+                                    <asp:Table runat="server">
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                Type: <asp:DropDownList ID="ddlTransomType" OnChange="newProjectTransomStyleChanged()" GroupName="styling" runat="server" />
+                                            </asp:TableCell>                                              
+                                        </asp:TableRow>                                           
+                                        <asp:TableRow>                                                                                   
+                                            <asp:TableCell>
+                                                Tint: <asp:DropDownList ID="ddlTransomTint" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+                                    </asp:Table>                                
+                                </li>
+                            </ul>
+                        </div> 
+                    </li> 
+                    
+                    <%-- Walls --%>            
+                    <li>
+                
+                        <%--<asp:RadioButton ID="radFramingOptions" GroupName="styling" runat="server" />
+                        <asp:Label ID="lblFramingOptionsRadio" AssociatedControlID="radFramingOptions" runat="server"></asp:Label>
+                        <asp:Label ID="lblFramingOptions" AssociatedControlID="radFramingOptions" runat="server" Text="Framing"></asp:Label>--%>
+                        <asp:Label ID="lblFramingOptions" runat="server" Text="Framing"></asp:Label>
+
+                        <div class="toggleContent">
+                            <ul>                                
+                                <li>
+                                    <asp:Table runat="server">
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblFramingColour" AssociatedControlID="ddlFramingColour" runat="server" Text="Framing Colour:" />
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlFramingColour" OnChange="newProjectCascadeColours()" GroupName="styling" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblInteriorSkin" AssociatedControlID="ddlInteriorSkin" runat="server" Text="Interior Skin:" />
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlInteriorSkin" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>
+
+                                        <asp:TableRow>
+                                            <asp:TableCell>
+                                                <asp:Label ID="lblExteriorSkin" AssociatedControlID="ddlExteriorSkin" runat="server" Text="Exterior Skin:" />
+                                            </asp:TableCell>
+                                            <asp:TableCell>
+                                                <asp:DropDownList ID="ddlExteriorSkin" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                            </asp:TableCell>
+                                        </asp:TableRow>  
+                                    </asp:Table>                            
+                                </li>
+                            </ul>
+                        </div>
+                    </li> 
+                </ul> 
+                <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question"/>     
+            </div>
+            <%-- end #slide4 --%>
 
              <%-- QUESTION 3 - DOOR OPTIONS/DETAILS
             ======================================== --%>
 
-            <div id="slide3" class="slide">
+            <div id="slide4" class="slide">
                 <h1>
                     <asp:Label ID="lblDoorDetails" runat="server" Text="Door Details"></asp:Label>
                 </h1>        
@@ -2511,31 +2895,11 @@
                     <asp:PlaceHolder ID="wallDoorOptions" runat="server"></asp:PlaceHolder>                    
                 </ul>            
 
-                <asp:Button ID="btnQuestion3" Enabled="true" OnClientClick="checkQuestion3()" CssClass="btnSubmit float-right slidePanel" data-slide="#slide4" runat="server" Text="Next Question"/>
+                <asp:Button ID="btnQuestion3" Enabled="true" OnClientClick="checkQuestion3();WindowPreparation()" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question"/>
 
             </div>
-            <%-- end #slide3 --%>
-
-
-             <%-- QUESTION 4 - WINDOW OPTIONS/DETAILS
-            ======================================== --%>
-            <div id="slide4" class="slide">
-                <h1>
-                    <asp:Label ID="lblWindowDetails" runat="server" Text="Window Details"></asp:Label>
-                </h1>        
-                              
-                <ul class="toggleOptions">
-                    <asp:PlaceHolder ID="wallWindowOptions" runat="server"></asp:PlaceHolder>
-                    <asp:PlaceHolder ID="plcFrameOptions" runat="server"></asp:PlaceHolder>
-                    <asp:PlaceHolder ID="plcScreenOptions" runat="server"></asp:PlaceHolder>
-                    <asp:PlaceHolder ID="plcSunshade" runat="server"></asp:PlaceHolder>           
-                </ul>  
-                 
-                <asp:Button ID="btnQuestion4" CssClass="btnSubmit float-right slidePanel" data-slide="#slide5" runat="server" Text="Next Question" OnClientClick="WindowPreparation();return false;"/>     
-            </div>
-            <%-- end #slide4 --%>
-
-
+            <%-- end #slide3 --%>   
+            
             <%-- QUESTION 5 - WALL PREVIEW PAGE
             ======================================== --%>
             <div id="slide5" class="slide">
@@ -2546,7 +2910,9 @@
                 <ul class="toggleOptions">
                     <asp:PlaceHolder ID="wallPreviewPlaceholder" runat="server"></asp:PlaceHolder>                   
                 </ul> 
-
+                
+                <br />
+                <asp:Label ID="lblFinished" runat="server"></asp:Label>
                 <asp:Button ID="btnSubmit" Enabled="true" CssClass="btnSubmit float-right slidePanel" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
 
             </div>
@@ -2669,6 +3035,18 @@
     <div id="hiddenFieldsDiv" runat="server"></div>
     <div id="removableHiddenFieldsDiv" runat="server"></div>
     <div id="hiddenWallInfo" runat="server"></div>
+
+    <input id="hidKneewallType" type="hidden" runat="server" />
+    <input id="hidKneewallHeight" type="hidden" runat="server" />
+    <input id="hidKneewallTint" type="hidden" runat="server" />
+    <input id="hidTransomType" type="hidden" runat="server" />
+    <input id="hidTransomHeight" type="hidden" runat="server" />
+    <input id="hidTransomTint" type="hidden" runat="server" />
+    <input id="hidFramingColour" type="hidden" runat="server" />
+    <input id="hidInteriorColour" type="hidden" runat="server" />
+    <input id="hidInteriorSkin" type="hidden" runat="server" />
+    <input id="hidExteriorColour" type="hidden" runat="server" />
+    <input id="hidExteriorSkin" type="hidden" runat="server" />
 
     <%-- <input id="hidSoffitLength" type="hidden" runat="server" /> --%>
     <input id="hidRoomProjection" type="hidden" runat="server" />
