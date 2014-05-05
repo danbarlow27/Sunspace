@@ -85,7 +85,8 @@ namespace SunspaceDealerDesktop
 
         public static string[] FASCIA_STRIPE_COLOUR = { "No Stripe", "Test1", "Test2"};
 
-        public static string[] SCREEN_TYPES = { "No Screen", "Better Vue Insect Screen (Default)", "No See Ums 20 x 20 Mesh", "Solar Insect Screening", "Tuff Screen" };
+        //Better vue default
+        public static string[] SCREEN_TYPES = { "Better Vue Insect Screen", "No See Ums 20 x 20 Mesh", "Solar Insect Screening", "Tuff Screen", "No Screen"};
 
         public static string[] ACRYLIC_COLOUR = { "Clear", "Bronze", "Solar Cool White", "Heat Stop Cool Blue" };
 

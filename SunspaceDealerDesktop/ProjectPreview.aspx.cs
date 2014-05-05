@@ -841,7 +841,7 @@ namespace SunspaceDealerDesktop
                                                                                 + linearCounter + ", "          //Linear Index
                                                                                 + k + ", "                      //Module Index
                                                                                 + 1 + ", '"               //Door Index
-                                                                                + aDoor.ScreenType + "', "      //Screen Type. This is a window, so it is 0
+                                                                                + doorWindow.ScreenType + "', "      //Screen Type. This is a window, so it is 0
                                                                                 + doorWindow.LeftHeight + ", "  //Start Height
                                                                                 + doorWindow.RightHeight + ", " //End Height
                                                                                 + doorWindow.Width + ", '"      //Length

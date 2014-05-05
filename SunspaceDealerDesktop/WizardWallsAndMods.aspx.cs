@@ -4138,6 +4138,7 @@ namespace SunspaceDealerDesktop
                                 }
                                 else {
                                     doorWindow.Colour = "";
+                                    doorWindow.ScreenType = Request.Form["hidWall" + i + "Door" + j + "screenOptions"];
                                 }
                                 if (doorWindow.WindowStyle == "Horizontal Roller")
                                 {
@@ -4187,7 +4188,7 @@ namespace SunspaceDealerDesktop
                                 doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight; //4 corresponds to the amount of framing at a bottom of a door
                                 doorWindow.LeftHeight = doorWindow.RightHeight = aDoor.FStartHeight - 2.125f;
                                 doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "glassTint"];
-                                doorWindow.ScreenType = Request.Form["hidWall" + i + "Door" + j + "style"];
+                                doorWindow.ScreenType = Request.Form["hidWall" + i + "Door" + j + "screenOptions"];
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
                                 aDoor.DoorWindow = doorWindow;
@@ -4224,6 +4225,7 @@ namespace SunspaceDealerDesktop
                                 else
                                 {
                                     doorWindow.Colour = "";
+                                    doorWindow.ScreenType = Request.Form["hidWall" + i + "Door" + j + "screenOptions"];
                                 }
                                 if (doorWindow.WindowStyle == "Horizontal Roller")
                                 {
