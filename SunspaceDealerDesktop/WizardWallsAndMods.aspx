@@ -2064,7 +2064,6 @@
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "style").value = walls[i].mods[j].style;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "swing").value = walls[i].mods[j].swing;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
-
                                 
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "vinylTint").value = walls[i].mods[j].vinylTint;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "width").value = walls[i].mods[j].width;
