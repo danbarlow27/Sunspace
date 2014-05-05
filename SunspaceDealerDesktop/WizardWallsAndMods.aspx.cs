@@ -1971,11 +1971,10 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorScreenOptionsDDL = new DropDownList();
                 doorScreenOptionsDDL.ID = "ddlDoorScreenOptions" + i + title;
-                for (int j = 1; j < Constants.SCREEN_TYPES.Count(); j++) //start at 1 to avoid 'no screen' and put that at bottom of dropdown list
+                for (int j = 0; j < Constants.SCREEN_TYPES.Count(); j++) 
                 {
                     doorScreenOptionsDDL.Items.Add(new ListItem(Constants.SCREEN_TYPES[j], Constants.SCREEN_TYPES[j]));
                 }
-                doorScreenOptionsDDL.Items.Add(new ListItem(Constants.SCREEN_TYPES[0], Constants.SCREEN_TYPES[0]));
                 doorScreenOptionsLBL.AssociatedControlID = "ddlDoorScreenOptions" + i + title;
 
                 #endregion
