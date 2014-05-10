@@ -43,6 +43,8 @@ namespace SunspaceDealerDesktop
         public const float THERMADECK_PANEL_PROJECTION = 288f;
         public const float BOXHEADER_LENGTH = Constants.BOXHEADER_LENGTH;
         public const float BOXHEADER_RECEIVER_LENGTH = Constants.BOXHEADER_RECEIVER_LENGTH;
+        public const float HCHANNEL_LENGTH = Constants.HCHANNEL_LENGTH;
+        public const float HCHANNEL_RECEIVER_LENGTH = Constants.HCHANNEL_RECEIVER_LENGTH;
 
         public string gableType = "";
 
@@ -1969,11 +1971,10 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorScreenOptionsDDL = new DropDownList();
                 doorScreenOptionsDDL.ID = "ddlDoorScreenOptions" + i + title;
-                for (int j = 0; j < Constants.SCREEN_TYPES.Count(); j++)
+                for (int j = 0; j < Constants.SCREEN_TYPES.Count(); j++) 
                 {
                     doorScreenOptionsDDL.Items.Add(new ListItem(Constants.SCREEN_TYPES[j], Constants.SCREEN_TYPES[j]));
                 }
-
                 doorScreenOptionsLBL.AssociatedControlID = "ddlDoorScreenOptions" + i + title;
 
                 #endregion
@@ -4136,6 +4137,7 @@ namespace SunspaceDealerDesktop
                                 }
                                 else {
                                     doorWindow.Colour = "";
+                                    doorWindow.ScreenType = Request.Form["hidWall" + i + "Door" + j + "screenOptions"];
                                 }
                                 if (doorWindow.WindowStyle == "Horizontal Roller")
                                 {
@@ -4180,12 +4182,16 @@ namespace SunspaceDealerDesktop
                                 Window doorWindow = new Window();
                                 doorWindow.FLength = aDoor.FLength - Constants.DOOR_PADDING; //11.5 is the amount of door between edge of door and start of window (both sides totalled to 11.5)
                                 doorWindow.Width = doorWindow.FLength - 2.125f;
-                                doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight - aDoor.Kickplate - Constants.KICKPLATE_PADDING; //4 corresponds to the amount of framing at a bottom of a door
-                                doorWindow.LeftHeight = doorWindow.RightHeight = aDoor.FStartHeight - aDoor.Kickplate - Constants.KICKPLATE_PADDING - 2.125f;
+                                doorWindow.ItemType = "Window";
+                                doorWindow.WindowStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
+                                doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight; //4 corresponds to the amount of framing at a bottom of a door
+                                doorWindow.LeftHeight = doorWindow.RightHeight = aDoor.FStartHeight - 2.125f;
                                 doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "glassTint"];
+                                doorWindow.ScreenType = Request.Form["hidWall" + i + "Door" + j + "screenOptions"];
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
-                                
+                                aDoor.DoorWindow = doorWindow;
+
                                 modularItems.Add(aDoor);
                             }
                             if (doorType == "French")
@@ -4218,6 +4224,7 @@ namespace SunspaceDealerDesktop
                                 else
                                 {
                                     doorWindow.Colour = "";
+                                    doorWindow.ScreenType = Request.Form["hidWall" + i + "Door" + j + "screenOptions"];
                                 }
                                 if (doorWindow.WindowStyle == "Horizontal Roller")
                                 {
@@ -4295,7 +4302,8 @@ namespace SunspaceDealerDesktop
                                     aWindow.Colour = Request.Form["MainContent_hidWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
                                     aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                     aWindow.ItemType = "Window";
-                                    aWindow.Width = aMod.Length - 2;
+                                    aWindow.FLength = aMod.Length - Constants.MOD_FRAMING_OFFSET;
+                                    aWindow.Width = aWindow.FLength - Constants.WINDOW_FRAMING_OFFSET;
                                     
                                     aWindow.WindowStyle = ddlTransomType.SelectedValue;
                                     aWindow.SpreaderBar = -1;
@@ -4323,8 +4331,10 @@ namespace SunspaceDealerDesktop
                                     aWindow.Colour = Request.Form["MainContent_hidWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
                                     aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                     aWindow.ItemType = "Window";
-                                    aWindow.Width = aMod.Length - 2;
-                                    aWindow.WindowStyle = (string)Session["newProjectTransomType"];
+                                    aWindow.FLength = aMod.Length - Constants.MOD_FRAMING_OFFSET;
+                                    aWindow.Width = aWindow.FLength - Constants.WINDOW_FRAMING_OFFSET;
+
+                                    aWindow.WindowStyle = ddlTransomType.SelectedValue;
                                     aWindow.SpreaderBar = -1;
 
                                     //Add remaining area to first window

@@ -359,7 +359,14 @@ namespace SunspaceWizard
             aCloseBar.Controls.Add(aCloseButton);
 
             // Create session for project editor
-            HttpContext.Current.Session["project_id"] = projectID;
+            try
+            {
+                HttpContext.Current.Session.Add("project_id", projectID);
+            }
+            catch (Exception ex)
+            {
+                HttpContext.Current.Session["project_id"] = projectID;
+            }
 
             Label aDirectionLabel = new Label();
             aDirectionLabel.Attributes["style"] = "margin-left: 25%";

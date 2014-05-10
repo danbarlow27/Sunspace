@@ -2,6 +2,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script src="Scripts/GlobalFunctions.js"></script>
+
     <script src="Scripts/Validation.js"></script>
     <script>
         //Embedded variables needed before call or addition of DoorSlideFunction.js
@@ -18,6 +19,12 @@
         var MODEL_400_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_400_TRANSOM_MINIMUM_SIZE"] %>';
         var BOXHEADER_LENGTH = <%= BOXHEADER_LENGTH %>;
         var BOXHEADER_RECEIVER_LENGTH = <%= BOXHEADER_RECEIVER_LENGTH %>;
+
+        if ("<%=currentModel%>" == "M400")
+        {
+            BOXHEADER_LENGTH = <%= HCHANNEL_LENGTH %>;
+            BOXHEADER_RECEIVER_LENGTH = <%= HCHANNEL_RECEIVER_LENGTH %>;
+        }
         //var MIN_WINDOW_WIDTH = 
         //var MAX_WINDOW_WIDTH = 
         //var MIN_MOD_WIDTH = MIN_WINDOW_WIDTH + 2;
@@ -31,6 +38,8 @@
         function Mods() {
             this.id = null;                 //mod id
             this.typeMod = null;            //Holds: Door, Window
+            //ADDED Screen Options
+            this.screenOptions = null;      //Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screen, Tuff Screen, No Screen
             this.mStartHeight = null;       //start height of the mod
             this.mEndHeight = null;         //end height of the mod
             this.mWidth = null;             //width of the mod
@@ -2023,6 +2032,8 @@
                             {                         
                                 var html = "";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" >";
+                                //ADDED Screen Options
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "screenOptions\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "screenOptions\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "colour\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "colour\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fheight\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fheight\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fwidth\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fwidth\" >";
@@ -2042,6 +2053,8 @@
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "width\" >";
                                 document.getElementById("MainContent_removableHiddenFieldsDiv").innerHTML += html;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
+                                //ADDED Screen Options
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "screenOptions").value = walls[i].mods[j].screenOptions;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
@@ -2057,7 +2070,6 @@
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "style").value = walls[i].mods[j].style;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "swing").value = walls[i].mods[j].swing;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
-
                                 
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "vinylTint").value = walls[i].mods[j].vinylTint;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "width").value = walls[i].mods[j].width;
@@ -2066,6 +2078,8 @@
                             {
                                 var html = "";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" >";
+                                //ADDED Screen Options
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "screenOptions\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "screenOptions\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "colour\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "colour\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fheight\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fheight\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fwidth\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fwidth\" >";
@@ -2085,6 +2099,8 @@
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "width\" >";
                                 document.getElementById("MainContent_removableHiddenFieldsDiv").innerHTML += html;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
+                                //ADDED Screen Options
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "screenOptions").value = walls[i].mods[j].screenOptions;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
@@ -2110,6 +2126,8 @@
                             {
                                 var html = "";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" >";
+                                //ADDED Screen Options
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "screenOptions\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "screenOptions\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "colour\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "colour\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fheight\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fheight\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fwidth\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fwidth\" >";
@@ -2124,6 +2142,8 @@
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "width\" >";
                                 document.getElementById("MainContent_removableHiddenFieldsDiv").innerHTML += html;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
+                                //ADDED Screen Options
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "screenOptions").value = walls[i].mods[j].screenOptions;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
