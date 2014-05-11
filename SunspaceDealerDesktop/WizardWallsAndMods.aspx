@@ -25,6 +25,7 @@
             BOXHEADER_LENGTH = <%= HCHANNEL_LENGTH %>;
             BOXHEADER_RECEIVER_LENGTH = <%= HCHANNEL_RECEIVER_LENGTH %>;
         }
+
         //var MIN_WINDOW_WIDTH = 
         //var MAX_WINDOW_WIDTH = 
         //var MIN_MOD_WIDTH = MIN_WINDOW_WIDTH + 2;
@@ -2629,7 +2630,6 @@
 
         function newProjectTransomStyleChanged()
         {
-            console.log("this one");
             ddlTransomTypes = document.getElementById("<%=ddlTransomType.ClientID%>");
             ddlTransomTints = document.getElementById("<%=ddlTransomTint.ClientID%>");
             ddlTransomTints.options.length = 0;

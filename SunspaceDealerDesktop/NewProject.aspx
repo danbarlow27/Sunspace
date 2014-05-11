@@ -915,7 +915,7 @@
                     </li> 
 
                     <%-- Existing Customer --%>
-                    <li>
+                    <li id="existingCustomerElement" runat="server">
                         <asp:RadioButton ID="radExistingCustomer" GroupName="question1" runat="server" OnClick="newProjectCheckQuestion1()" />
                         <asp:Label ID="lblExistingCustomerRadio" AssociatedControlID="radExistingCustomer" runat="server"></asp:Label>
                         <asp:Label ID="lblExistingCustomer" AssociatedControlID="radExistingCustomer" runat="server" Text="Existing customer"></asp:Label>

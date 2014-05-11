@@ -23,9 +23,6 @@ namespace SunspaceDealerDesktop
         public string model300TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_300_TRANSOM_TYPES);
         public string model400TransomTypesJ = new JavaScriptSerializer().Serialize(Constants.MODEL_400_TRANSOM_TYPES);
 
-        public string transomGlassTints = new JavaScriptSerializer().Serialize(Constants.TRANSOM_GLASS_TINTS);
-        public string vinylTints = new JavaScriptSerializer().Serialize(Constants.VINYL_TINTS);
-
         public string usStatesJ = new JavaScriptSerializer().Serialize(Constants.STATE_LIST);
         public string usCodesJ = new JavaScriptSerializer().Serialize(Constants.STATE_CODES);
         public string canProvJ = new JavaScriptSerializer().Serialize(Constants.PROVINCE_LIST);
@@ -58,7 +55,11 @@ namespace SunspaceDealerDesktop
                 }
             }
 
-            
+            //If sunspace user that has not yet spoofed, we hide existing customers
+            //if (Session["dealer_id"].ToString() == "-1")
+            //{
+            //    existingCustomerElement.Attributes.Add("class", "hideElement");
+            //}
 
             //if (ddlCustomerCountry.SelectedValue == "CAN")
             //{

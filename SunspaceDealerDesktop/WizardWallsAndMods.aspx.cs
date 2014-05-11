@@ -25,6 +25,7 @@ namespace SunspaceDealerDesktop
 
         public string transomGlassTints = new JavaScriptSerializer().Serialize(Constants.TRANSOM_GLASS_TINTS);
         public string vinylTints = new JavaScriptSerializer().Serialize(Constants.VINYL_TINTS);
+
         public float VINYL_TRAP_MIN_WIDTH_WARRANTY = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
         public float VINYL_TRAP_MAX_WIDTH_WARRANTY = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
         public float V4T_4V_MIN_WIDTH_WARRANTY = Constants.V4T_4V_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
@@ -232,9 +233,9 @@ namespace SunspaceDealerDesktop
                     ddlFramingColour.Items.Add(Constants.MODEL_100_FRAMING_COLOURS[i]);
                 }
 
-                for (int i = 0; i < Constants.MODEL_100_GLASS_TINTS.Length; i++)
+                for (int i = 0; i < Constants.VINYL_TINTS.Length; i++)
                 {
-                    ddlTransomTint.Items.Add(Constants.MODEL_100_GLASS_TINTS[i]);
+                    ddlTransomTint.Items.Add(Constants.VINYL_TINTS[i]);
                 }
             }
             else if (Session["model"].ToString() == "M200")
@@ -249,9 +250,9 @@ namespace SunspaceDealerDesktop
                     ddlFramingColour.Items.Add(Constants.MODEL_200_FRAMING_COLOURS[i]);
                 }
 
-                for (int i = 0; i < Constants.MODEL_200_GLASS_TINTS.Length; i++)
+                for (int i = 0; i < Constants.VINYL_TINTS.Length; i++)
                 {
-                    ddlTransomTint.Items.Add(Constants.MODEL_200_GLASS_TINTS[i]);
+                    ddlTransomTint.Items.Add(Constants.VINYL_TINTS[i]);
                 }
             }
             else if (Session["model"].ToString() == "M300")
@@ -266,9 +267,9 @@ namespace SunspaceDealerDesktop
                     ddlFramingColour.Items.Add(Constants.MODEL_300_FRAMING_COLOURS[i]);
                 }
 
-                for (int i = 0; i < Constants.MODEL_300_GLASS_TINTS.Length; i++)
+                for (int i = 0; i < Constants.VINYL_TINTS.Length; i++)
                 {
-                    ddlTransomTint.Items.Add(Constants.MODEL_300_GLASS_TINTS[i]);
+                    ddlTransomTint.Items.Add(Constants.VINYL_TINTS[i]);
                 }
             }
             else if (Session["model"].ToString() == "M400")
@@ -283,9 +284,9 @@ namespace SunspaceDealerDesktop
                     ddlFramingColour.Items.Add(Constants.MODEL_400_FRAMING_COLOURS[i]);
                 }
 
-                for (int i = 0; i < Constants.MODEL_400_GLASS_TINTS.Length; i++)
+                for (int i = 0; i < Constants.TRANSOM_GLASS_TINTS.Length; i++)
                 {
-                    ddlTransomTint.Items.Add(Constants.MODEL_400_GLASS_TINTS[i]);
+                    ddlTransomTint.Items.Add(Constants.TRANSOM_GLASS_TINTS[i]);
                 }
             }
             #endregion
