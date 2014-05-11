@@ -19,11 +19,12 @@ namespace SunspaceDealerDesktop
         protected int wallCount = 0;
         protected int floorCount = 0;
         protected int roofCount = 0;
-        protected int projectId;// = 98; //82 84 86 87 88 89 97 98 100 101 102, 103, 104 get it from the session (project_id)
+        protected int projectId = 105; //82 84 86 87 88 89 97 98 100 101 102, 103, 104, 105 get it from the session (project_id)
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            projectId = Convert.ToInt32(HttpContext.Current.Session["project_id"].ToString());
+            //projectId = Convert.ToInt32(HttpContext.Current.Session["project_id"].ToString());
 
             #region commented out hard coded data
             /*
@@ -2204,10 +2205,116 @@ namespace SunspaceDealerDesktop
 
                             #endregion
 
-                            switch (mod.ItemType.ToLower())
+                            switch (modularItem.ItemType.ToLower())
                             {
                                 case "panel":
                                 case "kneewall":
+                                    #region kneewall height
+
+                                    String[] splitPanelHeight = modularItem.FStartHeight.ToString().Split('.');
+
+                                    TableRow kneewallHeightRow = new TableRow();
+                                    kneewallHeightRow.ID = "rowKneewallHeight" + li.LinearIndex + modularItem.ModuleIndex;
+                                    //modHeightRow.Attributes.Add("style", "display:none;");
+                                    TableCell kneewallHeightLBLCell = new TableCell();
+                                    TableCell kneewallHeightTXTCell = new TableCell();
+                                    TableCell kneewallHeightDDLCell = new TableCell();
+
+                                    Label lblKneewallHeight = new Label();
+                                    lblKneewallHeight.ID = "lblKneewallHeight" + li.LinearIndex + modularItem.ModuleIndex;
+                                    lblKneewallHeight.Text = " Height:";
+
+                                    TextBox txtKneewallHeight = new TextBox();
+                                    txtKneewallHeight.ID = "txtKneewallHeight" + li.LinearIndex + modularItem.ModuleIndex;
+                                    txtKneewallHeight.CssClass = "txtField txtWindowInput";
+                                    txtKneewallHeight.Attributes.Add("maxlength", "3");
+                                    txtKneewallHeight.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
+                                    //txtKneewallHeight.Attributes.Add("onblur", "recalculate();");
+                                    txtKneewallHeight.ToolTip = "Enter the height of your kneewall in whole numbers";
+                                    txtKneewallHeight.Text = splitPanelHeight[0];
+
+                                    inchHeight = new DropDownList();
+                                    inches = new List<ListItem>(GlobalFunctions.FractionOptions(splitPanelHeight.Length == 1 ? null : "."+splitPanelHeight[1]));
+                                    for (int i = 0; i < inches.Count; i++)
+                                    {
+                                        inchHeight.Items.Add(inches[i]);
+                                    }
+                                    inchHeight.ID = "ddlKneewallHeight" + li.LinearIndex + modularItem.ModuleIndex;
+                                    //inchHeight.Attributes.Add("onchange", "recalculate();");
+                                    inchHeight.ToolTip = "Select the decimal value for your kneewall height";
+
+                                    lblKneewallHeight.AssociatedControlID = "txtKneewallHeight" + li.LinearIndex + modularItem.ModuleIndex;
+
+                                    kneewallHeightLBLCell.Controls.Add(lblKneewallHeight);
+                                    kneewallHeightTXTCell.Controls.Add(txtKneewallHeight);
+                                    kneewallHeightDDLCell.Controls.Add(inchHeight);
+
+                                    tblModDetails.Rows.Add(kneewallHeightRow);
+
+                                    kneewallHeightRow.Cells.Add(kneewallHeightLBLCell);
+                                    kneewallHeightRow.Cells.Add(kneewallHeightTXTCell);
+                                    kneewallHeightRow.Cells.Add(kneewallHeightDDLCell);
+                                    #endregion
+
+                                    #region kneewall type
+
+
+                                    TableRow kneewallTypeRow = new TableRow();
+                                    kneewallTypeRow.ID = "rowKneewallType" + li.LinearIndex + modularItem.ModuleIndex;
+                                    //modTypeRow.Attributes.Add("style", "display:none;");
+                                    TableCell kneewallTypeLBLCell = new TableCell();
+                                    TableCell kneewallTypeDDLCell = new TableCell();
+
+                                    Label lblKneewallType = new Label();
+                                    lblKneewallType.ID = "lblKneewallType" + li.LinearIndex + modularItem.ModuleIndex;
+                                    lblKneewallType.Text = " Type:";
+
+                                    DropDownList ddlKneewallType = new DropDownList();
+                                    ddlKneewallType.ID = "ddlKneewallType" + li.LinearIndex + modularItem.ModuleIndex;
+                                    ddlKneewallType.Attributes.Add("onchange", "kneewallTypeChanged(this.id);");
+                                    for (int i = 0; i < Constants.KNEEWALL_TYPES.Length; i++)
+                                    {
+                                        ddlKneewallType.Items.Add(Constants.KNEEWALL_TYPES[i]);
+                                    }
+
+                                    kneewallTypeLBLCell.Controls.Add(lblKneewallType);
+                                    kneewallTypeDDLCell.Controls.Add(ddlKneewallType);
+
+                                    tblModDetails.Rows.Add(kneewallTypeRow);
+
+                                    kneewallTypeRow.Cells.Add(kneewallTypeLBLCell);
+                                    kneewallTypeRow.Cells.Add(kneewallTypeDDLCell);
+                                    #endregion
+
+                                    #region kneewall tint
+
+
+                                    TableRow kneewallTintRow = new TableRow();
+                                    kneewallTintRow.ID = "rowKneewallTint" + li.LinearIndex + modularItem.ModuleIndex;
+                                    kneewallTintRow.Attributes.Add("style", "display:none;");
+                                    TableCell kneewallTintLBLCell = new TableCell();
+                                    TableCell kneewallTintDDLCell = new TableCell();
+
+                                    Label lblKneewallTint = new Label();
+                                    lblKneewallTint.ID = "lblKneewallTint" + li.LinearIndex + modularItem.ModuleIndex;
+                                    lblKneewallTint.Text = " Tint:";
+
+                                    DropDownList ddlKneewallTint = new DropDownList();
+                                    
+                                    for (int i = 0; i < Constants.KNEEWALL_GLASS_TINTS.Length; i++)
+                                    {
+                                        ddlKneewallTint.Items.Add(Constants.KNEEWALL_GLASS_TINTS[i]);
+                                    }
+
+                                    kneewallTintLBLCell.Controls.Add(lblKneewallTint);
+                                    kneewallTintDDLCell.Controls.Add(ddlKneewallTint);
+
+                                    tblModDetails.Rows.Add(kneewallTintRow);
+
+                                    kneewallTintRow.Cells.Add(kneewallTintLBLCell);
+                                    kneewallTintRow.Cells.Add(kneewallTintDDLCell);
+                                    #endregion
+
                                     break;
                                 case "transom":
                                 case "window":
