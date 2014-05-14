@@ -875,8 +875,8 @@ namespace SunspaceDealerDesktop
                                                                                 + project_id + ", "
                                                                                 + linearCounter + ", "
                                                                                 + k + ", "
-                                                                                + -1 + ", " //This is not a vent, just solid glass
-                                                                                + 1 + ", '" //This is a window
+                                                                                + -1 + ", " 
+                                                                                + 1 + ", '" 
                                                                                 + "Single Glaze" + "', "
                                                                                 + doorWindow.LeftHeight + ", "
                                                                                 + doorWindow.RightHeight + ", "
@@ -895,8 +895,8 @@ namespace SunspaceDealerDesktop
                                                                                 + project_id + ", "
                                                                                 + linearCounter + ", "
                                                                                 + k + ", "
-                                                                                + 0 + ", '" //0 because this is a window from a module, not within a door
-                                                                                + doorWindow.WindowStyle + "', '"
+                                                                                + 1 + ", '" 
+                                                                                + "Vertical 4 Track" + "', '"
                                                                                 + doorWindow.ScreenType + "', "
                                                                                 + doorWindow.FStartHeight + ", "
                                                                                 + doorWindow.FEndHeight + ", "
@@ -1024,8 +1024,8 @@ namespace SunspaceDealerDesktop
                                                                                     + project_id + ", "
                                                                                     + linearCounter + ", "
                                                                                     + k + ", "
-                                                                                    + -1 + ", " //This is not a vent, just solid glass
-                                                                                    + doorNum + ", '" //This is a window
+                                                                                    + -1 + ", " 
+                                                                                    + doorNum + ", '" 
                                                                                     + "Single Glaze" + "', "
                                                                                     + doorWindow.LeftHeight + ", "
                                                                                     + doorWindow.RightHeight + ", "
@@ -1044,8 +1044,8 @@ namespace SunspaceDealerDesktop
                                                                                     + project_id + ", "
                                                                                     + linearCounter + ", "
                                                                                     + k + ", "
-                                                                                    + 0 + ", '" //0 because this is a window from a module, not within a door
-                                                                                    + doorWindow.WindowStyle + "', '"
+                                                                                    + 1 + ", '" 
+                                                                                    + "Vertical 4 Track" + "', '"
                                                                                     + doorWindow.ScreenType + "', "
                                                                                     + doorWindow.FStartHeight + ", "
                                                                                     + doorWindow.FEndHeight + ", "
@@ -1061,8 +1061,8 @@ namespace SunspaceDealerDesktop
                                                                                         + project_id + ", "
                                                                                         + linearCounter + ", "
                                                                                         + k + ", "
-                                                                                        + vents + ", " //This is not in a vent, this is just solid vinyl
-                                                                                        + doorNum + ", " //This is a window, so it is 0
+                                                                                        + vents + ", " 
+                                                                                        + doorNum + ", " 
                                                                                         + doorWindow.LeftHeight + ", "
                                                                                         + doorWindow.RightHeight + ", "
                                                                                         + doorWindow.Width + ", '"
@@ -1093,8 +1093,8 @@ namespace SunspaceDealerDesktop
                                                                                     + project_id + ", "
                                                                                     + linearCounter + ", "
                                                                                     + k + ", "
-                                                                                    + -1 + ", " //This is not in a vent, this is just solid vinyl
-                                                                                    + doorNum + ", " //This is a window, so it is 0
+                                                                                    + -1 + ", " 
+                                                                                    + doorNum + ", " 
                                                                                     + doorWindow.LeftHeight + ", "
                                                                                     + doorWindow.RightHeight + ", "
                                                                                     + doorWindow.Width + ", '"
@@ -1140,8 +1140,8 @@ namespace SunspaceDealerDesktop
                                                                                 + project_id + ", "
                                                                                 + linearCounter + ", "
                                                                                 + k + ", "
-                                                                                + -1 + ", " //This is not a vent, just solid glass
-                                                                                + 1 + ", '" //This is a window
+                                                                                + -1 + ", " 
+                                                                                + 1 + ", '" 
                                                                                 + "Single Glaze" + "', "
                                                                                 + doorWindow.LeftHeight + ", "
                                                                                 + doorWindow.RightHeight + ", "
@@ -1172,8 +1172,8 @@ namespace SunspaceDealerDesktop
                                                                                 + project_id + ", "
                                                                                 + linearCounter + ", "
                                                                                 + k + ", "
-                                                                                + -1 + ", " //This is not a vent, just solid glass
-                                                                                + 1 + ", '" //This is a window
+                                                                                + -1 + ", " 
+                                                                                + 1 + ", '" 
                                                                                 + "Single Glaze" + "', "
                                                                                 + doorWindow.LeftHeight + ", "
                                                                                 + doorWindow.RightHeight + ", "

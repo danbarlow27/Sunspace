@@ -4126,8 +4126,9 @@ namespace SunspaceDealerDesktop
                                 doorWindow.ItemType = "Window";
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
+                                doorWindow.ScreenType = "No Screen";
 
-                                if (doorWindow.WindowStyle == "Vertical 4 Track" || doorWindow.WindowStyle.Contains("Vinyl"))
+                                if (doorWindow.WindowStyle == "Vertical Four Track" || doorWindow.WindowStyle.Contains("Vinyl"))
                                 {
                                     doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
                                     doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
@@ -4137,7 +4138,6 @@ namespace SunspaceDealerDesktop
                                     doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "glassTint"];
                                 }
                                 else {
-                                    doorWindow.Colour = "";
                                     doorWindow.ScreenType = Request.Form["hidWall" + i + "Door" + j + "screenOptions"];
                                 }
                                 if (doorWindow.WindowStyle == "Horizontal Roller")
