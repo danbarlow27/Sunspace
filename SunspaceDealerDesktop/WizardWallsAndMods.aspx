@@ -531,7 +531,7 @@
         *Adding onclick events to next question buttons
         */
         $(document).ready(function () {
-            //$('#MainContent_btnQuestion2').on('click', checkQuestion2(gable));
+            //$('#MainContent_btnQuestion2').on('click', checkWallHeights(gable));
             //$('#MainContent_btnQuestion2').on('click', determineStartAndEndHeightOfEachWall(gable));
             //$('#MainContent_btnQuestion2').on('click', loadWallData);
             $('#MainContent_btnSubmit').on('click', submitData);
@@ -1174,8 +1174,7 @@
         Depending on the user selection of the radio button, it also calculates the slope, or one of the heights 
             by calling the appropriate functions
         */
-        function checkQuestion2(isGable) {
-            //alert("here i am, rock you like a hurricane"); //i'll leave that in there for shenanigans
+        function checkWallHeights(isGable) {
             //disable 'next slide' button until after validation (this is currently enabled for debugging purposes)
             //document.getElementById('MainContent_btnQuestion1').disabled = false;
             //document.getElementById('MainContent_btnQuestion2').disabled = false;
@@ -1618,7 +1617,7 @@
             }--%>
         }
         
-        function newProjectCheckQuestion4() {
+        function checkModDetails() {
             document.getElementById("<%=txtErrorMessage.ClientID%>").value = "";
             document.getElementById('<%=btnQuestion4.ClientID%>').disabled = true;
 
@@ -1638,10 +1637,6 @@
                         {
                             document.getElementById("<%=txtErrorMessage.ClientID%>").value = "Glass kneewalls must be 20 inches or greater in height.";
                         }
-                    }
-                    else
-                    {
-
                     }
                 }
             }
@@ -2572,7 +2567,7 @@
             }
 
             //now that colours have cascaded we still need to validate the slide
-            newProjectCheckQuestion4();
+            checkModDetails();
         }
         //This function is used for initial population of the transom and kneewall type dropdowns
         <%--function newProjectPopulateKneewallTransom() {            
@@ -2664,7 +2659,7 @@
                     break;
             }
 
-            newProjectCheckQuestion4();
+            checkModDetails();
         }
     </script>
     <%-- End hidden div populating scripts --%>
@@ -2764,7 +2759,7 @@
                         </div> <%-- end .toggleContent --%>
 
                 <%-- button to go to the next question --%>
-                <input type="button" id="btnQuestion2" onclick="checkQuestion2(gable); determineStartAndEndHeightOfEachWall(gable); loadWallData(); newProjectPopulateKneewallTransom();" class="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" value="Next Question" disabled/>
+                <input type="button" id="btnQuestion2" onclick="checkWallHeights(gable); determineStartAndEndHeightOfEachWall(gable); loadWallData(); newProjectPopulateKneewallTransom();" class="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" value="Next Question" disabled/>
 
             </div> 
             <%-- end #slide2 --%>
@@ -2799,7 +2794,7 @@
                                                 <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height:" />
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtKneewallHeight" onkeydown="return (event.keyCode!=13);" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" Width="65" Text="0" runat="server" MaxLength="3" />
+                                                <asp:TextBox ID="txtKneewallHeight" onkeydown="return (event.keyCode!=13);" onkeyup="checkModDetails()" OnChange="checkModDetails()" GroupName="styling" CssClass="txtField" Width="65" Text="0" runat="server" MaxLength="3" />
                                             </asp:TableCell>                                         
                                         </asp:TableRow>
 
@@ -2808,7 +2803,7 @@
                                                 <asp:Label ID="lblKneewallType" AssociatedControlID="txtKneewallHeight" runat="server" Text="Type:" />
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlKneewallType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                                <asp:DropDownList ID="ddlKneewallType" OnChange="checkModDetails()" GroupName="styling" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -2817,7 +2812,7 @@
                                                 <asp:Label ID="lblKneewallTint" AssociatedControlID="txtKneewallHeight" runat="server" Text="Tint:"></asp:Label>
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlKneewallTint" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server"></asp:DropDownList>
+                                                <asp:DropDownList ID="ddlKneewallTint" OnChange="checkModDetails()" GroupName="styling" runat="server"></asp:DropDownList>
                                             </asp:TableCell>
                                         </asp:TableRow>
                                     </asp:Table>
@@ -2846,7 +2841,7 @@
                                         </asp:TableRow>                                           
                                         <asp:TableRow>                                                                                   
                                             <asp:TableCell>
-                                                Tint: <asp:DropDownList ID="ddlTransomTint" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                                Tint: <asp:DropDownList ID="ddlTransomTint" OnChange="checkModDetails()" GroupName="styling" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
                                     </asp:Table>                                
@@ -2881,7 +2876,7 @@
                                                 <asp:Label ID="lblInteriorSkin" AssociatedControlID="ddlInteriorSkin" runat="server" Text="Interior Skin:" />
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlInteriorSkin" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                                <asp:DropDownList ID="ddlInteriorSkin" OnChange="checkModDetails()" GroupName="styling" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -2890,7 +2885,7 @@
                                                 <asp:Label ID="lblExteriorSkin" AssociatedControlID="ddlExteriorSkin" runat="server" Text="Exterior Skin:" />
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlExteriorSkin" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                                <asp:DropDownList ID="ddlExteriorSkin" OnChange="checkModDetails()" GroupName="styling" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>  
                                     </asp:Table>                            

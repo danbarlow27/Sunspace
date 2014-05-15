@@ -98,9 +98,7 @@ namespace SunspaceDealerDesktop
 
             Page.Form.DefaultButton = "";
 
-
-            string[] gableCheck = (string[])Session["newProjectArray"];
-            if (gableCheck[26] == "Dealer Gable" || gableCheck[26] == "Sunspace Gable")
+            if (Session["newProjectRoofType"] == "Dealer Gable" || Session["newProjectRoofType"] == "Sunspace Gable")
             {
                 Session.Add("isGable", "True");
                 gableType = (string)Session["newProjectRoofType"];
