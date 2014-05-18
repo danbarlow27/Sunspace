@@ -13,9 +13,8 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //listOfWalls = (List<Wall>)Session["listOfWalls"];
+            listOfWalls = (List<Wall>)Session["listOfWalls"];
             //.CssClass = "removeElement";
-            Table aTable;
             TableRow aTableRow;
             TableHeaderCell aTableHeaderCell;
             TableCell aTableCell;
@@ -25,14 +24,14 @@ namespace SunspaceDealerDesktop
 
             #region Extrusion Cut Sheet
             ddlCutSheets.Items.Add("Extrusion Cut Sheet");
-            aTable = new Table();
+            Table extrusionTable = new Table();
             aTableRow = new TableRow();
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
             aTableCell = new TableCell();
 
-            aTable.ID = "tblExtrusion";
-            aTable.CssClass = "CutSheet";
+            extrusionTable.ID = "tblExtrusion";
+            extrusionTable.CssClass = "CutSheet";
 
             aTableHeaderCell.Text = "Extrusion Type";
             aTableRow.Controls.Add(aTableHeaderCell);
@@ -55,64 +54,19 @@ namespace SunspaceDealerDesktop
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
 
-            aTable.Controls.Add(aTableRow);            
-
-            //listofwalls.count
-            for (int i = 0; i < 3; i++)
-            {
-                aTableRow = new TableRow();
-                aTableHeaderCell = new TableHeaderCell();
-                aTableHeaderCell.CssClass = "CutSheetHeaders";
-                aTableCell = new TableCell();
-                aTableCell.CssClass = "CutSheetCells";
-                
-                //alternate colours on each row
-                if (i % 2 != 0)
-                {
-                    aTableRow.CssClass = "CutSheetRowOdd";
-                }
-                else
-                {
-                    aTableRow.CssClass = "CutSheetRowEven";
-                }
-
-                aTableCell.Text = "ext";
-                aTableRow.Controls.Add(aTableCell);
-                aTableCell = new TableCell();
-                aTableCell.CssClass = "CutSheetCells"; 
-                aTableCell.Text = "1";
-                aTableRow.Controls.Add(aTableCell);
-                aTableCell = new TableCell();
-                aTableCell.CssClass = "CutSheetCells";
-                aTableCell.Text = "20";
-                aTableRow.Controls.Add(aTableCell);
-                aTableCell = new TableCell();
-                aTableCell.CssClass = "CutSheetCells";
-                aTableCell.Text = "";
-                aTableRow.Controls.Add(aTableCell);
-                aTableCell = new TableCell();
-                aTableCell.CssClass = "CutSheetCells";
-                aTableCell.Text = "";
-                aTableRow.Controls.Add(aTableCell);
-                aTableCell = new TableCell();
-                aTableCell.CssClass = "CutSheetCells";
-
-                aTable.Controls.Add(aTableRow);
-            }
-
-            tblExtrusionPlaceholder.Controls.Add(aTable); 
+            extrusionTable.Controls.Add(aTableRow);
             #endregion
 
             #region Panel Cut Sheet
             ddlCutSheets.Items.Add("Panel Cut Sheet");
-            aTable = new Table();
+            Table panelTable = new Table();
             aTableRow = new TableRow();
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
             aTableCell = new TableCell();
 
-            aTable.ID = "tblPanel";
-            aTable.CssClass = "CutSheet";
+            panelTable.ID = "tblPanel";
+            panelTable.CssClass = "CutSheet";
 
             aTableHeaderCell.Text = "Item ID";
             aTableRow.Controls.Add(aTableHeaderCell);
@@ -139,69 +93,20 @@ namespace SunspaceDealerDesktop
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
 
-            aTable.Controls.Add(aTableRow);
-
-            //listofwalls.count
-            for (int i = 0; i < 3; i++)
-            {
-                aTableRow = new TableRow();
-                aTableHeaderCell = new TableHeaderCell();
-                aTableHeaderCell.CssClass = "CutSheetHeaders";
-                aTableCell = new TableCell();
-                aTableCell.CssClass = "CutSheetCells";
-
-                //alternate colours on each row
-                if (i % 2 != 0)
-                {
-                    aTableRow.CssClass = "CutSheetRowOdd";
-                }
-                else
-                {
-                    aTableRow.CssClass = "CutSheetRowEven";
-                }
-
-                aTableCell.Text = "F2";
-                aTableRow.Controls.Add(aTableCell);
-                aTableCell = new TableCell();
-                aTableCell.CssClass = "CutSheetCells";
-                aTableCell.Text = "1";
-                aTableRow.Controls.Add(aTableCell);
-                aTableCell = new TableCell();
-                aTableCell.CssClass = "CutSheetCells";
-                aTableCell.Text = "3-5/8";
-                aTableRow.Controls.Add(aTableCell);
-                aTableCell = new TableCell();
-                aTableCell.CssClass = "CutSheetCells";
-                aTableCell.Text = "95-3/4";
-                aTableRow.Controls.Add(aTableCell);
-                aTableCell = new TableCell();
-                aTableCell.CssClass = "CutSheetCells";
-                aTableCell.Text = "";
-                aTableRow.Controls.Add(aTableCell);
-                aTableCell = new TableCell();
-                aTableCell.CssClass = "CutSheetCells";
-                aTableCell.Text = "";
-                aTableRow.Controls.Add(aTableCell);
-                aTableCell = new TableCell();
-                aTableCell.CssClass = "CutSheetCells";
-
-                aTable.Controls.Add(aTableRow);
-            }
-
-            tblPanelPlaceholder.Controls.Add(aTable);
+            panelTable.Controls.Add(aTableRow);   
             #endregion
 
             #region Roof Cut Sheet
             ddlCutSheets.Items.Add("Roof Cut Sheet");
-            aTable = new Table();
+            Table roofTable = new Table();
             aTableRow = new TableRow();
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
             aTableCell = new TableCell();
             aTableCell.CssClass = "CutSheetCells";
 
-            aTable.ID = "tblRoof";
-            aTable.CssClass = "CutSheet";
+            roofTable.ID = "tblRoof";
+            roofTable.CssClass = "CutSheet";
 
             aTableHeaderCell.Text = "Roof Panels";
             aTableRow.Controls.Add(aTableHeaderCell);
@@ -224,7 +129,7 @@ namespace SunspaceDealerDesktop
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
 
-            aTable.Controls.Add(aTableRow);
+            roofTable.Controls.Add(aTableRow);
 
             //listofwalls.count
             for (int i = 0; i < 3; i++)
@@ -266,24 +171,21 @@ namespace SunspaceDealerDesktop
                 aTableCell = new TableCell();
                 aTableCell.CssClass = "CutSheetCells";
 
-                aTable.Controls.Add(aTableRow);
+                roofTable.Controls.Add(aTableRow);
             }
 
-            tblRoofPlaceholder.Controls.Add(aTable);
-            aLabel = new Label();
-            aLabel.Text = "Extrusion Colour: White";
-            tblRoofPlaceholder.Controls.Add(aLabel);
+            
 
             //roof extrusion
-            aTable = new Table();
+            Table roofExtrusionTable = new Table();
             aTableRow = new TableRow();
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
             aTableCell = new TableCell();
             aTableCell.CssClass = "CutSheetCells";
 
-            aTable.ID = "tblRoofExtrusion";
-            aTable.CssClass = "CutSheet";
+            roofExtrusionTable.ID = "tblRoofExtrusion";
+            roofExtrusionTable.CssClass = "CutSheet";
 
             aTableHeaderCell.Text = "Extrusion Type";
             aTableRow.Controls.Add(aTableHeaderCell);
@@ -306,7 +208,7 @@ namespace SunspaceDealerDesktop
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
 
-            aTable.Controls.Add(aTableRow);
+            roofExtrusionTable.Controls.Add(aTableRow);
 
             //listofwalls.count
             for (int i = 0; i < 3; i++)
@@ -347,23 +249,22 @@ namespace SunspaceDealerDesktop
                 aTableCell = new TableCell();
                 aTableCell.CssClass = "CutSheetCells";
 
-                aTable.Controls.Add(aTableRow);
+                roofExtrusionTable.Controls.Add(aTableRow);
             }
 
-            tblRoofPlaceholder.Controls.Add(aTable);
             #endregion
 
             #region Box Prep Sheet
             ddlCutSheets.Items.Add("Box Prep Sheet");
-            aTable = new Table();
+            Table boxPrepTable = new Table();
             aTableRow = new TableRow();
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
             aTableCell = new TableCell();
             aTableCell.CssClass = "CutSheetCells";
 
-            aTable.ID = "tblBox";
-            aTable.CssClass = "CutSheet";
+            boxPrepTable.ID = "tblBox";
+            boxPrepTable.CssClass = "CutSheet";
 
             aTableHeaderCell.Text = "Box Prep Type";
             aTableRow.Controls.Add(aTableHeaderCell);
@@ -386,7 +287,7 @@ namespace SunspaceDealerDesktop
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
 
-            aTable.Controls.Add(aTableRow);
+            boxPrepTable.Controls.Add(aTableRow);
 
             //listofwalls.count
             for (int i = 0; i < 3; i++)
@@ -428,10 +329,9 @@ namespace SunspaceDealerDesktop
                 aTableCell = new TableCell();
                 aTableCell.CssClass = "CutSheetCells";
 
-                aTable.Controls.Add(aTableRow);
+                boxPrepTable.Controls.Add(aTableRow);
             }
 
-            tblBoxPlaceholder.Controls.Add(aTable);
             #endregion
 
             #endregion
@@ -440,15 +340,15 @@ namespace SunspaceDealerDesktop
 
             #region Vinyl Window Production
             ddlCutSheets.Items.Add("Vinyl Window Production");
-            aTable = new Table();
+            Table vinylTable = new Table();
             aTableRow = new TableRow();
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
             aTableCell = new TableCell();
             aTableCell.CssClass = "CutSheetCells";
 
-            aTable.ID = "tblVinyl";
-            aTable.CssClass = "CutSheet";
+            vinylTable.ID = "tblVinyl";
+            vinylTable.CssClass = "CutSheet";
 
             aTableHeaderCell.Text = "#";
             aTableHeaderCell.RowSpan = 2;
@@ -492,7 +392,7 @@ namespace SunspaceDealerDesktop
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
 
-            aTable.Controls.Add(aTableRow);
+            vinylTable.Controls.Add(aTableRow);
 
             aTableRow = new TableRow();
             aTableHeaderCell = new TableHeaderCell();
@@ -540,7 +440,7 @@ namespace SunspaceDealerDesktop
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
 
-            aTable.Controls.Add(aTableRow);
+            vinylTable.Controls.Add(aTableRow);
 
             //listofwalls.count
             for (int i = 0; i < 3; i++)
@@ -610,23 +510,22 @@ namespace SunspaceDealerDesktop
                 aTableCell = new TableCell();
                 aTableCell.CssClass = "CutSheetCells";
 
-                aTable.Controls.Add(aTableRow);
+                vinylTable.Controls.Add(aTableRow);
             }
 
-            tblVinylProductionPlaceholder.Controls.Add(aTable);
             #endregion
 
             #region Sash Cut Sheet
             ddlCutSheets.Items.Add("Sash Cut Sheet");
-            aTable = new Table();
+            Table sashTable = new Table();
             aTableRow = new TableRow();
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
             aTableCell = new TableCell();
             aTableCell.CssClass = "CutSheetCells";
 
-            aTable.ID = "tblSash";
-            aTable.CssClass = "CutSheet";
+            sashTable.ID = "tblSash";
+            sashTable.CssClass = "CutSheet";
 
             aTableHeaderCell.Text = "#";
             aTableHeaderCell.RowSpan = 2;
@@ -664,7 +563,7 @@ namespace SunspaceDealerDesktop
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
 
-            aTable.Controls.Add(aTableRow);
+            sashTable.Controls.Add(aTableRow);
 
             aTableRow = new TableRow();
             aTableHeaderCell = new TableHeaderCell();
@@ -725,31 +624,31 @@ namespace SunspaceDealerDesktop
             aTableRow.Controls.Add(aTableHeaderCell);
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
-            aTable.Controls.Add(aTableRow);
+            sashTable.Controls.Add(aTableRow);
 
             aTableHeaderCell.Text = "Top";
             aTableRow.Controls.Add(aTableHeaderCell);
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
-            aTable.Controls.Add(aTableRow);
+            sashTable.Controls.Add(aTableRow);
 
             aTableHeaderCell.Text = "2";
             aTableRow.Controls.Add(aTableHeaderCell);
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
-            aTable.Controls.Add(aTableRow);
+            sashTable.Controls.Add(aTableRow);
 
             aTableHeaderCell.Text = "3";
             aTableRow.Controls.Add(aTableHeaderCell);
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
-            aTable.Controls.Add(aTableRow);
+            sashTable.Controls.Add(aTableRow);
 
             aTableHeaderCell.Text = "4";
             aTableRow.Controls.Add(aTableHeaderCell);
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
-            aTable.Controls.Add(aTableRow);
+            sashTable.Controls.Add(aTableRow);
 
             //listofwalls.count
             for (int i = 0; i < 3; i++)
@@ -835,23 +734,22 @@ namespace SunspaceDealerDesktop
                 aTableCell = new TableCell();
                 aTableCell.CssClass = "CutSheetCells";
 
-                aTable.Controls.Add(aTableRow);
+                sashTable.Controls.Add(aTableRow);
             }
 
-            tblSashPlaceholder.Controls.Add(aTable);
             #endregion
 
             #region Frame Cut Sheet
             ddlCutSheets.Items.Add("Frame Cut Sheet");
-            aTable = new Table();
+            Table frameTable = new Table();
             aTableRow = new TableRow();
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
             aTableCell = new TableCell();
             aTableCell.CssClass = "CutSheetCells";
 
-            aTable.ID = "tblSash";
-            aTable.CssClass = "CutSheet";
+            frameTable.ID = "tblSash";
+            frameTable.CssClass = "CutSheet";
 
             aTableHeaderCell.Text = "#";
             aTableHeaderCell.RowSpan = 2;
@@ -889,7 +787,7 @@ namespace SunspaceDealerDesktop
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
 
-            aTable.Controls.Add(aTableRow);
+            frameTable.Controls.Add(aTableRow);
 
             aTableRow = new TableRow();
             aTableHeaderCell = new TableHeaderCell();
@@ -945,7 +843,7 @@ namespace SunspaceDealerDesktop
             aTableRow.Controls.Add(aTableHeaderCell);
             aTableHeaderCell = new TableHeaderCell();
             aTableHeaderCell.CssClass = "CutSheetHeaders";
-            aTable.Controls.Add(aTableRow);
+            frameTable.Controls.Add(aTableRow);
 
             aTableHeaderCell.Text = "Qty";
             aTableRow.Controls.Add(aTableHeaderCell);
@@ -1018,12 +916,493 @@ namespace SunspaceDealerDesktop
                 aTableCell.Text = "";
                 aTableRow.Controls.Add(aTableCell);
 
-                aTable.Controls.Add(aTableRow);
+                frameTable.Controls.Add(aTableRow);
             }
 
-            tblFramePlaceholder.Controls.Add(aTable);
             #endregion
 
+            #endregion
+
+            #region Populate Cut Sheets
+            #region Starter/Receiver
+            //Loop for all walls
+            List<Tuple<string, int, float>> starterList = new List<Tuple<string, int, float>>(); //eg: Starter, 1, 94 3/4
+            for (int wallNumber = 0; wallNumber < listOfWalls.Count; wallNumber++)
+            {
+                for (int linearNumber = 0; linearNumber < listOfWalls[wallNumber].LinearItems.Count; linearNumber++)
+                {
+                    if (listOfWalls[wallNumber].LinearItems[linearNumber].ItemType == "Receiver")
+                    {
+                        if (starterList.Count==0)
+                        {
+                            starterList.Add(new Tuple<string, int, float>("Starter", 1, Math.Max(listOfWalls[wallNumber].LinearItems[linearNumber].StartHeight,listOfWalls[wallNumber].LinearItems[linearNumber].EndHeight)));
+                        }
+                        else
+                        {
+                            bool added = false;
+                            for (int i = 0; i < starterList.Count; i++)
+                            {
+                                Tuple<string, int, float> aTuple = starterList[i];
+                                if (aTuple.Item3 == Math.Max(listOfWalls[wallNumber].LinearItems[linearNumber].StartHeight, listOfWalls[wallNumber].LinearItems[linearNumber].EndHeight)) //If this height exists, we add one to quantity, instead of making a new entry
+                                {
+                                    starterList[i] = new Tuple<string,int,float>(aTuple.Item1, (aTuple.Item2 + 1), aTuple.Item3);
+                                    added = true;
+                                    break;
+                                }
+                            }
+
+                            if (added==false)
+                            {
+                                starterList.Add(new Tuple<string, int, float>("Starter", 1, Math.Max(listOfWalls[wallNumber].LinearItems[linearNumber].StartHeight, listOfWalls[wallNumber].LinearItems[linearNumber].EndHeight)));
+                            }
+                        }
+                    }
+                }
+            }
+
+            //Now that we've found all starters, we can add them to the table
+            for (int i = 0; i < starterList.Count; i++)
+            {
+                aTableRow = new TableRow();
+
+                //alternate colours on each row
+                if (i % 2 != 0)
+                {
+                    aTableRow.CssClass = "CutSheetRowOdd";
+                }
+                else
+                {
+                    aTableRow.CssClass = "CutSheetRowEven";
+                }
+
+                aTableCell = new TableCell();
+                aLabel = new Label();
+                aLabel.Text = starterList[i].Item1.ToString();
+                aTableCell.Controls.Add(aLabel);
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aLabel = new Label();
+                aLabel.Text = starterList[i].Item2.ToString();
+                aTableCell.Controls.Add(aLabel);
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aLabel = new Label();
+                aLabel.Text = starterList[i].Item3.ToString();
+                aTableCell.Controls.Add(aLabel);
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                extrusionTable.Controls.Add(aTableRow);
+            }
+            #endregion
+            #region Boxheader
+            List<Tuple<string, int, float>> boxheaderList = new List<Tuple<string, int, float>>(); //eg: Starter, 1, 94 3/4
+            for (int wallNumber = 0; wallNumber < listOfWalls.Count; wallNumber++)
+            {
+                for (int linearNumber = 0; linearNumber < listOfWalls[wallNumber].LinearItems.Count; linearNumber++)
+                {
+                    if (listOfWalls[wallNumber].LinearItems[linearNumber].ItemType == "BoxHeader")
+                    {
+                        if (boxheaderList.Count == 0)
+                        {
+                            boxheaderList.Add(new Tuple<string, int, float>("Box Header", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                        }
+                        else
+                        {
+                            bool added = false;
+                            for (int i = 0; i < boxheaderList.Count; i++)
+                            {
+                                Tuple<string, int, float> aTuple = boxheaderList[i];
+                                if (aTuple.Item3 == Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)) //If this height exists, we add one to quantity, instead of making a new entry
+                                {
+                                    boxheaderList[i] = new Tuple<string, int, float>(aTuple.Item1, (aTuple.Item2 + 1), aTuple.Item3);
+                                    added = true;
+                                    break;
+                                }
+                            }
+
+                            if (added == false)
+                            {
+                                boxheaderList.Add(new Tuple<string, int, float>("Box Header", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                            }
+                        }
+                    }
+                }
+            }
+
+            //Now that we've found all boxheaders, we can add them to the table
+            for (int i = 0; i < boxheaderList.Count; i++)
+            {
+                aTableRow = new TableRow();
+
+                //alternate colours on each row
+                if (i % 2 != 0)
+                {
+                    aTableRow.CssClass = "CutSheetRowOdd";
+                }
+                else
+                {
+                    aTableRow.CssClass = "CutSheetRowEven";
+                }
+
+                aTableCell = new TableCell();
+                aLabel = new Label();
+                aLabel.Text = boxheaderList[i].Item1.ToString();
+                aTableCell.Controls.Add(aLabel);
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aLabel = new Label();
+                aLabel.Text = boxheaderList[i].Item2.ToString();
+                aTableCell.Controls.Add(aLabel);
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aLabel = new Label();
+                aLabel.Text = boxheaderList[i].Item3.ToString();
+                aTableCell.Controls.Add(aLabel);
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                extrusionTable.Controls.Add(aTableRow);
+            }
+            #endregion
+            #region HChannel
+            List<Tuple<string, int, float>> hChannelList = new List<Tuple<string, int, float>>(); //eg: Starter, 1, 94 3/4
+            for (int wallNumber = 0; wallNumber < listOfWalls.Count; wallNumber++)
+            {
+                for (int linearNumber = 0; linearNumber < listOfWalls[wallNumber].LinearItems.Count; linearNumber++)
+                {
+                    if (listOfWalls[wallNumber].LinearItems[linearNumber].ItemType == "HChannel")
+                    {
+                        if (hChannelList.Count == 0)
+                        {
+                            hChannelList.Add(new Tuple<string, int, float>("HChannel", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                        }
+                        else
+                        {
+                            bool added = false;
+                            for (int i = 0; i < hChannelList.Count; i++)
+                            {
+                                Tuple<string, int, float> aTuple = hChannelList[i];
+                                if (aTuple.Item3 == Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)) //If this height exists, we add one to quantity, instead of making a new entry
+                                {
+                                    hChannelList[i] = new Tuple<string, int, float>(aTuple.Item1, (aTuple.Item2 + 1), aTuple.Item3);
+                                    added = true;
+                                    break;
+                                }
+                            }
+
+                            if (added == false)
+                            {
+                                hChannelList.Add(new Tuple<string, int, float>("HChanel", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                            }
+                        }
+                    }
+                }
+            }
+
+            //Now that we've found all hchannels, we can add them to the table
+            for (int i = 0; i < hChannelList.Count; i++)
+            {
+                aTableRow = new TableRow();
+
+                //alternate colours on each row
+                if (i % 2 != 0)
+                {
+                    aTableRow.CssClass = "CutSheetRowOdd";
+                }
+                else
+                {
+                    aTableRow.CssClass = "CutSheetRowEven";
+                }
+
+                aTableCell = new TableCell();
+                aLabel = new Label();
+                aLabel.Text = hChannelList[i].Item1.ToString();
+                aTableCell.Controls.Add(aLabel);
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aLabel = new Label();
+                aLabel.Text = hChannelList[i].Item2.ToString();
+                aTableCell.Controls.Add(aLabel);
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aLabel = new Label();
+                aLabel.Text = hChannelList[i].Item3.ToString();
+                aTableCell.Controls.Add(aLabel);
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                extrusionTable.Controls.Add(aTableRow);
+            }
+            #endregion
+            #region Electrical Chase
+            List<Tuple<string, int, float>> electricalChaseList = new List<Tuple<string, int, float>>(); //eg: Starter, 1, 94 3/4
+            for (int wallNumber = 0; wallNumber < listOfWalls.Count; wallNumber++)
+            {
+                for (int linearNumber = 0; linearNumber < listOfWalls[wallNumber].LinearItems.Count; linearNumber++)
+                {
+                    if (listOfWalls[wallNumber].LinearItems[linearNumber].ItemType == "EChase")
+                    {
+                        if (electricalChaseList.Count == 0)
+                        {
+                            electricalChaseList.Add(new Tuple<string, int, float>("Electrical Chase", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                        }
+                        else
+                        {
+                            bool added = false;
+                            for (int i = 0; i < electricalChaseList.Count; i++)
+                            {
+                                Tuple<string, int, float> aTuple = electricalChaseList[i];
+                                if (aTuple.Item3 == Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)) //If this height exists, we add one to quantity, instead of making a new entry
+                                {
+                                    electricalChaseList[i] = new Tuple<string, int, float>(aTuple.Item1, (aTuple.Item2 + 1), aTuple.Item3);
+                                    added = true;
+                                    break;
+                                }
+                            }
+
+                            if (added == false)
+                            {
+                                electricalChaseList.Add(new Tuple<string, int, float>("Electrical Chase", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                            }
+                        }
+                    }
+                }
+            }
+
+            //Now that we've found all electrical chases, we can add them to the table
+            for (int i = 0; i < electricalChaseList.Count; i++)
+            {
+                aTableRow = new TableRow();
+
+                //alternate colours on each row
+                if (i % 2 != 0)
+                {
+                    aTableRow.CssClass = "CutSheetRowOdd";
+                }
+                else
+                {
+                    aTableRow.CssClass = "CutSheetRowEven";
+                }
+
+                aTableCell = new TableCell();
+                aLabel = new Label();
+                aLabel.Text = electricalChaseList[i].Item1.ToString();
+                aTableCell.Controls.Add(aLabel);
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aLabel = new Label();
+                aLabel.Text = electricalChaseList[i].Item2.ToString();
+                aTableCell.Controls.Add(aLabel);
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aLabel = new Label();
+                aLabel.Text = electricalChaseList[i].Item3.ToString();
+                aTableCell.Controls.Add(aLabel);
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                aTableCell = new TableCell();
+                aTableCell.CssClass = "CutSheetCells";
+                aTableRow.Controls.Add(aTableCell);
+
+                extrusionTable.Controls.Add(aTableRow);
+            }
+            #endregion
+            #region Filler
+            List<Tuple<string, int, float>> fillerList = new List<Tuple<string, int, float>>(); //eg: Starter, 1, 94 3/4
+            for (int wallNumber = 0; wallNumber < listOfWalls.Count; wallNumber++)
+            {
+                for (int linearNumber = 0; linearNumber < listOfWalls[wallNumber].LinearItems.Count; linearNumber++)
+                {
+                    
+                }
+            }
+            #endregion
+            #region Mod
+            List<Tuple<string, int, float>> modList = new List<Tuple<string, int, float>>(); //eg: Starter, 1, 94 3/4
+            for (int wallNumber = 0; wallNumber < listOfWalls.Count; wallNumber++)
+            {
+                for (int linearNumber = 0; linearNumber < listOfWalls[wallNumber].LinearItems.Count; linearNumber++)
+                {
+                    if (listOfWalls[wallNumber].LinearItems[linearNumber].ItemType == "Mod")
+                    {
+                        if (listOfWalls[wallNumber].LinearItems[linearNumber].Sex.Substring(0, 1) == "F")
+                        {
+                            if (modList.Count == 0)
+                            {
+                                modList.Add(new Tuple<string, int, float>("Female", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                            }
+                            else
+                            {
+                                bool added = false;
+                                for (int i = 0; i < modList.Count; i++)
+                                {
+                                    Tuple<string, int, float> aTuple = modList[i];
+                                    if (aTuple.Item3 == Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)) //If this height exists, we add one to quantity, instead of making a new entry
+                                    {
+                                        modList[i] = new Tuple<string, int, float>(aTuple.Item1, (aTuple.Item2 + 1), aTuple.Item3);
+                                        added = true;
+                                        break;
+                                    }
+                                }
+
+                                if (added == false)
+                                {
+                                    modList.Add(new Tuple<string, int, float>("Female", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                                }
+                            }
+                        }
+
+                        if (listOfWalls[wallNumber].LinearItems[linearNumber].Sex.Substring(0, 1) == "M")
+                        {
+                            if (modList.Count == 0)
+                            {
+                                modList.Add(new Tuple<string, int, float>("Male", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                            }
+                            else
+                            {
+                                bool added = false;
+                                for (int i = 0; i < modList.Count; i++)
+                                {
+                                    Tuple<string, int, float> aTuple = modList[i];
+                                    if (aTuple.Item3 == Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)) //If this height exists, we add one to quantity, instead of making a new entry
+                                    {
+                                        modList[i] = new Tuple<string, int, float>(aTuple.Item1, (aTuple.Item2 + 1), aTuple.Item3);
+                                        added = true;
+                                        break;
+                                    }
+                                }
+
+                                if (added == false)
+                                {
+                                    modList.Add(new Tuple<string, int, float>("Male", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                                }
+                            }
+                        }
+
+                        if (listOfWalls[wallNumber].LinearItems[linearNumber].Sex.Substring(1, 1) == "F")
+                        {
+                            if (modList.Count == 0)
+                            {
+                                modList.Add(new Tuple<string, int, float>("Female", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                            }
+                            else
+                            {
+                                bool added = false;
+                                for (int i = 0; i < modList.Count; i++)
+                                {
+                                    Tuple<string, int, float> aTuple = modList[i];
+                                    if (aTuple.Item3 == Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)) //If this height exists, we add one to quantity, instead of making a new entry
+                                    {
+                                        modList[i] = new Tuple<string, int, float>(aTuple.Item1, (aTuple.Item2 + 1), aTuple.Item3);
+                                        added = true;
+                                        break;
+                                    }
+                                }
+
+                                if (added == false)
+                                {
+                                    modList.Add(new Tuple<string, int, float>("Female", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                                }
+                            }
+                        }
+
+                        if (listOfWalls[wallNumber].LinearItems[linearNumber].Sex.Substring(1, 1) == "M")
+                        {
+                            if (modList.Count == 0)
+                            {
+                                modList.Add(new Tuple<string, int, float>("Male", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                            }
+                            else
+                            {
+                                bool added = false;
+                                for (int i = 0; i < modList.Count; i++)
+                                {
+                                    Tuple<string, int, float> aTuple = modList[i];
+                                    if (aTuple.Item3 == Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)) //If this height exists, we add one to quantity, instead of making a new entry
+                                    {
+                                        modList[i] = new Tuple<string, int, float>(aTuple.Item1, (aTuple.Item2 + 1), aTuple.Item3);
+                                        added = true;
+                                        break;
+                                    }
+                                }
+
+                                if (added == false)
+                                {
+                                    modList.Add(new Tuple<string, int, float>("Male", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+            #endregion
+
+            #region Add tables to placeholders
+            tblExtrusionPlaceholder.Controls.Add(extrusionTable);
+
+            tblPanelPlaceholder.Controls.Add(panelTable);
+
+            tblRoofPlaceholder.Controls.Add(roofTable);
+            aLabel = new Label();
+            aLabel.Text = "Extrusion Colour: White"; //Get extrusion colour
+            tblRoofPlaceholder.Controls.Add(aLabel);
+
+            tblRoofPlaceholder.Controls.Add(roofExtrusionTable);
+
+            tblBoxPlaceholder.Controls.Add(boxPrepTable);
+
+            tblVinylProductionPlaceholder.Controls.Add(vinylTable);
+
+            tblSashPlaceholder.Controls.Add(sashTable);
+
+            tblFramePlaceholder.Controls.Add(frameTable);
             #endregion
         }
     }

@@ -5,22 +5,23 @@
     <nav class="navEditor">
         <ul class="ulNavEditor">
             <li><asp:DropDownList ID="ddlSunroomObjects" Width="160" runat="server"></asp:DropDownList></li>
+            <!-- Note: this hyperlink has a javascript a click event attached to it, see the last few lines of Page_Load in codebehind -->
             <li><asp:HyperLink ID="lnkEditorNavMods" CssClass="editMods" runat="server">Edit Mods</asp:HyperLink></li>
             <li><asp:HyperLink ID="lnkEditorNavTools" runat="server">Tools</asp:HyperLink>
                 <ul>
-                    <li><asp:HyperLink ID="lnkEditorNavSave" runat="server">Save</asp:HyperLink></li>
-                    <li><asp:HyperLink ID="lnkEditorNavUndo" runat="server">Undo</asp:HyperLink></li>
-                    <li><asp:HyperLink ID="lnkEditorNavRedo" runat="server">Redo</asp:HyperLink></li>
-                    <li><asp:HyperLink ID="lnkEditorNavAddMod" runat="server">Add</asp:HyperLink></li>
-                    <li><asp:HyperLink ID="lnkEditorNavDeleteMod" runat="server">Delete</asp:HyperLink></li>
-                    <li><asp:HyperLink ID="lnkEditorNavMoveLeft" runat="server">Left</asp:HyperLink></li>
-                    <li><asp:HyperLink ID="lnkEditorNavMoveRight" runat="server">Right</asp:HyperLink></li>
-                    <li><asp:HyperLink ID="lnkEditorNavPrint" runat="server">Print</asp:HyperLink></li>
+                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavSave" runat="server">Save</asp:HyperLink></li>
+                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavUndo" runat="server">Undo</asp:HyperLink></li>
+                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavRedo" runat="server">Redo</asp:HyperLink></li>
+                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavAddMod" runat="server">Add</asp:HyperLink></li>
+                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavDeleteMod" runat="server">Delete</asp:HyperLink></li>
+                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavMoveLeft" runat="server">Left</asp:HyperLink></li>
+                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavMoveRight" runat="server">Right</asp:HyperLink></li>
+                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavPrint" runat="server">Print</asp:HyperLink></li>
                 </ul>
             </li>
         </ul>
-        <ul class="ulNavEditor float-right">
-            <!-- Note: these 2 hyperlinks have javascript functions attached to their click events, see the last 2 lines of Page_Load in codebehind -->
+        <ul id="saveButtons" class="ulNavEditor float-right">
+            <!-- Note: these 2 hyperlinks have javascript functions attached to their click events, see the last few lines of Page_Load in codebehind -->
             <li class="float-right"><asp:HyperLink ID="lnkUpdateSunroom" runat="server" ToolTip="Click to update the sunroom temporarily/locally">Update</asp:HyperLink></li>
             <li class="float-right"><asp:HyperLink ID="lnkSubmitSunroom" runat="server" ToolTip="Click to submit the sunroom to the database to save it permanently">Submit</asp:HyperLink></li>
         </ul>
@@ -60,7 +61,7 @@
     <asp:Label ID="lblTitle" runat="server" Text="Label" CssClass="float-right"></asp:Label> <br />
     <!--Div tag to hold the canvas/grid-->
     <div style="max-width:100%; max-height:100%; min-width:100px; min-height:100px; margin: 0 auto;" id="myCanvas"></div>
-    <button type="button" onclick="toggle()">Click Me!</button>
+
     <style>
         /*some styling for the axes*/
         .axis text {
@@ -131,7 +132,7 @@
         */
         function drawRoomLayout() {
 
-            drawRect(canvas, MAX_CANVAS_WIDTH, scale(10), -CENTRE_X, -CENTRE_Y, "existingWall", "#a8a8a8",1,"black","$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('Existing Wall'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', '#a8a8a8'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");   
+            drawRect(canvas, MAX_CANVAS_WIDTH, scale(10), -CENTRE_X, -CENTRE_Y, "existingWall", "#a8a8a8",1,"black","$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('Existing Wall'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', '#a8a8a8'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");   
             var text = "";
 
             if (antiProjection > projection) {
@@ -184,7 +185,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(2), scale(length), -scale(1), 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
+                            drawRect(gLayout, scale(2), scale(length), -scale(1), 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate(0,"+scale(length)+")"); //bottom right coordinates of the linear item
                         }
                     }
@@ -227,7 +228,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(2), scale(length), -scale(1), -scale(length), "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
+                            drawRect(gLayout, scale(2), scale(length), -scale(1), -scale(length), "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate(0,"+(-(scale(length)))+")"); //bottom right coordinates of the linear item
                         }
                     }
@@ -269,7 +270,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(length), scale(2), (-(scale(length))), 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
+                            drawRect(gLayout, scale(length), scale(2), (-(scale(length))), 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate("+(-(scale(length)))+",0)"); //bottom right coordinates of the linear item
                         }
                     }
@@ -311,7 +312,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(2), scale(length), 0, 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
+                            drawRect(gLayout, scale(2), scale(length), 0, 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate(0,"+scale(length)+")"); //bottom right coordinates of the linear item
                         }
                     }
@@ -367,7 +368,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(2), scale(length), -scale(1), 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
+                            drawRect(gLayout, scale(2), scale(length), -scale(1), 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate(0,"+scale(length)+")"); //bottom right coordinates of the linear item
                         }
                     }
@@ -410,7 +411,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(2), scale(length), -scale(1), -scale(length), "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
+                            drawRect(gLayout, scale(2), scale(length), -scale(1), -scale(length), "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate(0,"+(-(scale(length)))+")"); //bottom right coordinates of the linear item
                         }
                     }
@@ -452,7 +453,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(length), scale(2), 0, 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
+                            drawRect(gLayout, scale(length), scale(2), 0, 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate("+((scale(length)))+",0)"); //bottom right coordinates of the linear item
                         }
                     }
@@ -494,7 +495,7 @@
                                     text = title;
                                     break;
                             }
-                            drawRect(gLayout, scale(length), scale(2), 0, 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
+                            drawRect(gLayout, scale(length), scale(2), 0, 0, "", "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+text+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");
                             gLayout = gLayout.append("g").attr("transform", "translate(0,"+scale(length)+")"); //bottom right coordinates of the linear item
                         }
                     }
@@ -529,7 +530,7 @@
 
             var points = [topRight, topLeft, bottomLeft, bottomRight, topReceiverRight, topReceiverLeft, bottomReceiverLeft, bottomReceiverRight, bottomRight]; //put all the coordinates together in an array
 
-            drawPolygon(points, "", title, g, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('Top & Bottom Receivers'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+            drawPolygon(points, "", title, g, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('Top & Bottom Receivers'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
             
             drawAxes();
           
@@ -663,7 +664,8 @@
 
                         points = [bottomLeft,topLeft,insideTopLeft,insideBottomLeft,insideBottomRight,insideTopRight,topRight,bottomRight]; //put all the coordinates together in an array
                         
-                        drawPolygon(points, "", title, gLi, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+listOfWalls[wallIndex].LinearItems[i].ModularItems[listOfWalls[wallIndex].LinearItems[i].ModularItems.length - 2].ItemType+ " " + listOfWalls[wallIndex].LinearItems[i].ItemType + "'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                        // THIS LINE IS THE RIGHT LINE ... THE LINE BELOW IS A HOT FIX ....drawPolygon(points, "", title, gLi, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+listOfWalls[wallIndex].LinearItems[i].ModularItems[listOfWalls[wallIndex].LinearItems[i].ModularItems.length - 2].ItemType+ " " + listOfWalls[wallIndex].LinearItems[i].ItemType + "'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(points, "", title, gLi, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+listOfWalls[wallIndex].LinearItems[i].ModularItems[listOfWalls[wallIndex].LinearItems[i].ModularItems.length - 1].ItemType+ " " + listOfWalls[wallIndex].LinearItems[i].ItemType + "'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                         
                         drawModularItems(modularItems, (parseFloat(x) + parseFloat(scale(1))), y, listOfWalls[wallIndex].LinearItems[i].LinearIndex, i);
 
@@ -688,7 +690,7 @@
 
                         points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(points, "", title, gLi, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+listOfWalls[wallIndex].LinearItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(points, "", title, gLi, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+listOfWalls[wallIndex].LinearItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                         //drawPolygon(points, "filler", title, gLi); //draw the polygon to represent the wall with the given coordinates and id
 
                         x = parseFloat(x) + scale(parseFloat(length));
@@ -757,7 +759,7 @@
 
                         var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(points, "", title, gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(points, "", title, gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                         var ggMod = gMod.append("g");
 
@@ -768,7 +770,7 @@
 
                         var points = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(points, "", title, ggMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(points, "", title, ggMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                         if (i < (parseFloat(modularItems.length) - 1)) {
 
@@ -796,7 +798,7 @@
 
                         var outsidePoints = [outsideTopLeft, outsideTopRight, outsideBottomRight, outsideBottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(outsidePoints, "", title, gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(outsidePoints, "", title, gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ modularItems[i].WindowStyle + " " +modularItems[i].ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                         //drawPolygon(outsidePoints, "", title, gMod);//, "white", 1, "black");
                         
                         gMod = gMod.append("g");
@@ -891,7 +893,7 @@
 
             var pt1, pt2, topLeft, topRight, bottomLeft, bottomRight, leftSlider, rightSlider;
 
-            drawPolygon(frame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+            drawPolygon(frame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
             //drawPolygon(frame, "", "", gMod); //draw the polygon to represent the wall with the given coordinates and id
             gWindow = gMod.append("g").attr("transform", "translate("+ frame[3].x + "," + frame[3].y + ")");
 
@@ -913,7 +915,7 @@
 
                     leftSlider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                    drawPolygon(leftSlider, "", "", gWindow, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Left Slider'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(leftSlider, "", "", gWindow, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Left Slider'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     if (window.SpreaderBar !== 0) {
                         gVent = gWindow.append("g");
@@ -931,7 +933,7 @@
 
                     rightSlider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                    drawPolygon(rightSlider, "", "", gWindow, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Right Slider'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(rightSlider, "", "", gWindow, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Right Slider'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     if (window.SpreaderBar !== 0) {
                         gVent = gWindow.append("g");
@@ -961,7 +963,7 @@
 
                         var slider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(slider, "", "", gVent, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Vent "+ (parseFloat(i) + parseFloat(1)) +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(slider, "", "", gVent, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Vent "+ (parseFloat(i) + parseFloat(1)) +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                         //drawPolygon(slider, "", "", gVent); //draw the polygon to represent the wall with the given coordinates and id
 
                         if (window.SpreaderBar !== 0) {
@@ -1025,6 +1027,11 @@
         @param id - id to be used for the onclick event to display the appropriate update form 
         */
         function drawDoorDetails(door, frame, transomIndex, linearIndex, relativeLinearIndex, id) {
+            
+            if (listOfWalls[wallIndex].ModelType.substring().toLowerCase() === "m400") { //if model 400
+                drawModel400DoorDetails(door, frame, transomIndex, linearIndex, relativeLinearIndex, id);
+                return; //exit out of this function so the rest of this function doesn't get executed
+            }
 
             var pt1, pt2, topLeft, topRight, bottomLeft, bottomRight, leftSlider, rightSlider;
 
@@ -1035,8 +1042,8 @@
             
             var doorDoorFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-            drawPolygon(doorDoorFrame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
-            drawPolygon(frame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+            drawPolygon(doorDoorFrame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+            drawPolygon(frame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
             
             gDoor = gMod.append("g").attr("transform", "translate("+ frame[3].x + "," + frame[3].y + ")");
 
@@ -1051,15 +1058,15 @@
                     var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
                     gMod = gMod.append("g");
-                    drawPolygon(doorWindowFrame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(doorWindowFrame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     var r = scale(1.25);
-                    var cx = (door.Hinge === "R") ? parseFloat(frame[0].x) + scale(parseFloat(1.75)) : parseFloat(frame[1].x) - scale(parseFloat(1.75));
+                    var cx = (door.Hinge === "R") ? parseFloat(frame[0].x) + scale(parseFloat(1.5)) : parseFloat(frame[1].x) - scale(parseFloat(1.5));
                     var cy = -scale(door.FEndHeight / 2);
 
                     var ggMod = gMod.append("g");
                     
-                    drawCircle(ggMod, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawCircle(ggMod, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     //////////////// DOOR WINDOW DETAILS
 
@@ -1067,7 +1074,7 @@
 
                     //////////////END DOOR WINDOW DETAILS
                     
-                    if (door.ScreenType.toLowerCase() != "no screen" && door.ScreenType != "noscreen" && door.ScreenType != "" && typeof door.ScreenType !== 'undefined') {
+                    if (door.ScreenType.toLowerCase() != "no screen" && door.ScreenType.toLowerCase() != "noscreen" && door.ScreenType.toLowerCase() != "" && typeof door.ScreenType !== 'undefined') {
                      
                         topLeft = { "x": topLeft.x + parseFloat(scale(1)) , "y": topLeft.y - parseFloat(scale(1)) }; //top left coordinates
                         topRight = { "x": topRight.x + parseFloat(scale(1)) , "y": topRight.y - parseFloat(scale(1)) }; //top right coordinates
@@ -1076,20 +1083,20 @@
 
                         doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawScreen(gMod, doorWindowFrame, door.ScreenType, id, true);
+                        drawScreen(gMod, doorWindowFrame, door.ScreenType, id, scale(door.Kickplate));
                     }
                     break;
                 case "french": case "frenchdoor": case "french door":
                     //////////////LEFT DOOR
                     var topLeft = { "x": parseFloat(frame[0].x), "y": parseFloat(frame[0].y) }; //top left coordinates
-                    var topRight = { "x": parseFloat(frame[1].x) - scale(parseFloat(door.FLength/2)) - scale(parseFloat(0/*.25*/)), "y": parseFloat(frame[1].y) }; //top right coordinates
-                    var bottomRight = { "x": parseFloat(frame[2].x) - scale(parseFloat(door.FLength/2)) - scale(parseFloat(0/*.25*/)), "y": parseFloat(frame[2].y) }; //bottom right coordinates
+                    var topRight = { "x": parseFloat(frame[1].x) - scale(parseFloat(door.FLength/2)) + scale(parseFloat(0.25)), "y": parseFloat(frame[1].y) }; //top right coordinates
+                    var bottomRight = { "x": parseFloat(frame[2].x) - scale(parseFloat(door.FLength/2)) + scale(parseFloat(0.25)), "y": parseFloat(frame[2].y) }; //bottom right coordinates
                     var bottomLeft = { "x": parseFloat(frame[3].x), "y": parseFloat(frame[3].y) }; //bottom left coordinates
 
                     var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
                     var gDoorFrame = gMod.append("g");
-                    drawPolygon(doorWindowFrame, "", "", gDoorFrame, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(doorWindowFrame, "", "", gDoorFrame, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                     
                     ///////////////END LEFT DOOR
 
@@ -1103,31 +1110,31 @@
                     var doorWindowFrame1 = [topLeft1, topRight1, bottomRight1, bottomLeft1]; //put all the coordinates together in an array
 
                     var gDoorWindow = gMod.append("g");
-                    drawPolygon(doorWindowFrame1, "", "", gDoorWindow, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(doorWindowFrame1, "", "", gDoorWindow, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     ///////////END LEFT DOOR WINDOW
 
                     //////////////LEFT DOORKNOB
 
                     var r = scale(1.25);
-                    var cx = parseFloat(frame[1].x) - scale(parseFloat(1.75)) - scale(parseFloat(door.FLength/2)) - scale(parseFloat(0.25));
+                    var cx = parseFloat(frame[1].x) - scale(parseFloat(1.6)) - scale(parseFloat(door.FLength/2)) - scale(parseFloat(0.25));
                     var cy = -scale(door.FEndHeight / 2);
 
                     var gDoorknob = gMod.append("g");
                     
-                    drawCircle(gDoorknob, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawCircle(gDoorknob, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     /////////////END LEFT DOORKNOB
 
                     //////////////// DOOR WINDOW DETAILS
 
-                    //drawDoorWindowDetails();
+                    drawDoorWindowDetails(gDoorWindow, doorWindowFrame1, door);
 
                     //////////////END DOOR WINDOW DETAILS
                     
                     ////////////////////LEFT DOOR SCREEN
 
-                    if (door.ScreenType.toLowerCase() != "no screen" && door.ScreenType != "noscreen" && door.ScreenType != "" && typeof door.ScreenType !== 'undefined') {
+                    if (door.ScreenType.toLowerCase() != "no screen" && door.ScreenType.toLowerCase() != "noscreen" && door.ScreenType.toLowerCase() != "" && typeof door.ScreenType !== 'undefined') {
                      
                         topLeft1 = { "x": topLeft1.x + parseFloat(scale(1)) , "y": topLeft1.y - parseFloat(scale(1)) }; //top left coordinates
                         topRight1 = { "x": topRight1.x + parseFloat(scale(1)) , "y": topRight1.y - parseFloat(scale(1)) }; //top right coordinates
@@ -1136,21 +1143,21 @@
 
                         doorWindowFrame1 = [topLeft1, topRight1, bottomRight1, bottomLeft1]; //put all the coordinates together in an array
 
-                        drawScreen(gMod, doorWindowFrame1, door.ScreenType, id, true);
+                        drawScreen(gMod, doorWindowFrame1, door.ScreenType, id, scale(door.Kickplate));
                     }
 
                     //////////////////END LEFT DOOR SCREEN
 
                     //////////////RIGHT DOOR
-                    var topLeft = { "x": parseFloat(frame[0].x) + scale(parseFloat(door.FLength/2)), "y": parseFloat(frame[0].y) }; //top left coordinates
+                    var topLeft = { "x": parseFloat(frame[0].x) + scale(parseFloat(door.FLength/2)) - scale(parseFloat(0.5)), "y": parseFloat(frame[0].y) }; //top left coordinates
                     var topRight = { "x": parseFloat(frame[1].x), "y": parseFloat(frame[1].y) }; //top right coordinates
                     var bottomRight = { "x": parseFloat(frame[2].x), "y": parseFloat(frame[2].y) }; //bottom right coordinates
-                    var bottomLeft = { "x": parseFloat(frame[3].x) + scale(parseFloat(door.FLength/2)), "y": parseFloat(frame[3].y) }; //bottom left coordinates
+                    var bottomLeft = { "x": parseFloat(frame[3].x) + scale(parseFloat(door.FLength/2)) - scale(parseFloat(0.5)), "y": parseFloat(frame[3].y) }; //bottom left coordinates
 
                     var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
                     gggMod = gDoorFrame.append("g");
-                    drawPolygon(doorWindowFrame, "", "", gggMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(doorWindowFrame, "", "", gggMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                     
                     ///////////////END RIGHT DOOR
                     
@@ -1164,7 +1171,7 @@
                     var doorWindowFrame1 = [topLeft1, topRight1, bottomRight1, bottomLeft1]; //put all the coordinates together in an array
 
                     ggMod = gDoorWindow.append("g");
-                    drawPolygon(doorWindowFrame1, "", "", ggMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID%>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawPolygon(doorWindowFrame1, "", "", ggMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID%>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
 
                     ///////////END RIGHT DOOR WINDOW
 
@@ -1174,19 +1181,19 @@
                     var cx = parseFloat(frame[0].x) + scale(parseFloat(1.75)) + scale(parseFloat(door.FLength/2)) - scale(parseFloat(0.25));
                     var cy = -scale(door.FEndHeight / 2);
 
-                    drawCircle(gDoorknob, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                    drawCircle(gDoorknob, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                 
                     ////////////END RIGHT DOORKNOB
 
                     //////////////// DOOR WINDOW DETAILS
 
-                    //drawDoorWindowDetails();
+                    drawDoorWindowDetails(ggMod, doorWindowFrame1, door);
 
                     //////////////END DOOR WINDOW DETAILS
                     
                     /////////////////RIGHT DOOR SCREEN
 
-                    if (door.ScreenType.toLowerCase() != "no screen" && door.ScreenType != "noscreen" && door.ScreenType != "" && typeof door.ScreenType !== 'undefined') {
+                    if (door.ScreenType.toLowerCase() != "no screen" && door.ScreenType.toLowerCase() != "noscreen" && door.ScreenType.toLowerCase() != "" && typeof door.ScreenType !== 'undefined') {
                      
                         topLeft1 = { "x": topLeft1.x + parseFloat(scale(1)) , "y": topLeft1.y - parseFloat(scale(1)) }; //top left coordinates
                         topRight1 = { "x": topRight1.x + parseFloat(scale(1)) , "y": topRight1.y - parseFloat(scale(1)) }; //top right coordinates
@@ -1195,7 +1202,7 @@
 
                         doorWindowFrame1 = [topLeft1, topRight1, bottomRight1, bottomLeft1]; //put all the coordinates together in an array
 
-                        drawScreen(gMod, doorWindowFrame1, door.ScreenType, id, true);
+                        drawScreen(gMod, doorWindowFrame1, door.ScreenType, id, scale(door.Kickplate));
                     }
 
                     /////////////END RIGHT DOOR SCREEN
@@ -1205,13 +1212,190 @@
         }
 
         /**
+        This function draws the details of a given door that is of model 400
+        @param door - the door object
+        @param frame - the door frame coordinates
+        @param transomIndex - modular index of the transom
+        @param linearIndex - index of the linear item which contains this door
+        @param relativeLinearIndex - index of the linear item relative to the wall drawn
+        @param id - id to be used for the onclick event to display the appropriate update form 
+        */
+        function drawModel400DoorDetails(door, frame, transomIndex, linearIndex, relativeLinearIndex, id) {
+            var pt1, pt2, topLeft, topRight, bottomLeft, bottomRight, leftSlider, rightSlider;
+
+            var topLeft = { "x": parseFloat(frame[0].x) - scale(parseFloat(1)), "y": parseFloat(frame[0].y) - scale(parseFloat(1)) }; //top left coordinates
+            var topRight = { "x": parseFloat(frame[1].x) + scale(parseFloat(1)), "y": parseFloat(frame[1].y) - scale(parseFloat(1)) }; //top right coordinates
+            var bottomRight = { "x": parseFloat(frame[2].x) + scale(parseFloat(1)), "y": parseFloat(frame[2].y) }; //bottom right coordinates
+            var bottomLeft = { "x": parseFloat(frame[3].x) - scale(parseFloat(1)), "y": parseFloat(frame[3].y) }; //bottom left coordinates
+            
+            var doorDoorFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+            drawPolygon(doorDoorFrame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+            drawPolygon(frame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+            
+            gDoor = gMod.append("g").attr("transform", "translate("+ frame[3].x + "," + frame[3].y + ")");
+
+
+            switch(door.DoorType.toLowerCase()) {
+                
+                case "cabana": case "cabana door": case "cabanadoor":
+
+                    switch(door.DoorStyle.toLowerCase()) {
+
+                        case "half lite": case "half lite venting": case "half lite with mini blinds":
+                        case "halflite": case "halfliteventing": case "halflitewithminiblinds":
+
+                            var topLeft = { "x": parseFloat(frame[0].x) + scale(parseFloat(3.5)), "y": parseFloat(frame[0].y) + scale(parseFloat(2.5)) }; //top left coordinates
+                            var topRight = { "x": parseFloat(frame[1].x) - scale(parseFloat(3.5)), "y": parseFloat(frame[1].y) + scale(parseFloat(2.5)) }; //top right coordinates
+                            var bottomRight = { "x": parseFloat(frame[2].x) - scale(parseFloat(3.5)), "y": parseFloat(frame[2].y) - scale(parseFloat(door.Height / 2.3) + parseFloat(0.5)) }; //bottom right coordinates
+                            var bottomLeft = { "x": parseFloat(frame[3].x) + scale(parseFloat(3.5)), "y": parseFloat(frame[3].y) - scale(parseFloat(door.Height / 2.3) + parseFloat(0.5)) }; //bottom left coordinates
+
+                            var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                            gMod = gMod.append("g");
+                            drawPolygon(doorWindowFrame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+
+                            ////////////////////
+
+                            var r = scale(1.25);
+                            var cx = (door.Hinge === "R") ? parseFloat(frame[0].x) + scale(parseFloat(1.5)) : parseFloat(frame[1].x) - scale(parseFloat(1.5));
+                            var cy = -scale(door.FEndHeight / 2);
+
+                            var ggMod = gMod.append("g");
+                    
+                            drawCircle(ggMod, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+
+                            //////////////////
+
+                            var topBottomLeft = { "x": parseFloat(frame[0].x) + scale(parseFloat(4)), "y": parseFloat(frame[0].y) + scale(parseFloat(door.Height / 1.7)) }; //top left coordinates
+                            var topBottomRight = { "x": parseFloat(frame[1].x) - scale(parseFloat(door.Length / 1.8)), "y": parseFloat(frame[1].y) + scale(parseFloat(door.Height / 1.7)) }; //top right coordinates
+                            var bottomBottomRight = { "x": parseFloat(frame[2].x) - scale(parseFloat(door.Length / 1.8)), "y": parseFloat(frame[2].y) - scale(parseFloat(10)) }; //bottom right coordinates
+                            var bottomBottomLeft = { "x": parseFloat(frame[3].x) + scale(parseFloat(4)), "y": parseFloat(frame[3].y) - scale(parseFloat(10)) }; //bottom left coordinates
+
+                            var doorBottomFrame = [topBottomLeft, topBottomRight, bottomBottomRight, bottomBottomLeft]; //put all the coordinates together in an array
+
+                            ggMod = ggMod.append("g");
+                            drawPolygon(doorBottomFrame, "", "", ggMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+
+                            var topBottomLeft = { "x": parseFloat(frame[0].x) + scale(parseFloat(door.Length / 1.8)), "y": parseFloat(frame[0].y) + scale(parseFloat(door.Height / 1.7)) }; //top left coordinates
+                            var topBottomRight = { "x": parseFloat(frame[1].x) - scale(parseFloat(4)), "y": parseFloat(frame[1].y) + scale(parseFloat(door.Height / 1.7)) }; //top right coordinates
+                            var bottomBottomRight = { "x": parseFloat(frame[2].x) - scale(parseFloat(4)), "y": parseFloat(frame[2].y) - scale(parseFloat(10)) }; //bottom right coordinates
+                            var bottomBottomLeft = { "x": parseFloat(frame[3].x) + scale(parseFloat(door.Length / 1.8)), "y": parseFloat(frame[3].y) - scale(parseFloat(10)) }; //bottom left coordinates
+
+                            var doorBottomFrame = [topBottomLeft, topBottomRight, bottomBottomRight, bottomBottomLeft]; //put all the coordinates together in an array
+
+                            ggMod = ggMod.append("g");
+                            drawPolygon(doorBottomFrame, "", "", ggMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+
+                            ////////////////////////////////////
+
+                            var topBottomLeft = { "x": parseFloat(frame[0].x) + scale(parseFloat(4)) + scale(1), "y": parseFloat(frame[0].y) + scale(parseFloat(door.Height / 1.7)) + scale(1) }; //top left coordinates
+                            var topBottomRight = { "x": parseFloat(frame[1].x) - scale(parseFloat(door.Length / 1.8)) - scale(1), "y": parseFloat(frame[1].y) + scale(parseFloat(door.Height / 1.7)) + scale(1) }; //top right coordinates
+                            var bottomBottomRight = { "x": parseFloat(frame[2].x) - scale(parseFloat(door.Length / 1.8)) - scale(1), "y": parseFloat(frame[2].y) - scale(parseFloat(10)) - scale(1) }; //bottom right coordinates
+                            var bottomBottomLeft = { "x": parseFloat(frame[3].x) + scale(parseFloat(4)) + scale(1), "y": parseFloat(frame[3].y) - scale(parseFloat(10)) - scale(1) }; //bottom left coordinates
+
+                            var doorBottomFrame = [topBottomLeft, topBottomRight, bottomBottomRight, bottomBottomLeft]; //put all the coordinates together in an array
+
+                            ggMod = ggMod.append("g");
+                            drawPolygon(doorBottomFrame, "", "", ggMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+
+                            var topBottomLeft = { "x": parseFloat(frame[0].x) + scale(parseFloat(door.Length / 1.8)) + scale(1), "y": parseFloat(frame[0].y) + scale(parseFloat(door.Height / 1.7)) + scale(1) }; //top left coordinates
+                            var topBottomRight = { "x": parseFloat(frame[1].x) - scale(parseFloat(4)) - scale(1), "y": parseFloat(frame[1].y) + scale(parseFloat(door.Height / 1.7)) + scale(1) }; //top right coordinates
+                            var bottomBottomRight = { "x": parseFloat(frame[2].x) - scale(parseFloat(4)) - scale(1), "y": parseFloat(frame[2].y) - scale(parseFloat(10)) - scale(1) }; //bottom right coordinates
+                            var bottomBottomLeft = { "x": parseFloat(frame[3].x) + scale(parseFloat(door.Length / 1.8)) + scale(1), "y": parseFloat(frame[3].y) - scale(parseFloat(10)) - scale(1) }; //bottom left coordinates
+
+                            var doorBottomFrame = [topBottomLeft, topBottomRight, bottomBottomRight, bottomBottomLeft]; //put all the coordinates together in an array
+
+                            ggMod = ggMod.append("g");
+                            drawPolygon(doorBottomFrame, "", "", ggMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+
+                            ////////////////////
+
+                            //////////////// DOOR WINDOW DETAILS
+
+                            drawDoorWindowDetails(gMod, doorWindowFrame, door, id);
+
+                            //////////////END DOOR WINDOW DETAILS
+                    
+                            if (door.ScreenType.toLowerCase() != "no screen" && door.ScreenType.toLowerCase() != "noscreen" && door.ScreenType.toLowerCase() != "" && typeof door.ScreenType !== 'undefined') {
+                     
+                                topLeft = { "x": topLeft.x + parseFloat(scale(1)) , "y": topLeft.y - parseFloat(scale(1)) }; //top left coordinates
+                                topRight = { "x": topRight.x + parseFloat(scale(1)) , "y": topRight.y - parseFloat(scale(1)) }; //top right coordinates
+                                bottomRight = { "x": bottomLeft.x + parseFloat(scale(1)) , "y": bottomLeft.y }; //bottom right coordinates
+                                bottomLeft = { "x": bottomRight.x + parseFloat(scale(1)) , "y": bottomRight.y }; //bottom left coordinates
+
+                                doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                                drawScreen(gMod, doorWindowFrame, door.ScreenType, id, scale(door.Height / 2.3));
+                            }
+
+                            break;
+
+                        case "full lite": case "full view": case "full view with mini blinds": 
+                        case "fulllite": case "fullview": case "fullviewwithminiblinds":
+                            
+                            var topLeft = { "x": parseFloat(frame[0].x) + scale(parseFloat(3.5)), "y": parseFloat(frame[0].y) + scale(parseFloat(2.5)) }; //top left coordinates
+                            var topRight = { "x": parseFloat(frame[1].x) - scale(parseFloat(3.5)), "y": parseFloat(frame[1].y) + scale(parseFloat(2.5)) }; //top right coordinates
+                            var bottomRight = { "x": parseFloat(frame[2].x) - scale(parseFloat(3.5)), "y": parseFloat(frame[2].y) - scale(parseFloat(5)) }; //bottom right coordinates
+                            var bottomLeft = { "x": parseFloat(frame[3].x) + scale(parseFloat(3.5)), "y": parseFloat(frame[3].y) - scale(parseFloat(5)) }; //bottom left coordinates
+
+                            var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                            gMod = gMod.append("g");
+                            drawPolygon(doorWindowFrame, "", "", gMod, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+
+                            ////////////////////////
+
+                            var r = scale(1.25);
+                            var cx = (door.Hinge === "R") ? parseFloat(frame[0].x) + scale(parseFloat(1.5)) : parseFloat(frame[1].x) - scale(parseFloat(1.5));
+                            var cy = -scale(door.FEndHeight / 2);
+
+                            var ggMod = gMod.append("g");
+                    
+                            drawCircle(ggMod, r, cx, cy, "", "yellow" /*hard coded for now*/, 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.HardwareType + " Hardware'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'yellow'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+
+                            //////////////// DOOR WINDOW DETAILS
+
+                            drawDoorWindowDetails(gMod, doorWindowFrame, door, id);
+
+                            //////////////END DOOR WINDOW DETAILS
+                    
+                            if (door.ScreenType.toLowerCase() != "no screen" && door.ScreenType.toLowerCase() != "noscreen" && door.ScreenType.toLowerCase() != "" && typeof door.ScreenType !== 'undefined') {
+                     
+                                topLeft = { "x": topLeft.x + parseFloat(scale(1)) , "y": topLeft.y - parseFloat(scale(1)) }; //top left coordinates
+                                topRight = { "x": topRight.x + parseFloat(scale(1)) , "y": topRight.y - parseFloat(scale(1)) }; //top right coordinates
+                                bottomRight = { "x": bottomLeft.x + parseFloat(scale(1)) , "y": bottomLeft.y }; //bottom right coordinates
+                                bottomLeft = { "x": bottomRight.x + parseFloat(scale(1)) , "y": bottomRight.y }; //bottom left coordinates
+
+                                doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                                drawScreen(gMod, doorWindowFrame, door.ScreenType, id, scale(5));
+                            }
+
+                            break;
+                    }
+
+                    break;
+
+                case "patio": case "patio door": case "patiodoor":
+
+                    break;
+
+            }
+
+
+        }
+        /**
         This function draws the details of the window within a given door
         @param g - the <g> element on which to append the line
         @param frame - the window frame coordinates
         @param door - the door object to retrieve the details out of
+        @param id - 
         */
-        function drawDoorWindowDetails(g, frame, door) {
+        function drawDoorWindowDetails(g, frame, door, id) {
  
+            id = typeof id !== 'undefined' ? id : "";
+
             var gDoorWindowDetails = g.append("g").attr("transform", "translate("+ frame[0].x + "," + frame[0].y + ")"); //translate to top right
 
             switch(door.DoorStyle.toLowerCase()) {
@@ -1222,6 +1406,7 @@
                 case "vinyl guard": case "vinylguard": //model 400 patio
                     //do nothing
                     break;
+                
                 case "full view colonial": case "fullviewcolonial": //model 200/300 cabana/french
                     
                     var xIncrement = (parseFloat(frame[1].x) - parseFloat(frame[0].x)) / 3; //take the frame width and divide it by 3
@@ -1230,18 +1415,19 @@
                     //vertical lines
                     for (var i = frame[0].x + scale(parseFloat(3.5)); i < frame[1].x - scale(1) - scale(parseFloat(3.5)); i += xIncrement) {
                         pt1 = { "x": i, "y": 0 }; //line left coordinates
-                        pt2 = { "x": i, "y":  -(frame[1].y + 1) - scale(20) }; //line left coordinates
-                        drawLine(pt1, pt2, gDoorWindowDetails, 1, "black", 1);//, "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
+                        pt2 = { "x": i, "y":  -(frame[1].y + 2) - scale(20) }; //line left coordinates
+                        drawLine(pt1, pt2, gDoorWindowDetails, 1, "black", 1);//, "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");
                     }
 
                     //horizontal lines
-                    for (var i = parseFloat(frame[1].y) + scale(parseFloat(50)) - scale(parseFloat(door.Kickplate)); i < frame[2].y + scale(1) + parseFloat(0.5) + scale(parseFloat(20)); i += (parseFloat(yIncrement) + parseFloat(2))) {
-                        pt1 = { "x": (frame[0].x - scale(4) - 1), "y": -i }; //line left coordinates
-                        pt2 = { "x": (frame[1].x - scale(4) - 1), "y": -i }; //line left coordinates
-                        drawLine(pt1, pt2, gDoorWindowDetails, 1, "black", 1);//, "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
+                    for (var i = parseFloat(frame[1].y) + scale(parseFloat(50)) - scale(parseFloat(door.Kickplate)) + scale(parseFloat(1)); i < frame[2].y + parseFloat(0.5) + scale(parseFloat(20)); i += (parseFloat(yIncrement) + parseFloat(2))) {
+                        pt1 = { "x": (frame[0].x - scale(4) - 3), "y": -i }; //line left coordinates
+                        pt2 = { "x": (frame[1].x - scale(4) - 3), "y": -i }; //line left coordinates
+                        drawLine(pt1, pt2, gDoorWindowDetails, 1, "black", 1);//, "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");
                     }
 
                     break;
+                
                 case "vertical four track": case "verticalfourtrack": case "vertical4track": case "vertical 4 track": case "v4t": //model 200 cabana/french
                     //////////////////////////////////////////////////////////
                     //////////////////////////////////////////////////////////
@@ -1266,7 +1452,7 @@
 
                         var slider = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
 
-                        drawPolygon(slider, "", "", gVent, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Vent "+ (parseFloat(i) + parseFloat(1)) +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+                        drawPolygon(slider, "", "", gVent, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ window.WindowStyle + " " +window.ItemType+" Vent "+ (parseFloat(i) + parseFloat(1)) +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                         
                         if (window.SpreaderBar !== 0) {
 
@@ -1294,13 +1480,88 @@
                     }
 
                     break;
+                
                 case "halflite": case "half lite": //model 400 cabana
+                    var topLeft = { "x": parseFloat(frame[0].x) - parseFloat(scale(4.5)) + parseFloat(scale(1)), "y": parseFloat(frame[0].y) + parseFloat(scale(78.65)) + parseFloat(scale(1)) }; //top left coordinates
+                    var topRight = { "x": parseFloat(frame[1].x) - parseFloat(scale(4.5)) - parseFloat(scale(1)), "y": parseFloat(frame[1].y) + parseFloat(scale(78.65)) + parseFloat(scale(1)) }; //top right coordinates
+                    var bottomRight = { "x": parseFloat(frame[2].x) - parseFloat(scale(4.5)) - parseFloat(scale(1)), "y": parseFloat(frame[2].y) + parseFloat(scale(78.65)) - parseFloat(scale(1)) }; //bottom right coordinates
+                    var bottomLeft = { "x": parseFloat(frame[3].x) - parseFloat(scale(4.5)) + parseFloat(scale(1)), "y": parseFloat(frame[3].y) + parseFloat(scale(78.65)) - parseFloat(scale(1)) }; //bottom left coordinates
+
+                    var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                    drawPolygon(doorWindowFrame, "", "", gDoorWindowDetails, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                     break;
+                
                 case "half lite venting": case "halfliteventing": //model 400 cabana
+                    var topLeft = { "x": parseFloat(frame[0].x) - parseFloat(scale(4.5)) + parseFloat(scale(1)), "y": parseFloat(frame[0].y) + parseFloat(scale(78.65)) + parseFloat(scale(1)) }; //top left coordinates
+                    var topRight = { "x": parseFloat(frame[1].x) - parseFloat(scale(4.5)) - parseFloat(scale(1)), "y": parseFloat(frame[1].y) + parseFloat(scale(78.65)) + parseFloat(scale(1)) }; //top right coordinates
+                    var bottomRight = { "x": parseFloat(frame[2].x) - parseFloat(scale(4.5)) - parseFloat(scale(1)), "y": parseFloat(frame[2].y) + parseFloat(scale(78.65)) - parseFloat(scale(1)) + (frame[2].y / 1.75) }; //bottom right coordinates
+                    var bottomLeft = { "x": parseFloat(frame[3].x) - parseFloat(scale(4.5)) + parseFloat(scale(1)), "y": parseFloat(frame[3].y) + parseFloat(scale(78.65)) - parseFloat(scale(1)) + (frame[2].y / 1.75) }; //bottom left coordinates
+
+                    var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                    drawPolygon(doorWindowFrame, "", "", gDoorWindowDetails, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+
+                    var topLeft = { "x": parseFloat(frame[0].x) - parseFloat(scale(4.5)) + parseFloat(scale(1)), "y": parseFloat(frame[0].y) + parseFloat(scale(78.65)) + parseFloat(scale(1)) - (frame[2].y / 1.75) }; //top left coordinates
+                    var topRight = { "x": parseFloat(frame[1].x) - parseFloat(scale(4.5)) - parseFloat(scale(1)), "y": parseFloat(frame[1].y) + parseFloat(scale(78.65)) + parseFloat(scale(1)) - (frame[2].y / 1.75) }; //top right coordinates
+                    var bottomRight = { "x": parseFloat(frame[2].x) - parseFloat(scale(4.5)) - parseFloat(scale(1)), "y": parseFloat(frame[2].y) + parseFloat(scale(78.65)) - parseFloat(scale(1)) }; //bottom right coordinates
+                    var bottomLeft = { "x": parseFloat(frame[3].x) - parseFloat(scale(4.5)) + parseFloat(scale(1)), "y": parseFloat(frame[3].y) + parseFloat(scale(78.65)) - parseFloat(scale(1)) }; //bottom left coordinates
+
+                    var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                    var g2 = gDoorWindowDetails.append("g");
+
+                    drawPolygon(doorWindowFrame, "", "", g2, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
                     break;
+                
                 case "half lite with mini blinds": case "halflitewithminiblinds": //model 400 cabana
+                    var topLeft = { "x": parseFloat(frame[0].x) - parseFloat(scale(4.5)) + parseFloat(scale(1)), "y": parseFloat(frame[0].y) + parseFloat(scale(78.65)) + parseFloat(scale(1)) }; //top left coordinates
+                    var topRight = { "x": parseFloat(frame[1].x) - parseFloat(scale(4.5)) - parseFloat(scale(1)), "y": parseFloat(frame[1].y) + parseFloat(scale(78.65)) + parseFloat(scale(1)) }; //top right coordinates
+                    var bottomRight = { "x": parseFloat(frame[2].x) - parseFloat(scale(4.5)) - parseFloat(scale(1)), "y": parseFloat(frame[2].y) + parseFloat(scale(78.65)) - parseFloat(scale(1)) }; //bottom right coordinates
+                    var bottomLeft = { "x": parseFloat(frame[3].x) - parseFloat(scale(4.5)) + parseFloat(scale(1)), "y": parseFloat(frame[3].y) + parseFloat(scale(78.65)) - parseFloat(scale(1)) }; //bottom left coordinates
+
+                    var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                    drawPolygon(doorWindowFrame, "", "", gDoorWindowDetails, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+
+                    //Draws horizontal lines of the mini blinds onto the window
+                    for (var i = doorWindowFrame[1].y; i < doorWindowFrame[2].y; i += scale(1.5)) {
+                        var pt1 = { "x": (doorWindowFrame[0].x + scale(1)), "y": i }; //line left coordinates
+                        var pt2 = { "x": (doorWindowFrame[1].x - scale(1)), "y": i }; //line left coordinates
+                        drawLine(pt1, pt2, gDoorWindowDetails, 1, "black", 0.5, "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");
+                    }
+
+                    break;
+                case "full lite": case "fulllite": //model 400 cabana
+
+                    var topLeft = { "x": parseFloat(frame[0].x) - parseFloat(scale(4.5)) + parseFloat(scale(1)), "y": parseFloat(frame[0].y) + parseFloat(scale(78.65)) + parseFloat(scale(1)) }; //top left coordinates
+                    var topRight = { "x": parseFloat(frame[1].x) - parseFloat(scale(4.5)) - parseFloat(scale(1)), "y": parseFloat(frame[1].y) + parseFloat(scale(78.65)) + parseFloat(scale(1)) }; //top right coordinates
+                    var bottomRight = { "x": parseFloat(frame[2].x) - parseFloat(scale(4.5)) - parseFloat(scale(1)), "y": parseFloat(frame[2].y) + parseFloat(scale(78.65)) - parseFloat(scale(1)) }; //bottom right coordinates
+                    var bottomLeft = { "x": parseFloat(frame[3].x) - parseFloat(scale(4.5)) + parseFloat(scale(1)), "y": parseFloat(frame[3].y) + parseFloat(scale(78.65)) - parseFloat(scale(1)) }; //bottom left coordinates
+
+                    var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                    drawPolygon(doorWindowFrame, "", "", gDoorWindowDetails, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+
                     break;
                 case "full view with mini blinds": case "fullviewwithminiblinds": //model 400 cabana
+
+                    var topLeft = { "x": parseFloat(frame[0].x) - parseFloat(scale(4.5)) + parseFloat(scale(1)), "y": parseFloat(frame[0].y) + parseFloat(scale(78.65)) + parseFloat(scale(1)) }; //top left coordinates
+                    var topRight = { "x": parseFloat(frame[1].x) - parseFloat(scale(4.5)) - parseFloat(scale(1)), "y": parseFloat(frame[1].y) + parseFloat(scale(78.65)) + parseFloat(scale(1)) }; //top right coordinates
+                    var bottomRight = { "x": parseFloat(frame[2].x) - parseFloat(scale(4.5)) - parseFloat(scale(1)), "y": parseFloat(frame[2].y) + parseFloat(scale(78.65)) - parseFloat(scale(1)) }; //bottom right coordinates
+                    var bottomLeft = { "x": parseFloat(frame[3].x) - parseFloat(scale(4.5)) + parseFloat(scale(1)), "y": parseFloat(frame[3].y) + parseFloat(scale(78.65)) - parseFloat(scale(1)) }; //bottom left coordinates
+
+                    var doorWindowFrame = [topLeft, topRight, bottomRight, bottomLeft]; //put all the coordinates together in an array
+
+                    drawPolygon(doorWindowFrame, "", "", gDoorWindowDetails, "white", 1, "black", "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle + " " +door.DoorType+" "+ door.ItemType +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')"); //draw the polygon to represent the wall with the given coordinates and id
+
+                    //Draws horizontal lines of the mini blinds onto the window
+                    for (var i = doorWindowFrame[1].y; i < doorWindowFrame[2].y; i += scale(1.5)) {
+                        var pt1 = { "x": (doorWindowFrame[0].x + scale(1)), "y": i }; //line left coordinates
+                        var pt2 = { "x": (doorWindowFrame[1].x - scale(1)), "y": i }; //line left coordinates
+                        drawLine(pt1, pt2, gDoorWindowDetails, 1, "black", 0.5, "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ door.DoorStyle +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");
+                    }
+
                     break;
             }
         }
@@ -1310,29 +1571,27 @@
         @param g - the <g> element on which to append the line
         @param frame - the window frame coordinates
         @param type - screen type
-        @param door - if its a door window (hot fix)
+        @param yBottom - if its a door window (hot fix)
         */
-        function drawScreen(g, frame, type, id, door) {
+        function drawScreen(g, frame, type, id, yBottom) {
 
-            door = typeof door !== 'undefined' ? door : false;
+            yBottom = typeof yBottom !== 'undefined' ? yBottom : 0;
 
             var pt1, pt2;
             gScreen = g.append("g");
-
-            var yBottom = (door) ? scale(20) : 0;
 
             //Draws vertical lines of the screen onto the window
             for (var i = frame[0].x; i < frame[1].x - scale(1); i += scale(0.5)) {
                 pt1 = { "x": i, "y": -1 - yBottom }; //line left coordinates
                 pt2 = { "x": i, "y":  (frame[1].y + scale(1) + 1) }; //line left coordinates
-                drawLine(pt1, pt2, gScreen, 1, "black", 0.05, "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
+                drawLine(pt1, pt2, gScreen, 1, "black", 0.05, "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");
             }
 
             //Draws horizontal lines of the screen onto the window
             for (var i = frame[1].y + scale(2); i < frame[2].y + scale(1); i += scale(0.5)) {
                 pt1 = { "x": (frame[0].x - scale(1) + 1), "y": i }; //line left coordinates
                 pt2 = { "x": (frame[1].x - scale(1) - 1), "y": i }; //line left coordinates
-                drawLine(pt1, pt2, gScreen, 1, "black", 0.05, "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggle('"+id+"')");
+                drawLine(pt1, pt2, gScreen, 1, "black", 0.05, "$(this).css('fill', '#ccffff'); $('#<%= lblTitle.ClientID %>').text('"+ type +"'); $('#<%= lblTitle.ClientID %>').css('visibility','visible');","$(this).css('fill', 'white'); $('#<%= lblTitle.ClientID %>').css('visibility','hidden');", "toggleDiv('"+id+"')");
             }
         }
 
@@ -1739,7 +1998,7 @@
         This function slide toggles the appropriate divs based on item on the canvas that was clicked
         @param id - the id of the div to slide down
         */
-        function toggle(id) {
+        function toggleDiv(id) {
 
             //slide up everything
             for (var i = 0; i < listOfWalls.length; i++) { 
@@ -1755,10 +2014,11 @@
             }
 
             var container = $("#"+id); //the div to slide down
-            var inputs = (container.find("input")); //get all the inputs from the div
+            var inputControls = (container.find("input")); //get all the inputs from the div
             $('.overlayContainer').slideDown(); //slide down the overlay container
             container.slideDown(); //slide down the div that was selected
-            inputs[0].focus(); //put focus on the first input element in the selected div
+            if (inputControls.length)
+                inputControls[0].focus(); //put focus on the first input element in the selected div
             
             //for (var i = 0; i < inputs.length; i++) {
             //    if(inputs[i].is('input:text')) {
@@ -1836,6 +2096,15 @@
                 $("#ModOverlay_rowLiSunshadeValance"+id).css("display","none");
             }
         }
+
+        /**
+        This functions shows/hides the kneewall tint row appropriately depending on whether solid wall or glass is selected
+        @param id - if of the row to show/hide
+        */
+        function kneewallTypeChanged(id) {////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            var value = $("#"+id+" :selected").text();////////////////////////////////////////////////////////////////////////////////////////////////////////
+            alert(value); ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        }/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /**
         This function uses the list of walls to calculate the room projection and antiProjection 

@@ -26,7 +26,7 @@ namespace SunspaceDealerDesktop
             }
 
             //Get the customers assosciated with this dealer
-            sdsDealers.SelectCommand = "SELECT dealer_name, dealer_id FROM dealers";
+            sdsDealers.SelectCommand = "SELECT dealer_name, dealer_id FROM dealers WHERE dealer_id != 1";
 
             //assign the table names to the dataview object
             DataView dvDealers = (DataView)sdsDealers.Select(System.Web.UI.DataSourceSelectArguments.Empty);

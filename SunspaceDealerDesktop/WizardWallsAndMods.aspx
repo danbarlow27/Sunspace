@@ -2,6 +2,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script src="Scripts/GlobalFunctions.js"></script>
+
     <script src="Scripts/Validation.js"></script>
     <script>
         //Embedded variables needed before call or addition of DoorSlideFunction.js
@@ -18,6 +19,13 @@
         var MODEL_400_TRANSOM_MINIMUM_SIZE = '<%= Session["MODEL_400_TRANSOM_MINIMUM_SIZE"] %>';
         var BOXHEADER_LENGTH = <%= BOXHEADER_LENGTH %>;
         var BOXHEADER_RECEIVER_LENGTH = <%= BOXHEADER_RECEIVER_LENGTH %>;
+
+        if ("<%=currentModel%>" == "M400")
+        {
+            BOXHEADER_LENGTH = <%= HCHANNEL_LENGTH %>;
+            BOXHEADER_RECEIVER_LENGTH = <%= HCHANNEL_RECEIVER_LENGTH %>;
+        }
+
         //var MIN_WINDOW_WIDTH = 
         //var MAX_WINDOW_WIDTH = 
         //var MIN_MOD_WIDTH = MIN_WINDOW_WIDTH + 2;
@@ -31,6 +39,8 @@
         function Mods() {
             this.id = null;                 //mod id
             this.typeMod = null;            //Holds: Door, Window
+            //ADDED Screen Options
+            this.screenOptions = null;      //Better Vue Insect Screen, No See Ums 20x20 Mesh, Solar Insect Screen, Tuff Screen, No Screen
             this.mStartHeight = null;       //start height of the mod
             this.mEndHeight = null;         //end height of the mod
             this.mWidth = null;             //width of the mod
@@ -521,7 +531,7 @@
         *Adding onclick events to next question buttons
         */
         $(document).ready(function () {
-            //$('#MainContent_btnQuestion2').on('click', checkQuestion2(gable));
+            //$('#MainContent_btnQuestion2').on('click', checkWallHeights(gable));
             //$('#MainContent_btnQuestion2').on('click', determineStartAndEndHeightOfEachWall(gable));
             //$('#MainContent_btnQuestion2').on('click', loadWallData);
             $('#MainContent_btnSubmit').on('click', submitData);
@@ -1164,8 +1174,7 @@
         Depending on the user selection of the radio button, it also calculates the slope, or one of the heights 
             by calling the appropriate functions
         */
-        function checkQuestion2(isGable) {
-            //alert("here i am, rock you like a hurricane"); //i'll leave that in there for shenanigans
+        function checkWallHeights(isGable) {
             //disable 'next slide' button until after validation (this is currently enabled for debugging purposes)
             //document.getElementById('MainContent_btnQuestion1').disabled = false;
             //document.getElementById('MainContent_btnQuestion2').disabled = false;
@@ -1608,7 +1617,7 @@
             }--%>
         }
         
-        function newProjectCheckQuestion4() {
+        function checkModDetails() {
             document.getElementById("<%=txtErrorMessage.ClientID%>").value = "";
             document.getElementById('<%=btnQuestion4.ClientID%>').disabled = true;
 
@@ -1628,10 +1637,6 @@
                         {
                             document.getElementById("<%=txtErrorMessage.ClientID%>").value = "Glass kneewalls must be 20 inches or greater in height.";
                         }
-                    }
-                    else
-                    {
-
                     }
                 }
             }
@@ -2023,6 +2028,8 @@
                             {                         
                                 var html = "";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" >";
+                                //ADDED Screen Options
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "screenOptions\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "screenOptions\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "colour\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "colour\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fheight\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fheight\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fwidth\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fwidth\" >";
@@ -2042,6 +2049,8 @@
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "width\" >";
                                 document.getElementById("MainContent_removableHiddenFieldsDiv").innerHTML += html;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
+                                //ADDED Screen Options
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "screenOptions").value = walls[i].mods[j].screenOptions;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
@@ -2057,7 +2066,6 @@
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "style").value = walls[i].mods[j].style;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "swing").value = walls[i].mods[j].swing;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "type").value = walls[i].mods[j].type;
-
                                 
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "vinylTint").value = walls[i].mods[j].vinylTint;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "width").value = walls[i].mods[j].width;
@@ -2066,6 +2074,8 @@
                             {
                                 var html = "";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" >";
+                                //ADDED Screen Options
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "screenOptions\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "screenOptions\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "colour\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "colour\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fheight\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fheight\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fwidth\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fwidth\" >";
@@ -2085,6 +2095,8 @@
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "width\" >";
                                 document.getElementById("MainContent_removableHiddenFieldsDiv").innerHTML += html;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
+                                //ADDED Screen Options
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "screenOptions").value = walls[i].mods[j].screenOptions;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
@@ -2110,6 +2122,8 @@
                             {
                                 var html = "";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "boxHeader\" >";
+                                //ADDED Screen Options
+                                html += "<input id=\"hidWall" + i + "Door" + (j+1) + "screenOptions\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "screenOptions\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "colour\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "colour\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fheight\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fheight\" >";
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "fwidth\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "fwidth\" >";
@@ -2124,6 +2138,8 @@
                                 html += "<input id=\"hidWall" + i + "Door" + (j+1) + "width\" type=\"hidden\" name=\"hidWall" + i + "Door" + (j+1) + "width\" >";
                                 document.getElementById("MainContent_removableHiddenFieldsDiv").innerHTML += html;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "boxHeader").value = walls[i].mods[j].boxHeader;
+                                //ADDED Screen Options
+                                document.getElementById("hidWall" + i + "Door" + (j+1) + "screenOptions").value = walls[i].mods[j].screenOptions;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "colour").value = walls[i].mods[j].colour;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fheight").value = walls[i].mods[j].fheight;
                                 document.getElementById("hidWall" + i + "Door" + (j+1) + "fwidth").value = walls[i].mods[j].fwidth;
@@ -2551,7 +2567,7 @@
             }
 
             //now that colours have cascaded we still need to validate the slide
-            newProjectCheckQuestion4();
+            checkModDetails();
         }
         //This function is used for initial population of the transom and kneewall type dropdowns
         <%--function newProjectPopulateKneewallTransom() {            
@@ -2609,7 +2625,6 @@
 
         function newProjectTransomStyleChanged()
         {
-            console.log("this one");
             ddlTransomTypes = document.getElementById("<%=ddlTransomType.ClientID%>");
             ddlTransomTints = document.getElementById("<%=ddlTransomTint.ClientID%>");
             ddlTransomTints.options.length = 0;
@@ -2644,7 +2659,7 @@
                     break;
             }
 
-            newProjectCheckQuestion4();
+            checkModDetails();
         }
     </script>
     <%-- End hidden div populating scripts --%>
@@ -2744,7 +2759,7 @@
                         </div> <%-- end .toggleContent --%>
 
                 <%-- button to go to the next question --%>
-                <input type="button" id="btnQuestion2" onclick="checkQuestion2(gable); determineStartAndEndHeightOfEachWall(gable); loadWallData(); newProjectPopulateKneewallTransom();" class="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" value="Next Question" disabled/>
+                <input type="button" id="btnQuestion2" onclick="checkWallHeights(gable); determineStartAndEndHeightOfEachWall(gable); loadWallData(); newProjectPopulateKneewallTransom();" class="btnSubmit float-right slidePanel" data-slide="#slide3" runat="server" value="Next Question" disabled/>
 
             </div> 
             <%-- end #slide2 --%>
@@ -2779,7 +2794,7 @@
                                                 <asp:Label ID="lblKneewallHeight" AssociatedControlID="txtKneewallHeight" runat="server" Text="Height:" />
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:TextBox ID="txtKneewallHeight" onkeydown="return (event.keyCode!=13);" onkeyup="newProjectCheckQuestion4()" OnChange="newProjectCheckQuestion4()" GroupName="styling" CssClass="txtField" Width="65" Text="0" runat="server" MaxLength="3" />
+                                                <asp:TextBox ID="txtKneewallHeight" onkeydown="return (event.keyCode!=13);" onkeyup="checkModDetails()" OnChange="checkModDetails()" GroupName="styling" CssClass="txtField" Width="65" Text="0" runat="server" MaxLength="3" />
                                             </asp:TableCell>                                         
                                         </asp:TableRow>
 
@@ -2788,7 +2803,7 @@
                                                 <asp:Label ID="lblKneewallType" AssociatedControlID="txtKneewallHeight" runat="server" Text="Type:" />
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlKneewallType" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                                <asp:DropDownList ID="ddlKneewallType" OnChange="checkModDetails()" GroupName="styling" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -2797,7 +2812,7 @@
                                                 <asp:Label ID="lblKneewallTint" AssociatedControlID="txtKneewallHeight" runat="server" Text="Tint:"></asp:Label>
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlKneewallTint" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server"></asp:DropDownList>
+                                                <asp:DropDownList ID="ddlKneewallTint" OnChange="checkModDetails()" GroupName="styling" runat="server"></asp:DropDownList>
                                             </asp:TableCell>
                                         </asp:TableRow>
                                     </asp:Table>
@@ -2826,7 +2841,7 @@
                                         </asp:TableRow>                                           
                                         <asp:TableRow>                                                                                   
                                             <asp:TableCell>
-                                                Tint: <asp:DropDownList ID="ddlTransomTint" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                                Tint: <asp:DropDownList ID="ddlTransomTint" OnChange="checkModDetails()" GroupName="styling" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
                                     </asp:Table>                                
@@ -2861,7 +2876,7 @@
                                                 <asp:Label ID="lblInteriorSkin" AssociatedControlID="ddlInteriorSkin" runat="server" Text="Interior Skin:" />
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlInteriorSkin" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                                <asp:DropDownList ID="ddlInteriorSkin" OnChange="checkModDetails()" GroupName="styling" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>
 
@@ -2870,7 +2885,7 @@
                                                 <asp:Label ID="lblExteriorSkin" AssociatedControlID="ddlExteriorSkin" runat="server" Text="Exterior Skin:" />
                                             </asp:TableCell>
                                             <asp:TableCell>
-                                                <asp:DropDownList ID="ddlExteriorSkin" OnChange="newProjectCheckQuestion4()" GroupName="styling" runat="server" />
+                                                <asp:DropDownList ID="ddlExteriorSkin" OnChange="checkModDetails()" GroupName="styling" runat="server" />
                                             </asp:TableCell>
                                         </asp:TableRow>  
                                     </asp:Table>                            

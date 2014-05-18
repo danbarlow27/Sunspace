@@ -25,6 +25,7 @@ namespace SunspaceDealerDesktop
 
         public string transomGlassTints = new JavaScriptSerializer().Serialize(Constants.TRANSOM_GLASS_TINTS);
         public string vinylTints = new JavaScriptSerializer().Serialize(Constants.VINYL_TINTS);
+
         public float VINYL_TRAP_MIN_WIDTH_WARRANTY = Constants.VINYL_TRAP_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
         public float VINYL_TRAP_MAX_WIDTH_WARRANTY = Constants.VINYL_TRAP_MAX_WIDTH_WARRANTY;
         public float V4T_4V_MIN_WIDTH_WARRANTY = Constants.V4T_4V_MIN_WIDTH_WARRANTY; //We use the trap version because they can have both
@@ -43,6 +44,8 @@ namespace SunspaceDealerDesktop
         public const float THERMADECK_PANEL_PROJECTION = 288f;
         public const float BOXHEADER_LENGTH = Constants.BOXHEADER_LENGTH;
         public const float BOXHEADER_RECEIVER_LENGTH = Constants.BOXHEADER_RECEIVER_LENGTH;
+        public const float HCHANNEL_LENGTH = Constants.HCHANNEL_LENGTH;
+        public const float HCHANNEL_RECEIVER_LENGTH = Constants.HCHANNEL_RECEIVER_LENGTH;
 
         public string gableType = "";
 
@@ -95,9 +98,7 @@ namespace SunspaceDealerDesktop
 
             Page.Form.DefaultButton = "";
 
-
-            string[] gableCheck = (string[])Session["newProjectArray"];
-            if (gableCheck[26] == "Dealer Gable" || gableCheck[26] == "Sunspace Gable")
+            if (Session["newProjectRoofType"] == "Dealer Gable" || Session["newProjectRoofType"] == "Sunspace Gable")
             {
                 Session.Add("isGable", "True");
                 gableType = (string)Session["newProjectRoofType"];
@@ -230,9 +231,9 @@ namespace SunspaceDealerDesktop
                     ddlFramingColour.Items.Add(Constants.MODEL_100_FRAMING_COLOURS[i]);
                 }
 
-                for (int i = 0; i < Constants.MODEL_100_GLASS_TINTS.Length; i++)
+                for (int i = 0; i < Constants.VINYL_TINTS.Length; i++)
                 {
-                    ddlTransomTint.Items.Add(Constants.MODEL_100_GLASS_TINTS[i]);
+                    ddlTransomTint.Items.Add(Constants.VINYL_TINTS[i]);
                 }
             }
             else if (Session["model"].ToString() == "M200")
@@ -247,9 +248,9 @@ namespace SunspaceDealerDesktop
                     ddlFramingColour.Items.Add(Constants.MODEL_200_FRAMING_COLOURS[i]);
                 }
 
-                for (int i = 0; i < Constants.MODEL_200_GLASS_TINTS.Length; i++)
+                for (int i = 0; i < Constants.VINYL_TINTS.Length; i++)
                 {
-                    ddlTransomTint.Items.Add(Constants.MODEL_200_GLASS_TINTS[i]);
+                    ddlTransomTint.Items.Add(Constants.VINYL_TINTS[i]);
                 }
             }
             else if (Session["model"].ToString() == "M300")
@@ -264,9 +265,9 @@ namespace SunspaceDealerDesktop
                     ddlFramingColour.Items.Add(Constants.MODEL_300_FRAMING_COLOURS[i]);
                 }
 
-                for (int i = 0; i < Constants.MODEL_300_GLASS_TINTS.Length; i++)
+                for (int i = 0; i < Constants.VINYL_TINTS.Length; i++)
                 {
-                    ddlTransomTint.Items.Add(Constants.MODEL_300_GLASS_TINTS[i]);
+                    ddlTransomTint.Items.Add(Constants.VINYL_TINTS[i]);
                 }
             }
             else if (Session["model"].ToString() == "M400")
@@ -281,9 +282,9 @@ namespace SunspaceDealerDesktop
                     ddlFramingColour.Items.Add(Constants.MODEL_400_FRAMING_COLOURS[i]);
                 }
 
-                for (int i = 0; i < Constants.MODEL_400_GLASS_TINTS.Length; i++)
+                for (int i = 0; i < Constants.TRANSOM_GLASS_TINTS.Length; i++)
                 {
-                    ddlTransomTint.Items.Add(Constants.MODEL_400_GLASS_TINTS[i]);
+                    ddlTransomTint.Items.Add(Constants.TRANSOM_GLASS_TINTS[i]);
                 }
             }
             #endregion
@@ -1969,11 +1970,10 @@ namespace SunspaceDealerDesktop
 
                 DropDownList doorScreenOptionsDDL = new DropDownList();
                 doorScreenOptionsDDL.ID = "ddlDoorScreenOptions" + i + title;
-                for (int j = 0; j < Constants.SCREEN_TYPES.Count(); j++)
+                for (int j = 0; j < Constants.SCREEN_TYPES.Count(); j++) 
                 {
                     doorScreenOptionsDDL.Items.Add(new ListItem(Constants.SCREEN_TYPES[j], Constants.SCREEN_TYPES[j]));
                 }
-
                 doorScreenOptionsLBL.AssociatedControlID = "ddlDoorScreenOptions" + i + title;
 
                 #endregion
@@ -4124,8 +4124,9 @@ namespace SunspaceDealerDesktop
                                 doorWindow.ItemType = "Window";
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
+                                doorWindow.ScreenType = "No Screen";
 
-                                if (doorWindow.WindowStyle == "Vertical 4 Track" || doorWindow.WindowStyle.Contains("Vinyl"))
+                                if (doorWindow.WindowStyle == "Vertical Four Track" || doorWindow.WindowStyle.Contains("Vinyl"))
                                 {
                                     doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "vinylTint"];
                                     doorWindow.NumVents = Convert.ToInt32(Request.Form["hidWall" + i + "Door" + j + "numberOfVents"]);
@@ -4135,7 +4136,7 @@ namespace SunspaceDealerDesktop
                                     doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "glassTint"];
                                 }
                                 else {
-                                    doorWindow.Colour = "";
+                                    doorWindow.ScreenType = Request.Form["hidWall" + i + "Door" + j + "screenOptions"];
                                 }
                                 if (doorWindow.WindowStyle == "Horizontal Roller")
                                 {
@@ -4180,12 +4181,16 @@ namespace SunspaceDealerDesktop
                                 Window doorWindow = new Window();
                                 doorWindow.FLength = aDoor.FLength - Constants.DOOR_PADDING; //11.5 is the amount of door between edge of door and start of window (both sides totalled to 11.5)
                                 doorWindow.Width = doorWindow.FLength - 2.125f;
-                                doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight - aDoor.Kickplate - Constants.KICKPLATE_PADDING; //4 corresponds to the amount of framing at a bottom of a door
-                                doorWindow.LeftHeight = doorWindow.RightHeight = aDoor.FStartHeight - aDoor.Kickplate - Constants.KICKPLATE_PADDING - 2.125f;
+                                doorWindow.ItemType = "Window";
+                                doorWindow.WindowStyle = Request.Form["hidWall" + i + "Door" + j + "style"];
+                                doorWindow.FStartHeight = doorWindow.FEndHeight = aDoor.FStartHeight; //4 corresponds to the amount of framing at a bottom of a door
+                                doorWindow.LeftHeight = doorWindow.RightHeight = aDoor.FStartHeight - 2.125f;
                                 doorWindow.Colour = Request.Form["hidWall" + i + "Door" + j + "glassTint"];
+                                doorWindow.ScreenType = Request.Form["hidWall" + i + "Door" + j + "screenOptions"];
                                 doorWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                 doorWindow.SpreaderBar = -1;
-                                
+                                aDoor.DoorWindow = doorWindow;
+
                                 modularItems.Add(aDoor);
                             }
                             if (doorType == "French")
@@ -4218,6 +4223,7 @@ namespace SunspaceDealerDesktop
                                 else
                                 {
                                     doorWindow.Colour = "";
+                                    doorWindow.ScreenType = Request.Form["hidWall" + i + "Door" + j + "screenOptions"];
                                 }
                                 if (doorWindow.WindowStyle == "Horizontal Roller")
                                 {
@@ -4295,7 +4301,8 @@ namespace SunspaceDealerDesktop
                                     aWindow.Colour = Request.Form["MainContent_hidWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
                                     aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                     aWindow.ItemType = "Window";
-                                    aWindow.Width = aMod.Length - 2;
+                                    aWindow.FLength = aMod.Length - Constants.MOD_FRAMING_OFFSET;
+                                    aWindow.Width = aWindow.FLength - Constants.WINDOW_FRAMING_OFFSET;
                                     
                                     aWindow.WindowStyle = ddlTransomType.SelectedValue;
                                     aWindow.SpreaderBar = -1;
@@ -4323,8 +4330,10 @@ namespace SunspaceDealerDesktop
                                     aWindow.Colour = Request.Form["MainContent_hidWindowColour"]; //CHANGEME if v4t will be XXXX, can't use hidWallWindowColour need to ask elsewhere
                                     aWindow.FrameColour = Request.Form["MainContent_hidWindowFramingColour"];
                                     aWindow.ItemType = "Window";
-                                    aWindow.Width = aMod.Length - 2;
-                                    aWindow.WindowStyle = (string)Session["newProjectTransomType"];
+                                    aWindow.FLength = aMod.Length - Constants.MOD_FRAMING_OFFSET;
+                                    aWindow.Width = aWindow.FLength - Constants.WINDOW_FRAMING_OFFSET;
+
+                                    aWindow.WindowStyle = ddlTransomType.SelectedValue;
                                     aWindow.SpreaderBar = -1;
 
                                     //Add remaining area to first window
