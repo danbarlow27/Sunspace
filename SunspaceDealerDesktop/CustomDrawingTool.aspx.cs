@@ -30,8 +30,7 @@ namespace SunspaceDealerDesktop
             }
 
             //Session["newSession"];
-            string[] newProjectArray = (string[])Session["newProjectArray"];
-            gableStyle = newProjectArray[26].ToString();
+            gableStyle = Session["newProjectRoofType"].ToString();
         }
 
         protected void Button1_Click1(object sender, EventArgs e)

@@ -260,29 +260,6 @@ namespace SunspaceDealerDesktop
                     }
                 }
             }
-        }
-
-        //This function will add a new project, a new floor, and either Thermadeck or Alumadeck panels
-        //This happens at an applicable time when the page is completed and has been posted back.
-        protected void insertNewFloor()
-        {
-            //sdsFloors.SelectCommand = "SELECT * FROM customers"; 
-            //DataView dvCustomers = (DataView)sdsFloors.Select(System.Web.UI.DataSourceSelectArguments.Empty);
-
-            //If new customer is selected, lets add this customer to our customer list
-            //CHANGEME Uses logged in session number as dealerID, this is likely userID in the future, and needs to be changed
-
-            //string sqlInsert = "INSERT INTO customers (dealer_id,first_name,last_name,address,city,prov_city,country,zip_postal,main_phone,cell_phone,email,accept_email)"
-            //+ "VALUES("
-            //+ Convert.ToInt32(GlobalFunctions.escapeSqlString(Session["dealer_id"].ToString())) + ",'" + GlobalFunctions.escapeSqlString(hidFirstName.Value) + "','" + GlobalFunctions.escapeSqlString(hidLastName.Value)
-            //+ "','" + GlobalFunctions.escapeSqlString(hidAddress.Value) + "','" + GlobalFunctions.escapeSqlString(hidCity.Value) + "','"
-            //+ GlobalFunctions.escapeSqlString(hidProvState.Value) + "','" + GlobalFunctions.escapeSqlString(hidCountry.Value) + "','" + GlobalFunctions.escapeSqlString(hidZip.Value) + "','" + GlobalFunctions.escapeSqlString(hidPhone.Value)
-            //+ "','" + GlobalFunctions.escapeSqlString(hidCell.Value) + "','" + GlobalFunctions.escapeSqlString(hidEmail.Value) + "',"
-            //+ 1 + ")";
-
-            //sdsFloors.InsertCommand = sqlInsert;
-            //sdsFloors.Insert();
-        }
-
+        }        
     }
 }

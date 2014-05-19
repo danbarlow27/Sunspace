@@ -80,10 +80,10 @@ namespace SunspaceDealerDesktop
                     sdsLogin.Update();
 
                     //Finally, we check what kind of user they are. Send sunspace users to spoof page by default, otherwise to home
-                    if (dvUsers[0][2].ToString() == "S")
-                    {
-                        Session["dealer_id"] = 1; //changeme to sunspace internal dealer default
-                    }
+                    //if (dvUsers[0][2].ToString() == "S")
+                    //{
+                    //    Session["dealer_id"] = 1; //changeme to sunspace internal dealer default
+                    //}
 
                     Response.Redirect("Home.aspx");
                 }                    

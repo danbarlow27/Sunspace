@@ -213,9 +213,8 @@ namespace SunspaceDealerDesktop
                 #endregion
             }
 
-            //Check roof type, position 26
-            string[] gableCheck = (string[])Session["newProjectArray"];
-            if (gableCheck[26] == "Dealer Gable" || gableCheck[26] == "Sunspace Gable")
+            //Check roof type
+            if (Session["newProjectRoofType"] == "Dealer Gable" || Session["newProjectRoofType"] == "Sunspace Gable")
             {
                 FOAM_PANEL_PROJECTION += FOAM_PANEL_PROJECTION;
                 ACRYLIC_PANEL_PROJECTION += ACRYLIC_PANEL_PROJECTION;
@@ -225,9 +224,7 @@ namespace SunspaceDealerDesktop
 
         protected void btnFinalButton_Click(object sender, EventArgs e)//
         {
-            //Check roof type, position 26
-            string[] newProjectArray = (string[])Session["newProjectArray"];
-
+            //Check roof type
             //Get room projection and width from session and set our roofs projection and width to those
             float roofProjection = Convert.ToSingle(Session["sunroomProjection"]);
             float roofProjection1 = Convert.ToSingle(Session["sunroomProjection"]);
@@ -245,7 +242,7 @@ namespace SunspaceDealerDesktop
 
             #region Gable System
             //if gable, we need two studio roof systems and additional logic
-            if (newProjectArray[26] == "Dealer Gable" || newProjectArray[26] == "Sunspace Gable")
+            if (Session["newProjectRoofType"] == "Dealer Gable" || Session["newProjectRoofType"] == "Sunspace Gable")
             {
                 #region Old Symmetrical Gable Code
                 ////If they've entered manual dimensions, we don't need to calculate overhang

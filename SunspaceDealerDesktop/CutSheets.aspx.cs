@@ -1263,6 +1263,125 @@ namespace SunspaceDealerDesktop
                 }
             }
             #endregion
+            #region Mod
+            List<Tuple<string, int, float>> modList = new List<Tuple<string, int, float>>(); //eg: Starter, 1, 94 3/4
+            for (int wallNumber = 0; wallNumber < listOfWalls.Count; wallNumber++)
+            {
+                for (int linearNumber = 0; linearNumber < listOfWalls[wallNumber].LinearItems.Count; linearNumber++)
+                {
+                    if (listOfWalls[wallNumber].LinearItems[linearNumber].ItemType == "Mod")
+                    {
+                        if (listOfWalls[wallNumber].LinearItems[linearNumber].Sex.Substring(0, 1) == "F")
+                        {
+                            if (modList.Count == 0)
+                            {
+                                modList.Add(new Tuple<string, int, float>("Female", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                            }
+                            else
+                            {
+                                bool added = false;
+                                for (int i = 0; i < modList.Count; i++)
+                                {
+                                    Tuple<string, int, float> aTuple = modList[i];
+                                    if (aTuple.Item3 == Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)) //If this height exists, we add one to quantity, instead of making a new entry
+                                    {
+                                        modList[i] = new Tuple<string, int, float>(aTuple.Item1, (aTuple.Item2 + 1), aTuple.Item3);
+                                        added = true;
+                                        break;
+                                    }
+                                }
+
+                                if (added == false)
+                                {
+                                    modList.Add(new Tuple<string, int, float>("Female", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                                }
+                            }
+                        }
+
+                        if (listOfWalls[wallNumber].LinearItems[linearNumber].Sex.Substring(0, 1) == "M")
+                        {
+                            if (modList.Count == 0)
+                            {
+                                modList.Add(new Tuple<string, int, float>("Male", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                            }
+                            else
+                            {
+                                bool added = false;
+                                for (int i = 0; i < modList.Count; i++)
+                                {
+                                    Tuple<string, int, float> aTuple = modList[i];
+                                    if (aTuple.Item3 == Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)) //If this height exists, we add one to quantity, instead of making a new entry
+                                    {
+                                        modList[i] = new Tuple<string, int, float>(aTuple.Item1, (aTuple.Item2 + 1), aTuple.Item3);
+                                        added = true;
+                                        break;
+                                    }
+                                }
+
+                                if (added == false)
+                                {
+                                    modList.Add(new Tuple<string, int, float>("Male", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                                }
+                            }
+                        }
+
+                        if (listOfWalls[wallNumber].LinearItems[linearNumber].Sex.Substring(1, 1) == "F")
+                        {
+                            if (modList.Count == 0)
+                            {
+                                modList.Add(new Tuple<string, int, float>("Female", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                            }
+                            else
+                            {
+                                bool added = false;
+                                for (int i = 0; i < modList.Count; i++)
+                                {
+                                    Tuple<string, int, float> aTuple = modList[i];
+                                    if (aTuple.Item3 == Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)) //If this height exists, we add one to quantity, instead of making a new entry
+                                    {
+                                        modList[i] = new Tuple<string, int, float>(aTuple.Item1, (aTuple.Item2 + 1), aTuple.Item3);
+                                        added = true;
+                                        break;
+                                    }
+                                }
+
+                                if (added == false)
+                                {
+                                    modList.Add(new Tuple<string, int, float>("Female", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                                }
+                            }
+                        }
+
+                        if (listOfWalls[wallNumber].LinearItems[linearNumber].Sex.Substring(1, 1) == "M")
+                        {
+                            if (modList.Count == 0)
+                            {
+                                modList.Add(new Tuple<string, int, float>("Male", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                            }
+                            else
+                            {
+                                bool added = false;
+                                for (int i = 0; i < modList.Count; i++)
+                                {
+                                    Tuple<string, int, float> aTuple = modList[i];
+                                    if (aTuple.Item3 == Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)) //If this height exists, we add one to quantity, instead of making a new entry
+                                    {
+                                        modList[i] = new Tuple<string, int, float>(aTuple.Item1, (aTuple.Item2 + 1), aTuple.Item3);
+                                        added = true;
+                                        break;
+                                    }
+                                }
+
+                                if (added == false)
+                                {
+                                    modList.Add(new Tuple<string, int, float>("Male", 1, Math.Max(listOfWalls[wallNumber].StartHeight, listOfWalls[wallNumber].EndHeight)));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
             #endregion
 
             #region Add tables to placeholders
