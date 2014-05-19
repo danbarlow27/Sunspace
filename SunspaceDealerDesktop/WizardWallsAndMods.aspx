@@ -1050,28 +1050,69 @@
         /**
         This function is used to validate the user input for question 1, i.e. wall lengths
         */
-        function checkQuestion1() {
+        function checkWallLengths() {
             //disable 'next slide' button until after validation (this is currently enabled for debugging purposes)
-            document.getElementById('MainContent_btnQuestion1').disabled = false;
+            document.getElementById('MainContent_btnQuestion1').disabled = true;
+            document.getElementById('pagerOne').style.display = "inline"; //Now that we've checked at least once there will be *something* in pager, so enable it
             //document.getElementById('MainContent_btnQuestion2').disabled = false;
             //document.getElementById('MainContent_btnQuestion3').disabled = false;
 
             //var lengthList = new Array();
             var isValid;// = true; //to do valid input or invalid input logic
             var answer = ""; //answer, to be displayed on the side panel
+            var existingWallCount = 0;
 
             //run through all the textboxes and check if the values in there are valid numbers
             for (var i = 1; i <= lineList.length; i++) {
-                if (coordList[i - 1][4] === "P"/* || coordList[i - 1][4] === "G"*/) {
-                    if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value) //if invalid numbers
-                        || document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0 //zero should be changed to MIN_WALL_LENGTH
-                        || isNaN(document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value)
-                        || document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value < 0
-                        || isNaN(document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value)
-                        || document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value < 0)
-                        isValid = false; //set isvalid to false
-                    else
-                        isValid = true;
+                if (coordList[i - 1][4] === "P"/* || coordList[i - 1][4] === "G"*/) 
+                {
+                    isValid = true; //Set to true by default, before checking for false
+
+                    if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "Length").value)) 
+                    {
+                        isValid = false; 
+                        $('#MainContent_lblWallLengthsAnswer').text("Wall " + i + " length invalid");  
+                        break;
+                    }
+                     
+                    if (document.getElementById("MainContent_txtWall" + (i) + "Length").value <= 0)
+                    {
+                        isValid = false; 
+                        $('#MainContent_lblWallLengthsAnswer').text("Wall " + i + " length too small (0 or higher)");
+                        break;
+                    }
+                        
+                    if (isNaN(document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value))
+                    {
+                        isValid = false; 
+                        $('#MainContent_lblWallLengthsAnswer').text("Wall " + i + " left filler invalid"); 
+                        break; 
+                    }
+                    
+                    if(document.getElementById("MainContent_txtWall" + (i) + "LeftFiller").value < 0)
+                    {
+                        isValid = false; 
+                        $('#MainContent_lblWallLengthsAnswer').text("Wall " + i + " left filler too small (0 or higher)");
+                        break;
+                    }
+                    
+                    if(isNaN(document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value))
+                    {
+                        isValid = false; 
+                        $('#MainContent_lblWallLengthsAnswer').text("Wall " + i + " right filler invalid");  
+                        break;
+                    }
+                        
+                    if(document.getElementById("MainContent_txtWall" + (i) + "RightFiller").value < 0)
+                    {
+                        isValid = false; 
+                        $('#MainContent_lblWallLengthsAnswer').text("Wall " + i + " right filler too small (0 or higher)");
+                        break;
+                    }
+                }
+                else
+                {
+                    existingWallCount++;
                 }
             }            
 
@@ -1156,13 +1197,6 @@
                 $('#MainContent_lblWallLengthsAnswer').html(answer);
                 document.getElementById('pagerOne').style.display = "inline";
                 document.getElementById('MainContent_btnQuestion1').disabled = false;
-            }
-            else { //not valid
-                //error styling or something
-                //Set answer on side pager and enable button
-                $('#MainContent_lblWallLengthsAnswer').text("Invalid Input");
-                document.getElementById('pagerOne').style.display = "inline";
-                document.getElementById('MainContent_btnQuestion1').disabled = true;
             }
             
             checkRoofPanels();
@@ -1357,6 +1391,7 @@
                 //if user wants to auto calculate the slope
                 if (document.getElementById("MainContent_radAutoRoofSlope").checked) {
                     //we have front wall height and back wall height, calculate slope
+                    console.log("Started auto roof slope");
                     if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value) //if the other textbox values are valid
                         && document.getElementById("MainContent_txtBackWallHeight").value != ""
                         && document.getElementById("MainContent_txtBackWallHeight").value > 0
@@ -1375,6 +1410,7 @@
                 }
                     //the user wants to auto calculate front height
                 else if (document.getElementById("MainContent_radAutoFrontWallHeight").checked) {
+                    console.log("Started auto front wall");
                     //we have back wall height and slope, calculate front wall height
                     if (!isNaN(document.getElementById("MainContent_txtBackWallHeight").value) //if the other textbox values are valid
                         && document.getElementById("MainContent_txtBackWallHeight").value != ""
@@ -1407,8 +1443,8 @@
                         }
 
                         //check if the old front wall height and the new front wall height are different
-                        if (frontHeight != (+newFrontHeight[0] + +newFrontHeight[1])) //if they are different
-                            document.getElementById("MainContent_txtRoofSlope").value = calculateSlope(); //recalculate the slope based on the new front wall height
+                        //if (frontHeight != (+newFrontHeight[0] + +newFrontHeight[1])) //if they are different
+                        //    document.getElementById("MainContent_txtRoofSlope").value = calculateSlope(); //recalculate the slope based on the new front wall height
                     }
                 }
                     //the user wants to auto calculate back wall height
@@ -1427,7 +1463,7 @@
 
                         isValid = true; //valid is true
 
-                        rise = calculateRise(); //calculate and store rise
+                        rise = calculateRise(""); //calculate and store rise
 
                         //calculate the backwall height by adding the rise to the front wall height
                         backHeight = parseFloat(document.getElementById("MainContent_txtFrontWallHeight").value) + parseFloat($("#MainContent_frontWallInchSpecificDDL").val()) + parseFloat(rise);
@@ -1445,8 +1481,8 @@
                         }
 
                         //check if the old back wall height and the new back wall height are different
-                        if (backHeight != (+newBackHeight[0] + +newBackHeight[1])) //if they are different
-                            document.getElementById("MainContent_txtRoofSlope").value = calculateSlope(); //recalculate the slope based on the new back wall height
+                        //if (backHeight != (+newBackHeight[0] + +newBackHeight[1])) //if they are different
+                        //    document.getElementById("MainContent_txtRoofSlope").value = calculateSlope(); //recalculate the slope based on the new back wall height
 
                     }
                 }
@@ -2731,7 +2767,7 @@
 
     
                 <%-- button to go to the next question --%>
-                <asp:Button ID="btnQuestion1" Enabled="false" OnClientClick="checkQuestion1()" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion1" Enabled="false" OnClientClick="checkWallLengths()" CssClass="btnSubmit float-right slidePanel" data-slide="#slide2" runat="server" Text="Next Question" />
 
             </div> 
             <%-- end #slide1 --%>

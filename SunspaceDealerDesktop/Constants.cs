@@ -301,9 +301,9 @@ namespace SunspaceDealerDesktop
 
         ////////NEED TO DOUBLE CHECK THESE VALUES...//////////
         public static float MIN_WALL_HEIGHT = 0F;
-        public static float MAX_WALL_HEIGHT;
+        public static float MAX_WALL_HEIGHT = 0F;
         public static float MIN_WALL_LENGTH = 0F;
-        public static float MAX_WALL_LENGTH;
+        public static float MAX_WALL_LENGTH = 0F;
         public static float MIN_FILLER_SIZE = 0F;
         public static float MAX_FILLER_SIZE = 46.5F; 
         //////////////////////////////////////////////////////
