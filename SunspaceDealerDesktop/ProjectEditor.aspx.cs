@@ -24,7 +24,7 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            projectId = Convert.ToInt32(HttpContext.Current.Session["project_id"].ToString());
+            //projectId = Convert.ToInt32(HttpContext.Current.Session["project_id"].ToString());
 
             #region hit the DB
 
