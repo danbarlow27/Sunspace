@@ -211,5 +211,6 @@
         </div>
 
         <textarea id="txtErrorMessage" class="txtErrorMessage" disabled="disabled" rows="5" runat="server"></textarea>
+        <asp:SqlDataSource ID="sdsDBConnection" runat="server" ConnectionString="<%$ ConnectionStrings:sunspaceDealerDesktopConnectionString %>" SelectCommand="SELECT * FROM [roofs]"></asp:SqlDataSource>
     </div>
 </asp:Content>

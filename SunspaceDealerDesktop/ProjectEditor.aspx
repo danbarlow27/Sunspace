@@ -9,22 +9,22 @@
             <li><asp:HyperLink ID="lnkEditorNavMods" CssClass="editMods" runat="server">Edit Mods</asp:HyperLink></li>
             <li><asp:HyperLink ID="lnkEditorNavTools" runat="server">Tools</asp:HyperLink>
                 <ul>
-                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavSave" runat="server">Save</asp:HyperLink></li>
-                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavUndo" runat="server">Undo</asp:HyperLink></li>
-                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavRedo" runat="server">Redo</asp:HyperLink></li>
-                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavAddMod" runat="server">Add</asp:HyperLink></li>
-                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavDeleteMod" runat="server">Delete</asp:HyperLink></li>
-                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavMoveLeft" runat="server">Left</asp:HyperLink></li>
-                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavMoveRight" runat="server">Right</asp:HyperLink></li>
-                    <li><asp:HyperLink CssClass="btnTools" ID="lnkEditorNavPrint" runat="server">Print</asp:HyperLink></li>
+                    <li><asp:HyperLink ID="lnkEditorNavSave" runat="server" ToolTip="Save recent changes locally">Save</asp:HyperLink></li>
+                    <li><asp:HyperLink ID="lnkEditorNavUndo" runat="server" ToolTip="Undo last change">Undo</asp:HyperLink></li>
+                    <li><asp:HyperLink ID="lnkEditorNavRedo" runat="server" ToolTip="Redo last change">Redo</asp:HyperLink></li>
+                    <li><asp:HyperLink ID="lnkEditorNavAddMod" runat="server" ToolTip="Add a mod in the selected position">Add</asp:HyperLink></li>
+                    <li><asp:HyperLink ID="lnkEditorNavDeleteMod" runat="server" ToolTip="Delete selected mod">Delete</asp:HyperLink></li>
+                    <li><asp:HyperLink ID="lnkEditorNavMoveLeft" runat="server" ToolTip="Move selected mod to the left">Left</asp:HyperLink></li>
+                    <li><asp:HyperLink ID="lnkEditorNavMoveRight" runat="server" ToolTip="Move selected mod to the right">Right</asp:HyperLink></li>
+                    <li><asp:HyperLink ID="lnkEditorNavPrint" runat="server" ToolTip="Print the sunroom specs">Print</asp:HyperLink></li>
                 </ul>
             </li>
         </ul>
-        <ul id="saveButtons" class="ulNavEditor float-right">
+        <%--<ul id="saveButtons" class="ulNavEditor float-right">--%>
             <!-- Note: these 2 hyperlinks have javascript functions attached to their click events, see the last few lines of Page_Load in codebehind -->
-            <li class="float-right"><asp:HyperLink ID="lnkUpdateSunroom" runat="server" ToolTip="Click to update the sunroom temporarily/locally">Update</asp:HyperLink></li>
-            <li class="float-right"><asp:HyperLink ID="lnkSubmitSunroom" runat="server" ToolTip="Click to submit the sunroom to the database to save it permanently">Submit</asp:HyperLink></li>
-        </ul>
+            <%--<li class="float-right"><asp:HyperLink ID="lnkUpdateSunroom" runat="server" ToolTip="Click to update the sunroom temporarily/locally">Update</asp:HyperLink></li>--%>
+            <%--<li class="float-right"><asp:HyperLink ID="lnkSubmitSunroom" runat="server" ToolTip="Click to submit the sunroom to the database to save it permanently">Submit</asp:HyperLink></li>--%>
+        <%--</ul>--%>
     </nav>
 </asp:Content>
 
@@ -88,8 +88,13 @@
     <script>
 
         var listOfWalls = <%= hidJsonObjects.Value %>;
+        version = 0;
+        var jsonVersions = new Array();
+        jsonVersions[0] = listOfWalls;
 
-        console.log(listOfWalls);
+        //console.log(listOfWalls);
+        //console.log(jsonVersions[0]);
+        console.log(jsonVersions[version]);
 
         var roofCount = '<%= roofCount %>';
         var floorCount = '<%= floorCount %>';
@@ -1438,7 +1443,7 @@
                     var ventHeight = 0;
                     var window = door.DoorWindow;
 
-                    gVent = gDoorWindowDetails.append("g");
+                    gVent = gDoorWindowDetails.append("g").attr("id", "HKLDFHAKJLDHF");
 
                     for (var i = 0; i < window.NumVents; i++) {
                         ventHeight = scale(window.VentHeights[i] / 4); ///4 because the vent heights are messed up
@@ -2027,6 +2032,7 @@
             //    }
             //}
         }
+        
 
         ///**
         //This function shows/hides the appropriate li rows depending on which wall is clicked
@@ -2066,7 +2072,45 @@
         This function updates the sunroom locally/temporarily
         */
         function updateSunroom() {
-            alert("update sunroom");
+            
+            version++;
+            jsonVersions[version] = listOfWalls[version - 1];
+
+            var container, inputControls;
+
+            for (var i = 0; i < listOfWalls.length; i++) { 
+                updateValues($("#wall_"+listOfWalls[i].FirstItemIndex), i, -1, -1);
+                for (var j = 0; j < listOfWalls[i].LinearItems.length; j++) {
+                    updateValues($("#div_"+listOfWalls[i].LinearItems[j].LinearIndex), i, j, -1);
+                    if (typeof listOfWalls[i].LinearItems[j].ModularItems !== 'undefined') {
+                        for (var k = 0; k < listOfWalls[i].LinearItems[j].ModularItems.length; k++) {
+                            updateValues($("#div_"+listOfWalls[i].LinearItems[j].LinearIndex+k), i, j, k);
+                        }
+                    }
+                }
+            }
+        }
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        function updateValues(container, wall, li, mod) {
+            //console.log("wall: " + wall + ", li: " + li + ", mod: " + mod);
+            console.log(container);
+            inputControls = container.find("input");
+            console.log(inputControls);
+            //console.log(container);
+            if (li === -1 && mod === -1) { //wall attributes
+            
+            }
+            else if (mod === -1) { //li attributes
+        
+            }
+            else { //mod attributes
+        
+            }
+
         }
 
         /**
@@ -2099,12 +2143,15 @@
 
         /**
         This functions shows/hides the kneewall tint row appropriately depending on whether solid wall or glass is selected
-        @param id - if of the row to show/hide
+        @param id - id of the row to show/hide
         */
-        function kneewallTypeChanged(id) {////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            var value = $("#"+id+" :selected").text();////////////////////////////////////////////////////////////////////////////////////////////////////////
-            alert(value); ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        }/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        function kneewallTypeChanged(id) {
+            var value = $("#"+id+" :selected").text();
+            if (value.toLowerCase() === "glass") 
+                $("#ModOverlay_rowKneewallTint" + id.substring(id.length - 2, id.length)).show();
+            else 
+                $("#ModOverlay_rowKneewallTint" + id.substring(id.length - 2, id.length)).hide();
+        }
 
         /**
         This function uses the list of walls to calculate the room projection and antiProjection 
