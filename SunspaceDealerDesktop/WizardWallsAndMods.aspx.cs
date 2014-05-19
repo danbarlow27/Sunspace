@@ -404,7 +404,7 @@ namespace SunspaceDealerDesktop
         //    ddlInchFractions.Items.Add(lst58);
         //    ddlInchFractions.Items.Add(lst34);
         //    ddlInchFractions.Items.Add(lst78);
-        //    ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
+        //    ddlInchFractions.Attributes.Add("onchange", "checkWallLengths()"); //give it an attribute to check question 1 on change
 
         //    lblWallNumber.Text = "Existing Wall " + existingWallCount + " : "; //output wall name/number to the label
     
@@ -415,8 +415,8 @@ namespace SunspaceDealerDesktop
         //    txtWallLength.ID = "txtWall" + i + "Length"; //give an appropriate id to the textbox
         //    txtWallLength.CssClass = "txtField txtLengthInput"; //give the textbox a css class
         //    txtWallLength.MaxLength = 3; //set the max length of the textbox to prevent invalid input
-        //    txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
-        //    txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+        //    txtWallLength.Attributes.Add("onkeyup", "checkWallLengths()"); //set its attribute to check question 1 on key up
+        //    txtWallLength.Attributes.Add("OnChange", "checkWallLengths()");//set its attribute to check question 1 on change
         //    txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()"); //set its attribute to highlight walls on focus
         //    txtWallLength.Attributes.Add("onblur", "resetWalls()"); //set its attribute to reset walls on blur
 
@@ -473,7 +473,7 @@ namespace SunspaceDealerDesktop
             ddlInchFractions.Items.Add(lst58);
             ddlInchFractions.Items.Add(lst34);
             ddlInchFractions.Items.Add(lst78);
-            ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
+            ddlInchFractions.Attributes.Add("onchange", "checkWallLengths()"); //give it an attribute to check question 1 on change
 
             //add the inch fraction list items to the dropdown list
             ddlLeftInchFractions.Items.Add(lst0);
@@ -484,7 +484,7 @@ namespace SunspaceDealerDesktop
             ddlLeftInchFractions.Items.Add(lst58);
             ddlLeftInchFractions.Items.Add(lst34);
             ddlLeftInchFractions.Items.Add(lst78);
-            ddlLeftInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
+            ddlLeftInchFractions.Attributes.Add("onchange", "checkWallLengths()"); //give it an attribute to check question 1 on change
 
             //add the inch fraction list items to the dropdown list
             ddlRightInchFractions.Items.Add(lst0);
@@ -495,7 +495,7 @@ namespace SunspaceDealerDesktop
             ddlRightInchFractions.Items.Add(lst58);
             ddlRightInchFractions.Items.Add(lst34);
             ddlRightInchFractions.Items.Add(lst78);
-            ddlRightInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
+            ddlRightInchFractions.Attributes.Add("onchange", "checkWallLengths()"); //give it an attribute to check question 1 on change
 
 
             lblWallNumber.Text = "Wall " + displayedWallCount + " : "; //output wall name/number to the label
@@ -507,8 +507,8 @@ namespace SunspaceDealerDesktop
             txtWallLength.ID = "txtWall" + i + "Length"; //give an appropriate id to the textbox
             txtWallLength.CssClass = "txtField txtLengthInput"; //give the textbox a css class
             txtWallLength.MaxLength = 3; //give the textbox a max length of 3 to prevent invalid input
-            txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
-            txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+            txtWallLength.Attributes.Add("onkeyup", "checkWallLengths()"); //set its attribute to check question 1 on key up
+            txtWallLength.Attributes.Add("OnChange", "checkWallLengths()");//set its attribute to check question 1 on change
             txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
             txtWallLength.Attributes.Add("onblur", "resetWalls()");//set its attribute to reset walls on blur
             txtWallLength.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
@@ -520,8 +520,8 @@ namespace SunspaceDealerDesktop
             txtLeftFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
             txtLeftFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
             txtLeftFiller.Text = Constants.PREFERRED_DEFAULT_FILLER.ToString();
-            txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
-            txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+            txtLeftFiller.Attributes.Add("onkeyup", "checkWallLengths()"); //set its attribute to check question 1 on key up
+            txtLeftFiller.Attributes.Add("OnChange", "checkWallLengths()");//set its attribute to check question 1 on change
             txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
             txtLeftFiller.Attributes.Add("onblur", "resetWalls()");//set its attribute to reset walls on blur
             txtLeftFiller.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
@@ -530,8 +530,8 @@ namespace SunspaceDealerDesktop
             txtRightFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
             txtRightFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
             txtRightFiller.Text = Constants.PREFERRED_DEFAULT_FILLER.ToString();
-            txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");//set its attribute to check question 1 on key up
-            txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+            txtRightFiller.Attributes.Add("onkeyup", "checkWallLengths()");//set its attribute to check question 1 on key up
+            txtRightFiller.Attributes.Add("OnChange", "checkWallLengths()");//set its attribute to check question 1 on change
             txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
             txtRightFiller.Attributes.Add("onblur", "resetWalls()");//set its attribute to check reset walls on blur    
             txtRightFiller.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
@@ -589,7 +589,7 @@ namespace SunspaceDealerDesktop
             ddlInchFractions.Items.Add(lst58);
             ddlInchFractions.Items.Add(lst34);
             ddlInchFractions.Items.Add(lst78);
-            ddlInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
+            ddlInchFractions.Attributes.Add("onchange", "checkWallLengths()"); //give it an attribute to check question 1 on change
 
             //add the inch fraction list items to the dropdown list
             ddlLeftInchFractions.Items.Add(lst0);
@@ -600,7 +600,7 @@ namespace SunspaceDealerDesktop
             ddlLeftInchFractions.Items.Add(lst58);
             ddlLeftInchFractions.Items.Add(lst34);
             ddlLeftInchFractions.Items.Add(lst78);
-            ddlLeftInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
+            ddlLeftInchFractions.Attributes.Add("onchange", "checkWallLengths()"); //give it an attribute to check question 1 on change
 
             //add the inch fraction list items to the dropdown list
             ddlRightInchFractions.Items.Add(lst0);
@@ -611,7 +611,7 @@ namespace SunspaceDealerDesktop
             ddlRightInchFractions.Items.Add(lst58);
             ddlRightInchFractions.Items.Add(lst34);
             ddlRightInchFractions.Items.Add(lst78);
-            ddlRightInchFractions.Attributes.Add("onchange", "checkQuestion1()"); //give it an attribute to check question 1 on change
+            ddlRightInchFractions.Attributes.Add("onchange", "checkWallLengths()"); //give it an attribute to check question 1 on change
 
 
             lblWallNumber.Text = "Wall " + displayedWallCount + " (Gable Post): "; //output wall name/number to the label
@@ -623,8 +623,8 @@ namespace SunspaceDealerDesktop
             txtWallLength.ID = "txtWall" + i + "Length"; //give an appropriate id to the textbox
             txtWallLength.CssClass = "txtField txtLengthInput"; //give the textbox a css class
             txtWallLength.MaxLength = 3; //give the textbox a max length of 3 to prevent invalid input
-            txtWallLength.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
-            txtWallLength.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+            txtWallLength.Attributes.Add("onkeyup", "checkWallLengths()"); //set its attribute to check question 1 on key up
+            txtWallLength.Attributes.Add("OnChange", "checkWallLengths()");//set its attribute to check question 1 on change
             txtWallLength.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
             txtWallLength.Attributes.Add("onblur", "resetWalls()");//set its attribute to reset walls on blur
             txtWallLength.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
@@ -636,8 +636,8 @@ namespace SunspaceDealerDesktop
             txtLeftFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
             txtLeftFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
             txtLeftFiller.Text = "0";
-            txtLeftFiller.Attributes.Add("onkeyup", "checkQuestion1()"); //set its attribute to check question 1 on key up
-            txtLeftFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+            txtLeftFiller.Attributes.Add("onkeyup", "checkWallLengths()"); //set its attribute to check question 1 on key up
+            txtLeftFiller.Attributes.Add("OnChange", "checkWallLengths()");//set its attribute to check question 1 on change
             txtLeftFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
             txtLeftFiller.Attributes.Add("onblur", "resetWalls()");//set its attribute to reset walls on blur
             txtLeftFiller.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
@@ -646,8 +646,8 @@ namespace SunspaceDealerDesktop
             txtRightFiller.CssClass = "txtField txtLengthInput"; //give the textbox a css class
             txtRightFiller.MaxLength = 3; //set the max length of textbox to 3 to prevent invalid input
             txtRightFiller.Text = "0";
-            txtRightFiller.Attributes.Add("onkeyup", "checkQuestion1()");//set its attribute to check question 1 on key up
-            txtRightFiller.Attributes.Add("OnChange", "checkQuestion1()");//set its attribute to check question 1 on change
+            txtRightFiller.Attributes.Add("onkeyup", "checkWallLengths()");//set its attribute to check question 1 on key up
+            txtRightFiller.Attributes.Add("OnChange", "checkWallLengths()");//set its attribute to check question 1 on change
             txtRightFiller.Attributes.Add("OnFocus", "highlightWallsLength()");//set its attribute to highlight walls on focus
             txtRightFiller.Attributes.Add("onblur", "resetWalls()");//set its attribute to check reset walls on blur      
             txtRightFiller.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
@@ -772,7 +772,7 @@ namespace SunspaceDealerDesktop
                 TextBox leftWallTextbox = new TextBox();
                 leftWallTextbox.ID = "txtLeftWallHeight";
                 leftWallTextbox.CssClass = "txtField txtInput";
-                leftWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                leftWallTextbox.Attributes.Add("onkeyup", "checkWallHeights('" + isGable + "')");
                 leftWallTextbox.Attributes.Add("onblur", "resetWalls()");
                 leftWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
                 leftWallTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
@@ -780,7 +780,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList leftWallInchSpecific = new DropDownList();
                 leftWallInchSpecific.ID = "leftWallInchSpecificDDL";
-                leftWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+                leftWallInchSpecific.Attributes.Add("onchange", "checkWallHeights('" + isGable + "')");
                 leftWallInchSpecific.Items.Add(lst0);
                 leftWallInchSpecific.Items.Add(lst18);
                 leftWallInchSpecific.Items.Add(lst14);
@@ -820,7 +820,7 @@ namespace SunspaceDealerDesktop
                 TextBox rightWallTextbox = new TextBox();
                 rightWallTextbox.ID = "txtRightWallHeight";
                 rightWallTextbox.CssClass = "txtField txtInput";
-                rightWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                rightWallTextbox.Attributes.Add("onkeyup", "checkWallHeights('" + isGable + "')");
                 rightWallTextbox.Attributes.Add("onblur", "resetWalls()");
                 rightWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
                 rightWallTextbox.ID = "txtRightWallHeight";
@@ -829,7 +829,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList rightWallInchSpecific = new DropDownList();
                 rightWallInchSpecific.ID = "rightWallInchSpecificDDL";
-                rightWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+                rightWallInchSpecific.Attributes.Add("onchange", "checkWallHeights('" + isGable + "')");
                 rightWallInchSpecific.Items.Add(lst0);
                 rightWallInchSpecific.Items.Add(lst18);
                 rightWallInchSpecific.Items.Add(lst14);
@@ -869,7 +869,7 @@ namespace SunspaceDealerDesktop
                 TextBox gablePostTextbox = new TextBox();
                 gablePostTextbox.ID = "txtGablePostHeight";
                 gablePostTextbox.CssClass = "txtField txtInput";
-                gablePostTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                gablePostTextbox.Attributes.Add("onkeyup", "checkWallHeights('" + isGable + "')");
                 gablePostTextbox.Attributes.Add("onblur", "resetWalls()");
                 gablePostTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
                 gablePostTextbox.ID = "txtGablePostHeight";
@@ -878,7 +878,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList gablePostInchSpecific = new DropDownList();
                 gablePostInchSpecific.ID = "gablePostInchSpecificDDL";
-                gablePostInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+                gablePostInchSpecific.Attributes.Add("onchange", "checkWallHeights('" + isGable + "')");
                 gablePostInchSpecific.Items.Add(lst0);
                 gablePostInchSpecific.Items.Add(lst18);
                 gablePostInchSpecific.Items.Add(lst14);
@@ -919,7 +919,7 @@ namespace SunspaceDealerDesktop
                 TextBox leftRoofSlopeTextbox = new TextBox();
                 leftRoofSlopeTextbox.ID = "txtLeftRoofSlope";
                 leftRoofSlopeTextbox.CssClass = "txtField txtInput";
-                leftRoofSlopeTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                leftRoofSlopeTextbox.Attributes.Add("onkeyup", "checkWallHeights('" + isGable + "')");
                 leftRoofSlopeTextbox.Attributes.Add("onblur", "resetWalls()");
                 leftRoofSlopeTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
                 leftRoofSlopeTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
@@ -960,7 +960,7 @@ namespace SunspaceDealerDesktop
                 TextBox rightRoofSlopeTextbox = new TextBox();
                 rightRoofSlopeTextbox.ID = "txtRightRoofSlope";
                 rightRoofSlopeTextbox.CssClass = "txtField txtInput";
-                rightRoofSlopeTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                rightRoofSlopeTextbox.Attributes.Add("onkeyup", "checkWallHeights('" + isGable + "')");
                 rightRoofSlopeTextbox.Attributes.Add("onblur", "resetWalls()");
                 rightRoofSlopeTextbox.Attributes.Add("OnFocus", "highlightWallsHeightGable()");
                 rightRoofSlopeTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
@@ -1073,7 +1073,7 @@ namespace SunspaceDealerDesktop
                 TextBox backWallTextbox = new TextBox();
                 backWallTextbox.ID = "txtBackWallHeight";
                 backWallTextbox.CssClass = "txtField txtInput";
-                backWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                backWallTextbox.Attributes.Add("onkeyup", "checkWallHeights('" + isGable + "')");
                 backWallTextbox.Attributes.Add("onblur", "resetWalls()");
                 //backWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
                 backWallTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
@@ -1081,7 +1081,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList backWallInchSpecific = new DropDownList();
                 backWallInchSpecific.ID = "backWallInchSpecificDDL";
-                backWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+                backWallInchSpecific.Attributes.Add("onchange", "checkWallHeights('" + isGable + "')");
                 backWallInchSpecific.Items.Add(lst0);
                 backWallInchSpecific.Items.Add(lst18);
                 backWallInchSpecific.Items.Add(lst14);
@@ -1121,7 +1121,7 @@ namespace SunspaceDealerDesktop
                 TextBox frontWallTextbox = new TextBox();
                 frontWallTextbox.ID = "txtFrontWallHeight";
                 frontWallTextbox.CssClass = "txtField txtInput";
-                frontWallTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                frontWallTextbox.Attributes.Add("onkeyup", "checkWallHeights('" + isGable + "')");
                 frontWallTextbox.Attributes.Add("onblur", "resetWalls()");
                 frontWallTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                 //frontWallTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
@@ -1129,7 +1129,7 @@ namespace SunspaceDealerDesktop
 
                 DropDownList frontWallInchSpecific = new DropDownList();
                 frontWallInchSpecific.ID = "frontWallInchSpecificDDL";
-                frontWallInchSpecific.Attributes.Add("onchange", "checkQuestion2('" + isGable + "')");
+                frontWallInchSpecific.Attributes.Add("onchange", "checkWallHeights('" + isGable + "')");
                 frontWallInchSpecific.Items.Add(lst0);
                 frontWallInchSpecific.Items.Add(lst18);
                 frontWallInchSpecific.Items.Add(lst14);
@@ -1169,7 +1169,7 @@ namespace SunspaceDealerDesktop
                 TextBox roofSlopeTextbox = new TextBox();
                 roofSlopeTextbox.ID = "txtRoofSlope";
                 roofSlopeTextbox.CssClass = "txtField txtInput";
-                roofSlopeTextbox.Attributes.Add("onkeyup", "checkQuestion2('" + isGable + "')");
+                roofSlopeTextbox.Attributes.Add("onkeyup", "checkWallHeights('" + isGable + "')");
                 roofSlopeTextbox.Attributes.Add("onblur", "resetWalls()");
                 roofSlopeTextbox.Attributes.Add("onkeydown", "return (event.keyCode!=13);");
                 //roofSlopeTextbox.Attributes.Add("OnFocus", "highlightWallsHeight()");
