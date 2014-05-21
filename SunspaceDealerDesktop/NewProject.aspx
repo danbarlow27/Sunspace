@@ -382,30 +382,6 @@
             return false;
         }
 
-        function newProjectFoamSlide() {
-            document.getElementById("<%=txtErrorMessage.ClientID%>").value = "";
-            document.getElementById('<%=btnQuestion5.ClientID%>').disabled = true;
-
-            //confirm that an answer is selected, and update hidden values, and pager as needed
-            if ($('#<%=radFoamProtectedYes.ClientID%>').is(':checked')) {
-                document.getElementById('<%=btnQuestion5.ClientID%>').disabled = false;
-                $('#<%=lblQuestion5PagerAnswer.ClientID%>').text("Yes");
-                document.getElementById('pagerFive').style.display = "inline";
-                document.getElementById("<%=hidFoamProtected.ClientID%>").value = "Yes";
-            }
-            else if ($('#<%=radFoamProtectedNo.ClientID%>').is(':checked')) {
-                document.getElementById('<%=btnQuestion5.ClientID%>').disabled = false;
-                $('#<%=lblQuestion5PagerAnswer.ClientID%>').text("No");
-                document.getElementById('pagerFive').style.display = "inline";
-                document.getElementById("<%=hidFoamProtected.ClientID%>").value = "No";
-            }
-            else {
-                //no selection, errors
-            }
-
-            return false;
-        }
-
         function newProjectFloorSlide() {
             document.getElementById('<%=btnQuestion6.ClientID%>').disabled = true;
 

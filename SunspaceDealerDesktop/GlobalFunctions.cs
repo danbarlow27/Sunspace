@@ -10,6 +10,13 @@ namespace SunspaceDealerDesktop
 {
     public static class GlobalFunctions
     {
+        /// <summary>
+        /// Returns a list with each of the eighth of an inch increments that would be needed for a dropdown 
+        /// to select eighth of inches. Can be sent a string value .125, .25 (etc.) that will preselect the 
+        /// specific step in the dropdown this list is added to.
+        /// </summary>
+        /// <param name="preselect"></param>
+        /// <returns></returns>
         public static List<ListItem> FractionOptions(string preselect = null)
         {
             List<ListItem> options = new List<ListItem>();
@@ -425,6 +432,14 @@ namespace SunspaceDealerDesktop
             return returnArray;
         }
 
+        /// <summary>
+        /// This function is used for figuring out sizes of a mod based on space available and the type of window to be added
+        /// returns an array with multiple values, corresponding to size of the window, number of windows at that size, extra 
+        /// unfillable space to be added elsewhere in code
+        /// </summary>
+        /// <param name="space"></param>
+        /// <param name="windowType"></param>
+        /// <returns></returns>
         public static float[] validateWindowModSize(float space, string windowType/*, size, number, wall, start*/) 
         {
             float MIN_MOD_WIDTH = 0f;
