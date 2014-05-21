@@ -769,7 +769,32 @@
             }
         }
 
-        
+        function isFoamProtected()
+        {
+            console.log("Is foam protected?");
+            if ($('#MainContent_radProjectSunroom').is(':checked'))
+            {
+                if ($('#MainContent_chkSunroomFoamPanels').is(':checked'))
+                {
+                    document.getElementById('<%=hidFoamProtected.ClientID%>').value = "Yes";
+                }
+                else
+                {                    
+                    document.getElementById('<%=hidFoamProtected.ClientID%>').value = "No";
+                }
+            }
+            else if ($('#MainContent_radProjectWalls').is(':checked'))
+            {
+                if ($('#MainContent_chkWallFoamPanels').is(':checked'))
+                {
+                    document.getElementById('<%=hidFoamProtected.ClientID%>').value = "Yes";
+                }
+                else
+                {                    
+                    document.getElementById('<%=hidFoamProtected.ClientID%>').value = "No";
+                }
+            }
+        }
     </script>
 
     <div class="slide-window"  >
@@ -992,6 +1017,11 @@
                                     <asp:Label ID="lblSunroomModel400Radio" AssociatedControlID="radSunroomModel400" runat="server"></asp:Label>
                                     <asp:Label ID="lblSunroomModel400" AssociatedControlID="radSunroomModel400" runat="server" Text="Model 400"></asp:Label>
                                 </li>
+                                <li>
+                                    <asp:CheckBox ID="chkSunroomFoamPanels" runat="server" onclick="isFoamProtected()" />
+                                    <asp:Label ID="lblSunroomFoamPanelsCheck" AssociatedControlID="chkSunroomFoamPanels" runat="server"></asp:Label>
+                                    <asp:Label ID="lblSunroomFoamPanels" AssociatedControlID="chkSunroomFoamPanels" runat="server" Text=" Foam Panels"></asp:Label>
+                                </li>
                             </ul>            
                         </div>
                     </li>
@@ -1027,6 +1057,11 @@
                                 <li>
                                     <asp:Label ID="lblWallNumber" runat="server" Text="Number of walls:"></asp:Label>
                                     <asp:TextBox ID="txtWallNumber" runat="server" Text="1" onkeyup="newProjectTypeSlide()"></asp:TextBox>
+                                </li>
+                                <li>
+                                    <asp:CheckBox ID="chkWallFoamPanels" runat="server" onclick="isFoamProtected()" />
+                                    <asp:Label ID="lblWallFoamPanelsCheck" AssociatedControlID="chkWallFoamPanels" runat="server"></asp:Label>
+                                    <asp:Label ID="lblWallFoamPanels" AssociatedControlID="chkWallFoamPanels" runat="server" Text=" Foam Panels"></asp:Label>
                                 </li>
                             </ul>            
                         </div>
@@ -1100,34 +1135,9 @@
                     </li> 
                 </ul> 
 
-                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#foamSlide" runat="server" Text="Next Question" />
+                <asp:Button ID="btnQuestion3" Enabled="true" CssClass="btnSubmit float-right slidePanel" data-slide="#floorSlide" runat="server" Text="Next Question" />
                 <asp:Button ID="btnQuestion3_OrderOnly" Enabled="true" CssClass="btnSubmit float-right slidePanel" OnClick="btnQuestion3_OrderOnly_Click" runat="server" Text="Next Question" />
             </div>            
-            
-
-            <%-- Slide 4 - Foam Protected Panels --%>
-            <div id="foamSlide" class="slide">                
-                <h1>
-                    <asp:Label ID="lblFoamProtected" runat="server" Text="Would you like foam protected panels?"></asp:Label>
-                </h1> 
-
-                <ul class="toggleOptions">
-                    <li>
-                        <asp:RadioButton ID="radFoamProtectedYes" OnClick="newProjectFoamSlide()" GroupName="foam" runat="server" />
-                        <asp:Label ID="lblFoamProtectedYesRadio" AssociatedControlID="radFoamProtectedYes" runat="server"></asp:Label>
-                        <asp:Label ID="lblFoamProtectedYes" AssociatedControlID="radFoamProtectedYes" runat="server" Text="Yes"></asp:Label>
-                    </li>
-
-                    <li>
-                        <asp:RadioButton ID="radFoamProtectedNo" OnClick="newProjectFoamSlide()" GroupName="foam" runat="server" />
-                        <asp:Label ID="lblFoamProtectedNoRadio" AssociatedControlID="radFoamProtectedNo" runat="server"></asp:Label>
-                        <asp:Label ID="lblFoamProtectedNo" AssociatedControlID="radFoamProtectedNo" runat="server" Text="No"></asp:Label>
-                    </li>
-
-                </ul>
-
-                <asp:Button ID="btnQuestion5" Enabled="false" CssClass="btnSubmit float-right slidePanel" data-slide="#floorSlide" runat="server" Text="Next Question" />
-            </div> 
 
             <%-- Slide 5 - Prefabricated Floors --%>
             <div id="floorSlide" class="slide">                
@@ -1337,24 +1347,6 @@
                                 </a>
                         </li>
                     </div>
-
-                    <div style="display: none" id="pagerFour">
-                        <li>
-                                <a href="#" data-slide="#slide4" class="slidePanel">
-                                    <asp:Label ID="Label27" runat="server" Text="Styling options"></asp:Label>
-                                    <asp:Label ID="lblQuestion4PagerAnswer" runat="server" Text="Question 4 Answer"></asp:Label>
-                                </a>
-                        </li>
-                    </div>
-
-                    <div style="display: none" id="pagerFive">
-                        <li>
-                                <a href="#" data-slide="#foamSlide" class="slidePanel">
-                                    <asp:Label ID="Label31" runat="server" Text="Foam protection"></asp:Label>
-                                    <asp:Label ID="lblQuestion5PagerAnswer" runat="server" Text="Question 5 Answer"></asp:Label>
-                                </a>
-                        </li>          
-                    </div>    
                   
                 <div style="display: none" id="pagerSix">
                     <li>
@@ -1423,7 +1415,7 @@
     <input id="hidExteriorColour" type="hidden" runat="server" />
     <input id="hidExteriorSkin" type="hidden" runat="server" />
 
-    <input id="hidFoamProtected" type="hidden" runat="server" />
+    <input id="hidFoamProtected" type="hidden" runat="server" value="No"/>
 
     <input id="hidPrefabFloor" type="hidden" runat="server" />
 

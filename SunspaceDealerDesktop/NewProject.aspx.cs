@@ -426,6 +426,10 @@ namespace SunspaceDealerDesktop
             {
                 Response.Redirect("WizardRoofOnly.aspx");
             }
+            else if (hidProjectType.Value == "Walls")
+            {
+                Response.Redirect("WizardWallsOnly.aspx");
+            }
         }
 
         protected void btnQuestion4Walls_Click(object sender, EventArgs e)
