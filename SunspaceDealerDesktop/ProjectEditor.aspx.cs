@@ -24,7 +24,7 @@ namespace SunspaceDealerDesktop
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            projectId = Convert.ToInt32(HttpContext.Current.Session["project_id"].ToString());
+            //projectId = Convert.ToInt32(HttpContext.Current.Session["project_id"].ToString());
 
             #region hit the DB
 
@@ -1104,6 +1104,8 @@ namespace SunspaceDealerDesktop
             //lnkEditorNavMods.Attributes.Add("onclick", "$('.overlayContainer').slideToggle()");
             //lnkEditorNavTools.Attributes.Add("onclick", "$('#saveButtons').fadeToggle(); $('.btnTools').slideToggle();");
             lnkEditorNavSave.Attributes.Add("onclick", "updateSunroom()");
+            lnkEditorNavUndo.Attributes.Add("onclick", "undo()");
+            lnkEditorNavRedo.Attributes.Add("onclick", "redo()");
 
             //Add list of all objects to session, for use by other pages accessed through project editor
             try
