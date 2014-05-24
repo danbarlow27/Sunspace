@@ -924,6 +924,11 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region Populate Cut Sheets
+            //In the following sections, Tuples are used to get the data that will be entered into the tables. We confirm whether or not
+            //there will be an addition based on the item we check, then we create the tuple and add it to a list. Once we check all of
+            //those specific items in the sunroom, we can output the list into the required tables. This helps replicate the ordering of
+            //the items, as well as letting us confirm whether or not we will have multiple, or different sized entries of the same type
+
             #region Starter/Receiver
             //Loop for all walls
             List<Tuple<string, int, float>> starterList = new List<Tuple<string, int, float>>(); //eg: Starter, 1, 94 3/4
@@ -1385,6 +1390,8 @@ namespace SunspaceDealerDesktop
             #endregion
 
             #region Add tables to placeholders
+            //Now that we've created and populated all the tables, we can add them to the page
+
             tblExtrusionPlaceholder.Controls.Add(extrusionTable);
 
             tblPanelPlaceholder.Controls.Add(panelTable);

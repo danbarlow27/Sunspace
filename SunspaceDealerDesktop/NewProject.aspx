@@ -1295,7 +1295,7 @@
   
             <div id="paging"> 
                 <h2>Project Specifications</h2>
-
+                Click data to return to that slide
                 <ul>
                     <div style="display: none" id="pagerOne">
                         <li>

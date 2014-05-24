@@ -203,8 +203,6 @@
     <Content Include="Images\iconsNavEditor.png" />
     <Content Include="index.aspx" />
     <Content Include="Insert.aspx" />
-    <Content Include="JSONTest.aspx" />
-    <Content Include="JSONTest2.aspx" />
     <Content Include="ComponentMenu.aspx" />
     <Content Include="PriceCalculator.aspx" />
     <Content Include="Content\print.css" />
@@ -214,7 +212,6 @@
     <Content Include="OrderLanding.aspx" />
     <Content Include="Update.aspx" />
     <Content Include="WizardDoorOnly.aspx" />
-    <Content Include="GenerateMods.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
@@ -458,20 +455,6 @@
       <DependentUpon>Insert.aspx</DependentUpon>
     </Compile>
     <Compile Include="InsulatedFloors.cs" />
-    <Compile Include="JSONTest.aspx.cs">
-      <DependentUpon>JSONTest.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="JSONTest.aspx.designer.cs">
-      <DependentUpon>JSONTest.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="JSONTest2.aspx.cs">
-      <DependentUpon>JSONTest2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="JSONTest2.aspx.designer.cs">
-      <DependentUpon>JSONTest2.aspx</DependentUpon>
-    </Compile>
     <Compile Include="ComponentMenu.aspx.cs">
       <DependentUpon>ComponentMenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -539,13 +522,6 @@
     </Compile>
     <Compile Include="Filler.cs" />
     <Compile Include="FrenchDoor.cs" />
-    <Compile Include="GenerateMods.aspx.cs">
-      <DependentUpon>GenerateMods.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GenerateMods.aspx.designer.cs">
-      <DependentUpon>GenerateMods.aspx</DependentUpon>
-    </Compile>
     <Compile Include="GlassWindow.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

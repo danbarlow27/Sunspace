@@ -403,7 +403,7 @@
         <div id="paging-wrapper">    
             <div id="paging"> 
                 <h2>Roof Specifications</h2>
-
+                Click data to return to that slide
                 <ul>
                     <%-- MINI CANVAS (HIGHLIGHTS CURRENT WALL)
                     ======================================== --%>

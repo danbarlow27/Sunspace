@@ -2980,8 +2980,8 @@
     <div id="sidebar">
         <div id="paging-wrapper">    
             <div id="paging"> 
-                <h2>Wall Specifications</h2>
-
+                <h2>Wall Specifications</h2>                
+                Click data to return to that slide
                 <ul>
                     <%-- MINI CANVAS (HIGHLIGHTS CURRENT WALL)
                     ======================================== --%>
