@@ -80,15 +80,22 @@ namespace SunspaceDealerDesktop
 
             count = selectTable.Count;
 
-            sqlInsert = "INSERT INTO " + table
-            + "(accId,partName,description,partNumber,color,packQuantity,width,widthUnits,length,lengthUnits,size,sizeUnits,usdPrice,cadPrice,status)"
-            + "VALUES"
-            + "(" + (count + 1) + ",'" + AccessoryName + "','" + AccessoryDescription + "','" + AccessoryNumber + "','" + AccessoryColor + "'," + AccessoryPackQuantity + ","
-            + AccessoryWidth + ",'" + AccessoryWidthUnits + "'," + AccessoryLength + ",'" + AccessoryLengthUnits + "'," + AccessorySize + ",'" + accessorySizeUnits + "',"
-            + AccessoryUsdPrice + "," + AccessoryCadPrice + "," + 1 + ")";
+            try
+            {
+                sqlInsert = "INSERT INTO " + table
+                + "(accId,partName,description,partNumber,color,packQuantity,width,widthUnits,length,lengthUnits,size,sizeUnits,usdPrice,cadPrice,status)"
+                + "VALUES"
+                + "(" + (count + 1) + ",'" + AccessoryName + "','" + AccessoryDescription + "','" + AccessoryNumber + "','" + AccessoryColor + "'," + AccessoryPackQuantity + ","
+                + AccessoryWidth + ",'" + AccessoryWidthUnits + "'," + AccessoryLength + ",'" + AccessoryLengthUnits + "'," + AccessorySize + ",'" + accessorySizeUnits + "',"
+                + AccessoryUsdPrice + "," + AccessoryCadPrice + "," + 1 + ")";
 
-            dataSource.InsertCommand = sqlInsert;
-            dataSource.Insert();
+                dataSource.InsertCommand = sqlInsert;
+                dataSource.Insert();
+            }
+            catch (Exception ex)
+            {
+                string troubleshoot = ex.Message;
+            }
 
         }
 

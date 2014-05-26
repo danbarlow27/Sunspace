@@ -317,47 +317,48 @@
                 document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').style.display="none";
             }
             else if ($('#<%=radProjectWalls.ClientID%>').is(':checked')) {
+                document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').disabled = true;
                 //They check one of 4 model types
                 //update pager, enable button, and update hidden value
                 //corresponding to selected model #
                 if ($('#<%=radWallsModel100.ClientID%>').is(':checked')) {
                     document.getElementById("<%=hidModelNumber.ClientID%>").value = "M100";
                     document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
+                    document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').disabled = false;
                 }
                 else if ($('#<%=radWallsModel200.ClientID%>').is(':checked')) {
                     document.getElementById("<%=hidModelNumber.ClientID%>").value = "M200";
                     document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
+                    document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').disabled = false;
                 }
                 else if ($('#<%=radWallsModel300.ClientID%>').is(':checked')) {
                     document.getElementById("<%=hidModelNumber.ClientID%>").value = "M300";
                     document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
+                    document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').disabled = false;
                 }
                 else if ($('#<%=radWallsModel400.ClientID%>').is(':checked')) {
                     document.getElementById("<%=hidModelNumber.ClientID%>").value = "M400";
                     document.getElementById('pagerThree').style.display = "inline";
-                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
+                    document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').disabled = false;
                 }                
                 //update hidden value for type, and display pager message based on the now
                 //two hidden values type and model#
                 document.getElementById("<%=hidProjectType.ClientID%>").value = "Walls";
                 $('#<%=lblProjectTypeAnswer.ClientID%>').text(document.getElementById("<%=hidProjectType.ClientID%>").value + " of Model " + document.getElementById("<%=hidModelNumber.ClientID%>").value);
                                 
-                document.getElementById('<%=btnQuestion3.ClientID%>').style.display="inline";
-                document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').style.display="none";
+                document.getElementById('<%=btnQuestion3.ClientID%>').style.display="none";
+                document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').style.display="inline";
 
-                document.getElementById("<%=hidProjectType.ClientID%>").value = document.getElementById('<%=txtWallNumber.ClientID%>').value;
+                document.getElementById("<%=hidWallNumber.ClientID%>").value = document.getElementById('<%=txtWallNumber.ClientID%>').value;
 
                 if (document.getElementById('<%=txtWallNumber.ClientID%>').value == "" || document.getElementById('<%=txtWallNumber.ClientID%>').value < 1)
                 {
-                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = true;
+                    document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').disabled = true;
                     document.getElementById('<%=txtErrorMessage.ClientID%>').value = "You must have at least one wall.";
                 }
                 else
                 {
-                    document.getElementById('<%=btnQuestion3.ClientID%>').disabled = false;
+                    document.getElementById('<%=btnQuestion3_OrderOnly.ClientID%>').disabled = false;
                     document.getElementById('<%=txtErrorMessage.ClientID%>').value = "";
                 }
             }
@@ -770,6 +771,11 @@
                     document.getElementById('<%=hidFoamProtected.ClientID%>').value = "No";
                 }
             }
+        }
+
+        function checkProjectType()
+        {
+            
         }
     </script>
 

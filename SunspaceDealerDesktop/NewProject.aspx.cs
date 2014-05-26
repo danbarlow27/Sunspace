@@ -428,7 +428,9 @@ namespace SunspaceDealerDesktop
             }
             else if (hidProjectType.Value == "Walls")
             {
-                Response.Redirect("WizardWallsOnly.aspx");
+                Session.Add("model", GlobalFunctions.escapeSqlString(hidModelNumber.Value.ToString()));
+                Session.Add("wallsOnlyNumber", GlobalFunctions.escapeSqlString(hidWallNumber.Value.ToString()));
+                Response.Redirect("WizardWallsOnly.aspx");                
             }
         }
 
